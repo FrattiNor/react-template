@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+    <header>
+        <meta charset="UTF-8" />
+        <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0" /> -->
+        <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" />
+        <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+        <title>ASTP</title>
+    </header>
+    <body>
+        <div id="root"></div>
+    </body>
+    <script>
+        ;(function (doc, win) {
+            var docEl = doc.documentElement,
+                resizeEvt = 'orientationchange' in window ? 'orientationchange' : 'resize',
+                recalc = function () {
+                    var clientWidth = docEl.clientWidth
+                    docEl.style.fontSize = 100 * (clientWidth / 1400) + 'px'
+                }
+            if (!doc.addEventListener) {
+                return
+            }
+            win.addEventListener(resizeEvt, recalc, false)
+            doc.addEventListener('DOMContentLoaded', recalc, false)
+            recalc()
+        })(document, window)
+    </script>
+</html>

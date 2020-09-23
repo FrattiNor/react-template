@@ -1,0 +1,7 @@
+declare module '*.less'
+declare module 'react-document-title'
+declare module 'history'
+declare module 'react-router-dom'
+declare module 'react-redux'
+declare module 'dva-core'
+declare module 'dva-loading'
