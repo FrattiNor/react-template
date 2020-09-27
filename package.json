@@ -57,6 +57,7 @@
         "webpack-merge": "^4.2.2"
     },
     "dependencies": {
+        "@types/react-router-dom": "^5.1.5",
         "classnames": "^2.2.6",
         "dva-core": "^2.0.2",
         "dva-loading": "^3.0.20",

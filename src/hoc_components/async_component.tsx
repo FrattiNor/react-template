@@ -11,7 +11,8 @@ const asyncComponent = (promise: any) => {
             try {
                 if (isPromise(promise)) {
                     promise.then((res: any) => {
-                        setComponent(res)
+                        const { default: Component } = res
+                        setComponent(<Component {...props} />)
                     })
                 }
             } catch (e) {
@@ -19,7 +20,7 @@ const asyncComponent = (promise: any) => {
             }
         }, [])
 
-        return Component ? <Component.default {...props} /> : null
+        return Component
     }
 
     return LoadComponent

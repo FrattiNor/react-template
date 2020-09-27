@@ -45,7 +45,7 @@ const getComponent = (component: any): any => {
     if (isPromise(component)) {
         return asyncComponent(component)
     } else {
-        return component || <></>
+        return component.default || component
     }
 }
 

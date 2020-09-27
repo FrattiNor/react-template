@@ -27,8 +27,8 @@ module.exports = {
     },
     rules: {
         // 这里填入你的项目需要的个性化配置
-        '@typescript-eslint/no-var-requires': 0,
-        '@typescript-eslint/member-delimiter-style': 0,
+        '@typescript-eslint/no-var-requires': 'off', // var 和 require（webpack需要使用）
+        '@typescript-eslint/member-delimiter-style': 'off', // interface，分号分隔
         'no-duplicate-imports': 'error', // 禁止重复导入
         semi: ['error', 'never'], //禁止分号
         'no-console': 'warn', // 禁用 console
@@ -49,7 +49,8 @@ module.exports = {
         'react/no-did-update-set-state': 'off',
         'react-hooks/rules-of-hooks': 'error',
         'react-hooks/exhaustive-deps': 'warn',
-        'react/prop-types': [2, { ignore: ['children'] }],
+        // 'react/prop-types': [2, { ignore: ['children'] }],
+        'react/prop-types': 'off',
         indent: [
             // 缩进4个空格
             'error',
