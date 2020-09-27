@@ -7,7 +7,7 @@ interface RouteList {
     models?: string[]
 }
 
-import React from 'react'
+import React, { FC } from 'react'
 import ReactDocumentTitle from 'react-document-title'
 import { createBrowserHistory } from 'history'
 import asyncComponent from '@/hoc_components/async_component'
@@ -25,7 +25,7 @@ import menu from './menu'
 const history = createBrowserHistory()
 
 // 加载 dva_model
-const loadModel = (models: string[], app: any) => {
+const loadModel = (models: string[], app: any): void => {
     models.forEach((road) => {
         try {
             const model = require(`@/models/${road}`).default
@@ -50,8 +50,8 @@ const getComponent = (component: any): any => {
 }
 
 // 递归渲染路由
-const Routes = ({ app }: { app: any }) => {
-    const renderRoute = (list: any) => {
+const Routes = ({ app }: { app: any }): JSX.Element => {
+    const renderRoute = (list: any): JSX.Element => {
         const renderRouteDom = list.map(({ path, component, routes, redirect, title = '', models }: RouteList) => {
             // 加载model
             if (models) {
@@ -75,7 +75,7 @@ const Routes = ({ app }: { app: any }) => {
                     key={path}
                     path={path}
                     exact={!hasChild}
-                    render={(props: any) => (
+                    render={(props: any): JSX.Element => (
                         <ReactDocumentTitle title={title}>
                             <Component {...props} child={routes}>
                                 {hasChild && renderRoute(routes)}

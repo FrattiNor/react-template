@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react'
+import React, { FC, useEffect, useState } from 'react'
 import { isPromise } from '@/utils/judge'
 
 // import的promise转为component
 // promise_to_component
-const asyncComponent = (promise: any) => {
-    const LoadComponent = (props: object) => {
+const asyncComponent = (promise: any): FC => {
+    const LoadComponent = (props: object): JSX.Element => {
         const [Component, setComponent]: any = useState(null)
 
         useEffect(() => {
