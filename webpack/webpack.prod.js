@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/camelcase */
+const path = require('path')
 const merge = require('webpack-merge')
 const baseConfig = require('./webpack.common')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
@@ -6,8 +8,9 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin')
 const TerserPlugin = require('terser-webpack-plugin')
 const ScriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin')
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
+// const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 const defaultConfig = require('./default.const')
+const PrerenderSPAPlugin = require('prerender-spa-plugin')
 
 const { output, htmlWebpackPlugin, lessRule } = defaultConfig
 
@@ -16,6 +19,7 @@ const prodConfig = {
     devtool: 'cheap-module-source-map',
     output: {
         filename: 'js/[name].[chunkhash].js',
+        publicPath: '/',
         ...output
     },
     module: {
@@ -54,7 +58,15 @@ const prodConfig = {
             inline: /runtime\..*\.js$/
         }),
         // webpack打包之后输出文件的大小占比
-        new BundleAnalyzerPlugin()
+        // new BundleAnalyzerPlugin(),
+        // 预渲染插件
+        new PrerenderSPAPlugin({
+            routes: ['/', '/doc'],
+            staticDir: path.join(__dirname, '../dist')
+            // renderer: new Renderer({
+            //     renderAfterTime: 50000
+            // })
+        })
     ],
     optimization: {
         // 性能配置

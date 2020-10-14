@@ -2,6 +2,9 @@
 const path = require('path')
 const ProgressBarPlugin = require('progress-bar-webpack-plugin')
 const PxtoremWebpackPlugin = require('pxtorem-webpack-plugin')
+// const marked = require('marked')
+
+// const renderer = new marked.Renderer()
 
 module.exports = {
     // 入口
@@ -56,6 +59,21 @@ module.exports = {
                         }
                     }
                 ]
+            },
+            {
+                test: /\.md$/,
+                use: [
+                    {
+                        loader: 'html-loader'
+                    },
+                    {
+                        loader: 'markdown-loader',
+                        // options: {
+                        //     pedantic: true,
+                        //     renderer
+                        // }
+                    }
+                ]
             }
         ]
     },
@@ -86,7 +104,7 @@ module.exports = {
         new PxtoremWebpackPlugin({
             // templates: ['index.html'],
             // baseDpr: 2,
-            baseWidth: 1400,
+            baseWidth: 1920,
             remUnit: 100
         })
     ]

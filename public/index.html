@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html>
-    <header>
+    <head>
         <meta charset="UTF-8" />
         <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0" /> -->
         <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" />
         <meta http-equiv="X-UA-Compatible" content="ie=edge" />
         <title>ASTP</title>
-    </header>
+    </head>
     <body>
         <div id="root"></div>
     </body>
@@ -16,7 +16,7 @@
                 resizeEvt = 'orientationchange' in window ? 'orientationchange' : 'resize',
                 recalc = function () {
                     var clientWidth = docEl.clientWidth
-                    docEl.style.fontSize = 100 * (clientWidth / 1400) + 'px'
+                    docEl.style.fontSize = 100 * (clientWidth / 1920) + 'px'
                 }
             if (!doc.addEventListener) {
                 return

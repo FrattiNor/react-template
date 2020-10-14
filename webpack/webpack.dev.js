@@ -12,6 +12,7 @@ const devConfig = {
     devtool: 'cheap-module-eval-source-map',
     output: {
         filename: 'js/[name].[hash].js',
+        publicPath: '/',
         ...output
     },
     plugins: [

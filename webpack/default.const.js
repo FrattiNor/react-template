@@ -5,7 +5,6 @@ const path = require('path')
 
 const output = {
     path: path.join(__dirname, '../dist'),
-    publicPath: '/'
 }
 
 const htmlWebpackPlugin = {
