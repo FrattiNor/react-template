@@ -1,3 +1,5 @@
+import LazyLoad from '@/components/lazy_load'
+
 // 总路由
 const routes = [
     {
@@ -6,7 +8,7 @@ const routes = [
         routes: [
             {
                 path: '/',
-                component: import('@/layouts/basic_layout'),
+                component: LazyLoad(() => import('@/layouts/basic_layout')),
                 routes: [
                     {
                         path: '/',
@@ -15,8 +17,13 @@ const routes = [
                     {
                         path: '/one',
                         title: '页面 - 1',
-                        component: import('@/pages/one')
+                        component: LazyLoad(() => import('@/pages/one'))
                     },
+                    {
+                        path: '/two',
+                        title: '页面 - 2',
+                        component: LazyLoad(() => import('@/pages/two'))
+                    }
                     // {
                     //     path: '/403',
                     //     title: '403 - 禁止访问',
