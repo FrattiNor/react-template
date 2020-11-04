@@ -1,8 +1,7 @@
 import React, { FC, useEffect } from 'react'
 
-type Props = {}
-
-const BasicLayout: FC<Props> = ({ children }) => {
+// 基础的layout，负责构建基本框架
+const BasicLayout: FC = ({ children }) => {
     useEffect(() => {
         console.log('basic')
     }, [])

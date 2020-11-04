@@ -1,4 +1,4 @@
-import asyncComponent from '@/hoc_components/async_component'
+import asyncImport from '@/hoc_components/async_import'
 import { isPromise } from '@/utils/judge'
 import EmptyComponent from './empty'
 
@@ -22,7 +22,7 @@ const loadModel = (models: string[], app: any): void => {
 const getComponent = (component: any): any => {
     if (component) {
         if (isPromise(component)) {
-            return asyncComponent(component)
+            return asyncImport(component)
         } else {
             return component.default || component
         }
