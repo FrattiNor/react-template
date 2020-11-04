@@ -7,47 +7,14 @@ interface RouteList {
     models?: string[]
 }
 
-import React, { FC } from 'react'
+import React from 'react'
 import ReactDocumentTitle from 'react-document-title'
 import { createBrowserHistory } from 'history'
-import asyncComponent from '@/hoc_components/async_component'
-import { isPromise } from '@/utils/judge'
-import {
-    Route,
-    Switch,
-    Redirect,
-    // HashRouter as Router
-    // BrowserRouter as Router,
-    Router
-} from 'react-router-dom'
+import { Route, Switch, Redirect, Router } from 'react-router-dom'
+import { loadModel, getComponent } from './utils'
 import menu from './menu'
 
 const history = createBrowserHistory()
-
-// 加载 dva_model
-const loadModel = (models: string[], app: any): void => {
-    models.forEach((road) => {
-        try {
-            const model = require(`@/models/${road}`).default
-            const inModels = app._models.some(({ namespace }: { namespace: string }) => namespace === model.namespace)
-            if (!inModels) {
-                app.model(model)
-            }
-        } catch (e) {
-            console.error(`models 路径不正确 ${road}`)
-            console.error(e)
-        }
-    })
-}
-
-// 获取组件本体
-const getComponent = (component: any): any => {
-    if (isPromise(component)) {
-        return asyncComponent(component)
-    } else {
-        return component.default || component
-    }
-}
 
 // 递归渲染路由
 const Routes = ({ app }: { app: any }): JSX.Element => {
