@@ -1,8 +1,12 @@
-import React, { FC } from 'react'
+import React, { FC, useEffect } from 'react'
 
 type Props = {}
 
 const BasicLayout: FC<Props> = ({ children }) => {
+    useEffect(() => {
+        console.log('basic')
+    }, [])
+
     return <>{children}</>
 }
 

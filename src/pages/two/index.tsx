@@ -5,8 +5,6 @@ import styles from './index.less'
 type Props = {}
 
 const Two: FC<RouteComponentProps & Props> = ({ history }) => {
-    console.log(history)
-
     return <div className={styles.wrapper} onClick={() => history.push('/one')}>Two</div>
 }
 

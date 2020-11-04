@@ -1,14 +1,15 @@
-import LazyLoad from '@/components/lazy_load'
+import ReactLazyLoad from '@/components/react_lazy_load'
+// import LazyLoad from '@/components/lazy_load'
 
 // 总路由
 const routes = [
     {
         path: '/',
-        component: import('@/layouts/out_layout'),
+        component: ReactLazyLoad(() => import('@/layouts/out_layout')), 
         routes: [
             {
                 path: '/',
-                component: LazyLoad(() => import('@/layouts/basic_layout')),
+                component: ReactLazyLoad(() => import('@/layouts/basic_layout')), 
                 routes: [
                     {
                         path: '/',
@@ -17,12 +18,12 @@ const routes = [
                     {
                         path: '/one',
                         title: '页面 - 1',
-                        component: LazyLoad(() => import('@/pages/one'))
+                        component: ReactLazyLoad(() => import('@/pages/one')),
                     },
                     {
                         path: '/two',
                         title: '页面 - 2',
-                        component: LazyLoad(() => import('@/pages/two'))
+                        component: ReactLazyLoad(() => import('@/pages/two')),
                     }
                     // {
                     //     path: '/403',
