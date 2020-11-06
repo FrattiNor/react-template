@@ -1,7 +1,6 @@
 // node path模块
 const path = require('path')
 const ProgressBarPlugin = require('progress-bar-webpack-plugin')
-const PxtoremWebpackPlugin = require('pxtorem-webpack-plugin')
 // const marked = require('marked')
 
 // const renderer = new marked.Renderer()
@@ -67,7 +66,7 @@ module.exports = {
                         loader: 'html-loader'
                     },
                     {
-                        loader: 'markdown-loader',
+                        loader: 'markdown-loader'
                         // options: {
                         //     pedantic: true,
                         //     renderer
@@ -100,12 +99,6 @@ module.exports = {
     },
     plugins: [
         // 打包📦进度条
-        new ProgressBarPlugin(),
-        new PxtoremWebpackPlugin({
-            // templates: ['index.html'],
-            // baseDpr: 2,
-            baseWidth: 1920,
-            remUnit: 100
-        })
+        new ProgressBarPlugin()
     ]
 }
