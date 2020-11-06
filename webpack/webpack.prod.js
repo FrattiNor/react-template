@@ -16,7 +16,7 @@ const { output, htmlWebpackPlugin, lessRule } = defaultConfig
 
 const prodConfig = {
     mode: 'production',
-    devtool: 'cheap-module-source-map',
+    devtool: 'none',
     output: {
         filename: 'js/[name].[chunkhash].js',
         publicPath: '/',
