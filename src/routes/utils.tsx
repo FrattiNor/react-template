@@ -1,6 +1,6 @@
 import asyncImport from '@/hoc_components/async_import'
 import { isPromise } from '@/utils/judge'
-import EmptyComponent from './empty'
+import EmptyComponent from '@/components/empty_component'
 
 // 加载 dva_model
 const loadModel = (models: string[], app: any): void => {

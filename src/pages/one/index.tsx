@@ -1,9 +1,9 @@
 import React, { FC } from 'react'
 import { withRouter, RouteComponentProps } from 'react-router-dom'
-import ReactLazyLoad from '@/components/react_lazy_load'
+import ReactLazyLoad from '@/components/lazy_load'
 import styles from './index.less'
 
-const Three = ReactLazyLoad(() => import('../three'))
+const Three = ReactLazyLoad(() => import('../three'), 'react')
 
 const One: FC<RouteComponentProps> = ({ history }) => {
     return (

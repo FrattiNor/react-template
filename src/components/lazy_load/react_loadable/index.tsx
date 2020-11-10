@@ -1,10 +1,8 @@
-import React, { FC, ComponentType } from 'react'
+import { FC, ComponentType } from 'react'
 import Loadable from 'react-loadable'
+import Loading from '@/components/lazy_load/loading'
 
-// 加载时显示的dom
-const Loading: FC = () => <div>Loading...</div>
-
-const LazyLoad = (loader: () => Promise<{ default: ComponentType<any> }>) =>
+const LazyLoad = (loader: () => Promise<{ default: ComponentType<any> }>): FC =>
     Loadable({
         loader,
         loading: Loading
