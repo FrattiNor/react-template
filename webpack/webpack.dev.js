@@ -1,5 +1,5 @@
 const webpack = require('webpack')
-const merge = require('webpack-merge')
+const { merge } = require('webpack-merge')
 const baseConfig = require('./webpack.common')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin')
@@ -9,11 +9,21 @@ const { output, htmlWebpackPlugin, lessRule } = defaultConfig
 
 const devConfig = {
     mode: 'development',
-    devtool: 'cheap-module-eval-source-map',
+    devtool: 'inline-source-map', // source map // "^(inline-|hidden-|eval-)?(nosources-)?(cheap-(module-)?)?source-map$"
     output: {
         filename: 'js/[name].[hash].js',
         publicPath: '/',
         ...output
+    },
+    module: {
+        rules: [
+            lessRule({
+                styleLoader: 'style-loader',
+                cssLoaderModules: {
+                    localIdentName: '[hash:base64:6]-[name]-[local]'
+                }
+            })
+        ]
     },
     plugins: [
         // 热加载插件，用于启用局部模块热重载方便我们开发
@@ -25,16 +35,6 @@ const devConfig = {
         // 优化webpack显示
         new FriendlyErrorsWebpackPlugin()
     ],
-    module: {
-        rules: [
-            lessRule({
-                styleLoader: 'style-loader',
-                cssLoaderModules: {
-                    localIdentName: '[path][name]__[local]--[hash:base64:6]'
-                }
-            })
-        ]
-    },
     // node 本地服务器配置
     devServer: {
         host: '0.0.0.0',
