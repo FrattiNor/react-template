@@ -15,13 +15,12 @@ const ObserveBlock: FC<Props> = ({ children, setHeight, setWidth }) => {
             ro = new ROP((entries) => {
                 for (const entry of entries) {
                     const { height, width } = entry.contentRect
-                    if(typeof setHeight === 'function') {
+                    if (typeof setHeight === 'function') {
                         setHeight(height)
                     }
-                    if(typeof setWidth === 'function') {
+                    if (typeof setWidth === 'function') {
                         setWidth(width)
                     }
-                    
                 }
             })
 
