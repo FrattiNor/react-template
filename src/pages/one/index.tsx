@@ -1,11 +1,15 @@
-import React, { FC } from 'react'
+import React, { FC, useEffect } from 'react'
 import { withRouter, RouteComponentProps } from 'react-router-dom'
-import ReactLazyLoad from '@/components/lazy_load'
+import LazyLoad from '@/components/lazy_load'
 import styles from './index.less'
 
-const Three = ReactLazyLoad(() => import('../three'), 'react')
+const Three = LazyLoad(() => import('../three'))
 
 const One: FC<RouteComponentProps> = ({ history }) => {
+    useEffect(() => {
+        console.log('one')
+    }, [])
+
     return (
         <div>
             <div className={styles.wrapper} onClick={() => history.push('/two')}>

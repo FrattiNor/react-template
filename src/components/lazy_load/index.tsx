@@ -1,17 +1,18 @@
-import { ComponentType, FC } from 'react'
-import Empty from '@/components/empty_component'
-import ReactLoadable from './react_loadable'
-import ReactLazyLoad from './react_lazy'
+import React, { FC, Suspense, ComponentType, lazy } from 'react'
+import DefaultLoading from './default_loading'
 
-const LazyLoad = (loader: () => Promise<{ default: ComponentType<any> }>, type: 'react' | 'loadable', Loading?: FC): FC => {
-    switch (type) {
-        case 'react':
-            return ReactLazyLoad(loader, Loading)
-        case 'loadable':
-            return ReactLoadable(loader, Loading)
-        default:
-            return Empty
+const LazyLoad = (loader: () => Promise<{ default: ComponentType<any> }>, Loading?: FC): FC => {
+    const Component: FC = (props) => {
+        const LazyComponent = lazy(loader)
+
+        return (
+            <Suspense fallback={Loading ? <Loading /> : <DefaultLoading />}>
+                <LazyComponent {...props} />
+            </Suspense>
+        )
     }
+
+    return Component
 }
 
 export default LazyLoad
