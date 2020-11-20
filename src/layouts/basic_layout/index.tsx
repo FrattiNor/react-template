@@ -1,12 +1,20 @@
 import React, { FC, useEffect } from 'react'
+import { useRouteMatch } from 'react-router-dom'
 
 // 基础的layout，负责构建基本框架
 const BasicLayout: FC = ({ children }) => {
-    useEffect(() => {
-        console.log('basic')
-    }, [])
+    const match = useRouteMatch('/one')
 
-    return <>{children}</>
+    useEffect(() => {
+        console.log('basic', children)
+    }, [children])
+
+    return (
+        <>
+            {children}
+            {match && <div>yes</div>}
+        </>
+    )
 }
 
 export default BasicLayout

@@ -1,11 +1,19 @@
 import React, { FC } from 'react'
-import { withRouter, RouteComponentProps } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 import styles from './index.less'
 
-type Props = {}
-
-const One: FC<RouteComponentProps & Props> = ({ history }) => {
-    return <div className={styles.wrapper} onClick={() => history.push('/two')}>THree</div>
+type Props = {
+    data: string
 }
 
-export default withRouter(One)
+const One: FC<Props> = ({ data }) => {
+    const history = useHistory()
+
+    return (
+        <div className={styles.wrapper} onClick={() => history.push('/two')}>
+            {data}
+        </div>
+    )
+}
+
+export default One

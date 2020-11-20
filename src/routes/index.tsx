@@ -1,25 +1,13 @@
-interface RouteList {
-    path?: string
-    component?: any
-    routes?: any[]
-    redirect?: string
-    title?: string
-    models?: string[]
-}
-
-import React from 'react'
+import React, { FC } from 'react'
 import ReactDocumentTitle from 'react-document-title'
-import { createBrowserHistory } from 'history'
-import { Route, Switch, Redirect, Router } from 'react-router-dom'
+import { Route, Switch, Redirect, BrowserRouter } from 'react-router-dom'
 import { loadModel, getComponent } from './utils'
 import menu from './menu'
 
-const history = createBrowserHistory()
-
 // 递归渲染路由
-const Routes = ({ app }: { app: any }): JSX.Element => {
-    const renderRoute = (list: any): JSX.Element => {
-        const renderRouteDom = list.map(({ path, component, routes, redirect, title = '', models }: RouteList) => {
+const Routes: FC<{ app: any }> = ({ app }) => {
+    const renderRoute = (list: routeItem[]): JSX.Element => {
+        const renderRouteDom = list.map(({ path, component, routes, redirect, title = '', models }: routeItem) => {
             // 加载model
             if (models) {
                 loadModel(models, app)
@@ -37,15 +25,16 @@ const Routes = ({ app }: { app: any }): JSX.Element => {
             // 渲染route
             const Component = getComponent(component)
             const hasChild = Array.isArray(routes) && routes.length > 0
+
             return (
                 <Route
                     key={path}
                     path={path}
                     exact={!hasChild}
-                    render={(props: any): JSX.Element => (
+                    render={(props) => (
                         <ReactDocumentTitle title={title}>
                             <Component {...props} child={routes}>
-                                {hasChild && renderRoute(routes)}
+                                {Array.isArray(routes) && routes.length > 0 && renderRoute(routes)}
                             </Component>
                         </ReactDocumentTitle>
                     )}
@@ -56,7 +45,7 @@ const Routes = ({ app }: { app: any }): JSX.Element => {
         return <Switch>{renderRouteDom}</Switch>
     }
 
-    return <Router history={history}>{renderRoute(menu)}</Router>
+    return <BrowserRouter>{renderRoute(menu)}</BrowserRouter>
 }
 
 export default Routes

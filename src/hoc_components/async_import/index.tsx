@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState, ComponentType } from 'react'
+import React, { FC, useEffect, useState, ComponentType, useRef } from 'react'
 
 // import的promise转为component
 // promise to component
@@ -11,7 +11,7 @@ const asyncComponent = (promise: Promise<{default: ComponentType}>): FC => {
                 const { default: Component } = res
                 setComponent(<Component {...props} />)
             })
-        }, [props])
+        }, [])
 
         return Component
     }
