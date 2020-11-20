@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/camelcase */
 const merge = require('webpack-merge')
 const baseConfig = require('./webpack.common')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
