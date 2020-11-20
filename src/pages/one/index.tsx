@@ -1,9 +1,9 @@
 import React, { FC } from 'react'
 import { withRouter, RouteComponentProps } from 'react-router-dom'
-// import ReactLazyLoad from '@/components/lazy_load'
+import ReactLazyLoad from '@/components/lazy_load'
 import styles from './index.less'
 
-// const Three = ReactLazyLoad(() => import('../three'), 'react')
+const Three = ReactLazyLoad(() => import('../three'), 'react')
 
 const One: FC<RouteComponentProps> = ({ history }) => {
     return (
@@ -11,7 +11,7 @@ const One: FC<RouteComponentProps> = ({ history }) => {
             <div className={styles.wrapper} onClick={() => history.push('/two')}>
                 One
             </div>
-            {/* <Three /> */}
+            <Three />
         </div>
     )
 }

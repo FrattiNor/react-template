@@ -93,7 +93,7 @@ module.exports = {
         maxAssetSize: 102400, // 生成的文件最大限制 整数类型（以字节为单位）(100kb)
         maxEntrypointSize: 102400, // 引入的文件最大限制 整数类型（以字节为单位）(100kb)
         assetFilter: function (assetFilename) {
-            // 提供资源文件名的断言函数（参与性能提示）
+            // 提供资源文件名的断言函数
             return /\.(png|jpe?g|gif|svg)(\?.*)?$/.test(assetFilename)
         }
     },
