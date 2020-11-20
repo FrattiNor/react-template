@@ -1,24 +1,17 @@
-import React, { FC, useState } from 'react'
-import { isPromise } from '@/utils/judge'
+import React, { FC, useEffect, useState, ComponentType } from 'react'
 
 // import的promise转为component
-// promise_to_component
-const asyncComponent = (promise: any): FC => {
+// promise to component
+const asyncComponent = (promise: Promise<{default: ComponentType}>): FC => {
     const LoadComponent: FC = (props) => {
-        const [Component, setComponent]: any = useState(null)
+        const [Component, setComponent] = useState(<div />)
 
-        if (Component === null) {
-            try {
-                if (isPromise(promise)) {
-                    promise.then((res: any) => {
-                        const { default: Component } = res
-                        setComponent(<Component {...props} />)
-                    })
-                }
-            } catch (e) {
-                console.error(e)
-            }
-        }
+        useEffect(() => {
+            promise.then((res) => {
+                const { default: Component } = res
+                setComponent(<Component {...props} />)
+            })
+        }, [props])
 
         return Component
     }
