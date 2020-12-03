@@ -1,17 +1,18 @@
-import React, { FC, useEffect, useState } from 'react'
-import { useHistory, useLocation, useParams, useRouteMatch } from 'react-router-dom'
-import LazyLoad from '@/components/lazy_load'
+import React, { FC, useState } from 'react'
+// import { useHistory, useLocation, useParams, useRouteMatch } from 'react-router-dom'
+// import LazyLoad from '@/components/lazy_load'
+import DropDown from '@/components/drop_down'
 import styles from './index.less'
 
-const Three = LazyLoad(() => import('../three'))
+// const Three = LazyLoad(() => import('../three'))
 
 const One: FC = () => {
     const [data, setData] = useState('okk')
 
-    const history = useHistory()
-    const location = useLocation()
-    const params = useParams()
-    const match = useRouteMatch('/one')
+    // const history = useHistory()
+    // const location = useLocation()
+    // const params = useParams()
+    // const match = useRouteMatch('/one')
 
     return (
         <div>
@@ -23,7 +24,10 @@ const One: FC = () => {
             >
                 One
             </div>
-            <Three data={data} />
+            {/* <Three data={data} /> */}
+            <DropDown>
+                <div className={styles['btn']}>btn</div>
+            </DropDown>
         </div>
     )
 }

@@ -1,9 +1,9 @@
 import React, { FC, useEffect } from 'react'
-import { useRouteMatch } from 'react-router-dom'
+// import { useRouteMatch } from 'react-router-dom'
 
 // 基础的layout，负责构建基本框架
 const BasicLayout: FC = ({ children }) => {
-    const match = useRouteMatch('/one')
+    // const match = useRouteMatch('/one')
 
     useEffect(() => {
         console.log('basic', children)
@@ -12,7 +12,7 @@ const BasicLayout: FC = ({ children }) => {
     return (
         <>
             {children}
-            {match && <div>yes</div>}
+            {/* {match && <div>yes</div>} */}
         </>
     )
 }
