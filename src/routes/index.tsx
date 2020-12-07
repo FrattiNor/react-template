@@ -31,7 +31,7 @@ const Routes: FC<{ app: any }> = ({ app }) => {
                     key={path}
                     path={path}
                     exact={!hasChild}
-                    render={(props) => (
+                    render={(props): JSX.Element => (
                         <ReactDocumentTitle title={title}>
                             <Component {...props} child={routes}>
                                 {Array.isArray(routes) && routes.length > 0 && renderRoute(routes)}

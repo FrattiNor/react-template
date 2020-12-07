@@ -1,9 +1,9 @@
-;(function (doc, win) {
-    var docEl = doc.documentElement,
+(function (doc, win) {
+    const docEl = doc.documentElement,
         resizeEvt =
             "orientationchange" in window ? "orientationchange" : "resize",
         recalc = function () {
-            var clientWidth = docEl.clientWidth
+            const clientWidth = docEl.clientWidth
             docEl.style.fontSize = 100 * (clientWidth / 1920) + "px"
         }
     if (!doc.addEventListener) {
