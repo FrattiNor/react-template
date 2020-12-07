@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState, ComponentType, useRef } from 'react'
+import React, { FC, useEffect, useState, ComponentType } from 'react'
 
 // import的promise转为component
 // promise to component
