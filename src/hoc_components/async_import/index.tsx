@@ -4,10 +4,10 @@ import React, { FC, useEffect, useState, ComponentType } from 'react'
 // promise_to_component
 const asyncComponent = (promise: Promise<{ default: ComponentType }>): FC => {
     const LoadComponent: FC = (props) => {
-        const [Component, setComponent]: any = useState(<div />)
+        const [Component, setComponent] = useState(<div />)
 
         useEffect(() => {
-            promise.then((res: any) => {
+            promise.then((res) => {
                 const { default: Component } = res
                 setComponent(<Component {...props} />)
             })

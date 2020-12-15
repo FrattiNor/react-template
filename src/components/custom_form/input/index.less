@@ -1,0 +1,27 @@
+.input {
+    outline: none;
+    border-radius: 2px;
+    border: 1px solid #ebedf0;
+    box-sizing: border-box;
+    padding: 0 10px;
+    height: 32px;
+    transition: border-color 0.3s, box-shadow 0.3s;
+    font-size: 16px;
+    width: 100%;
+
+    &:hover,
+    &:focus {
+        border-color: #40a9ff;
+        box-shadow: 0 0 0 2px rgba(24, 144, 255, 0.2);
+    }
+}
+
+.input-error {
+    border: 1px solid #ff4d4f;
+
+    &:hover,
+    &:focus {
+        border-color: #ff4d4f;
+        box-shadow: 0 0 0 2px rgba(255, 77, 79, 0.2);
+    }
+}

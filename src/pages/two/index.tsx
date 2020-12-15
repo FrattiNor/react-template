@@ -1,11 +1,11 @@
-import React, { FC } from 'react'
-import { withRouter, RouteComponentProps } from 'react-router-dom'
-import styles from './index.less'
+import React, { FC, useState } from 'react'
 
 type Props = {}
 
-const Two: FC<RouteComponentProps & Props> = ({ history }) => {
-    return <div className={styles.wrapper} onClick={() => history.push('/one')}>Two</div>
+const Two: FC<Props> = () => {
+    const [count, setCount] = useState(0)
+
+    return <div onClick={() => setCount(count + 1)}>{count}</div>
 }
 
-export default withRouter(Two)
+export default Two

@@ -4,11 +4,11 @@ import LazyLoad from '@/components/lazy_load'
 const routes = [
     {
         path: '/',
-        component: LazyLoad(() => import('@/layouts/out_layout'), 'react'), 
+        component: require('@/layouts/out_layout'),
         routes: [
             {
                 path: '/',
-                component: LazyLoad(() => import('@/layouts/basic_layout'), 'react'), 
+                component: require('@/layouts/basic_layout'),
                 routes: [
                     {
                         path: '/',
@@ -22,7 +22,7 @@ const routes = [
                     {
                         path: '/two',
                         title: '页面 - 2',
-                        component: LazyLoad(() => import('@/pages/two'), 'react'),
+                        component: require('@/pages/two'),
                     }
                     // {
                     //     path: '/403',

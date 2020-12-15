@@ -60,6 +60,7 @@
         "webpack-merge": "^4.2.2"
     },
     "dependencies": {
+        "@types/classnames": "^2.2.11",
         "classnames": "^2.2.6",
         "dva-core": "^2.0.2",
         "dva-loading": "^3.0.20",
