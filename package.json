@@ -2,15 +2,6 @@
     "name": "react-ts-template",
     "version": "0.2.0",
     "description": "react + typescript",
-    "license": "MIT",
-    "browserslist": [
-        "defaults",
-        "not ie < 11",
-        "last 2 versions",
-        "> 1%",
-        "iOS 7",
-        "last 3 iOS versions"
-    ],
     "scripts": {
         "dev": "webpack-dev-server --config webpack/webpack.dev.js",
         "start": "yarn dev",
