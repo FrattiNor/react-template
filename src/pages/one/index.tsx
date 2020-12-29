@@ -26,7 +26,7 @@ const One: FC = () => {
             </div>
             {/* <Three data={data} /> */}
             <DropDown>
-                <div className={styles['btn']}>btn</div>
+                <div className={styles['btn']}>bt1n</div>
             </DropDown>
         </div>
     )
