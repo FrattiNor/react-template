@@ -1,4 +1,4 @@
-import asyncImport from '@/hoc_components/async_import'
+import asyncImport from '@/hoc/async_import'
 import { isPromise } from '@/utils/judge'
 import EmptyComponent from '@/components/empty_component'
 
