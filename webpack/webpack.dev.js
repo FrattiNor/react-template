@@ -3,9 +3,7 @@ const merge = require('webpack-merge')
 const baseConfig = require('./webpack.common')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin')
-const defaultConfig = require('./default.const')
-
-const { output, htmlWebpackPlugin, lessRule } = defaultConfig
+const { output, htmlWebpackPlugin, lessRule } = require('./default.const')
 
 const devConfig = {
     mode: 'development',

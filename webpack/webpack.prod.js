@@ -10,9 +10,7 @@ const ScriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin')
 // const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 // const path = require('path')
 // const PrerenderSPAPlugin = require('prerender-spa-plugin')
-const defaultConfig = require('./default.const')
-
-const { output, htmlWebpackPlugin, lessRule } = defaultConfig
+const { output, htmlWebpackPlugin, lessRule } = require('./default.const')
 
 const prodConfig = {
     mode: 'production',
@@ -72,31 +70,9 @@ const prodConfig = {
         // 性能配置
         minimizer: [
             // 打包时优化压缩css代码
-            new OptimizeCssAssetsPlugin({
-                cssProcessor: require('cssnano'), // 使用 cssnano 压缩器
-                cssProcessorOptions: {
-                    reduceIdents: false,
-                    autoprefixer: false,
-                    safe: true,
-                    discardComments: {
-                        removeAll: true
-                    }
-                }
-            }),
+            new OptimizeCssAssetsPlugin(),
             // 打包时优化压缩js代码
-            new TerserPlugin({
-                cache: true,
-                // parallel: true,
-                terserOptions: {
-                    compress: {
-                        warnings: true,
-                        drop_console: true,
-                        drop_debugger: true,
-                        pure_funcs: ['console.log'] // 移除console
-                    }
-                },
-                sourceMap: true
-            })
+            new TerserPlugin()
         ],
         runtimeChunk: true
     },

@@ -4,7 +4,7 @@ const path = require('path')
 // 便于修改
 
 const output = {
-    path: path.join(__dirname, '../dist'),
+    path: path.join(__dirname, '../dist')
 }
 
 const htmlWebpackPlugin = {
@@ -15,7 +15,7 @@ const htmlWebpackPlugin = {
 }
 
 const lessRule = ({ styleLoader, cssLoaderModules }) => ({
-    test: /\.(css|less)$/, // 正则匹配css，less, 样式文件匹配 非依赖文件夹，
+    test: /\.less$/, // 正则匹配css，less, 样式文件匹配 非依赖文件夹，
     use: [
         // loader生效是从下往上的
         styleLoader,
@@ -28,7 +28,7 @@ const lessRule = ({ styleLoader, cssLoaderModules }) => ({
         'postcss-loader', // postcss
         'less-loader'
     ],
-    exclude: /node_modules/
+    exclude: path.join(__dirname, '../node_modules')
 })
 
 module.exports = { output, htmlWebpackPlugin, lessRule }

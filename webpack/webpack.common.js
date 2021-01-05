@@ -13,9 +13,11 @@ module.exports = {
         rules: [
             {
                 test: /\.(j|t)sx?$/, // 匹配js，ts
-                include: path.join(__dirname, '../src'),
                 use: ['babel-loader'],
-                exclude: /node_modules/ // 排除node_modules底下的
+            },
+            {
+                test: /\.css$/, // 匹配js，ts
+                use: ['style-loader', 'css-loader']
             },
             {
                 test: /\.(css|less)$/, // 正则匹配css，less, 样式文件只匹配依赖文件夹，只用于antd样式引入，非依赖下的less文件配置在对应配置文件下
@@ -31,7 +33,7 @@ module.exports = {
                         }
                     }
                 ], // 注意loader生效是从下往上的
-                include: /node_modules/ // antd样式引入出了问题
+                include: path.join(__dirname, '../node_modules') // antd样式引入出了问题
             },
             {
                 test: /\.(png|jpe?g|gif|svg)(\?.*)?$/, // 匹配图片文件
@@ -61,18 +63,11 @@ module.exports = {
             },
             {
                 test: /\.md$/,
-                use: [
-                    {
-                        loader: 'html-loader'
-                    },
-                    {
-                        loader: 'markdown-loader'
-                        // options: {
-                        //     pedantic: true,
-                        //     renderer
-                        // }
-                    }
-                ]
+                use: ['html-loader', 'markdown-loader']
+            },
+            {
+                test: /\.mdx$/,
+                use: ['babel-loader', 'markdown-loader']
             }
         ]
     },
