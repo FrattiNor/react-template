@@ -67,7 +67,7 @@ module.exports = {
             },
             {
                 test: /\.mdx$/,
-                use: ['babel-loader', 'markdown-loader']
+                use: ['babel-loader', '@mdx-js/loader']
             }
         ]
     },
