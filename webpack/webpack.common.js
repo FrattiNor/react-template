@@ -16,7 +16,7 @@ module.exports = {
                 use: ['babel-loader'],
             },
             {
-                test: /\.css$/, // 匹配js，ts
+                test: /\.css$/, // 匹配css
                 use: ['style-loader', 'css-loader']
             },
             {
