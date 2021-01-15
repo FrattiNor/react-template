@@ -64,7 +64,7 @@ const devConfig = (port) => ({
             errors: true
         },
         inline: true, // 模式
-        //【error】（目前热加载无效，可能是webpack v5的问题）
+        //【error】（目前热加载无效，可能是webpack v5的问题，目前已知是和browserslist发生冲突，需要删除browserslist）
         hot: true, // 热加载 
         // hotOnly: true, // 启用热模块替换，而无需页面刷新作为构建失败时的回退。
         open: true, // 打开页面
