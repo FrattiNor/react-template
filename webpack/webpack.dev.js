@@ -2,9 +2,10 @@ const path = require('path')
 const webpack = require('webpack')
 const { merge } = require('webpack-merge')
 const commonConfig = require('./webpack.common')
+const portfinder = require('portfinder')
 const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin')
 
-const devConfig = {
+const devConfig = (port) => ({
     // 模式
     mode: 'development',
     // source map
@@ -53,7 +54,7 @@ const devConfig = {
     // node 本地服务器配置
     devServer: {
         host: '0.0.0.0',
-        port: 3000,
+        port,
         publicPath: '/',
         historyApiFallback: true, // 该选项的作用所有的404都连接到index.html
         clientLogLevel: 'silent', // devServer.clientLogLevel 可能会导致日志过于冗余，你可以通过将其设置为 'silent' 来关闭日志
@@ -79,6 +80,20 @@ const devConfig = {
     },
     // 【error】webpack v5 不生效
     stats: 'errors-only'
-}
+})
 
-module.exports = merge(devConfig, commonConfig)
+
+const getDevConfig = new Promise((res, rej) => {
+    //查找端口号
+    portfinder.getPort({ port: 3000, stopPort: 9000 }, (err, port) => {
+        if (err) {
+            rej(err)
+            return
+        }
+
+        // 端口被占用时就重新设置devServer的端口
+        res(merge(commonConfig, devConfig(port)))
+    })
+})
+
+module.exports = getDevConfig
