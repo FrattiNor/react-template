@@ -22,7 +22,14 @@ const devConfig = (port) => ({
             ...htmlWebpackPlugin
         }),
         // 优化webpack显示
-        new FriendlyErrorsWebpackPlugin()
+        new FriendlyErrorsWebpackPlugin({
+            // 清除控制台原有的信息
+            clearConsole: true,
+            // 打包成功之后在控制台给予开发者的提示
+            compilationSuccessInfo: {
+                messages: [`开发环境启动成功，项目运行在: http://127.0.0.1:${port}`]
+            }
+        })
     ],
     module: {
         rules: [
