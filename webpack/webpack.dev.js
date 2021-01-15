@@ -4,7 +4,7 @@ const baseConfig = require('./webpack.common')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin')
 const portfinder = require('portfinder')
-const { output, htmlWebpackPlugin, lessRule } = require('./default.const')
+const { output, htmlWebpackPlugin, styleRule } = require('./default.const')
 
 const devConfig = (port) => ({
     mode: 'development',
@@ -33,7 +33,7 @@ const devConfig = (port) => ({
     ],
     module: {
         rules: [
-            ...lessRule({
+            ...styleRule({
                 styleLoader: 'style-loader',
                 cssLoaderModules: {
                     localIdentName: '[path][name]__[local]--[hash:base64:6]'

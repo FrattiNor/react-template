@@ -14,7 +14,11 @@ const htmlWebpackPlugin = {
     favicon: 'public/favicon.ico'
 }
 
-const lessRule = ({ styleLoader, cssLoaderModules }) => [
+const styleRule = ({ styleLoader, cssLoaderModules }) => [
+    {
+        test: /\.css$/, // 匹配css
+        use: [styleLoader, 'css-loader']
+    },
     {
         test: /\.less$/, // 正则匹配css，less, 样式文件匹配 非依赖文件夹，
         use: [
@@ -49,4 +53,4 @@ const lessRule = ({ styleLoader, cssLoaderModules }) => [
     }
 ]
 
-module.exports = { output, htmlWebpackPlugin, lessRule }
+module.exports = { output, htmlWebpackPlugin, styleRule }

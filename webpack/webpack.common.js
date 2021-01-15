@@ -16,10 +16,6 @@ module.exports = {
                 use: ['babel-loader'],
             },
             {
-                test: /\.css$/, // 匹配css
-                use: ['style-loader', 'css-loader']
-            },
-            {
                 test: /\.(png|jpe?g|gif|svg)(\?.*)?$/, // 匹配图片文件
                 use: [
                     {
