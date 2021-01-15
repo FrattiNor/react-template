@@ -3,9 +3,10 @@ const merge = require('webpack-merge')
 const baseConfig = require('./webpack.common')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin')
+const portfinder = require('portfinder')
 const { output, htmlWebpackPlugin, lessRule } = require('./default.const')
 
-const devConfig = {
+const devConfig = (port) => ({
     mode: 'development',
     devtool: 'cheap-module-eval-source-map',
     output: {
@@ -36,7 +37,7 @@ const devConfig = {
     // node 本地服务器配置
     devServer: {
         host: '0.0.0.0',
-        port: 3000,
+        port,
         historyApiFallback: true, // 该选项的作用所有的404都连接到index.html
         overlay: {
             //当出现编译器错误或警告时，就在网页上显示一层黑色的背景层和错误信息
@@ -62,6 +63,19 @@ const devConfig = {
         }
     },
     stats: 'errors-only'
-}
+})
 
-module.exports = merge(baseConfig, devConfig)
+const getDevConfig = new Promise((res, rej) => {
+    //查找端口号
+    portfinder.getPort({ port: 3000, stopPort: 9000 }, (err, port) => {
+        if (err) {
+            rej(err)
+            return
+        }
+
+        // 端口被占用时就重新设置devServer的端口
+        res(merge(baseConfig, devConfig(port)))
+    })
+})
+
+module.exports = merge(baseConfig, getDevConfig)
