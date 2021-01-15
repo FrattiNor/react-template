@@ -78,4 +78,4 @@ const getDevConfig = new Promise((res, rej) => {
     })
 })
 
-module.exports = merge(baseConfig, getDevConfig)
+module.exports = getDevConfig
