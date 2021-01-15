@@ -33,7 +33,7 @@ const devConfig = (port) => ({
     ],
     module: {
         rules: [
-            lessRule({
+            ...lessRule({
                 styleLoader: 'style-loader',
                 cssLoaderModules: {
                     localIdentName: '[path][name]__[local]--[hash:base64:6]'

@@ -14,21 +14,39 @@ const htmlWebpackPlugin = {
     favicon: 'public/favicon.ico'
 }
 
-const lessRule = ({ styleLoader, cssLoaderModules }) => ({
-    test: /\.less$/, // 正则匹配css，less, 样式文件匹配 非依赖文件夹，
-    use: [
-        // loader生效是从下往上的
-        styleLoader,
-        {
-            loader: 'css-loader',
-            options: {
-                modules: cssLoaderModules
+const lessRule = ({ styleLoader, cssLoaderModules }) => [
+    {
+        test: /\.less$/, // 正则匹配css，less, 样式文件匹配 非依赖文件夹，
+        use: [
+            // loader生效是从下往上的
+            styleLoader,
+            {
+                loader: 'css-loader',
+                options: {
+                    modules: cssLoaderModules
+                }
+            },
+            'postcss-loader', // postcss
+            'less-loader'
+        ],
+        exclude: path.join(__dirname, '../node_modules')
+    },
+    {
+        test: /\.less$/, // 正则匹配css，less, 样式文件只匹配依赖文件夹，只用于antd样式引入，非依赖下的less文件配置在对应配置文件下
+        use: [
+            styleLoader,
+            'css-loader',
+            'postcss-loader',
+            {
+                loader: 'less-loader',
+                options: {
+                    javascriptEnabled: true
+                    // modifyVars: theme,
+                }
             }
-        },
-        'postcss-loader', // postcss
-        'less-loader'
-    ],
-    exclude: path.join(__dirname, '../node_modules')
-})
+        ], // 注意loader生效是从下往上的
+        include: path.join(__dirname, '../node_modules') // antd样式引入出了问题
+    }
+]
 
 module.exports = { output, htmlWebpackPlugin, lessRule }

@@ -20,22 +20,6 @@ module.exports = {
                 use: ['style-loader', 'css-loader']
             },
             {
-                test: /\.less$/, // 正则匹配css，less, 样式文件只匹配依赖文件夹，只用于antd样式引入，非依赖下的less文件配置在对应配置文件下
-                use: [
-                    'style-loader',
-                    'css-loader',
-                    'postcss-loader',
-                    {
-                        loader: 'less-loader',
-                        options: {
-                            javascriptEnabled: true
-                            // modifyVars: theme,
-                        }
-                    }
-                ], // 注意loader生效是从下往上的
-                include: path.join(__dirname, '../node_modules') // antd样式引入出了问题
-            },
-            {
                 test: /\.(png|jpe?g|gif|svg)(\?.*)?$/, // 匹配图片文件
                 use: [
                     {

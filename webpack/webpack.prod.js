@@ -22,7 +22,7 @@ const prodConfig = {
     },
     module: {
         rules: [
-            lessRule({
+            ...lessRule({
                 styleLoader: MiniCssExtractPlugin.loader,
                 cssLoaderModules: {
                     localIdentName: '[hash:base64:6]'
