@@ -1,9 +1,6 @@
 // node path模块
 const path = require('path')
 const ProgressBarPlugin = require('progress-bar-webpack-plugin')
-// const marked = require('marked')
-
-// const renderer = new marked.Renderer()
 
 module.exports = {
     // 入口
@@ -13,7 +10,7 @@ module.exports = {
         rules: [
             {
                 test: /\.(j|t)sx?$/, // 匹配js，ts
-                use: ['babel-loader'],
+                use: ['babel-loader']
             },
             {
                 test: /\.(png|jpe?g|gif|svg)(\?.*)?$/, // 匹配图片文件
@@ -58,8 +55,6 @@ module.exports = {
         // 别名
         alias: {
             '@': path.join(__dirname, '../src')
-            // '@antd': path.join(__dirname, '../src/components/antd'),
-            // '@ant-design/icons/lib/dist$': path.join(__dirname, '../src/icons.ts')
         }
     },
     performance: {

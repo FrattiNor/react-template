@@ -3,6 +3,7 @@ const merge = require('webpack-merge')
 const baseConfig = require('./webpack.common')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin')
+const ReactRefreshPlugin = require('@pmmmwh/react-refresh-webpack-plugin')
 const portfinder = require('portfinder')
 const { output, htmlWebpackPlugin, styleRule } = require('./default.const')
 
@@ -29,7 +30,9 @@ const devConfig = (port) => ({
             compilationSuccessInfo: {
                 messages: [`开发环境启动成功，项目运行在: http://127.0.0.1:${port}`]
             }
-        })
+        }),
+        // react 热加载
+        new ReactRefreshPlugin()
     ],
     module: {
         rules: [
