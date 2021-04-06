@@ -1,4 +1,5 @@
-import React from 'react'
+import { hot } from 'react-hot-loader/root'
+import React, { FC } from 'react'
 import ReactDom from 'react-dom'
 import { Provider } from 'react-redux'
 import Routes from '@/routes'
@@ -8,9 +9,12 @@ import './index.less'
 const app = dva()
 const store = app.getStore()
 
-ReactDom.render(
-    <Provider store={store}>
-        <Routes app={app} />
-    </Provider>,
-    document.getElementById('root')
-)
+const Entry: FC = hot(() => {
+    return (
+        <Provider store={store}>
+            <Routes app={app} />
+        </Provider>
+    )
+})
+
+ReactDom.render(<Entry />, document.getElementById('root'))
