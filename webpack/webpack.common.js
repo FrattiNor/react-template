@@ -13,7 +13,7 @@ module.exports = {
         rules: [
             {
                 test: /\.(j|t)sx?$/, // 匹配js，ts
-                use: ['babel-loader']
+                use: ['babel-loader'],
             },
             {
                 test: /\.(png|jpe?g|gif|svg)(\?.*)?$/, // 匹配图片文件
@@ -57,7 +57,6 @@ module.exports = {
         extensions: ['.ts', '.tsx', '.js', '.jsx'],
         // 别名
         alias: {
-            'react-dom': '@hot-loader/react-dom',
             '@': path.join(__dirname, '../src')
             // '@antd': path.join(__dirname, '../src/components/antd'),
             // '@ant-design/icons/lib/dist$': path.join(__dirname, '../src/icons.ts')
