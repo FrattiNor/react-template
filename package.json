@@ -64,6 +64,7 @@
     },
     "dependencies": {
         "@pmmmwh/react-refresh-webpack-plugin": "^0.4.3",
+        "eslint-plugin-prettier": "^3.3.1",
         "portfinder": "^1.0.28",
         "react": "17.0.1",
         "react-document-title": "^2.0.3",

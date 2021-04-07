@@ -7,7 +7,11 @@ type Props = {}
 const One: FC<RouteComponentProps & Props> = ({ history }) => {
     console.log(history)
 
-    return <div className={styles.wrapper} onClick={() => history.push('/two')}>THree</div>
+    return (
+        <div className={styles.wrapper} onClick={() => history.push('/two')}>
+            THree
+        </div>
+    )
 }
 
 export default withRouter(One)
