@@ -30,7 +30,7 @@ const prodConfig = {
     // 插件
     plugins: [
         // 清除上次dist文件内容插件
-        new CleanWebpackPlugin(),
+        new CleanWebpackPlugin()
     ],
     optimization: {
         // 将包含chunks映射关系的list单独从app.js里提取出来

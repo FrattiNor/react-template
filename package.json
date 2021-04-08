@@ -4,6 +4,7 @@
     "description": "react + typescript",
     "license": "MIT",
     "scripts": {
+        "dev2": "webpack-dev-server --config webpack/webpack.dev.js",
         "dev": "webpack serve --config webpack/webpack.dev.js",
         "start": "yarn dev",
         "build": "webpack --config webpack/webpack.prod.js"
@@ -53,7 +54,7 @@
         "url-loader": "^4.1.1",
         "webpack": "^5.31.0",
         "webpack-cli": "^4.6.0",
-        "webpack-dev-server": "^3.11.2",
+        "webpack-dev-server": "4.0.0-beta.2",
         "webpack-merge": "^5.7.3"
     },
     "dependencies": {

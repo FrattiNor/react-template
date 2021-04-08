@@ -22,7 +22,7 @@ const One: FC = () => {
                     setData(data === 'okk' ? 'ok' : 'okk')
                 }}
             >
-                One
+                Oneas
             </div>
             {/* <Three data={data} /> */}
             <DropDown>
