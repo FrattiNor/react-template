@@ -1,9 +1,9 @@
-const path = require('path')
 const webpack = require('webpack')
 const { merge } = require('webpack-merge')
 const commonConfig = require('./webpack.common')
 const portfinder = require('portfinder')
 const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin')
+const ReactRefreshPlugin = require('@pmmmwh/react-refresh-webpack-plugin')
 
 const devConfig = (port) => ({
     // 模式
@@ -39,7 +39,8 @@ const devConfig = (port) => ({
         //【error】（目前热加载无效，可能是webpack v5的问题）
         new webpack.HotModuleReplacementPlugin(),
         // 优化webpack显示
-        new FriendlyErrorsWebpackPlugin()
+        new FriendlyErrorsWebpackPlugin(),
+        new ReactRefreshPlugin()
     ],
     // 性能提示，可以提示过大文件
     performance: {
@@ -65,7 +66,7 @@ const devConfig = (port) => ({
         },
         inline: true, // 模式
         //【error】（目前热加载无效，可能是webpack v5的问题，目前已知是和browserslist发生冲突，需要删除browserslist）
-        hot: true, // 热加载 
+        hot: true, // 热加载
         // hotOnly: true, // 启用热模块替换，而无需页面刷新作为构建失败时的回退。
         open: true, // 打开页面
         useLocalIp: true, // 此选项允许浏览器使用本地 IP 打开
@@ -81,7 +82,6 @@ const devConfig = (port) => ({
     // 【error】webpack v5 不生效
     stats: 'errors-only'
 })
-
 
 const getDevConfig = new Promise((res, rej) => {
     //查找端口号
