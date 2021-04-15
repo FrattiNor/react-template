@@ -1,6 +1,6 @@
 import { FC, ComponentType } from 'react'
 import Loadable from 'react-loadable'
-import DefaultLoading from '@/components/lazy_load/default_loading'
+import DefaultLoading from '@/components/lazy-load/default_loading'
 
 const LazyLoad = (loader: () => Promise<{ default: ComponentType<any> }>, Loading?: FC): FC =>
     Loadable({

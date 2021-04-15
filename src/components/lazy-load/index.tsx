@@ -1,5 +1,5 @@
 import { ComponentType, FC } from 'react'
-import Empty from '@/components/empty_component'
+import Empty from '@/components/empty-component'
 import ReactLoadable from './react_loadable'
 import ReactLazyLoad from './react_lazy'
 

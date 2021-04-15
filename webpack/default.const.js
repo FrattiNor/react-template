@@ -33,7 +33,7 @@ const styleRule = ({ styleLoader, cssLoaderModules }) => [
             'postcss-loader', // postcss
             'less-loader'
         ],
-        exclude: path.join(__dirname, '../node_modules')
+        exclude: /node_modules/
     },
     {
         test: /\.less$/, // 正则匹配css，less, 样式文件只匹配依赖文件夹，只用于antd样式引入，非依赖下的less文件配置在对应配置文件下
@@ -49,7 +49,7 @@ const styleRule = ({ styleLoader, cssLoaderModules }) => [
                 }
             }
         ], // 注意loader生效是从下往上的
-        include: path.join(__dirname, '../node_modules') // antd样式引入出了问题
+        include: /node_modules/
     }
 ]
 

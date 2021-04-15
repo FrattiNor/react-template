@@ -10,7 +10,8 @@ module.exports = {
         rules: [
             {
                 test: /\.(j|t)sx?$/, // 匹配js，ts
-                use: ['babel-loader']
+                use: ['babel-loader'],
+                exclude: /node_modules/
             },
             {
                 test: /\.(png|jpe?g|gif|svg)(\?.*)?$/, // 匹配图片文件
