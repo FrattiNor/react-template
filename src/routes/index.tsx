@@ -53,10 +53,14 @@ const Routes = ({ app }: { app: any }): JSX.Element => {
             )
         })
 
-        return <Switch>{renderRouteDom}</Switch>
+        return renderRouteDom
     }
 
-    return <Router history={history}>{renderRoute(menu)}</Router>
+    return (
+        <Router history={history}>
+            <Switch>{renderRoute(menu)}</Switch>
+        </Router>
+    )
 }
 
 export default Routes
