@@ -6,7 +6,7 @@ import menu from './menu'
 
 // 递归渲染路由
 const Routes: FC<{ app: any }> = ({ app }) => {
-    const renderRoute = (list: routeItem[]): JSX.Element[] => {
+    const renderRoute = (list: routeItem[]): JSX.Element => {
         const renderRouteDom = list.map(({ path, component, routes, redirect, title = '', models }: routeItem) => {
             // 加载model
             if (models) {
@@ -42,14 +42,10 @@ const Routes: FC<{ app: any }> = ({ app }) => {
             )
         })
 
-        return renderRouteDom
+        return <Switch>{renderRouteDom}</Switch>
     }
 
-    return (
-        <BrowserRouter>
-            <Switch>{renderRoute(menu)}</Switch>
-        </BrowserRouter>
-    )
+    return <BrowserRouter>{renderRoute(menu)}</BrowserRouter>
 }
 
 export default Routes
