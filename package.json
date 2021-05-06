@@ -4,9 +4,10 @@
     "description": "react + typescript",
     "license": "MIT",
     "scripts": {
-        "dev": "webpack-dev-server --config webpack/webpack.dev.js",
+        "dev": "cross-env NODE_ENV=development webpack-dev-server --config webpack/webpack.dev.js",
         "start": "yarn dev",
-        "build": "webpack --config webpack/webpack.prod.js"
+        "build": "cross-env NODE_ENV=production webpack --config webpack/webpack.prod.js && sh scripts/copy.sh",
+        "prettier": "prettier --write ./src/**/**"
     },
     "devDependencies": {
         "@babel/core": "^7.9.0",
@@ -27,6 +28,7 @@
         "babel-loader": "^8.1.0",
         "classnames": "^2.2.6",
         "clean-webpack-plugin": "^3.0.0",
+        "cross-env": "^7.0.3",
         "css-loader": "^3.5.3",
         "dva-core": "^2.0.2",
         "dva-loading": "^3.0.20",
