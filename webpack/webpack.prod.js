@@ -54,7 +54,7 @@ const prodConfig = {
         new ScriptExtHtmlWebpackPlugin({
             //`runtime` must same as runtimeChunk name. default is `runtime`
             inline: /runtime\..*\.js$/
-        }),
+        })
         // webpack打包之后输出文件的大小占比
         // new BundleAnalyzerPlugin(),
         // 预渲染插件

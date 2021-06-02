@@ -11,7 +11,7 @@ const devConfig = (port) => ({
     mode: 'development',
     devtool: 'cheap-module-eval-source-map',
     output: {
-        filename: 'js/[name].[hash].js',
+        filename: 'js/[name].js',
         publicPath: '/',
         ...output
     },
@@ -32,14 +32,18 @@ const devConfig = (port) => ({
             }
         }),
         // react 热加载
-        new ReactRefreshPlugin()
+        new ReactRefreshPlugin({
+            exclude: /node_modules/,
+            include: /\.([jt]sx?|flow)$/,
+            overlay: false
+        })
     ],
     module: {
         rules: [
             ...styleRule({
                 styleLoader: 'style-loader',
                 cssLoaderModules: {
-                    localIdentName: '[path][name]__[local]--[hash:base64:6]'
+                    localIdentName: '[local]--[hash:base64:6]'
                 }
             })
         ]
@@ -48,7 +52,9 @@ const devConfig = (port) => ({
     devServer: {
         host: '0.0.0.0',
         port,
-        historyApiFallback: true, // 该选项的作用所有的404都连接到index.html
+        historyApiFallback: {
+            htmlAcceptHeaders: ['text/html']
+        }, // true 该选项的作用所有的404都连接到index.html
         overlay: {
             //当出现编译器错误或警告时，就在网页上显示一层黑色的背景层和错误信息
             errors: true
@@ -63,12 +69,6 @@ const devConfig = (port) => ({
                 changeOrigin: true,
                 secure: false,
                 pathRewrite: { '^/api': '' }
-            },
-            '/external/': {
-                target: 'https://192.168.2.3/external/',
-                changeOrigin: true,
-                secure: false,
-                pathRewrite: { '^/external': '' }
             }
         }
     },
