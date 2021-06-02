@@ -6,7 +6,7 @@
     "scripts": {
         "dev": "cross-env NODE_ENV=development webpack-dev-server --config webpack/webpack.dev.js",
         "start": "yarn dev",
-        "build": "cross-env NODE_ENV=production webpack --config webpack/webpack.prod.js && sh scripts/copy.sh",
+        "build": "cross-env NODE_ENV=production webpack --config webpack/webpack.prod.js",
         "prettier": "prettier --write ./src/**/**"
     },
     "devDependencies": {
