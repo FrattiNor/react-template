@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/explicit-function-return-type */
 // node path模块
 const path = require('path')
 const ProgressBarPlugin = require('progress-bar-webpack-plugin')
@@ -11,7 +12,7 @@ module.exports = {
             {
                 test: /\.(j|t)sx?$/, // 匹配js，ts
                 use: ['babel-loader'],
-                exclude: /node_modules/
+                include: [/src/, /public/]
             },
             {
                 test: /\.(png|jpe?g|gif|svg)(\?.*)?$/, // 匹配图片文件
@@ -25,7 +26,8 @@ module.exports = {
                             name: path.join('img/[name].[hash:7].[ext]')
                         }
                     }
-                ]
+                ],
+                include: [/src/]
             },
             {
                 test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/, // 匹配文字文件
@@ -37,15 +39,18 @@ module.exports = {
                             name: path.join('font/[name].[hash:7].[ext]')
                         }
                     }
-                ]
+                ],
+                include: [/src/]
             },
             {
                 test: /\.md$/,
-                use: ['html-loader', 'markdown-loader']
+                use: ['html-loader', 'markdown-loader'],
+                include: [/src/]
             },
             {
                 test: /\.mdx$/,
-                use: ['babel-loader', '@mdx-js/loader']
+                use: ['babel-loader', '@mdx-js/loader'],
+                include: [/src/]
             }
         ]
     },
@@ -71,5 +76,13 @@ module.exports = {
     plugins: [
         // 打包📦进度条
         new ProgressBarPlugin()
-    ]
+    ],
+    optimization: {
+        // 分片提取公共部分
+        splitChunks: {
+            chunks: 'all',
+            minSize: 0,
+            minChunks: 1
+        }
+    }
 }

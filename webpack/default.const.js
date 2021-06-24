@@ -4,7 +4,8 @@ const path = require('path')
 // 便于修改
 
 const output = {
-    path: path.join(__dirname, '../dist')
+    path: path.join(__dirname, '../dist'),
+    publicPath: '/'
 }
 
 const htmlWebpackPlugin = {

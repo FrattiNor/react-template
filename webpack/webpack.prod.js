@@ -17,18 +17,8 @@ const prodConfig = {
     devtool: 'none',
     output: {
         filename: 'js/[name].[chunkhash].js',
-        publicPath: '/',
+        chunkFilename: 'js/[name].[chunkhash].js',
         ...output
-    },
-    module: {
-        rules: [
-            ...styleRule({
-                styleLoader: MiniCssExtractPlugin.loader,
-                cssLoaderModules: {
-                    localIdentName: '[hash:base64:6]'
-                }
-            })
-        ]
     },
     plugins: [
         // html模板配置插件
@@ -66,6 +56,16 @@ const prodConfig = {
         //     // })
         // })
     ],
+    module: {
+        rules: [
+            ...styleRule({
+                styleLoader: MiniCssExtractPlugin.loader,
+                cssLoaderModules: {
+                    localIdentName: '[hash:base64:6]'
+                }
+            })
+        ]
+    },
     optimization: {
         // 性能配置
         minimizer: [

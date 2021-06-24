@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/explicit-function-return-type */
 const webpack = require('webpack')
 const merge = require('webpack-merge')
 const baseConfig = require('./webpack.common')
@@ -12,7 +13,7 @@ const devConfig = (port) => ({
     devtool: 'cheap-module-eval-source-map',
     output: {
         filename: 'js/[name].js',
-        publicPath: '/',
+        chunkFilename: 'js/[name].js',
         ...output
     },
     plugins: [
