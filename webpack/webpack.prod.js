@@ -8,11 +8,12 @@ const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin')
 const TerserPlugin = require('terser-webpack-plugin')
 const ScriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin')
 // const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
-// const path = require('path')
+const path = require('path')
 // const PrerenderSPAPlugin = require('prerender-spa-plugin')
 const { output, htmlWebpackPlugin, styleRule } = require('./default.const')
 
 const prodConfig = {
+    recordsPath: path.join(__dirname, 'records.json'),
     mode: 'production',
     devtool: 'none',
     output: {
@@ -72,9 +73,36 @@ const prodConfig = {
             // 打包时优化压缩css代码
             new OptimizeCssAssetsPlugin(),
             // 打包时优化压缩js代码
-            new TerserPlugin()
+            new TerserPlugin({
+                extractComments: false // 取消打包生产的LICENSE文件
+            })
         ],
-        runtimeChunk: true
+        runtimeChunk: true,
+        usedExports: true,
+        removeAvailableModules: true,
+        removeEmptyChunks: true,
+        splitChunks: {
+            // 将多入口的公共部分单独打包
+            chunks: 'all',
+            minSize: 10240, // 10kb
+            maxSize: 0,
+            minChunks: 1,
+            maxAsyncRequests: Infinity,
+            maxInitialRequests: Infinity,
+            cacheGroups: {
+                vendors: {
+                    // name: 'vendors', // 不能添加名字，否则所有的依赖都封到一个vendors.js中了，不设名字为单独处理并添加前缀
+                    test: /[\\/]node_modules[\\/]/,
+                    priority: -10
+                },
+                components: {
+                    minChunks: 2,
+                    priority: -20,
+                    reuseExistingChunk: true
+                },
+                default: false
+            }
+        }
     },
     stats: {
         entrypoints: false,

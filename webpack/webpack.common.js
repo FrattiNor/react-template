@@ -2,6 +2,7 @@
 // node path模块
 const path = require('path')
 const ProgressBarPlugin = require('progress-bar-webpack-plugin')
+const HappyPack = require('happypack')
 
 module.exports = {
     // 入口
@@ -11,45 +12,27 @@ module.exports = {
         rules: [
             {
                 test: /\.(j|t)sx?$/, // 匹配js，ts
-                use: ['babel-loader'],
+                use: ['happypack/loader?id=babel'],
                 include: [/src/, /public/]
             },
             {
                 test: /\.(png|jpe?g|gif|svg)(\?.*)?$/, // 匹配图片文件
-                use: [
-                    {
-                        loader: 'url-loader',
-                        options: {
-                            //1024 == 1kb
-                            //小于10kb时打包成base64编码的图片否则单独打包成图片
-                            limit: 10240,
-                            name: path.join('img/[name].[hash:7].[ext]')
-                        }
-                    }
-                ],
+                use: ['happypack/loader?id=img'],
                 include: [/src/]
             },
             {
                 test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/, // 匹配文字文件
-                use: [
-                    {
-                        loader: 'url-loader',
-                        options: {
-                            limit: 10240,
-                            name: path.join('font/[name].[hash:7].[ext]')
-                        }
-                    }
-                ],
+                use: ['happypack/loader?id=font'],
                 include: [/src/]
             },
             {
                 test: /\.md$/,
-                use: ['html-loader', 'markdown-loader'],
+                use: ['happypack/loader?id=md'],
                 include: [/src/]
             },
             {
                 test: /\.mdx$/,
-                use: ['babel-loader', '@mdx-js/loader'],
+                use: ['happypack/loader?id=mdx'],
                 include: [/src/]
             }
         ]
@@ -75,14 +58,44 @@ module.exports = {
     },
     plugins: [
         // 打包📦进度条
-        new ProgressBarPlugin()
-    ],
-    optimization: {
-        // 分片提取公共部分
-        splitChunks: {
-            chunks: 'all',
-            minSize: 0,
-            minChunks: 1
-        }
-    }
+        new ProgressBarPlugin(),
+        new HappyPack({
+            id: 'babel',
+            loaders: ['babel-loader']
+        }),
+        new HappyPack({
+            id: 'mdx',
+            loaders: ['babel-loader', '@mdx-js/loader']
+        }),
+        new HappyPack({
+            id: 'md',
+            loaders: ['html-loader', 'markdown-loader']
+        }),
+        new HappyPack({
+            id: 'font',
+            loaders: [
+                {
+                    loader: 'url-loader',
+                    options: {
+                        limit: 10240,
+                        name: path.join('font/[name].[hash:7].[ext]')
+                    }
+                }
+            ]
+        }),
+        new HappyPack({
+            id: 'img',
+            loaders: [
+                {
+                    loader: 'url-loader',
+                    options: {
+                        //1024 == 1kb
+                        //小于10kb时打包成base64编码的图片否则单独打包成图片
+                        limit: 10240,
+                        name: path.join('img/[name].[hash:7].[ext]')
+                    }
+                }
+            ]
+        })
+    ]
 }

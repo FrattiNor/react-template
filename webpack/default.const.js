@@ -18,7 +18,8 @@ const htmlWebpackPlugin = {
 const styleRule = ({ styleLoader, cssLoaderModules }) => [
     {
         test: /\.css$/, // 匹配css
-        use: [styleLoader, 'css-loader']
+        use: [styleLoader, 'css-loader'],
+        include: [/src/, /node_modules/]
     },
     {
         test: /\.less$/, // 正则匹配css，less, 样式文件匹配 非依赖文件夹，
@@ -34,7 +35,7 @@ const styleRule = ({ styleLoader, cssLoaderModules }) => [
             'postcss-loader', // postcss
             'less-loader'
         ],
-        exclude: /node_modules/
+        include: [/src/]
     },
     {
         test: /\.less$/, // 正则匹配css，less, 样式文件只匹配依赖文件夹，只用于antd样式引入，非依赖下的less文件配置在对应配置文件下
@@ -50,7 +51,7 @@ const styleRule = ({ styleLoader, cssLoaderModules }) => [
                 }
             }
         ], // 注意loader生效是从下往上的
-        include: /node_modules/
+        include: [/node_modules/]
     }
 ]
 
