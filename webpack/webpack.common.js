@@ -17,12 +17,28 @@ module.exports = {
             },
             {
                 test: /\.(png|jpe?g|gif|svg)(\?.*)?$/, // 匹配图片文件
-                use: ['happypack/loader?id=img'],
+                use: [
+                    {
+                        loader: 'url-loader',
+                        options: {
+                            limit: 10240,
+                            name: path.join('font/[name].[hash:7].[ext]')
+                        }
+                    }
+                ],
                 include: [/src/]
             },
             {
                 test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/, // 匹配文字文件
-                use: ['happypack/loader?id=font'],
+                use: [
+                    {
+                        loader: 'url-loader',
+                        options: {
+                            limit: 10240,
+                            name: path.join('font/[name].[hash:7].[ext]')
+                        }
+                    }
+                ],
                 include: [/src/]
             },
             {
@@ -70,32 +86,6 @@ module.exports = {
         new HappyPack({
             id: 'md',
             loaders: ['html-loader', 'markdown-loader']
-        }),
-        new HappyPack({
-            id: 'font',
-            loaders: [
-                {
-                    loader: 'url-loader',
-                    options: {
-                        limit: 10240,
-                        name: path.join('font/[name].[hash:7].[ext]')
-                    }
-                }
-            ]
-        }),
-        new HappyPack({
-            id: 'img',
-            loaders: [
-                {
-                    loader: 'url-loader',
-                    options: {
-                        //1024 == 1kb
-                        //小于10kb时打包成base64编码的图片否则单独打包成图片
-                        limit: 10240,
-                        name: path.join('img/[name].[hash:7].[ext]')
-                    }
-                }
-            ]
         })
     ]
 }
