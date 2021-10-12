@@ -1,5 +1,6 @@
 {
     "compilerOptions": {
+        "outDir": "./dist",
         "jsx": "react",
         "target": "esnext",
         "module": "commonjs",
