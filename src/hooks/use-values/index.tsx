@@ -4,11 +4,10 @@ const useValues = (defaultValue: anyObject): [anyObject, (newV: anyObject) => vo
     const [v, setV] = useState(defaultValue)
 
     const changeV = (newV: anyObject): void => {
-
         const newObj = { ...v, ...newV }
 
         Object.entries(newObj).forEach(([key, value]) => {
-            if(value === '') {
+            if (value === '') {
                 delete newObj[key]
             }
         })

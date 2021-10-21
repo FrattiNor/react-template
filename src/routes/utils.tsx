@@ -1,5 +1,5 @@
-import asyncImport from '@/hoc/async_import'
-import { isPromise } from '@/utils/judge'
+import asyncImport from '@/hoc/async-import'
+import { isPromise } from '@/utils/judge-type'
 import EmptyComponent from '@/components/empty-component'
 
 // 加载 dva_model
