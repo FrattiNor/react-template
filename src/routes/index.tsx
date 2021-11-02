@@ -8,7 +8,7 @@ interface RouteList {
     exact?: boolean
 }
 
-import React, { Fragment, useEffect, FC } from 'react'
+import React, { Fragment, useLayoutEffect, FC } from 'react'
 import ReactDocumentTitle from 'react-document-title'
 import { Route, Switch, Redirect } from 'react-router-dom'
 import { loadModel, getComponent } from './utils'
@@ -16,7 +16,7 @@ import menu from './menu'
 
 // 加载 models
 const LoadModalComponent: FC<{ models?: string[]; app: any }> = ({ children, app, models }) => {
-    useEffect(() => {
+    useLayoutEffect(() => {
         loadModel(app, models)
     }, [])
 
