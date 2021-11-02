@@ -3,8 +3,8 @@ import { isPromise } from '@/utils/judge-type'
 import EmptyComponent from '@/components/empty-component'
 
 // 加载 dva_model
-const loadModel = (models: string[], app: any): void => {
-    models.forEach((road) => {
+const loadModel = (app: any, models?: string[]): void => {
+    models?.forEach((road) => {
         try {
             const model = require(`@/models/${road}`).default
             const inModels = app._models.some(({ namespace }: { namespace: string }) => namespace === model.namespace)

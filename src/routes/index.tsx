@@ -13,15 +13,26 @@ import { Route, Switch, Redirect } from 'react-router-dom'
 import { loadModel, getComponent } from './utils'
 import menu from './menu'
 
+type RenderModelsProps = {
+    app: any
+    models?: string[]
+}
+
+class RenderModels extends React.PureComponent<RenderModelsProps, {}> {
+    constructor(props: RenderModelsProps) {
+        super(props)
+        if (this.props.models) loadModel(this.props.app, this.props.models)
+        this.state = {}
+    }
+    render() {
+        return <Fragment>{this.props.children}</Fragment>
+    }
+}
+
 // 递归渲染路由
 const Routes = ({ app }: { app: any }): JSX.Element => {
     const renderRoute = (list: any): JSX.Element => {
         const renderRouteDom = list.map(({ path, component, routes, redirect, title = '', models }: RouteList) => {
-            // 加载model
-            if (models) {
-                loadModel(models, app)
-            }
-
             // 重定向
             if (redirect) {
                 if (path) {
@@ -41,9 +52,11 @@ const Routes = ({ app }: { app: any }): JSX.Element => {
                     exact={!hasChild}
                     render={(props: any): JSX.Element => (
                         <ReactDocumentTitle title={title}>
-                            <Component {...props} child={routes}>
-                                {hasChild && renderRoute(routes)}
-                            </Component>
+                            <RenderModels app={app} models={models}>
+                                <Component {...props} child={routes}>
+                                    {hasChild && renderRoute(routes)}
+                                </Component>
+                            </RenderModels>
                         </ReactDocumentTitle>
                     )}
                 />
