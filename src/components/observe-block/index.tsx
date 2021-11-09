@@ -28,7 +28,7 @@ const ObserveBlock: FC<Props> = ({ children, setHeight, setWidth }) => {
         }
 
         return () => {
-            ro?.unobserve(Ref.current)
+            ro?.disconnect()
         }
     }, [])
 
