@@ -1,7 +1,8 @@
 import React, { FC } from 'react'
 import ReactDom from 'react-dom'
 import { Provider } from 'react-redux'
-import Routes from '@/routes'
+import RenderRoute from '@/routes/render-route'
+import routeMenu from '@/routes/menu'
 import dva from '@/utils/dva'
 import { BrowserRouter, useHistory } from 'react-router-dom'
 import './index.less'
@@ -13,7 +14,7 @@ const App: FC = () => {
 
     return (
         <Provider store={store}>
-            <Routes app={app} />
+            <RenderRoute menu={routeMenu} />
         </Provider>
     )
 }

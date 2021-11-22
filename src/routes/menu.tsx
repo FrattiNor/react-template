@@ -1,47 +1,51 @@
 import LazyLoad from '@/components/lazy-load'
+import { requireLoad } from './utils'
 
 // 总路由
 const routes = [
     {
         path: '/',
-        component: require('@/layouts/out-layout'),
+        component: requireLoad(() => require('@/layouts/out-layout')), // 全局layout
+        models: ['global/modalState', 'global/login'],
         routes: [
             {
+                path: '/403',
+                title: '403 - 禁止访问',
+                component: LazyLoad(() => import('@/pages/error/403'))
+            },
+            {
+                path: '/404',
+                title: '404 - 资源未找到',
+                component: LazyLoad(() => import('@/pages/error/404'))
+            },
+            {
+                path: '/500',
+                title: '500 - 服务器错误',
+                component: LazyLoad(() => import('@/pages/error/500'))
+            },
+            {
+                path: '/login',
+                title: '登录',
+                component: LazyLoad(() => import('@/pages/login'))
+            },
+            {
                 path: '/',
-                component: require('@/layouts/basic-layout'),
+                component: requireLoad(() => require('@/layouts/basic-layout')), // 登录layout
                 routes: [
                     {
                         path: '/',
-                        redirect: '/one'
+                        redirect: '/home'
                     },
                     {
-                        path: '/one',
-                        title: '页面 - 1',
-                        component: LazyLoad(() => import('@/pages/one'), 'react')
+                        path: '/home',
+                        title: '主页',
+                        component: LazyLoad(() => import('@/pages/home'))
                     },
                     {
-                        path: '/two',
-                        title: '页面 - 2',
-                        component: require('@/pages/two')
+                        path: '/app',
+                        title: 'app',
+                        component: LazyLoad(() => import('@/pages/app'))
                     }
-                    // {
-                    //     path: '/403',
-                    //     title: '403 - 禁止访问',
-                    //     component: import('@/pages/error/403')
-                    // },
-                    // {
-                    //     path: '/404',
-                    //     title: '404 - 资源未找到',
-                    //     component: import('@/pages/error/404')
-                    // },
-                    // {
-                    //     path: '/500',
-                    //     title: '500 - 服务器错误',
-                    //     component: import('@/pages/error/500')
-                    // },
-                    // {
-                    //     redirect: '/404'
-                    // }
                 ]
             }
         ]

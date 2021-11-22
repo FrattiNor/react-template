@@ -1,0 +1,75 @@
+@import '../index.less';
+
+@keyframes exitActive {
+    0% {
+        opacity: 1;
+        left: 0;
+    }
+    100% {
+        opacity: 0;
+        left: -24px;
+    }
+}
+
+@keyframes enterActive {
+    0% {
+        opacity: 0;
+        left: 24px;
+    }
+    100% {
+        opacity: 1;
+        left: 0;
+    }
+}
+
+.enter {
+    position: relative;
+    opacity: 0;
+    left: 0;
+    top: 0;
+    width: 100%;
+    transform: translate3d(0, 0, 0);
+}
+
+.enter-active {
+    position: absolute;
+    width: 100%;
+    top: 0;
+    animation: enterActive @enterTime @enterDelay forwards;
+    transform: translate3d(0, 0, 0);
+}
+
+.enter-done {
+    position: relative;
+    opacity: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    transform: translate3d(0, 0, 0);
+}
+
+.exit {
+    position: relative;
+    opacity: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    transform: translate3d(0, 0, 0);
+}
+
+.exit-active {
+    position: absolute;
+    width: 100%;
+    top: 0;
+    animation: exitActive @exitTime @exitDelay forwards;
+    transform: translate3d(0, 0, 0);
+}
+
+.exit-done {
+    position: relative;
+    opacity: 0;
+    left: 0;
+    top: 0;
+    width: 100%;
+    transform: translate3d(0, 0, 0);
+}

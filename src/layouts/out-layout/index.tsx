@@ -1,18 +1,9 @@
-import React from 'react'
-
-type Props = {}
-
-type State = {}
+import React, { FC } from 'react'
+import styles from './index.less'
 
 // 最外部的layout，负责获取全局的一些数据
-class OutLayout extends React.PureComponent<Props, State> {
-    // componentDidMount() {
-    //     console.log('out')
-    // }
-
-    render() {
-        return <>{this.props.children}</>
-    }
+const OutLayout: FC = ({ children }) => {
+    return <div className={styles['out-layout']}>{children}</div>
 }
 
 export default OutLayout

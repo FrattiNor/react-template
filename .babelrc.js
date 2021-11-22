@@ -8,7 +8,8 @@ const plugins = [
         {
             corejs: 3
         }
-    ]
+    ],
+    ['import', { libraryName: 'antd', libraryDirectory: 'es', style: true }, 'antd']
 ]
 
 if (isDev) {

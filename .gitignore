@@ -9,3 +9,5 @@ lib
 yarn-error.log
 
 .history
+
+.vscode

@@ -39,7 +39,7 @@
         "react-hooks/exhaustive-deps": "warn",
 
         "semi": ["error", "never"], //禁止分号
-        "no-unused-vars": [
+        "@typescript-eslint/no-unused-vars": [
             // 禁止出现未使用过的变量
             "error",
             {
@@ -52,6 +52,11 @@
         "no-duplicate-imports": "error", // 禁止重复导入
         "react/prop-types": "off",
         "prettier/prettier": "error",
-        "@typescript-eslint/explicit-function-return-type": "off"
+        "@typescript-eslint/no-explicit-any": "off",
+        "react/display-name": "off",
+        "@typescript-eslint/no-empty-function": "off",
+        "@typescript-eslint/explicit-function-return-type": "off",
+        "@typescript-eslint/explicit-module-boundary-types": "off",
+        "@typescript-eslint/ban-types": "off"
     }
 }

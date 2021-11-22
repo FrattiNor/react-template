@@ -1,19 +1,19 @@
-import asyncImport from '@/hoc/async-import'
-import { isPromise } from '@/utils/judge-type'
+// import asyncImport from '@/hocs/async-import'
+import { isString } from '@/utils/judge-type'
 import EmptyComponent from '@/components/empty-component'
 
 // 加载 dva_model
-const loadModel = (app: any, models?: string[]): void => {
+const loadModel = (app: any, models?: string[]): any => {
     models?.forEach((road) => {
         try {
-            const model = require(`@/models/${road}`).default
+            const modelRoad = isString(road) ? road : ''
+            const model = require(`@/models/${modelRoad}`).default
             const inModels = app._models.some(({ namespace }: { namespace: string }) => namespace === model.namespace)
             if (!inModels) {
                 app.model(model)
             }
         } catch (e) {
             console.error(`models 路径不正确 ${road}`)
-            console.error(e)
         }
     })
 }
@@ -21,14 +21,16 @@ const loadModel = (app: any, models?: string[]): void => {
 // 获取组件本体
 const getComponent = (component: any): any => {
     if (component) {
-        if (isPromise(component)) {
-            return asyncImport(component)
-        } else {
-            return component.default || component
-        }
+        return component.default || component
     } else {
         return EmptyComponent
     }
 }
 
-export { loadModel, getComponent }
+// 和 lazyLoad 统一格式
+// todo一些load相关操作
+const requireLoad = (load: () => any) => {
+    return load()
+}
+
+export { loadModel, getComponent, requireLoad }

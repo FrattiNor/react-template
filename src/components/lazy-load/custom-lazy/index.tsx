@@ -1,13 +1,13 @@
-import React, { FC, useEffect, useState, ComponentType } from 'react'
+import React, { FC, useLayoutEffect, useState, ComponentType } from 'react'
 
 // import的promise转为component
 // promise_to_component
-const asyncComponent = (promise: Promise<{ default: ComponentType }>): FC => {
+const asyncComponent = (promise: () => Promise<{ default: ComponentType }>): FC => {
     const LoadComponent: FC = (props) => {
         const [Component, setComponent] = useState(<div />)
 
-        useEffect(() => {
-            promise.then((res) => {
+        useLayoutEffect(() => {
+            promise().then((res) => {
                 const { default: Component } = res
                 setComponent(<Component {...props} />)
             })
