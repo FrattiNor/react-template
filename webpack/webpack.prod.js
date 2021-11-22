@@ -34,7 +34,33 @@ const prodConfig = {
     ],
     optimization: {
         // 将包含chunks映射关系的list单独从app.js里提取出来
-        runtimeChunk: true
+        runtimeChunk: true,
+        splitChunks: {
+            // 将多入口的公共部分单独打包
+            chunks: 'all',
+            minChunks: 1,
+            minSize: 5120, // 5 KB
+            maxSize: 1572864, // 1.5 MB
+            maxAsyncRequests: Infinity,
+            maxInitialRequests: Infinity,
+            cacheGroups: {
+                vendors: {
+                    test: /[\\/]node_modules[\\/]/,
+                    priority: -10,
+                    filename: `vendors.[name].[chunkhash:8].js`,
+                    reuseExistingChunk: true
+                    // minSize: 102400 // 100 KB
+                },
+                components: {
+                    minChunks: 2,
+                    priority: -20,
+                    filename: `components.[name].[chunkhash:8].js`,
+                    reuseExistingChunk: true
+                },
+                defaultVendors: false,
+                default: false
+            }
+        }
     },
     // 【error】webpack v5 不生效
     stats: {
