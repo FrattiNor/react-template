@@ -19,6 +19,11 @@ const devConfig = (port) => ({
     plugins: [
         // 热加载插件，用于启用局部模块热重载方便我们开发
         new webpack.HotModuleReplacementPlugin(),
+        // react 热加载
+        new ReactRefreshPlugin({
+            exclude: /node_modules/,
+            overlay: false
+        }),
         // 配置模板html位置
         new HtmlWebpackPlugin({
             ...htmlWebpackPlugin
@@ -31,12 +36,6 @@ const devConfig = (port) => ({
             compilationSuccessInfo: {
                 messages: [`开发环境启动成功，项目运行在: http://127.0.0.1:${port}`]
             }
-        }),
-        // react 热加载
-        new ReactRefreshPlugin({
-            exclude: /node_modules/,
-            include: /\.([jt]sx?|flow)$/,
-            overlay: false
         })
     ],
     module: {
