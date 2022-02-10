@@ -1,8 +1,8 @@
 import React, { FC } from 'react'
 import { Form, Input, Button } from 'antd'
 import { UserOutlined, LockOutlined } from '@ant-design/icons'
-import styles from './index.less'
 import { useHistory } from 'react-router-dom'
+import styles from './index.less'
 
 const Login: FC = () => {
     const history = useHistory()

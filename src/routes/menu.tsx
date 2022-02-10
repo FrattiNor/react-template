@@ -6,7 +6,6 @@ const routes = [
     {
         path: '/',
         component: requireLoad(() => require('@/layouts/out-layout')), // 全局layout
-        models: ['global/modalState', 'global/login'],
         routes: [
             {
                 path: '/403',
@@ -26,7 +25,8 @@ const routes = [
             {
                 path: '/login',
                 title: '登录',
-                component: LazyLoad(() => import('@/pages/login'))
+                component: LazyLoad(() => import('@/pages/login')),
+                models: ['app']
             },
             {
                 path: '/',

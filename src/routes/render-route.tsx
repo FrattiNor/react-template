@@ -8,8 +8,7 @@ export interface RouteList {
     exact?: boolean
 }
 
-import { DvaContext } from '@/utils/dva'
-import React, { FC, Fragment, useContext, useMemo } from 'react'
+import React, { FC, Fragment, useMemo } from 'react'
 import ReactDocumentTitle from 'react-document-title'
 import { Route, Switch, Redirect } from 'react-router-dom'
 import { loadModel, getComponent } from './utils'
@@ -18,6 +17,7 @@ import ErrorCatch from './error-catch'
 
 type RenderRouteProps = {
     menu: any
+    app: any
 }
 
 type RenderModelsProps = {
@@ -37,9 +37,7 @@ class RenderModels extends React.PureComponent<RenderModelsProps, {}> {
 }
 
 // 递归渲染路由
-const RenderRoute: FC<RenderRouteProps> = ({ menu }) => {
-    const { app } = useContext(DvaContext)
-
+const RenderRoute: FC<RenderRouteProps> = ({ app, menu }) => {
     const renderRoute = (list: any): JSX.Element => {
         const renderRouteDom = list.map(({ path, component, routes, redirect, title = '', models, exact }: RouteList) => {
             // if (models) loadModel(app, models)

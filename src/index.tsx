@@ -14,7 +14,7 @@ const App: FC = () => {
 
     return (
         <Provider store={store}>
-            <RenderRoute menu={routeMenu} />
+            <RenderRoute app={app} menu={routeMenu} />
         </Provider>
     )
 }

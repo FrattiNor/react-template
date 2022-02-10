@@ -6,13 +6,10 @@ import { message } from 'antd'
 import { create } from 'dva-core'
 import createLoading from 'dva-loading'
 import { createLogger } from 'redux-logger'
-import H from 'history'
-import { loadModel } from '../routes/utils'
 import { isFunction, isObject, isString } from './judge-type'
-import { createContext } from 'react'
+import H from 'history'
 
 const env = process.env.NODE_ENV || 'development'
-const globalModels: string[] = ['global/global']
 
 // 使用代理模式扩展 history 对象的 listen 方法，添加了一个回调函数做参数并在路由变化是主动调用
 function patchHistory(history: H.History<unknown>): any {
@@ -48,8 +45,6 @@ export default (history: H.History<unknown>): any => {
 
     app.use(createLoading())
 
-    loadModel(app, globalModels)
-
     app.start()
 
     const store = app._store
@@ -57,5 +52,3 @@ export default (history: H.History<unknown>): any => {
 
     return app
 }
-
-export const DvaContext = createContext({ app: null })

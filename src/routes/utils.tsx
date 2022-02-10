@@ -13,6 +13,7 @@ const loadModel = (app: any, models?: string[]): any => {
                 app.model(model)
             }
         } catch (e) {
+            console.error(e)
             console.error(`models 路径不正确 ${road}`)
         }
     })
