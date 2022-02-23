@@ -1,15 +1,30 @@
-import React, { FC } from 'react'
+import React, { FC, useState } from 'react'
 import { Form, Input, Button } from 'antd'
 import { UserOutlined, LockOutlined } from '@ant-design/icons'
 import { useHistory } from 'react-router-dom'
 import styles from './index.less'
 
 const Login: FC = () => {
+    const [a, setA] = useState(1)
+    const [b, setB] = useState(1)
+    console.log(a, b)
     const history = useHistory()
 
     const onFinish = (values: any): void => {
         console.log('values', values)
         history.push('/home')
+    }
+
+    const onClick = () => {
+        setA(a + 1)
+        setA(a + 1)
+    }
+
+    const onClick2 = () => {
+        Promise.resolve().then(() => {
+            setA(a + 1)
+            setA(a + 1)
+        })
     }
 
     return (
@@ -30,6 +45,12 @@ const Login: FC = () => {
                     </Button>
                 </Form>
             </div>
+            <Button type="primary" onClick={onClick2}>
+                Promise
+            </Button>
+            <Button type="primary" onClick={onClick}>
+                notPromise
+            </Button>
         </div>
     )
 }
