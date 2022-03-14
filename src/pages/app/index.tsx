@@ -1,10 +1,16 @@
 /* eslint-disable no-self-assign */
-import React, { FC, useRef, useEffect, MouseEventHandler } from 'react'
+import React, { FC, useRef, useEffect, useState } from 'react'
+import { Button } from 'antd'
+import JSAnimate, { easeIn, easeInOut, easeOut, useAnimate } from './util2'
+import styles from './index.less'
 
 const App: FC = () => {
     const ref = useRef<any>()
+    const [w1, setW1] = useState(0)
+    const [w2, setW2] = useState(0)
+    const [w3, setW3] = useState(0)
 
-    useEffect(() => {
+    const draw = (p: number) => {
         if (ref.current && ref.current.getContext) {
             const canvas = ref.current
 
@@ -72,6 +78,10 @@ const App: FC = () => {
             }
 
             // 绘图
+            ctx.translate(250, 250)
+            ctx.rotate(getAngle(p * 360))
+            ctx.translate(-250, -250)
+
             const angle = 360 / 5
             getFlowerOne(angle * 0)
             getFlowerOne(angle * 1)
@@ -79,28 +89,57 @@ const App: FC = () => {
             getFlowerOne(angle * 3)
             getFlowerOne(angle * 4)
         }
-    }, [])
+    }
 
-    const canvasClick: MouseEventHandler = (e) => {
-        if (ref.current && ref.current.getContext) {
-            const ctx = ref.current.getContext('2d')
-            const { x, y } = (e.target as any).getBoundingClientRect()
-            const ctxX = e.clientX - x
-            const ctxY = e.clientY - y
-            ctx.save()
-            ctx.beginPath()
-            ctx.moveTo(250, 250)
-            ctx.lineTo(250, 0)
-            ctx.lineTo(500, 0)
-            ctx.fill()
-            ctx.restore()
-            console.log(ctxX, ctxY, ctx.isPointInPath(255, 5))
+    const [animate] = useAnimate(draw, 10000, {
+        count: 1,
+        timing: easeIn
+    })
+
+    const onClick = () => {
+        if (animate !== null) {
+            if (animate.state === 'playing') {
+                animate.pause()
+            }
+            if (animate.state === 'paused') {
+                animate.play()
+            }
         }
     }
 
+    useEffect(() => {
+        JSAnimate(
+            (p: number) => {
+                setW1(p * 100)
+            },
+            10000,
+            { timing: easeIn }
+        )
+        // JSAnimate(
+        //     (p: number) => {
+        //         setW2(p * 100)
+        //     },
+        //     10000,
+        //     { timing: easeOut }
+        // )
+        // JSAnimate(
+        //     (p: number) => {
+        //         setW3(p * 100)
+        //     },
+        //     10000,
+        //     { timing: easeInOut }
+        // )
+    }, [])
+
     return (
         <div style={{ height: '200vh' }}>
-            <canvas onClick={canvasClick} ref={ref} width={500} height={500} style={{ border: '1px solid #000' }} />
+            <canvas ref={ref} width={500} height={500} style={{ border: '1px solid #000' }} />
+            <div className={styles['a']} style={{ width: w1 }} />
+            <div className={styles['a']} style={{ width: w2 }} />
+            <div className={styles['a']} style={{ width: w3 }} />
+            <div>
+                <Button onClick={onClick}>取消</Button>
+            </div>
         </div>
     )
 }
