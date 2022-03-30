@@ -1,21 +1,18 @@
-/* eslint-disable @typescript-eslint/explicit-function-return-type */
 const webpack = require('webpack')
-const merge = require('webpack-merge')
+const { merge } = require('webpack-merge')
 const baseConfig = require('./webpack.common')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin')
 const ReactRefreshPlugin = require('@pmmmwh/react-refresh-webpack-plugin')
 const portfinder = require('portfinder')
-const { output, htmlWebpackPlugin, styleRule } = require('./default.const')
+const path = require('path')
+const { proxyAddress } = require('./proxy')
 
 const devConfig = (port) => ({
     mode: 'development',
-    devtool: 'cheap-module-eval-source-map',
-    output: {
-        filename: 'js/[name].js',
-        chunkFilename: 'js/[name].js',
-        ...output
-    },
+    cache: { type: 'memory' },
+    devtool: 'eval-cheap-module-source-map',
+    stats: 'errors-only',
     plugins: [
         // 热加载插件，用于启用局部模块热重载方便我们开发
         new webpack.HotModuleReplacementPlugin(),
@@ -26,7 +23,9 @@ const devConfig = (port) => ({
         }),
         // 配置模板html位置
         new HtmlWebpackPlugin({
-            ...htmlWebpackPlugin
+            filename: 'index.html',
+            template: path.join(__dirname, '../public/index.html'),
+            inject: true
         }),
         // 优化webpack显示
         new FriendlyErrorsWebpackPlugin({
@@ -38,41 +37,38 @@ const devConfig = (port) => ({
             }
         })
     ],
-    module: {
-        rules: [
-            ...styleRule({
-                styleLoader: 'style-loader',
-                cssLoaderModules: {
-                    localIdentName: '[local]--[hash:base64:6]'
-                }
-            })
-        ]
-    },
     // node 本地服务器配置
     devServer: {
-        host: '0.0.0.0',
+        host: 'local-ip',
         port,
+        compress: true,
         historyApiFallback: {
             htmlAcceptHeaders: ['text/html']
-        }, // true 该选项的作用所有的404都连接到index.html
-        overlay: {
-            //当出现编译器错误或警告时，就在网页上显示一层黑色的背景层和错误信息
-            errors: true
         },
-        inline: true, // 模式
+        client: {
+            progress: true,
+            overlay: {
+                //当出现编译器错误或警告时，就在网页上显示一层黑色的背景层和错误信息
+                errors: true
+            }
+        },
         hot: true, // 热加载
         open: true, // 打开页面
-        useLocalIp: true, // 此选项允许浏览器使用本地 IP 打开
         proxy: {
-            '/api/': {
-                target: 'https://192.168.2.3/api/',
+            '/msc': {
+                target: proxyAddress,
                 changeOrigin: true,
                 secure: false,
-                pathRewrite: { '^/api': '' }
+                pathRewrite: { '^': '' }
+            },
+            '/auth': {
+                target: proxyAddress,
+                changeOrigin: true,
+                secure: false,
+                pathRewrite: { '^': '' }
             }
         }
-    },
-    stats: 'errors-only'
+    }
 })
 
 const getDevConfig = new Promise((res, rej) => {

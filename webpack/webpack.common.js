@@ -1,55 +1,85 @@
-/* eslint-disable @typescript-eslint/explicit-function-return-type */
-// node path模块
 const path = require('path')
 const ProgressBarPlugin = require('progress-bar-webpack-plugin')
-const HappyPack = require('happypack')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 
-module.exports = {
+const isDev = process.env.NODE_DEV === 'development'
+
+const cssUse = (endLoader) => [endLoader, 'css-loader']
+const lessLocalUse = (endLoader) => [
+    endLoader,
+    {
+        loader: 'css-loader',
+        options: {
+            modules: {
+                localIdentName: '[local]--[hash:base64:6]'
+            }
+        }
+    },
+    'postcss-loader',
+    'less-loader'
+]
+const lessAntdUse = (endLoader) => [
+    endLoader,
+    'css-loader',
+    'postcss-loader',
+    {
+        loader: 'less-loader',
+        options: {
+            javascriptEnabled: true
+            // modifyVars: theme,
+        }
+    }
+]
+
+const config = {
     // 入口
-    entry: [path.join(__dirname, '../src/index.tsx'), path.join(__dirname, '../public/rem.js')],
+    entry: {
+        main: path.join(__dirname, '../src/index.tsx')
+    },
+    output: {
+        filename: isDev ? 'js/[name].bundle.js' : 'common/js/[name].[contenthash:8].bundle.js',
+        chunkFilename: isDev ? 'js/[name].chunk.js' : 'common/js/[name].[contenthash:8].chunk.js',
+        assetModuleFilename: isDev ? 'assets/[hash][ext][query]' : 'common/assets/[hash][ext][query]',
+        path: path.join(__dirname, '../dist'),
+        publicPath: '/',
+        clean: true
+    },
     // 模块
     module: {
         rules: [
             {
-                test: /\.(j|t)sx?$/, // 匹配js，ts
-                use: ['happypack/loader?id=babel'],
-                include: [/src/, /public/]
+                test: /\.(j|t)sx?$/,
+                use: ['babel-loader'],
+                exclude: [/node_modules/]
             },
             {
-                test: /\.(png|jpe?g|gif|svg)(\?.*)?$/, // 匹配图片文件
-                use: [
-                    {
-                        loader: 'url-loader',
-                        options: {
-                            limit: 10240,
-                            name: path.join('font/[name].[hash:7].[ext]')
-                        }
-                    }
-                ],
-                include: [/src/]
+                test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
+                type: 'asset/resource',
+                generator: {
+                    filename: 'assets/images/[hash][ext][query]'
+                }
             },
             {
-                test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/, // 匹配文字文件
-                use: [
-                    {
-                        loader: 'url-loader',
-                        options: {
-                            limit: 10240,
-                            name: path.join('font/[name].[hash:7].[ext]')
-                        }
-                    }
-                ],
-                include: [/src/]
+                test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
+                type: 'asset/resource',
+                generator: {
+                    filename: 'assets/fonts/[hash][ext][query]'
+                }
             },
             {
-                test: /\.md$/,
-                use: ['happypack/loader?id=md'],
-                include: [/src/]
+                test: /\.css$/,
+                use: isDev ? cssUse('style-loader') : cssUse(MiniCssExtractPlugin.loader)
             },
             {
-                test: /\.mdx$/,
-                use: ['happypack/loader?id=mdx'],
+                test: /\.less$/,
+                use: isDev ? lessLocalUse('style-loader') : lessLocalUse(MiniCssExtractPlugin.loader),
                 include: [/src/]
+            },
+            // 正则匹配css，less, 样式文件只匹配依赖文件夹，只用于antd样式引入，非依赖下的less文件配置在对应配置文件下
+            {
+                test: /\.less$/,
+                use: isDev ? lessAntdUse('style-loader') : lessAntdUse(MiniCssExtractPlugin.loader),
+                include: [/node_modules/]
             }
         ]
     },
@@ -74,18 +104,8 @@ module.exports = {
     },
     plugins: [
         // 打包📦进度条
-        new ProgressBarPlugin(),
-        new HappyPack({
-            id: 'babel',
-            loaders: ['babel-loader']
-        }),
-        new HappyPack({
-            id: 'mdx',
-            loaders: ['babel-loader', '@mdx-js/loader']
-        }),
-        new HappyPack({
-            id: 'md',
-            loaders: ['html-loader', 'markdown-loader']
-        })
+        new ProgressBarPlugin()
     ]
 }
+
+module.exports = config

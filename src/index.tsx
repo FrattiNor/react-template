@@ -1,22 +1,18 @@
 import React, { FC } from 'react'
 import ReactDom from 'react-dom'
-import { Provider } from 'react-redux'
-import RenderRoute from '@/routes/render-route'
-import routeMenu from '@/routes/menu'
-import dva from '@/utils/dva'
-import { BrowserRouter, useHistory } from 'react-router-dom'
-import './index.less'
+// import { Provider } from 'react-redux'
+// import dva from '@/utils/dva'
+import { BrowserRouter } from 'react-router-dom'
+
+// const App: FC = () => {
+//     const app = dva()
+//     const store = app._store
+
+//     return <Provider store={store}>app</Provider>
+// }
 
 const App: FC = () => {
-    const history = useHistory()
-    const app = dva(history)
-    const store = app.getStore()
-
-    return (
-        <Provider store={store}>
-            <RenderRoute app={app} menu={routeMenu} />
-        </Provider>
-    )
+    return <>app</>
 }
 
 ReactDom.render(

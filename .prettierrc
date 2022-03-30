@@ -1,5 +1,5 @@
 {
-    "url": "https://juejin.im/post/5a7d70496fb9a063317c47f1",
+    "parser": "typescript",
     "singleQuote": true,
     "tabWidth": 4,
     "semi": false,
@@ -8,5 +8,7 @@
     "bracketSpacing": true,
     "jsxBracketSameLine": false,
     "arrowParens": "always",
-    "printWidth": 150
+    "printWidth": 150,
+    "endOfLine": "lf",
+    "proseWrap": "never"
 }

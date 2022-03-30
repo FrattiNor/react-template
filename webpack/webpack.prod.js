@@ -1,30 +1,21 @@
-/* eslint-disable @typescript-eslint/camelcase */
-const merge = require('webpack-merge')
+const { merge } = require('webpack-merge')
 const baseConfig = require('./webpack.common')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
-const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin')
 const TerserPlugin = require('terser-webpack-plugin')
 const ScriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin')
-// const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 const path = require('path')
-// const PrerenderSPAPlugin = require('prerender-spa-plugin')
-const { output, htmlWebpackPlugin, styleRule } = require('./default.const')
 
 const prodConfig = {
-    recordsPath: path.join(__dirname, 'records.json'),
     mode: 'production',
-    devtool: 'none',
-    output: {
-        filename: 'js/[name].[chunkhash].js',
-        chunkFilename: 'js/[name].[chunkhash].js',
-        ...output
-    },
+    cache: false,
     plugins: [
         // html模板配置插件
         new HtmlWebpackPlugin({
-            ...htmlWebpackPlugin,
+            filename: 'index.html',
+            template: path.join(__dirname, '../public/index.html'),
+            inject: true,
             minify: {
                 removeComments: true, // 去掉注释
                 collapseWhitespace: true, // 去掉多余空白
@@ -35,38 +26,18 @@ const prodConfig = {
         new MiniCssExtractPlugin({
             // Options similar to the same options in webpackOptions.output
             // both options are optional
-            filename: 'css/[name].[contenthash].css',
-            chunkFilename: 'css/[name].[id].[contenthash].css'
+            filename: 'common/css/[name].[contenthash].css',
+            chunkFilename: 'common/css/[name].[id].[contenthash].css',
+            ignoreOrder: true
         }),
-        // 清除上次dist文件内容插件
-        new CleanWebpackPlugin(),
         // 注意一定要在HtmlWebpackPlugin之后引用
         // inline 的name 和你 runtimeChunk 的 name保持一致
         new ScriptExtHtmlWebpackPlugin({
-            //`runtime` must same as runtimeChunk name. default is `runtime`
             inline: /runtime\..*\.js$/
         })
         // webpack打包之后输出文件的大小占比
         // new BundleAnalyzerPlugin(),
-        // 预渲染插件
-        // new PrerenderSPAPlugin({
-        //     routes: ['/', '/doc'],
-        //     staticDir: path.join(__dirname, '../dist')
-        //     // renderer: new Renderer({
-        //     //     renderAfterTime: 50000
-        //     // })
-        // })
     ],
-    module: {
-        rules: [
-            ...styleRule({
-                styleLoader: MiniCssExtractPlugin.loader,
-                cssLoaderModules: {
-                    localIdentName: '[hash:base64:6]'
-                }
-            })
-        ]
-    },
     optimization: {
         // 性能配置
         minimizer: [
@@ -77,30 +48,30 @@ const prodConfig = {
                 extractComments: false // 取消打包生产的LICENSE文件
             })
         ],
-        runtimeChunk: true,
+        runtimeChunk: {
+            name: 'runtime'
+        },
         usedExports: true,
         removeAvailableModules: true,
         removeEmptyChunks: true,
         splitChunks: {
             // 将多入口的公共部分单独打包
             chunks: 'all',
-            minSize: 10240, // 10kb
-            maxSize: 0,
-            minChunks: 1,
-            maxAsyncRequests: Infinity,
-            maxInitialRequests: Infinity,
+            automaticNameDelimiter: '-',
             cacheGroups: {
                 vendors: {
-                    // name: 'vendors', // 不能添加名字，否则所有的依赖都封到一个vendors.js中了，不设名字为单独处理并添加前缀
+                    name: 'vendors',
+                    enforce: true,
                     test: /[\\/]node_modules[\\/]/,
-                    priority: -10
+                    priority: 10
                 },
-                components: {
-                    minChunks: 2,
-                    priority: -20,
+                default: {
+                    name: 'common',
+                    minSize: 0,
+                    minChunks: 3,
+                    priority: 10,
                     reuseExistingChunk: true
-                },
-                default: false
+                }
             }
         }
     },
