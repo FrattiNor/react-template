@@ -26,7 +26,7 @@ const JsAnimate = (draw: Draw, duration: number, _option?: Option) => {
         // 当前的Progress
         let currentProgress = 0
         // 动画状态
-        let state: State = 'default'
+        let state: State = 'start'
         // 拆解option
         const option = _option || {}
         // timing函数
@@ -35,6 +35,14 @@ const JsAnimate = (draw: Draw, duration: number, _option?: Option) => {
         let delay = typeof option.delay === 'number' ? option.delay : 0
         // 次数
         let count = typeof option.count === 'number' || option.count === 'infinite' ? option.count : 1
+        // 是否执行过start
+        let isStart = false
+        // 动画开始钩子函数
+        const onStart = typeof option.onStart === 'function' ? option.onStart : null
+        // 是否执行过end
+        let isEnd = false
+        // 动画结束钩子函数
+        const onEnd = typeof option.onEnd === 'function' ? option.onEnd : null
 
         // 动画函数
         const animate = (time: number) => {
@@ -45,11 +53,16 @@ const JsAnimate = (draw: Draw, duration: number, _option?: Option) => {
             if (progress > 1) progress = 1
             // 记录当前进度(小于0为延迟，不记录)
             if (progress >= 0) currentProgress = progress
-            // 根据timing函数获取进度（实现 ease等效果）
-            const timingProgress = timing !== null ? timing(progress) : linear(progress)
             // 根据进度绘制，延迟时进度小于0，需要绘制首帧
             if (progress >= 0) {
+                // 根据timing函数获取进度（实现 ease等效果）
+                const timingProgress = timing !== null ? timing(progress) : linear(progress)
                 draw(timingProgress)
+                // start
+                if (onStart !== null && !isStart) {
+                    onStart()
+                }
+                isStart = true
             } else if (!drawn) {
                 drawn = true
                 draw(0)
@@ -64,6 +77,13 @@ const JsAnimate = (draw: Draw, duration: number, _option?: Option) => {
                 currentProgress = 0
                 start = window.performance.now()
                 timeout = window.requestAnimationFrame(animate)
+            } else {
+                if (onEnd !== null && !isEnd) {
+                    // end
+                    onEnd()
+                }
+                state = 'end'
+                isEnd = true
             }
         }
 
@@ -91,6 +111,21 @@ const JsAnimate = (draw: Draw, duration: number, _option?: Option) => {
             return state
         }
 
+        // 重置
+        const reset = () => {
+            if (state !== 'start') {
+                if (timeout !== null) window.cancelAnimationFrame(timeout)
+                state = 'start'
+                delay = 0
+                drawn = false
+                beforeProgress = 0
+                count = typeof option.count === 'number' || option.count === 'infinite' ? option.count : 1
+                isStart = false
+                isEnd = false
+                play()
+            }
+        }
+
         // 默认执行
         play()
 
@@ -98,6 +133,7 @@ const JsAnimate = (draw: Draw, duration: number, _option?: Option) => {
         const res: Animate = {
             pause,
             play,
+            reset,
             state,
             progress: currentProgress
         }

@@ -1,14 +1,10 @@
 /* eslint-disable no-self-assign */
 import React, { FC, useRef, useEffect, useState } from 'react'
 import { Button } from 'antd'
-import JSAnimate, { easeIn, easeInOut, easeOut, useAnimate } from './util2'
-import styles from './index.less'
+import JSAnimate, { Animate } from '@/components/animate-js'
 
 const App: FC = () => {
     const ref = useRef<any>()
-    const [w1, setW1] = useState(0)
-    const [w2, setW2] = useState(0)
-    const [w3, setW3] = useState(0)
 
     const draw = (p: number) => {
         if (ref.current && ref.current.getContext) {
@@ -91,54 +87,31 @@ const App: FC = () => {
         }
     }
 
-    const [animate] = useAnimate(draw, 10000, {
-        count: 1,
-        timing: easeIn
-    })
+    const [a, setA] = useState<Animate | null>(null)
 
     const onClick = () => {
-        if (animate !== null) {
-            if (animate.state === 'playing') {
-                animate.pause()
+        if (a !== null) {
+            if (a.state === 'playing') {
+                a.pause()
             }
-            if (animate.state === 'paused') {
-                animate.play()
+            if (a.state === 'paused') {
+                a.play()
             }
         }
     }
 
     useEffect(() => {
-        JSAnimate(
-            (p: number) => {
-                setW1(p * 100)
-            },
-            10000,
-            { timing: easeIn }
-        )
-        // JSAnimate(
-        //     (p: number) => {
-        //         setW2(p * 100)
-        //     },
-        //     10000,
-        //     { timing: easeOut }
-        // )
-        // JSAnimate(
-        //     (p: number) => {
-        //         setW3(p * 100)
-        //     },
-        //     10000,
-        //     { timing: easeInOut }
-        // )
+        const a = JSAnimate(draw, 10000)
+        setA(a)
     }, [])
 
     return (
         <div style={{ height: '200vh' }}>
             <canvas ref={ref} width={500} height={500} style={{ border: '1px solid #000' }} />
-            <div className={styles['a']} style={{ width: w1 }} />
-            <div className={styles['a']} style={{ width: w2 }} />
-            <div className={styles['a']} style={{ width: w3 }} />
+
             <div>
                 <Button onClick={onClick}>取消</Button>
+                <Button onClick={() => a?.reset()}>重置</Button>
             </div>
         </div>
     )

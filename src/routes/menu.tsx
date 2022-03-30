@@ -45,6 +45,16 @@ const routes = [
                         path: '/app',
                         title: 'app',
                         component: LazyLoad(() => import('@/pages/app'))
+                    },
+                    {
+                        path: '/chart',
+                        title: 'chart',
+                        component: LazyLoad(() => import('@/pages/chart'))
+                    },
+                    {
+                        path: '/canvas',
+                        title: 'canvas',
+                        component: LazyLoad(() => import('@/pages/canvas'))
                     }
                 ]
             }
