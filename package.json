@@ -12,7 +12,7 @@
         "rm-dep": "npx rimraf ./node_modules",
         "reinstall": "npm run rm-dep && pnpm install",
         "stylelint": "stylelint **/*.{less,css} --fix",
-        "eslint": "eslint **/*.{js,jsx,ts,tsx} --fix",
+        "eslint": "eslint \"**/*.{js,jsx,ts,tsx}\" --fix",
         "prettier": "prettier **/* --write --ignore-unknown"
     },
     "devDependencies": {

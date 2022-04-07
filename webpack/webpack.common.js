@@ -40,9 +40,7 @@ const config = ({ isDev }) => ({
     output: {
         filename: isDev ? 'js/[name].bundle.js' : 'common/js/[name].[contenthash:8].bundle.js',
         chunkFilename: isDev ? 'js/[name].chunk.js' : 'common/js/[name].[contenthash:8].chunk.js',
-        assetModuleFilename: isDev
-            ? 'assets/[hash][ext][query]'
-            : 'common/assets/[hash][ext][query]',
+        assetModuleFilename: isDev ? 'assets/[hash][ext][query]' : 'common/assets/[hash][ext][query]',
         path: path.join(__dirname, '../dist'),
         publicPath: '/',
         clean: true,
@@ -75,9 +73,7 @@ const config = ({ isDev }) => ({
             },
             {
                 test: /\.less$/,
-                use: isDev
-                    ? lessLocalUse('style-loader')
-                    : lessLocalUse(MiniCssExtractPlugin.loader),
+                use: isDev ? lessLocalUse('style-loader') : lessLocalUse(MiniCssExtractPlugin.loader),
                 include: [/src/],
             },
             // 正则匹配css，less, 样式文件只匹配依赖文件夹，只用于antd样式引入，非依赖下的less文件配置在对应配置文件下
