@@ -1,11 +1,11 @@
-const { merge } = require('webpack-merge')
-const baseConfig = require('./webpack.common')
-const HtmlWebpackPlugin = require('html-webpack-plugin')
-const MiniCssExtractPlugin = require('mini-css-extract-plugin')
-const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin')
-const TerserPlugin = require('terser-webpack-plugin')
-const ScriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin')
-const path = require('path')
+const { merge } = require('webpack-merge');
+const baseConfig = require('./webpack.common');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+const TerserPlugin = require('terser-webpack-plugin');
+const ScriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin');
+const path = require('path');
 
 const prodConfig = {
     mode: 'production',
@@ -19,8 +19,8 @@ const prodConfig = {
             minify: {
                 removeComments: true, // 去掉注释
                 collapseWhitespace: true, // 去掉多余空白
-                removeAttributeQuotes: true // 去掉一些属性的引号，例如id="moo" => id=moo
-            }
+                removeAttributeQuotes: true, // 去掉一些属性的引号，例如id="moo" => id=moo
+            },
         }),
         // css单独提取插件
         new MiniCssExtractPlugin({
@@ -28,13 +28,13 @@ const prodConfig = {
             // both options are optional
             filename: 'common/css/[name].[contenthash].css',
             chunkFilename: 'common/css/[name].[id].[contenthash].css',
-            ignoreOrder: true
+            ignoreOrder: true,
         }),
         // 注意一定要在HtmlWebpackPlugin之后引用
         // inline 的name 和你 runtimeChunk 的 name保持一致
         new ScriptExtHtmlWebpackPlugin({
-            inline: /runtime\..*\.js$/
-        })
+            inline: /runtime\..*\.js$/,
+        }),
         // webpack打包之后输出文件的大小占比
         // new BundleAnalyzerPlugin(),
     ],
@@ -45,11 +45,11 @@ const prodConfig = {
             new OptimizeCssAssetsPlugin(),
             // 打包时优化压缩js代码
             new TerserPlugin({
-                extractComments: false // 取消打包生产的LICENSE文件
-            })
+                extractComments: false, // 取消打包生产的LICENSE文件
+            }),
         ],
         runtimeChunk: {
-            name: 'runtime'
+            name: 'runtime',
         },
         usedExports: true,
         removeAvailableModules: true,
@@ -63,17 +63,17 @@ const prodConfig = {
                     name: 'vendors',
                     enforce: true,
                     test: /[\\/]node_modules[\\/]/,
-                    priority: 10
+                    priority: 10,
                 },
                 default: {
                     name: 'common',
                     minSize: 0,
                     minChunks: 3,
                     priority: 10,
-                    reuseExistingChunk: true
-                }
-            }
-        }
+                    reuseExistingChunk: true,
+                },
+            },
+        },
     },
     stats: {
         entrypoints: false,
@@ -82,8 +82,8 @@ const prodConfig = {
         modules: false,
         children: false,
         chunks: false,
-        chunkModules: false
-    }
-}
+        chunkModules: false,
+    },
+};
 
-module.exports = merge(baseConfig, prodConfig)
+module.exports = merge(baseConfig({ isDev: false }), prodConfig);

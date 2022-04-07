@@ -1,23 +1,16 @@
-import React, { FC } from 'react'
-import ReactDom from 'react-dom'
-// import { Provider } from 'react-redux'
-// import dva from '@/utils/dva'
-import { BrowserRouter } from 'react-router-dom'
+import React from 'react';
+import ReactDom from 'react-dom';
+import { Provider } from 'react-redux';
+import dva from '@/utils/dva';
+import { BrowserRouter } from 'react-router-dom';
+import './index.less';
 
-// const App: FC = () => {
-//     const app = dva()
-//     const store = app._store
-
-//     return <Provider store={store}>app</Provider>
-// }
-
-const App: FC = () => {
-    return <>app</>
-}
+const app = dva();
+const store = app._store;
 
 ReactDom.render(
     <BrowserRouter>
-        <App />
+        <Provider store={store}>app</Provider>
     </BrowserRouter>,
-    document.getElementById('root')
-)
+    document.getElementById('root'),
+);

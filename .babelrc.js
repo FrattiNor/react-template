@@ -1,19 +1,14 @@
-const isDev = process.env.NODE_ENV === 'development'
+const isDev = process.env.NODE_ENV === 'development';
 
-const presets = ['@babel/preset-env', '@babel/preset-typescript', '@babel/preset-react']
+const presets = ['@babel/preset-env', '@babel/preset-typescript', '@babel/preset-react'];
 
 const plugins = [
-    // [
-    //     '@babel/plugin-transform-runtime', // 动态导入polyfill
-    //     {
-    //         corejs: 3
-    //     }
-    // ],
-    ['import', { libraryName: 'antd', libraryDirectory: 'es', style: true }, 'antd']
-]
+    ['@babel/plugin-transform-runtime', { corejs: 3 }], // 动态导入polyfill
+    ['import', { libraryName: 'antd', libraryDirectory: 'es', style: true }, 'antd'],
+];
 
 if (isDev) {
-    plugins.push('react-refresh/babel')
+    plugins.push('react-refresh/babel');
 }
 
-module.exports = { presets, plugins }
+module.exports = { presets, plugins };
