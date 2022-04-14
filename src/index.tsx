@@ -10,7 +10,7 @@ const store = app._store;
 
 ReactDom.render(
     <BrowserRouter>
-        <Provider store={store}>app</Provider>
+        <Provider store={store}>app[test]</Provider>
     </BrowserRouter>,
     document.getElementById('root'),
 );
