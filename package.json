@@ -57,6 +57,9 @@
         "webpack-merge": "^5.8.0"
     },
     "dependencies": {
+        "@types/react": "^18.0.6",
+        "@types/react-redux": "^7.1.24",
+        "@types/react-router-dom": "^5.3.3",
         "dva-core": "^2.0.4",
         "dva-loading": "^3.0.22",
         "react": "^17.0.2",

@@ -41,7 +41,7 @@ const devConfig = (port) => ({
     devServer: {
         host: 'local-ip',
         port,
-        compress: true,
+        compress: false,
         historyApiFallback: {
             htmlAcceptHeaders: ['text/html'],
         },
