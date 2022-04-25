@@ -14,8 +14,6 @@ const devConfig = (port) => ({
     devtool: 'eval-cheap-module-source-map',
     stats: 'errors-only',
     plugins: [
-        // 热加载插件，用于启用局部模块热重载方便我们开发
-        new webpack.HotModuleReplacementPlugin(),
         // react 热加载
         new ReactRefreshPlugin({
             exclude: /node_modules/,
@@ -37,16 +35,20 @@ const devConfig = (port) => ({
             },
         }),
     ],
+    optimization: {
+        // 不添加影响热更新
+        runtimeChunk: 'single',
+    },
     // node 本地服务器配置
     devServer: {
         host: 'local-ip',
         port,
-        compress: false,
+        compress: true,
         historyApiFallback: {
             htmlAcceptHeaders: ['text/html'],
         },
         client: {
-            progress: true,
+            progress: false,
             overlay: {
                 //当出现编译器错误或警告时，就在网页上显示一层黑色的背景层和错误信息
                 errors: true,
