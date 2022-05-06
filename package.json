@@ -26,7 +26,10 @@
         "@types/jest": "^27.4.1",
         "@types/mockjs": "^1.0.6",
         "@types/node": "^17.0.23",
+        "@types/react": "^17.0.39",
         "@types/react-dom": "^17.0.14",
+        "@types/react-redux": "^7.1.24",
+        "@types/react-router-dom": "^5.3.3",
         "@umijs/fabric": "^2.10.2",
         "autoprefixer": "^10.4.4",
         "babel-loader": "^8.2.4",
@@ -57,9 +60,6 @@
         "webpack-merge": "^5.8.0"
     },
     "dependencies": {
-        "@types/react": "^18.0.6",
-        "@types/react-redux": "^7.1.24",
-        "@types/react-router-dom": "^5.3.3",
         "dva-core": "^2.0.4",
         "dva-loading": "^3.0.22",
         "react": "^17.0.2",
