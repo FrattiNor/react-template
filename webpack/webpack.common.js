@@ -38,9 +38,9 @@ const config = ({ isDev }) => ({
         ...(isDev ? { mock: path.join(__dirname, '../mock/index.ts') } : {}),
     },
     output: {
-        filename: isDev ? 'js/[name].bundle.js' : 'js/[name].[contenthash:8].bundle.js',
-        chunkFilename: isDev ? 'js/[name].chunk.js' : 'js/[name].[contenthash:8].chunk.js',
-        assetModuleFilename: isDev ? 'assets/[hash][ext][query]' : 'assets/[hash][ext][query]',
+        filename: 'js/[name].[contenthash:8].bundle.js',
+        chunkFilename: 'js/[name].[contenthash:8].chunk.js',
+        assetModuleFilename: 'assets/[hash][contenthash:8][query]',
         path: path.join(__dirname, '../dist'),
         publicPath: '/',
         clean: true,
@@ -57,14 +57,14 @@ const config = ({ isDev }) => ({
                 test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
                 type: 'asset/resource',
                 generator: {
-                    filename: 'assets/images/[hash][ext][query]',
+                    filename: 'assets/[contenthash:8][ext]',
                 },
             },
             {
                 test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
                 type: 'asset/resource',
                 generator: {
-                    filename: 'assets/fonts/[hash][ext][query]',
+                    filename: 'assets/[contenthash:8][ext]',
                 },
             },
             {

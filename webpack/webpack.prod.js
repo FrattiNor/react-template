@@ -25,8 +25,8 @@ const prodConfig = {
         new MiniCssExtractPlugin({
             // Options similar to the same options in webpackOptions.output
             // both options are optional
-            filename: 'css/[name].[contenthash].css',
-            chunkFilename: 'css/[name].[id].[contenthash].css',
+            filename: 'css/[name].[contenthash:8].bundle.css',
+            chunkFilename: 'css/[name].[id].[contenthash:8].chunk.css',
             ignoreOrder: true,
         }),
     ],
@@ -52,11 +52,13 @@ const prodConfig = {
             automaticNameDelimiter: '-',
             cacheGroups: {
                 vendors: {
+                    filename: 'js/[name].[contenthash:8].vendors.js',
                     test: /[\\/]node_modules[\\/]/,
                     priority: 10,
                     reuseExistingChunk: true,
                 },
                 default: {
+                    filename: 'js/[name].[contenthash:8].common.js',
                     minSize: 0,
                     minChunks: 2,
                     priority: 5,
