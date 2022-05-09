@@ -2,9 +2,8 @@ const { merge } = require('webpack-merge');
 const baseConfig = require('./webpack.common');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
-const ScriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin');
 const path = require('path');
 
 const prodConfig = {
@@ -26,23 +25,16 @@ const prodConfig = {
         new MiniCssExtractPlugin({
             // Options similar to the same options in webpackOptions.output
             // both options are optional
-            filename: 'common/css/[name].[contenthash].css',
-            chunkFilename: 'common/css/[name].[id].[contenthash].css',
+            filename: 'css/[name].[contenthash].css',
+            chunkFilename: 'css/[name].[id].[contenthash].css',
             ignoreOrder: true,
         }),
-        // 注意一定要在HtmlWebpackPlugin之后引用
-        // inline 的name 和你 runtimeChunk 的 name保持一致
-        new ScriptExtHtmlWebpackPlugin({
-            inline: /runtime\..*\.js$/,
-        }),
-        // webpack打包之后输出文件的大小占比
-        // new BundleAnalyzerPlugin(),
     ],
     optimization: {
         // 性能配置
         minimizer: [
             // 打包时优化压缩css代码
-            new OptimizeCssAssetsPlugin(),
+            new CssMinimizerPlugin(),
             // 打包时优化压缩js代码
             new TerserPlugin({
                 extractComments: false, // 取消打包生产的LICENSE文件
@@ -60,16 +52,14 @@ const prodConfig = {
             automaticNameDelimiter: '-',
             cacheGroups: {
                 vendors: {
-                    name: 'vendors',
-                    enforce: true,
                     test: /[\\/]node_modules[\\/]/,
                     priority: 10,
+                    reuseExistingChunk: true,
                 },
                 default: {
-                    name: 'common',
                     minSize: 0,
-                    minChunks: 3,
-                    priority: 10,
+                    minChunks: 2,
+                    priority: 5,
                     reuseExistingChunk: true,
                 },
             },

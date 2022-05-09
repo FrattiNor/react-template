@@ -38,9 +38,9 @@ const config = ({ isDev }) => ({
         ...(isDev ? { mock: path.join(__dirname, '../mock/index.ts') } : {}),
     },
     output: {
-        filename: isDev ? 'js/[name].bundle.js' : 'common/js/[name].[contenthash:8].bundle.js',
-        chunkFilename: isDev ? 'js/[name].chunk.js' : 'common/js/[name].[contenthash:8].chunk.js',
-        assetModuleFilename: isDev ? 'assets/[hash][ext][query]' : 'common/assets/[hash][ext][query]',
+        filename: isDev ? 'js/[name].bundle.js' : 'js/[name].[contenthash:8].bundle.js',
+        chunkFilename: isDev ? 'js/[name].chunk.js' : 'js/[name].[contenthash:8].chunk.js',
+        assetModuleFilename: isDev ? 'assets/[hash][ext][query]' : 'assets/[hash][ext][query]',
         path: path.join(__dirname, '../dist'),
         publicPath: '/',
         clean: true,
