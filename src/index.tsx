@@ -1,16 +1,16 @@
 import React from 'react';
 import ReactDom from 'react-dom';
 import { Provider } from 'react-redux';
-import dva from '@/utils/dva';
 import { BrowserRouter } from 'react-router-dom';
+import Route from './route';
+import store from './store';
 import './index.less';
-
-const app = dva();
-const store = app._store;
 
 ReactDom.render(
     <BrowserRouter>
-        <Provider store={store}>app[test]</Provider>
+        <Provider store={store}>
+            <Route />
+        </Provider>
     </BrowserRouter>,
     document.getElementById('root'),
 );
