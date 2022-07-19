@@ -41,7 +41,7 @@ const devConfig = (port) => ({
     },
     // node 本地服务器配置
     devServer: {
-        host: 'local-ip',
+        host: '0.0.0.0',
         port,
         compress: true,
         historyApiFallback: {
@@ -56,7 +56,7 @@ const devConfig = (port) => ({
             },
         },
         hot: true, // 热加载
-        open: true, // 打开页面
+        open: `http://127.0.0.1:${port}`, // 打开页面
         proxy: {
             '/msc': {
                 target: proxyAddress,
