@@ -2,7 +2,7 @@ const webpack = require('webpack');
 const { merge } = require('webpack-merge');
 const baseConfig = require('./webpack.common');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin');
+const FriendlyErrorsWebpackPlugin = require('@soda/friendly-errors-webpack-plugin');
 const ReactRefreshPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
 const portfinder = require('portfinder');
 const path = require('path');
@@ -12,7 +12,6 @@ const devConfig = (port) => ({
     mode: 'development',
     cache: { type: 'memory' },
     devtool: 'eval-cheap-module-source-map',
-    stats: 'errors-only',
     plugins: [
         // react 热加载
         new ReactRefreshPlugin({
@@ -48,6 +47,7 @@ const devConfig = (port) => ({
             htmlAcceptHeaders: ['text/html'],
         },
         client: {
+            logging: 'error',
             progress: false,
             overlay: {
                 //当出现编译器错误或警告时，就在网页上显示一层黑色的背景层和错误信息
@@ -58,13 +58,7 @@ const devConfig = (port) => ({
         hot: true, // 热加载
         open: `http://127.0.0.1:${port}`, // 打开页面
         proxy: {
-            '/msc': {
-                target: proxyAddress,
-                changeOrigin: true,
-                secure: false,
-                pathRewrite: { '^': '' },
-            },
-            '/auth': {
+            '/api': {
                 target: proxyAddress,
                 changeOrigin: true,
                 secure: false,
@@ -72,6 +66,10 @@ const devConfig = (port) => ({
             },
         },
     },
+    infrastructureLogging: {
+        level: 'none',
+    },
+    stats: 'errors-warnings',
 });
 
 const getDevConfig = new Promise((res, rej) => {

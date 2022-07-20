@@ -1,5 +1,5 @@
 const path = require('path');
-const ProgressBarPlugin = require('progress-bar-webpack-plugin');
+const WebpackBar = require('webpackbar');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 const cssUse = (endLoader) => [endLoader, 'css-loader'];
@@ -105,7 +105,7 @@ const config = ({ isDev }) => ({
     },
     plugins: [
         // 打包📦进度条
-        new ProgressBarPlugin(),
+        new WebpackBar(),
     ],
 });
 

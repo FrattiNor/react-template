@@ -7,12 +7,10 @@ import store from './store';
 import './index.less';
 
 ReactDom.render(
-    <React.StrictMode>
-        <BrowserRouter>
-            <Provider store={store}>
-                <Route />
-            </Provider>
-        </BrowserRouter>
-    </React.StrictMode>,
+    <BrowserRouter>
+        <Provider store={store}>
+            <Route />
+        </Provider>
+    </BrowserRouter>,
     document.getElementById('root'),
 );
