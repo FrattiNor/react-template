@@ -1,3 +1,4 @@
-declare module '*.less';
-declare module 'dva-core';
-declare module 'dva-loading';
+declare module '*.less' {
+    const classes: Readonly<Record<string, string>>;
+    export default classes;
+}
