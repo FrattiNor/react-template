@@ -1,25 +1,23 @@
 {
     "compilerOptions": {
-        "outDir": "build/dist",
-        "module": "esnext",
-        "target": "esnext",
-        "lib": ["esnext", "dom"],
-        "sourceMap": true,
-        "baseUrl": ".",
-        "jsx": "react",
+        "module": "ESNext", // 模块 影响导入模块时的解析 https://www.typescriptlang.org/zh/tsconfig#module
+        "moduleResolution": "Node",
+        "target": "ES5", // 编译目标 https://www.typescriptlang.org/zh/tsconfig#target
+        "lib": ["ESNext", "DOM"], // 库
+        "jsx": "react-jsx",
         "allowSyntheticDefaultImports": true,
-        "moduleResolution": "node",
         "forceConsistentCasingInFileNames": true,
+        "resolveJsonModule": true,
         "noImplicitReturns": true,
-        "suppressImplicitAnyIndexErrors": true,
         "noUnusedLocals": true,
-        "allowJs": true,
+        "allowJs": false,
         "skipLibCheck": true,
-        "experimentalDecorators": true,
         "strict": true,
+        "isolatedModules": true,
+        "noEmit": true,
         "paths": {
             "@/*": ["./src/*"]
         }
     },
-    "exclude": ["node_modules", "build", "dist", "scripts", "webpack", "jest"]
+    "include": ["src/**/*"]
 }

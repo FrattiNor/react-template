@@ -1,6 +1,6 @@
 const isDev = process.env.NODE_ENV === 'development';
 
-const presets = ['@babel/preset-env', '@babel/preset-typescript', '@babel/preset-react'];
+const presets = ['@babel/preset-env', '@babel/preset-typescript', ['@babel/preset-react', { runtime: 'automatic' }]];
 
 const plugins = [
     ['@babel/plugin-transform-runtime', { corejs: 3 }], // 动态导入polyfill

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { useSelector, useDispatch } from '@/store';
 import { incrementByAmount } from '@/store/reducer/counter';
 
@@ -14,7 +14,7 @@ const App = () => {
         dispatch(incrementByAmount(2));
     };
 
-    return <div onClick={add}>App</div>;
+    return <div onClick={add}>123</div>;
 };
 
 export default App;
