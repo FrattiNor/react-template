@@ -50,18 +50,19 @@ const prodConfig = {
             // 将多入口的公共部分单独打包
             chunks: 'all',
             automaticNameDelimiter: '-',
+            maxSize: 200 * 1024, // 200kb
+            minSize: 10 * 1024, // 10kb
             cacheGroups: {
-                vendors: {
+                defaultVendors: {
                     filename: 'js/[name].[contenthash:8].vendors.js',
                     test: /[\\/]node_modules[\\/]/,
-                    priority: 10,
+                    priority: -10,
                     reuseExistingChunk: true,
                 },
                 default: {
                     filename: 'js/[name].[contenthash:8].common.js',
-                    minSize: 0,
                     minChunks: 2,
-                    priority: 5,
+                    priority: -20,
                     reuseExistingChunk: true,
                 },
             },
