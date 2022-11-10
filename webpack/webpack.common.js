@@ -35,7 +35,6 @@ const config = ({ isDev }) => ({
     // 入口
     entry: {
         main: path.join(__dirname, '../src/index.tsx'),
-        // ...(isDev ? { mock: path.join(__dirname, '../mock/index.ts') } : {}),
     },
     output: {
         filename: 'js/[name].[contenthash:8].bundle.js',
