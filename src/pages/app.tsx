@@ -1,4 +1,5 @@
 import { useEffect, useRef } from 'react';
+import { fabric } from 'fabric';
 import Editor from './editor';
 import styles from './app.less';
 
@@ -8,6 +9,17 @@ const App = () => {
     useEffect(() => {
         if (ref.current) {
             const editor = new Editor(ref.current);
+
+            // 矩形
+            const rect = new fabric.Rect({
+                width: 100,
+                height: 100,
+                left: 100,
+                top: 100,
+                fill: 'pink',
+            });
+
+            editor.canvas.add(rect);
 
             return () => {
                 editor.destroy();
