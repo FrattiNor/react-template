@@ -19,7 +19,15 @@ const App = () => {
                 fill: 'pink',
             });
 
-            editor.canvas.add(rect);
+            const rect2 = new fabric.Rect({
+                width: 100,
+                height: 100,
+                left: 200,
+                top: 200,
+                fill: 'red',
+            });
+
+            editor.canvas.add(rect, rect2);
 
             return () => {
                 editor.destroy();

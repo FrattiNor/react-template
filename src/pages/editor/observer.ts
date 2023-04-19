@@ -17,6 +17,7 @@ class Observer {
             entries.forEach((entry) => {
                 const { height, width } = entry.contentRect;
                 canvas.setDimensions({ width, height });
+                canvas.renderAll();
             });
         });
 
