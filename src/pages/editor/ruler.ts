@@ -1,149 +1,151 @@
 import type Editor from './editor';
-import { fabric } from 'fabric';
+import { drawLine, drawMask, drawRect, drawText, getGap } from './rulerUtils';
 
 type Vpt = [number, number, number, number, number, number];
 
 class Ruler {
     constructor(editor: Editor) {
         this.editor = editor;
-        this.rulerGroup = null;
         this.visible = false;
         this.backgroundColor = '#fff';
         this.textColor = '#888';
         this.highlightColor = '#007fff';
+        this.borderColor = '#ddd';
         this.size = 20;
         this.maskAddSize = 10;
-        this.gapSize = 100;
-        this.vpt = [1, 0, 0, 1, 0, 0];
+        this.fontSize = 12;
+
+        this.offsetX = this.size;
+        this.offsetY = this.size;
+        this.vpt = (this.editor.canvas.viewportTransform as Vpt) || [1, 0, 0, 1, 0, 0];
+        this.width = this.editor.canvas.width || 0;
+        this.height = this.editor.canvas.width || 0;
     }
 
     editor: Editor;
-    rulerGroup: fabric.Group | null;
-    visible: boolean;
-    backgroundColor: string;
-    textColor: string;
-    highlightColor: string;
-    size: number;
-    maskAddSize: number;
-    gapSize: number;
-    vpt: Vpt;
+    visible: boolean; // 是否显示
+    backgroundColor: string; // 背景色
+    textColor: string; // 字体色
+    highlightColor: string; // 高亮色
+    borderColor: string; // 边框色
+    size: number; // 尺子尺寸
+    maskAddSize: number; // 遮罩额外尺寸
+    fontSize: number; // 字体大小
 
-    compareVpt(vpt1: Vpt, vpt2: Vpt) {
-        if (vpt1[0] !== vpt2[0] || vpt1[1] !== vpt2[1] || vpt1[2] !== vpt2[2] || vpt1[3] !== vpt2[3] || vpt1[4] !== vpt2[4] || vpt1[5] !== vpt2[5]) {
-            return true;
+    offsetY: number; // 纵向偏移量
+    offsetX: number; // 横向偏移量
+    vpt: Vpt;
+    width: number;
+    height: number;
+
+    eventHandlers = {
+        afterRender: this.afterRender.bind(this),
+    };
+
+    afterRender() {
+        const width = this.editor.canvas.width || 0;
+        const height = this.editor.canvas.height || 0;
+        const vpt = this.editor.canvas.viewportTransform as Vpt;
+        this.vpt = vpt;
+        this.width = width;
+        this.height = height;
+        this.draw();
+    }
+
+    draw() {
+        const ctx = this.editor.canvas.getContext();
+        const zoom = this.vpt[0];
+        const x = this.vpt[4];
+        const y = this.vpt[5];
+        const gap = getGap(zoom);
+        // 横向尺子
+        drawRect(ctx, {
+            left: this.size,
+            top: 0,
+            width: this.width - this.size,
+            height: this.size,
+            fill: this.backgroundColor,
+            stroke: this.borderColor,
+        });
+        const hStart = -((x + this.offsetX) / zoom);
+        const hLength = this.width / zoom;
+        const hStartValue = Math[hStart > 0 ? 'floor' : 'ceil'](hStart / gap) * gap;
+        for (let i = hStartValue; i < hLength + hStart; i += gap) {
+            drawLine(ctx, {
+                left: (i - hStart) * zoom,
+                top: (this.size * 2) / 3,
+                width: 0,
+                height: this.size / 3,
+                stroke: this.textColor,
+            });
+            drawText(ctx, {
+                text: `${i}`,
+                left: (i - hStart) * zoom,
+                top: 2,
+                fill: this.textColor,
+                fontSize: this.fontSize,
+                align: 'center',
+            });
         }
-        return false;
+
+        // 纵向尺子
+        drawRect(ctx, {
+            left: 0,
+            top: this.size,
+            width: this.size,
+            height: this.height,
+            fill: this.backgroundColor,
+            stroke: this.borderColor,
+        });
+        const vStart = -((y + this.offsetY) / zoom);
+        const vLength = this.height / zoom;
+        const vStartValue = Math[vStart > 0 ? 'floor' : 'ceil'](vStart / gap) * gap;
+        for (let i = vStartValue; i < vLength + vStart; i += gap) {
+            drawLine(ctx, {
+                left: (this.size * 2) / 3,
+                top: (i - vStart) * zoom + 1,
+                width: this.size / 3,
+                height: 0,
+                stroke: this.textColor,
+            });
+            drawText(ctx, {
+                text: `${i}`,
+                left: 2,
+                top: (i - vStart) * zoom,
+                fill: this.textColor,
+                fontSize: this.fontSize,
+                align: 'center',
+                angle: -90,
+            });
+        }
+
+        // 左上角遮罩
+        drawMask(ctx, {
+            isHorizontal: true,
+            left: -this.maskAddSize,
+            top: -this.maskAddSize,
+            width: this.size + this.maskAddSize * 2,
+            height: this.size + this.maskAddSize,
+            backgroundColor: this.backgroundColor,
+        });
+        drawMask(ctx, {
+            isHorizontal: false,
+            left: -this.maskAddSize,
+            top: -this.maskAddSize,
+            width: this.size + this.maskAddSize,
+            height: this.size + this.maskAddSize * 2,
+            backgroundColor: this.backgroundColor,
+        });
     }
 
     enable() {
-        if (this.rulerGroup === null) {
-            const width = this.editor.canvas.width ?? 0;
-            const height = this.editor.canvas.height ?? 0;
-
-            // 横向尺
-            const hRuler = new fabric.Rect({
-                top: 0,
-                left: this.size,
-                width: width - this.size,
-                height: this.size,
-                fill: this.backgroundColor,
-            });
-
-            // 纵向尺
-            const vRuler = new fabric.Rect({
-                top: this.size,
-                left: 0,
-                width: this.size,
-                height: height - this.size,
-                fill: this.backgroundColor,
-            });
-
-            // 横向遮挡
-            const hMask = new fabric.Rect({
-                top: -this.maskAddSize,
-                left: -this.maskAddSize,
-                width: 2 * this.maskAddSize + this.size,
-                height: this.maskAddSize + this.size,
-                fill: this.backgroundColor,
-            });
-
-            // 纵向遮挡
-            const vMask = new fabric.Rect({
-                top: -this.maskAddSize,
-                left: -this.maskAddSize,
-                width: this.maskAddSize + this.size,
-                height: 2 * this.maskAddSize + this.size,
-                fill: this.backgroundColor,
-            });
-
-            // 横标尺刻度线
-            const hScalesMarks = [];
-            for (let j = this.size + 1; j < width - this.size; j += this.gapSize) {
-                hScalesMarks.push(
-                    new fabric.Line([j, this.size, j, (this.size * 2) / 3], {
-                        stroke: this.textColor,
-                    }),
-                );
-            }
-
-            // 横标尺刻度线
-            const vScalesMarks = [];
-            for (let j = this.size + 1; j < height - this.size; j += this.gapSize) {
-                vScalesMarks.push(
-                    new fabric.Line([this.size, j, (this.size * 2) / 3, j], {
-                        stroke: this.textColor,
-                    }),
-                );
-            }
-
-            // 横标尺刻度
-            const hScales = [];
-            for (let j = this.size + 1; j < width - this.size; j += this.gapSize) {
-                hScales.push(
-                    new fabric.Text(`${Math.floor(j / this.gapSize) * this.gapSize}`, {
-                        top: (1 / 3) * this.size,
-                        left: j,
-                        fontSize: 10,
-                        originX: 'center',
-                        originY: 'center',
-                    }),
-                );
-            }
-
-            // 纵标尺刻度
-            const vScales = [];
-            for (let j = this.size + 1; j < height - this.size; j += this.gapSize) {
-                vScales.push(
-                    new fabric.Text(`${Math.floor(j / this.gapSize) * this.gapSize}`, {
-                        top: j,
-                        left: (1 / 3) * this.size,
-                        fontSize: 10,
-                        originY: 'center',
-                        originX: 'center',
-                        angle: -90,
-                    }),
-                );
-            }
-
-            this.rulerGroup = new fabric.Group([vMask, hMask, vRuler, hRuler, ...hScalesMarks, ...vScalesMarks, ...hScales, ...vScales], {
-                selectable: false,
-            });
-
-            this.editor.canvas.add(this.rulerGroup);
-
-            this.rulerGroup.bringToFront();
-
-            this.editor.canvas.on('after:render', () => {
-                const vpt = this.editor.canvas.viewportTransform as Vpt;
-                if (this.rulerGroup && vpt && this.compareVpt(vpt, this.vpt)) {
-                    this.vpt = vpt;
-                    this.editor.canvas.requestRenderAll();
-                }
-            });
-        }
+        this.editor.canvas.on('after:render', this.eventHandlers.afterRender);
+        this.draw();
     }
 
-    disable() {}
+    disable() {
+        this.editor.canvas.off('after:render', this.eventHandlers.afterRender);
+    }
 }
 
 export default Ruler;
