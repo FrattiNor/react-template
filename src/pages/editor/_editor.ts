@@ -1,10 +1,11 @@
-import Controller from './controller';
+import ActiveHandler from './activeHandler';
+import ContextMenu from './contextMenu';
 import Guidelines from './guidelines2';
+import Controller from './controller';
 import Workspace from './workspace';
 import Alignment from './alignment';
 import Observer from './observer';
 import { fabric } from 'fabric';
-import ZIndex from './zIndex';
 import EEvent from './eEvent';
 import Ruler from './ruler';
 import Zoom from './zoom';
@@ -17,9 +18,13 @@ class Editor {
         this.canvas = new fabric.Canvas(element, {
             width: container?.clientWidth,
             height: container?.clientHeight,
+            fireRightClick: true, // 启用右键，button的数字为3
+            stopContextMenu: true, // 禁止默认右键菜单
+            controlsAboveOverlay: true, // 超出clipPath后仍然展示控制条
         });
 
         this.eEvent = new EEvent();
+        this.activeHandler = new ActiveHandler(this);
         this.ruler = new Ruler(this);
         this.ruler.enable();
         this.workspace = new Workspace(this);
@@ -35,10 +40,10 @@ class Editor {
         this.alignment.enable();
         this.controller = new Controller(this);
         this.controller.enable();
-        this.zIndex = new ZIndex(this);
-        this.zIndex.enable();
         this.observer = new Observer(this);
         this.observer.enable();
+        this.contextMenu = new ContextMenu(this);
+        this.contextMenu.enable();
     }
 
     canvas: fabric.Canvas;
@@ -51,9 +56,11 @@ class Editor {
     guidelines: Guidelines;
     alignment: Alignment;
     controller: Controller;
-    zIndex: ZIndex;
+    activeHandler: ActiveHandler;
+    contextMenu: ContextMenu;
 
     destroy() {
+        this.contextMenu.disable();
         this.observer.disable();
         this.canvas.dispose();
     }

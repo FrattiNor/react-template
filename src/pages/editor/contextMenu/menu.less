@@ -1,0 +1,49 @@
+.menu {
+    font-family: Helvetica Neue, Helvetica, PingFang SC, Hiragino Sans GB, Microsoft YaHei, Arial, sans-serif;
+    box-shadow: 0 8px 8px #00000014;
+    border: 1px solid #e8eaec;
+    background-color: #fff;
+    border-radius: 4px;
+    position: absolute;
+    overflow: hidden;
+    padding: 0 0;
+    width: 200px;
+
+    .menu-item {
+        padding: 6px 10px 6px 10px;
+        color: #33383e;
+        font-size: 14px;
+        cursor: pointer;
+
+        &:hover {
+            background-color: #e6f4ff;
+        }
+
+        .tip {
+            float: right;
+            color: #bdbdbd;
+        }
+
+        // 禁用
+        &.disabled {
+            cursor: not-allowed;
+            pointer-events: none;
+            color: rgba(0, 0, 0, 0.25) !important;
+            background-color: rgba(0, 0, 0, 0.04);
+
+            .tip {
+                float: right;
+                color: rgba(0, 0, 0, 0.25);
+            }
+        }
+    }
+
+    .menu-group {
+        border-top: 1px solid #e8eaec;
+        border-bottom: 1px solid #e8eaec;
+
+        & + .menu-group {
+            border-top: unset;
+        }
+    }
+}

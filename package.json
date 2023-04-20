@@ -58,6 +58,7 @@
     "dependencies": {
         "@reduxjs/toolkit": "^1.8.3",
         "@types/fabric": "^5.3.0",
+        "classnames": "^2.3.2",
         "fabric": "^5.3.0",
         "fabric-guideline-plugin": "^0.0.11",
         "react": "^18.2.0",

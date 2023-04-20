@@ -60,6 +60,7 @@ class Controller {
             cornerStyle: 'circle',
             cornerStrokeColor: '#0E98FC',
             borderOpacityWhenMoving: 1,
+            padding: 0,
         });
     }
     disable() {}
