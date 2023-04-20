@@ -1,2 +1,2 @@
-import Editor from './editor';
+import Editor from './_editor';
 export default Editor;

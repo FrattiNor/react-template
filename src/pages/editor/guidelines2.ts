@@ -1,5 +1,5 @@
 /* eslint-disable no-param-reassign */
-import type Editor from './editor';
+import type Editor from './_editor';
 import { fabric } from 'fabric';
 
 function initAligningGuidelines(canvas: fabric.Canvas) {
@@ -24,8 +24,8 @@ function initAligningGuidelines(canvas: fabric.Canvas) {
         ctx.lineWidth = aligningLineWidth;
         ctx.strokeStyle = aligningLineColor;
         ctx.beginPath();
-        ctx.moveTo((x1 + viewportTransform[4]) * zoom, (y1 + viewportTransform[5]) * zoom);
-        ctx.lineTo((x2 + viewportTransform[4]) * zoom, (y2 + viewportTransform[5]) * zoom);
+        ctx.moveTo(x1 * zoom + viewportTransform[4], y1 * zoom + viewportTransform[5]);
+        ctx.lineTo(x2 * zoom + viewportTransform[4], y2 * zoom + viewportTransform[5]);
         ctx.stroke();
         ctx.restore();
     }
@@ -155,8 +155,12 @@ function initAligningGuidelines(canvas: fabric.Canvas) {
     });
 
     canvas.on('before:render', function () {
-        // @ts-ignore
-        canvas.clearContext(canvas.contextTop);
+        try {
+            // @ts-ignore
+            canvas.clearContext(canvas.contextTop);
+        } catch (error) {
+            console.log(error);
+        }
     });
 
     canvas.on('after:render', function () {

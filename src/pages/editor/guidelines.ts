@@ -1,4 +1,4 @@
-import type Editor from './editor';
+import type Editor from './_editor';
 import { fabric } from 'fabric';
 
 type VLines = {

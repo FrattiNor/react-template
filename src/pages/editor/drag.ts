@@ -1,5 +1,5 @@
 import type { IEvent } from 'fabric/fabric-impl';
-import type Editor from './editor';
+import type Editor from './_editor';
 
 class Drag {
     constructor(editor: Editor) {

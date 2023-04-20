@@ -1,4 +1,4 @@
-import type Editor from './editor';
+import type Editor from './_editor';
 import { drawLine, drawMask, drawRect, drawText, getGap } from './rulerUtils';
 
 type Vpt = [number, number, number, number, number, number];

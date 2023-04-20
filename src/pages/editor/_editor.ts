@@ -20,16 +20,14 @@ class Editor {
         });
 
         this.eEvent = new EEvent();
-        this.observer = new Observer(this);
-        this.observer.enable();
+        this.ruler = new Ruler(this);
+        this.ruler.enable();
         this.workspace = new Workspace(this);
         this.workspace.enable();
         this.zoom = new Zoom(this);
         this.zoom.enable();
         this.drag = new Drag(this);
         this.drag.enable();
-        this.ruler = new Ruler(this);
-        this.ruler.enable();
         this.guidelines = new Guidelines(this);
         this.guidelines.enable();
         // this.guidelines.disable();
@@ -39,6 +37,8 @@ class Editor {
         this.controller.enable();
         this.zIndex = new ZIndex(this);
         this.zIndex.enable();
+        this.observer = new Observer(this);
+        this.observer.enable();
     }
 
     canvas: fabric.Canvas;

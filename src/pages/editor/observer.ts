@@ -1,4 +1,4 @@
-import type Editor from './editor';
+import type Editor from './_editor';
 
 class Observer {
     constructor(editor: Editor) {
@@ -11,12 +11,14 @@ class Observer {
 
     enable() {
         const canvas = this.editor.canvas as any;
+        const workspace = this.editor.workspace;
         const wrapper = canvas.wrapperEl as HTMLDivElement;
         const container = wrapper?.parentElement;
         this.ob = new ResizeObserver((entries) => {
             entries.forEach((entry) => {
                 const { height, width } = entry.contentRect;
                 canvas.setDimensions({ width, height });
+                workspace.autoZoom();
                 canvas.renderAll();
             });
         });

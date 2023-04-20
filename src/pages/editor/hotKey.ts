@@ -1,4 +1,4 @@
-import type Editor from './editor';
+import type Editor from './_editor';
 
 class HotKey {
     constructor(editor: Editor) {
