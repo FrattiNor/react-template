@@ -1,17 +1,20 @@
+import Controller from './controller';
+import Guidelines from './guidelines2';
+import Workspace from './workspace';
+import Alignment from './alignment';
 import Observer from './observer';
 import { fabric } from 'fabric';
+import ZIndex from './zIndex';
 import EEvent from './eEvent';
 import Ruler from './ruler';
 import Zoom from './zoom';
 import Drag from './drag';
-import Workspace from './workspace';
-import Guidelines from './guidelines';
 
 class Editor {
-    constructor(canvas: HTMLCanvasElement) {
-        const container = canvas.parentElement;
+    constructor(element: HTMLCanvasElement) {
+        const container = element.parentElement;
 
-        this.canvas = new fabric.Canvas(canvas, {
+        this.canvas = new fabric.Canvas(element, {
             width: container?.clientWidth,
             height: container?.clientHeight,
         });
@@ -29,6 +32,13 @@ class Editor {
         this.ruler.enable();
         this.guidelines = new Guidelines(this);
         this.guidelines.enable();
+        // this.guidelines.disable();
+        this.alignment = new Alignment(this);
+        this.alignment.enable();
+        this.controller = new Controller(this);
+        this.controller.enable();
+        this.zIndex = new ZIndex(this);
+        this.zIndex.enable();
     }
 
     canvas: fabric.Canvas;
@@ -39,6 +49,9 @@ class Editor {
     drag: Drag;
     workspace: Workspace;
     guidelines: Guidelines;
+    alignment: Alignment;
+    controller: Controller;
+    zIndex: ZIndex;
 
     destroy() {
         this.observer.disable();

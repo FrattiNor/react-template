@@ -10,7 +10,14 @@ const App = () => {
         if (ref.current) {
             const editor = new Editor(ref.current);
 
-            // 矩形
+            const rect0 = new fabric.Rect({
+                width: 100,
+                height: 100,
+                left: 0,
+                top: 0,
+                fill: 'green',
+            });
+
             const rect = new fabric.Rect({
                 width: 100,
                 height: 100,
@@ -20,14 +27,14 @@ const App = () => {
             });
 
             const rect2 = new fabric.Rect({
-                width: 100,
-                height: 100,
+                width: 200,
+                height: 200,
                 left: 200,
                 top: 200,
                 fill: 'red',
             });
 
-            editor.canvas.add(rect, rect2);
+            editor.canvas.add(rect0, rect, rect2);
 
             return () => {
                 editor.destroy();

@@ -21,9 +21,11 @@ class Drag {
     };
 
     mouseDown(opt: IEvent<MouseEvent>) {
+        const canvas = this.editor.canvas;
         const evt = opt.e;
         if (evt.altKey === true) {
             this.isDragging = true;
+            canvas.selection = false;
             this.lastPosX = evt.clientX;
             this.lastPosY = evt.clientY;
         }
@@ -46,6 +48,9 @@ class Drag {
     }
 
     mouseUp() {
+        const canvas = this.editor.canvas;
+        canvas.setViewportTransform(canvas.viewportTransform as any);
+        canvas.selection = true;
         this.isDragging = false;
     }
 

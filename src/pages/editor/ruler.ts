@@ -54,10 +54,12 @@ class Ruler {
 
     draw() {
         const ctx = this.editor.canvas.getContext();
-        const zoom = this.vpt[0];
+        const hZoom = this.vpt[0];
+        const vZoom = this.vpt[3];
         const x = this.vpt[4];
         const y = this.vpt[5];
-        const gap = getGap(zoom);
+        const hGap = getGap(hZoom);
+        const vGap = getGap(vZoom);
         // 横向尺子
         drawRect(ctx, {
             left: this.size,
@@ -67,12 +69,12 @@ class Ruler {
             fill: this.backgroundColor,
             stroke: this.borderColor,
         });
-        const hStart = -((x + this.offsetX) / zoom);
-        const hLength = this.width / zoom;
-        const hStartValue = Math[hStart > 0 ? 'floor' : 'ceil'](hStart / gap) * gap;
-        for (let i = hStartValue; i < hLength + hStart; i += gap) {
+        const hStart = -((x + this.offsetX) / hZoom);
+        const hLength = this.width / hZoom;
+        const hStartValue = Math[hStart > 0 ? 'floor' : 'ceil'](hStart / hGap) * hGap;
+        for (let i = hStartValue; i < hLength + hStart; i += hGap) {
             drawLine(ctx, {
-                left: (i - hStart) * zoom,
+                left: (i - hStart) * hZoom,
                 top: (this.size * 2) / 3,
                 width: 0,
                 height: this.size / 3,
@@ -80,7 +82,7 @@ class Ruler {
             });
             drawText(ctx, {
                 text: `${i}`,
-                left: (i - hStart) * zoom,
+                left: (i - hStart) * hZoom,
                 top: 2,
                 fill: this.textColor,
                 fontSize: this.fontSize,
@@ -97,13 +99,13 @@ class Ruler {
             fill: this.backgroundColor,
             stroke: this.borderColor,
         });
-        const vStart = -((y + this.offsetY) / zoom);
-        const vLength = this.height / zoom;
-        const vStartValue = Math[vStart > 0 ? 'floor' : 'ceil'](vStart / gap) * gap;
-        for (let i = vStartValue; i < vLength + vStart; i += gap) {
+        const vStart = -((y + this.offsetY) / vZoom);
+        const vLength = this.height / vZoom;
+        const vStartValue = Math[vStart > 0 ? 'floor' : 'ceil'](vStart / vGap) * vGap;
+        for (let i = vStartValue; i < vLength + vStart; i += vGap) {
             drawLine(ctx, {
                 left: (this.size * 2) / 3,
-                top: (i - vStart) * zoom + 1,
+                top: (i - vStart) * vZoom + 1,
                 width: this.size / 3,
                 height: 0,
                 stroke: this.textColor,
@@ -111,7 +113,7 @@ class Ruler {
             drawText(ctx, {
                 text: `${i}`,
                 left: 2,
-                top: (i - vStart) * zoom,
+                top: (i - vStart) * vZoom,
                 fill: this.textColor,
                 fontSize: this.fontSize,
                 align: 'center',
