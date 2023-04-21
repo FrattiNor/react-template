@@ -62,7 +62,6 @@ class ContextMenu {
     disable() {
         this.editor.canvas.off('mouse:down', this.eventHandlers.mouseDown as any);
         this.editor.canvas.off('mouse:wheel', this.eventHandlers.mouseWheel as any);
-        this.root.unmount();
     }
 }
 

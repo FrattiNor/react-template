@@ -1,7 +1,7 @@
+/* eslint-disable react/no-array-index-key */
 import { Fragment, useEffect, useRef, useState } from 'react';
 import type { CSSProperties, FC } from 'react';
 import type Editor from '../_editor';
-import classNames from 'classnames';
 import styles from './menu.less';
 
 type Props = {
@@ -23,6 +23,7 @@ type MenuGroup = {
     type: 'group';
     key: string;
     children: MenuItem[];
+    disabled?: boolean;
 };
 
 type Menus = MenuItem | MenuGroup;
@@ -32,10 +33,10 @@ const getMenu = (editor: Editor): Menus[] => [
         type: 'item',
         text: '复制',
         key: 'Copy',
-        disabled: !editor.activeHandler.canClone(),
+        disabled: !editor.handler.canCloneActive(),
         handler: () => {
             editor.contextMenu.hiddenMenu();
-            editor.activeHandler.clone();
+            editor.handler.cloneActive();
         },
     },
     {
@@ -46,20 +47,20 @@ const getMenu = (editor: Editor): Menus[] => [
                 type: 'item',
                 text: '组合',
                 key: 'Group',
-                disabled: !editor.activeHandler.canGroup(),
+                disabled: !editor.handler.canGroupActive(),
                 handler: () => {
                     editor.contextMenu.hiddenMenu();
-                    editor.activeHandler.group();
+                    editor.handler.groupActive();
                 },
             },
             {
                 type: 'item',
                 text: '拆分组合',
                 key: 'UnGroup',
-                disabled: !editor.activeHandler.canUnGroup(),
+                disabled: !editor.handler.canUnGroupActive(),
                 handler: () => {
                     editor.contextMenu.hiddenMenu();
-                    editor.activeHandler.unGroup();
+                    editor.handler.unGroupActive();
                 },
             },
         ],
@@ -67,45 +68,133 @@ const getMenu = (editor: Editor): Menus[] => [
     {
         type: 'group',
         key: 'zIndex',
+        disabled: !editor.handler.canUpActive(), // 能否移层的判断都是一致的
         children: [
             {
                 type: 'item',
                 text: '上移一层',
                 key: 'Up',
-                disabled: !editor.activeHandler.canUp(),
+                disabled: !editor.handler.canUpActive(),
                 handler: () => {
                     editor.contextMenu.hiddenMenu();
-                    editor.activeHandler.up();
+                    editor.handler.upActive();
                 },
             },
             {
                 type: 'item',
                 text: '下移一层',
                 key: 'Down',
-                disabled: !editor.activeHandler.canDown(),
+                disabled: !editor.handler.canDownActive(),
                 handler: () => {
                     editor.contextMenu.hiddenMenu();
-                    editor.activeHandler.down();
+                    editor.handler.downActive();
                 },
             },
             {
                 type: 'item',
                 text: '移到顶层',
                 key: 'Top',
-                disabled: !editor.activeHandler.canUpTop(),
+                disabled: !editor.handler.canUpTopActive(),
                 handler: () => {
                     editor.contextMenu.hiddenMenu();
-                    editor.activeHandler.upTop();
+                    editor.handler.upTopActive();
                 },
             },
             {
                 type: 'item',
                 text: '移到低层',
                 key: 'Bottom',
-                disabled: !editor.activeHandler.canDownTop(),
+                disabled: !editor.handler.canDownTopActive(),
                 handler: () => {
                     editor.contextMenu.hiddenMenu();
-                    editor.activeHandler.downTop();
+                    editor.handler.downTopActive();
+                },
+            },
+        ],
+    },
+    {
+        type: 'group',
+        key: 'align',
+        disabled: !editor.alignment.canAlign(),
+        children: [
+            {
+                type: 'item',
+                text: '左对齐',
+                key: 'Left',
+                disabled: !editor.alignment.canAlign(),
+                handler: () => {
+                    editor.contextMenu.hiddenMenu();
+                    editor.alignment.leftAlign();
+                },
+            },
+            {
+                type: 'item',
+                text: '右对齐',
+                key: 'Right',
+                disabled: !editor.alignment.canAlign(),
+                handler: () => {
+                    editor.contextMenu.hiddenMenu();
+                    editor.alignment.rightAlign();
+                },
+            },
+            {
+                type: 'item',
+                text: '顶部对齐',
+                key: 'Top',
+                disabled: !editor.alignment.canAlign(),
+                handler: () => {
+                    editor.contextMenu.hiddenMenu();
+                    editor.alignment.TopAlign();
+                },
+            },
+            {
+                type: 'item',
+                text: '底部对齐',
+                key: 'Bottom',
+                disabled: !editor.alignment.canAlign(),
+                handler: () => {
+                    editor.contextMenu.hiddenMenu();
+                    editor.alignment.BottomAlign();
+                },
+            },
+            {
+                type: 'item',
+                text: '水平居中',
+                key: 'XCenter',
+                disabled: !editor.alignment.canAlign(),
+                handler: () => {
+                    editor.contextMenu.hiddenMenu();
+                    editor.alignment.xCenterAlign();
+                },
+            },
+            {
+                type: 'item',
+                text: '垂直居中',
+                key: 'YCenter',
+                disabled: !editor.alignment.canAlign(),
+                handler: () => {
+                    editor.contextMenu.hiddenMenu();
+                    editor.alignment.yCenterAlign();
+                },
+            },
+            {
+                type: 'item',
+                text: '水平均分',
+                key: 'XAverage',
+                disabled: !editor.alignment.canAlign(),
+                handler: () => {
+                    editor.contextMenu.hiddenMenu();
+                    editor.alignment.xAverageAlign();
+                },
+            },
+            {
+                type: 'item',
+                text: '垂直均分',
+                key: 'YAverage',
+                disabled: !editor.alignment.canAlign(),
+                handler: () => {
+                    editor.contextMenu.hiddenMenu();
+                    editor.alignment.yAverageAlign();
                 },
             },
         ],
@@ -114,11 +203,11 @@ const getMenu = (editor: Editor): Menus[] => [
         type: 'item',
         text: '删除',
         key: 'Delete',
-        disabled: !editor.activeHandler.canDelete(),
+        disabled: !editor.handler.canDeleteActive(),
         style: { color: 'rgb(255,0,0)' },
         handler: () => {
             editor.contextMenu.hiddenMenu();
-            editor.activeHandler.delete();
+            editor.handler.deleteActive();
         },
     },
 ];
@@ -160,27 +249,31 @@ const Menu: FC<Props> = ({ x, y, editor }) => {
     }, [x, y]);
 
     const renderMenu = (m: Menus[]) => {
-        return m.map((item) => {
+        return m.map((item, i) => {
             switch (item.type) {
                 case 'group': {
                     const _item = item as MenuGroup;
-                    return (
-                        <div key={_item.key} className={styles['menu-group']}>
-                            {renderMenu(_item.children)}
-                        </div>
-                    );
+                    if (_item.disabled !== true) {
+                        return (
+                            <div key={_item.key} className={styles['menu-group']}>
+                                {renderMenu(_item.children)}
+                            </div>
+                        );
+                    }
                 }
                 case 'item': {
                     const _item = item as MenuItem;
-                    return (
-                        <div key={_item.key} className={classNames(styles['menu-item'], { [styles['disabled']]: _item.disabled })} onClick={_item.handler} style={_item.style}>
-                            <span className={styles['content']}>{_item.text}</span>
-                            <span className={styles['tip']}>{_item.key}</span>
-                        </div>
-                    );
+                    if (_item.disabled !== true) {
+                        return (
+                            <div key={_item.key} className={styles['menu-item']} onClick={_item.handler} style={_item.style}>
+                                <span className={styles['content']}>{_item.text}</span>
+                                <span className={styles['tip']}>{_item.key}</span>
+                            </div>
+                        );
+                    }
                 }
                 default:
-                    return <Fragment />;
+                    return <Fragment key={i} />;
             }
         });
     };

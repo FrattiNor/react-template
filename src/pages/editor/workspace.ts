@@ -7,22 +7,31 @@ class Workspace {
         this.height = 1080;
         this.width = 1920;
         this.padding = 40;
+        this.id = 'workspace';
         this.workspace = new fabric.Rect({
+            // @ts-ignore 自定义属性
+            id: this.id,
+            top: 0,
+            left: 0,
+            selectable: false,
             width: this.width,
             height: this.height,
-            left: 0,
-            top: 0,
-            fill: 'rgb(255,255,255)',
-            selectable: false,
             hoverCursor: 'default',
+            moveCursor: 'pointer',
+            fill: 'rgb(255,255,255)',
         });
     }
 
+    id: string;
     editor: Editor;
     workspace: fabric.Rect;
     width: number;
     height: number;
     padding: number;
+
+    getWorkspace() {
+        return this.editor.canvas.getObjects().find(({ id }: any) => id === this.id);
+    }
 
     autoZoom() {
         const canvasWidth = this.editor.canvas.width || 0;
