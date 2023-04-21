@@ -27,10 +27,10 @@ class ContextMenu {
     };
 
     mouseDown(e: IEvent<MouseEvent>) {
-        const canvas = this.editor.canvas;
-        const activeObject = canvas.getActiveObjects();
-        if (!activeObject.length) return this.hiddenMenu();
         if (e.button === 3 && e.target) {
+            const canvas = this.editor.canvas;
+            canvas.setActiveObject(e.target);
+            canvas.renderAll();
             const pointX = e.pointer?.x;
             const pointY = e.pointer?.y;
             if (pointX && pointY) {
@@ -60,6 +60,7 @@ class ContextMenu {
     }
 
     disable() {
+        this.hiddenMenu();
         this.editor.canvas.off('mouse:down', this.eventHandlers.mouseDown as any);
         this.editor.canvas.off('mouse:wheel', this.eventHandlers.mouseWheel as any);
     }

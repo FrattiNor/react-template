@@ -98,7 +98,13 @@ const App = () => {
                 <div className={styles['center']} id="center">
                     <canvas id="ccc" className={styles['canvas']} />
                 </div>
-                <div className={styles['right']} />
+                <div className={styles['right']}>
+                    <div className={styles['z-index']}>
+                        <div className={styles['title']}>
+                            <span className={styles['inner']}>图层</span>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     );

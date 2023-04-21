@@ -34,6 +34,26 @@ class EEvent {
         };
     }
 
+    off(key: string, value: () => void) {
+        const keys = this.getKey(key);
+
+        keys.forEach((_key) => {
+            // 判断是否之前存在事件
+            if (!this.listenQueen[_key]) this.listenQueen[_key] = [];
+            // 事件队列
+            const queen = this.listenQueen[_key];
+            // 找到对应的事件删除
+            queen.some((item, i) => {
+                if (item === value) {
+                    console.log('EEvent', i);
+                    queen[i] = null;
+                    return true;
+                }
+                return false;
+            });
+        });
+    }
+
     fire(key: string, ...rest: any) {
         const keys = this.getKey(key);
         keys.forEach((_key) => {

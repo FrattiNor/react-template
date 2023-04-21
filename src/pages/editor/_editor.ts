@@ -1,5 +1,5 @@
 import ContextMenu from './contextMenu';
-import Guidelines from './guidelines3';
+// import Guidelines from './guidelines3';
 import Controller from './controller';
 import Workspace from './workspace';
 import Alignment from './alignment';
@@ -13,6 +13,7 @@ import Zoom from './zoom';
 import Drag from './drag';
 import History from './history';
 import Drop from './drop';
+import Layer from './layer';
 
 class Editor {
     constructor(element: HTMLCanvasElement) {
@@ -53,6 +54,9 @@ class Editor {
         this.hotKey.enable();
         this.drop = new Drop(this);
         this.drop.enable();
+        this.layer = new Layer(this);
+        this.layer.enable();
+        this.layer.disable();
 
         // 挂载到windows
         (window as any)['__editor__'] = this;
@@ -73,6 +77,7 @@ class Editor {
     hotKey: HotKey;
     history: History;
     drop: Drop;
+    layer: Layer;
 
     toJSON() {
         return this.canvas.toJSON(['id', 'selectable', 'hoverCursor', 'perPixelTargetFind']);
