@@ -25,6 +25,10 @@ class Drop {
         }
     }
 
+    setDropItem(obj: fabric.Object | null) {
+        this.dropItem = obj;
+    }
+
     enable() {
         this.editor.canvas.on('drop', this.eventHandlers.drop);
     }

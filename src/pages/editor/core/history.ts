@@ -44,7 +44,7 @@ class History {
         if (this.canBack()) {
             this.index -= 1;
             this.needSave = false;
-            this.editor.canvas.loadFromJSON(this.history[this.index], () => {});
+            this.editor.loadFromJSON(this.history[this.index]);
             this.needSave = true;
         }
     }
@@ -58,7 +58,7 @@ class History {
         if (this.canNext()) {
             this.index += 1;
             this.needSave = false;
-            this.editor.canvas.loadFromJSON(this.history[this.index], () => {});
+            this.editor.loadFromJSON(this.history[this.index]);
             this.needSave = true;
         }
     }

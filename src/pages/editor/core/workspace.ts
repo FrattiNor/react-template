@@ -7,24 +7,13 @@ class Workspace {
         this.height = 1080;
         this.width = 1920;
         this.padding = 40;
-        this.id = 'workspace';
-        this.workspace = new fabric.Rect({
-            // @ts-ignore 自定义属性
-            id: this.id,
-            top: 0,
-            left: 0,
-            selectable: false,
-            width: this.width,
-            height: this.height,
-            hoverCursor: 'default',
-            moveCursor: 'pointer',
-            fill: 'rgb(255,255,255)',
-        });
+        this.customType = 'Workspace';
+        this.id = 'Workspace';
     }
 
     id: string;
+    customType: string;
     editor: Editor;
-    workspace: fabric.Rect;
     width: number;
     height: number;
     padding: number;
@@ -36,14 +25,15 @@ class Workspace {
     autoZoom() {
         const canvasWidth = this.editor.canvas.width || 0;
         const canvasHeight = this.editor.canvas.height || 0;
-        if (canvasWidth && canvasHeight) {
+        const workspace = this.getWorkspace();
+        if (canvasWidth && canvasHeight && workspace) {
             const zoom1 = (canvasWidth - 2 * this.padding) / this.width;
             const zoom2 = (canvasHeight - 2 * this.padding) / this.height;
-            const zoom = Math.min(zoom1, zoom2);
+            const zoom = Math.min(Math.min(zoom1, zoom2), 1);
             this.editor.canvas.setViewportTransform([1, 0, 0, 1, 0, 0]);
             const center = this.editor.canvas.getCenter();
             this.editor.canvas.zoomToPoint({ x: center.left, y: center.top }, zoom);
-            this.editor.canvas.centerObject(this.workspace);
+            this.editor.canvas.centerObject(workspace);
         }
     }
 
@@ -57,12 +47,28 @@ class Workspace {
     }
 
     enable() {
-        this.editor.canvas.add(this.workspace);
+        this.editor.canvas.add(
+            new fabric.Rect({
+                // @ts-ignore 自定义属性
+                id: this.id,
+                customType: this.customType,
+                top: 0,
+                left: 0,
+                selectable: false,
+                width: this.width,
+                height: this.height,
+                hoverCursor: 'default',
+                moveCursor: 'pointer',
+                fill: 'rgb(255,255,255)',
+            }),
+        );
+
         this.autoZoom();
     }
 
     disable() {
-        this.editor.canvas.remove(this.workspace);
+        const workspace = this.getWorkspace();
+        if (workspace) this.editor.canvas.remove(workspace);
     }
 }
 

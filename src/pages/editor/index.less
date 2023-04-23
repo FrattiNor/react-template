@@ -1,0 +1,70 @@
+.wrapper {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    min-height: 800px;
+    flex-direction: column;
+
+    // 滚动条样式
+    ::-webkit-scrollbar {
+        width: 10px;
+        height: 4px;
+    }
+
+    /* 滑块颜色 */
+    ::-webkit-scrollbar-thumb {
+        position: absolute;
+        background-color: var(--border-color);
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.2s;
+
+        &:hover {
+            background-color: var(--border-color);
+        }
+    }
+
+    .top {
+        height: 56px;
+        flex-shrink: 0;
+        border-bottom: 1px solid var(--border-color);
+    }
+
+    .content {
+        height: 0;
+        width: 100%;
+        flex-grow: 1;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        .left,
+        .right {
+            flex-shrink: 0;
+            width: 300px;
+            height: 100%;
+        }
+
+        .center {
+            width: 0;
+            height: 100%;
+            flex-grow: 1;
+            min-width: 500px;
+            overflow: hidden;
+            position: relative;
+            background-color: var(--canvas-bg);
+
+            &::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                z-index: 999;
+                box-shadow: 0 0 5px 5px rgba(0, 0, 0, 0.1) inset;
+                pointer-events: none;
+            }
+        }
+    }
+}

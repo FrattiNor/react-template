@@ -27,7 +27,7 @@ class HotKey {
             if (e.key === 'z' || e.code === 'KeyZ' || e.keyCode === 90) {
                 this.ctrlZ();
             }
-            if (e.key === 'x' || e.code === 'KeyX') {
+            if (e.key === 'x' || e.code === 'KeyX' || e.keyCode === 88) {
                 this.ctrlX();
             }
         }

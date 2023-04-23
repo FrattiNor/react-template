@@ -1,0 +1,30 @@
+.wrapper {
+    display: flex;
+    flex-direction: column;
+
+    .content {
+        height: 400px;
+        padding: 0 16px;
+        overflow-y: auto;
+        overflow-x: hidden;
+
+        .item {
+            cursor: pointer;
+            font-size: 12px;
+            overflow: hidden;
+            padding: 5px 10px;
+            border-radius: 4px;
+            text-overflow: ellipsis;
+            background-color: #f7f7f7;
+
+            &.active {
+                color: #2d8cf0;
+                background-color: #f0faff;
+            }
+
+            & + .item {
+                margin-top: 5px;
+            }
+        }
+    }
+}

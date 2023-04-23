@@ -21,37 +21,39 @@ class Drag {
     };
 
     mouseDown(opt: IEvent<MouseEvent>) {
-        const canvas = this.editor.canvas;
         const evt = opt.e;
         if (evt.altKey === true) {
             this.isDragging = true;
-            canvas.selection = false;
+            this.editor.canvas.selection = false;
             this.lastPosX = evt.clientX;
             this.lastPosY = evt.clientY;
         }
     }
 
     mouseMove(opt: IEvent<MouseEvent>) {
-        const canvas = this.editor.canvas;
         if (this.isDragging) {
             const e = opt.e;
+            const canvas = this.editor.canvas;
             const vpt = canvas.viewportTransform;
 
             if (vpt) {
                 vpt[4] += e.clientX - this.lastPosX;
                 vpt[5] += e.clientY - this.lastPosY;
-                canvas.requestRenderAll();
                 this.lastPosX = e.clientX;
                 this.lastPosY = e.clientY;
+                canvas.renderAll();
             }
         }
     }
 
     mouseUp() {
-        const canvas = this.editor.canvas;
-        canvas.setViewportTransform(canvas.viewportTransform as any);
-        canvas.selection = true;
-        this.isDragging = false;
+        if (this.isDragging) {
+            const canvas = this.editor.canvas;
+            canvas.selection = true;
+            this.isDragging = false;
+            canvas.setViewportTransform(canvas.viewportTransform as any);
+            canvas.renderAll();
+        }
     }
 
     enable() {

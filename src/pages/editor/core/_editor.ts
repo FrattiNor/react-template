@@ -4,16 +4,17 @@ import Controller from './controller';
 import Workspace from './workspace';
 import Alignment from './alignment';
 import Observer from './observer';
+import { nanoid } from 'nanoid';
 import { fabric } from 'fabric';
 import Handler from './handler';
+import History from './history';
 import HotKey from './hotKey';
 import EEvent from './eEvent';
+import Layer from './layer';
 import Ruler from './ruler';
 import Zoom from './zoom';
 import Drag from './drag';
-import History from './history';
 import Drop from './drop';
-import Layer from './layer';
 
 class Editor {
     constructor(element: HTMLCanvasElement) {
@@ -56,7 +57,7 @@ class Editor {
         this.drop.enable();
         this.layer = new Layer(this);
         this.layer.enable();
-        this.layer.disable();
+        // this.layer.disable();
 
         // 挂载到windows
         (window as any)['__editor__'] = this;
@@ -80,7 +81,15 @@ class Editor {
     layer: Layer;
 
     toJSON() {
-        return this.canvas.toJSON(['id', 'selectable', 'hoverCursor', 'perPixelTargetFind']);
+        return this.canvas.toJSON(['id', 'customType', 'selectable', 'hoverCursor', 'perPixelTargetFind']);
+    }
+
+    loadFromJSON(json: Record<string, any>) {
+        this.canvas.loadFromJSON(json, () => {});
+    }
+
+    id() {
+        return nanoid();
     }
 
     destroy() {

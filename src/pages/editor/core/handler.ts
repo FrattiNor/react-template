@@ -38,7 +38,13 @@ class Handler {
             const clones: fabric.Object[] = [];
             objs.forEach((obj) => {
                 obj.clone((cloned: fabric.Object) => {
-                    cloned.set({ left: (cloned?.left || 0) + 10, top: (cloned?.top || 0) + 10 });
+                    cloned.set({
+                        // @ts-ignore
+                        id: this.editor.id(),
+                        customType: (obj as any).customType,
+                        top: (cloned?.top || 0) + 10,
+                        left: (cloned?.left || 0) + 10,
+                    });
                     clones.push(cloned);
                 });
             });
@@ -69,6 +75,7 @@ class Handler {
         const canvas = this.editor.canvas;
         obj.toActiveSelection();
         canvas.renderAll();
+        this.editor.eEvent.fire('group:change');
     }
 
     canUnGroupActive() {
@@ -87,7 +94,16 @@ class Handler {
 
     // == group ======================================================
     group(obj: fabric.ActiveSelection) {
-        obj.toGroup();
+        const canvas = this.editor.canvas;
+        const group = obj.toGroup();
+        group.set({
+            // @ts-ignore
+            id: this.editor.id(),
+            customType: 'Group',
+        });
+        console.log(group);
+        canvas.renderAll();
+        this.editor.eEvent.fire('group:change');
     }
 
     canGroupActive() {
@@ -107,6 +123,7 @@ class Handler {
         const canvas = this.editor.canvas;
         obj.bringForward();
         canvas.renderAll();
+        this.editor.eEvent.fire('zIndex:change');
     }
 
     canUpActive() {
@@ -126,6 +143,7 @@ class Handler {
         const canvas = this.editor.canvas;
         obj.bringToFront();
         canvas.renderAll();
+        this.editor.eEvent.fire('zIndex:change');
     }
 
     canUpTopActive() {
@@ -147,6 +165,7 @@ class Handler {
         obj.sendBackwards();
         workspace.getWorkspace()?.sendToBack();
         canvas.renderAll();
+        this.editor.eEvent.fire('zIndex:change');
     }
 
     canDownActive() {
@@ -168,6 +187,7 @@ class Handler {
         obj.sendToBack();
         workspace.getWorkspace()?.sendToBack();
         canvas.renderAll();
+        this.editor.eEvent.fire('zIndex:change');
     }
 
     canDownTopActive() {

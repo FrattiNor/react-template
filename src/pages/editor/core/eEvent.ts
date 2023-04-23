@@ -1,5 +1,5 @@
-type QueenFun = ((...args: any) => void) | null;
-type ListenQueen = Record<string, QueenFun[]>;
+type QueenFun = (...args: any) => void;
+type ListenQueen = Record<string, (QueenFun | null)[]>;
 
 class EEvent {
     listenQueen: ListenQueen = {};
@@ -9,7 +9,7 @@ class EEvent {
         return key.split(' ');
     }
 
-    on(key: string, value: () => void) {
+    on(key: string, value: QueenFun) {
         const keys = this.getKey(key);
 
         const stops = keys.map((_key) => {
@@ -34,7 +34,7 @@ class EEvent {
         };
     }
 
-    off(key: string, value: () => void) {
+    off(key: string, value: QueenFun) {
         const keys = this.getKey(key);
 
         keys.forEach((_key) => {
@@ -45,7 +45,7 @@ class EEvent {
             // 找到对应的事件删除
             queen.some((item, i) => {
                 if (item === value) {
-                    console.log('EEvent', i);
+                    // console.log('EEvent', i);
                     queen[i] = null;
                     return true;
                 }
@@ -60,7 +60,7 @@ class EEvent {
             if (this.listenQueen[_key]) {
                 this.listenQueen[_key].forEach((v) => {
                     if (v !== null) {
-                        v(rest);
+                        v(...rest);
                     }
                 });
             }
