@@ -1,3 +1,3 @@
-const proxyAddress = 'http://192.168.2.78:80';
+const proxyAddress = 'http://127.0.0.1:8080';
 
 module.exports = { proxyAddress };

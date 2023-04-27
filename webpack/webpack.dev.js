@@ -62,7 +62,7 @@ const devConfig = (port) => ({
                 target: proxyAddress,
                 changeOrigin: true,
                 secure: false,
-                pathRewrite: { '^': '' },
+                pathRewrite: { '^/api': '' },
             },
         },
     },
