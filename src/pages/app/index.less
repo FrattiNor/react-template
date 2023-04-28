@@ -1,70 +1,164 @@
-.wrapper {
+.container {
     width: 100vw;
     height: 100vh;
     display: flex;
-    min-height: 800px;
     flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    padding: 24px;
+    box-sizing: border-box;
+    overflow: auto;
 
-    // 滚动条样式
-    ::-webkit-scrollbar {
-        width: 10px;
-        height: 4px;
+    &::after,
+    &::before {
+        content: '';
     }
 
-    /* 滑块颜色 */
-    ::-webkit-scrollbar-thumb {
-        position: absolute;
-        background-color: var(--border-color);
-        border-radius: 4px;
-        cursor: pointer;
-        transition: background-color 0.2s;
-
-        &:hover {
-            background-color: var(--border-color);
-        }
-    }
-
-    .top {
-        height: 56px;
-        flex-shrink: 0;
-        border-bottom: 1px solid var(--border-color);
-    }
-
-    .content {
-        height: 0;
-        width: 100%;
-        flex-grow: 1;
+    .wrapper {
+        width: 800px;
+        max-height: 400px;
         display: flex;
-        align-items: center;
-        justify-content: space-between;
+        flex-direction: column;
 
-        .left,
-        .right {
-            flex-shrink: 0;
-            width: 300px;
-            height: 100%;
+        ::-webkit-scrollbar {
+            width: 10px;
+            height: 10px;
         }
 
-        .center {
-            width: 0;
-            height: 100%;
-            flex-grow: 1;
-            min-width: 500px;
-            overflow: hidden;
-            position: relative;
-            background-color: var(--canvas-bg);
+        ::-webkit-scrollbar-thumb {
+            background-color: #ccc;
 
-            &::before {
-                content: '';
-                position: absolute;
-                top: 0;
-                left: 0;
-                right: 0;
-                bottom: 0;
-                z-index: 999;
-                box-shadow: 0 0 5px 5px rgba(0, 0, 0, 0.1) inset;
-                pointer-events: none;
+            &:hover {
+                background-color: #6e6e6e;
+            }
+        }
+
+        ::-webkit-scrollbar-track {
+            background-color: #eaeaea;
+        }
+
+        ::-webkit-scrollbar-corner {
+            background-color: #eaeaea;
+        }
+
+        .table-wrapper {
+            width: 100%;
+            flex-shrink: 1;
+            overflow: auto;
+            max-height: 400px;
+            position: relative;
+            border: 1px solid #dfe3e8;
+
+            table {
+                border-collapse: separate;
+                table-layout: fixed;
+                position: relative;
+                border-spacing: 0;
+                min-width: 100%;
+
+                .cell {
+                    font-weight: normal;
+                    text-align: left;
+                    padding: 4px 8px;
+                    overflow: hidden;
+                    white-space: nowrap;
+                    text-overflow: ellipsis;
+                    word-break: break-all;
+                    border-right: 1px solid #dfe3e8;
+                    border-bottom: 1px solid #dfe3e8;
+                }
+
+                thead {
+                    position: sticky;
+                    top: 0;
+
+                    tr {
+                        th:last-child {
+                            border-right: 0;
+                        }
+
+                        th {
+                            .cell();
+                            color: #5a6c84;
+                            background-color: #e9edf2;
+                            position: relative;
+
+                            .resizer {
+                                position: absolute;
+                                right: 0;
+                                top: 0;
+                                height: 100%;
+                                width: 5px;
+                                background: rgba(0, 0, 0, 0.5);
+                                cursor: col-resize;
+                                user-select: none;
+                                touch-action: none;
+                                opacity: 0;
+                            }
+
+                            &:hover.resizer {
+                                opacity: 1;
+                            }
+
+                            .resizer.isResizing {
+                                background: blue;
+                                opacity: 1;
+                            }
+                        }
+                    }
+                }
+
+                tbody {
+                    tr {
+                        &:last-child td {
+                            border-bottom: 0;
+                        }
+
+                        td:last-child {
+                            border-right: 0;
+                        }
+
+                        td {
+                            .cell();
+                            color: #262626;
+                            background-color: #fff;
+                        }
+                    }
+                }
+
+                tfoot {
+                    tr {
+                        &:first-child th {
+                            border-top: 1px solid #dfe3e8;
+                        }
+
+                        &:last-child th {
+                            border-bottom: 0;
+                        }
+
+                        th:last-child {
+                            border-right: 0;
+                        }
+
+                        th {
+                            .cell();
+                            color: #5a6c84;
+                            background-color: #e9edf2;
+                        }
+                    }
+                }
             }
         }
     }
+
+    .pagination {
+        margin-top: 5px;
+        flex-shrink: 0;
+        display: flex;
+    }
+}
+
+.flex-box {
+    display: flex;
+    align-items: center;
 }

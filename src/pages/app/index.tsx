@@ -1,97 +1,228 @@
-// import TileImage from 'ol/source/TileImage';
-// import TileGrid from 'ol/tilegrid/TileGrid';
-import XYZ from 'ol/source/XYZ';
-import { fromLonLat } from 'ol/proj';
-import { useEffect } from 'react';
-import { Tile } from 'ol/layer';
-import View from 'ol/View';
-import Map from 'ol/Map';
-import 'ol/ol.css';
+/* eslint-disable react/jsx-key */
+
+import { createColumnHelper, flexRender, getCoreRowModel, getPaginationRowModel, useReactTable } from '@tanstack/react-table';
+import type { ColumnDef } from '@tanstack/react-table';
+// import type { ColumnOrderState } from '@tanstack/react-table';
+import { makeData } from './makeData';
+import classNames from 'classnames';
+import { getTitle } from './utils';
+import styles from './index.less';
+import { Pagination } from 'antd';
+import React from 'react';
+
+type Person = {
+    firstName: string;
+    lastName: string;
+    age: number;
+    visits: number;
+    status: string;
+    progress: number;
+};
+
+const columnHelper = createColumnHelper<Person>();
+
+const defaultColumn: Partial<ColumnDef<Person>> = {
+    maxSize: 1000,
+    minSize: 100,
+};
+
+const columns = [
+    columnHelper.group({
+        header: 'Name',
+        footer: () => 'Name F',
+        columns: [
+            columnHelper.accessor('firstName', {
+                cell: (info) => info.getValue(),
+                footer: () => 'firstName F',
+                enableResizing: false,
+                // columnPinning: "left",
+            }),
+            columnHelper.accessor((row) => row.lastName, {
+                id: 'lastName',
+                cell: (info) => <i>{info.getValue()}</i>,
+                header: () => 'Last Name',
+                footer: () => 'lastName F',
+            }),
+        ],
+    }),
+    columnHelper.group({
+        header: 'Info',
+        footer: () => 'Info F',
+        columns: [
+            columnHelper.accessor('age', {
+                header: () => 'Age',
+                cell: (info) => info.renderValue(),
+                footer: () => 'Age F',
+            }),
+            columnHelper.group({
+                header: 'More Info',
+                footer: () => 'More Info F',
+                columns: [
+                    columnHelper.accessor('visits', {
+                        header: () => 'Visits',
+                        footer: () => 'Visits F',
+                    }),
+                    columnHelper.accessor('status', {
+                        header: 'Status',
+                        footer: () => 'Status F',
+                    }),
+                    columnHelper.accessor('progress', {
+                        header: 'Profile Progress',
+                        size: 400,
+                        footer: () => 'Progress F',
+                    }),
+                ],
+            }),
+        ],
+    }),
+];
 
 const App = () => {
-    useEffect(() => {
-        // 获取地图容器
-        const mapDom = document.getElementById('map') as HTMLElement;
+    const [data, setData] = React.useState(() => makeData(10000));
+    const [columnVisibility, setColumnVisibility] = React.useState({});
+    // const [columnOrder, setColumnOrder] = React.useState<ColumnOrderState>([]);
 
-        // 初始化地图配置
-        const mapObj = new Map({
-            target: mapDom, // 地图容器
-            view: new View({
-                projection: 'EPSG:3857', // 坐标系
-                center: fromLonLat([120.13809443, 30.17955119], 'EPSG:3857'), // 中心点
-                zoom: 15, // 缩放
-            }),
-        });
+    const resetData = () => {
+        setData(makeData(1000));
+    };
 
-        // const resolutions = [];
-        // const maxZoom = 18;
+    const table = useReactTable({
+        data, // 数据源
+        columns, // 列配置
+        defaultColumn, // 默认列配置
 
-        // // 计算百度使用的分辨率
-        // for (let i = 0; i <= maxZoom; i++) {
-        //     resolutions[i] = Math.pow(2, maxZoom - i);
-        // }
+        // === @pinning 列固定 ===
+        enablePinning: true,
 
-        // // 设置分辨率
-        // const tileGrid = new TileGrid({
-        //     origin: [0, 0],
-        //     resolutions: resolutions,
-        // });
+        // === @state 状态 ===
+        state: {
+            columnVisibility, //  列可见状态
+            // columnOrder, // 列排序状态
+        },
 
-        // // 创建百度地图的数据源
-        // const baiduSource = new TileImage({
-        //     projection: 'EPSG:3857',
-        //     tileGrid: tileGrid,
-        //     tileUrlFunction: (tileCoord) => {
-        //         const z = tileCoord[0];
-        //         let x = tileCoord[1];
-        //         let y = tileCoord[2];
+        // === @columnResize 宽变更 ===
+        // enableResizing: true,
+        columnResizeMode: 'onChange', // 列拖动排序触发方式
 
-        //         // 百度瓦片服务url将负数使用M前缀来标识
-        //         if (x < 0) {
-        //             x = -x;
-        //         }
-        //         if (y < 0) {
-        //             y = -y - 1;
-        //         }
+        // === @pagination 分页 ===
+        // manualPagination: true, // 手动分页（服务端分页）
+        // pageCount: -1 // 手动分页需要提供
+        autoResetPageIndex: true, // data更新 过滤器改变 分组改变 主动重置index
+        getPaginationRowModel: getPaginationRowModel(), // 启用分页模型
 
-        //         return `http://127.0.0.1:3001/api/${z}/${x}/${y}.png`;
-        //     },
-        // });
+        // === @columnVisibility 列可见 ===
+        onColumnVisibilityChange: setColumnVisibility,
 
-        const aSource = new XYZ({
-            projection: 'EPSG:3857',
-            url: `http://127.0.0.1:3001/api/{z}/{x}/{y}.png`,
-        });
+        // === @columnOrder 列排序 ===
+        // onColumnOrderChange: setColumnOrder,
 
-        const offlineMapLayer = new Tile({
-            source: aSource,
-        });
+        // === @core ===
+        getCoreRowModel: getCoreRowModel(), // 启动核心模型
 
-        // 将图层添加到地图
-        mapObj.addLayer(offlineMapLayer);
-
-        mapObj.on('click', (evt) => {
-            console.log(evt);
-            // 获取点击位置的数据
-            const feature = mapObj.forEachFeatureAtPixel(evt.pixel, function (f) {
-                return f;
-            });
-
-            console.log(feature);
-        });
-
-        return () => {
-            mapObj.dispose();
-        };
-    }, []);
+        // === @meta 额外赋予的函数 ===
+        meta: {
+            updateData: (rowIndex, columnId, value) => {
+                console.log(rowIndex, columnId, value);
+            },
+        },
+    });
 
     return (
-        <>
-            <div style={{ width: '100vw', height: '100vh', position: 'relative' }}>
-                <div style={{ width: '100vw', height: '100vh' }} id="map" />
+        <div className={styles['container']}>
+            <div>
+                {table.getAllLeafColumns().map((column) => (
+                    <div key={column.id}>
+                        <label>
+                            <input
+                                {...{
+                                    type: 'checkbox',
+                                    checked: column.getIsVisible(),
+                                    onChange: column.getToggleVisibilityHandler(),
+                                }}
+                            />
+                            {column.id}
+                        </label>
+                    </div>
+                ))}
             </div>
-            <div style={{ width: '2px', height: '2px', top: '50%', left: '50%', backgroundColor: '#000', position: 'fixed' }} />
-        </>
+
+            <div onClick={resetData}>reset data</div>
+
+            <div className={styles['wrapper']}>
+                <div className={styles['table-wrapper']}>
+                    <table {...{ style: { width: table.getTotalSize() } }}>
+                        <colgroup>
+                            {table.getAllLeafColumns().map((column) => (
+                                <col key={column.id} width={column.getSize()} />
+                            ))}
+                        </colgroup>
+
+                        <thead>
+                            {table.getHeaderGroups().map((headerGroup) => (
+                                <tr key={headerGroup.id}>
+                                    {headerGroup.headers.map((header) => {
+                                        const value = header.isPlaceholder ? null : flexRender(header.column.columnDef.header, header.getContext());
+                                        const title = getTitle(value);
+                                        return (
+                                            <th title={title} key={header.id} colSpan={header.colSpan} style={{ textAlign: header.colSpan > 1 ? 'center' : 'left' }}>
+                                                {value}
+                                                {header.column.getCanResize() && (
+                                                    <div onMouseDown={header.getResizeHandler()} onTouchStart={header.getResizeHandler()} className={classNames(styles['resizer'], { [styles['isResizing']]: header.column.getIsResizing() })} />
+                                                )}
+                                            </th>
+                                        );
+                                    })}
+                                </tr>
+                            ))}
+                        </thead>
+
+                        <tbody>
+                            {table.getRowModel().rows.map((row) => (
+                                <tr key={row.id}>
+                                    {row.getVisibleCells().map((cell) => {
+                                        const value = flexRender(cell.column.columnDef.cell, cell.getContext());
+                                        const title = getTitle(value);
+                                        return (
+                                            <td title={title} key={cell.id}>
+                                                {value}
+                                            </td>
+                                        );
+                                    })}
+                                </tr>
+                            ))}
+                        </tbody>
+
+                        <tfoot>
+                            {table.getFooterGroups().map((footerGroup) => (
+                                <tr key={footerGroup.id}>
+                                    {footerGroup.headers.map((header) => {
+                                        const value = header.isPlaceholder ? null : flexRender(header.column.columnDef.footer, header.getContext());
+                                        const title = getTitle(value);
+                                        return (
+                                            <th title={title} key={header.id} colSpan={header.colSpan} style={{ textAlign: header.colSpan > 1 ? 'center' : 'left' }}>
+                                                {value}
+                                            </th>
+                                        );
+                                    })}
+                                </tr>
+                            ))}
+                        </tfoot>
+                    </table>
+                </div>
+
+                <div className={styles['pagination']}>
+                    <Pagination
+                        size="small"
+                        showQuickJumper
+                        total={data.length}
+                        pageSizeOptions={[10, 20, 30, 40, 50, 100]}
+                        onChange={(v) => table.setPageIndex(v - 1)}
+                        onShowSizeChange={(_, size) => table.setPageSize(size)}
+                        current={table.getState().pagination.pageIndex + 1}
+                    />
+                </div>
+            </div>
+        </div>
     );
 };
 
