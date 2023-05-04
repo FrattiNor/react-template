@@ -7,6 +7,8 @@ import { Tile } from 'ol/layer';
 import View from 'ol/View';
 import Map from 'ol/Map';
 import 'ol/ol.css';
+import TileGrid from 'ol/tilegrid/TileGrid';
+import TileImage from 'ol/source/TileImage';
 
 const App = () => {
     useEffect(() => {
@@ -18,7 +20,7 @@ const App = () => {
             target: mapDom, // 地图容器
             view: new View({
                 projection: 'EPSG:3857', // 坐标系
-                center: fromLonLat([120.13809443, 30.17955119], 'EPSG:3857'), // 中心点
+                center: fromLonLat([120.13794422, 30.17947236], 'EPSG:3857'), // 中心点
                 zoom: 15, // 缩放
             }),
         });
