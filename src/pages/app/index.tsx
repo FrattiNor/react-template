@@ -1,8 +1,9 @@
 /* eslint-disable react/jsx-key */
 
-import { createColumnHelper, flexRender, getCoreRowModel, getPaginationRowModel, useReactTable } from '@tanstack/react-table';
+import { createColumnHelper, flexRender, getCoreRowModel, getFilteredRowModel, getPaginationRowModel, getSortedRowModel, useReactTable } from '@tanstack/react-table';
 import type { ColumnDef } from '@tanstack/react-table';
 // import type { ColumnOrderState } from '@tanstack/react-table';
+import type { HTMLProps } from 'react';
 import { makeData } from './makeData';
 import classNames from 'classnames';
 import { getTitle } from './utils';
@@ -24,17 +25,57 @@ const columnHelper = createColumnHelper<Person>();
 const defaultColumn: Partial<ColumnDef<Person>> = {
     maxSize: 1000,
     minSize: 100,
+    enableColumnFilter: false,
 };
 
+function IndeterminateCheckbox({ indeterminate, ...rest }: { indeterminate?: boolean } & HTMLProps<HTMLInputElement>) {
+    const ref = React.useRef<HTMLInputElement>(null!);
+
+    React.useEffect(() => {
+        if (typeof indeterminate === 'boolean') {
+            ref.current.indeterminate = !rest.checked && indeterminate;
+        }
+    }, [ref, indeterminate]);
+
+    return <input type="checkbox" ref={ref} {...rest} />;
+}
+
 const columns = [
+    // @ts-ignore
+    columnHelper.accessor('Select', {
+        maxSize: 50,
+        minSize: 50,
+        header: ({ table }) => (
+            <IndeterminateCheckbox
+                {...{
+                    checked: table.getIsAllRowsSelected(),
+                    indeterminate: table.getIsSomeRowsSelected(),
+                    onChange: table.getToggleAllRowsSelectedHandler(),
+                }}
+            />
+        ),
+        cell: ({ row }) => (
+            <IndeterminateCheckbox
+                {...{
+                    checked: row.getIsSelected(),
+                    disabled: !row.getCanSelect(),
+                    indeterminate: row.getIsSomeSelected(),
+                    onChange: row.getToggleSelectedHandler(),
+                }}
+            />
+        ),
+    }),
     columnHelper.group({
         header: 'Name',
         footer: () => 'Name F',
+        enableColumnFilter: false,
         columns: [
             columnHelper.accessor('firstName', {
                 cell: (info) => info.getValue(),
                 footer: () => 'firstName F',
-                enableResizing: false,
+                // enableResizing: false,
+                enableColumnFilter: true,
+                // filterFn: {},
                 // columnPinning: "left",
             }),
             columnHelper.accessor((row) => row.lastName, {
@@ -42,6 +83,7 @@ const columns = [
                 cell: (info) => <i>{info.getValue()}</i>,
                 header: () => 'Last Name',
                 footer: () => 'lastName F',
+                enableColumnFilter: true,
             }),
         ],
     }),
@@ -79,7 +121,8 @@ const columns = [
 
 const App = () => {
     const [data, setData] = React.useState(() => makeData(10000));
-    const [columnVisibility, setColumnVisibility] = React.useState({});
+    const [rowSelection, setRowSelection] = React.useState({});
+    // const [columnVisibility, setColumnVisibility] = React.useState({});
     // const [columnOrder, setColumnOrder] = React.useState<ColumnOrderState>([]);
 
     const resetData = () => {
@@ -96,8 +139,9 @@ const App = () => {
 
         // === @state 状态 ===
         state: {
-            columnVisibility, //  列可见状态
+            // columnVisibility, //  列可见状态
             // columnOrder, // 列排序状态
+            rowSelection,
         },
 
         // === @columnResize 宽变更 ===
@@ -111,20 +155,33 @@ const App = () => {
         getPaginationRowModel: getPaginationRowModel(), // 启用分页模型
 
         // === @columnVisibility 列可见 ===
-        onColumnVisibilityChange: setColumnVisibility,
+        // onColumnVisibilityChange: setColumnVisibility,
 
         // === @columnOrder 列排序 ===
         // onColumnOrderChange: setColumnOrder,
+
+        // === @rowSelection 行选择 ===
+        onRowSelectionChange: setRowSelection,
+
+        // === @filter 筛选 ===
+        // manualFiltering: true, //手动筛选（服务端筛选）
+        enableFilters: true,
+        enableGlobalFilter: true,
+        enableColumnFilters: true,
+        getFilteredRowModel: getFilteredRowModel(),
+
+        // === @sort 排序 ===
+        getSortedRowModel: getSortedRowModel(),
 
         // === @core ===
         getCoreRowModel: getCoreRowModel(), // 启动核心模型
 
         // === @meta 额外赋予的函数 ===
-        meta: {
-            updateData: (rowIndex, columnId, value) => {
-                console.log(rowIndex, columnId, value);
-            },
-        },
+        // meta: {
+        //     updateData: (rowIndex, columnId, value) => {
+        //         console.log(rowIndex, columnId, value);
+        //     },
+        // },
     });
 
     return (
@@ -152,7 +209,7 @@ const App = () => {
                 <div className={styles['table-wrapper']}>
                     <table {...{ style: { width: table.getTotalSize() } }}>
                         <colgroup>
-                            {table.getAllLeafColumns().map((column) => (
+                            {table.getVisibleLeafColumns().map((column) => (
                                 <col key={column.id} width={column.getSize()} />
                             ))}
                         </colgroup>
@@ -163,12 +220,24 @@ const App = () => {
                                     {headerGroup.headers.map((header) => {
                                         const value = header.isPlaceholder ? null : flexRender(header.column.columnDef.header, header.getContext());
                                         const title = getTitle(value);
-                                        return (
-                                            <th title={title} key={header.id} colSpan={header.colSpan} style={{ textAlign: header.colSpan > 1 ? 'center' : 'left' }}>
+                                        const canSort = header.column.getCanSort();
+                                        const canFilter = header.column.getCanFilter();
+                                        const canResize = header.column.getCanResize();
+
+                                        return header.isPlaceholder ? (
+                                            <th key={header.id} />
+                                        ) : (
+                                            <th title={title} key={header.id} colSpan={header.colSpan} style={{ textAlign: header.colSpan > 1 ? 'center' : 'left' }} onClick={canSort ? header.column.getToggleSortingHandler() : undefined}>
                                                 {value}
-                                                {header.column.getCanResize() && (
+                                                {canResize && (
                                                     <div onMouseDown={header.getResizeHandler()} onTouchStart={header.getResizeHandler()} className={classNames(styles['resizer'], { [styles['isResizing']]: header.column.getIsResizing() })} />
                                                 )}
+                                                {canFilter && (
+                                                    <div>
+                                                        <input style={{ width: '100%' }} value={header.column.getFilterValue() as string} onChange={(e) => header.column.setFilterValue(e.target.value || '')} />
+                                                    </div>
+                                                )}
+                                                {canSort && ({ asc: '🔼', desc: '🔽' }[header.column.getIsSorted() as string] ?? null)}
                                             </th>
                                         );
                                     })}
