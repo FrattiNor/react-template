@@ -1,8 +1,0 @@
-.history
-.vscode
-dist
-node_modules
-public
-package-lock.json
-pnpm-lock.yaml
-yarn.lock
