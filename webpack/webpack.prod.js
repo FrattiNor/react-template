@@ -1,10 +1,14 @@
-const { merge } = require('webpack-merge');
-const baseConfig = require('./webpack.common');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const { getExportFilePrefix } = require('./conf/utils');
 const TerserPlugin = require('terser-webpack-plugin');
+const CopyPlugin = require('copy-webpack-plugin');
+const baseConfig = require('./webpack.common');
+const { merge } = require('webpack-merge');
 const path = require('path');
+
+const { jsPrefix, cssPrefix } = getExportFilePrefix();
 
 const prodConfig = {
     mode: 'production',
@@ -14,6 +18,7 @@ const prodConfig = {
         new HtmlWebpackPlugin({
             filename: 'index.html',
             template: path.join(__dirname, '../public/index.html'),
+            favicon: path.join(__dirname, '../public/favicon.ico'),
             inject: true,
             minify: {
                 removeComments: true, // 去掉注释
@@ -23,11 +28,12 @@ const prodConfig = {
         }),
         // css单独提取插件
         new MiniCssExtractPlugin({
-            // Options similar to the same options in webpackOptions.output
-            // both options are optional
-            filename: 'css/[name].[contenthash:8].bundle.css',
-            chunkFilename: 'css/[name].[id].[contenthash:8].chunk.css',
+            filename: `${cssPrefix}/[name].[contenthash:8].bundle.css`,
+            chunkFilename: `${cssPrefix}/[name].[id].[contenthash:8].chunk.css`,
             ignoreOrder: true,
+        }),
+        new CopyPlugin({
+            patterns: [{ from: path.join(__dirname, '../static'), to: 'static' }],
         }),
     ],
     optimization: {
@@ -43,6 +49,8 @@ const prodConfig = {
         runtimeChunk: {
             name: 'runtime',
         },
+        providedExports: true,
+        sideEffects: true,
         usedExports: true,
         removeAvailableModules: true,
         removeEmptyChunks: true,
@@ -50,20 +58,78 @@ const prodConfig = {
             // 将多入口的公共部分单独打包
             chunks: 'all',
             automaticNameDelimiter: '-',
-            maxSize: 200 * 1024, // 200kb
-            minSize: 10 * 1024, // 10kb
+            enforceSizeThreshold: 10 * 1024 * 1024,
+            maxSize: 10 * 1024 * 1024,
+            minSize: 0 * 1024,
+            minSizeReduction: 0 * 1024,
+            maxAsyncRequests: 1000,
+            maxInitialRequests: 1000,
+            minChunks: 1,
             cacheGroups: {
-                defaultVendors: {
-                    filename: 'js/[name].[contenthash:8].vendors.js',
-                    test: /[\\/]node_modules[\\/]/,
-                    priority: -10,
+                react: {
+                    filename: `${jsPrefix}/react/[name].[contenthash:8].react.js`,
+                    test: /node_modules[\\/](react|react-|redux|@reduxjs[\\/]toolkit)/,
+                    minChunks: 1,
+                    priority: 10,
                     reuseExistingChunk: true,
+                    enforceSizeThreshold: 10 * 1024 * 1024,
+                    maxSize: 10 * 1024 * 1024,
+                    minSize: 0 * 1024,
+                    minSizeReduction: 0 * 1024,
+                },
+                antd: {
+                    filename: `${jsPrefix}/antd/[name].[contenthash:8].antd.js`,
+                    test: /node_modules[\\/](antd|@ant-design|rc-|@ctrl\/tinycolor)/,
+                    minChunks: 1,
+                    priority: 9,
+                    reuseExistingChunk: true,
+                    enforceSizeThreshold: 10 * 1024 * 1024,
+                    maxSize: 10 * 1024 * 1024,
+                    minSize: 10 * 1024,
+                    minSizeReduction: 10 * 1024,
+                },
+                zrender: {
+                    filename: `${jsPrefix}/zrender/[name].[contenthash:8].zrender.js`,
+                    test: /node_modules[\\/]zrender/,
+                    minChunks: 1,
+                    priority: 5,
+                    reuseExistingChunk: true,
+                    enforceSizeThreshold: 10 * 1024 * 1024,
+                    maxSize: 10 * 1024 * 1024,
+                    minSize: 0 * 1024,
+                    minSizeReduction: 0 * 1024,
+                },
+                babel: {
+                    filename: `${jsPrefix}/babel/[name].[contenthash:8].babel.js`,
+                    test: /node_modules[\\/](babel|@babel|core-js-pure)/,
+                    minChunks: 1,
+                    priority: 3,
+                    reuseExistingChunk: true,
+                    enforceSizeThreshold: 10 * 1024 * 1024,
+                    maxSize: 10 * 1024 * 1024,
+                    minSize: 10 * 1024,
+                    minSizeReduction: 10 * 1024,
+                },
+                defaultVendors: {
+                    filename: `${jsPrefix}/vendors/[name].[contenthash:8].vendors.js`,
+                    test: /node_modules/,
+                    minChunks: 2,
+                    priority: 2,
+                    reuseExistingChunk: true,
+                    enforceSizeThreshold: 10 * 1024 * 1024,
+                    maxSize: 10 * 1024 * 1024,
+                    minSize: 10 * 1024,
+                    minSizeReduction: 10 * 1024,
                 },
                 default: {
-                    filename: 'js/[name].[contenthash:8].common.js',
+                    filename: `${jsPrefix}/component/[name].[contenthash:8].component.js`,
                     minChunks: 2,
-                    priority: -20,
+                    priority: 1,
                     reuseExistingChunk: true,
+                    enforceSizeThreshold: 10 * 1024 * 1024,
+                    maxSize: 10 * 1024 * 1024,
+                    minSize: 10 * 1024,
+                    minSizeReduction: 10 * 1024,
                 },
             },
         },

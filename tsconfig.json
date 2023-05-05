@@ -10,7 +10,7 @@
         "resolveJsonModule": true,
         "noImplicitReturns": true,
         "noUnusedLocals": true,
-        "allowJs": false,
+        "allowJs": true,
         "skipLibCheck": true,
         "strict": true,
         "isolatedModules": true,

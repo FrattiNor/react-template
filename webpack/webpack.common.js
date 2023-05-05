@@ -1,8 +1,13 @@
-const path = require('path');
-const WebpackBar = require('webpackbar');
+const NodePolyfillPlugin = require('node-polyfill-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const { getExportFilePrefix } = require('./conf/utils');
+const WebpackBar = require('webpackbar');
+const path = require('path');
+
+const { jsPrefix, assetsPrefix } = getExportFilePrefix();
 
 const cssUse = (endLoader) => [endLoader, 'css-loader'];
+
 const lessLocalUse = (endLoader) => [
     endLoader,
     {
@@ -14,9 +19,17 @@ const lessLocalUse = (endLoader) => [
         },
     },
     'postcss-loader',
-    'less-loader',
+    {
+        loader: 'less-loader',
+        options: {
+            lessOptions: {
+                javascriptEnabled: true,
+            },
+        },
+    },
 ];
-const lessAntdUse = (endLoader) => [
+
+const lessNodeModulesUse = (endLoader) => [
     endLoader,
     'css-loader',
     'postcss-loader',
@@ -25,7 +38,6 @@ const lessAntdUse = (endLoader) => [
         options: {
             lessOptions: {
                 javascriptEnabled: true,
-                // modifyVars: theme,
             },
         },
     },
@@ -35,11 +47,12 @@ const config = ({ isDev }) => ({
     // 入口
     entry: {
         main: path.join(__dirname, '../src/index.tsx'),
+        rem: path.join(__dirname, '../public/rem.js'),
     },
     output: {
-        filename: 'js/[name].[contenthash:8].bundle.js',
-        chunkFilename: 'js/[name].[contenthash:8].chunk.js',
-        assetModuleFilename: 'assets/[hash][contenthash:8][query]',
+        filename: `${jsPrefix}/bundle/[name].[contenthash:8].bundle.js`,
+        chunkFilename: `${jsPrefix}/chunk/[name].[contenthash:8].chunk.js`,
+        assetModuleFilename: `${assetsPrefix}/[contenthash:8][ext][query]`,
         path: path.join(__dirname, '../dist'),
         publicPath: '/',
         clean: true,
@@ -56,14 +69,14 @@ const config = ({ isDev }) => ({
                 test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
                 type: 'asset/resource',
                 generator: {
-                    filename: 'assets/[contenthash:8][ext]',
+                    filename: `${assetsPrefix}/[name]-[contenthash:8][ext]`,
                 },
             },
             {
                 test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
                 type: 'asset/resource',
                 generator: {
-                    filename: 'assets/[contenthash:8][ext]',
+                    filename: `${assetsPrefix}/[name]-[contenthash:8][ext]`,
                 },
             },
             {
@@ -78,7 +91,7 @@ const config = ({ isDev }) => ({
             // 正则匹配css，less, 样式文件只匹配依赖文件夹，只用于antd样式引入，非依赖下的less文件配置在对应配置文件下
             {
                 test: /\.less$/,
-                use: isDev ? lessAntdUse('style-loader') : lessAntdUse(MiniCssExtractPlugin.loader),
+                use: isDev ? lessNodeModulesUse('style-loader') : lessNodeModulesUse(MiniCssExtractPlugin.loader),
                 include: [/node_modules/],
             },
         ],
@@ -105,6 +118,7 @@ const config = ({ isDev }) => ({
     plugins: [
         // 打包📦进度条
         new WebpackBar(),
+        new NodePolyfillPlugin(),
     ],
 });
 
