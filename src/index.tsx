@@ -1,17 +1,15 @@
-import { BrowserRouter } from 'react-router-dom';
 import ReactDOM from 'react-dom/client';
-import App from './pages/testApp';
+import { Provider } from 'react-redux';
 import Route from './route';
+import store from './store';
 import './index.less';
 
-const isTest = 0;
-
-ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
-    isTest ? (
-        <App />
-    ) : (
-        <BrowserRouter>
+const App = () => {
+    return (
+        <Provider store={store}>
             <Route />
-        </BrowserRouter>
-    ),
-);
+        </Provider>
+    );
+};
+
+ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(<App />);

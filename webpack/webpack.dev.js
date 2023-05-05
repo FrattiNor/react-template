@@ -1,12 +1,12 @@
-const webpack = require('webpack');
-const { merge } = require('webpack-merge');
-const baseConfig = require('./webpack.common');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
+const { getWebpackProxyObj, getProxyAddress, getProxyName, getMqttDevAddress, getMqttDevName, getPort, getBranch } = require('./conf/utils');
 const FriendlyErrorsWebpackPlugin = require('@soda/friendly-errors-webpack-plugin');
 const ReactRefreshPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const baseConfig = require('./webpack.common');
+const { merge } = require('webpack-merge');
 const portfinder = require('portfinder');
+
 const path = require('path');
-const { proxyAddress } = require('./proxy');
 
 const devConfig = (port) => ({
     mode: 'development',
@@ -30,7 +30,13 @@ const devConfig = (port) => ({
             clearConsole: true,
             // 打包成功之后在控制台给予开发者的提示
             compilationSuccessInfo: {
-                messages: [`开发环境启动成功，项目运行在: http://127.0.0.1:${port}`],
+                messages: [
+                    `开发环境启动成功`,
+                    `当前项目分支: ${getBranch() || '未知'}`,
+                    `项目运行地址: http://127.0.0.1:${port}`,
+                    `当前代理地址: ${getProxyAddress()} [${getProxyName()}]`,
+                    `mqtt连接地址: ${getMqttDevAddress()} [${getMqttDevName()}]`,
+                ],
             },
         }),
     ],
@@ -57,14 +63,8 @@ const devConfig = (port) => ({
         },
         hot: true, // 热加载
         open: `http://127.0.0.1:${port}`, // 打开页面
-        proxy: {
-            '/api': {
-                target: proxyAddress,
-                changeOrigin: true,
-                secure: false,
-                pathRewrite: { '^/api': '' },
-            },
-        },
+        proxy: getWebpackProxyObj(),
+        setupExitSignals: true,
     },
     infrastructureLogging: {
         level: 'none',
@@ -74,7 +74,7 @@ const devConfig = (port) => ({
 
 const getDevConfig = new Promise((res, rej) => {
     //查找端口号
-    portfinder.getPort({ port: 3000, stopPort: 9000 }, (err, port) => {
+    portfinder.getPort({ port: getPort() || 3000, stopPort: 9000 }, (err, port) => {
         if (err) {
             rej(err);
             return;

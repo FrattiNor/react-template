@@ -1,0 +1,84 @@
+{
+    "basic": {
+        "prefix": "/api/msc/vxidm-portal-basic",
+        "port": 30305,
+        "proxy": {
+            "pathRewrite": { "^/api/msc/vxidm-portal-basic": "" },
+            "changeOrigin": true,
+            "secure": false
+        }
+    },
+    "ws": {
+        "prefix": "/api/ws",
+        "port": 30305,
+        "proxy": {
+            "ws": true,
+            "pathRewrite": { "^/api/ws": "" },
+            "changeOrigin": true,
+            "secure": false
+        }
+    },
+    "log": {
+        "prefix": "/api/msc/vxidm-audittrail-service",
+        "port": 30306,
+        "proxy": {
+            "pathRewrite": { "^/api/msc/vxidm-audittrail-service": "" },
+            "changeOrigin": true,
+            "secure": false
+        }
+    },
+    "realtime": {
+        "prefix": "/api/msc/vxisdm-realtime",
+        "port": 30313,
+        "proxy": {
+            "pathRewrite": { "^/api/msc/vxisdm-realtime": "" },
+            "changeOrigin": true,
+            "secure": false
+        }
+    },
+    "history": {
+        "prefix": "/api/msc/vxisdm-history",
+        "port": 30314,
+        "proxy": {
+            "pathRewrite": { "^/api/msc/vxisdm-history": "" },
+            "changeOrigin": true,
+            "secure": false
+        }
+    },
+    "report": {
+        "prefix": "/api/msc/isdm-statistic",
+        "port": 30308,
+        "proxy": {
+            "pathRewrite": { "^/api/msc/isdm-statistic": "" },
+            "changeOrigin": true,
+            "secure": false
+        }
+    },
+    "valve": {
+        "prefix": "/api/msc/isdm-valve",
+        "port": 30312,
+        "proxy": {
+            "pathRewrite": { "^/api/msc/isdm-valve": "" },
+            "changeOrigin": true,
+            "secure": false
+        }
+    },
+    "knowledge": {
+        "prefix": "/api/msc/isdm-knowledge",
+        "port": 30321,
+        "proxy": {
+            "pathRewrite": { "^/api/msc/isdm-knowledge": "" },
+            "changeOrigin": true,
+            "secure": false
+        }
+    },
+    "gateway": {
+        "prefix": "/api",
+        "port": 30304,
+        "proxy": {
+            "pathRewrite": { "^/api": "" },
+            "changeOrigin": true,
+            "secure": false
+        }
+    }
+}
