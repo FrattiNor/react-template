@@ -19,7 +19,7 @@ const menu: RouteItem[] = [
     {
         path: '/home',
         title: '主页',
-        component: LazyLoad(() => import('@/pages/home')),
+        component: LazyLoad(() => import('@/pages/Home')),
     },
 ];
 

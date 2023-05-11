@@ -1,3 +1,5 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Virtualizer, VirtualizerOptions, observeElementRect } from '@tanstack/react-virtual';
 import { useCallback, useEffect, useMemo, useReducer, useRef, useState, useLayoutEffect } from 'react';
 import BScroll from '@better-scroll/core';

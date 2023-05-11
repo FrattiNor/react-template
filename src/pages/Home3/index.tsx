@@ -3,21 +3,26 @@ import styles from './index.module.less';
 import { useRef, useState } from 'react';
 import useScroll from './useScroll';
 import classNames from 'classnames';
+import { Link } from 'react-router-dom';
 
 const App = () => {
     const ref = useRef<HTMLDivElement>(null);
     const [count, setCount] = useState(101);
     const [visibles, setVisibles] = useState<Record<string, boolean>>({});
     const { scroll, tip } = useScroll({ scrollWrapperRef: ref });
-    const nextPage = () => {
-        return new Promise((res) => {
-            setTimeout(() => {
-                setCount((c) => c + 100);
-                res(0);
-            }, 100);
-        });
-    };
-    const { virtualizer, totalSize, items } = useVirtualizer({ scrollWrapperRef: ref, scroll, count, getNextCount: nextPage });
+    const { virtualizer, totalSize, items } = useVirtualizer({
+        count,
+        scroll,
+        scrollWrapperRef: ref,
+        getNextCount: () => {
+            return new Promise((res) => {
+                setTimeout(() => {
+                    setCount((c) => c + 100);
+                    res(0);
+                }, 100);
+            });
+        },
+    });
 
     return (
         <div className={styles['wrapper']}>
@@ -25,6 +30,9 @@ const App = () => {
                 <button onClick={() => virtualizer?.scrollToOffset(0)}>顶部</button>
                 <button onClick={() => virtualizer?.scrollToIndex(Math.floor(count / 2))}>中间</button>
                 <button onClick={() => virtualizer?.scrollToIndex(count - 1)}>底部</button>
+                <Link to="/home2" preventScrollReset={true}>
+                    to home2
+                </Link>
             </div>
 
             <div ref={ref} className={styles['scroll-wrapper']}>
