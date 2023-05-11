@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import NormalLayout from '@/layouts/NormalLayout';
 import ErrorLayout from '@/layouts/ErrorLayout';
 import BasicLayout from '@/layouts/BaseLayout';

@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useMatches } from 'react-router-dom';
 import { useEffect } from 'react';
 

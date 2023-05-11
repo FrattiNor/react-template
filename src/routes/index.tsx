@@ -13,8 +13,8 @@ const getLazy = (LazyComponent: Route['LazyComponent']) => {
     return {};
 };
 
-const convertRoutes = (routes: Array<Route>): Array<RouteObject> => {
-    return routes.map(({ path, Component, LazyComponent, children, title }) => {
+const convertRoutes = (rs: Array<Route>): Array<RouteObject> => {
+    return rs.map(({ path, Component, LazyComponent, children, title }) => {
         const _Component = !Component && !LazyComponent ? EmptyComponent : Component;
 
         return {
