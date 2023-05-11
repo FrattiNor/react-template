@@ -1,6 +1,6 @@
 import ReactDOM from 'react-dom/client';
 import { Provider } from 'react-redux';
-import Route from './routes2';
+import Route from './routes';
 import store from './store';
 import 'amfe-flexible';
 import './index.css';

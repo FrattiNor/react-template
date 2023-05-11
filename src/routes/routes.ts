@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import NormalLayout from '@/layouts/NormalLayout';
 import ErrorLayout from '@/layouts/ErrorLayout';
-import BasicLayout from '@/layouts/baseLayout';
+import BasicLayout from '@/layouts/BaseLayout';
 import Error404 from './Error404Page';
 import Error500 from './Error500Page';
 import { FC } from 'react';
