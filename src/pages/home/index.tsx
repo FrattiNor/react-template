@@ -1,112 +1,57 @@
-import { useEffect, useState } from 'react';
-import BScroll from '@better-scroll/core';
-import PullUp from '@better-scroll/pull-up';
-import MouseWheel from '@better-scroll/mouse-wheel';
-import PullDown from '@better-scroll/pull-down';
-import ScrollBar from '@better-scroll/scroll-bar';
-import InfinityScroll from '@better-scroll/infinity';
-import ObserveDOM from '@better-scroll/observe-dom';
-import Inner from './inner';
+import useVirtualizer from './useVirtualizer';
+import styles from './index.module.less';
+import { useRef, useState } from 'react';
+import useScroll from './useScroll';
+import classNames from 'classnames';
 
-BScroll.use(ObserveDOM);
-BScroll.use(ScrollBar);
-BScroll.use(PullDown);
-BScroll.use(MouseWheel);
-BScroll.use(PullUp);
-BScroll.use(InfinityScroll);
+const App = () => {
+    const ref = useRef<HTMLDivElement>(null);
+    const [count, setCount] = useState(101);
+    const [visibles, setVisibles] = useState<Record<string, boolean>>({});
+    const { scroll, tip } = useScroll({ scrollWrapperRef: ref });
+    const nextPage = () => {
+        return new Promise((res) => {
+            setTimeout(() => {
+                setCount((c) => c + 100);
+                res(0);
+            }, 100);
+        });
+    };
+    const { virtualizer, totalSize, items } = useVirtualizer({ scrollWrapperRef: ref, scroll, count, getNextCount: nextPage });
 
-const ARROW_BOTTOM =
-    '<svg width="16" height="16" viewBox="0 0 512 512"><path fill="currentColor" d="M367.997 338.75l-95.998 95.997V17.503h-32v417.242l-95.996-95.995l-22.627 22.627L256 496l134.624-134.623l-22.627-22.627z"></path></svg>';
-const ARROW_UP =
-    '<svg width="16" height="16" viewBox="0 0 512 512"><path fill="currentColor" d="M390.624 150.625L256 16L121.376 150.625l22.628 22.627l95.997-95.998v417.982h32V77.257l95.995 95.995l22.628-22.627z"></path></svg>';
+    return (
+        <div className={styles['wrapper']}>
+            <div className={styles['handle']}>
+                <button onClick={() => virtualizer?.scrollToOffset(0)}>顶部</button>
+                <button onClick={() => virtualizer?.scrollToIndex(Math.floor(count / 2))}>中间</button>
+                <button onClick={() => virtualizer?.scrollToIndex(count - 1)}>底部</button>
+            </div>
 
-// pulldownRefresh state
-const PHASE = {
-    moving: {
-        enter: 'enter',
-        leave: 'leave',
-    },
-    fetching: 'fetching',
-    succeed: 'succeed',
+            <div ref={ref} className={styles['scroll-wrapper']}>
+                <div className={styles['container']} style={{ height: `${totalSize}px` }}>
+                    <div dangerouslySetInnerHTML={{ __html: tip }} className={styles['pulldown-wrapper']} />
+                    <div className={styles['container-inner']} style={{ transform: `translateY(${items?.[0]?.start}px)` }}>
+                        {items?.map((virtualItem) => (
+                            <div
+                                key={virtualItem.key}
+                                data-index={virtualItem.index}
+                                ref={virtualizer?.measureElement}
+                                className={classNames(styles['item'], {
+                                    [styles['open']]: visibles[virtualItem.key],
+                                    [styles['first']]: virtualItem.index === 0,
+                                    [styles['even']]: !(virtualItem.index % 2),
+                                    [styles['odd']]: virtualItem.index % 2,
+                                })}
+                                onClick={() => setVisibles((v) => ({ ...v, [virtualItem.key]: !v[virtualItem.key] }))}
+                            >
+                                Row {virtualItem.index}
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            </div>
+        </div>
+    );
 };
 
-function App() {
-    const [tip, setTip] = useState('');
-    const [bs, setBs] = useState<BScroll | null>(null);
-
-    useEffect(() => {
-        const e = document.getElementById('scroll-wrapper') as HTMLDivElement;
-
-        const bs = new BScroll(e, {
-            click: true,
-            scrollX: false,
-            scrollbar: true,
-            // observeDOM: true,
-            bounce: {
-                // top: false,
-                bottom: false,
-            },
-            pullDownRefresh: {
-                threshold: 70,
-                stop: 56,
-            },
-            mouseWheel: {
-                speed: 20,
-                invert: false,
-                easeTime: 300,
-            },
-            probeType: 3,
-        });
-
-        const setTipText = (phase: string) => {
-            const TEXTS_MAP: Record<string, string> = {
-                enter: `${ARROW_BOTTOM} Pull down`,
-                leave: `${ARROW_UP} Release`,
-                fetching: 'Loading...',
-                succeed: 'Refresh succeed',
-            };
-            setTip(TEXTS_MAP[phase]);
-        };
-
-        const getData = () => {
-            return new Promise((res) => {
-                setTimeout(() => {
-                    res(0);
-                }, 3000);
-            });
-        };
-
-        bs.on('pullingDown', async () => {
-            setTipText(PHASE.fetching);
-            await getData();
-            setTipText(PHASE.succeed);
-            setTimeout(() => {
-                bs.finishPullDown();
-                bs.refresh();
-            }, 500);
-        });
-
-        bs.on('enterThreshold', () => {
-            setTipText(PHASE.moving.enter);
-        });
-
-        bs.on('leaveThreshold', () => {
-            setTipText(PHASE.moving.leave);
-        });
-
-        // bs.on('scroll', (e: any) => {
-        //     console.log(e);
-        // });
-
-        setBs(bs);
-
-        return () => {
-            bs.destroy();
-        };
-    }, []);
-
-    return <Inner bs={bs} tip={tip} />;
-}
-
 export default App;
-//

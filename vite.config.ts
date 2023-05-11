@@ -1,7 +1,7 @@
+import { UserConfigExport, defineConfig } from 'vite';
 import { getProxyObj, getPort } from './proxy';
 import react from '@vitejs/plugin-react-swc';
 import legacy from '@vitejs/plugin-legacy';
-import { UserConfigExport, defineConfig } from 'vite';
 
 // https://vitejs.dev/config/
 export default defineConfig(async ({ command }) => {

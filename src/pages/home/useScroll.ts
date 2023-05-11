@@ -22,75 +22,81 @@ const PHASE = {
     succeed: 'succeed',
 };
 
-function useScroll() {
+type Props = {
+    scrollWrapperRef: React.RefObject<HTMLDivElement>;
+};
+
+function useScroll({ scrollWrapperRef }: Props) {
     const [tip, setTip] = useState('');
     const [scroll, setScroll] = useState<BScroll | null>(null);
 
     useEffect(() => {
-        const e = document.getElementById('scroll-wrapper') as HTMLDivElement;
-
-        const bs = new BScroll(e, {
-            click: true,
-            scrollX: false,
-            scrollbar: true,
-            bounce: {
-                bottom: false,
-            },
-            pullDownRefresh: {
-                threshold: 70,
-                stop: 56,
-            },
-            mouseWheel: {
-                speed: 20,
-                invert: false,
-                easeTime: 300,
-            },
-            probeType: 3,
-        });
-
-        setScroll(bs);
-
-        // == 上拉刷新 ==
-        const setTipText = (phase: string) => {
-            const TEXTS_MAP: Record<string, string> = {
-                enter: `${ARROW_BOTTOM} Pull down`,
-                leave: `${ARROW_UP} Release`,
-                fetching: 'Loading...',
-                succeed: 'Refresh succeed',
-            };
-            setTip(TEXTS_MAP[phase]);
-        };
-
-        const getData = () => {
-            return new Promise((res) => {
-                setTimeout(() => {
-                    res(0);
-                }, 3000);
+        if (scrollWrapperRef.current) {
+            const bs = new BScroll(scrollWrapperRef.current, {
+                click: true,
+                scrollX: false,
+                scrollbar: {
+                    minSize: 20,
+                },
+                bounce: {
+                    bottom: false,
+                },
+                pullDownRefresh: {
+                    threshold: 70,
+                    stop: 56,
+                },
+                mouseWheel: {
+                    speed: 20,
+                    invert: false,
+                    easeTime: 300,
+                },
+                probeType: 3,
             });
-        };
 
-        bs.on('pullingDown', async () => {
-            setTipText(PHASE.fetching);
-            await getData();
-            setTipText(PHASE.succeed);
-            setTimeout(() => {
-                bs.finishPullDown();
-                bs.refresh();
-            }, 500);
-        });
+            setScroll(bs);
 
-        bs.on('enterThreshold', () => {
-            setTipText(PHASE.moving.enter);
-        });
+            // == 上拉刷新 ==
+            const setTipText = (phase: string) => {
+                const TEXTS_MAP: Record<string, string> = {
+                    enter: `${ARROW_BOTTOM} Pull down`,
+                    leave: `${ARROW_UP} Release`,
+                    fetching: 'Loading...',
+                    succeed: 'Refresh succeed',
+                };
+                setTip(TEXTS_MAP[phase]);
+            };
 
-        bs.on('leaveThreshold', () => {
-            setTipText(PHASE.moving.leave);
-        });
-        // == 上拉刷新 ==
+            const getData = () => {
+                return new Promise((res) => {
+                    setTimeout(() => {
+                        res(0);
+                    }, 3000);
+                });
+            };
 
-        return () => {
-            bs.destroy();
-        };
+            bs.on('pullingDown', async () => {
+                setTipText(PHASE.fetching);
+                await getData();
+                setTipText(PHASE.succeed);
+                setTimeout(() => {
+                    bs.finishPullDown();
+                    bs.refresh();
+                }, 500);
+            });
+
+            bs.on('enterThreshold', () => {
+                setTipText(PHASE.moving.enter);
+            });
+
+            bs.on('leaveThreshold', () => {
+                setTipText(PHASE.moving.leave);
+            });
+            // == 上拉刷新 ==
+
+            return () => {
+                bs.destroy();
+            };
+        }
     }, []);
 
     return { scroll, tip };
