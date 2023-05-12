@@ -21,7 +21,8 @@
 
         /* alias */
         "paths": {
-            "@/*": ["./src/*"]
+            "@/*": ["./src/*"],
+            "@proxy/*": ["./proxy/*"]
         }
     },
     "include": ["src"],

@@ -1,3 +1,4 @@
+import { useDeviceList } from '@/services/device/query';
 import useVirtualizer from './useVirtualizer';
 import styles from './index.module.less';
 import { useRef, useState } from 'react';
@@ -23,6 +24,8 @@ const App = () => {
             });
         },
     });
+
+    useDeviceList();
 
     return (
         <div className={styles['wrapper']}>

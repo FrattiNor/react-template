@@ -48,5 +48,6 @@ export const getProxyObj = () => {
             rewrite: (path: string) => path.replace(new RegExp(`^${prefix}`), ''),
         };
     });
+    console.log(obj);
     return obj;
 };

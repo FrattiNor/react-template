@@ -9,6 +9,7 @@ export default defineConfig(async ({ command }) => {
         resolve: {
             alias: {
                 '@': '/src',
+                '@proxy': '/proxy',
             },
         },
     };
