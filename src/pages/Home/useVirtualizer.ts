@@ -7,15 +7,16 @@ type Props = {
     scroll: BScroll | null;
     fetchNextPage: () => Promise<any>;
     scrollRef: React.RefObject<HTMLDivElement>;
-    demoItemRef: React.RefObject<HTMLDivElement>;
 };
 
-function useVirtualizer({ scroll, scrollRef, demoItemRef, count, fetchNextPage }: Props) {
+function useVirtualizer({ scroll, scrollRef, count, fetchNextPage }: Props) {
     const requestFlag = useRef(false);
 
     const rerender = useReducer(() => ({}), {})[1];
 
     const [virtualizer, setVirtualizer] = useState<Virtualizer<HTMLDivElement, any> | null>(null);
+
+    const [normalHeight, setNormalHeight] = useState<number>(35);
 
     const options = useMemo(() => {
         const getScrollElement = () => {
@@ -63,7 +64,7 @@ function useVirtualizer({ scroll, scrollRef, demoItemRef, count, fetchNextPage }
             observeElementRect,
             observeElementOffset,
             getItemKey: (i) => i,
-            estimateSize: () => demoItemRef.current?.clientHeight || 35,
+            estimateSize: () => normalHeight,
             onChange: (instance) => {
                 rerender();
                 pageTurning(instance.range.endIndex);
@@ -71,7 +72,7 @@ function useVirtualizer({ scroll, scrollRef, demoItemRef, count, fetchNextPage }
         };
 
         return resolvedOptions;
-    }, [scroll, count, fetchNextPage]);
+    }, [scroll, normalHeight, count, fetchNextPage]);
 
     useEffect(() => {
         if (scroll) {
@@ -99,6 +100,12 @@ function useVirtualizer({ scroll, scrollRef, demoItemRef, count, fetchNextPage }
     useEffect(() => {
         if (scroll) scroll.refresh();
     }, [totalSize, scroll]);
+
+    useEffect(() => {
+        if (normalHeight === 35 && items.length > 0) {
+            setNormalHeight(items[0].size);
+        }
+    }, [items]);
 
     return { virtualizer, totalSize, items };
 }
