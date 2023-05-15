@@ -1,45 +1,55 @@
+import { useCallback, useEffect, useMemo, useReducer, useRef, useState, useLayoutEffect } from 'react';
 import { Virtualizer, VirtualizerOptions, observeElementRect } from '@tanstack/react-virtual';
-import { useEffect, useMemo, useReducer, useRef, useState } from 'react';
 import BScroll from '@better-scroll/core';
 
 type Props = {
     count: number;
     scroll: BScroll | null;
-    fetchNextPage: () => Promise<any>;
-    scrollRef: React.RefObject<HTMLDivElement>;
-    demoItemRef: React.RefObject<HTMLDivElement>;
+    getNextPage: () => Promise<any>;
+    scrollWrapperRef: React.RefObject<HTMLDivElement>;
 };
 
-function useVirtualizer({ scroll, scrollRef, demoItemRef, count, fetchNextPage }: Props) {
+function useVirtualizer({ scroll, scrollWrapperRef, count, getNextPage }: Props) {
     const requestFlag = useRef(false);
 
     const rerender = useReducer(() => ({}), {})[1];
 
     const [virtualizer, setVirtualizer] = useState<Virtualizer<HTMLDivElement, any> | null>(null);
 
-    const options = useMemo(() => {
-        const getScrollElement = () => {
-            return scrollRef.current;
-        };
+    const totalSize = virtualizer?.getTotalSize();
 
-        const pageTurning = async (endIndex: number) => {
+    const items = virtualizer?.getVirtualItems();
+
+    const getScrollElement = useCallback(() => {
+        return scrollWrapperRef.current;
+    }, []);
+
+    // count 和 getNextPage 是一起变的
+    const pageTurning = useCallback(
+        async (endIndex: number) => {
             if (count - (endIndex + 1) < 5) {
                 if (!requestFlag.current) {
                     requestFlag.current = true;
-                    await fetchNextPage();
+                    await getNextPage();
                     requestFlag.current = false;
                 }
             }
-        };
+        },
+        [count, getNextPage],
+    );
 
-        const scrollToFn: VirtualizerOptions<any, any>['scrollToFn'] = (offset, _canSmooth, instance) => {
+    const scrollToFn: VirtualizerOptions<any, any>['scrollToFn'] = useCallback(
+        (offset, _canSmooth, instance) => {
             if (scroll) {
                 const to: [number, number] = instance.options.horizontal ? [-offset, scroll.y] : [scroll.x, -offset];
                 scroll.scrollTo(...to, 300);
             }
-        };
+        },
+        [scroll],
+    );
 
-        const observeElementOffset: VirtualizerOptions<any, any>['observeElementOffset'] = (instance, cb) => {
+    const observeElementOffset: VirtualizerOptions<any, any>['observeElementOffset'] = useCallback(
+        (instance, cb) => {
             if (scroll) {
                 const handler = (e: { x: number; y: number }) => {
                     cb(-e[instance.options.horizontal ? 'x' : 'y']);
@@ -53,9 +63,12 @@ function useVirtualizer({ scroll, scrollRef, demoItemRef, count, fetchNextPage }
                     scroll.off('scroll', handler);
                 };
             }
-        };
+        },
+        [scroll],
+    );
 
-        const resolvedOptions: VirtualizerOptions<any, any> = {
+    const resolvedOptions: VirtualizerOptions<any, any> = useMemo(
+        () => ({
             count,
             scrollToFn,
             overscan: 0,
@@ -63,42 +76,37 @@ function useVirtualizer({ scroll, scrollRef, demoItemRef, count, fetchNextPage }
             observeElementRect,
             observeElementOffset,
             getItemKey: (i) => i,
-            estimateSize: () => demoItemRef.current?.clientHeight || 35,
+            estimateSize: () => 35,
             onChange: (instance) => {
                 rerender();
                 pageTurning(instance.range.endIndex);
             },
-        };
+        }),
+        [count, scroll, pageTurning],
+    );
 
-        return resolvedOptions;
-    }, [scroll, count, fetchNextPage]);
+    useEffect(() => {
+        if (scroll) scroll.refresh();
+    }, [totalSize, scroll]);
 
     useEffect(() => {
         if (scroll) {
-            const newVirtualizer = new Virtualizer<any, any>(options);
-            (window as any)['virtualizer'] = newVirtualizer;
-            setVirtualizer(newVirtualizer);
-            const _didMount = newVirtualizer._didMount();
-            newVirtualizer._willUpdate();
-            return _didMount;
+            setVirtualizer(new Virtualizer<any, any>(resolvedOptions));
         }
     }, [scroll]);
 
     useEffect(() => {
         if (virtualizer) {
-            virtualizer.setOptions(options);
-            virtualizer._willUpdate();
-            rerender();
+            return virtualizer._didMount();
         }
-    }, [options, virtualizer]);
+    }, [virtualizer]);
 
-    const totalSize = virtualizer?.getTotalSize() || 0;
-
-    const items = virtualizer?.getVirtualItems() || [];
-
-    useEffect(() => {
-        if (scroll) scroll.refresh();
-    }, [totalSize, scroll]);
+    useLayoutEffect(() => {
+        if (virtualizer) {
+            virtualizer?.setOptions(resolvedOptions);
+            return virtualizer._willUpdate();
+        }
+    });
 
     return { virtualizer, totalSize, items };
 }

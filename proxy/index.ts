@@ -45,7 +45,11 @@ export const getProxyObj = () => {
         obj[prefix] = {
             changeOrigin: true,
             target: 'http://' + getHttpProxy() + `:${port}`,
-            rewrite: (path: string) => path.replace(new RegExp(`^${prefix}`), ''),
+            rewrite: (path: string) => {
+                console.log(path);
+                console.log(path.replace(new RegExp(`^${prefix}`), ''));
+                return path.replace(new RegExp(`^${prefix}`), '');
+            },
         };
     });
     console.log(obj);

@@ -1,31 +1,24 @@
-import { useDeviceList } from '@/services/device/query';
+import { useDeviceList } from '@/services/device';
 import useVirtualizer from './useVirtualizer';
-import styles from './index.module.less';
 import { useRef, useState } from 'react';
-import { Link } from 'react-router-dom';
+import styles from './index.module.less';
 import useScroll from './useScroll';
 import classNames from 'classnames';
 
 const App = () => {
-    const ref = useRef<HTMLDivElement>(null);
-    const [count, setCount] = useState(101);
+    const tipRef = useRef<HTMLDivElement>(null);
+    const scrollRef = useRef<HTMLDivElement>(null);
+    const demoItemRef = useRef<HTMLDivElement>(null);
     const [visibles, setVisibles] = useState<Record<string, boolean>>({});
-    const { scroll, tip } = useScroll({ scrollWrapperRef: ref });
-    const { virtualizer, totalSize, items } = useVirtualizer({
+    const { data, count, fetchNextPage, refetch } = useDeviceList(1);
+    const { scroll, getPullDownTip } = useScroll({ scrollRef, tipRef, refetch });
+    const { virtualizer, items, totalSize } = useVirtualizer({
         count,
         scroll,
-        scrollWrapperRef: ref,
-        getNextCount: () => {
-            return new Promise((res) => {
-                setTimeout(() => {
-                    setCount((c) => c + 100);
-                    res(0);
-                }, 100);
-            });
-        },
+        scrollRef,
+        demoItemRef,
+        fetchNextPage,
     });
-
-    useDeviceList();
 
     return (
         <div className={styles['wrapper']}>
@@ -33,16 +26,22 @@ const App = () => {
                 <button onClick={() => virtualizer?.scrollToOffset(0)}>顶部</button>
                 <button onClick={() => virtualizer?.scrollToIndex(Math.floor(count / 2))}>中间</button>
                 <button onClick={() => virtualizer?.scrollToIndex(count - 1)}>底部</button>
-                <Link to="/home2" preventScrollReset={true}>
-                    to home2
-                </Link>
+                <button onClick={() => fetchNextPage()}>fetchNextPage</button>
+                <button onClick={() => refetch()}>refetch</button>
             </div>
 
-            <div ref={ref} className={styles['scroll-wrapper']}>
+            <div ref={scrollRef} className={styles['scroll-wrapper']}>
                 <div className={styles['container']} style={{ height: `${totalSize}px` }}>
-                    <div dangerouslySetInnerHTML={{ __html: tip }} className={styles['pulldown-wrapper']} />
-                    <div className={styles['container-inner']} style={{ transform: `translateY(${items?.[0]?.start}px)` }}>
-                        {items?.map((virtualItem) => (
+                    <div ref={tipRef} className={styles['tip']}>
+                        {getPullDownTip()}
+                    </div>
+
+                    <div className={styles['container-inner']} style={{ transform: `translateY(${items?.[0]?.start || 0}px)` }}>
+                        <div ref={demoItemRef} className={classNames(styles['item'], styles['demo'])}>
+                            xxx
+                        </div>
+
+                        {items.map((virtualItem) => (
                             <div
                                 key={virtualItem.key}
                                 data-index={virtualItem.index}
@@ -55,7 +54,7 @@ const App = () => {
                                 })}
                                 onClick={() => setVisibles((v) => ({ ...v, [virtualItem.key]: !v[virtualItem.key] }))}
                             >
-                                Row {virtualItem.index}
+                                {data[virtualItem.index].isdmTag}
                             </div>
                         ))}
                     </div>
