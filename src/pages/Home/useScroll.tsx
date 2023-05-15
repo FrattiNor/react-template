@@ -23,6 +23,8 @@ function useScroll({ scrollRef, tipRef, refetch }: Props) {
 
     useEffect(() => {
         if (scrollRef.current) {
+            const pullDownTipHeight = tipRef.current?.clientHeight || 65;
+
             const newScroll = new BScroll(scrollRef.current, {
                 click: true,
                 scrollX: false,
@@ -30,11 +32,14 @@ function useScroll({ scrollRef, tipRef, refetch }: Props) {
                     minSize: 20,
                 },
                 bounce: {
+                    top: true,
+                    left: false,
+                    right: false,
                     bottom: false,
                 },
                 pullDownRefresh: {
-                    threshold: tipRef.current?.clientHeight || 65,
-                    stop: 56,
+                    threshold: pullDownTipHeight * 1.1,
+                    stop: pullDownTipHeight,
                 },
                 mouseWheel: {
                     speed: 20,

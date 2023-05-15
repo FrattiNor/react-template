@@ -59,7 +59,7 @@ function useVirtualizer({ scroll, scrollRef, count, fetchNextPage }: Props) {
         const resolvedOptions: VirtualizerOptions<any, any> = {
             count,
             scrollToFn,
-            overscan: 0,
+            overscan: 5,
             getScrollElement,
             observeElementRect,
             observeElementOffset,

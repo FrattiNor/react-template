@@ -8,8 +8,8 @@ import classNames from 'classnames';
 const App = () => {
     const tipRef = useRef<HTMLDivElement>(null);
     const scrollRef = useRef<HTMLDivElement>(null);
+    const { data, count, fetchNextPage, refetch, setParams } = useDeviceList(1);
     const [visibles, setVisibles] = useState<Record<string, boolean>>({});
-    const { data, count, fetchNextPage, refetch } = useDeviceList(1);
     const { scroll, getPullDownTip } = useScroll({ scrollRef, tipRef, refetch });
     const { virtualizer, items, totalSize } = useVirtualizer({
         count,
@@ -24,29 +24,32 @@ const App = () => {
                 <button onClick={() => virtualizer?.scrollToOffset(0)}>顶部</button>
                 <button onClick={() => virtualizer?.scrollToIndex(Math.floor(count / 2))}>中间</button>
                 <button onClick={() => virtualizer?.scrollToIndex(count - 1)}>底部</button>
-                <button onClick={() => fetchNextPage()}>fetchNextPage</button>
+                <button onClick={() => fetchNextPage()}>nextPage</button>
                 <button onClick={() => refetch()}>refetch</button>
+                <button onClick={() => setParams({ isdmTag: 'AI01060116' })}>setParams</button>
+                <button onClick={() => scroll?.refresh()}>refresh</button>
             </div>
 
             <div ref={scrollRef} className={styles['scroll-wrapper']}>
                 <div className={styles['container']} style={{ height: `${totalSize}px` }}>
-                    <div ref={tipRef} className={styles['tip']}>
+                    <div ref={tipRef} className={styles['pullDownTip']}>
                         {getPullDownTip()}
                     </div>
 
                     <div className={styles['container-inner']} style={{ transform: `translateY(${items?.[0]?.start || 0}px)` }}>
                         {items.map((virtualItem) => {
-                            if (virtualItem.index < count - 1) {
+                            // items的更新比count慢，可能会出现items数量多于count的情况
+                            if (virtualItem.index < count) {
                                 return (
                                     <div
                                         key={virtualItem.key}
                                         data-index={virtualItem.index}
                                         ref={virtualizer?.measureElement}
                                         className={classNames(styles['item'], {
-                                            [styles['open']]: visibles[virtualItem.key],
-                                            [styles['first']]: virtualItem.index === 0,
-                                            [styles['even']]: !(virtualItem.index % 2),
                                             [styles['odd']]: virtualItem.index % 2,
+                                            [styles['even']]: !(virtualItem.index % 2),
+                                            [styles['first']]: virtualItem.index === 0,
+                                            [styles['open']]: visibles[virtualItem.key],
                                         })}
                                         onClick={() => setVisibles((v) => ({ ...v, [virtualItem.key]: !v[virtualItem.key] }))}
                                     >
@@ -57,6 +60,8 @@ const App = () => {
                             return null;
                         })}
                     </div>
+
+                    <div className={styles['container-inner-bottom']} />
                 </div>
             </div>
         </div>

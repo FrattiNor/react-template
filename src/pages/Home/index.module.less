@@ -7,14 +7,16 @@
     justify-content: center;
 
     .handle {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: center;
         margin-bottom: 50px;
+        row-gap: 10px;
+        gap: 10px;
 
         button {
             cursor: pointer;
-        }
-
-        button + button {
-            margin-left: 10px;
         }
     }
 
@@ -25,17 +27,29 @@
         position: relative;
         border: 1px solid #666;
 
-        .tip {
+        .pullDownTip {
             top: 0;
             left: 0;
             width: 100%;
-            padding: 20px;
+            padding: 10px;
             color: #999;
             font-size: 14px;
             position: absolute;
             text-align: center;
             box-sizing: border-box;
             transform: translate3d(0, -100%, 0);
+            border-bottom: 1px solid #666;
+        }
+
+        .container-inner-bottom {
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            color: #999;
+            position: absolute;
+            box-sizing: border-box;
+            transform: translate3d(0, 100%, 0);
+            border-bottom: 1px solid #666;
         }
 
         .container {
@@ -54,6 +68,10 @@
                     transition: height 0.3s;
                     box-sizing: border-box;
                     height: 50px;
+
+                    &.first {
+                        border-top: 0;
+                    }
 
                     &.odd {
                         background-color: #fff;
