@@ -16,7 +16,9 @@ function useVirtualizer({ scroll, scrollRef, count, fetchNextPage }: Props) {
 
     const [virtualizer, setVirtualizer] = useState<Virtualizer<HTMLDivElement, any> | null>(null);
 
-    const [normalHeight, setNormalHeight] = useState<number>(35);
+    const [normalHeight, setNormalHeight] = useState<null | number>(null);
+
+    // const canScroll =
 
     const options = useMemo(() => {
         const getScrollElement = () => {
@@ -64,7 +66,7 @@ function useVirtualizer({ scroll, scrollRef, count, fetchNextPage }: Props) {
             observeElementRect,
             observeElementOffset,
             getItemKey: (i) => i,
-            estimateSize: () => normalHeight,
+            estimateSize: () => normalHeight || 35,
             onChange: (instance) => {
                 rerender();
                 pageTurning(instance.range.endIndex);
@@ -99,13 +101,27 @@ function useVirtualizer({ scroll, scrollRef, count, fetchNextPage }: Props) {
 
     useEffect(() => {
         if (scroll) scroll.refresh();
+        // if (scroll && scrollRef.current) {
+        //     const nextCanScroll = scrollRef.current.clientHeight < scrollRef.current.scrollHeight;
+        //     if (nextCanScroll) {
+        //         scroll.enable();
+        //     } else {
+        //         scroll.disable();
+        //     }
+        // }
     }, [totalSize, scroll]);
 
+    // @ts-ignore
+    const itemSizeCache: Map<number, number> | undefined = virtualizer?.itemSizeCache;
+
     useEffect(() => {
-        if (normalHeight === 35 && items.length > 0) {
-            setNormalHeight(items[0].size);
+        if (normalHeight === null && itemSizeCache) {
+            const firstHeight = itemSizeCache.get(0);
+            if (typeof firstHeight === 'number') {
+                setNormalHeight(firstHeight);
+            }
         }
-    }, [items]);
+    }, [itemSizeCache]);
 
     return { virtualizer, totalSize, items };
 }

@@ -26,6 +26,6 @@
         }
     },
     "include": ["src"],
-    "exclude": ["iconfont.js"],
+    "exclude": ["iconfont.js", "scrollbar"],
     "references": [{ "path": "./tsconfig.node.json" }]
 }

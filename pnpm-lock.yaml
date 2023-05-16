@@ -48,6 +48,9 @@ dependencies:
     version: 6.11.1(react-dom@18.2.0)(react@18.2.0)
 
 devDependencies:
+  '@better-scroll/shared-utils':
+    specifier: ^2.5.1
+    version: 2.5.1
   '@faker-js/faker':
     specifier: ^7.6.0
     version: 7.6.0
@@ -1297,7 +1300,6 @@ packages:
 
   /@better-scroll/shared-utils@2.5.1:
     resolution: {integrity: sha512-AplkfSjXVYP9LZiD6JsKgmgQJ/mG4uuLmBuwLz8W5OsYc7AYTfN8kw6GqZ5OwCGoXkVhBGyd8NeC4xwYItp0aw==}
-    dev: false
 
   /@esbuild/android-arm64@0.17.18:
     resolution: {integrity: sha512-/iq0aK0eeHgSC3z55ucMAHO05OIqmQehiGay8eP5l/5l+iEr4EIbh4/MI8xD9qRFjqzgkc0JkX0LculNC9mXBw==}

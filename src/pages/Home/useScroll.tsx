@@ -1,15 +1,14 @@
 import MouseWheel from '@better-scroll/mouse-wheel';
-import ScrollBar from '@better-scroll/scroll-bar';
 import PullDown from '@better-scroll/pull-down';
 import { useEffect, useState } from 'react';
 import BScroll from '@better-scroll/core';
-import Iconfont from '@/iconfont';
+import ScrollBar from './scrollbar';
 
 BScroll.use(MouseWheel);
 BScroll.use(ScrollBar);
 BScroll.use(PullDown);
 
-type PullDownTip = '' | 'enter' | 'leave' | 'fetching' | 'success';
+type PullDownType = '' | 'enter' | 'leave' | 'fetching' | 'success';
 
 type Props = {
     scrollRef: React.RefObject<HTMLDivElement>;
@@ -18,18 +17,18 @@ type Props = {
 };
 
 function useScroll({ scrollRef, tipRef, refetch }: Props) {
-    const [pullDownTip, setPullDownTip] = useState<PullDownTip>('');
+    const [pullDownType, setPullDownType] = useState<PullDownType>('');
     const [scroll, setScroll] = useState<BScroll | null>(null);
 
     useEffect(() => {
         if (scrollRef.current) {
-            const pullDownTipHeight = tipRef.current?.clientHeight || 65;
+            const pullDownHeight = tipRef.current?.clientHeight || 65;
 
             const newScroll = new BScroll(scrollRef.current, {
                 click: true,
                 scrollX: false,
                 scrollbar: {
-                    minSize: 20,
+                    minSize: 15,
                 },
                 bounce: {
                     top: true,
@@ -38,8 +37,8 @@ function useScroll({ scrollRef, tipRef, refetch }: Props) {
                     bottom: false,
                 },
                 pullDownRefresh: {
-                    threshold: pullDownTipHeight * 1.1,
-                    stop: pullDownTipHeight,
+                    threshold: pullDownHeight * 1.1,
+                    stop: pullDownHeight,
                 },
                 mouseWheel: {
                     speed: 20,
@@ -62,9 +61,9 @@ function useScroll({ scrollRef, tipRef, refetch }: Props) {
             // == 上拉刷新 ==
 
             const pullingDown = async () => {
-                setPullDownTip('fetching');
+                setPullDownType('fetching');
                 await refetch();
-                setPullDownTip('success');
+                setPullDownType('success');
                 setTimeout(() => {
                     scroll.finishPullDown();
                     scroll.refresh();
@@ -72,11 +71,11 @@ function useScroll({ scrollRef, tipRef, refetch }: Props) {
             };
 
             const enterThreshold = async () => {
-                setPullDownTip('enter');
+                setPullDownType('enter');
             };
 
             const leaveThreshold = async () => {
-                setPullDownTip('leave');
+                setPullDownType('leave');
             };
 
             scroll.on('pullingDown', pullingDown);
@@ -92,32 +91,7 @@ function useScroll({ scrollRef, tipRef, refetch }: Props) {
         }
     }, [scroll, refetch]);
 
-    const getPullDownTip = () => {
-        switch (pullDownTip) {
-            case 'enter':
-                return (
-                    <span>
-                        <Iconfont icon="arrow-down" />
-                        <span> 下拉刷新</span>
-                    </span>
-                );
-            case 'leave':
-                return (
-                    <span>
-                        <Iconfont icon="arrow-up" />
-                        <span> 释放刷新</span>
-                    </span>
-                );
-            case 'fetching':
-                return <span>加载中...</span>;
-            case 'success':
-                return <span>刷新成功</span>;
-            default:
-                return <span>占位</span>;
-        }
-    };
-
-    return { scroll, getPullDownTip };
+    return { scroll, pullDownType };
 }
 
 export default useScroll;

@@ -36,6 +36,7 @@ export const useDeviceList = (view: number) => {
     const pages = query.data?.pages;
     const data = useMemo(() => pages?.reduce((a, b) => [...(a || []), ...(b?.list || [])], [] as DeviceListItem[]) || [], [pages]);
     const count = data.length;
+    const empty = count === 0;
 
     // query 自带的 refetch 会从1 - n的页面数据重新获取一次
     const refetch = useCallback(() => {
@@ -56,5 +57,5 @@ export const useDeviceList = (view: number) => {
         return Promise.resolve();
     }, [isFetchingNextPage, hasNextPage]);
 
-    return { setParams, fetchNextPage, refetch, data, count };
+    return { setParams, fetchNextPage, refetch, data, count, empty };
 };
