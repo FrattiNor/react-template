@@ -18,8 +18,6 @@ function useVirtualizer({ scroll, scrollRef, count, fetchNextPage }: Props) {
 
     const [normalHeight, setNormalHeight] = useState<null | number>(null);
 
-    // const canScroll =
-
     const options = useMemo(() => {
         const getScrollElement = () => {
             return scrollRef.current;
@@ -101,14 +99,6 @@ function useVirtualizer({ scroll, scrollRef, count, fetchNextPage }: Props) {
 
     useEffect(() => {
         if (scroll) scroll.refresh();
-        // if (scroll && scrollRef.current) {
-        //     const nextCanScroll = scrollRef.current.clientHeight < scrollRef.current.scrollHeight;
-        //     if (nextCanScroll) {
-        //         scroll.enable();
-        //     } else {
-        //         scroll.disable();
-        //     }
-        // }
     }, [totalSize, scroll]);
 
     // @ts-ignore

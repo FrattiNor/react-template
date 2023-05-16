@@ -1,4 +1,4 @@
-import iconfontJSON from './iconfontJson';
+import iconfontJSON from './iconfontJson.js';
 import styles from './index.module.less';
 import { CSSProperties, FC } from 'react';
 import classNames from 'classnames';

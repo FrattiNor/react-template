@@ -1,12 +1,13 @@
+import { PullDownType } from '../useScroll';
 import styles from './index.module.less';
-import Iconfont from '@/iconfont';
+import Iconfont from '@/components/Iconfont';
 import { FC } from 'react';
 
 type Props = {
-    type: 'enter' | 'leave' | 'fetching' | 'success' | '';
+    type: PullDownType;
 };
 
-const FetchTips: FC<Props> = ({ type }) => {
+const FetchTip: FC<Props> = ({ type }) => {
     switch (type) {
         case 'enter':
             return (
@@ -26,7 +27,7 @@ const FetchTips: FC<Props> = ({ type }) => {
             return (
                 <span>
                     <span>加载中 </span>
-                    <Iconfont icon="loading" className={styles['loading']} />
+                    <Iconfont icon="loading" className={styles['tip-loading']} />
                 </span>
             );
         case 'success':
@@ -36,4 +37,4 @@ const FetchTips: FC<Props> = ({ type }) => {
     }
 };
 
-export default FetchTips;
+export default FetchTip;

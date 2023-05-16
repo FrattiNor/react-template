@@ -3,12 +3,13 @@ import PullDown from '@better-scroll/pull-down';
 import { useEffect, useState } from 'react';
 import BScroll from '@better-scroll/core';
 import ScrollBar from './scrollbar';
+import FetchTip from './fetchTip';
 
 BScroll.use(MouseWheel);
 BScroll.use(ScrollBar);
 BScroll.use(PullDown);
 
-type PullDownType = '' | 'enter' | 'leave' | 'fetching' | 'success';
+export type PullDownType = '' | 'enter' | 'leave' | 'fetching' | 'success';
 
 type Props = {
     scrollRef: React.RefObject<HTMLDivElement>;
@@ -91,7 +92,9 @@ function useScroll({ scrollRef, tipRef, refetch }: Props) {
         }
     }, [scroll, refetch]);
 
-    return { scroll, pullDownType };
+    const fetchTip = <FetchTip type={pullDownType} />;
+
+    return { scroll, fetchTip };
 }
 
 export default useScroll;
