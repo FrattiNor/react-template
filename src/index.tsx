@@ -6,7 +6,7 @@ import { Provider } from 'react-redux';
 import Route from './routes';
 import store from './store';
 import 'amfe-flexible';
-import './index.css';
+import './index.less';
 
 const queryClient = new QueryClient();
 

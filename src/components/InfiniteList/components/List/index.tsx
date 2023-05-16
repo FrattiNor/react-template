@@ -4,10 +4,10 @@ import useScroll from '../../hooks/scroll/useScroll';
 import Iconfont from '@/components/Iconfont';
 import LoadingIcon from '../LoadingIcon';
 import styles from './index.module.less';
+import { ListProps } from '../../type';
 import classNames from 'classnames';
-import { Props } from '../../type';
 
-function List<T>({ query, renderItem, rowKey, enableVisible }: Props<T>) {
+function List<T>({ query, renderItem, rowKey, enableVisible }: ListProps<T>) {
     const tipRef = useRef<HTMLDivElement>(null);
     const scrollRef = useRef<HTMLDivElement>(null);
     const { data, count, empty, fetchNextPage, refetch, hasNextPage, isFetchingNextPage } = query;

@@ -1,0 +1,36 @@
+:root {
+    font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+    line-height: 1.5;
+    font-weight: 400;
+    color-scheme: light dark;
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-text-size-adjust: 100%;
+}
+
+.theme {
+    --primary-color: #1677ff; // 主题色
+    --primary-font-color: #fff; //字颜色（主题色为背景）
+    --bg-color: #fff; // 背景色
+    --font-color: #262626; // 字颜色（背景色为背景）
+    --notice-font-color: #999; // 字提示颜色（背景色为背景）
+    --font-size: 14px; // 字体大小
+    // 悬浮框阴影
+    --float-box-shadow: 0 6px 16px 0 rgba(0, 0, 0, 0.08), 0 3px 6px -4px rgba(0, 0, 0, 0.12), 0 9px 28px 8px rgba(0, 0, 0, 0.05);
+}
+
+html,
+body,
+#root {
+    .theme();
+
+    background-color: var(--bg-color);
+    font-size: var(--font-size);
+    color: var(--font-color);
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    margin: 0;
+}

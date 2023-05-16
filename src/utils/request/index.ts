@@ -1,3 +1,4 @@
+import Toast from '@/components/Toast';
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
 import contentDisposition from 'content-disposition';
 
@@ -26,13 +27,7 @@ type Res<T> = T extends Blob ? BlobRes | null : T | null;
 class RequestClient {
     private axiosClient = axios.create();
 
-    private methods = {
-        GET: 'GET',
-        PUT: 'PUT',
-        POST: 'POST',
-        PATCH: 'PATCH',
-        DELETE: 'DELETE',
-    };
+    private methods = ['GET', 'PUT', 'POST', 'PATCH', 'DELETE'] as const;
 
     private handleBlob = (data: Blob, headers: AxiosResponse['headers']): BlobRes => {
         const contentDispositionStr = headers['content-disposition'];
@@ -47,7 +42,9 @@ class RequestClient {
             case 0:
                 return result.data;
             default:
-                console.log(msg);
+                if (typeof msg === 'string' && msg !== '') {
+                    Toast.fail(msg);
+                }
                 return null;
         }
     };
@@ -65,14 +62,20 @@ class RequestClient {
         }
     };
 
+    private handleError = (e: any): Res<any> => {
+        const { msg, message, error } = e?.response?.data || {};
+        Toast.fail('xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx' || msg || message || error || '接口错误');
+        return null as Res<any>;
+    };
+
     get request() {
-        type Method = keyof typeof this.methods;
+        type Method = (typeof this.methods)[number];
         type Request = <T>(config: Omit<AxiosRequestConfig, 'method'>) => Promise<Res<T>>;
         type Map = Record<Method, Request>;
         const map: Map = {} as Map;
-        Object.entries(this.methods).forEach(([k, v]) => {
-            map[k as Method] = <T>(config: Omit<AxiosRequestConfig, 'method'>) =>
-                this.axiosClient<ReturnData<T>>({ method: v, ...config }).then(this.handleResponse);
+        this.methods.forEach((method) => {
+            map[method] = <T>(config: Omit<AxiosRequestConfig, 'method'>) =>
+                this.axiosClient<ReturnData<T>>({ method, ...config }).then(this.handleResponse, this.handleError);
         });
         return map;
     }

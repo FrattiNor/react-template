@@ -23,9 +23,9 @@ const routes: Array<Route> = [
                 Component: NormalLayout,
                 children: [
                     {
-                        path: 'home?',
-                        title: '主页',
-                        LazyComponent: () => import('@/pages/Home'),
+                        path: 'device?',
+                        title: '设备台账',
+                        LazyComponent: () => import('@/pages/Device'),
                     },
                     {
                         path: 'home2',

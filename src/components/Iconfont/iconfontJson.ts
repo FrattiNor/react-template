@@ -6,6 +6,13 @@ const iconfontJSON = {
     description: '',
     glyphs: [
         {
+            icon_id: '248980',
+            name: 'search',
+            font_class: 'search',
+            unicode: 'e699',
+            unicode_decimal: 59033,
+        },
+        {
             icon_id: '8827222',
             name: 'loading',
             font_class: 'loading',
