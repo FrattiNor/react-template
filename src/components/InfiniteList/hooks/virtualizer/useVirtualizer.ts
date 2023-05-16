@@ -24,7 +24,7 @@ function useVirtualizer({ scroll, scrollRef, count, fetchNextPage }: Props) {
         };
 
         const pageTurning = async (endIndex: number) => {
-            if (count - (endIndex + 1) < 5) {
+            if (count - (endIndex + 1) === 0) {
                 if (!requestFlag.current) {
                     requestFlag.current = true;
                     await fetchNextPage();
@@ -106,9 +106,10 @@ function useVirtualizer({ scroll, scrollRef, count, fetchNextPage }: Props) {
 
     useEffect(() => {
         if (normalHeight === null && itemSizeCache) {
-            const firstHeight = itemSizeCache.get(0);
-            if (typeof firstHeight === 'number') {
-                setNormalHeight(firstHeight);
+            const secondHeight = itemSizeCache.get(1);
+            if (typeof secondHeight === 'number') {
+                console.log('secondHeight', secondHeight);
+                setNormalHeight(secondHeight);
             }
         }
     }, [itemSizeCache]);

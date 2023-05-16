@@ -1,4 +1,4 @@
-import Iconfont from '@/components/Iconfont';
+import LoadingIcon from '../LoadingIcon';
 import styles from './index.module.less';
 import { Props } from '../../type';
 import List from '../List';
@@ -10,7 +10,7 @@ function Wrapper<T>(props: Props<T>) {
         <div className={styles['wrapper']}>
             {loading && (
                 <div className={styles['loading']}>
-                    <Iconfont icon="loading" className={styles['icon']} />
+                    <LoadingIcon className={styles['icon']} />
                 </div>
             )}
             {!loading && <List {...props} />}

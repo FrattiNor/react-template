@@ -1,7 +1,8 @@
 import useVirtualizer from '../../hooks/virtualizer/useVirtualizer';
-import { useCallback, useRef, useState } from 'react';
+import { Fragment, useCallback, useRef, useState } from 'react';
 import useScroll from '../../hooks/scroll/useScroll';
 import Iconfont from '@/components/Iconfont';
+import LoadingIcon from '../LoadingIcon';
 import styles from './index.module.less';
 import classNames from 'classnames';
 import { Props } from '../../type';
@@ -9,11 +10,11 @@ import { Props } from '../../type';
 function List<T>({ query, renderItem, rowKey, enableVisible }: Props<T>) {
     const tipRef = useRef<HTMLDivElement>(null);
     const scrollRef = useRef<HTMLDivElement>(null);
-    const { data, count, empty, fetchNextPage, refetch } = query;
+    const { data, count, empty, fetchNextPage, refetch, hasNextPage, isFetchingNextPage } = query;
     const [visibles, setVisibles] = useState<Record<string, boolean>>({});
     const { scroll, fetchTip } = useScroll({ scrollRef, tipRef, refetch });
     const { virtualizer, items, totalSize } = useVirtualizer({
-        count,
+        count: count + 1, // 多给一位用于显示加载中
         scroll,
         scrollRef,
         fetchNextPage,
@@ -51,7 +52,7 @@ function List<T>({ query, renderItem, rowKey, enableVisible }: Props<T>) {
                 {empty && (
                     <div className={styles['empty']}>
                         <Iconfont className={styles['icon']} icon="empty" />
-                        <span className={styles['font']}>暂无数据</span>
+                        <span className={styles['font']}>{`暂无数据`}</span>
                     </div>
                 )}
 
@@ -72,11 +73,26 @@ function List<T>({ query, renderItem, rowKey, enableVisible }: Props<T>) {
                                         onClick={() => itemClick(key)}
                                         ref={virtualizer?.measureElement}
                                         className={classNames(styles['item'], {
-                                            [styles['odd']]: virtualItem.index % 2,
-                                            [styles['even']]: !(virtualItem.index % 2),
+                                            [styles['odd']]: index % 2,
+                                            [styles['even']]: !(index % 2),
+                                            [styles['first']]: index === 0,
                                         })}
                                     >
                                         {renderItem(item, visible, index)}
+                                    </div>
+                                );
+                            }
+
+                            if (index === count) {
+                                return (
+                                    <div key="bottom-status" className={styles['bottom-status']}>
+                                        {isFetchingNextPage && (
+                                            <Fragment>
+                                                <span>{`加载中 `}</span>
+                                                <LoadingIcon />
+                                            </Fragment>
+                                        )}
+                                        {!hasNextPage && <span>{`- 没有更多了 -`}</span>}
                                     </div>
                                 );
                             }

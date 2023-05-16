@@ -1,6 +1,7 @@
 import { useCallback, useMemo, useReducer, useState } from 'react';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { ListData } from '@/global';
+import useDelay from '../useDelay';
 
 type Params = Record<string, any>;
 type PaginationParams = { current: number; pageSize: number };
@@ -9,9 +10,11 @@ type Props<T> = {
     queryKey: any[];
     fetchFn: (p: { params: Params; paginationParams: PaginationParams }) => Promise<ListData<T> | null>;
     pageSize?: number;
+    delay?: number;
 };
 
-const useInfiniteList = <T>({ pageSize = 100, queryKey, fetchFn }: Props<T>) => {
+const useInfiniteList = <T>({ pageSize = 50, queryKey, delay, fetchFn }: Props<T>) => {
+    const [delayFn] = useDelay({ delayFn: fetchFn, delay: delay || 0 });
     const rerender = useReducer(() => ({}), {})[1];
     const [params, setParams] = useState<Params>({});
     const _queryKey = [...queryKey, pageSize, params];
@@ -21,7 +24,7 @@ const useInfiniteList = <T>({ pageSize = 100, queryKey, fetchFn }: Props<T>) => 
         queryFn: ({ pageParam }) => {
             if (pageParam === false) return;
             const paginationParams = { current: typeof pageParam === 'number' ? pageParam : 1, pageSize };
-            return fetchFn({ paginationParams, params });
+            return delayFn({ paginationParams, params });
         },
         getNextPageParam: (lastPage) => {
             if (!lastPage) return false;
@@ -65,7 +68,7 @@ const useInfiniteList = <T>({ pageSize = 100, queryKey, fetchFn }: Props<T>) => 
         return Promise.resolve();
     }, [isFetchingNextPage, hasNextPage]);
 
-    return { setParams, fetchNextPage, refetch, data, count, empty, loading };
+    return { setParams, fetchNextPage, refetch, data, count, empty, loading, hasNextPage, isFetchingNextPage };
 };
 
 export default useInfiniteList;

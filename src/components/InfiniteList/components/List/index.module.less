@@ -1,20 +1,26 @@
 .scroll-wrapper {
+    --infinite-up-color: #fff;
+    --infinite-font-color: #262626;
+    --infinite-down-color: #fafbfc;
+    --infinite-notice-font-color: #999;
+
     width: 100%;
     height: 100%;
+    font-size: 14px;
     overflow: hidden;
     position: relative;
+    background-color: var(--infinite-down-color);
 
     .fetchTip {
         top: 0;
         left: 0;
         width: 100%;
-        padding: 10px;
-        color: #999;
-        font-size: 14px;
+        padding: 15px;
         position: absolute;
         text-align: center;
         box-sizing: border-box;
         transform: translate3d(0, -100%, 0);
+        color: var(--infinite-notice-font-color);
     }
 
     .empty {
@@ -29,19 +35,19 @@
 
         .icon {
             font-size: 80px;
-            color: #dce0e6;
+            color: var(--infinite-notice-font-color);
         }
 
         .font {
             font-size: 16px;
-            color: #bfbfbf;
+            color: var(--infinite-notice-font-color);
         }
     }
 
     .container {
         width: 100%;
         position: relative;
-        background-color: #fff;
+        background-color: var(--infinite-up-color);
 
         .container-inner {
             top: 0;
@@ -50,16 +56,20 @@
             position: absolute;
 
             .item {
-                transition: height 0.3s;
                 box-sizing: border-box;
+                transition: height 0.3s;
+                border-top: 4px solid var(--infinite-down-color);
 
-                &.odd {
-                    background-color: #fff;
+                &.first {
+                    border-top: 0;
                 }
+            }
 
-                &.even {
-                    background-color: #e6e4dc;
-                }
+            .bottom-status {
+                padding: 15px;
+                text-align: center;
+                color: var(--infinite-notice-font-color);
+                background-color: var(--infinite-down-color);
             }
         }
     }

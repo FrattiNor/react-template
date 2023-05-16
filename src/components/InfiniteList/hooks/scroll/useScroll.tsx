@@ -1,9 +1,10 @@
+import LoadingIcon from '../../components/LoadingIcon';
+import { useEffect, useMemo, useState } from 'react';
 import MouseWheel from '@better-scroll/mouse-wheel';
 import PullDown from '@better-scroll/pull-down';
-import { useEffect, useState } from 'react';
+import Iconfont from '@/components/Iconfont';
 import BScroll from '@better-scroll/core';
 import ScrollBar from './scrollbar';
-import FetchTip from './fetchTip';
 
 BScroll.use(MouseWheel);
 BScroll.use(ScrollBar);
@@ -92,7 +93,35 @@ function useScroll({ scrollRef, tipRef, refetch }: Props) {
         }
     }, [scroll, refetch]);
 
-    const fetchTip = <FetchTip type={pullDownType} />;
+    const fetchTip = useMemo(() => {
+        switch (pullDownType) {
+            case 'enter':
+                return (
+                    <span>
+                        <Iconfont icon="arrow-down" />
+                        <span>{` 下拉刷新`}</span>
+                    </span>
+                );
+            case 'leave':
+                return (
+                    <span>
+                        <Iconfont icon="arrow-up" />
+                        <span>{` 释放立即刷新`}</span>
+                    </span>
+                );
+            case 'fetching':
+                return (
+                    <span>
+                        <span>{`加载中 `}</span>
+                        <LoadingIcon />
+                    </span>
+                );
+            case 'success':
+                return <span>{`刷新成功`}</span>;
+            default:
+                return <span>{`-`}</span>;
+        }
+    }, [pullDownType]);
 
     return { scroll, fetchTip };
 }
