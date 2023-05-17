@@ -49,7 +49,7 @@ class RequestClient {
         }
     };
 
-    private handleResponse = <T>(req: AxiosResponse<ReturnData<T>, any>): Res<T> => {
+    private handleSuccess = <T>(req: AxiosResponse<ReturnData<T>, any>): Res<T> => {
         const { data, headers } = req;
         switch (Object.prototype.toString.call(data)) {
             case '[object Object]':
@@ -64,7 +64,7 @@ class RequestClient {
 
     private handleError = (e: any): Res<any> => {
         const { msg, message, error } = e?.response?.data || {};
-        Toast.fail('xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx' || msg || message || error || '接口错误');
+        Toast.fail(msg || message || error || '接口错误');
         return null as Res<any>;
     };
 
@@ -75,7 +75,7 @@ class RequestClient {
         const map: Map = {} as Map;
         this.methods.forEach((method) => {
             map[method] = <T>(config: Omit<AxiosRequestConfig, 'method'>) =>
-                this.axiosClient<ReturnData<T>>({ method, ...config }).then(this.handleResponse, this.handleError);
+                this.axiosClient<ReturnData<T>>({ method, ...config }).then(this.handleSuccess, this.handleError);
         });
         return map;
     }

@@ -52,6 +52,5 @@ export const getProxyObj = () => {
             },
         };
     });
-    console.log(obj);
     return obj;
 };

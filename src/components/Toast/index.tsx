@@ -1,4 +1,4 @@
-import { Toast as AntdToast, ToastShowProps } from 'antd-mobile';
+import AntdToast, { ToastShowProps } from 'antd-mobile/es/components/toast';
 import { ToastHandler } from 'antd-mobile/es/components/toast';
 import { ReactNode } from 'react';
 

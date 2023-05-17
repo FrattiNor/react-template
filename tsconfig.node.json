@@ -6,5 +6,5 @@
         "moduleResolution": "bundler",
         "allowSyntheticDefaultImports": true
     },
-    "include": ["vite.config.ts", "proxy/index.ts", "proxy/proxy.json", "proxy/proxyAddress.json"]
+    "include": ["vite.config.ts", "vite.build.rollupOptions.ts", "./proxy/index.ts", "./proxy/proxy.json", "./proxy/proxyAddress.json"]
 }
