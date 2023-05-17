@@ -51,6 +51,5 @@
         "prettier": "^2.8.8",
         "typescript": "^5.0.2",
         "vite": "^4.3.2"
-    },
-    "sideEffects": []
+    }
 }

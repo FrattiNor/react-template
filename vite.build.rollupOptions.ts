@@ -5,34 +5,38 @@ const rollupOptions: UserConfig['build']['rollupOptions'] = {
     output: {
         // splitCode
         // 返回一个key，如果key一样将打包到一个文件里（css也会打包到同名css中【全部】）
-        manualChunks(id) {
+        manualChunks(id, { getModuleInfo }) {
             // 处理第三方包
             if (id.includes('node_modules')) {
-                const list = id.split('node_modules/');
-                const vendorPath = list[list.length - 1];
-                const vendorName = vendorPath.split('/')[0];
-                // 大于30KB
-                switch (vendorName) {
-                    case 'react-router-dom':
-                    case 'path-browserify':
-                    case '@better-scroll':
-                    case '@react-spring':
-                    case 'react-router':
-                    case 'antd-mobile':
-                    case '@remix-run':
-                    case 'react-dom':
-                    case '@tanstack':
-                    case '@reduxjs':
-                    case 'buffer':
-                    case 'lodash':
-                    case 'axios':
-                    case 'immer':
-                    case 'redux':
-                    case 'react':
-                        return vendorName;
-                    // 其余小文件打包成一个包
-                    default:
-                        return 'vendor';
+                const info = getModuleInfo(id);
+                // 未被tree-shaking的部分，并且不是外部模块
+                if (info.isIncluded === true && info.isExternal === false) {
+                    const list = id.split('node_modules/');
+                    const vendorPath = list[list.length - 1];
+                    const vendorName = vendorPath.split('/')[0];
+                    // 大于30KB
+                    switch (vendorName) {
+                        case 'react-router-dom':
+                        case 'path-browserify':
+                        case '@better-scroll':
+                        case '@react-spring':
+                        case 'react-router':
+                        case 'antd-mobile':
+                        case '@remix-run':
+                        case 'react-dom':
+                        case '@tanstack':
+                        case '@reduxjs':
+                        case 'buffer':
+                        case 'lodash':
+                        case 'axios':
+                        case 'immer':
+                        case 'redux':
+                        case 'react':
+                            return vendorName;
+                        // 其余小文件打包成一个包
+                        default:
+                            return 'vendor';
+                    }
                 }
             }
         },

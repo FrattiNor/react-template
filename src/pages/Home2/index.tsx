@@ -1,5 +1,5 @@
 import empty from '@/assets/empty.svg';
-import Button from 'antd-mobile/es/components/button';
+import { Button } from 'antd-mobile';
 
 const Home = () => {
     return (
