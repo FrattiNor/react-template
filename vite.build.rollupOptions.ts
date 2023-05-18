@@ -3,13 +3,12 @@ import { UserConfig } from 'vite';
 // 将 build 模式的 rollupOptions 单独提取
 const rollupOptions: UserConfig['build']['rollupOptions'] = {
     output: {
-        // splitCode
-        // 返回一个key，如果key一样将打包到一个文件里（css也会打包到同名css中【全部】）
+        // splitCode 返回一个key，如果key一样将打包到一个文件里（css也会打包到同名css中【全部】）
         manualChunks(id, { getModuleInfo }) {
             // 处理第三方包
             if (id.includes('node_modules')) {
                 const info = getModuleInfo(id);
-                // 未被tree-shaking的部分，并且不是外部模块
+                // 未被 tree-shaking 的部分，并且不是外部模块
                 if (info.isIncluded === true && info.isExternal === false) {
                     const list = id.split('node_modules/');
                     const vendorPath = list[list.length - 1];
@@ -55,15 +54,16 @@ const rollupOptions: UserConfig['build']['rollupOptions'] = {
             }
             return 'vendor/[name]-[hash].js';
         },
+        entryFileNames() {
+            return 'js/[name]-[hash].js';
+        },
         assetFileNames(assetInfo) {
             // css无法解决index命名的问题
             const { name } = assetInfo;
             // css 单独一个文件夹
             if (/.css$/.test(name)) {
-                // console.log(assetInfo);
                 return '[ext]/[name]-[hash].[ext]';
             }
-            // console.log(assetInfo);
             return 'assets/[name]-[hash].[ext]';
         },
     },

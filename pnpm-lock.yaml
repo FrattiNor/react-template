@@ -34,6 +34,9 @@ dependencies:
   content-disposition:
     specifier: ^0.5.4
     version: 0.5.4
+  dayjs:
+    specifier: ^1.11.7
+    version: 1.11.7
   react:
     specifier: ^18.2.0
     version: 18.2.0

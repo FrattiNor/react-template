@@ -68,7 +68,7 @@ const useInfiniteList = <T>({ pageSize = 50, queryKey, delay, fetchFn }: Props<T
         return Promise.resolve();
     }, [isFetchingNextPage, hasNextPage]);
 
-    return { setParams, fetchNextPage, refetch, data, count, empty, loading, hasNextPage, isFetchingNextPage };
+    return { setParams, fetchNextPage, refetch, data, params, count, empty, loading, hasNextPage, isFetchingNextPage };
 };
 
 export default useInfiniteList;

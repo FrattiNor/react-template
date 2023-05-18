@@ -9,6 +9,8 @@ function InfiniteList<T>(props: WrapperProps<T>) {
     const { filter: filterProps = {}, ...listProps } = props;
 
     const loading = listProps.query.loading;
+    const params = listProps.query.params;
+    const setParams = listProps.query.setParams;
     const filterList = filterProps?.filterList;
     const enableFilter = filterProps?.enableFilter;
     const haveFilter = useCallback((f: any): f is any[] => Array.isArray(f) && f.length > 0, []);
@@ -24,7 +26,9 @@ function InfiniteList<T>(props: WrapperProps<T>) {
             {!loading && (
                 <Fragment>
                     <List {...listProps} />
-                    {haveFilter(filterList) && enableFilter !== false && <Filter {...filterProps} filterList={filterList} />}
+                    {haveFilter(filterList) && enableFilter !== false && (
+                        <Filter {...filterProps} filterList={filterList} params={params} setParams={setParams} />
+                    )}
                 </Fragment>
             )}
         </div>

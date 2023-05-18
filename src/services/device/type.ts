@@ -19,3 +19,8 @@ export type DeviceListItem = {
     systemTag: string; // 系统位号
     devMode: number; // 模式状态
 };
+
+export type DeviceModelItem = {
+    mfrAndDevice: string;
+    deviceModelView: string;
+};

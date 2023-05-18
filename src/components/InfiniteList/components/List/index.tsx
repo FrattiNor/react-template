@@ -1,7 +1,7 @@
 import useVirtualizer from '../../hooks/virtualizer/useVirtualizer';
 import { Fragment, useCallback, useRef, useState } from 'react';
 import useScroll from '../../hooks/scroll/useScroll';
-import Iconfont from '@/components/Iconfont';
+import EmptySvg from '@/assets/emptySvg';
 import LoadingIcon from '../LoadingIcon';
 import styles from './index.module.less';
 import { ListProps } from '../../type';
@@ -51,7 +51,7 @@ function List<T>({ query, renderItem, rowKey, enableVisible }: ListProps<T>) {
 
                 {empty && (
                     <div className={styles['empty']}>
-                        <Iconfont className={styles['icon']} icon="empty" />
+                        <EmptySvg className={styles['icon']} />
                         <span className={styles['font']}>{`暂无数据`}</span>
                     </div>
                 )}
