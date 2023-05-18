@@ -10,7 +10,7 @@ const Device = () => {
             rowKey="id"
             enableVisible
             query={query}
-            renderItem={(item, visible) => <div style={{ height: visible ? 100 : 50 }}>{item.isdmTag}</div>}
+            renderItem={(item, { visible }) => <div style={{ height: visible ? 100 : 50 }}>{item.isdmTag}</div>}
             filter={{
                 filterList: [
                     {

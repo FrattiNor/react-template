@@ -1,6 +1,8 @@
+import { useEffect, useMemo, useState } from 'react';
 import MouseWheel from '@better-scroll/mouse-wheel';
+import LoadingIcon from '@/components/LoadingIcon';
 import PullDown from '@better-scroll/pull-down';
-import { useEffect, useState } from 'react';
+import Iconfont from '@/components/Iconfont';
 import BScroll from '@better-scroll/core';
 import ScrollBar from './scrollbar';
 
@@ -8,20 +10,24 @@ BScroll.use(MouseWheel);
 BScroll.use(ScrollBar);
 BScroll.use(PullDown);
 
-export type PullDownType = '' | 'enter' | 'leave' | 'fetching' | 'success';
+type PullDownType = '' | 'enter' | 'leave' | 'fetching' | 'success';
 
 type Props = {
+    enablePullDown?: false | { refetch: () => Promise<any> };
     scrollRef: React.RefObject<HTMLDivElement>;
+    tipRef: React.RefObject<HTMLDivElement>;
     enableScroll?: boolean;
 };
 
-function useScroll({ scrollRef, enableScroll }: Props) {
+function useScroll({ scrollRef, enableScroll, enablePullDown, tipRef }: Props) {
+    const [pullDownType, setPullDownType] = useState<PullDownType>('');
     const [scroll, setScroll] = useState<BScroll | null>(null);
+    const refetch = enablePullDown ? enablePullDown.refetch : null;
 
     useEffect(() => {
         if (enableScroll) {
             if (scrollRef.current) {
-                const pullDownHeight = 65;
+                const pullDownHeight = tipRef.current?.clientHeight || 65;
 
                 const newScroll = new BScroll(scrollRef.current, {
                     click: true,
@@ -30,7 +36,7 @@ function useScroll({ scrollRef, enableScroll }: Props) {
                         minSize: 15,
                     },
                     bounce: {
-                        top: true,
+                        top: enablePullDown ? true : false,
                         left: false,
                         right: false,
                         bottom: false,
@@ -55,9 +61,76 @@ function useScroll({ scrollRef, enableScroll }: Props) {
                 };
             }
         }
-    }, [enableScroll]);
+    }, [enableScroll, enablePullDown]);
 
-    return { scroll };
+    useEffect(() => {
+        console.log(enablePullDown);
+        if (enablePullDown) {
+            if (scroll) {
+                // == 上拉刷新 ==
+                const pullingDown = async () => {
+                    setPullDownType('fetching');
+                    if (refetch) await refetch();
+                    setPullDownType('success');
+                    setTimeout(() => {
+                        scroll.finishPullDown();
+                        scroll.refresh();
+                    }, 500);
+                };
+
+                const enterThreshold = async () => {
+                    setPullDownType('enter');
+                };
+
+                const leaveThreshold = async () => {
+                    setPullDownType('leave');
+                };
+
+                scroll.on('pullingDown', pullingDown);
+                scroll.on('enterThreshold', enterThreshold);
+                scroll.on('leaveThreshold', leaveThreshold);
+                // == 上拉刷新 ==
+
+                return () => {
+                    scroll.off('pullingDown', pullingDown);
+                    scroll.off('enterThreshold', enterThreshold);
+                    scroll.off('leaveThreshold', leaveThreshold);
+                };
+            }
+        }
+    }, [scroll, enablePullDown]);
+
+    const fetchTip = useMemo(() => {
+        switch (pullDownType) {
+            case 'enter':
+                return (
+                    <span>
+                        <Iconfont icon="arrow-down" />
+                        <span>{` 下拉刷新`}</span>
+                    </span>
+                );
+            case 'leave':
+                return (
+                    <span>
+                        <Iconfont icon="arrow-up" />
+                        <span>{` 释放立即刷新`}</span>
+                    </span>
+                );
+            case 'fetching':
+                return (
+                    <span>
+                        <span>{`加载中 `}</span>
+                        <LoadingIcon />
+                    </span>
+                );
+            case 'success':
+                return <span>{`刷新成功`}</span>;
+            default:
+                return <span>{`-`}</span>;
+        }
+    }, [pullDownType]);
+
+    return { scroll, fetchTip };
 }
 
 export default useScroll;

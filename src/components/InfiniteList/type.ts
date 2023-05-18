@@ -1,6 +1,6 @@
-import { FilterProps } from './components/Filter/type';
-import { ListProps } from './components/List/type';
+import { FilterProps } from './Filter/type';
 import { useInfiniteQuery2 } from '@/hooks';
+import { ListProps } from './List/type';
 import { PartialKeys } from '@/global';
 
 export type Query<T> = ReturnType<typeof useInfiniteQuery2<T>>;

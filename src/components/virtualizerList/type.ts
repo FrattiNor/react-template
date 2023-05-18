@@ -5,8 +5,10 @@ export type VirtualizerListProps<T> = {
     loading?: boolean;
     className?: string;
     enableScroll?: boolean;
+    enablePullDown?: { refetch: () => Promise<any> };
     rowKey: keyof T | ((item: T, index: number) => string);
-    renderItem: (item: T, index: number) => ReactNode;
+    renderItem: (item: T, opt: { key: string; index: number }) => ReactNode;
+    enableLoadMore?: { isFetchingNextPage: boolean; hasNextPage: boolean; fetchNextPage: () => Promise<any> };
 };
 
 export type ListProps<T> = Omit<VirtualizerListProps<T>, 'loading' | 'className'>;

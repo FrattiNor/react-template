@@ -29,11 +29,30 @@
         position: relative;
         background-color: var(--m-card-bg-color);
 
+        .fetchTip {
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 15px;
+            position: absolute;
+            text-align: center;
+            box-sizing: border-box;
+            transform: translate3d(0, -100%, 0);
+            color: var(--m-notice-font-color);
+        }
+
         .container-inner {
             top: 0;
             left: 0;
             width: 100%;
             position: absolute;
+
+            .bottom-status {
+                padding: 15px;
+                text-align: center;
+                color: var(--m-notice-font-color);
+                background-color: var(--m-card-down-bg-color);
+            }
         }
     }
 }

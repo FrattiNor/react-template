@@ -1,7 +1,7 @@
 import { UseQueryResult } from '@tanstack/react-query';
 import { DatePickerProps } from 'antd-mobile';
 import { CSSProperties } from 'react';
-import { Query } from '../../type';
+import { Query } from '../type';
 
 export type FieldKeys<T> = {
     label: keyof T;

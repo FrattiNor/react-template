@@ -1,9 +1,7 @@
-import LoadingIcon from './components/LoadingIcon';
 import { Fragment, useCallback } from 'react';
-import styles from './index.module.less';
-import Filter from './components/Filter';
 import { WrapperProps } from './type';
-import List from './components/List';
+import Filter from './Filter';
+import List from './List';
 
 function InfiniteList<T>(props: WrapperProps<T>) {
     const { filter: filterProps = {}, ...listProps } = props;
@@ -16,22 +14,12 @@ function InfiniteList<T>(props: WrapperProps<T>) {
     const haveFilter = useCallback((f: any): f is any[] => Array.isArray(f) && f.length > 0, []);
 
     return (
-        <div className={styles['wrapper']}>
-            {isLoading && (
-                <div className={styles['loading']}>
-                    <LoadingIcon className={styles['icon']} />
-                </div>
+        <Fragment>
+            <List {...listProps} />
+            {!isLoading && haveFilter(filterList) && enableFilter !== false && (
+                <Filter {...filterProps} filterList={filterList} params={params} setParams={setParams} />
             )}
-
-            {!isLoading && (
-                <Fragment>
-                    <List {...listProps} />
-                    {haveFilter(filterList) && enableFilter !== false && (
-                        <Filter {...filterProps} filterList={filterList} params={params} setParams={setParams} />
-                    )}
-                </Fragment>
-            )}
-        </div>
+        </Fragment>
     );
 }
 

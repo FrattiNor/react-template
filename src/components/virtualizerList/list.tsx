@@ -1,21 +1,24 @@
 import useVirtualizer from './hooks/virtualizer/useVirtualizer';
 import useScroll from './hooks/scroll/useScroll';
-import { useCallback, useRef } from 'react';
+import { Fragment, useCallback, useRef } from 'react';
 import EmptySvg from '@/assets/emptySvg';
 import styles from './list.module.less';
 import { ListProps } from './type';
+import LoadingIcon from '../LoadingIcon';
 
-function List<T>({ data, renderItem, rowKey, enableScroll }: ListProps<T>) {
+function List<T>({ data, renderItem, rowKey, enableScroll, enablePullDown, enableLoadMore }: ListProps<T>) {
     const scrollRef = useRef<HTMLDivElement>(null);
+    const tipRef = useRef<HTMLDivElement>(null);
     const count = data.length;
     const empty = count === 0;
 
-    const { scroll } = useScroll({ scrollRef, enableScroll });
+    const { scroll, fetchTip } = useScroll({ scrollRef, tipRef, enableScroll, enablePullDown });
     const { virtualizer, items, totalSize } = useVirtualizer({
-        count,
+        count: enableLoadMore ? count + 1 : count,
         scroll,
         scrollRef,
         enableScroll,
+        fetchNextPage: enableLoadMore?.fetchNextPage,
     });
 
     const getRowKey = useCallback(
@@ -34,6 +37,12 @@ function List<T>({ data, renderItem, rowKey, enableScroll }: ListProps<T>) {
     return (
         <div ref={scrollRef} className={styles['scroll-wrapper']} style={{ overflow: enableScroll ? 'hidden' : 'auto' }}>
             <div className={styles['container']} style={{ height: !empty ? `${totalSize}px` : '99%' }}>
+                {enablePullDown && (
+                    <div ref={tipRef} className={styles['fetchTip']}>
+                        {fetchTip}
+                    </div>
+                )}
+
                 {empty && (
                     <div className={styles['empty']}>
                         <EmptySvg className={styles['icon']} />
@@ -52,7 +61,22 @@ function List<T>({ data, renderItem, rowKey, enableScroll }: ListProps<T>) {
 
                                 return (
                                     <div key={key} data-index={index} ref={virtualizer?.measureElement}>
-                                        {renderItem(item, index)}
+                                        {renderItem(item, { key, index })}
+                                    </div>
+                                );
+                            }
+                            if (enableLoadMore && index === count) {
+                                const { isFetchingNextPage, hasNextPage } = enableLoadMore;
+
+                                return (
+                                    <div key="bottom-status" className={styles['bottom-status']}>
+                                        {isFetchingNextPage && (
+                                            <Fragment>
+                                                <span>{`加载中 `}</span>
+                                                <LoadingIcon />
+                                            </Fragment>
+                                        )}
+                                        {!hasNextPage && <span>{`- 没有更多了 -`}</span>}
                                     </div>
                                 );
                             }

@@ -1,4 +1,4 @@
-import LoadingIcon from '../../../LoadingIcon';
+import LoadingIcon from '@/components/LoadingIcon';
 import FilterSelectMultiple from './multiple';
 import { Form, Picker } from 'antd-mobile';
 import { SelectItem } from '../../type';

@@ -1,21 +1,18 @@
-import { useEffect, useMemo, useReducer, useState } from 'react';
+import { useEffect, useMemo, useReducer, useRef, useState } from 'react';
 import BScroll from '@better-scroll/core';
-import {
-    observeElementOffset as _observeElementOffset,
-    VirtualizerOptions,
-    observeElementRect,
-    elementScroll,
-    Virtualizer,
-} from '@tanstack/react-virtual';
+import { observeElementOffset, VirtualizerOptions, observeElementRect, elementScroll, Virtualizer } from '@tanstack/react-virtual';
 
 type Props = {
     count: number;
     enableScroll?: boolean;
     scroll: BScroll | null;
+    fetchNextPage?: () => Promise<any>;
     scrollRef: React.RefObject<HTMLDivElement>;
 };
 
-function useVirtualizer({ scroll, scrollRef, count, enableScroll }: Props) {
+function useVirtualizer({ scroll, scrollRef, count, enableScroll, fetchNextPage }: Props) {
+    const requestFlag = useRef(false);
+
     const rerender = useReducer(() => ({}), {})[1];
 
     const [virtualizer, setVirtualizer] = useState<Virtualizer<HTMLDivElement, any> | null>(null);
@@ -23,11 +20,23 @@ function useVirtualizer({ scroll, scrollRef, count, enableScroll }: Props) {
     const [normalHeight, setNormalHeight] = useState<null | number>(null);
 
     const options = useMemo(() => {
+        console.log({ fetchNextPage });
+
         const getScrollElement = () => {
             return scrollRef.current;
         };
 
-        const scrollToFn: VirtualizerOptions<any, any>['scrollToFn'] = (offset, _canSmooth, instance) => {
+        const pageTurning = async (endIndex: number) => {
+            if (count - (endIndex + 1) === 0) {
+                if (!requestFlag.current) {
+                    requestFlag.current = true;
+                    if (fetchNextPage) await fetchNextPage();
+                    requestFlag.current = false;
+                }
+            }
+        };
+
+        const scrollToFn2: VirtualizerOptions<any, any>['scrollToFn'] = (offset, _canSmooth, instance) => {
             if (enableScroll && scroll) {
                 const to: [number, number] = instance.options.horizontal ? [-offset, scroll.y] : [scroll.x, -offset];
                 scroll.scrollTo(...to, 300);
@@ -37,7 +46,7 @@ function useVirtualizer({ scroll, scrollRef, count, enableScroll }: Props) {
             }
         };
 
-        const observeElementOffset: VirtualizerOptions<any, any>['observeElementOffset'] = (instance, cb) => {
+        const observeElementOffset2: VirtualizerOptions<any, any>['observeElementOffset'] = (instance, cb) => {
             if (enableScroll && scroll) {
                 const handler = (e: { x: number; y: number }) => {
                     cb(-e[instance.options.horizontal ? 'x' : 'y']);
@@ -52,26 +61,29 @@ function useVirtualizer({ scroll, scrollRef, count, enableScroll }: Props) {
                 };
             }
             if (!enableScroll) {
-                _observeElementOffset(instance, cb);
+                observeElementOffset(instance, cb);
             }
         };
 
         const resolvedOptions: VirtualizerOptions<any, any> = {
             count,
-            scrollToFn,
             overscan: 5,
             getScrollElement,
             observeElementRect,
-            observeElementOffset,
             getItemKey: (i) => i,
+            scrollToFn: scrollToFn2,
             estimateSize: () => normalHeight || 35,
-            onChange: () => {
+            observeElementOffset: observeElementOffset2,
+            onChange: (instance) => {
                 rerender();
+                if (fetchNextPage) {
+                    pageTurning(instance.range.endIndex);
+                }
             },
         };
 
         return resolvedOptions;
-    }, [enableScroll, scroll, normalHeight, count]);
+    }, [enableScroll, scroll, normalHeight, count, fetchNextPage]);
 
     useEffect(() => {
         if (!enableScroll || (enableScroll && scroll)) {
