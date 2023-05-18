@@ -1,0 +1,39 @@
+.scroll-wrapper {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    background-color: var(--m-card-down-bg-color);
+
+    .empty {
+        gap: 20px;
+        width: 100%;
+        height: 99%;
+        display: flex;
+        position: relative;
+        align-items: center;
+        flex-direction: column;
+        justify-content: center;
+
+        .icon {
+            width: 160px;
+        }
+
+        .font {
+            font-size: 16px;
+            color: var(--m-notice-font-color);
+        }
+    }
+
+    .container {
+        width: 100%;
+        position: relative;
+        background-color: var(--m-card-bg-color);
+
+        .container-inner {
+            top: 0;
+            left: 0;
+            width: 100%;
+            position: absolute;
+        }
+    }
+}

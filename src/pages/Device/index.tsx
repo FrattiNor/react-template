@@ -1,4 +1,4 @@
-import { getDeviceModelList } from '@/services/device/api';
+import { useDeviceModelList } from '@/services/device/query';
 import InfiniteList from '@/components/InfiniteList';
 import { useDeviceList } from '@/services/device';
 
@@ -59,7 +59,8 @@ const Device = () => {
                         label: '设备类型',
                         type: 'select',
                         name: 'mfrAndDevice',
-                        option: getDeviceModelList,
+                        option: useDeviceModelList,
+                        multiple: true,
                         fieldKeys: {
                             key: 'mfrAndDevice',
                             value: 'mfrAndDevice',

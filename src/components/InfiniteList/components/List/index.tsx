@@ -4,7 +4,7 @@ import useScroll from '../../hooks/scroll/useScroll';
 import EmptySvg from '@/assets/emptySvg';
 import LoadingIcon from '../LoadingIcon';
 import styles from './index.module.less';
-import { ListProps } from '../../type';
+import { ListProps } from './type';
 import classNames from 'classnames';
 
 function List<T>({ query, renderItem, rowKey, enableVisible }: ListProps<T>) {

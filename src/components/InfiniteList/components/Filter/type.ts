@@ -1,6 +1,7 @@
+import { UseQueryResult } from '@tanstack/react-query';
+import { DatePickerProps } from 'antd-mobile';
 import { CSSProperties } from 'react';
 import { Query } from '../../type';
-import { DatePickerProps } from 'antd-mobile';
 
 export type FieldKeys<T> = {
     label: keyof T;
@@ -21,7 +22,7 @@ export type SelectItem<T> = {
     label: string;
     placeholder?: string;
     multiple?: boolean;
-    option: T[] | (() => Promise<null | T[]>);
+    option: T[] | (() => UseQueryResult<null | T[]>);
     fieldKeys?: FieldKeys<T>;
 };
 

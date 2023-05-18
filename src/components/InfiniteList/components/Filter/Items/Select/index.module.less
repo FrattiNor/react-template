@@ -1,0 +1,33 @@
+.popup-body {
+    border-top-right-radius: 8px;
+    border-top-left-radius: 8px;
+    overflow: hidden;
+
+    .top {
+        padding: 12px;
+        font-size: 15px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        border-bottom: 1px solid var(--m-border-color);
+
+        .button {
+            color: var(--m-primary-color);
+        }
+    }
+
+    .search {
+        padding: 12px;
+        border-bottom: 1px solid var(--m-border-color);
+    }
+
+    .content {
+        height: 40vh;
+        max-height: 50vh;
+
+        .item {
+            height: 50px;
+            border-top: 1px solid var(--m-border-color);
+        }
+    }
+}

@@ -1,13 +1,24 @@
 .wrapper {
-    padding: 5px 0;
     overflow: hidden;
-    background-color: var(--card-down-bg-color);
+    background-color: var(--m-card-down-bg-color);
+
+    .form-container {
+        padding: 12px 0;
+
+        .form {
+            max-height: 50vh;
+            overflow: auto;
+            margin: -12px 0;
+        }
+    }
 
     .foot {
-        margin: 12px;
+        background-color: var(--m-bg-color);
+        padding: 12px;
         display: flex;
         align-items: center;
         justify-content: space-between;
+        border-top: 1px solid var(--m-border-color);
 
         button {
             width: calc(50% - 6px);

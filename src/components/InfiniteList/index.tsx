@@ -8,8 +8,8 @@ import List from './components/List';
 function InfiniteList<T>(props: WrapperProps<T>) {
     const { filter: filterProps = {}, ...listProps } = props;
 
-    const loading = listProps.query.loading;
     const params = listProps.query.params;
+    const isLoading = listProps.query.isLoading;
     const setParams = listProps.query.setParams;
     const filterList = filterProps?.filterList;
     const enableFilter = filterProps?.enableFilter;
@@ -17,13 +17,13 @@ function InfiniteList<T>(props: WrapperProps<T>) {
 
     return (
         <div className={styles['wrapper']}>
-            {loading && (
+            {isLoading && (
                 <div className={styles['loading']}>
                     <LoadingIcon className={styles['icon']} />
                 </div>
             )}
 
-            {!loading && (
+            {!isLoading && (
                 <Fragment>
                     <List {...listProps} />
                     {haveFilter(filterList) && enableFilter !== false && (

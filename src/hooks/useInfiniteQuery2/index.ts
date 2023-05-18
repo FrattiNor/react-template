@@ -1,23 +1,23 @@
 import { useCallback, useMemo, useReducer, useState } from 'react';
-import { useInfiniteQuery } from '@tanstack/react-query';
+import { UseInfiniteQueryOptions, useInfiniteQuery } from '@tanstack/react-query';
 import { ListData } from '@/global';
 import useDelay from '../useDelay';
 
 type Params = Record<string, any>;
 type PaginationParams = { current: number; pageSize: number };
 
-type Props<T> = {
-    queryKey: any[];
-    fetchFn: (p: { params: Params; paginationParams: PaginationParams }) => Promise<ListData<T> | null>;
+type Props<T> = Omit<UseInfiniteQueryOptions, 'queryFn'> & {
+    queryFn: (p: { params: Params; paginationParams: PaginationParams }) => Promise<ListData<T> | null>;
     pageSize?: number;
     delay?: number;
 };
 
-const useInfiniteList = <T>({ pageSize = 50, queryKey, delay, fetchFn }: Props<T>) => {
-    const [delayFn] = useDelay({ delayFn: fetchFn, delay: delay || 0 });
+// 在默认的 useInfiniteQuery 中加入一些默认配置以及增加一些参数
+const useInfiniteQuery2 = <T>({ pageSize = 50, queryKey, delay, queryFn }: Props<T>) => {
+    const [delayFn] = useDelay({ delayFn: queryFn, delay: delay || 0 });
     const rerender = useReducer(() => ({}), {})[1];
     const [params, setParams] = useState<Params>({});
-    const _queryKey = [...queryKey, pageSize, params];
+    const _queryKey = [...(queryKey || []), pageSize, params];
 
     const query = useInfiniteQuery({
         queryKey: _queryKey,
@@ -39,11 +39,12 @@ const useInfiniteList = <T>({ pageSize = 50, queryKey, delay, fetchFn }: Props<T
         refetchOnMount: false,
         retryOnMount: false,
         retry: false,
+        cacheTime: 0,
+        staleTime: 0,
     });
 
     const isFetchingNextPage = query.isFetchingNextPage;
     const hasNextPage = query.hasNextPage;
-    const loading = query.isLoading;
     const pages = query.data?.pages;
     const data = useMemo(() => pages?.reduce((a, b) => [...(a || []), ...(b?.list || [])], [] as T[]) || [], [pages]);
     const count = data.length;
@@ -68,7 +69,7 @@ const useInfiniteList = <T>({ pageSize = 50, queryKey, delay, fetchFn }: Props<T
         return Promise.resolve();
     }, [isFetchingNextPage, hasNextPage]);
 
-    return { setParams, fetchNextPage, refetch, data, params, count, empty, loading, hasNextPage, isFetchingNextPage };
+    return { ...query, setParams, fetchNextPage, refetch, data, params, count, empty };
 };
 
-export default useInfiniteList;
+export default useInfiniteQuery2;

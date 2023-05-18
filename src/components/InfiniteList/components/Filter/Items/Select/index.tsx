@@ -1,33 +1,30 @@
 import LoadingIcon from '../../../LoadingIcon';
-import { FC, useMemo, useState } from 'react';
+import FilterSelectMultiple from './multiple';
 import { Form, Picker } from 'antd-mobile';
 import { SelectItem } from '../../type';
+import { FC, useMemo } from 'react';
 
-const FilterSelect: FC<SelectItem<any>> = ({ name, label, placeholder = '请选择', option, fieldKeys }) => {
-    const [opt, setOpts] = useState<any[]>([]);
-    const [loading, setLoading] = useState(false);
+const FilterSelect: FC<SelectItem<any>> = ({ name, label, placeholder = '请选择', option, fieldKeys, multiple }) => {
+    const query = typeof option === 'function' ? option() : null;
+    const data = query?.data;
+    const refetch = query?.refetch;
+    const loading = query?.isFetching;
 
-    const opts = useMemo(() => (typeof option === 'function' ? opt : option), [opt, option]);
-
-    const columns = useMemo(() => {
+    const opts = useMemo(() => {
+        const _opts = Array.isArray(option) ? option : data || [];
         return fieldKeys
-            ? opts.map((item) => ({
+            ? _opts.map((item) => ({
                   label: item[fieldKeys.label],
                   value: item[fieldKeys.value],
                   ...(fieldKeys.key ? { key: item[fieldKeys.key] } : {}),
               }))
-            : opts;
-    }, [JSON.stringify(fieldKeys), JSON.stringify(opts)]);
+            : _opts;
+    }, [fieldKeys, data, option]);
 
-    const getOption = async () => {
-        if (typeof option === 'function') {
-            setLoading(true);
-            await option().then((v) => {
-                if (v) setOpts(v);
-            });
-            setLoading(false);
-        }
-    };
+    // 多选
+    if (multiple) {
+        return <FilterSelectMultiple opts={opts} loading={loading} refetch={refetch} name={name} label={label} placeholder={placeholder} />;
+    }
 
     return (
         <Form.Item
@@ -35,13 +32,13 @@ const FilterSelect: FC<SelectItem<any>> = ({ name, label, placeholder = '请选�
             label={label}
             trigger="onConfirm"
             onClick={(_e, datePickerRef) => {
-                getOption();
+                if (refetch) refetch();
                 datePickerRef.current?.open();
             }}
         >
             <Picker
+                columns={[opts]}
                 loading={loading}
-                columns={[columns]}
                 loadingContent={
                     <div className="adm-picker-view-loading-content">
                         <LoadingIcon />

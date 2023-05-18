@@ -11,16 +11,18 @@
 }
 
 .theme {
-    --primary-color: #1677ff; // 主题色
-    --primary-font-color: #fff; //字颜色（主题色为背景）
-    --bg-color: #fff; // 背景色
-    --font-color: #262626; // 字颜色（背景色为背景）
-    --notice-font-color: #999; // 字提示颜色（背景色为背景）
-    --font-size: 14px; // 字体大小
+    --m-primary-color: #1677ff; // 主题色
+    --m-primary-font-color: #fff; //字颜色（主题色为背景）
+    --m-bg-color: #fff; // 背景色
+    --m-font-color: #262626; // 字颜色（背景色为背景）
+    --m-notice-font-color: #999; // 字提示颜色（背景色为背景）
+    --m-font-size: 14px; // 字体大小
     // 悬浮框阴影
-    --float-box-shadow: 0 6px 16px 0 rgba(0, 0, 0, 0.08), 0 3px 6px -4px rgba(0, 0, 0, 0.12), 0 9px 28px 8px rgba(0, 0, 0, 0.05);
-    --card-bg-color: #fff; // card模式，块的背景颜色
-    --card-down-bg-color: #f0f1f2; // card模式，块的底层背景色
+    --m-float-box-shadow: 0 6px 16px 0 rgba(0, 0, 0, 0.08), 0 3px 6px -4px rgba(0, 0, 0, 0.12), 0 9px 28px 8px rgba(0, 0, 0, 0.05);
+    --m-card-bg-color: #fff; // card模式，块的背景颜色
+    --m-card-down-bg-color: #f3f4f5; // card模式，块的底层背景色
+    --m-card-border-color: #e0e0e0; // card模式 边框色
+    --m-border-color: #eee; // 边框色
 }
 
 html,
@@ -28,9 +30,9 @@ body,
 #root {
     .theme();
 
-    background-color: var(--bg-color);
-    font-size: var(--font-size);
-    color: var(--font-color);
+    background-color: var(--m-bg-color);
+    font-size: var(--m-font-size);
+    color: var(--m-font-color);
     width: 100%;
     height: 100%;
     padding: 0;
