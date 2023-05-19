@@ -13,7 +13,7 @@ BScroll.use(PullDown);
 type PullDownType = '' | 'enter' | 'leave' | 'fetching' | 'success';
 
 type Props = {
-    enablePullDown?: false | { refetch: () => Promise<any> };
+    enablePullDown?: { refetch: () => Promise<any> };
     scrollRef: React.RefObject<HTMLDivElement>;
     tipRef: React.RefObject<HTMLDivElement>;
     enableScroll?: boolean;
@@ -22,10 +22,11 @@ type Props = {
 function useScroll({ scrollRef, enableScroll, enablePullDown, tipRef }: Props) {
     const [pullDownType, setPullDownType] = useState<PullDownType>('');
     const [scroll, setScroll] = useState<BScroll | null>(null);
-    const refetch = enablePullDown ? enablePullDown.refetch : null;
+    // 避免频繁更新
+    const enablePullDownBoolean = !!enablePullDown;
 
     useEffect(() => {
-        if (enableScroll) {
+        if (enablePullDownBoolean) {
             if (scrollRef.current) {
                 const pullDownHeight = tipRef.current?.clientHeight || 65;
 
@@ -61,16 +62,15 @@ function useScroll({ scrollRef, enableScroll, enablePullDown, tipRef }: Props) {
                 };
             }
         }
-    }, [enableScroll, enablePullDown]);
+    }, [enableScroll, enablePullDownBoolean]);
 
     useEffect(() => {
-        console.log(enablePullDown);
-        if (enablePullDown) {
+        if (enablePullDownBoolean) {
             if (scroll) {
                 // == 上拉刷新 ==
                 const pullingDown = async () => {
                     setPullDownType('fetching');
-                    if (refetch) await refetch();
+                    if (enablePullDown.refetch) await enablePullDown.refetch();
                     setPullDownType('success');
                     setTimeout(() => {
                         scroll.finishPullDown();
@@ -98,7 +98,7 @@ function useScroll({ scrollRef, enableScroll, enablePullDown, tipRef }: Props) {
                 };
             }
         }
-    }, [scroll, enablePullDown]);
+    }, [scroll, enablePullDownBoolean]);
 
     const fetchTip = useMemo(() => {
         switch (pullDownType) {

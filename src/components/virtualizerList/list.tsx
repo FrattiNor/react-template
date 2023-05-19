@@ -14,11 +14,11 @@ function List<T>({ data, renderItem, rowKey, enableScroll, enablePullDown, enabl
 
     const { scroll, fetchTip } = useScroll({ scrollRef, tipRef, enableScroll, enablePullDown });
     const { virtualizer, items, totalSize } = useVirtualizer({
-        count: enableLoadMore ? count + 1 : count,
+        count,
         scroll,
         scrollRef,
         enableScroll,
-        fetchNextPage: enableLoadMore?.fetchNextPage,
+        enableLoadMore,
     });
 
     const getRowKey = useCallback(
