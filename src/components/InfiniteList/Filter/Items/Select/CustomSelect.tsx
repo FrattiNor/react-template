@@ -136,8 +136,8 @@ function CustomSelect<T>(props: CustomSelectProps<T>) {
             let _label = '';
             let _value = '';
             if (fieldKeys) {
-                _value = item[fieldKeys.value] as string;
-                _label = item[fieldKeys.label] as string;
+                _value = (fieldKeys === 'isStringArray' ? item : item[fieldKeys.value]) as string;
+                _label = (fieldKeys === 'isStringArray' ? item : item[fieldKeys.label]) as string;
             } else {
                 _value = (item as any)['value'];
                 _label = (item as any)['label'];

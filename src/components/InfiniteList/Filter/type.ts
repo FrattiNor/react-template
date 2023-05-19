@@ -1,12 +1,14 @@
+import { CSSProperties, Dispatch, SetStateAction } from 'react';
 import { UseQueryResult } from '@tanstack/react-query';
 import { DatePickerProps } from 'antd-mobile';
-import { CSSProperties } from 'react';
-import { Query } from '../type';
+import { Query } from '../Wrapper/type';
 
-export type FieldKeys<T> = {
-    label: keyof T;
-    value: keyof T;
-};
+export type FieldKeys<T> =
+    | {
+          label: keyof T;
+          value: keyof T;
+      }
+    | 'isStringArray';
 
 export type InputItem = {
     type: 'input';
@@ -53,15 +55,17 @@ export type RangPickItem = {
     precision?: DatePickerProps['precision'];
 };
 
-export type FilterItem = InputItem | SelectItem<any> | BlockSelectItem<any> | DatePickItem | RangPickItem;
+export type FilterItem<T> = InputItem | SelectItem<T> | BlockSelectItem<T> | DatePickItem | RangPickItem;
 
 export type FilterProps = {
     enableFilter?: boolean;
     style?: CSSProperties;
-    filterList: Array<FilterItem>;
+    filterList: Array<FilterItem<any>>;
     params: Query<any>['params'];
     position?: 'absolute' | 'fixed';
     addAndDelParams: Query<any>['addAndDelParams'];
 };
 
-export type ContentProps = Pick<FilterProps, 'filterList' | 'params' | 'addAndDelParams'>;
+export type ContentProps = Pick<FilterProps, 'filterList' | 'params' | 'addAndDelParams'> & {
+    setVisible: Dispatch<SetStateAction<boolean>>;
+};

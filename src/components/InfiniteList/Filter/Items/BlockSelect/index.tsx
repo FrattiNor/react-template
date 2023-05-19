@@ -6,8 +6,8 @@ const FilterBlockSelect: FC<BlockSelectItem<any>> = ({ name, label, columns, mul
     const options = useMemo(() => {
         return fieldKeys
             ? option.map((item) => ({
-                  label: item[fieldKeys.label],
-                  value: item[fieldKeys.value],
+                  label: fieldKeys === 'isStringArray' ? item : item[fieldKeys.label],
+                  value: fieldKeys === 'isStringArray' ? item : item[fieldKeys.value],
               }))
             : option;
     }, [JSON.stringify(fieldKeys), JSON.stringify(option)]);

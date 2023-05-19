@@ -1,5 +1,5 @@
+import { Query } from '../Wrapper/type';
 import { ReactNode } from 'react';
-import { Query } from '../type';
 
 export type ListProps<T> = {
     query: Query<T>;

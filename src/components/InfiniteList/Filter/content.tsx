@@ -9,7 +9,7 @@ import FilterSelect from './Items/Select';
 import FilterInput from './Items/Input';
 import { ContentProps } from './type';
 
-const Content: FC<ContentProps> = ({ params, addAndDelParams, filterList }) => {
+const Content: FC<ContentProps> = ({ params, filterList, setVisible, addAndDelParams }) => {
     const [form] = Form.useForm();
 
     const filterKeys = useMemo(
@@ -24,11 +24,13 @@ const Content: FC<ContentProps> = ({ params, addAndDelParams, filterList }) => {
                 if (isEmptyParam(v[key])) del.push(key);
             });
             addAndDelParams({ add: cleanParams(v), del });
+            setVisible(false);
         });
     };
 
     const reset = () => {
         addAndDelParams({ del: filterKeys });
+        setVisible(false);
     };
 
     return (

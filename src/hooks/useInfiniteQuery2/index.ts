@@ -41,7 +41,7 @@ const useInfiniteQuery2 = <T>({ pageSize = 50, queryKey, delay, queryFn, arrayTo
         },
         refetchOnWindowFocus: false,
         refetchOnReconnect: false,
-        keepPreviousData: true,
+        // keepPreviousData: true,
         refetchOnMount: false,
         retryOnMount: false,
         retry: false,

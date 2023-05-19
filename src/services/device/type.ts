@@ -24,3 +24,5 @@ export type DeviceModelItem = {
     mfrAndDevice: string;
     deviceModelView: string;
 };
+
+export type Mfrs = string[];

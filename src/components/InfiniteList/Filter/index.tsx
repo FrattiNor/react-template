@@ -5,7 +5,7 @@ import { FilterProps } from './type';
 import { Popup } from 'antd-mobile';
 import Content from './content';
 
-const Filter: FC<FilterProps> = ({ style, position, filterList, params, setParams }) => {
+const Filter: FC<FilterProps> = ({ style, position, filterList, params, addAndDelParams }) => {
     const [visible, setVisible] = useState(false);
 
     const open = () => {
@@ -22,7 +22,7 @@ const Filter: FC<FilterProps> = ({ style, position, filterList, params, setParam
             </div>
 
             <Popup visible={visible} onMaskClick={close} bodyClassName={styles['popup-body']} destroyOnClose>
-                <Content {...{ filterList, params, setParams }} />
+                <Content {...{ filterList, params, addAndDelParams }} setVisible={setVisible} />
             </Popup>
         </Fragment>
     );
