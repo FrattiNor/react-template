@@ -1,4 +1,4 @@
-import VirtualizerList from '@/components/virtualizerList';
+import VirtualizerList from '@/components/VirtualizerList2';
 import { useCallback, useState } from 'react';
 import styles from './index.module.less';
 import classNames from 'classnames';

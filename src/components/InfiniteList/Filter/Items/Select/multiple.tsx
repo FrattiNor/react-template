@@ -1,5 +1,5 @@
 import { Form, Picker, Popup, SearchBar } from 'antd-mobile';
-import VirtualizerList from '@/components/virtualizerList';
+import VirtualizerList from '@/components/VirtualizerList2';
 import { FC, Fragment, useState } from 'react';
 import styles from './index.module.less';
 
