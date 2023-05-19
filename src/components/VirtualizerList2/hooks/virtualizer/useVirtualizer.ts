@@ -39,7 +39,6 @@ function useVirtualizer({ scroll, scrollRef, count, enableScroll, enableLoadMore
         };
 
         const scrollToFn2: VirtualizerOptions<any, any>['scrollToFn'] = (offset, _canSmooth, instance) => {
-            console.log('scrollToFn2');
             if (enableScroll && scroll) {
                 const to: [number, number] = instance.options.horizontal ? [-offset, scroll.y] : [scroll.x, -offset];
                 scroll.scrollTo(...to, 300);
@@ -50,7 +49,6 @@ function useVirtualizer({ scroll, scrollRef, count, enableScroll, enableLoadMore
         };
 
         const observeElementOffset2: VirtualizerOptions<any, any>['observeElementOffset'] = (instance, cb) => {
-            console.log('observeElementOffset2');
             if (enableScroll && scroll) {
                 const handler = (e: { x: number; y: number }) => {
                     cb(-e[instance.options.horizontal ? 'x' : 'y']);

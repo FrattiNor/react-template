@@ -8,7 +8,6 @@ const FilterBlockSelect: FC<BlockSelectItem<any>> = ({ name, label, columns, mul
             ? option.map((item) => ({
                   label: item[fieldKeys.label],
                   value: item[fieldKeys.value],
-                  ...(fieldKeys.key ? { key: item[fieldKeys.key] } : {}),
               }))
             : option;
     }, [JSON.stringify(fieldKeys), JSON.stringify(option)]);

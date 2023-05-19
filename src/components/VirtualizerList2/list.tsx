@@ -1,12 +1,13 @@
 import useVirtualizer from './hooks/virtualizer/useVirtualizer';
-import useScroll from './hooks/scroll/useScroll';
 import { Fragment, useCallback, useRef } from 'react';
+import useScroll from './hooks/scroll/useScroll';
+import LoadingIcon from '../LoadingIcon';
 import EmptySvg from '@/assets/emptySvg';
 import styles from './list.module.less';
+import classNames from 'classnames';
 import { ListProps } from './type';
-import LoadingIcon from '../LoadingIcon';
 
-function List<T>({ data, renderItem, rowKey, enableScroll, enablePullDown, enableLoadMore }: ListProps<T>) {
+function List<T>({ data, renderItem, rowKey, enableScroll, enablePullDown, enableLoadMore, scrollClassName }: ListProps<T>) {
     const scrollRef = useRef<HTMLDivElement>(null);
     const tipRef = useRef<HTMLDivElement>(null);
     const count = data.length;
@@ -35,7 +36,7 @@ function List<T>({ data, renderItem, rowKey, enableScroll, enablePullDown, enabl
     );
 
     return (
-        <div ref={scrollRef} className={styles['scroll-wrapper']} style={{ overflow: enableScroll ? 'hidden' : 'auto' }}>
+        <div ref={scrollRef} className={classNames(styles['scroll-wrapper'], scrollClassName)} style={{ overflow: enableScroll ? 'hidden' : 'auto' }}>
             <div className={styles['container']} style={{ height: !empty ? `${totalSize}px` : '99%' }}>
                 {enablePullDown && (
                     <div ref={tipRef} className={styles['fetchTip']}>
@@ -45,8 +46,10 @@ function List<T>({ data, renderItem, rowKey, enableScroll, enablePullDown, enabl
 
                 {empty && (
                     <div className={styles['empty']}>
-                        <EmptySvg className={styles['icon']} />
-                        <span className={styles['font']}>{`暂无数据`}</span>
+                        <div className={styles['empty-inner']}>
+                            <EmptySvg className={styles['icon']} />
+                            <span className={styles['font']}>{`暂无数据`}</span>
+                        </div>
                     </div>
                 )}
 

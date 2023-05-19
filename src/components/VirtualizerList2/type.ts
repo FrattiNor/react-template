@@ -4,6 +4,7 @@ export type VirtualizerListProps<T> = {
     data: T[];
     loading?: boolean;
     className?: string;
+    scrollClassName?: string;
     enableScroll?: boolean;
     enablePullDown?: { refetch: () => Promise<any> };
     rowKey: keyof T | ((item: T, index: number) => string);

@@ -7,6 +7,7 @@ export const useDeviceList = (view: number) => {
         delay: 500,
         queryKey: ['device', view],
         queryFn: (p) => getDeviceListV2({ view, ...p.paginationParams, ...p.params }),
+        arrayToString: ['mfrAndDevice'],
     });
 };
 

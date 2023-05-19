@@ -6,7 +6,6 @@ import { Query } from '../type';
 export type FieldKeys<T> = {
     label: keyof T;
     value: keyof T;
-    key?: keyof T;
 };
 
 export type InputItem = {
@@ -62,7 +61,7 @@ export type FilterProps = {
     filterList: Array<FilterItem>;
     params: Query<any>['params'];
     position?: 'absolute' | 'fixed';
-    setParams: Query<any>['setParams'];
+    addAndDelParams: Query<any>['addAndDelParams'];
 };
 
-export type ContentProps = Pick<FilterProps, 'filterList' | 'params' | 'setParams'>;
+export type ContentProps = Pick<FilterProps, 'filterList' | 'params' | 'addAndDelParams'>;

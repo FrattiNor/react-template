@@ -62,7 +62,6 @@ const Device = () => {
                         option: useDeviceModelList,
                         multiple: true,
                         fieldKeys: {
-                            key: 'mfrAndDevice',
                             value: 'mfrAndDevice',
                             label: 'deviceModelView',
                         },
