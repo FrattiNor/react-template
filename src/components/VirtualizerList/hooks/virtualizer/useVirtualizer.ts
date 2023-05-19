@@ -10,9 +10,10 @@ type Props = {
     enableLoadMore?: { isFetchingNextPage: boolean; hasNextPage: boolean; fetchNextPage: () => Promise<any> };
 };
 
-function useVirtualizer({ scroll, scrollRef, count, enableScroll, enableLoadMore }: Props) {
+function useVirtualizer({ scroll, scrollRef, count: c, enableScroll, enableLoadMore }: Props) {
+    const enableScrollBoolean = !!enableScroll;
     const enableLoadMoreBoolean = !!enableLoadMore;
-
+    const count = enableLoadMoreBoolean ? c + 1 : c;
     const requestFlag = useRef(false);
 
     const rerender = useReducer(() => ({}), {})[1];
@@ -29,7 +30,7 @@ function useVirtualizer({ scroll, scrollRef, count, enableScroll, enableLoadMore
         };
 
         const pageTurning = async (endIndex: number) => {
-            if (count - (endIndex + 1) === 0) {
+            if (count - (endIndex + 1) <= 0) {
                 if (!requestFlag.current) {
                     requestFlag.current = true;
                     if (fetchNextPage) await fetchNextPage();
@@ -39,17 +40,17 @@ function useVirtualizer({ scroll, scrollRef, count, enableScroll, enableLoadMore
         };
 
         const scrollToFn2: VirtualizerOptions<any, any>['scrollToFn'] = (offset, _canSmooth, instance) => {
-            if (enableScroll && scroll) {
+            if (enableScrollBoolean && scroll) {
                 const to: [number, number] = instance.options.horizontal ? [-offset, scroll.y] : [scroll.x, -offset];
                 scroll.scrollTo(...to, 300);
             }
-            if (!enableScroll) {
+            if (!enableScrollBoolean) {
                 elementScroll(offset, _canSmooth, instance);
             }
         };
 
         const observeElementOffset2: VirtualizerOptions<any, any>['observeElementOffset'] = (instance, cb) => {
-            if (enableScroll && scroll) {
+            if (enableScrollBoolean && scroll) {
                 const handler = (e: { x: number; y: number }) => {
                     cb(-e[instance.options.horizontal ? 'x' : 'y']);
                 };
@@ -62,13 +63,13 @@ function useVirtualizer({ scroll, scrollRef, count, enableScroll, enableLoadMore
                     scroll.off('scroll', handler);
                 };
             }
-            if (!enableScroll) {
+            if (!enableScrollBoolean) {
                 observeElementOffset(instance, cb);
             }
         };
 
         const resolvedOptions: VirtualizerOptions<any, any> = {
-            count: enableLoadMoreBoolean ? count + 1 : count,
+            count,
             overscan: 5,
             getScrollElement,
             observeElementRect,
@@ -85,10 +86,10 @@ function useVirtualizer({ scroll, scrollRef, count, enableScroll, enableLoadMore
         };
 
         return resolvedOptions;
-    }, [scroll, enableScroll, normalHeight, count, enableLoadMoreBoolean]);
+    }, [scroll, count, normalHeight, enableScrollBoolean, enableLoadMore?.fetchNextPage]);
 
     useEffect(() => {
-        if (!enableScroll || (enableScroll && scroll)) {
+        if (!enableScrollBoolean || (enableScrollBoolean && scroll)) {
             const newVirtualizer = new Virtualizer<any, any>(options);
             (window as any)['virtualizer'] = newVirtualizer;
             setVirtualizer(newVirtualizer);
@@ -96,7 +97,7 @@ function useVirtualizer({ scroll, scrollRef, count, enableScroll, enableLoadMore
             newVirtualizer._willUpdate();
             return _didMount;
         }
-    }, [enableScroll, scroll]);
+    }, [enableScrollBoolean, scroll]);
 
     useEffect(() => {
         if (virtualizer) {
@@ -106,13 +107,15 @@ function useVirtualizer({ scroll, scrollRef, count, enableScroll, enableLoadMore
         }
     }, [options, virtualizer]);
 
-    const totalSize = virtualizer?.getTotalSize() || 0;
+    const vTotalSize = virtualizer?.getTotalSize() || 0;
 
-    const items = virtualizer?.getVirtualItems() || [];
+    const vItems = virtualizer?.getVirtualItems() || [];
+    // virtualizerCount跟随items变更，解决items更新比data.length慢的问题
+    const vCount = virtualizer?.options.count || 0;
 
     useEffect(() => {
-        if (enableScroll && scroll) scroll.refresh();
-    }, [totalSize, scroll]);
+        if (enableScrollBoolean && scroll) scroll.refresh();
+    }, [vTotalSize, scroll]);
 
     // @ts-ignore
     const itemSizeCache: Map<number, number> | undefined = virtualizer?.itemSizeCache;
@@ -121,13 +124,12 @@ function useVirtualizer({ scroll, scrollRef, count, enableScroll, enableLoadMore
         if (normalHeight === null && itemSizeCache) {
             const secondHeight = itemSizeCache.get(1);
             if (typeof secondHeight === 'number') {
-                // console.log('secondHeight', secondHeight);
                 setNormalHeight(secondHeight);
             }
         }
     }, [itemSizeCache]);
 
-    return { virtualizer, totalSize, items };
+    return { virtualizer, vTotalSize, vItems, vCount };
 }
 
 export default useVirtualizer;

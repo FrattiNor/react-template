@@ -1,13 +1,13 @@
 import { Button } from 'antd-mobile';
 
-const Home = () => {
+const Knowledge = () => {
     return (
         <div style={{ padding: 24 }}>
             <Button color="primary" fill="solid">
-                111111
+                Knowledge
             </Button>
         </div>
     );
 };
 
-export default Home;
+export default Knowledge;

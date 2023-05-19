@@ -14,7 +14,6 @@ const useDelay = <F extends (...args: any[]) => Promise<any>>({ delayFn, delay }
         const endTime = new Date().getTime();
         // 剩余时间
         const remainder = delay - (endTime - startTime);
-        console.log('剩余时间', remainder);
         if (remainder > 0)
             await new Promise((resolve) => {
                 setTimeout(resolve, remainder);

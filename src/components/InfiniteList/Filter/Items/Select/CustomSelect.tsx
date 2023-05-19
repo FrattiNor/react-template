@@ -1,5 +1,5 @@
 import { Dispatch, Fragment, SetStateAction, useCallback, useMemo, useState } from 'react';
-import VirtualizerList from '@/components/VirtualizerList2';
+import VirtualizerList from '@/components/VirtualizerList';
 import { Picker, Popup, SearchBar } from 'antd-mobile';
 import styles from './CustomSelect.module.less';
 import Iconfont from '@/components/Iconfont';

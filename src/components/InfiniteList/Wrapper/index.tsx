@@ -1,5 +1,5 @@
-import { Fragment, useCallback } from 'react';
 import { WrapperProps } from './type';
+import { useCallback } from 'react';
 import Filter from '../Filter';
 import List from '../List';
 
@@ -14,12 +14,12 @@ function InfiniteList<T>(props: WrapperProps<T>) {
     const haveFilter = useCallback((f: any): f is any[] => Array.isArray(f) && f.length > 0, []);
 
     return (
-        <Fragment>
+        <div style={{ height: '100%', position: 'relative' }}>
             <List {...listProps} />
             {!isLoading && haveFilter(filterList) && enableFilter !== false && (
                 <Filter {...filterProps} filterList={filterList} params={params} addAndDelParams={addAndDelParams} />
             )}
-        </Fragment>
+        </div>
     );
 }
 

@@ -1,6 +1,6 @@
 /* eslint-disable @tanstack/query/exhaustive-deps */
 import { UseInfiniteQueryOptions, useInfiniteQuery } from '@tanstack/react-query';
-import { useCallback, useMemo, useReducer, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import { paramsArrayToStr } from '@/utils/params';
 import { ListData } from '@/global';
 import useDelay from '../useDelay';
@@ -18,7 +18,6 @@ type Props<T> = Omit<UseInfiniteQueryOptions, 'queryFn'> & {
 // 在默认的 useInfiniteQuery 中加入一些默认配置以及增加一些参数
 const useInfiniteQuery2 = <T>({ pageSize = 50, queryKey, delay, queryFn, arrayToString }: Props<T>) => {
     const [delayFn] = useDelay({ delayFn: queryFn, delay: delay || 0 });
-    const rerender = useReducer(() => ({}), {})[1];
     const [params, setParams] = useState<Params>({});
     const _queryKey = [...(queryKey || []), pageSize, params];
 
@@ -27,9 +26,7 @@ const useInfiniteQuery2 = <T>({ pageSize = 50, queryKey, delay, queryFn, arrayTo
         queryFn: ({ pageParam }) => {
             if (pageParam === false) return;
             const paginationParams = { current: typeof pageParam === 'number' ? pageParam : 1, pageSize };
-            console.log('params', params);
             const handledParams = arrayToString ? paramsArrayToStr(params, arrayToString) : params;
-            console.log('handledParams', handledParams);
             return delayFn({ paginationParams, params: handledParams });
         },
         getNextPageParam: (lastPage) => {
@@ -41,7 +38,6 @@ const useInfiniteQuery2 = <T>({ pageSize = 50, queryKey, delay, queryFn, arrayTo
         },
         refetchOnWindowFocus: false,
         refetchOnReconnect: false,
-        // keepPreviousData: true,
         refetchOnMount: false,
         retryOnMount: false,
         retry: false,
@@ -53,8 +49,16 @@ const useInfiniteQuery2 = <T>({ pageSize = 50, queryKey, delay, queryFn, arrayTo
     const hasNextPage = query.hasNextPage;
     const pages = query.data?.pages;
     const data = useMemo(() => pages?.reduce((a, b) => [...(a || []), ...(b?.list || [])], [] as T[]) || [], [pages]);
-    const count = data.length;
-    const empty = count === 0;
+
+    // 删除增加参数
+    const addAndDelParams = useCallback(({ add, del }: { add?: Record<string, any>; del?: string[] }) => {
+        setParams((beforeParams) => {
+            let nextParams = { ...beforeParams };
+            if (del) del.forEach((key) => delete nextParams[key]);
+            if (add) nextParams = { ...nextParams, ...add };
+            return { ...nextParams };
+        });
+    }, []);
 
     // query 自带的 refetch 会从1 - n的页面数据重新获取一次
     const refetch = useCallback(() => {
@@ -63,9 +67,8 @@ const useInfiniteQuery2 = <T>({ pageSize = 50, queryKey, delay, queryFn, arrayTo
             query.data.pages = [query.data.pages[0]];
             query.data.pageParams = [query.data.pageParams[0]];
         }
-        // refetch 不会触发任何更新， rerender 触发一下 data 更新
-        return query.refetch().then(rerender);
-    }, [query]);
+        return query.refetch();
+    }, [pages]);
 
     // fetchNextPage 不会自动拦截没有 hasNextPage 的情况
     const fetchNextPage = useCallback(() => {
@@ -75,17 +78,7 @@ const useInfiniteQuery2 = <T>({ pageSize = 50, queryKey, delay, queryFn, arrayTo
         return Promise.resolve();
     }, [isFetchingNextPage, hasNextPage]);
 
-    // 删除增加参数
-    const addAndDelParams = ({ add, del }: { add?: Record<string, any>; del?: string[] }) => {
-        setParams((beforeParams) => {
-            let nextParams = { ...beforeParams };
-            if (del) del.forEach((key) => delete nextParams[key]);
-            if (add) nextParams = { ...nextParams, ...add };
-            return { ...nextParams };
-        });
-    };
-
-    return { ...query, setParams, addAndDelParams, fetchNextPage, refetch, data, params, count, empty };
+    return { ...query, setParams, addAndDelParams, fetchNextPage, refetch, data, params };
 };
 
 export default useInfiniteQuery2;

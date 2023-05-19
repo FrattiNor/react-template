@@ -65,40 +65,45 @@ function useScroll({ scrollRef, enableScroll, enablePullDown, tipRef }: Props) {
     }, [enableScroll, enablePullDownBoolean]);
 
     useEffect(() => {
-        if (enablePullDownBoolean) {
-            if (scroll) {
-                // == 上拉刷新 ==
-                const pullingDown = async () => {
-                    setPullDownType('fetching');
-                    if (enablePullDown.refetch) await enablePullDown.refetch();
-                    setPullDownType('success');
-                    setTimeout(() => {
-                        scroll.finishPullDown();
-                        scroll.refresh();
-                    }, 500);
-                };
+        if (enablePullDownBoolean && scroll) {
+            const enterThreshold = async () => {
+                setPullDownType('enter');
+            };
 
-                const enterThreshold = async () => {
-                    setPullDownType('enter');
-                };
+            const leaveThreshold = async () => {
+                setPullDownType('leave');
+            };
 
-                const leaveThreshold = async () => {
-                    setPullDownType('leave');
-                };
+            scroll.on('enterThreshold', enterThreshold);
+            scroll.on('leaveThreshold', leaveThreshold);
 
-                scroll.on('pullingDown', pullingDown);
-                scroll.on('enterThreshold', enterThreshold);
-                scroll.on('leaveThreshold', leaveThreshold);
-                // == 上拉刷新 ==
-
-                return () => {
-                    scroll.off('pullingDown', pullingDown);
-                    scroll.off('enterThreshold', enterThreshold);
-                    scroll.off('leaveThreshold', leaveThreshold);
-                };
-            }
+            return () => {
+                scroll.off('enterThreshold', enterThreshold);
+                scroll.off('leaveThreshold', leaveThreshold);
+            };
         }
     }, [scroll, enablePullDownBoolean]);
+
+    // == 上拉刷新的函数需要更新 ==
+    useEffect(() => {
+        if (enablePullDownBoolean && scroll) {
+            const pullingDown = async () => {
+                setPullDownType('fetching');
+                if (enablePullDown.refetch) await enablePullDown.refetch();
+                setPullDownType('success');
+                setTimeout(() => {
+                    scroll.finishPullDown();
+                    scroll.refresh();
+                }, 500);
+            };
+
+            scroll.on('pullingDown', pullingDown);
+
+            return () => {
+                scroll.off('pullingDown', pullingDown);
+            };
+        }
+    }, [enablePullDown?.refetch]);
 
     const fetchTip = useMemo(() => {
         switch (pullDownType) {

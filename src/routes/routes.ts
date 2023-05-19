@@ -1,6 +1,6 @@
-import NormalLayout from '@/layouts/NormalLayout';
 import ErrorLayout from '@/layouts/ErrorLayout';
 import BasicLayout from '@/layouts/BaseLayout';
+import HomeLayout from '@/layouts/HomeLayout';
 import Error404 from './Error404Page';
 import Error500 from './Error500Page';
 import { FC } from 'react';
@@ -19,18 +19,23 @@ const routes: Array<Route> = [
         Component: BasicLayout,
         children: [
             {
-                path: '/',
-                Component: NormalLayout,
+                path: 'home?',
+                Component: HomeLayout,
                 children: [
                     {
                         path: 'device?',
-                        title: '设备台账',
+                        title: '设备',
                         LazyComponent: () => import('@/pages/Device'),
                     },
                     {
-                        path: 'home2',
-                        title: '主页2',
-                        LazyComponent: () => import('@/pages/Home2'),
+                        path: 'alarm',
+                        title: '报警',
+                        LazyComponent: () => import('@/pages/Alarm'),
+                    },
+                    {
+                        path: 'knowledge',
+                        title: '知识库',
+                        LazyComponent: () => import('@/pages/Knowledge'),
                     },
                 ],
             },

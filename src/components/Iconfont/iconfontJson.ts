@@ -6,6 +6,27 @@ const iconfontJSON = {
     description: '',
     glyphs: [
         {
+            icon_id: '22354003',
+            name: '知识库',
+            font_class: 'knowledge',
+            unicode: 'e605',
+            unicode_decimal: 58885,
+        },
+        {
+            icon_id: '11200247',
+            name: '报警',
+            font_class: 'alarm',
+            unicode: 'e600',
+            unicode_decimal: 58880,
+        },
+        {
+            icon_id: '31304140',
+            name: '公司设备',
+            font_class: 'device',
+            unicode: 'e60c',
+            unicode_decimal: 58892,
+        },
+        {
             icon_id: '5810295',
             name: 'yes',
             font_class: 'yes',
