@@ -1,8 +1,11 @@
+import { setTitle } from '@/store/reducer/global';
 import { useMatches } from 'react-router-dom';
+import { useDispatch } from '@/store';
 import { useEffect } from 'react';
 
 const useTitle = () => {
     const matches = useMatches();
+    const dispatch = useDispatch();
 
     useEffect(() => {
         let nextTitle = '';
@@ -15,6 +18,7 @@ const useTitle = () => {
         }
         if (nextTitle) {
             document.title = nextTitle;
+            dispatch(setTitle(nextTitle));
         }
     }, [matches]);
 };

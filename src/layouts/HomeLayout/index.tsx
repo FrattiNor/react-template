@@ -1,6 +1,7 @@
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import Iconfont from '@/components/Iconfont';
 import styles from './index.module.less';
+import { useSelector } from '@/store';
 import { TabBar } from 'antd-mobile';
 import { FC } from 'react';
 
@@ -40,15 +41,17 @@ const Bottom: FC = () => {
 };
 
 const HomeLayout = () => {
+    const title = useSelector((s) => s.global.title);
+
     return (
         <div className={styles['home']}>
-            <div className={styles['bottom']}>
-                <Bottom />
+            <div className={styles['head']}>
+                <div>{title}</div>
             </div>
             <div className={styles['content']}>
                 <Outlet />
             </div>
-            <div className={styles['bottom']}>
+            <div className={styles['foot']}>
                 <Bottom />
             </div>
         </div>

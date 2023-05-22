@@ -85,7 +85,12 @@ function List<T>({ data, renderItem, rowKey, enableScroll, enablePullDown, enabl
                                     const key = getRowKey(item, index);
 
                                     return (
-                                        <div key={key} data-index={index} ref={virtualizer?.measureElement} className={styles['item']}>
+                                        <div
+                                            key={key}
+                                            data-index={index}
+                                            ref={virtualizer?.measureElement}
+                                            className={classNames(styles['item'], { [styles['first']]: index === 0 })}
+                                        >
                                             {renderItem(item, { key, index })}
                                         </div>
                                     );

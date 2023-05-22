@@ -1,7 +1,5 @@
 import VirtualizerList from '@/components/VirtualizerList';
-import { useCallback, useState } from 'react';
-import styles from './index.module.less';
-import classNames from 'classnames';
+import { useCallback, useEffect, useState } from 'react';
 import { ListProps } from './type';
 
 function List<T>({ query, renderItem, rowKey, enableVisible }: ListProps<T>) {
@@ -17,6 +15,11 @@ function List<T>({ query, renderItem, rowKey, enableVisible }: ListProps<T>) {
         [enableVisible],
     );
 
+    // isLoading在react-query中代表第一次请求
+    useEffect(() => {
+        if (isLoading) setVisibles({});
+    }, [isLoading]);
+
     return (
         <VirtualizerList
             data={data}
@@ -26,9 +29,7 @@ function List<T>({ query, renderItem, rowKey, enableVisible }: ListProps<T>) {
             enablePullDown={{ refetch }}
             enableLoadMore={{ hasNextPage: !!hasNextPage, isFetchingNextPage, fetchNextPage }}
             renderItem={(item, { key, index }) => (
-                <div className={classNames(styles['item'], { [styles['first']]: index === 0 })} onClick={() => itemClick(key)}>
-                    {renderItem(item, { key, index, visible: !!visibles[key] })}
-                </div>
+                <div onClick={() => itemClick(key)}>{renderItem(item, { key, index, visible: !!visibles[key] })}</div>
             )}
         />
     );

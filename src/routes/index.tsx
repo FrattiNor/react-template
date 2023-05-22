@@ -25,10 +25,6 @@ const convertRoutes = (rs: Array<Route>): Array<RouteObject> => {
             ...getLazy(LazyComponent),
             handle: { title: title || '' },
             children: children ? convertRoutes(children) : undefined,
-            // loader: (...res) => {
-            //     console.log('loader', res);
-            //     return Promise.resolve(1);
-            // },
         };
     });
 };

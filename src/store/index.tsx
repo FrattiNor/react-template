@@ -1,10 +1,10 @@
 import { useSelector as useSelectorOrigin, useDispatch as useDispatchOrigin } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
-import counter from './reducer/counter';
+import global from './reducer/global';
 
 const store = configureStore({
     reducer: {
-        counter,
+        global,
     },
 });
 
