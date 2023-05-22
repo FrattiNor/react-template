@@ -1,0 +1,29 @@
+.wrapper {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+
+    .header {
+        z-index: 2;
+        padding: 12px;
+        flex-shrink: 0;
+        font-size: 18px;
+        position: relative;
+        text-align: center;
+        color: var(--m-primary-font-color);
+        background-color: var(--m-primary-color);
+
+        &.box-shadow {
+            box-shadow: var(--m-primary-head-box-shadow);
+        }
+    }
+
+    .content {
+        z-index: 1;
+        min-height: 0;
+        height: 100%;
+        flex-grow: 1;
+        flex-shrink: 1;
+        position: relative;
+    }
+}
