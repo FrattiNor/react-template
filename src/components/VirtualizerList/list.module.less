@@ -34,7 +34,10 @@
     .container {
         width: 100%;
         position: relative;
-        min-height: calc(100% + 1px);
+
+        &.scroll {
+            min-height: calc(100% + 1px);
+        }
 
         .fetchTip {
             top: 0;
@@ -44,8 +47,8 @@
             position: absolute;
             text-align: center;
             box-sizing: border-box;
-            transform: translate3d(0, -100%, 0);
             color: var(--m-notice-font-color);
+            transform: translate3d(0, -100%, 0);
         }
 
         .container-inner {

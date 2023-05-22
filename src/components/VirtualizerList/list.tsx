@@ -7,7 +7,7 @@ import styles from './list.module.less';
 import classNames from 'classnames';
 import { ListProps } from './type';
 
-function List<T>({ data, renderItem, rowKey, enableScroll, enablePullDown, enableLoadMore, scrollClassName }: ListProps<T>) {
+function List<T>({ data, renderItem, rowKey, enableScroll, enablePullDown, enableLoadMore, scrollClassName, borderWidth = 0 }: ListProps<T>) {
     const scrollRef = useRef<HTMLDivElement>(null);
     const tipRef = useRef<HTMLDivElement>(null);
     const dataCount = data.length;
@@ -38,7 +38,7 @@ function List<T>({ data, renderItem, rowKey, enableScroll, enablePullDown, enabl
 
     return (
         <div ref={scrollRef} className={classNames(styles['scroll-wrapper'], scrollClassName)} style={{ overflow: enableScroll ? 'hidden' : 'auto' }}>
-            <div className={styles['container']} style={{ height: `${vTotalSize}px` }}>
+            <div className={classNames(styles['container'], { [styles['scroll']]: enableScroll })} style={{ height: `${vTotalSize}px` }}>
                 {enablePullDown && (
                     <div ref={tipRef} className={styles['fetchTip']}>
                         {fetchTip}
@@ -88,6 +88,7 @@ function List<T>({ data, renderItem, rowKey, enableScroll, enablePullDown, enabl
                                         <div
                                             key={key}
                                             data-index={index}
+                                            style={{ borderWidth }}
                                             ref={virtualizer?.measureElement}
                                             className={classNames(styles['item'], { [styles['first']]: index === 0 })}
                                         >

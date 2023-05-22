@@ -25,6 +25,7 @@ function List<T>({ query, renderItem, rowKey, enableVisible }: ListProps<T>) {
             data={data}
             enableScroll
             rowKey={rowKey}
+            borderWidth={3}
             loading={isLoading}
             enablePullDown={{ refetch }}
             enableLoadMore={{ hasNextPage: !!hasNextPage, isFetchingNextPage, fetchNextPage }}

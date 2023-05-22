@@ -105,13 +105,14 @@ function CustomPopup<T>({ fieldKeysOpt, setVisible, value, onChange, multiple, l
             </div>
 
             <VirtualizerList
+                borderWidth={1}
                 loading={loading}
                 data={searchedOptions}
                 rowKey={(_, i) => `${i}`}
                 className={styles['content']}
-                renderItem={(item, { index }) => {
+                renderItem={(item) => {
                     return (
-                        <div className={classNames(styles['item'], { [styles['first']]: index === 0 })} onClick={() => onClick(item)}>
+                        <div className={styles['item']} onClick={() => onClick(item)}>
                             <div className={styles['label']}>{item.label}</div>
                             <div className={classNames(styles['icon'], { [styles['show']]: itemChecked(item) })}>
                                 <Iconfont icon="yes" />

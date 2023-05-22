@@ -4,7 +4,7 @@ import { useInfiniteQuery2, useQuery2 } from '@/hooks';
 // 获取设备列表
 export const useDeviceList = (view: number) => {
     return useInfiniteQuery2({
-        delay: 500,
+        delay: 700,
         queryKey: ['device', view],
         queryFn: (p) => getDeviceListV2({ view, ...p.paginationParams, ...p.params }),
         arrayToString: ['sourceType', 'devMode', 'mfrName', 'mfrAndDevice'],
