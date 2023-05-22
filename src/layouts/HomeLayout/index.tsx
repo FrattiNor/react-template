@@ -31,7 +31,7 @@ const Bottom: FC = () => {
     ];
 
     return (
-        <TabBar activeKey={pathname} onChange={(value) => setRouteActive(value)}>
+        <TabBar activeKey={pathname} onChange={(value) => setRouteActive(value)} safeArea>
             {tabs.map((item) => (
                 <TabBar.Item key={item.key} title={item.title} icon={item.icon} />
             ))}

@@ -1,17 +1,8 @@
-import { CSSProperties, FC, SVGProps } from 'react';
-import iconfontJSON from './iconfontJson.js';
 import styles from './index.module.less';
 import classNames from 'classnames';
+import { Props } from './type';
+import { FC } from 'react';
 import './iconfont.js';
-
-type FontClass = (typeof iconfontJSON.glyphs)[number]['font_class'];
-
-type Props = {
-    icon: FontClass;
-    className?: string;
-    style?: CSSProperties;
-    onClick?: SVGProps<SVGSVGElement>['onClick'];
-};
 
 const Iconfont: FC<Props> = ({ icon, style, className = '', onClick }) => {
     return (
