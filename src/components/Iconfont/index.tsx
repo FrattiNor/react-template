@@ -1,6 +1,6 @@
+import { CSSProperties, FC, SVGProps } from 'react';
 import iconfontJSON from './iconfontJson.js';
 import styles from './index.module.less';
-import { CSSProperties, FC } from 'react';
 import classNames from 'classnames';
 import './iconfont.js';
 
@@ -10,11 +10,12 @@ type Props = {
     icon: FontClass;
     className?: string;
     style?: CSSProperties;
+    onClick?: SVGProps<SVGSVGElement>['onClick'];
 };
 
-const Iconfont: FC<Props> = ({ icon, style, className = '' }) => {
+const Iconfont: FC<Props> = ({ icon, style, className = '', onClick }) => {
     return (
-        <svg className={classNames(styles['iconfont'], className)} style={style} aria-hidden="true">
+        <svg className={classNames(styles['iconfont'], className)} style={style} onClick={onClick} aria-hidden="true">
             <use xlinkHref={`#icon-${icon}`}></use>
         </svg>
     );

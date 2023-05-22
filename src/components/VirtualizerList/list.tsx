@@ -38,7 +38,7 @@ function List<T>({ data, renderItem, rowKey, enableScroll, enablePullDown, enabl
 
     return (
         <div ref={scrollRef} className={classNames(styles['scroll-wrapper'], scrollClassName)} style={{ overflow: enableScroll ? 'hidden' : 'auto' }}>
-            <div className={styles['container']} style={{ height: !empty ? `${vTotalSize}px` : '99%' }}>
+            <div className={styles['container']} style={{ height: `${vTotalSize}px` }}>
                 {enablePullDown && (
                     <div ref={tipRef} className={styles['fetchTip']}>
                         {fetchTip}
@@ -85,7 +85,7 @@ function List<T>({ data, renderItem, rowKey, enableScroll, enablePullDown, enabl
                                     const key = getRowKey(item, index);
 
                                     return (
-                                        <div key={key} data-index={index} ref={virtualizer?.measureElement}>
+                                        <div key={key} data-index={index} ref={virtualizer?.measureElement} className={styles['item']}>
                                             {renderItem(item, { key, index })}
                                         </div>
                                     );

@@ -42,6 +42,9 @@ const Bottom: FC = () => {
 const HomeLayout = () => {
     return (
         <div className={styles['home']}>
+            <div className={styles['bottom']}>
+                <Bottom />
+            </div>
             <div className={styles['content']}>
                 <Outlet />
             </div>

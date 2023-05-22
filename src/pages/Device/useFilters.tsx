@@ -1,5 +1,5 @@
 import { useDeviceMfrList, useDeviceModelList } from '@/services/device/query';
-import { createFilterItem } from '@/components/InfiniteList';
+import { createFilterItem } from '@/components/InfiniteList/utils';
 import { useConst } from '@/hooks';
 
 const useFilters = () => {

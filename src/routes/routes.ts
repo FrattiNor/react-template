@@ -1,5 +1,5 @@
 import ErrorLayout from '@/layouts/ErrorLayout';
-import BasicLayout from '@/layouts/BaseLayout';
+import BasicLayout from '@/layouts/BasicLayout';
 import HomeLayout from '@/layouts/HomeLayout';
 import Error404 from './Error404Page';
 import Error500 from './Error500Page';

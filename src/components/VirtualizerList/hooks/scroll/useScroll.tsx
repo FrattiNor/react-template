@@ -34,7 +34,7 @@ function useScroll({ scrollRef, enableScroll, enablePullDown, tipRef }: Props) {
                     click: true,
                     scrollX: false,
                     scrollbar: {
-                        minSize: 15,
+                        minSize: 24,
                     },
                     bounce: {
                         top: enablePullDown ? true : false,
@@ -103,7 +103,7 @@ function useScroll({ scrollRef, enableScroll, enablePullDown, tipRef }: Props) {
                 scroll.off('pullingDown', pullingDown);
             };
         }
-    }, [enablePullDown?.refetch]);
+    }, [scroll, enablePullDown?.refetch]);
 
     const fetchTip = useMemo(() => {
         switch (pullDownType) {

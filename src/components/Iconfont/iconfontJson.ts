@@ -6,6 +6,13 @@ const iconfontJSON = {
     description: '',
     glyphs: [
         {
+            icon_id: '639164',
+            name: 'jclear',
+            font_class: 'clear',
+            unicode: 'e64b',
+            unicode_decimal: 58955,
+        },
+        {
             icon_id: '22354003',
             name: '知识库',
             font_class: 'knowledge',
