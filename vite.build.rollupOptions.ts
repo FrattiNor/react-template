@@ -34,6 +34,7 @@ const rollupOptions: UserConfig['build']['rollupOptions'] = {
                             return vendorName;
                         // 其余小文件打包成一个包
                         default:
+                            // return vendorName;
                             return 'vendor';
                     }
                 }

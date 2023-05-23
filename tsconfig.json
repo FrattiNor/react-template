@@ -26,7 +26,7 @@
             "@proxy/*": ["./proxy/*"]
         }
     },
-    "include": ["./src/**/*", "./proxy/**/*"],
+    "include": ["src", "proxy"],
     "exclude": ["iconfont.js", "scrollbar"],
     "references": [{ "path": "./tsconfig.node.json" }]
 }

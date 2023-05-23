@@ -1,6 +1,7 @@
+// @ts-ignore
+import { getProxyObj, getPort } from './proxy';
 import { UserConfig, UserConfigExport, defineConfig } from 'vite';
 import rollupOptions from './vite.build.rollupOptions';
-import { getProxyObj, getPort } from './proxy';
 import react from '@vitejs/plugin-react-swc';
 import legacy from '@vitejs/plugin-legacy';
 
@@ -10,6 +11,8 @@ export default defineConfig(async ({ command }) => {
         alias: {
             '@': '/src',
             '@proxy': '/proxy',
+            // path: 'rollup-plugin-node-polyfills/polyfills/path',
+            // buffer: 'rollup-plugin-node-polyfills/polyfills/buffer-es6',
         },
     };
 
