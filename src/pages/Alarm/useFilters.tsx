@@ -2,7 +2,7 @@ import { createFilterItem } from '@/components/InfiniteList/utils';
 import { useConst } from '@/hooks';
 import { useAreaList } from '@/services/alarm';
 
-const useFilters = () => {
+const useHistoryFilters = () => {
     const { ALARM_STATUS_MAP, ALARM_LEVEL_MAP } = useConst();
 
     return [
@@ -14,6 +14,11 @@ const useFilters = () => {
         createFilterItem({
             label: '设备类型',
             name: 'deviceModel',
+            type: 'input',
+        }),
+        createFilterItem({
+            label: 'ISDM位号',
+            name: 'tagName',
             type: 'input',
         }),
         createFilterItem({
@@ -52,4 +57,36 @@ const useFilters = () => {
     ];
 };
 
-export default useFilters;
+const useRealtimeFilters = () => {
+    const { ALARM_LEVEL_MAP } = useConst();
+
+    return [
+        createFilterItem({
+            label: 'ISDM位号',
+            name: 'tagName',
+            type: 'input',
+        }),
+        createFilterItem({
+            label: '报警等级',
+            name: 'alarmLevel',
+            type: 'block-select',
+            multiple: true,
+            columns: 2,
+            option: Array.from(ALARM_LEVEL_MAP).map(([value, label]) => ({ value, label })),
+        }),
+
+        createFilterItem({
+            label: '装置',
+            name: 'areaId',
+            type: 'select',
+            multiple: true,
+            option: useAreaList,
+            fieldKeys: {
+                value: 'id',
+                label: 'areaName',
+            },
+        }),
+    ];
+};
+
+export { useHistoryFilters, useRealtimeFilters };

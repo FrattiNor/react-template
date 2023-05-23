@@ -21,7 +21,7 @@ export const paramsArrayToStr = (v: Record<string, any>, keys: string[]): Record
     keys.forEach((key) => {
         const value = nextParams[key];
         if (Array.isArray(value) && value.length > 0) {
-            nextParams[key] = v.join(',');
+            nextParams[key] = value.join(',');
         }
     });
 

@@ -1,5 +1,6 @@
 import { useAlarmHistoryList, useAlarmRealtimeList } from '@/services/alarm';
 import { createInfiniteListItem } from '@/components/InfiniteLists/utils';
+import { useHistoryFilters, useRealtimeFilters } from './useFilters';
 import TableLike, { Line } from '@/components/TableLike';
 import InfiniteLists from '@/components/InfiniteLists';
 import Collapse from '@/components/Collapse';
@@ -9,11 +10,12 @@ import styles from './index.module.less';
 import timeTool from '@/utils/timeTool';
 import notEmpty from '@/utils/notEmpty';
 import AlarmAckTag from './AlarmAckTag';
-import useFilters from './useFilters';
 import { useConst } from '@/hooks';
 
 const Device = () => {
-    const filterList = useFilters();
+    const historyFilterList = useHistoryFilters();
+    const realtimeFilterList = useRealtimeFilters();
+
     const { ALARM_STATUS_MAP } = useConst();
     const queryHistory = useAlarmHistoryList();
     const queryRealtime = useAlarmRealtimeList();
@@ -29,7 +31,7 @@ const Device = () => {
                         rowKey: 'alarmId',
                         query: queryHistory,
                         enableVisible: true,
-                        filter: { filterList },
+                        filter: { filterList: historyFilterList },
                         renderItem: (item, { visible }) => (
                             <div className={styles['item']}>
                                 <TableLike className={{ 0: styles['key'], 1: styles['value'] }}>
@@ -54,7 +56,7 @@ const Device = () => {
                         rowKey: 'alarmId',
                         query: queryRealtime,
                         enableVisible: true,
-                        filter: { filterList },
+                        filter: { filterList: realtimeFilterList },
                         renderItem: (item, { visible }) => (
                             <div className={styles['item']}>
                                 <TableLike className={{ 0: styles['key'], 1: styles['value'] }}>
