@@ -3,7 +3,7 @@ import dayjs, { Dayjs } from 'dayjs';
 const defaultFormat = 'YYYY-MM-DD HH:mm:ss';
 
 const isDay = (v: any): v is Dayjs => {
-    return Object.prototype.toString.call(v) === '[Object object]' && typeof v.isValid === 'function' && v.isValid() === true;
+    return typeof v?.isValid === 'function' && v.isValid() === true;
 };
 
 const toNumByStr = (s: string, format?: string): number => {
@@ -16,6 +16,7 @@ const toNumByDay = (d: Dayjs): number => {
 };
 
 const toStrByNum = (n: number | string, format?: string): string => {
+    // console.log(n);
     const d = dayjs(Number(n));
     return isDay(d) ? d.format(format || defaultFormat) : '-';
 };

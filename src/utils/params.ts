@@ -1,22 +1,11 @@
-export const isEmptyParam = (v: any) => {
-    if (
-        v === '' ||
-        v === null ||
-        v === undefined ||
-        (Array.isArray(v) && v.length === 0) ||
-        (Object.prototype.toString.call(v) === '[object Object]' && Object.keys(v).length === 0)
-    ) {
-        return true;
-    }
-    return false;
-};
+import { isEmpty } from './tools';
 
 // 清除空数组，undefined，null，空字符串，空对象
 export const cleanParams = (_v: Record<string, any>): Record<string, any> => {
     const nextParams: Record<string, any> = {};
 
     Object.entries(_v).forEach(([k, v]) => {
-        if (!isEmptyParam(v)) {
+        if (!isEmpty(v)) {
             nextParams[k] = v;
         }
     });

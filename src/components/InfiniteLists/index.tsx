@@ -6,7 +6,7 @@ import styles from './index.module.less';
 import { useRef, useState } from 'react';
 import { Props } from './type';
 
-function InfiniteLists<T>({ items }: Props<T>) {
+function InfiniteLists({ items }: Props<any>) {
     const [view, setView] = useState('0');
     const swiperRef = useRef<SwiperRef>(null);
     const filterProps = items[Number(view)].filter;

@@ -97,8 +97,8 @@ export const ALARM_CONFIRM_MAP: Map<number, string> = new Map([
 
 // 报警是否确认颜色
 export const ALARM_CONFIRM_COLOR_MAP: Map<number, string> = new Map([
-    [0, '#CF1322'],
-    [1, '#F5A623'],
+    [0, '#f5222d'],
+    [1, '#ff9626'],
 ]);
 
 // 设备台账自定义字段显示搜索

@@ -1,12 +1,13 @@
-import { cleanParams, isEmptyParam } from '@/utils/params';
 import FilterBlockSelect from './Items/BlockSelect';
 import FilterDatePicker from './Items/DatePicker';
 import FilterRangPicker from './Items/RangPicker';
 import { FC, Fragment, useMemo } from 'react';
+import { cleanParams } from '@/utils/params';
 import { Button, Form } from 'antd-mobile';
 import styles from './content.module.less';
 import FilterSelect from './Items/Select';
 import FilterInput from './Items/Input';
+import { isEmpty } from '@/utils/tools';
 import { ContentProps } from './type';
 
 const Content: FC<ContentProps> = ({ params, filterList, setVisible, addAndDelParams }) => {
@@ -21,7 +22,7 @@ const Content: FC<ContentProps> = ({ params, filterList, setVisible, addAndDelPa
         form.validateFields().then((v) => {
             const del: string[] = [];
             filterKeys.forEach((key) => {
-                if (isEmptyParam(v[key])) del.push(key);
+                if (isEmpty(v[key])) del.push(key);
             });
             addAndDelParams({ add: cleanParams(v), del });
             setVisible(false);
