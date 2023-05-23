@@ -7,7 +7,7 @@ type Props<T> = Omit<UseQueryOptions, 'queryFn'> & {
 };
 
 // 在默认的useQuery中加入一些默认配置以及增加一些参数
-const useQuery2 = <T>({ queryKey, delay, queryFn }: Props<T>) => {
+const useQuery2 = <T>({ queryKey, delay, queryFn, ...rest }: Props<T>) => {
     const [delayFn] = useDelay({ delayFn: queryFn, delay: delay || 0 });
 
     const query = useQuery({
@@ -20,6 +20,7 @@ const useQuery2 = <T>({ queryKey, delay, queryFn }: Props<T>) => {
         retry: false,
         cacheTime: 0,
         staleTime: 0,
+        ...rest,
     });
 
     return query;

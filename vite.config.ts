@@ -11,6 +11,7 @@ export default defineConfig(async ({ command }) => {
             '@': '/src',
             '@proxy': '/proxy',
             buffer: 'buffer',
+            events: 'events',
             path: 'path-browserify',
         },
     };
