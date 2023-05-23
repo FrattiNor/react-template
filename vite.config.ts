@@ -11,8 +11,8 @@ export default defineConfig(async ({ command }) => {
         alias: {
             '@': '/src',
             '@proxy': '/proxy',
-            // path: 'rollup-plugin-node-polyfills/polyfills/path',
-            // buffer: 'rollup-plugin-node-polyfills/polyfills/buffer-es6',
+            buffer: 'buffer',
+            path: 'path-browserify',
         },
     };
 
