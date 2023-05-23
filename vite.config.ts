@@ -10,9 +10,6 @@ export default defineConfig(async ({ command }) => {
         alias: {
             '@': '/src',
             '@proxy': '/proxy',
-            buffer: 'buffer',
-            events: 'events',
-            path: 'path-browserify',
         },
     };
 

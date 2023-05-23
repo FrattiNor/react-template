@@ -1,22 +1,28 @@
-import { connect, IClientOptions, MqttClient, OnMessageCallback } from 'mqtt';
+import { IClientOptions, MqttClient, OnMessageCallback } from 'mqtt';
 import { useEffect, useState } from 'react';
+import * as mqtt from 'mqtt/dist/mqtt.min';
 import { isDev, mqttDevUrl } from '@/env';
+import useMqttUrl from './useMqttUrl';
 import { getWill } from './utils';
 import { nanoid } from 'nanoid';
 
+type OnConnect = ({ client, clientId }: { client: MqttClient; clientId: string }) => void;
+type OnMessage = (topic: string, payload: any) => void;
+
 type Option = Omit<IClientOptions, 'will'> & {
     will?: string;
-    onMessage?: (topic: string, payload: any) => void;
-    onConnect?: ({ client, clientId }: { client: MqttClient; clientId: string }) => void;
+    onMessage?: OnMessage;
+    onConnect?: OnConnect;
 };
 
 const useMqtt = (option: Option) => {
-    const url = '';
+    const url = useMqttUrl();
     const url2 = isDev ? mqttDevUrl : url;
+    console.log(url2);
     const [clientId] = useState(nanoid());
     const { onConnect, onMessage, will, ...restOption } = option;
     const clientOption = { ...restOption, will: getWill(clientId, will) };
-    const [client] = useState(connect(url2, { clientId, ...clientOption }));
+    const [client] = useState(mqtt.connect(url2, { clientId, ...clientOption }));
 
     useEffect(() => {
         client.on('connect', () => {
