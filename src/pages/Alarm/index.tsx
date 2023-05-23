@@ -8,15 +8,17 @@ import Header from '@/components/Header';
 import styles from './index.module.less';
 import timeTool from '@/utils/timeTool';
 import notEmpty from '@/utils/notEmpty';
+import AlarmAckTag from './AlarmAckTag';
 import useFilters from './useFilters';
 import { useConst } from '@/hooks';
-import AlarmAckTag from './AlarmAckTag';
 
 const Device = () => {
     const filterList = useFilters();
     const { ALARM_STATUS_MAP } = useConst();
     const queryHistory = useAlarmHistoryList();
     const queryRealtime = useAlarmRealtimeList();
+    const showAlarmLevel = (level: number) => <AlarmLevelTag level={level} />;
+    const showIsAcked = (isAcked: number) => <AlarmAckTag isAcked={isAcked} />;
 
     return (
         <Header boxShadow={false}>
@@ -31,10 +33,7 @@ const Device = () => {
                         renderItem: (item, { visible }) => (
                             <div className={styles['item']}>
                                 <TableLike className={{ 0: styles['key'], 1: styles['value'] }}>
-                                    <Line>
-                                        报警等级:
-                                        <AlarmLevelTag level={item.alarmLevel} />
-                                    </Line>
+                                    <Line>报警等级:{showAlarmLevel(item.alarmLevel)}</Line>
                                     <Line>报警时间:{notEmpty(item.alarmTime, () => timeTool.toStrByNum(item.alarmTime))}</Line>
                                     <Line>报警状态:{notEmpty(ALARM_STATUS_MAP.get(item.alarmStatus))}</Line>
                                     <Collapse visible={visible}>
@@ -51,7 +50,7 @@ const Device = () => {
                         ),
                     }),
                     createInfiniteListItem({
-                        title: '实时',
+                        title: '实时报警',
                         rowKey: 'alarmId',
                         query: queryRealtime,
                         enableVisible: true,
@@ -59,17 +58,11 @@ const Device = () => {
                         renderItem: (item, { visible }) => (
                             <div className={styles['item']}>
                                 <TableLike className={{ 0: styles['key'], 1: styles['value'] }}>
-                                    <Line>
-                                        报警等级:
-                                        <AlarmLevelTag level={item.alarmType} />
-                                    </Line>
+                                    <Line>报警等级:{showAlarmLevel(item.alarmType)}</Line>
                                     <Line>报警时间:{notEmpty(item.alarmTime, () => timeTool.toStrByNum(item.alarmTime))}</Line>
                                     <Line>报警状态:{notEmpty(ALARM_STATUS_MAP.get(item.alarmStatus))}</Line>
                                     <Collapse visible={visible}>
-                                        <Line>
-                                            是否确认:
-                                            <AlarmAckTag isAcked={item.isAcked} />
-                                        </Line>
+                                        <Line>是否确认:{showIsAcked(item.isAcked)}</Line>
                                         <Line>厂商:{notEmpty(item.mfr)}</Line>
                                         <Line>设备类型:{notEmpty(item.deviceModel)}</Line>
                                         <Line>ISDM位号:{notEmpty(item.isdmTag)}</Line>

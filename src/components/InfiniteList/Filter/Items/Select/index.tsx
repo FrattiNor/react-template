@@ -1,28 +1,22 @@
-import CustomSelect from './CustomSelect';
+import CustomFormItem from './CustomFormItem2';
+import Clear from '../_components/Clear';
 import { SelectItem } from '../../type';
-import { useState } from 'react';
 import { Form } from 'antd-mobile';
 
 function FilterSelect<T>(props: SelectItem<T>) {
-    const { name, label, option, placeholder = '请选择' } = props;
-    const [visible, setVisible] = useState(false);
-    const query = typeof option === 'function' ? option() : null;
-    const data = query?.data;
-    const refetch = query?.refetch;
-    const loading = query?.isFetching;
-    const opt = Array.isArray(option) ? option : data || [];
+    const { name } = props;
 
     return (
-        <Form.Item
-            name={name}
-            label={label}
-            onClick={() => {
-                if (refetch) refetch();
-                setVisible(true);
+        <Form.Subscribe to={[name]}>
+            {(subscribeValue, form) => {
+                const currentValue = subscribeValue[name];
+                const clear = () => form.setFieldValue(name, []);
+                const haveValue = Array.isArray(currentValue) && currentValue.length > 0;
+                const arrow = haveValue ? <Clear clear={clear} /> : true;
+
+                return <CustomFormItem {...props} arrow={arrow} />;
             }}
-        >
-            <CustomSelect {...props} visible={visible} setVisible={setVisible} loading={loading} opt={opt} placeholder={placeholder} />
-        </Form.Item>
+        </Form.Subscribe>
     );
 }
 

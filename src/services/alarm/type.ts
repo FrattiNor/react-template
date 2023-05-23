@@ -34,3 +34,9 @@ export type AlarmRealtimeListItem = {
     isAcked: number;
     message: string;
 };
+
+export type AreaItem = {
+    areaLevel: number;
+    areaName: string;
+    id: string;
+};

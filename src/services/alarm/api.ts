@@ -1,4 +1,4 @@
-import { AlarmHistoryListItem, AlarmRealtimeListItem } from './type';
+import { AlarmHistoryListItem, AlarmRealtimeListItem, AreaItem } from './type';
 import proxyPrefix from '@proxy/proxyPrefix';
 import request from '@/utils/request';
 import { ListData } from '@/global';
@@ -16,5 +16,12 @@ export const getAlarmRealtimeList = (params: Record<string, any>) => {
     return request.GET<ListData<AlarmRealtimeListItem>>({
         url: `${proxyPrefix.basic}/realtime/alarm`,
         params,
+    });
+};
+
+// 获取装置列表
+export const getAreaList = () => {
+    return request.GET<AreaItem[]>({
+        url: `${proxyPrefix.basic}/hierarchy/areaList`,
     });
 };

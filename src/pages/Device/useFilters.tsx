@@ -1,4 +1,4 @@
-import { useDeviceMfrList, useDeviceModelList } from '@/services/device/query';
+import { useDeviceMfrList, useDeviceModelList } from '@/services/device';
 import { createFilterItem } from '@/components/InfiniteList/utils';
 import { useConst } from '@/hooks';
 
@@ -23,7 +23,7 @@ const useFilters = () => {
             label: '模式状态',
             type: 'block-select',
             multiple: true,
-            columns: 4,
+            columns: 2,
             name: 'devMode',
             option: Array.from(DEVICE_DEV_MODE).map(([value, label]) => ({ value, label })),
         }),

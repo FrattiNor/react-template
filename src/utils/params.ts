@@ -1,4 +1,5 @@
 import { isEmpty } from './tools';
+import dayjs from 'dayjs';
 
 // 清除空数组，undefined，null，空字符串，空对象
 export const cleanParams = (_v: Record<string, any>): Record<string, any> => {
@@ -14,15 +15,30 @@ export const cleanParams = (_v: Record<string, any>): Record<string, any> => {
 };
 
 // 将参数的数组转为字符串，逗号分隔
-export const paramsArrayToStr = (_v: Record<string, any>, keys: string[]): Record<string, any> => {
-    const newParams = cleanParams(_v);
-    const nextParams: Record<string, any> = {};
+export const paramsArrayToStr = (v: Record<string, any>, keys: string[]): Record<string, any> => {
+    const nextParams: Record<string, any> = { ...v };
 
-    Object.entries(newParams).forEach(([k, v]) => {
-        if (keys.includes(k) && Array.isArray(v) && v.length > 0) {
-            nextParams[k] = v.join(',');
-        } else {
-            nextParams[k] = v;
+    keys.forEach((key) => {
+        const value = nextParams[key];
+        if (Array.isArray(value) && value.length > 0) {
+            nextParams[key] = v.join(',');
+        }
+    });
+
+    return nextParams;
+};
+
+export const paramsDateFormat = (v: Record<string, any>, keys: Record<string, string>): Record<string, any> => {
+    const nextParams: Record<string, any> = { ...v };
+
+    Object.entries(keys).forEach(([key, format]) => {
+        const value = nextParams[key];
+        if (value instanceof Date) {
+            if (format === 'num') {
+                nextParams[key] = dayjs(value).valueOf();
+            } else {
+                nextParams[key] = dayjs(value).format(format);
+            }
         }
     });
 

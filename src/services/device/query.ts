@@ -14,7 +14,7 @@ export const useDeviceList = (view: number) => {
 // 获取设备类型
 export const useDeviceModelList = () => {
     return useQuery2({
-        queryKey: ['device-model'],
+        queryKey: ['deviceModel'],
         queryFn: () => getDeviceModelList(),
     });
 };
@@ -22,7 +22,7 @@ export const useDeviceModelList = () => {
 // 获取设备类型
 export const useDeviceMfrList = () => {
     return useQuery2({
-        queryKey: ['device-mfr'],
+        queryKey: ['deviceMfr'],
         queryFn: () => getDeviceMfrList(),
     });
 };

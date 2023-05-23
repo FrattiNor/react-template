@@ -1,2 +1,2 @@
-export { useDeviceList } from './query';
+export * from './query';
 export * from './type';

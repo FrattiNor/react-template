@@ -1,50 +1,53 @@
-import { useDeviceMfrList, useDeviceModelList } from '@/services/device/query';
 import { createFilterItem } from '@/components/InfiniteList/utils';
 import { useConst } from '@/hooks';
+import { useAreaList } from '@/services/alarm';
 
 const useFilters = () => {
-    const { DEVICE_ORIGIN_MAP, DEVICE_DEV_MODE } = useConst();
+    const { ALARM_STATUS_MAP, ALARM_LEVEL_MAP } = useConst();
 
     return [
         createFilterItem({
-            label: 'ISDM位号',
-            name: 'isdmTag',
+            label: '报警事件描述',
+            name: 'alarmName',
             type: 'input',
         }),
         createFilterItem({
-            label: '设备来源',
+            label: '设备类型',
+            name: 'deviceModel',
+            type: 'input',
+        }),
+        createFilterItem({
+            label: '报警等级',
+            name: 'alarmLevel',
             type: 'block-select',
             multiple: true,
             columns: 2,
-            name: 'sourceType',
-            option: Array.from(DEVICE_ORIGIN_MAP).map(([value, label]) => ({ value, label })),
+            option: Array.from(ALARM_LEVEL_MAP).map(([value, label]) => ({ value, label })),
         }),
         createFilterItem({
-            label: '模式状态',
+            label: '报警状态',
+            name: 'alarmStatus',
             type: 'block-select',
             multiple: true,
-            columns: 4,
-            name: 'devMode',
-            option: Array.from(DEVICE_DEV_MODE).map(([value, label]) => ({ value, label })),
+            columns: 2,
+            option: Array.from(ALARM_STATUS_MAP).map(([value, label]) => ({ value, label })),
         }),
         createFilterItem({
-            label: '厂商',
+            label: '装置',
+            name: 'areaId',
             type: 'select',
             multiple: true,
-            name: 'mfrName',
-            option: useDeviceMfrList,
-            fieldKeys: 'isStringArray',
-        }),
-        createFilterItem({
-            label: '设备类型',
-            type: 'select',
-            multiple: true,
-            name: 'mfrAndDevice',
-            option: useDeviceModelList,
+            option: useAreaList,
             fieldKeys: {
-                value: 'mfrAndDevice',
-                label: 'deviceModelView',
+                value: 'id',
+                label: 'areaName',
             },
+        }),
+        createFilterItem({
+            label: ['结开始时间', '结束时间'],
+            name: ['startTime', 'endTime'],
+            type: 'rang-picker',
+            precision: 'minute',
         }),
     ];
 };

@@ -1,5 +1,5 @@
-import { getAlarmHistoryList, getAlarmRealtimeList } from './api';
-import { useInfiniteQuery2 } from '@/hooks';
+import { getAlarmHistoryList, getAlarmRealtimeList, getAreaList } from './api';
+import { useInfiniteQuery2, useQuery2 } from '@/hooks';
 
 // 获取历史报警列表
 export const useAlarmHistoryList = () => {
@@ -7,7 +7,7 @@ export const useAlarmHistoryList = () => {
         delay: 700,
         queryKey: ['alarmHistory'],
         queryFn: (p) => getAlarmHistoryList({ pagination: p.paginationParams, param: p.params }),
-        // arrayToString: ['sourceType', 'devMode', 'mfrName', 'mfrAndDevice'],
+        formatTime: { startTime: 'YYYY-MM-DD HH:mm:ss', endTime: 'YYYY-MM-DD HH:mm:ss' },
     });
 };
 
@@ -18,5 +18,13 @@ export const useAlarmRealtimeList = () => {
         queryKey: ['alarmRealtime'],
         queryFn: (p) => getAlarmRealtimeList({ ...p.paginationParams, ...p.params }),
         // arrayToString: ['sourceType', 'devMode', 'mfrName', 'mfrAndDevice'],
+    });
+};
+
+// 获取设备类型
+export const useAreaList = () => {
+    return useQuery2({
+        queryKey: ['areaList'],
+        queryFn: () => getAreaList(),
     });
 };
