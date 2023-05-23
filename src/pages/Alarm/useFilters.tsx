@@ -68,7 +68,7 @@ const useRealtimeFilters = () => {
         }),
         createFilterItem({
             label: '报警等级',
-            name: 'alarmLevel',
+            name: 'alarmType',
             type: 'block-select',
             multiple: true,
             columns: 2,

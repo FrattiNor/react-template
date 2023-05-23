@@ -1,7 +1,7 @@
 import { CSSProperties, Dispatch, SetStateAction } from 'react';
 import { UseQueryResult } from '@tanstack/react-query';
 import { DatePickerProps } from 'antd-mobile';
-import { Query } from '../Wrapper/type';
+import { InfiniteQuery2 } from '../Wrapper/type';
 
 export type FieldKeys<T> =
     | {
@@ -58,12 +58,11 @@ export type RangPickItem = {
 export type FilterItem<T> = InputItem | SelectItem<T> | BlockSelectItem<T> | DatePickItem | RangPickItem;
 
 export type FilterProps = {
-    enableFilter?: boolean;
     style?: CSSProperties;
     filterList: Array<FilterItem<any>>;
-    params: Query<any>['params'];
+    params: InfiniteQuery2<any>['params'];
     position?: 'absolute' | 'fixed';
-    addAndDelParams: Query<any>['addAndDelParams'];
+    addAndDelParams: InfiniteQuery2<any>['addAndDelParams'];
 };
 
 export type ContentProps = Pick<FilterProps, 'filterList' | 'params' | 'addAndDelParams'> & {

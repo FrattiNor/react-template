@@ -6,6 +6,13 @@ const iconfontJSON = {
     description: '',
     glyphs: [
         {
+            icon_id: '7008994',
+            name: 'refresh',
+            font_class: 'refresh',
+            unicode: 'e71e',
+            unicode_decimal: 59166,
+        },
+        {
             icon_id: '15838562',
             name: 'arrow-up-bold',
             font_class: 'arrow-down-2',

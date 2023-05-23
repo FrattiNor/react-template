@@ -3,6 +3,7 @@ import { createInfiniteListItem } from '@/components/InfiniteLists/utils';
 import { useHistoryFilters, useRealtimeFilters } from './useFilters';
 import TableLike, { Line } from '@/components/TableLike';
 import InfiniteLists from '@/components/InfiniteLists';
+import RealtimeRefresh from './RealtimeRefresh';
 import Collapse from '@/components/Collapse';
 import AlarmLevelTag from './AlarmLevelTag';
 import Header from '@/components/Header';
@@ -57,6 +58,7 @@ const Device = () => {
                         query: queryRealtime,
                         enableVisible: true,
                         filter: { filterList: realtimeFilterList },
+                        float: { render: RealtimeRefresh },
                         renderItem: (item, { visible }) => (
                             <div className={styles['item']}>
                                 <TableLike className={{ 0: styles['key'], 1: styles['value'] }}>

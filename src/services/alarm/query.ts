@@ -17,7 +17,7 @@ export const useAlarmRealtimeList = () => {
         delay: 700,
         queryKey: ['alarmRealtime'],
         queryFn: (p) => getAlarmRealtimeList({ ...p.paginationParams, ...p.params }),
-        arrayToString: ['areaId', 'alarmLevel'],
+        arrayToString: ['areaId', 'alarmType'],
     });
 };
 
