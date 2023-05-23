@@ -9,12 +9,30 @@
         flex-shrink: 0;
         font-size: 18px;
         position: relative;
-        text-align: center;
         color: var(--m-primary-font-color);
         background-color: var(--m-primary-color);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
 
         &.box-shadow {
             box-shadow: var(--m-primary-head-box-shadow);
+        }
+
+        .left {
+            width: 50px;
+            flex-shrink: 0;
+        }
+
+        .middle {
+            width: 0;
+            flex-grow: 1;
+            text-align: center;
+        }
+
+        .right {
+            width: 50px;
+            flex-shrink: 0;
         }
     }
 

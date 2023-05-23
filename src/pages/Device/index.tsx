@@ -1,15 +1,23 @@
 import { createInfiniteListItem } from '@/components/InfiniteLists/utils';
 import InfiniteLists from '@/components/InfiniteLists';
+import TableLike, { Line } from '@/components/TableLike';
 import { useDeviceList } from '@/services/device';
 import Collapse from '@/components/Collapse';
 import Header from '@/components/Header';
 import styles from './index.module.less';
+import notEmpty from '@/utils/notEmpty';
 import useFilters from './useFilters';
+import { useConst } from '@/hooks';
+import timeTool from '@/utils/timeTool';
+import { Button } from 'antd-mobile';
+import { useNavigate } from 'react-router-dom';
 
 const Device = () => {
     const filterList = useFilters();
     const queryCard = useDeviceList(2);
     const queryMeter = useDeviceList(1);
+    const { DEVICE_CATEGORY_MAP, DEVICE_ORIGIN_MAP } = useConst();
+    const navigate = useNavigate();
 
     return (
         <Header boxShadow={false}>
@@ -23,21 +31,26 @@ const Device = () => {
                         filter: { filterList },
                         renderItem: (item, { visible }) => (
                             <div className={styles['item']}>
-                                <div>ISDM位号:{item.isdmTag}</div>
-                                <div>设备类型:{item.deviceModel}</div>
-                                <div>厂商:{item.mfrName}</div>
-                                <Collapse visible={visible}>
-                                    <div>类别:{item.category}</div>
-                                    <div>仪表位号:{item.deviceTag}</div>
-                                    <div>系统位号:{item.systemTag}</div>
-                                    <div>设备身份码:{item.identifier}</div>
-                                    <div>协议:{item.protocol}</div>
-                                    <div>设备来源:{item.sourceType}</div>
-                                    <div>模式状态:{item.devMode}</div>
-                                    <div>累计运行时间:{item.wkDay}</div>
-                                    <div>最近上线时间:{item.onlineTime}</div>
-                                    <div>工厂模型:{item.areaRef}</div>
-                                </Collapse>
+                                <TableLike className={{ 0: styles['key'], 1: styles['value'] }}>
+                                    <Line>ISDM位号:{notEmpty(item.isdmTag)}</Line>
+                                    <Line>设备类型:{notEmpty(item.deviceModel)}</Line>
+                                    <Line>厂商:{notEmpty(item.mfrName)}</Line>
+                                    <Collapse visible={visible}>
+                                        <Line>类别:{notEmpty(DEVICE_CATEGORY_MAP.get(item.category))}</Line>
+                                        <Line>仪表位号:{notEmpty(item.deviceTag)}</Line>
+                                        <Line>系统位号:{notEmpty(item.systemTag)}</Line>
+                                        <Line>设备身份码:{notEmpty(item.identifier)}</Line>
+                                        <Line>协议:{notEmpty(item.protocol)}</Line>
+                                        <Line>设备来源:{notEmpty(DEVICE_ORIGIN_MAP.get(item.sourceType))}</Line>
+                                        <Line>模式状态:{notEmpty(item.devMode)}</Line>
+                                        <Line>累计运行时间:{notEmpty(item.wkDay, () => `${item.wkDay}天`)}</Line>
+                                        <Line>最近上线时间:{notEmpty(item.onlineTime, () => timeTool.toStrByNum(item.onlineTime))}</Line>
+                                        <Line>工厂模型:{notEmpty(item.areaRef)}</Line>
+                                        <Button block color="primary" size="small" onClick={() => navigate(`/device/${item.id}`)}>
+                                            详情
+                                        </Button>
+                                    </Collapse>
+                                </TableLike>
                             </div>
                         ),
                     }),
@@ -49,18 +62,23 @@ const Device = () => {
                         filter: { filterList },
                         renderItem: (item, { visible }) => (
                             <div className={styles['item']}>
-                                <div>ISDM位号:{item.isdmTag}</div>
-                                <div>设备类型:{item.deviceModel}</div>
-                                <div>类别:{item.category}</div>
-                                <Collapse visible={visible}>
-                                    <div>厂商:{item.mfrName}</div>
-                                    <div>设备身份码:{item.identifier}</div>
-                                    <div>设备来源:{item.sourceType}</div>
-                                    <div>模式状态:{item.devMode}</div>
-                                    <div>累计运行时间:{item.wkDay}</div>
-                                    <div>最近上线时间:{item.onlineTime}</div>
-                                    <div>工厂模型:{item.areaRef}</div>
-                                </Collapse>
+                                <TableLike className={{ 0: styles['key'], 1: styles['value'] }}>
+                                    <Line>ISDM位号:{notEmpty(item.isdmTag)}</Line>
+                                    <Line>设备类型:{notEmpty(item.deviceModel)}</Line>
+                                    <Line>类别:{notEmpty(DEVICE_CATEGORY_MAP.get(item.category))}</Line>
+                                    <Collapse visible={visible}>
+                                        <Line>厂商:{notEmpty(item.mfrName)}</Line>
+                                        <Line>设备身份码:{notEmpty(item.identifier)}</Line>
+                                        <Line>设备来源:{notEmpty(DEVICE_ORIGIN_MAP.get(item.sourceType))}</Line>
+                                        <Line>模式状态:{notEmpty(item.devMode)}</Line>
+                                        <Line>累计运行时间:{notEmpty(item.wkDay, () => `${item.wkDay}天`)}</Line>
+                                        <Line>最近上线时间:{notEmpty(item.onlineTime, () => timeTool.toStrByNum(item.onlineTime))}</Line>
+                                        <Line>工厂模型:{notEmpty(item.areaRef)}</Line>
+                                        <Button block color="primary" size="small" onClick={() => navigate(`/device/${item.id}`)}>
+                                            详情
+                                        </Button>
+                                    </Collapse>
+                                </TableLike>
                             </div>
                         ),
                     }),

@@ -6,6 +6,34 @@ const iconfontJSON = {
     description: '',
     glyphs: [
         {
+            icon_id: '15838562',
+            name: 'arrow-up-bold',
+            font_class: 'arrow-down-2',
+            unicode: 'e685',
+            unicode_decimal: 59013,
+        },
+        {
+            icon_id: '35644522',
+            name: 'arrow-up-bold-copy',
+            font_class: 'arrow-up-2',
+            unicode: 'e93e',
+            unicode_decimal: 59710,
+        },
+        {
+            icon_id: '35644524',
+            name: 'arrow-up-bold-copy-copy',
+            font_class: 'arrow-left-2',
+            unicode: 'e93f',
+            unicode_decimal: 59711,
+        },
+        {
+            icon_id: '35644526',
+            name: 'arrow-up-bold-copy-copy-copy',
+            font_class: 'arrow-right-2',
+            unicode: 'e940',
+            unicode_decimal: 59712,
+        },
+        {
             icon_id: '639164',
             name: 'jclear',
             font_class: 'clear',
@@ -74,6 +102,20 @@ const iconfontJSON = {
             font_class: 'arrow-down',
             unicode: 'e696',
             unicode_decimal: 59030,
+        },
+        {
+            icon_id: '35644548',
+            name: 'arrow-up-copy',
+            font_class: 'arrow-left',
+            unicode: 'e941',
+            unicode_decimal: 59713,
+        },
+        {
+            icon_id: '35644549',
+            name: 'arrow-up-copy',
+            font_class: 'arrow-right',
+            unicode: 'e942',
+            unicode_decimal: 59714,
         },
     ],
 } as const;

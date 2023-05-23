@@ -40,6 +40,11 @@ const routes: Array<Route> = [
                 ],
             },
             {
+                path: 'device/:deviceId',
+                title: '设备详情',
+                LazyComponent: () => import('@/pages/DeviceDetail'),
+            },
+            {
                 path: '/',
                 Component: ErrorLayout,
                 children: [

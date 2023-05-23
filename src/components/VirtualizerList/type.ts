@@ -5,8 +5,8 @@ export type VirtualizerListProps<T> = {
     loading?: boolean;
     className?: string;
     borderWidth?: number;
-    scrollClassName?: string;
     enableScroll?: boolean;
+    scrollClassName?: string;
     enablePullDown?: { refetch: () => Promise<any> };
     rowKey: keyof T | ((item: T, index: number) => string);
     renderItem: (item: T, opt: { key: string; index: number }) => ReactNode;

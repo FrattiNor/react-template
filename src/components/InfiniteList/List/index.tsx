@@ -20,6 +20,12 @@ function List<T>({ query, renderItem, rowKey, enableVisible }: ListProps<T>) {
         if (isLoading) setVisibles({});
     }, [isLoading]);
 
+    // after 上拉刷新
+    // const afterRefetch = () => {
+    //     setListKey(Math.random());
+    //     setVisibles({});
+    // };
+
     return (
         <VirtualizerList
             data={data}

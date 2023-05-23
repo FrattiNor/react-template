@@ -1,6 +1,6 @@
 import { linear } from './timing';
 
-type Draw = (progress: number) => void;
+type Draw = (progress: number, cancel: () => void) => void;
 type Timing = (progress: number) => number;
 type Props = { draw: Draw; duration: number; timing?: Timing; autoPlay?: boolean };
 
@@ -35,7 +35,7 @@ class JsAnimate {
         const progress = Math.min((nowTime - this.startTime) / this.duration, 1);
         if (progress >= 0 && progress <= 1) {
             const timingProgress = this.timing(progress);
-            this.draw(timingProgress);
+            this.draw(timingProgress, this.destroy);
             if (progress !== 1) {
                 this.timeout = window.requestAnimationFrame(this.animate.bind(this));
             }
@@ -44,7 +44,7 @@ class JsAnimate {
 
     play() {
         if (this.judge()) {
-            this.draw(0);
+            this.draw(0, this.destroy);
             this.startTime = window.performance.now();
             this.timeout = window.requestAnimationFrame(this.animate.bind(this));
         }
