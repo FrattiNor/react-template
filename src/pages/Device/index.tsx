@@ -8,9 +8,9 @@ import Header from '@/components/Header';
 import styles from './index.module.less';
 import timeTool from '@/utils/timeTool';
 import notEmpty from '@/utils/notEmpty';
+import useConst from '@/hooks/useConst';
 import useFilters from './useFilters';
 import { Button } from 'antd-mobile';
-import { useConst } from '@/hooks';
 
 const Device = () => {
     const filterList = useFilters();

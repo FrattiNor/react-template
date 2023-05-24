@@ -1,5 +1,5 @@
+import useQuery2 from '@/hooks/useQuery2';
 import { getConstValues } from './api';
-import { useQuery2 } from '@/hooks';
 
 // 获取ConstValue
 export const useConstValue = () => {

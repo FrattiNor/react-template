@@ -1,5 +1,6 @@
 import { getDeviceListV2, getDeviceMfrOption, getDeviceModelOption } from './api';
-import { useInfiniteQuery2, useQuery2 } from '@/hooks';
+import useInfiniteQuery2 from '@/hooks/useInfiniteQuery2';
+import useQuery2 from '@/hooks/useQuery2';
 
 // 获取设备
 export const useDeviceList = (view: number) => {

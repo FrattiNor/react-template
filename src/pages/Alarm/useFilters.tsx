@@ -1,6 +1,6 @@
 import { createFilterItem } from '@/components/InfiniteList/utils';
 import { useAreaOption } from '@/services/alarm';
-import { useConst } from '@/hooks';
+import useConst from '@/hooks/useConst';
 
 const useHistoryFilters = () => {
     const { ALARM_STATUS_MAP, ALARM_LEVEL_MAP } = useConst();

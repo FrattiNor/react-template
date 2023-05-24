@@ -1,6 +1,7 @@
 import { downloadFile, getDeviceModelOption, getFactoryModelTreeOption, getFileUrl, getKnowledgeList, getKnowledgeTagOption } from './api';
-import { useInfiniteQuery2, useQuery2 } from '@/hooks';
+import useInfiniteQuery2 from '@/hooks/useInfiniteQuery2';
 import { useMutation } from '@tanstack/react-query';
+import useQuery2 from '@/hooks/useQuery2';
 
 // 获取知识库
 export const useKnowledgeList = () => {

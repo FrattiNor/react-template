@@ -1,5 +1,6 @@
 import { getAlarmHistoryList, getAlarmRealtimeList, getAreaOption } from './api';
-import { useInfiniteQuery2, useQuery2 } from '@/hooks';
+import useInfiniteQuery2 from '@/hooks/useInfiniteQuery2';
+import useQuery2 from '@/hooks/useQuery2';
 
 // 获取历史报警
 export const useAlarmHistoryList = () => {

@@ -2,8 +2,8 @@ import { InfiniteQuery2 } from '@/components/InfiniteList/Wrapper/type';
 import { FC, useCallback, useState } from 'react';
 import Iconfont from '@/components/Iconfont';
 import styles from './index.module.less';
+import useMqtt from '@/hooks/useMqtt';
 import classNames from 'classnames';
-import { useMqtt } from '@/hooks';
 
 const RealtimeRefresh: FC<InfiniteQuery2<any>> = ({ remove, setParams }) => {
     const [newData, setNewData] = useState(false);

@@ -1,0 +1,59 @@
+.skeleton {
+    position: relative;
+
+    .skeleton-loading {
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 99;
+        overflow: hidden;
+        position: absolute;
+        background-color: var(--m-bg-color);
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+
+        &.top {
+            padding-top: 12px;
+        }
+        &.left {
+            padding-left: 12px;
+        }
+        &.right {
+            padding-right: 12px;
+        }
+        &.bottom {
+            padding-bottom: 12px;
+        }
+
+        .block {
+            border-radius: 2px;
+            background: linear-gradient(90deg, hsla(0, 0%, 74.5%, 0.2) 25%, hsla(0, 0%, 50.6%, 0.24) 37%, hsla(0, 0%, 74.5%, 0.2) 63%);
+            background-size: 400% 100%;
+            animation: skeleton-loading 1.4s ease infinite;
+        }
+
+        .title {
+            width: 50%;
+            height: 1px;
+            flex-grow: 1.5;
+            .block();
+        }
+
+        .paragraph {
+            height: 1px;
+            flex-grow: 1;
+            .block();
+        }
+    }
+}
+
+@keyframes skeleton-loading {
+    0% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0 50%;
+    }
+}

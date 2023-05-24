@@ -8,7 +8,8 @@ import useDelay from '../useDelay';
 type Params = Record<string, any>;
 type PaginationParams = { current: number; pageSize: number };
 
-type Props<T> = Omit<UseInfiniteQueryOptions, 'queryFn'> & {
+type Props<T> = {
+    queryKey: UseInfiniteQueryOptions['queryKey'];
     queryFn: (p: { params: Params; paginationParams: PaginationParams }) => Promise<ListData<T> | null>;
     pageSize?: number;
     delay?: number;

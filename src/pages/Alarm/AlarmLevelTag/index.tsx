@@ -1,7 +1,7 @@
+import useConst from '@/hooks/useConst';
 import styles from './index.module.less';
 import notEmpty from '@/utils/notEmpty';
 import { FC, Fragment } from 'react';
-import { useConst } from '@/hooks';
 
 type Props = {
     level: number;

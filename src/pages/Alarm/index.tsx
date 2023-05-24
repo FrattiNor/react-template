@@ -11,7 +11,7 @@ import styles from './index.module.less';
 import timeTool from '@/utils/timeTool';
 import notEmpty from '@/utils/notEmpty';
 import AlarmAckTag from './AlarmAckTag';
-import { useConst } from '@/hooks';
+import useConst from '@/hooks/useConst';
 
 const Device = () => {
     const historyFilterList = useHistoryFilters();
