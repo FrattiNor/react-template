@@ -3,6 +3,7 @@ import { useDateUtils } from '../DatePicker/utils';
 import { DatePicker, Form } from 'antd-mobile';
 import { RangPickItem } from '../../type';
 import Clear from '../_components/Clear';
+import Value from '../_components/value';
 import { FC, useRef } from 'react';
 import dayjs from 'dayjs';
 
@@ -92,11 +93,9 @@ const FilterRangPicker: FC<RangPickItem> = ({ name, label, format, precision = '
                                 renderLabel={renderLabel}
                             >
                                 {(value) => {
-                                    return value ? (
-                                        dayjs(value).format(_format)
-                                    ) : (
-                                        <span style={{ color: 'var(--adm-color-light)' }}>{_placeholder}</span>
-                                    );
+                                    const haveValue = !!value;
+                                    const showText = haveValue ? dayjs(value).format(_format) : _placeholder;
+                                    return <Value type={haveValue ? 'value' : 'placeholder'}>{showText}</Value>;
                                 }}
                             </DatePicker>
                         </Form.Item>

@@ -1,6 +1,7 @@
 import { Cascader, Form } from 'antd-mobile';
 import { CascaderItem } from '../../type';
 import { ReactNode, useMemo } from 'react';
+import Value from '../_components/value';
 
 type fieldKeysOptItem = {
     label: string;
@@ -46,8 +47,9 @@ function CustomFormItem<T>(props: CascaderItem<T> & { arrow: boolean | ReactNode
         >
             <Cascader options={fieldKeysOpt}>
                 {(value) => {
-                    if (Array.isArray(value) && value.length > 0) return value.map((item) => item?.label).join(' / ');
-                    return <span style={{ color: 'var(--adm-color-light)' }}>{placeholder}</span>;
+                    const haveValue = Array.isArray(value) && value.length > 0;
+                    const showText = haveValue ? value.map((item) => item?.label).join(' / ') : placeholder;
+                    return <Value type={haveValue ? 'value' : 'placeholder'}>{showText}</Value>;
                 }}
             </Cascader>
         </Form.Item>

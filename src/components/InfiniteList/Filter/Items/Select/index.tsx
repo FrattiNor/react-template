@@ -1,4 +1,4 @@
-import CustomFormItem from './CustomFormItem2';
+import CustomFormItem from './CustomFormItem';
 import Clear from '../_components/Clear';
 import { SelectItem } from '../../type';
 import { Form } from 'antd-mobile';

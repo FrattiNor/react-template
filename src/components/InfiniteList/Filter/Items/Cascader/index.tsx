@@ -6,8 +6,6 @@ import { Form } from 'antd-mobile';
 function FilterCascader<T>(props: CascaderItem<T>) {
     const { name } = props;
 
-    console.log(name);
-
     return (
         <Form.Subscribe to={[name]}>
             {(subscribeValue, form) => {

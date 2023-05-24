@@ -10,7 +10,7 @@ const FilterBlockSelect: FC<BlockSelectItem<any>> = ({ name, label, columns, mul
                   value: fieldKeys === 'isStringArray' ? item : item[fieldKeys.value],
               }))
             : option;
-    }, [JSON.stringify(fieldKeys), JSON.stringify(option)]);
+    }, [JSON.stringify(option)]);
 
     return (
         <Form.Item name={name} label={label}>

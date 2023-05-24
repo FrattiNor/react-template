@@ -1,6 +1,7 @@
 import { DatePicker, Form } from 'antd-mobile';
 import { DatePickItem } from '../../type';
 import Clear from '../_components/Clear';
+import Value from '../_components/value';
 import { useDateUtils } from './utils';
 import { FC } from 'react';
 import dayjs from 'dayjs';
@@ -28,11 +29,9 @@ const FilterDatePicker: FC<DatePickItem> = ({ name, label, placeholder = '请选
                     >
                         <DatePicker precision={precision} renderLabel={renderLabel} destroyOnClose>
                             {(value) => {
-                                return value ? (
-                                    dayjs(value).format(format || defaultFormat)
-                                ) : (
-                                    <span style={{ color: 'var(--adm-color-light)' }}>{placeholder}</span>
-                                );
+                                const haveValue = !!value;
+                                const showText = haveValue ? dayjs(value).format(format || defaultFormat) : placeholder;
+                                return <Value type={haveValue ? 'value' : 'placeholder'}>{showText}</Value>;
                             }}
                         </DatePicker>
                     </Form.Item>
