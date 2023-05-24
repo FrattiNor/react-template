@@ -1,7 +1,7 @@
 /* eslint-disable @tanstack/query/exhaustive-deps */
 import { UseInfiniteQueryOptions, useInfiniteQuery } from '@tanstack/react-query';
-import { cleanParams, paramsArrayToStr, paramsDateFormat } from '@/utils/params';
 import { useCallback, useMemo, useState } from 'react';
+import { handleParams } from '@/utils/params';
 import { ListData } from '@/global';
 import useDelay from '../useDelay';
 
@@ -12,12 +12,14 @@ type Props<T> = Omit<UseInfiniteQueryOptions, 'queryFn'> & {
     queryFn: (p: { params: Params; paginationParams: PaginationParams }) => Promise<ListData<T> | null>;
     pageSize?: number;
     delay?: number;
+    // 提交前处理参数
     arrayToString?: string[];
     formatTime?: Record<string, string>;
+    arrayToLast?: string[];
 };
 
 // 在默认的 useInfiniteQuery 中加入一些默认配置以及增加一些参数
-const useInfiniteQuery2 = <T>({ pageSize = 50, queryKey, delay, queryFn, arrayToString, formatTime }: Props<T>) => {
+const useInfiniteQuery2 = <T>({ pageSize = 50, queryKey, delay, queryFn, arrayToString, formatTime, arrayToLast }: Props<T>) => {
     const [delayFn] = useDelay({ delayFn: queryFn, delay: delay || 0 });
     const [params, setParams] = useState<Params>({});
     const _queryKey = [...(queryKey || []), pageSize, params];
@@ -27,10 +29,8 @@ const useInfiniteQuery2 = <T>({ pageSize = 50, queryKey, delay, queryFn, arrayTo
         queryFn: ({ pageParam }) => {
             if (pageParam === false) return;
             const paginationParams = { current: typeof pageParam === 'number' ? pageParam : 1, pageSize };
-            const handledParams1 = cleanParams(params);
-            const handledParams2 = arrayToString ? paramsArrayToStr(handledParams1, arrayToString) : handledParams1;
-            const handledParams3 = formatTime ? paramsDateFormat(handledParams2, formatTime) : handledParams2;
-            return delayFn({ paginationParams, params: handledParams3 });
+            const handledParams = handleParams(params, { arrayToString, formatTime, arrayToLast, clean: true });
+            return delayFn({ paginationParams, params: handledParams });
         },
         getNextPageParam: (lastPage) => {
             if (!lastPage) return false;

@@ -8,6 +8,7 @@ export const useKnowledgeList = () => {
         delay: 700,
         queryKey: ['knowledge'],
         queryFn: (p) => getKnowledgeList({ ...p.paginationParams, ...p.params }),
+        arrayToLast: ['factoryModelId'],
     });
 };
 
