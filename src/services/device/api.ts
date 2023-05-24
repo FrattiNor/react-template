@@ -3,7 +3,7 @@ import proxyPrefix from '@proxy/proxyPrefix';
 import request from '@/utils/request';
 import { ListData } from '@/global';
 
-// 获取设备列表
+// 获取设备
 export const getDeviceListV2 = ({ view, ...params }: DeviceListParams) => {
     return request.GET<ListData<DeviceItem>>({
         url: `${proxyPrefix.basic}/device/v2/ledger/${view}`,
@@ -11,15 +11,15 @@ export const getDeviceListV2 = ({ view, ...params }: DeviceListParams) => {
     });
 };
 
-// 设备类型列表
-export const getDeviceModelList = () => {
+// 获取设备类型【筛选项】
+export const getDeviceModelOption = () => {
     return request.GET<DeviceModelItem[]>({
         url: `${proxyPrefix.basic}/device/deviceModel`,
     });
 };
 
-// 设备厂商列表
-export const getDeviceMfrList = () => {
+// 获取厂商【筛选项】
+export const getDeviceMfrOption = () => {
     return request.GET<Mfrs>({
         url: `${proxyPrefix.basic}/device/mfrs`,
     });

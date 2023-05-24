@@ -1,6 +1,6 @@
 import { createFilterItem } from '@/components/InfiniteList/utils';
+import { useAreaOption } from '@/services/alarm';
 import { useConst } from '@/hooks';
-import { useAreaList } from '@/services/alarm';
 
 const useHistoryFilters = () => {
     const { ALARM_STATUS_MAP, ALARM_LEVEL_MAP } = useConst();
@@ -42,7 +42,7 @@ const useHistoryFilters = () => {
             name: 'areaId',
             type: 'select',
             multiple: true,
-            option: useAreaList,
+            option: useAreaOption,
             fieldKeys: {
                 value: 'id',
                 label: 'areaName',
@@ -80,7 +80,7 @@ const useRealtimeFilters = () => {
             name: 'areaId',
             type: 'select',
             multiple: true,
-            option: useAreaList,
+            option: useAreaOption,
             fieldKeys: {
                 value: 'id',
                 label: 'areaName',

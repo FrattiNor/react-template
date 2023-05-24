@@ -46,7 +46,13 @@ const Device = () => {
                                         <Line>累计运行时间:{notEmpty(item.wkDay, () => `${item.wkDay}天`)}</Line>
                                         <Line>最近上线时间:{notEmpty(item.onlineTime, () => timeTool.toStrByNum(item.onlineTime))}</Line>
                                         <Line>工厂模型:{notEmpty(item.areaRef)}</Line>
-                                        <Button block color="primary" size="small" onClick={() => navigate(`/device/${item.id}`)}>
+                                        <Button
+                                            block
+                                            size="small"
+                                            color="primary"
+                                            className={styles['btn']}
+                                            onClick={() => navigate(`/device/${item.id}`)}
+                                        >
                                             详情
                                         </Button>
                                     </Collapse>
@@ -74,7 +80,13 @@ const Device = () => {
                                         <Line>累计运行时间:{notEmpty(item.wkDay, () => `${item.wkDay}天`)}</Line>
                                         <Line>最近上线时间:{notEmpty(item.onlineTime, () => timeTool.toStrByNum(item.onlineTime))}</Line>
                                         <Line>工厂模型:{notEmpty(item.areaRef)}</Line>
-                                        <Button block color="primary" size="small" onClick={() => navigate(`/device/${item.id}`)}>
+                                        <Button
+                                            block
+                                            size="small"
+                                            color="primary"
+                                            className={styles['btn']}
+                                            onClick={() => navigate(`/device/${item.id}`)}
+                                        >
                                             详情
                                         </Button>
                                     </Collapse>

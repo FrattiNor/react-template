@@ -1,7 +1,7 @@
-import { getAlarmHistoryList, getAlarmRealtimeList, getAreaList } from './api';
+import { getAlarmHistoryList, getAlarmRealtimeList, getAreaOption } from './api';
 import { useInfiniteQuery2, useQuery2 } from '@/hooks';
 
-// 获取历史报警列表
+// 获取历史报警
 export const useAlarmHistoryList = () => {
     return useInfiniteQuery2({
         delay: 700,
@@ -11,7 +11,7 @@ export const useAlarmHistoryList = () => {
     });
 };
 
-// 获取实时报警列表
+// 获取实时报警
 export const useAlarmRealtimeList = () => {
     return useInfiniteQuery2({
         delay: 700,
@@ -21,10 +21,10 @@ export const useAlarmRealtimeList = () => {
     });
 };
 
-// 获取设备类型
-export const useAreaList = () => {
+// 获取装置【筛选项】
+export const useAreaOption = () => {
     return useQuery2({
         queryKey: ['areaList'],
-        queryFn: () => getAreaList(),
+        queryFn: () => getAreaOption(),
     });
 };

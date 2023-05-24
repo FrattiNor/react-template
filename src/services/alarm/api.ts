@@ -3,7 +3,7 @@ import proxyPrefix from '@proxy/proxyPrefix';
 import request from '@/utils/request';
 import { ListData } from '@/global';
 
-// 获取历史报警列表
+// 获取历史报警
 export const getAlarmHistoryList = (data: Record<string, any>) => {
     return request.POST<ListData<AlarmHistoryItem>>({
         url: `${proxyPrefix.basic}/alarm/searchByTag`,
@@ -11,7 +11,7 @@ export const getAlarmHistoryList = (data: Record<string, any>) => {
     });
 };
 
-// 获取实时报警列表
+// 获取实时报警
 export const getAlarmRealtimeList = (params: Record<string, any>) => {
     return request.GET<ListData<AlarmRealtimeItem>>({
         url: `${proxyPrefix.basic}/realtime/alarm`,
@@ -19,8 +19,8 @@ export const getAlarmRealtimeList = (params: Record<string, any>) => {
     });
 };
 
-// 获取装置列表
-export const getAreaList = () => {
+// 获取装置【筛选项】
+export const getAreaOption = () => {
     return request.GET<AreaItem[]>({
         url: `${proxyPrefix.basic}/hierarchy/areaList`,
     });

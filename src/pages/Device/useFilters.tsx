@@ -1,4 +1,4 @@
-import { useDeviceMfrList, useDeviceModelList } from '@/services/device';
+import { useDeviceMfrOption, useDeviceModelOption } from '@/services/device';
 import { createFilterItem } from '@/components/InfiniteList/utils';
 import { useConst } from '@/hooks';
 
@@ -32,7 +32,7 @@ const useFilters = () => {
             type: 'select',
             multiple: true,
             name: 'mfrName',
-            option: useDeviceMfrList,
+            option: useDeviceMfrOption,
             fieldKeys: 'isStringArray',
         }),
         createFilterItem({
@@ -40,7 +40,7 @@ const useFilters = () => {
             type: 'select',
             multiple: true,
             name: 'mfrAndDevice',
-            option: useDeviceModelList,
+            option: useDeviceModelOption,
             fieldKeys: {
                 value: 'mfrAndDevice',
                 label: 'deviceModelView',

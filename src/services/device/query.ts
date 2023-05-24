@@ -1,7 +1,7 @@
-import { getDeviceListV2, getDeviceMfrList, getDeviceModelList } from './api';
+import { getDeviceListV2, getDeviceMfrOption, getDeviceModelOption } from './api';
 import { useInfiniteQuery2, useQuery2 } from '@/hooks';
 
-// 获取设备列表
+// 获取设备
 export const useDeviceList = (view: number) => {
     return useInfiniteQuery2({
         delay: 700,
@@ -11,18 +11,18 @@ export const useDeviceList = (view: number) => {
     });
 };
 
-// 获取设备类型
-export const useDeviceModelList = () => {
+// 获取设备类型【筛选项】
+export const useDeviceModelOption = () => {
     return useQuery2({
         queryKey: ['deviceModel'],
-        queryFn: () => getDeviceModelList(),
+        queryFn: () => getDeviceModelOption(),
     });
 };
 
-// 获取设备类型
-export const useDeviceMfrList = () => {
+// 获取厂商【筛选项】
+export const useDeviceMfrOption = () => {
     return useQuery2({
         queryKey: ['deviceMfr'],
-        queryFn: () => getDeviceMfrList(),
+        queryFn: () => getDeviceMfrOption(),
     });
 };
