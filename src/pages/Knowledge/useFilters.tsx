@@ -1,4 +1,4 @@
-import { useDeviceModelOption, useKnowledgeTagOption } from '@/services/knowledge';
+import { useDeviceModelOption, useFactoryModelTreeOption, useKnowledgeTagOption } from '@/services/knowledge';
 import { createFilterItem } from '@/components/InfiniteList/utils';
 
 const useFilters = () => {
@@ -40,14 +40,17 @@ const useFilters = () => {
                 label: 'deviceModelView',
             },
         }),
-        // createFilterItem({
-        //     label: '工厂模型',
-        //     type: 'block-select',
-        //     multiple: true,
-        //     columns: 2,
-        //     name: 'sourceType',
-        //     option: Array.from(DEVICE_ORIGIN_MAP).map(([value, label]) => ({ value, label })),
-        // }),
+        createFilterItem({
+            label: '工厂模型',
+            type: 'cascader',
+            name: 'factoryModelId',
+            option: useFactoryModelTreeOption,
+            fieldKeys: {
+                value: 'id',
+                label: 'nodeName',
+                children: 'childList',
+            },
+        }),
     ];
 };
 

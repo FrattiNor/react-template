@@ -10,6 +10,12 @@ export type FieldKeys<T> =
       }
     | 'isStringArray';
 
+export type CascaderFieldKeys<T> = {
+    label: keyof T;
+    value: keyof T;
+    children: keyof T;
+};
+
 export type InputItem = {
     type: 'input';
     name: string;
@@ -55,7 +61,16 @@ export type RangPickItem = {
     precision?: DatePickerProps['precision'];
 };
 
-export type FilterItem<T> = InputItem | SelectItem<T> | BlockSelectItem<T> | DatePickItem | RangPickItem;
+export type CascaderItem<T> = {
+    type: 'cascader';
+    name: string;
+    label: string;
+    placeholder?: string;
+    option: T[] | (() => UseQueryResult<null | T[]>);
+    fieldKeys?: CascaderFieldKeys<T>;
+};
+
+export type FilterItem<T> = InputItem | SelectItem<T> | BlockSelectItem<T> | DatePickItem | RangPickItem | CascaderItem<T>;
 
 export type FilterProps = {
     style?: CSSProperties;

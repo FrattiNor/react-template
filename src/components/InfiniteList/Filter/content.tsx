@@ -2,6 +2,7 @@ import FilterBlockSelect from './Items/BlockSelect';
 import FilterDatePicker from './Items/DatePicker';
 import FilterRangPicker from './Items/RangPicker';
 import { FC, Fragment, useMemo } from 'react';
+import FilterCascader from './Items/Cascader';
 import { cleanParams } from '@/utils/params';
 import { Button, Form } from 'antd-mobile';
 import styles from './content.module.less';
@@ -55,6 +56,9 @@ const Content: FC<ContentProps> = ({ params, filterList, setVisible, addAndDelPa
                                 break;
                             case 'rang-picker':
                                 res = <FilterRangPicker {...item} />;
+                                break;
+                            case 'cascader':
+                                res = <FilterCascader {...item} />;
                                 break;
                             default:
                                 res = <Fragment />;
