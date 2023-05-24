@@ -45,8 +45,8 @@ const Device = () => {
                                         <Line>设备类型:{notEmpty(item.deviceModel)}</Line>
                                         <Line>ISDM位号:{notEmpty(item.tagName)}</Line>
                                         <Line>工厂模型:{notEmpty(item.areaName)}</Line>
-                                        <Line>报警事件描述:{notEmpty(item.alarmName)}</Line>
                                         <Line>报警建议:{notEmpty(item.alarmSuggestion)}</Line>
+                                        <Line>报警事件描述:{notEmpty(item.alarmName)}</Line>
                                     </Collapse>
                                 </TableLike>
                             </div>
@@ -71,9 +71,9 @@ const Device = () => {
                                         <Line>设备类型:{notEmpty(item.deviceModel)}</Line>
                                         <Line>ISDM位号:{notEmpty(item.isdmTag)}</Line>
                                         <Line>工厂模型:{notEmpty(item.areaName)}</Line>
-                                        <Line>报警事件描述:{notEmpty(item.alarmName)}</Line>
                                         <Line>报警建议:{notEmpty(item.alarmSuggestion)}</Line>
                                         <Line>确认消息:{notEmpty(item.message)}</Line>
+                                        <Line>报警事件描述:{notEmpty(item.alarmName)}</Line>
                                     </Collapse>
                                 </TableLike>
                             </div>

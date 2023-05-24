@@ -1,4 +1,4 @@
-export type AlarmHistoryListItem = {
+export type AlarmHistoryItem = {
     alarmId: string;
     alarmLevel: number;
     mfr: string;
@@ -15,7 +15,7 @@ export type AlarmHistoryListItem = {
     createTime: string;
 };
 
-export type AlarmRealtimeListItem = {
+export type AlarmRealtimeItem = {
     areaId: string;
     areaName: string;
     deviceModel: string;

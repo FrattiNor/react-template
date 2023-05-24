@@ -3,7 +3,7 @@ export type DeviceListParams = {
     [key: string]: any;
 };
 
-export type DeviceListItem = {
+export type DeviceItem = {
     id: string; // ID
     sourceType: number; //  设备来源
     areaRef: string; // 工厂模型

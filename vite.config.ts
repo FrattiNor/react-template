@@ -18,7 +18,6 @@ export default defineConfig(async ({ command }) => {
     if (command === 'serve') {
         const config: UserConfigExport = {
             resolve,
-            logLevel: 'error',
             plugins: [viteNodePolyfillsPlugins(), react()],
             server: {
                 open: true,
@@ -33,6 +32,7 @@ export default defineConfig(async ({ command }) => {
     if (command === 'build') {
         const config: UserConfigExport = {
             resolve,
+            logLevel: 'error',
             plugins: [react(), legacy()],
             build: {
                 rollupOptions,

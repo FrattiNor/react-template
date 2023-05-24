@@ -6,7 +6,7 @@ import classNames from 'classnames';
 import { useMqtt } from '@/hooks';
 
 const RealtimeRefresh: FC<InfiniteQuery2<any>> = ({ remove, setParams }) => {
-    const [newData, setNewData] = useState(true);
+    const [newData, setNewData] = useState(false);
 
     const onClick = () => {
         remove();
@@ -16,13 +16,11 @@ const RealtimeRefresh: FC<InfiniteQuery2<any>> = ({ remove, setParams }) => {
 
     useMqtt({
         onConnect: ({ client }) => {
-            console.log('client');
             client.subscribe('basic/alarm/count');
-            client.subscribe('basic/device/alarm/count/{id}');
+            // client.subscribe('basic/device/alarm/count/{id}');
         },
         onMessage: useCallback(() => {
             setNewData(true);
-            console.log('o');
         }, []),
     });
 
