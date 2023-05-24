@@ -1,6 +1,5 @@
-import { IClientOptions, MqttClient, OnMessageCallback } from 'mqtt';
+import { connect, IClientOptions, MqttClient, OnMessageCallback } from 'mqtt';
 import { useEffect, useState } from 'react';
-import * as mqtt from 'mqtt/dist/mqtt.min';
 import { isDev, mqttDevUrl } from '@/env';
 import useMqttUrl from './useMqttUrl';
 import { getWill } from './utils';
@@ -16,13 +15,12 @@ type Option = Omit<IClientOptions, 'will'> & {
 };
 
 const useMqtt = (option: Option) => {
-    const url = useMqttUrl();
-    const url2 = isDev ? mqttDevUrl : url;
-    console.log(url2);
+    const mqttUrl = useMqttUrl();
+    const url = isDev ? mqttDevUrl : mqttUrl;
     const [clientId] = useState(nanoid());
     const { onConnect, onMessage, will, ...restOption } = option;
     const clientOption = { ...restOption, will: getWill(clientId, will) };
-    const [client] = useState(mqtt.connect(url2, { clientId, ...clientOption }));
+    const [client] = useState(connect(url, { clientId, ...clientOption }));
 
     useEffect(() => {
         client.on('connect', () => {

@@ -1,26 +1,33 @@
 import { InfiniteQuery2 } from '@/components/InfiniteList/Wrapper/type';
+import { FC, useCallback, useState } from 'react';
 import Iconfont from '@/components/Iconfont';
 import styles from './index.module.less';
-import { FC, useCallback } from 'react';
+import classNames from 'classnames';
 import { useMqtt } from '@/hooks';
 
 const RealtimeRefresh: FC<InfiniteQuery2<any>> = ({ remove, setParams }) => {
+    const [newData, setNewData] = useState(true);
+
     const onClick = () => {
         remove();
         setParams({}); // 会触发请求
+        setNewData(false);
     };
 
     useMqtt({
         onConnect: ({ client }) => {
-            console.log(client);
+            console.log('client');
+            client.subscribe('basic/alarm/count');
+            client.subscribe('basic/device/alarm/count/{id}');
         },
         onMessage: useCallback(() => {
+            setNewData(true);
             console.log('o');
         }, []),
     });
 
     return (
-        <div className={styles['wrapper']} onClick={onClick}>
+        <div className={classNames(styles['wrapper'], { [styles['new-data']]: newData })} onClick={onClick}>
             <Iconfont icon="refresh" />
         </div>
     );

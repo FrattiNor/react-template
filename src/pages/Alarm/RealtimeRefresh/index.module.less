@@ -6,15 +6,17 @@
     border-radius: 50%;
     justify-content: center;
 
-    &::after {
-        top: 15%;
-        right: 15%;
-        width: 10px;
-        height: 10px;
-        content: '';
-        border-radius: 50%;
-        position: absolute;
-        background-color: red;
-        transform: translate(50%, -50%);
+    &.new-data {
+        &::after {
+            top: 15%;
+            right: 15%;
+            width: 10px;
+            height: 10px;
+            content: '';
+            border-radius: 50%;
+            position: absolute;
+            background-color: red;
+            transform: translate(50%, -50%);
+        }
     }
 }

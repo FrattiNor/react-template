@@ -15,45 +15,45 @@ const rollupOptions: UserConfig['build']['rollupOptions'] = {
                     const vendorName = vendorPath.split('/')[0];
                     // 大于30KB
                     switch (vendorName) {
-                        case 'react-router-dom':
-                        case 'path-browserify':
-                        case '@better-scroll':
-                        case '@react-spring':
-                        case 'react-router':
-                        case 'antd-mobile':
-                        case '@remix-run':
                         case 'react-dom':
+                        case 'antd-mobile':
+                        case '@better-scroll':
+                        case '@remix-run':
+                        case 'js-sdsl':
                         case '@tanstack':
-                        case '@reduxjs':
-                        case 'buffer':
+                        case '@react-spring':
+                        case 'readable-stream':
                         case 'lodash':
+                        case 'rc-field-form':
                         case 'axios':
+                        case 'mqtt':
+                        case 'mqtt-packet':
+                        case '@reduxjs':
+                        case '@use-gesture':
+                        case 'buffer':
+                        case 'async-validator':
+                        case 'react-router':
+                        case '@babel':
+                        case '@floating-ui':
+                        case 'react-router-dom':
                         case 'immer':
                         case 'redux':
+                        case 'dayjs':
+                        case 'bl':
+                        case 'antd-mobile-icons':
                         case 'react':
-                            return vendorName;
+                        case 'path-browserify':
+                            return `vendor-${vendorName}`;
                         // 其余小文件打包成一个包
                         default:
-                            // return vendorName;
-                            return 'vendor';
+                            // return `vendor-${vendorName}`;
+                            return 'vendor-other';
                     }
                 }
             }
         },
-        chunkFileNames(chunkInfo) {
-            const { facadeModuleId } = chunkInfo;
-            // 有 facadeModuleId 的是src下的代码（应该）
-            if (typeof facadeModuleId === 'string') {
-                const list = facadeModuleId.split('/');
-                const lastOne = list[list.length - 1];
-                const lastTwo = list[list.length - 2];
-                // 处理文件名称为index的问题
-                if (lastOne.includes('index') && typeof lastTwo === 'string') {
-                    return `js/${lastTwo.toLocaleLowerCase()}-[hash].js`;
-                }
-                return 'js/[name]-[hash].js';
-            }
-            return 'vendor/[name]-[hash].js';
+        chunkFileNames() {
+            return 'js/[name]-[hash].js';
         },
         entryFileNames() {
             return 'js/[name]-[hash].js';

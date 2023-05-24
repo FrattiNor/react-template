@@ -1,5 +1,6 @@
 // @ts-ignore
 import { getProxyObj, getPort } from './proxy';
+import viteNodePolyfillsPlugins from './vite-node-polyfills-plugins';
 import { UserConfig, UserConfigExport, defineConfig } from 'vite';
 import rollupOptions from './vite.build.rollupOptions';
 import react from '@vitejs/plugin-react-swc';
@@ -11,8 +12,6 @@ export default defineConfig(async ({ command }) => {
         alias: {
             '@': '/src',
             '@proxy': '/proxy',
-            buffer: 'buffer',
-            path: 'path-browserify',
         },
     };
 
@@ -20,7 +19,7 @@ export default defineConfig(async ({ command }) => {
         const config: UserConfigExport = {
             resolve,
             logLevel: 'error',
-            plugins: [react()],
+            plugins: [viteNodePolyfillsPlugins(), react()],
             server: {
                 open: true,
                 host: '0.0.0.0',
