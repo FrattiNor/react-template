@@ -10,13 +10,13 @@ import { Props } from './type';
 function InfiniteLists({ items }: Props<any>) {
     const [view, setView] = useState('0');
     const swiperRef = useRef<SwiperRef>(null);
-    const filterProps = items[Number(view)].filter;
-    const floatProps = items[Number(view)].float;
+    const filterProps = items[Number(view)]?.filter;
+    const floatProps = items[Number(view)]?.float;
     const filterList = filterProps?.filterList;
     const RenderFloat = floatProps?.render;
-    const query = items[Number(view)].query;
-    const params = query.params;
-    const addAndDelParams = query.addAndDelParams;
+    const query = items[Number(view)]?.query;
+    const params = query?.params;
+    const addAndDelParams = query?.addAndDelParams;
 
     const tabChange = (v: string) => {
         setView(v);

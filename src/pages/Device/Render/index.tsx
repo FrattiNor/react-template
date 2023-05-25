@@ -1,4 +1,4 @@
-import KeyValueTable, { Tr } from '@/components/KeyValueTable';
+import KeyValueTable, { KeyValueProvider, Tr } from '@/components/KeyValueTable';
 import { useNavigate } from 'react-router-dom';
 import { DeviceItem } from '@/services/device';
 import Collapse from '@/components/Collapse';
@@ -25,26 +25,28 @@ const useRender = () => {
     const renderMeterItem = useCallback(
         (item: DeviceItem, { visible }: { visible: boolean }) => (
             <div className={styles['item']}>
-                <KeyValueTable widths={['2.5rem']}>
-                    <Tr>ISDM位号:{notEmpty(item.isdmTag)}</Tr>
-                    <Tr>设备类型:{notEmpty(item.deviceModel)}</Tr>
-                    <Tr>厂商:{notEmpty(item.mfrName)}</Tr>
-                </KeyValueTable>
-                <Collapse visible={visible}>
-                    <KeyValueTable widths={['2.6rem']}>
-                        <Tr>类别:{notEmpty(DEVICE_CATEGORY_MAP.get(item.category))}</Tr>
-                        <Tr>仪表位号:{notEmpty(item.deviceTag)}</Tr>
-                        <Tr>系统位号:{notEmpty(item.systemTag)}</Tr>
-                        <Tr>设备身份码:{notEmpty(item.identifier)}</Tr>
-                        <Tr>协议:{notEmpty(item.protocol)}</Tr>
-                        <Tr>设备来源:{notEmpty(DEVICE_ORIGIN_MAP.get(item.sourceType))}</Tr>
-                        <Tr>模式状态:{notEmpty(item.devMode)}</Tr>
-                        <Tr>累计运行时间:{notEmpty(item.wkDay, () => `${item.wkDay}天`)}</Tr>
-                        <Tr>最近上线时间:{notEmpty(item.onlineTime, () => timeTool.toStrByNum(item.onlineTime))}</Tr>
-                        <Tr>工厂模型:{notEmpty(item.areaRef)}</Tr>
+                <KeyValueProvider widthClassNames={[styles['key']]}>
+                    <KeyValueTable>
+                        <Tr>ISDM位号:{notEmpty(item.isdmTag)}</Tr>
+                        <Tr>设备类型:{notEmpty(item.deviceModel)}</Tr>
+                        <Tr>厂商:{notEmpty(item.mfrName)}</Tr>
                     </KeyValueTable>
-                    {renderDetailBtn(item.id)}
-                </Collapse>
+                    <Collapse visible={visible}>
+                        <KeyValueTable>
+                            <Tr>类别:{notEmpty(DEVICE_CATEGORY_MAP.get(item.category))}</Tr>
+                            <Tr>仪表位号:{notEmpty(item.deviceTag)}</Tr>
+                            <Tr>系统位号:{notEmpty(item.systemTag)}</Tr>
+                            <Tr>设备身份码:{notEmpty(item.identifier)}</Tr>
+                            <Tr>协议:{notEmpty(item.protocol)}</Tr>
+                            <Tr>设备来源:{notEmpty(DEVICE_ORIGIN_MAP.get(item.sourceType))}</Tr>
+                            <Tr>模式状态:{notEmpty(item.devMode)}</Tr>
+                            <Tr>累计运行时间:{notEmpty(item.wkDay, () => `${item.wkDay}天`)}</Tr>
+                            <Tr>最近上线时间:{notEmpty(item.onlineTime, () => timeTool.toStrByNum(item.onlineTime))}</Tr>
+                            <Tr>工厂模型:{notEmpty(item.areaRef)}</Tr>
+                        </KeyValueTable>
+                        {renderDetailBtn(item.id)}
+                    </Collapse>
+                </KeyValueProvider>
             </div>
         ),
         [],
@@ -52,25 +54,27 @@ const useRender = () => {
 
     const renderCardItem = useCallback(
         (item: DeviceItem, { visible }: { visible: boolean }) => (
-            <div className={styles['item']}>
-                <KeyValueTable widths={['2.5rem']}>
-                    <Tr>ISDM位号:{notEmpty(item.isdmTag)}</Tr>
-                    <Tr>设备类型:{notEmpty(item.deviceModel)}</Tr>
-                    <Tr>类别:{notEmpty(DEVICE_CATEGORY_MAP.get(item.category))}</Tr>
-                </KeyValueTable>
-                <Collapse visible={visible}>
-                    <KeyValueTable widths={['2.5rem']}>
-                        <Tr>厂商:{notEmpty(item.mfrName)}</Tr>
-                        <Tr>设备身份码:{notEmpty(item.identifier)}</Tr>
-                        <Tr>设备来源:{notEmpty(DEVICE_ORIGIN_MAP.get(item.sourceType))}</Tr>
-                        <Tr>模式状态:{notEmpty(item.devMode)}</Tr>
-                        <Tr>累计运行时间:{notEmpty(item.wkDay, () => `${item.wkDay}天`)}</Tr>
-                        <Tr>最近上线时间:{notEmpty(item.onlineTime, () => timeTool.toStrByNum(item.onlineTime))}</Tr>
-                        <Tr>工厂模型:{notEmpty(item.areaRef)}</Tr>
+            <KeyValueProvider widthClassNames={[styles['key']]}>
+                <div className={styles['item']}>
+                    <KeyValueTable>
+                        <Tr>ISDM位号:{notEmpty(item.isdmTag)}</Tr>
+                        <Tr>设备类型:{notEmpty(item.deviceModel)}</Tr>
+                        <Tr>类别:{notEmpty(DEVICE_CATEGORY_MAP.get(item.category))}</Tr>
                     </KeyValueTable>
-                    {renderDetailBtn(item.id)}
-                </Collapse>
-            </div>
+                    <Collapse visible={visible}>
+                        <KeyValueTable>
+                            <Tr>厂商:{notEmpty(item.mfrName)}</Tr>
+                            <Tr>设备身份码:{notEmpty(item.identifier)}</Tr>
+                            <Tr>设备来源:{notEmpty(DEVICE_ORIGIN_MAP.get(item.sourceType))}</Tr>
+                            <Tr>模式状态:{notEmpty(item.devMode)}</Tr>
+                            <Tr>累计运行时间:{notEmpty(item.wkDay, () => `${item.wkDay}天`)}</Tr>
+                            <Tr>最近上线时间:{notEmpty(item.onlineTime, () => timeTool.toStrByNum(item.onlineTime))}</Tr>
+                            <Tr>工厂模型:{notEmpty(item.areaRef)}</Tr>
+                        </KeyValueTable>
+                        {renderDetailBtn(item.id)}
+                    </Collapse>
+                </div>
+            </KeyValueProvider>
         ),
         [],
     );

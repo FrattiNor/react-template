@@ -33,35 +33,16 @@
             }
         }
 
-        .info-content {
-            display: flex;
-            flex-wrap: wrap;
+        .key {
+            width: 72px;
+        }
 
-            .item {
-                width: 50%;
-                display: flex;
-                padding: 2px 0;
+        .value {
+            width: calc(50% - 72px);
+        }
 
-                .key {
-                    width: 70px;
-                    font-weight: 600;
-                    white-space: nowrap;
-                    overflow: hidden;
-                    text-overflow: ellipsis;
-                    word-break: break-all;
-                }
-
-                .value {
-                    width: 1px;
-                    min-width: 0;
-                    flex-grow: 1;
-                    color: var(--m-secondary-font-color);
-                    white-space: nowrap;
-                    overflow: hidden;
-                    text-overflow: ellipsis;
-                    word-break: break-all;
-                }
-            }
+        .key2 {
+            width: 45px;
         }
     }
 

@@ -21,7 +21,7 @@ const Device = () => {
                         query: queryMeter,
                         enableVisible: true,
                         filter: { filterList },
-                        renderItem: renderCardItem,
+                        renderItem: renderMeterItem,
                     }),
                     createInfiniteListItem({
                         title: '卡件',
@@ -29,7 +29,7 @@ const Device = () => {
                         query: queryCard,
                         enableVisible: true,
                         filter: { filterList },
-                        renderItem: renderMeterItem,
+                        renderItem: renderCardItem,
                     }),
                 ]}
             />

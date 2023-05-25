@@ -1,3 +1,4 @@
+import KeyValueTable, { Tr } from '@/components/KeyValueTable';
 import { useDeviceDetailInfo } from '@/services/deviceDetail';
 import { useParams } from 'react-router-dom';
 import Collapse from '@/components/Collapse';
@@ -11,8 +12,8 @@ import { useState } from 'react';
 import Detail from './Detail';
 
 const DeviceDetail = () => {
-    const [visible, setVisible] = useState(false);
     const { deviceId } = useParams<{ deviceId: string }>();
+    const [visible, setVisible] = useState(false);
     const { data } = useDeviceDetailInfo(deviceId);
     const { isdmTag, areaRef } = data || {};
     const infoMap = useInfoMap(data);
@@ -26,18 +27,14 @@ const DeviceDetail = () => {
                         <Iconfont icon="arrow-down-2" className={classNames(styles['icon'], { [styles['show']]: visible })} />
                     </div>
                     <Collapse visible={visible}>
-                        <div className={styles['info-content']}>
-                            <div className={styles['item']} style={{ width: '100%' }}>
-                                <div className={styles['key']}>{`工厂模型: `}</div>
-                                <div className={styles['value']}>{notEmpty(areaRef)}</div>
-                            </div>
-                            {Object.entries(infoMap).map(([key, value]) => (
-                                <div key={key} className={styles['item']}>
-                                    <div className={styles['key']}>{`${key}: `}</div>
-                                    <div className={styles['value']}>{value}</div>
-                                </div>
+                        <KeyValueTable widthClassNames={[styles['key']]}>
+                            <Tr>工厂模型:{notEmpty(areaRef)}</Tr>
+                        </KeyValueTable>
+                        <KeyValueTable widthClassNames={[styles['key'], styles['value'], styles['key2']]}>
+                            {infoMap.map((line, i) => (
+                                <Tr key={i}>{line}</Tr>
                             ))}
-                        </div>
+                        </KeyValueTable>
                     </Collapse>
                 </div>
                 <div className={styles['detail']}>
