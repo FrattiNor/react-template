@@ -1,11 +1,12 @@
 import { createInfiniteListItem } from '@/components/InfiniteLists/utils';
 import InfiniteLists from '@/components/InfiniteLists';
 import { useDeviceList } from '@/services/device';
+import KeepAlive from '@/components/KeepAlive';
 import Header from '@/components/Header';
 import useFilter from './Filter';
 import useRender from './Render';
 
-const Device = () => {
+const KeepInner = () => {
     const filterList = useFilter();
     const queryCard = useDeviceList(2);
     const queryMeter = useDeviceList(1);
@@ -34,6 +35,14 @@ const Device = () => {
                 ]}
             />
         </Header>
+    );
+};
+
+const Device = () => {
+    return (
+        <KeepAlive id="device">
+            <KeepInner />
+        </KeepAlive>
     );
 };
 

@@ -1,4 +1,5 @@
 import KeyValueTable, { KeyValueProvider, Tr } from '@/components/KeyValueTable';
+import useKeepAlive from '@/components/KeepAlive/useKeepAlive';
 import { useNavigate } from 'react-router-dom';
 import { DeviceItem } from '@/services/device';
 import Collapse from '@/components/Collapse';
@@ -10,13 +11,23 @@ import { Button } from 'antd-mobile';
 import { useCallback } from 'react';
 
 const useRender = () => {
+    const { cache } = useKeepAlive();
     const navigate = useNavigate();
     const { DEVICE_CATEGORY_MAP, DEVICE_ORIGIN_MAP } = useConst();
 
     const renderDetailBtn = useCallback(
         (id: string) => (
             <div className={styles['bottom']}>
-                <Button block size="small" color="primary" onClick={() => navigate(`/device/${id}`)}>
+                <Button
+                    block
+                    size="small"
+                    color="primary"
+                    onClick={() => {
+                        // 跳转前缓存页面
+                        cache('device');
+                        navigate(`/device/${id}`);
+                    }}
+                >
                     详情
                 </Button>
             </div>
