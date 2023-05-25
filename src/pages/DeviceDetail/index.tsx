@@ -6,10 +6,10 @@ import Iconfont from '@/components/Iconfont';
 import Header from '@/components/Header';
 import styles from './index.module.less';
 import notEmpty from '@/utils/notEmpty';
+import DetailList from './DetailList';
 import useInfoMap from './useInfoMap';
 import classNames from 'classnames';
 import { useState } from 'react';
-import Detail from './Detail';
 
 const DeviceDetail = () => {
     const { deviceId } = useParams<{ deviceId: string }>();
@@ -38,7 +38,7 @@ const DeviceDetail = () => {
                     </Collapse>
                 </div>
                 <div className={styles['detail']}>
-                    <Detail />
+                    <DetailList />
                 </div>
             </div>
         </Header>
