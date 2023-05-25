@@ -1,8 +1,10 @@
 import VirtualizerList from '@/components/VirtualizerList';
 import { useCallback, useEffect, useState } from 'react';
+import styles from './index.module.less';
 import { ListProps } from './type';
+import classNames from 'classnames';
 
-function List<T>({ query, renderItem, rowKey, enableVisible }: ListProps<T>) {
+function List<T>({ query, renderItem, rowKey, enableVisible, itemPadding = true }: ListProps<T>) {
     const { data, isLoading, fetchNextPage, refetch, hasNextPage, isFetchingNextPage } = query;
     const [visibles, setVisibles] = useState<Record<string, boolean>>({});
 
@@ -20,12 +22,6 @@ function List<T>({ query, renderItem, rowKey, enableVisible }: ListProps<T>) {
         if (isLoading) setVisibles({});
     }, [isLoading]);
 
-    // after 上拉刷新
-    // const afterRefetch = () => {
-    //     setListKey(Math.random());
-    //     setVisibles({});
-    // };
-
     return (
         <VirtualizerList
             data={data}
@@ -36,7 +32,9 @@ function List<T>({ query, renderItem, rowKey, enableVisible }: ListProps<T>) {
             enablePullDown={{ refetch }}
             enableLoadMore={{ hasNextPage: !!hasNextPage, isFetchingNextPage, fetchNextPage }}
             renderItem={(item, { key, index }) => (
-                <div onClick={() => itemClick(key)}>{renderItem(item, { key, index, visible: !!visibles[key] })}</div>
+                <div className={classNames(styles['item'], { [styles['padding']]: itemPadding })} onClick={() => itemClick(key)}>
+                    {renderItem(item, { key, index, visible: !!visibles[key] })}
+                </div>
             )}
         />
     );

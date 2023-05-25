@@ -22,28 +22,27 @@ const useRender = () => {
     const renderItem = useCallback(
         (item: KnowledgeItem, { visible }: { visible: boolean }) => (
             <KeyValueProvider widthClassNames={[styles['key']]}>
-                <div className={styles['item']}>
+                <KeyValueTable>
+                    <Tr>文档名称:{notEmpty(item.fileName)}</Tr>
+                    <Tr>知识分类:{notEmpty(item.classificationName)}</Tr>
+                    <Tr>创建时间:{notEmpty(item.createTime, () => timeTool.toStrByNum(item.createTime))}</Tr>
+                </KeyValueTable>
+                <Collapse visible={visible}>
                     <KeyValueTable>
-                        <Tr>文档名称:{notEmpty(item.fileName)}</Tr>
-                        <Tr>知识分类:{notEmpty(item.classificationName)}</Tr>
-                        <Tr>创建时间:{notEmpty(item.createTime, () => timeTool.toStrByNum(item.createTime))}</Tr>
+                        <Tr>工厂模型:{notEmpty(item.factoryModelName?.join(', '))}</Tr>
+                        <Tr>设备类型:{notEmpty(item.deviceModelView?.join(', '))}</Tr>
+                        <Tr>设备:{notEmpty(item.isdmTag?.join(', '))}</Tr>
                     </KeyValueTable>
-                    <Collapse visible={visible}>
-                        <KeyValueTable>
-                            <Tr>工厂模型:{notEmpty(item.factoryModelName?.join(', '))}</Tr>
-                            <Tr>设备类型:{notEmpty(item.deviceModelView?.join(', '))}</Tr>
-                            <Tr>设备:{notEmpty(item.isdmTag?.join(', '))}</Tr>
-                        </KeyValueTable>
-                        <div className={styles['btn-container']} onClick={(e) => e.stopPropagation()}>
-                            <Button size="small" color="primary" onClick={() => downloadFile(item.md5, item.fileName)}>
-                                下载
-                            </Button>
-                            <Button size="small" color="primary" disabled={!item.supportView} onClick={() => fileUrl.mutate(item.md5)}>
-                                预览
-                            </Button>
-                        </div>
-                    </Collapse>
-                </div>
+
+                    <div className={styles['bottom']} onClick={(e) => e.stopPropagation()}>
+                        <Button size="small" color="primary" onClick={() => downloadFile(item.md5, item.fileName)}>
+                            下载
+                        </Button>
+                        <Button size="small" color="primary" disabled={!item.supportView} onClick={() => fileUrl.mutate(item.md5)}>
+                            预览
+                        </Button>
+                    </div>
+                </Collapse>
             </KeyValueProvider>
         ),
         [],

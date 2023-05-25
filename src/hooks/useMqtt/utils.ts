@@ -61,6 +61,7 @@ export const replaceSubscribe = (client: MqttClient, clientId: string) => {
         // 执行原生subscribe函数，并替换callback
         const innerCb = () => {
             console.log(`已订阅: ${newTopic}`);
+            console.log(newTopic);
         };
         if (typeof optsOrCb === 'function' || typeof optsOrCb === 'undefined') {
             nativeSubscribe(newTopic, replaceCallback(innerCb, optsOrCb));

@@ -38,7 +38,7 @@ const DeviceDetail = () => {
                     </Collapse>
                 </div>
                 <div className={styles['detail']}>
-                    <DetailList />
+                    <DetailList deviceId={deviceId} isdmTag={isdmTag} />
                 </div>
             </div>
         </Header>

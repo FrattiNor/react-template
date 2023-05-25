@@ -10,6 +10,7 @@ type PaginationParams = { current: number; pageSize: number };
 
 type Props<T> = {
     queryKey: UseInfiniteQueryOptions['queryKey'];
+    enabled?: UseInfiniteQueryOptions['enabled'];
     queryFn: (p: { params: Params; paginationParams: PaginationParams }) => Promise<ListData<T> | null>;
     pageSize?: number;
     delay?: number;
@@ -20,7 +21,7 @@ type Props<T> = {
 };
 
 // 在默认的 useInfiniteQuery 中加入一些默认配置以及增加一些参数
-const useInfiniteQuery2 = <T>({ pageSize = 50, queryKey, delay, queryFn, arrayToString, formatTime, arrayToLast }: Props<T>) => {
+const useInfiniteQuery2 = <T>({ enabled, pageSize = 50, queryKey, delay, queryFn, arrayToString, formatTime, arrayToLast }: Props<T>) => {
     const [delayFn] = useDelay({ delayFn: queryFn, delay: delay || 0 });
     const [params, setParams] = useState<Params>({});
     const _queryKey = [...(queryKey || []), pageSize, params];
@@ -47,6 +48,7 @@ const useInfiniteQuery2 = <T>({ pageSize = 50, queryKey, delay, queryFn, arrayTo
         retry: false,
         cacheTime: 0,
         staleTime: 0,
+        enabled,
     });
 
     const isFetchingNextPage = query.isFetchingNextPage;

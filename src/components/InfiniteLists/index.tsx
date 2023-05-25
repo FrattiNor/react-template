@@ -54,7 +54,9 @@ function InfiniteLists({ items }: Props<any>) {
                     </Float>
                 )}
 
-                {filterList && <Filter {...filterProps} filterList={filterList} params={params} addAndDelParams={addAndDelParams} />}
+                {Array.isArray(filterList) && filterList.length > 0 && (
+                    <Filter {...filterProps} filterList={filterList} params={params} addAndDelParams={addAndDelParams} />
+                )}
             </div>
         </div>
     );
