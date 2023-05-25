@@ -51,7 +51,8 @@ export const useFileUrl = () => {
         mutationKey: ['getKnowledgeFileUrl'],
         mutationFn: (md5: string) => getFileUrl(md5),
         onSuccess: (url) => {
-            if (url) window.open(url);
+            // setTimeout解决ios回调里使用window.open不生效的问题
+            if (url) setTimeout(() => window.open(url));
         },
     });
 };

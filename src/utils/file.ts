@@ -48,3 +48,17 @@ export const fileDownload = (blob: Blob, filename: string) => {
     URL.revokeObjectURL(blobUrl);
     document.body.removeChild(aLink);
 };
+
+/**
+ * 文件打开
+ * @param url 文件流
+ */
+export const fileOpen = (url: string) => {
+    const aLink = document.createElement('a');
+    aLink.setAttribute('style', 'display:none');
+    aLink.setAttribute('href', url);
+    aLink.setAttribute('target', '_blank');
+    document.body.appendChild(aLink);
+    aLink.click();
+    document.body.removeChild(aLink);
+};
