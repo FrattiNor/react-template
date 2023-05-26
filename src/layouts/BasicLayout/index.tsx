@@ -1,6 +1,7 @@
 import KeepAlive2Provider from '@/components/KeepAlive2/Provider2';
 import { Outlet, ScrollRestoration } from 'react-router-dom';
 import HistoryRecordProvider from './HistoryRecord/Provider';
+import Header from '@/components/Header';
 import useTitle from './useTitle';
 
 const BasicLayout = () => {
@@ -10,7 +11,9 @@ const BasicLayout = () => {
         // 需要再react-redux和router下面
         <KeepAlive2Provider>
             <HistoryRecordProvider>
-                <Outlet />
+                <Header>
+                    <Outlet />
+                </Header>
                 <ScrollRestoration />
             </HistoryRecordProvider>
         </KeepAlive2Provider>

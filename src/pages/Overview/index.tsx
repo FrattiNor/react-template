@@ -1,7 +1,5 @@
-import Header from '@/components/Header';
-
 const Overview = () => {
-    return <Header right="back">Overview</Header>;
+    return <>Overview</>;
 };
 
 export default Overview;

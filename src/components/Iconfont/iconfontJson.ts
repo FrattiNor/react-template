@@ -6,11 +6,18 @@ const iconfontJSON = {
     description: '',
     glyphs: [
         {
-            icon_id: '18442512',
+            icon_id: '34024216',
+            name: 'overview_line',
+            font_class: 'overview',
+            unicode: 'e77c',
+            unicode_decimal: 59260,
+        },
+        {
+            icon_id: '1857393',
             name: 'menu',
             font_class: 'menu',
-            unicode: 'e601',
-            unicode_decimal: 58881,
+            unicode: 'e602',
+            unicode_decimal: 58882,
         },
         {
             icon_id: '7008994',

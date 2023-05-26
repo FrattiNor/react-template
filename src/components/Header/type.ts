@@ -1,6 +1,8 @@
-import { PropsWithChildren } from 'react';
+import { Dispatch, PropsWithChildren, SetStateAction } from 'react';
 
-export type Props = PropsWithChildren<{
-    boxShadow?: boolean;
-    right?: 'back' | 'menu';
-}>;
+export type Props = PropsWithChildren;
+
+export type MenuProps = {
+    menuVisible: boolean;
+    setMenuVisible: Dispatch<SetStateAction<boolean>>;
+};
