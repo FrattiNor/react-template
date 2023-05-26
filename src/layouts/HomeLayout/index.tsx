@@ -19,12 +19,12 @@ const Bottom: FC = () => {
             title: <span className={styles['tab-bar-text']}>{`设备`}</span>,
         },
         {
-            key: '/home/alarm',
+            key: '/alarm',
             icon: <Iconfont icon="alarm" />,
             title: <span className={styles['tab-bar-text']}>{`报警`}</span>,
         },
         {
-            key: '/home/knowledge',
+            key: '/knowledge',
             icon: <Iconfont icon="knowledge" />,
             title: <span className={styles['tab-bar-text']}>{`知识库`}</span>,
         },

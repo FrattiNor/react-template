@@ -6,7 +6,7 @@ const Alarm = () => {
     const { historyData, realtimeData } = useAlarmData();
 
     return (
-        <Header boxShadow={false}>
+        <Header boxShadow={false} right="menu">
             <InfiniteLists items={[historyData, realtimeData]} />
         </Header>
     );

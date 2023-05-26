@@ -6,7 +6,7 @@ import Iconfont from '../Iconfont';
 import { Props } from './type';
 import { FC } from 'react';
 
-const Header: FC<Props> = ({ children, boxShadow = true, back }) => {
+const Header: FC<Props> = ({ children, boxShadow = true, right }) => {
     const navigate = useNavigate();
     const title = useSelector((s) => s.global.title);
     const goBack = () => {
@@ -16,7 +16,10 @@ const Header: FC<Props> = ({ children, boxShadow = true, back }) => {
     return (
         <div className={styles['wrapper']}>
             <div className={classNames(styles['header'], { [styles['box-shadow']]: boxShadow })}>
-                <div className={styles['left']}>{back && <Iconfont icon="arrow-left-2" onClick={goBack} />}</div>
+                <div className={styles['left']}>
+                    {right === 'back' && <Iconfont icon="arrow-left-2" onClick={goBack} />}
+                    {right === 'menu' && <Iconfont icon="menu" onClick={goBack} />}
+                </div>
                 <div className={styles['middle']}>{title}</div>
                 <div className={styles['right']} />
             </div>

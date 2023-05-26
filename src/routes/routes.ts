@@ -1,3 +1,5 @@
+import SecondLayout from '@/layouts/SecondLayout';
+import DetailLayout from '@/layouts/DetailLayout';
 import ErrorLayout from '@/layouts/ErrorLayout';
 import BasicLayout from '@/layouts/BasicLayout';
 import HomeLayout from '@/layouts/HomeLayout';
@@ -18,8 +20,9 @@ const routes: Array<Route> = [
         path: '/',
         Component: BasicLayout,
         children: [
+            // 主页
             {
-                path: 'home?',
+                path: '/',
                 Component: HomeLayout,
                 children: [
                     {
@@ -39,11 +42,31 @@ const routes: Array<Route> = [
                     },
                 ],
             },
+            // 次级页面
             {
-                path: 'device/:deviceId',
-                title: '设备详情',
-                LazyComponent: () => import('@/pages/DeviceDetail'),
+                path: '/',
+                Component: SecondLayout,
+                children: [
+                    {
+                        path: 'overview',
+                        title: '总貌图',
+                        LazyComponent: () => import('@/pages/Overview'),
+                    },
+                ],
             },
+            // 详情页面
+            {
+                path: '/',
+                Component: DetailLayout,
+                children: [
+                    {
+                        path: 'device/:deviceId',
+                        title: '设备详情',
+                        LazyComponent: () => import('@/pages/DeviceDetail'),
+                    },
+                ],
+            },
+            // Error页面
             {
                 path: '/',
                 Component: ErrorLayout,

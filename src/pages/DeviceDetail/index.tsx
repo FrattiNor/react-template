@@ -19,7 +19,7 @@ const DeviceDetail = () => {
     const infoMap = useInfoMap(data);
 
     return (
-        <Header back>
+        <Header right="back">
             <div className={styles['wrapper']}>
                 <div className={styles['info']}>
                     <div className={styles['title']} onClick={() => setVisible((v) => !v)}>

@@ -10,7 +10,7 @@ const Knowledge = () => {
     const { renderItem } = useRender();
 
     return (
-        <Header>
+        <Header right="menu">
             <InfiniteList rowKey="id" query={query} enableVisible={true} filter={{ filterList }} renderItem={renderItem} />
         </Header>
     );

@@ -13,7 +13,7 @@ const KeepInner = () => {
     const { renderCardItem, renderMeterItem } = useRender();
 
     return (
-        <Header boxShadow={false}>
+        <Header boxShadow={false} right="menu">
             <InfiniteLists
                 items={[
                     createInfiniteListItem({
