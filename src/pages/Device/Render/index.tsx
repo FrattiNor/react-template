@@ -1,5 +1,5 @@
 import KeyValueTable, { KeyValueProvider, Tr } from '@/components/KeyValueTable';
-import useCache from '@/components/KeepAlive/useCache';
+import useKeepAlive from '@/components/KeepAlive/useKeepAlive';
 import { useNavigate } from 'react-router-dom';
 import { DeviceItem } from '@/services/device';
 import Collapse from '@/components/Collapse';
@@ -12,7 +12,7 @@ import { useCallback } from 'react';
 
 const useRender = () => {
     const navigate = useNavigate();
-    const { setCache } = useCache({ name: 'device' });
+    const { setCache } = useKeepAlive();
     const { DEVICE_CATEGORY_MAP, DEVICE_ORIGIN_MAP } = useConst();
 
     const renderDetailBtn = useCallback(
@@ -23,10 +23,10 @@ const useRender = () => {
                     size="small"
                     color="primary"
                     onClick={(e) => {
-                        // 先缓存
-                        setCache(true);
                         e.stopPropagation();
-                        navigate(`/device/${id}`);
+                        setCache(true).then(() => {
+                            navigate(`/device/${id}`);
+                        });
                     }}
                 >
                     详情

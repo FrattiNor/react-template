@@ -40,7 +40,7 @@ const KeepInner = () => {
 
 const Device = () => {
     return (
-        <KeepAlive name="device">
+        <KeepAlive name="device" cacheKey="device">
             <KeepInner />
         </KeepAlive>
     );

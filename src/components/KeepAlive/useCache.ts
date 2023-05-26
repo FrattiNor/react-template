@@ -9,14 +9,15 @@ const useCache = ({ name }: { name: string }) => {
     useActivate(() => {
         console.log('useActivate');
         console.log(controller.getCachingNodes());
-        controller.dropScope(name);
     });
 
     useUnactivate(() => {
         if (!when.current) {
             console.log('useUnactivate');
             console.log(controller.getCachingNodes());
+            controller.refreshScope(name);
             controller.dropScope(name);
+            controller.refreshScope(name);
             console.log(controller.getCachingNodes());
         }
     });
