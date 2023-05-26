@@ -21,8 +21,8 @@ const KeyValueTable: FC<Props> = ({ widths, widthClassNames, children }) => {
         <table className={styles['key-value-table']}>
             <colgroup>
                 {use?.map((item, i) => {
-                    if (trueWidths) return <col key={i} style={{ width: item }} />;
-                    if (trueClassNames) return <col key={i} className={item as string} />;
+                    if (trueWidths) return <col key={i} className={styles['col']} style={{ width: item }} />;
+                    if (trueClassNames) return <col key={i} className={classNames(styles['col'], item as string)} />;
                     return <Fragment key={i} />;
                 })}
             </colgroup>

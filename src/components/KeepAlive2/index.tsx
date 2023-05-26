@@ -3,6 +3,8 @@ import Context2 from './context2';
 import ReactDOM from 'react-dom';
 import { Props } from './type';
 
+// 目前缺陷
+// Context在KeepAliveProvider2里面时，缓存时无法获取到
 const KeepAlive2: FC<Props> = ({ children, cacheKey, wrapperClassName, contentClassName, wrapperStyle, contentStyle }) => {
     const { cacheMap, setCacheMap, setNeedCacheMap } = useContext(Context2);
     const parent = useRef<HTMLDivElement>(null);

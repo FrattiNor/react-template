@@ -7,6 +7,7 @@ import timeTool from '@/utils/timeTool';
 import notEmpty from '@/utils/notEmpty';
 import useConst from '@/hooks/useConst';
 import Tag from './Tag';
+import classNames from 'classnames';
 
 export const useRender = () => {
     const { ALARM_STATUS_MAP, ALARM_LEVEL_COLOR_MAP, ALARM_LEVEL_MAP, ALARM_CONFIRM_COLOR_MAP, ALARM_CONFIRM_MAP } = useConst();
@@ -35,7 +36,7 @@ export const useRender = () => {
 
     const renderHistoryItem = useCallback(
         (item: AlarmHistoryItem, { visible }: { visible: boolean }) => (
-            <KeyValueProvider widthClassNames={[styles['key']]}>
+            <KeyValueProvider widthClassNames={[classNames(styles['key'], { [styles['visible']]: visible })]}>
                 <KeyValueTable>
                     <Tr>报警等级:{renderLevel(item.alarmLevel)}</Tr>
                     <Tr>报警时间:{notEmpty(item.alarmTime, () => timeTool.toStrByNum(item.alarmTime))}</Tr>
@@ -59,7 +60,7 @@ export const useRender = () => {
 
     const renderRealtimeItem = useCallback(
         (item: AlarmRealtimeItem, { visible }: { visible: boolean }) => (
-            <KeyValueProvider widthClassNames={[styles['key']]}>
+            <KeyValueProvider widthClassNames={[classNames(styles['key'], { [styles['visible']]: visible })]}>
                 <KeyValueTable>
                     <Tr>报警等级:{renderLevel(item.alarmType)}</Tr>
                     <Tr>报警时间:{notEmpty(item.alarmTime, () => timeTool.toStrByNum(item.alarmTime))}</Tr>

@@ -9,6 +9,7 @@ import notEmpty from '@/utils/notEmpty';
 import useConst from '@/hooks/useConst';
 import { Button } from 'antd-mobile';
 import { useCallback } from 'react';
+import classNames from 'classnames';
 
 const useRender = () => {
     const navigate = useNavigate();
@@ -38,7 +39,7 @@ const useRender = () => {
 
     const renderMeterItem = useCallback(
         (item: DeviceItem, { visible }: { visible: boolean }) => (
-            <KeyValueProvider widthClassNames={[styles['key']]}>
+            <KeyValueProvider widthClassNames={[classNames(styles['key'], { [styles['visible']]: visible })]}>
                 <KeyValueTable>
                     <Tr>ISDM位号:{notEmpty(item.isdmTag)}</Tr>
                     <Tr>设备类型:{notEmpty(item.deviceModel)}</Tr>
@@ -66,7 +67,7 @@ const useRender = () => {
 
     const renderCardItem = useCallback(
         (item: DeviceItem, { visible }: { visible: boolean }) => (
-            <KeyValueProvider widthClassNames={[styles['key']]}>
+            <KeyValueProvider widthClassNames={[classNames(styles['key'], { [styles['visible']]: visible })]}>
                 <KeyValueTable>
                     <Tr>ISDM位号:{notEmpty(item.isdmTag)}</Tr>
                     <Tr>设备类型:{notEmpty(item.deviceModel)}</Tr>
