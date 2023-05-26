@@ -5,17 +5,12 @@ import KeepAlive2 from '@/components/KeepAlive2';
 import Header from '@/components/Header';
 import useFilter from './Filter';
 import useRender from './Render';
-import { useEffect, useState } from 'react';
 
-const KeepInner = ({ count }) => {
+const KeepInner = () => {
     const filterList = useFilter();
     const queryCard = useDeviceList(2);
     const queryMeter = useDeviceList(1);
     const { renderCardItem, renderMeterItem } = useRender();
-
-    useEffect(() => {
-        console.log(98, count);
-    }, []);
 
     return (
         <Header boxShadow={false}>
@@ -44,21 +39,9 @@ const KeepInner = ({ count }) => {
 };
 
 const Device = () => {
-    const [count, setCount] = useState(1);
-
-    useEffect(() => {
-        console.log(99, count);
-    }, [count]);
-
-    useEffect(() => {
-        setTimeout(() => {
-            setCount(2);
-        }, 2000);
-    }, []);
-
     return (
         <KeepAlive2 cacheKey="device" wrapperStyle={{ height: '100%' }} contentStyle={'height: 100%'}>
-            <KeepInner {...{ count, setCount }} />
+            <KeepInner />
         </KeepAlive2>
     );
 };
