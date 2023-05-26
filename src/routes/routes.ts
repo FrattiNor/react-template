@@ -19,8 +19,8 @@ const routes: Array<Route> = [
         path: '/',
         Component: BasicLayout,
         children: [
-            // 主页
             {
+                // 主页
                 path: '/',
                 type: 'home',
                 Component: HomeLayout,
@@ -45,8 +45,8 @@ const routes: Array<Route> = [
                     },
                 ],
             },
-            // 次级页面
             {
+                // 次级页面
                 path: '/',
                 type: 'second',
                 children: [
@@ -56,10 +56,16 @@ const routes: Array<Route> = [
                         title: '总貌图',
                         LazyComponent: () => import('@/pages/Overview'),
                     },
+                    {
+                        path: 'chart',
+                        icon: '',
+                        title: '趋势图',
+                        LazyComponent: () => import('@/pages/Chart'),
+                    },
                 ],
             },
-            // 详情页面
             {
+                // 详情页面
                 path: '/',
                 type: 'detail',
                 children: [
@@ -70,77 +76,25 @@ const routes: Array<Route> = [
                     },
                 ],
             },
-            // Error页面
+        ],
+    },
+    {
+        // Error页面
+        path: '/',
+        type: 'error',
+        children: [
             {
-                path: '/',
-                type: 'error',
-                children: [
-                    {
-                        path: '500',
-                        title: '500',
-                        Component: Error500,
-                    },
-                    {
-                        path: '*',
-                        title: '404',
-                        Component: Error404,
-                    },
-                ],
+                path: '500',
+                title: '500',
+                Component: Error500,
+            },
+            {
+                path: '*',
+                title: '404',
+                Component: Error404,
             },
         ],
     },
 ];
 
-const getTypeRoutes = () => {
-    const homeRoutes: Array<Route> = [];
-    const secondRoutes: Array<Route> = [];
-    const detailRoutes: Array<Route> = [];
-    const errorRoutes: Array<Route> = [];
-
-    const handlePath = (beforePath: string, path: string) => {
-        const endSlash = /\/$/.test(beforePath);
-        if (path === '/' || path === '') return beforePath + (endSlash ? '' : '/');
-        if (/\?/.test(path)) return beforePath + (endSlash ? '' : '/');
-        if (!endSlash && !/^\//.test(path)) return beforePath + '/' + path;
-        return beforePath + path;
-    };
-
-    const getMapRoutes = (rs: Array<Route>, beforePath = '', beforeType = '') => {
-        let map: Record<string, Route> = {};
-        rs.forEach((item) => {
-            const currentPath = handlePath(beforePath, item.path);
-            const currentType = item.type ?? beforeType;
-            if (item.children) {
-                map = { ...map, ...getMapRoutes(item.children, currentPath, currentType) };
-            } else {
-                const pushItem = { ...item, path: currentPath, type: currentType, Component: undefined };
-                map[currentPath] = pushItem;
-
-                switch (currentType) {
-                    case 'home':
-                        homeRoutes.push(pushItem);
-                        break;
-                    case 'second':
-                        secondRoutes.push(pushItem);
-                        break;
-                    case 'detail':
-                        detailRoutes.push(pushItem);
-                        break;
-                    case 'error':
-                        errorRoutes.push(pushItem);
-                        break;
-                    default:
-                        break;
-                }
-            }
-        });
-        return map;
-    };
-
-    const mapRoutes = getMapRoutes(routes);
-
-    return { homeRoutes, secondRoutes, detailRoutes, errorRoutes, mapRoutes };
-};
-
-export { getTypeRoutes };
 export default routes;

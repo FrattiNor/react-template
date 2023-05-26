@@ -1,24 +1,24 @@
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
-import { getTypeRoutes } from '@/routes/routes';
+import useTypeRoutes from '@/routes/useTypeRoutes';
 import Iconfont from '@/components/Iconfont';
 import styles from './index.module.less';
 import { TabBar } from 'antd-mobile';
 import { FC, useMemo } from 'react';
 
 const Bottom: FC = () => {
+    const navigate = useNavigate();
+    const { pathname } = useLocation();
+    const { homeRoutes } = useTypeRoutes();
+
     const tabs = useMemo(() => {
-        const { homeRoutes } = getTypeRoutes();
         return homeRoutes.map((item) => ({
             path: item.path,
             icon: item.icon as any,
             title: item.title,
         }));
-    }, []);
+    }, [homeRoutes]);
 
-    const navigate = useNavigate();
-    const { pathname } = useLocation();
     const setRouteActive = (value: string) => {
-        console.log(value);
         navigate(value);
     };
 
