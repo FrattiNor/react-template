@@ -5,7 +5,7 @@ import { Provider } from 'react-redux';
 import ReactDOM from 'react-dom/client';
 import Route from './routes';
 import store from './store';
-import './index.less';
+import './index.css';
 
 const queryClient = new QueryClient();
 

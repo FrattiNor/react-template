@@ -1,6 +1,6 @@
+import { observeElementOffset, VirtualizerOptions, observeElementRect, elementScroll, Virtualizer } from '@tanstack/react-virtual';
 import { useEffect, useMemo, useReducer, useRef, useState } from 'react';
 import BScroll from '@better-scroll/core';
-import { observeElementOffset, VirtualizerOptions, observeElementRect, elementScroll, Virtualizer } from '@tanstack/react-virtual';
 
 type Props = {
     count: number;

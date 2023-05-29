@@ -1,6 +1,6 @@
-import useVirtualizer from './hooks/virtualizer/useVirtualizer';
 import { Fragment, useCallback, useRef } from 'react';
-import useScroll from './hooks/scroll/useScroll';
+import useVirtualizer from './hooks/useVirtualizer';
+import useScroll from './hooks/useScroll';
 import LoadingIcon from '../LoadingIcon';
 import EmptySvg from '@/assets/emptySvg';
 import styles from './list.module.less';
