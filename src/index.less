@@ -45,23 +45,25 @@
     .cover-antd-mobile();
 }
 
-html,
-body,
-#root {
-    font-size: var(--m-font-size);
-    color: var(--m-font-color);
-    touch-action: manipulation;
-    width: 100%;
-    height: 100%;
-    padding: 0;
-    margin: 0;
-}
-
 // 某些设备横屏左右会多出来的部分显示的颜色
 body {
     background-color: #595959;
 }
 
-#root {
-    background-color: var(--m-bg-color);
+:global {
+    #root {
+        background-color: var(--m-bg-color);
+    }
+
+    html,
+    body,
+    #root {
+        font-size: var(--m-font-size);
+        color: var(--m-font-color);
+        touch-action: manipulation;
+        width: 100%;
+        height: 100%;
+        padding: 0;
+        margin: 0;
+    }
 }

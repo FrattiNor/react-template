@@ -1,6 +1,5 @@
 import './utils/initDayjs';
 import './utils/initFlexible';
-import './utils/initOrientationChange';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { Provider } from 'react-redux';
 import ReactDOM from 'react-dom/client';

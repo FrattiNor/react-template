@@ -1,10 +1,10 @@
 import { useEffect, useMemo, useState } from 'react';
 import MouseWheel from '@better-scroll/mouse-wheel';
 import LoadingIcon from '@/components/LoadingIcon';
+import ScrollBar from '@better-scroll/scroll-bar';
 import PullDown from '@better-scroll/pull-down';
 import Iconfont from '@/components/Iconfont';
 import BScroll from '@better-scroll/core';
-import ScrollBar from './scrollbar';
 
 BScroll.use(MouseWheel);
 BScroll.use(ScrollBar);
