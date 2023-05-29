@@ -1,5 +1,7 @@
+import BoxShadow from '@/components/Header/boxShadow';
+
 const Chart = () => {
-    return <>Chart</>;
+    return <BoxShadow>Chart</BoxShadow>;
 };
 
 export default Chart;
