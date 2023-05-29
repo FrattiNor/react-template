@@ -1,3 +1,4 @@
+import styles from './index.module.less';
 import { WrapperProps } from './type';
 import { useCallback } from 'react';
 import Filter from '../Filter';
@@ -17,7 +18,7 @@ function InfiniteList<T>(props: WrapperProps<T>) {
     const haveFilter = useCallback((f: any): f is any[] => Array.isArray(f) && f.length > 0, []);
 
     return (
-        <div style={{ height: '100%', position: 'relative' }}>
+        <div className={styles['wrapper']}>
             <List {...listProps} />
 
             {!isLoading && RenderFloat && (

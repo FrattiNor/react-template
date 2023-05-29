@@ -10,10 +10,8 @@ const KeepAlive2: FC<Props> = ({ children, cacheKey, wrapperClassName, contentCl
     const parent = useRef<HTMLDivElement>(null);
     const memoKey = useMemo(() => cacheKey, []);
     const element = cacheMap[cacheKey]?.element;
-    console.log(cacheMap);
 
     useLayoutEffect(() => {
-        console.log(4);
         setCacheMap((map) => {
             const _element = map[memoKey]?.element || document.createElement('div');
             map[memoKey] = { element: _element, portal: ReactDOM.createPortal(children, _element) };
@@ -22,8 +20,6 @@ const KeepAlive2: FC<Props> = ({ children, cacheKey, wrapperClassName, contentCl
     }, [children]);
 
     useEffect(() => {
-        console.log(3);
-        console.log(element);
         if (element && parent.current) {
             if (contentClassName) element.setAttribute('class', contentClassName);
             if (contentStyle) element.setAttribute('style', contentStyle);
@@ -35,9 +31,7 @@ const KeepAlive2: FC<Props> = ({ children, cacheKey, wrapperClassName, contentCl
     }, [element]);
 
     useEffect(() => {
-        console.log(1);
         return () => {
-            console.log(2);
             setNeedCacheMap((need) => {
                 if (need[memoKey]) {
                     delete need[memoKey];

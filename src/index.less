@@ -17,7 +17,7 @@
     /* 阴影 */
     --m-float-box-shadow: 1px 1px 10px 1px rgba(0, 0, 0, 0.15); // 悬浮框阴影
     --m-primary-float-box-shadow: 1px 1px 10px 1px rgba(0, 0, 0, 0.35); // 悬浮框阴影（主题色背景）
-    --m-head-box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.15); // 头部阴影/底部阴影
+    --m-head-box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.1); // 头部阴影/底部阴影
     --m-primary-head-box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.45); // 头部阴影/底部阴影（主题色背景）
     /* 边框 */
     --m-border-color: #eee; // 边框色
@@ -48,7 +48,6 @@
 html,
 body,
 #root {
-    background-color: var(--m-bg-color);
     font-size: var(--m-font-size);
     color: var(--m-font-color);
     touch-action: manipulation;
@@ -56,4 +55,13 @@ body,
     height: 100%;
     padding: 0;
     margin: 0;
+}
+
+// 某些设备横屏左右会多出来的部分显示的颜色
+body {
+    background-color: #595959;
+}
+
+#root {
+    background-color: var(--m-bg-color);
 }

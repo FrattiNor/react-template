@@ -6,11 +6,25 @@ const iconfontJSON = {
     description: '',
     glyphs: [
         {
-            icon_id: '34024216',
-            name: 'overview_line',
+            icon_id: '35219686',
+            name: '总览',
+            font_class: 'overview2',
+            unicode: 'e601',
+            unicode_decimal: 58881,
+        },
+        {
+            icon_id: '12550676',
+            name: '趋势图',
+            font_class: 'trend',
+            unicode: 'e63c',
+            unicode_decimal: 58940,
+        },
+        {
+            icon_id: '6241660',
+            name: '后台总览',
             font_class: 'overview',
-            unicode: 'e77c',
-            unicode_decimal: 59260,
+            unicode: 'e625',
+            unicode_decimal: 58917,
         },
         {
             icon_id: '1857393',

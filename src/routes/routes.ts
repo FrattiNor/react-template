@@ -58,7 +58,7 @@ const routes: Array<Route> = [
                     },
                     {
                         path: 'chart',
-                        icon: '',
+                        icon: 'trend',
                         title: '趋势图',
                         LazyComponent: () => import('@/pages/Chart'),
                     },
