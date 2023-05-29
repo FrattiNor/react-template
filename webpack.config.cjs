@@ -121,7 +121,7 @@ const prodConfig = {
         removeEmptyChunks: true,
         splitChunks: {
             chunks: 'all',
-            minChunks: 2,
+            minChunks: 1,
             usedExports: true,
             minSize: 20 * 1024,
             maxSize: 60 * 1024,
