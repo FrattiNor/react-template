@@ -1,4 +1,5 @@
-import { useLayoutEffect, useState } from 'react';
+import { useLayoutEffect, useMemo, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import routes, { Route } from './routes';
 
 const getTypeRoutes = (r: Array<Route>) => {
@@ -6,6 +7,7 @@ const getTypeRoutes = (r: Array<Route>) => {
     const secondRoutes: Array<Route> = [];
     const detailRoutes: Array<Route> = [];
     const errorRoutes: Array<Route> = [];
+    const horizontalRoutes: Array<Route> = [];
 
     const handlePath = (beforePath: string, path: string) => {
         const endSlash = /\/$/.test(beforePath);
@@ -36,6 +38,9 @@ const getTypeRoutes = (r: Array<Route>) => {
                     case 'detail':
                         detailRoutes.push(pushItem);
                         break;
+                    case 'horizontal':
+                        horizontalRoutes.push(pushItem);
+                        break;
                     case 'error':
                         errorRoutes.push(pushItem);
                         break;
@@ -49,12 +54,15 @@ const getTypeRoutes = (r: Array<Route>) => {
 
     const mapRoutes = getMapRoutes(r);
 
-    return { homeRoutes, secondRoutes, detailRoutes, errorRoutes, mapRoutes };
+    return { homeRoutes, secondRoutes, detailRoutes, errorRoutes, horizontalRoutes, mapRoutes };
 };
 
 const useTypeRoutes = () => {
+    const { pathname } = useLocation();
+
     const [res, setRes] = useState<ReturnType<typeof getTypeRoutes>>({
         homeRoutes: [],
+        horizontalRoutes: [],
         secondRoutes: [],
         detailRoutes: [],
         errorRoutes: [],
@@ -65,7 +73,9 @@ const useTypeRoutes = () => {
         setRes(getTypeRoutes(routes));
     }, []);
 
-    return res;
+    const type = useMemo(() => res.mapRoutes[pathname]?.type, [pathname, res.mapRoutes]) as 'home' | 'second' | 'horizontal' | 'detail' | '';
+
+    return { ...res, type };
 };
 
 export default useTypeRoutes;

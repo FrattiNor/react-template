@@ -45,10 +45,29 @@ const routes: Array<Route> = [
                     },
                 ],
             },
+            // {
+            //     // 次级页面
+            //     path: '/',
+            //     type: 'second',
+            //     children: [
+            //         {
+            //             path: 'overview',
+            //             icon: 'overview',
+            //             title: '总貌图',
+            //             LazyComponent: () => import('@/pages/Overview'),
+            //         },
+            //         {
+            //             path: 'chart',
+            //             icon: 'trend',
+            //             title: '趋势图',
+            //             LazyComponent: () => import('@/pages/PointTrend'),
+            //         },
+            //     ],
+            // },
             {
-                // 次级页面
+                // 横屏
                 path: '/',
-                type: 'second',
+                type: 'horizontal',
                 children: [
                     {
                         path: 'overview',

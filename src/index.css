@@ -38,22 +38,37 @@
     --adm-color-primary: #4096ff;
 }
 
-body {
-    background-color: #595959;
-}
-
-#root {
-    background-color: var(--m-bg-color);
-}
-
 html,
-body,
-#root {
+body {
     font-size: var(--m-font-size);
+    background-color: #595959;
     color: var(--m-font-color);
     touch-action: manipulation;
-    width: 100%;
+    overflow: hidden;
     height: 100%;
     padding: 0;
     margin: 0;
 }
+
+#root {
+    height: 100%;
+    background-color: var(--m-bg-color);
+}
+
+/* 横屏 */
+/* @media (orientation: landscape) {
+    body {
+        width: calc(100vh - env(safe-area-inset-top));
+        height: 100vw;
+        transform-origin: 0 0;
+        transform: rotate(-90deg) translateX(-100vh);
+    }
+} */
+
+/* 竖屏 */
+/* @media (orientation: portrait) {
+    body {
+        height: 100vh;
+        width: 100vw;
+    }
+} */
