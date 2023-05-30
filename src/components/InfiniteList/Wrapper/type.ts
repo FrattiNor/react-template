@@ -1,5 +1,5 @@
 import useInfiniteQuery2 from '@/hooks/useInfiniteQuery2';
-import { FilterProps } from '../Filter/type';
+import { FilterProps } from '@/components/Filter/type';
 import { FloatProps } from '../Float/type';
 import { ListProps } from '../List/type';
 import { PartialKeys } from '@/global';

@@ -1,5 +1,5 @@
+import createInfiniteListItem from '@/components/InfiniteLists/utils/createInfiniteListItem';
 import { useAlarmHistoryList, useAlarmRealtimeList } from '@/services/alarm';
-import { createInfiniteListItem } from '@/components/InfiniteLists/utils';
 import useHaveNew from './RealtimeRefresh/useHaveNew';
 import RealtimeRefresh from './RealtimeRefresh';
 import { useRender } from './Render';

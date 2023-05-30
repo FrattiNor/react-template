@@ -1,4 +1,4 @@
-import { createInfiniteListItem } from '@/components/InfiniteLists/utils';
+import createInfiniteListItem from '@/components/InfiniteLists/utils/createInfiniteListItem';
 import { useHandleLogList } from '@/services/handleLog';
 import { useRender } from './Render';
 

@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import Filter from '@/components/InfiniteList/Filter';
 import { Swiper, SwiperRef, Tabs } from 'antd-mobile';
 import InfiniteList from '../InfiniteList';
+import Float from '../InfiniteList/Float';
 import styles from './index.module.less';
 import { useRef, useState } from 'react';
-import Float from '../InfiniteList/Float';
+import Filter from '@/components/Filter';
 import { Props } from './type';
 
 function InfiniteLists({ items }: Props<any>) {

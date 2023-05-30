@@ -1,4 +1,4 @@
-import { createInfiniteListItem } from '@/components/InfiniteLists/utils';
+import createInfiniteListItem from '@/components/InfiniteLists/utils/createInfiniteListItem';
 import InfiniteLists from '@/components/InfiniteLists';
 import { useDeviceList } from '@/services/device';
 import KeepAlive2 from '@/components/KeepAlive2';

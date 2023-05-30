@@ -1,5 +1,6 @@
 /* eslint-disable @tanstack/query/exhaustive-deps */
 import { UseInfiniteQueryOptions, useInfiniteQuery } from '@tanstack/react-query';
+import getAddAndDelParams from '@/utils/addAndDelParams';
 import { useCallback, useMemo, useState } from 'react';
 import { handleParams } from '@/utils/params';
 import { ListData } from '@/global';
@@ -57,14 +58,7 @@ const useInfiniteQuery2 = <T>({ enabled, pageSize = 50, queryKey, delay, queryFn
     const data = useMemo(() => pages?.reduce((a, b) => [...(a || []), ...(b?.list || [])], [] as T[]) || [], [pages]);
 
     // 删除增加参数
-    const addAndDelParams = useCallback(({ add, del }: { add?: Record<string, any>; del?: string[] }) => {
-        setParams((beforeParams) => {
-            let nextParams = { ...beforeParams };
-            if (del) del.forEach((key) => delete nextParams[key]);
-            if (add) nextParams = { ...nextParams, ...add };
-            return { ...nextParams };
-        });
-    }, []);
+    const addAndDelParams = useCallback(getAddAndDelParams(setParams), []);
 
     // query 自带的 refetch 会从1 - n的页面数据重新获取一次
     const refetch = useCallback(() => {

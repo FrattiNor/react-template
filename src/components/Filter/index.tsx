@@ -3,9 +3,10 @@ import Iconfont from '@/components/Iconfont';
 import styles from './index.module.less';
 import { FilterProps } from './type';
 import { Popup } from 'antd-mobile';
+import classNames from 'classnames';
 import Content from './content';
 
-const Filter: FC<FilterProps> = ({ style, position, filterList, params, addAndDelParams }) => {
+const Filter: FC<FilterProps> = ({ style, className, filterList, params, addAndDelParams }) => {
     const [visible, setVisible] = useState(false);
 
     const open = () => {
@@ -17,7 +18,7 @@ const Filter: FC<FilterProps> = ({ style, position, filterList, params, addAndDe
 
     return (
         <Fragment>
-            <div className={styles['filter-btn']} style={{ position, ...(style || {}) }} onClick={open}>
+            <div className={classNames(styles['filter-btn'], className)} style={style} onClick={open}>
                 <Iconfont icon="search" />
             </div>
 

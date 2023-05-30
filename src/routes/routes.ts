@@ -60,7 +60,7 @@ const routes: Array<Route> = [
                         path: 'chart',
                         icon: 'trend',
                         title: '趋势图',
-                        LazyComponent: () => import('@/pages/Chart'),
+                        LazyComponent: () => import('@/pages/PointTrend'),
                     },
                 ],
             },

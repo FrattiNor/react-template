@@ -1,4 +1,4 @@
-import { createFilterItem } from '@/components/InfiniteList/utils';
+import createFilterItem from '@/components/Filter/utils/createFilterItem';
 import { useAreaOption } from '@/services/alarm';
 import useConst from '@/hooks/useConst';
 import { useMemo } from 'react';

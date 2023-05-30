@@ -1,5 +1,5 @@
 import { useDeviceModelOption, useFactoryModelTreeOption, useKnowledgeTagOption } from '@/services/knowledge';
-import { createFilterItem } from '@/components/InfiniteList/utils';
+import createFilterItem from '@/components/Filter/utils/createFilterItem';
 import { useMemo } from 'react';
 
 const useFilter = () => {

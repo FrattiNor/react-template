@@ -1,7 +1,7 @@
+import Filter from '@/components/Filter';
 import styles from './index.module.less';
 import { WrapperProps } from './type';
 import { useCallback } from 'react';
-import Filter from '../Filter';
 import Float from '../Float';
 import List from '../List';
 
