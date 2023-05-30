@@ -16,7 +16,7 @@
     --m-primary-font-color: #fff; /*字体颜色（主题色背景）*/
     /* 阴影 */
     --m-float-box-shadow: 1px 1px 10px 1px rgba(0, 0, 0, 0.15); /* 悬浮框阴影*/
-    --m-primary-float-box-shadow: 1px 1px 10px 1px rgba(0, 0, 0, 0.35); /* 悬浮框阴影（主题色背景）*/
+    --m-primary-float-box-shadow: 1px 1px 10px 1px rgba(0, 0, 0, 0.25); /* 悬浮框阴影（主题色背景）*/
     --m-head-box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.1); /* 头部阴影/底部阴影*/
     --m-primary-head-box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.45); /* 头部阴影/底部阴影（主题色背景）*/
     /* 边框 */

@@ -1,3 +1,4 @@
+import useRenderArray from './Items/_hooks/useRenderArray';
 import FilterBlockSelect from './Items/BlockSelect';
 import FilterDatePicker from './Items/DatePicker';
 import FilterRangPicker from './Items/RangPicker';
@@ -13,6 +14,7 @@ import { ContentProps } from './type';
 
 const Content: FC<ContentProps> = ({ params, filterList, setVisible, addAndDelParams }) => {
     const [form] = Form.useForm();
+    const { renderArray } = useRenderArray();
 
     const filterKeys = useMemo(
         () => filterList.reduce((a, { name }) => [...a, ...(Array.isArray(name) ? name : [name])], [] as string[]),
@@ -43,6 +45,8 @@ const Content: FC<ContentProps> = ({ params, filterList, setVisible, addAndDelPa
                         let res = <Fragment />;
                         switch (item.type) {
                             case 'input':
+                                // 如果是array直接返回
+                                if (item.array) return <Fragment key={i}>{renderArray(item.name, item.label, FilterInput, item)}</Fragment>;
                                 res = <FilterInput {...item} />;
                                 break;
                             case 'select':

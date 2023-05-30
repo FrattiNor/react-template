@@ -3,7 +3,6 @@
         "prefix": "/api/msc/vxidm-portal-basic",
         "port": 30305
     },
-
     "log": {
         "prefix": "/api/msc/vxidm-audittrail-service",
         "port": 30306

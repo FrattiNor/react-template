@@ -18,9 +18,16 @@ const map = {
     gauge: GaugeChart,
 };
 
-const echartsUse = (keys: (keyof typeof map)[]) => {
+export const echartsUse = (keys: (keyof typeof map)[]) => {
     const useValue = keys.map((key) => map[key] || null).filter((item) => item);
     echarts.use([CanvasRenderer, ...useValue]);
 };
 
-export { echarts, echartsUse };
+export const tooltipConfig = {
+    confine: true,
+    backgroundColor: '#333',
+    borderColor: '#333',
+    textStyle: { color: '#eee' },
+};
+
+export { echarts };

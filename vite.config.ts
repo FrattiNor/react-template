@@ -17,7 +17,7 @@ export default defineConfig(async ({ command }) => {
             resolve,
             base: './',
             optimizeDeps: { disabled: false },
-            plugins: [viteNodePolyfillsPlugins(), react()],
+            plugins: [react(), viteNodePolyfillsPlugins()],
             server: {
                 open: true,
                 host: '0.0.0.0',

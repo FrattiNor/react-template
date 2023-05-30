@@ -1,22 +1,23 @@
-import { defaultParams, getEmpty, getRequestParams, getSeries } from './utils';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import getAddAndDelParams from '@/utils/addAndDelParams';
-import { usePointHistory } from '@/services/pointTrend';
+import { getSeries } from '../History/utils';
 import useEcharts from '@/hooks/useEcharts';
-import Filter from '@/components/Filter';
 import styles from './index.module.less';
+import Filter from '@/components/Filter';
 import useFilter from './useFilter';
+import { getEmpty } from './utils';
 import { Params } from './type';
+import useData from './useData';
 import Switch from '../Switch';
 import option from './option';
 
-const History = () => {
+const Realtime = () => {
     const filter = useFilter();
     const ref = useRef<HTMLDivElement>(null);
-    const [instance] = useEcharts(() => ref.current as HTMLDivElement);
-    const [params, setParams] = useState<Params>(defaultParams);
+    const [params, setParams] = useState<Params>({});
     const addAndDelParams = useCallback(getAddAndDelParams(setParams), []);
-    const { data } = usePointHistory(getRequestParams(params));
+    const [instance] = useEcharts(() => ref.current as HTMLDivElement);
+    const data = useData(params);
     const { empty, emptyTip } = useMemo(() => getEmpty(data, params), [data, params]);
 
     // 更新option
@@ -36,4 +37,4 @@ const History = () => {
     );
 };
 
-export default History;
+export default Realtime;

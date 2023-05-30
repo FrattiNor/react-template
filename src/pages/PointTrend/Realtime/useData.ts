@@ -1,11 +1,7 @@
+import { useCallback, useEffect, useState } from 'react';
 import { PointItem } from '@/services/pointTrend';
-import { useCallback, useState } from 'react';
 import useMqtt from '@/hooks/useMqtt';
-
-type EchartsValueItem = {
-    name: string;
-    value: [number, number | null];
-};
+import { Params } from './type';
 
 type Res = Record<string, PointItem>;
 
@@ -20,26 +16,24 @@ const subscribeTopic = 'realtime/web/{id}/realtimeTrendChart';
 const willTopic = 'web/realtime/disconnect/{id}/realtimeTrendChart';
 const publishTopic = 'web/realtime/connect/{id}/realtimeTrendChart';
 
-const useData = ({ fullPointTags }: { fullPointTags: string[] }) => {
-    const [maps, setMaps] = useState<Record<string, EchartsValueItem[]>>({});
+const useData = ({ fullPointTags }: Params) => {
+    const [data, setData] = useState<Record<string, PointItem[]>>({});
 
-    useMqtt({
+    const client = useMqtt({
         will: willTopic,
-        onConnect: ({ client }) => {
-            client.subscribe(subscribeTopic, () => {
-                const payload = JSON.stringify(fullPointTags.map((fullPointTag) => ({ fullPointTag })));
-                client.publish(publishTopic, payload);
-            });
+        onConnect: ({ client: _client }) => {
+            _client.subscribe(subscribeTopic);
         },
         onMessage: useCallback((_: any, payload: Res) => {
-            setMaps((beforeMap) => {
+            setData((beforeMap) => {
                 const nextMap = { ...beforeMap };
-                Object.entries(payload).forEach(([k, { pointTag, timestamp, value }]) => {
-                    const count = value === null ? null : Number(value);
+                Object.entries(payload).forEach(([k, { pointTag, timestamp, value, datasourceName }]) => {
                     if (!nextMap[k]) nextMap[k] = [];
                     nextMap[k].push({
-                        name: pointTag,
-                        value: [formatTimestamp(Number(timestamp)), count],
+                        value,
+                        pointTag,
+                        datasourceName,
+                        timestamp: `${formatTimestamp(Number(timestamp))}`,
                     });
                     // 多于31个，取31个
                     if (nextMap[k].length > 31) {
@@ -51,7 +45,14 @@ const useData = ({ fullPointTags }: { fullPointTags: string[] }) => {
         }, []),
     });
 
-    return maps;
+    useEffect(() => {
+        if (Array.isArray(fullPointTags) && fullPointTags.length > 0) {
+            const payload = JSON.stringify(fullPointTags.map((fullPointTag) => ({ fullPointTag })));
+            client.publish(publishTopic, payload);
+        }
+    }, [fullPointTags]);
+
+    return data;
 };
 
 export default useData;

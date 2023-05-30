@@ -1,7 +1,8 @@
-import { useEffect, useLayoutEffect, useState } from 'react';
+import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import ResizeObserver from 'resize-observer-polyfill';
 import { echarts } from '@/utils/echarts';
 
+// 加载echarts实例
 const useEcharts = (getElement: () => HTMLElement | undefined) => {
     const [instance, setInstance] = useState<echarts.ECharts>();
 
@@ -23,11 +24,17 @@ const useEcharts = (getElement: () => HTMLElement | undefined) => {
     return [instance];
 };
 
-const useEchartsOption = (instance: echarts.ECharts | undefined, option: any) => {
+// 加载首次option
+const useFirstOption = (instance: echarts.ECharts | undefined, option: any) => {
+    const rendered = useRef(false);
+
     useEffect(() => {
-        if (instance) instance.setOption(option);
+        if (!rendered.current && instance && option) {
+            instance.setOption(option);
+            rendered.current = true;
+        }
     }, [instance, option]);
 };
 
-export { useEchartsOption };
+export { useFirstOption };
 export default useEcharts;

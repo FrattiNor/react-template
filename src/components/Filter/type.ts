@@ -20,6 +20,7 @@ export type InputItem = {
     name: string;
     label: string;
     placeholder?: string;
+    array?: boolean;
 };
 
 export type SelectItem<T> = {

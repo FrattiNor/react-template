@@ -1,13 +1,13 @@
-import { tooltipConfig, echartsUse } from '@/utils/echarts';
+import { echartsUse, tooltipConfig } from '@/utils/echarts';
 import timeTool from '@/utils/timeTool';
 
-echartsUse(['grid', 'tooltip', 'line']);
+echartsUse(['line', 'tooltip', 'grid']);
 
 const option = {
     grid: {
         top: 24,
         left: 12,
-        right: 12,
+        right: 30,
         bottom: 12,
         containLabel: true,
     },
@@ -41,19 +41,19 @@ const option = {
         splitLine: {
             show: false,
         },
-        splitNumber: 6,
+        interval: 1000,
         minInterval: 1000,
+        maxInterval: 1000,
+        min: 'dataMin',
+        max: (value: any) => {
+            return value.min + 30001;
+        },
         axisLabel: {
-            hideOverlap: true,
-            formatter: {
-                year: '{yyyy}',
-                month: '{yyyy}-{MM}',
-                day: '{MM}-{dd}',
-                hour: '{HH}:{mm}',
-                minute: '{HH}:{mm}',
-                second: '{HH}:{mm}:{ss}',
-                millisecond: '{HH}:{mm}:{ss}',
-                none: '{yyyy}-{MM}-{dd} {HH}:{mm}:{ss}',
+            formatter: (p: any, i: any) => {
+                if (i % 6 === 1) {
+                    return timeTool.toStrByNum(p, 'HH:mm:ss');
+                }
+                return '';
             },
         },
     },
@@ -63,6 +63,7 @@ const option = {
         minInterval: 1,
     },
     series: [],
+    animation: false,
 };
 
 export default option;
