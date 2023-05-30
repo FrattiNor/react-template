@@ -6,9 +6,23 @@ const iconfontJSON = {
     description: '',
     glyphs: [
         {
+            icon_id: '705711',
+            name: '暂停',
+            font_class: 'stop',
+            unicode: 'e635',
+            unicode_decimal: 58933,
+        },
+        {
+            icon_id: '2076218',
+            name: '播放2',
+            font_class: 'play',
+            unicode: 'e87c',
+            unicode_decimal: 59516,
+        },
+        {
             icon_id: '35219686',
             name: '总览',
-            font_class: 'overview2',
+            font_class: 'overview',
             unicode: 'e601',
             unicode_decimal: 58881,
         },
@@ -18,13 +32,6 @@ const iconfontJSON = {
             font_class: 'trend',
             unicode: 'e63c',
             unicode_decimal: 58940,
-        },
-        {
-            icon_id: '6241660',
-            name: '后台总览',
-            font_class: 'overview',
-            unicode: 'e625',
-            unicode_decimal: 58917,
         },
         {
             icon_id: '1857393',

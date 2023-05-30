@@ -1,24 +1,19 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import getAddAndDelParams from '@/utils/addAndDelParams';
+import { FC, useEffect, useRef } from 'react';
 import { getSeries } from '../History/utils';
+import Iconfont from '@/components/Iconfont';
 import useEcharts from '@/hooks/useEcharts';
 import styles from './index.module.less';
 import Filter from '@/components/Filter';
 import useFilter from './useFilter';
-import { getEmpty } from './utils';
-import { Params } from './type';
-import useData from './useData';
 import Switch from '../Switch';
+import { Props } from './type';
 import option from './option';
 
-const Realtime = () => {
+const Realtime: FC<Props> = ({ realtimeData }) => {
     const filter = useFilter();
     const ref = useRef<HTMLDivElement>(null);
-    const [params, setParams] = useState<Params>({});
-    const addAndDelParams = useCallback(getAddAndDelParams(setParams), []);
     const [instance] = useEcharts(() => ref.current as HTMLDivElement);
-    const data = useData(params);
-    const { empty, emptyTip } = useMemo(() => getEmpty(data, params), [data, params]);
+    const { data, play, setPlay, params, addAndDelParams, empty, emptyTip } = realtimeData;
 
     // 更新option
     useEffect(() => {
@@ -27,12 +22,22 @@ const Realtime = () => {
         }
     }, [data, instance]);
 
+    // 取消挂载暂停
+    useEffect(() => {
+        return () => {
+            setPlay(false);
+        };
+    }, []);
+
     return (
         <div className={styles['wrapper']}>
             <div ref={ref} className={styles['chart']} style={{ visibility: empty ? 'hidden' : 'visible' }} />
             {empty && <div className={styles['empty']}>{emptyTip}</div>}
             <Filter filterList={filter} params={params} addAndDelParams={addAndDelParams} />
             <Switch />
+            <div className={styles['btn']} onClick={() => setPlay((v) => !v)}>
+                <Iconfont icon={play ? 'stop' : 'play'} />
+            </div>
         </div>
     );
 };

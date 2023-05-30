@@ -1,3 +1,5 @@
+import useHistoryData from './useHistoryData';
+
 export type Params = {
     startTime?: Date;
     endTime?: Date;
@@ -7,4 +9,8 @@ export type Params = {
 export type EchartsValueItem = {
     name: string;
     value: [number, number | null];
+};
+
+export type Props = {
+    historyData: ReturnType<typeof useHistoryData>;
 };

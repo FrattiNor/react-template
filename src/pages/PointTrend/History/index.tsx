@@ -1,23 +1,18 @@
-import { defaultParams, getEmpty, getRequestParams, getSeries } from './utils';
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import getAddAndDelParams from '@/utils/addAndDelParams';
-import { usePointHistory } from '@/services/pointTrend';
+import { FC, useEffect, useRef } from 'react';
 import useEcharts from '@/hooks/useEcharts';
 import Filter from '@/components/Filter';
 import styles from './index.module.less';
 import useFilter from './useFilter';
-import { Params } from './type';
+import { getSeries } from './utils';
 import Switch from '../Switch';
+import { Props } from './type';
 import option from './option';
 
-const History = () => {
+const History: FC<Props> = ({ historyData }) => {
     const filter = useFilter();
     const ref = useRef<HTMLDivElement>(null);
     const [instance] = useEcharts(() => ref.current as HTMLDivElement);
-    const [params, setParams] = useState<Params>(defaultParams);
-    const addAndDelParams = useCallback(getAddAndDelParams(setParams), []);
-    const { data } = usePointHistory(getRequestParams(params));
-    const { empty, emptyTip } = useMemo(() => getEmpty(data, params), [data, params]);
+    const { data, params, addAndDelParams, empty, emptyTip } = historyData;
 
     // 更新option
     useEffect(() => {

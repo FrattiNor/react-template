@@ -61,6 +61,12 @@ const option = {
         type: 'value',
         scale: true,
         minInterval: 1,
+        axisLabel: {
+            formatter: (value: any) => {
+                if (String(value).includes('.')) return '';
+                return value;
+            },
+        },
     },
     series: [],
 };

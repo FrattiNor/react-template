@@ -16,8 +16,8 @@ const subscribeTopic = 'realtime/web/{id}/realtimeTrendChart';
 const willTopic = 'web/realtime/disconnect/{id}/realtimeTrendChart';
 const publishTopic = 'web/realtime/connect/{id}/realtimeTrendChart';
 
-const useData = ({ fullPointTags }: Params) => {
-    const [data, setData] = useState<Record<string, PointItem[]>>({});
+const useData = ({ fullPointTags }: Params, play: boolean) => {
+    const [data, setData] = useState<Record<string, PointItem[]> | undefined>(undefined);
 
     const client = useMqtt({
         will: willTopic,
@@ -26,7 +26,7 @@ const useData = ({ fullPointTags }: Params) => {
         },
         onMessage: useCallback((_: any, payload: Res) => {
             setData((beforeMap) => {
-                const nextMap = { ...beforeMap };
+                const nextMap = { ...(beforeMap || {}) };
                 Object.entries(payload).forEach(([k, { pointTag, timestamp, value, datasourceName }]) => {
                     if (!nextMap[k]) nextMap[k] = [];
                     nextMap[k].push({
@@ -46,11 +46,19 @@ const useData = ({ fullPointTags }: Params) => {
     });
 
     useEffect(() => {
-        if (Array.isArray(fullPointTags) && fullPointTags.length > 0) {
-            const payload = JSON.stringify(fullPointTags.map((fullPointTag) => ({ fullPointTag })));
-            client.publish(publishTopic, payload);
+        if (play) {
+            // 播放器将数据重置
+            setData(undefined);
+            if (Array.isArray(fullPointTags) && fullPointTags.length > 0) {
+                const payload = JSON.stringify(fullPointTags.map((fullPointTag) => ({ fullPointTag })));
+                client.publish(publishTopic, payload);
+            } else {
+                client.publish(publishTopic, '[]');
+            }
+        } else {
+            client.publish(publishTopic, '[]');
         }
-    }, [fullPointTags]);
+    }, [fullPointTags, play]);
 
     return data;
 };

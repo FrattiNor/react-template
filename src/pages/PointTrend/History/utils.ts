@@ -1,7 +1,6 @@
 import { PointItem } from '@/services/pointTrend';
 import { EchartsValueItem, Params } from './type';
 import timeTool from '@/utils/timeTool';
-import dayjs from 'dayjs';
 
 const pointItemToValueItem = (v: PointItem[]): EchartsValueItem[] => {
     const res: EchartsValueItem[] = [];
@@ -13,11 +12,6 @@ const pointItemToValueItem = (v: PointItem[]): EchartsValueItem[] => {
         });
     });
     return res;
-};
-
-export const defaultParams = {
-    startTime: timeTool.toDateByDay(dayjs().subtract(10, 'minute')),
-    endTime: timeTool.toDateByDay(dayjs()),
 };
 
 export const getRequestParams = (params: Params) => ({
