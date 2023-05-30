@@ -1,7 +1,8 @@
 import useRealtimeData from './Realtime/useRealtimeData';
-import useHistoryData from './History/useHistoryData';
 import SwitchContext, { Type } from './Switch/context';
+import useHistoryData from './History/useHistoryData';
 import BoxShadow from '@/components/Header/boxShadow';
+import Horizontal from '@/components/Horizontal';
 import Realtime from './Realtime';
 import { useState } from 'react';
 import History from './History';
@@ -13,10 +14,12 @@ const Chart = () => {
 
     return (
         <BoxShadow>
-            <SwitchContext.Provider value={{ type, setType }}>
-                {type === 'history' && <History historyData={historyData} />}
-                {type === 'realtime' && <Realtime realtimeData={realtimeData} />}
-            </SwitchContext.Provider>
+            <Horizontal>
+                <SwitchContext.Provider value={{ type, setType }}>
+                    {type === 'history' && <History historyData={historyData} />}
+                    {type === 'realtime' && <Realtime realtimeData={realtimeData} />}
+                </SwitchContext.Provider>
+            </Horizontal>
         </BoxShadow>
     );
 };

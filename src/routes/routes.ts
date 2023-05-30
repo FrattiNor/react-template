@@ -45,29 +45,10 @@ const routes: Array<Route> = [
                     },
                 ],
             },
-            // {
-            //     // 次级页面
-            //     path: '/',
-            //     type: 'second',
-            //     children: [
-            //         {
-            //             path: 'overview',
-            //             icon: 'overview',
-            //             title: '总貌图',
-            //             LazyComponent: () => import('@/pages/Overview'),
-            //         },
-            //         {
-            //             path: 'chart',
-            //             icon: 'trend',
-            //             title: '趋势图',
-            //             LazyComponent: () => import('@/pages/PointTrend'),
-            //         },
-            //     ],
-            // },
             {
-                // 横屏
+                // 次级页面
                 path: '/',
-                type: 'horizontal',
+                type: 'second',
                 children: [
                     {
                         path: 'overview',
@@ -83,6 +64,25 @@ const routes: Array<Route> = [
                     },
                 ],
             },
+            // {
+            //     // 横屏
+            //     path: '/',
+            //     type: 'horizontal',
+            //     children: [
+            //         {
+            //             path: 'overview',
+            //             icon: 'overview',
+            //             title: '总貌图',
+            //             LazyComponent: () => import('@/pages/Overview'),
+            //         },
+            //         {
+            //             path: 'chart',
+            //             icon: 'trend',
+            //             title: '趋势图',
+            //             LazyComponent: () => import('@/pages/PointTrend'),
+            //         },
+            //     ],
+            // },
             {
                 // 详情页面
                 path: '/',
