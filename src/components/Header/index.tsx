@@ -23,8 +23,8 @@ const Header: FC<Props> = ({ children }) => {
             <div className={styles['wrapper']}>
                 <div className={styles['header']}>
                     <div className={styles['left']}>
-                        {!showMenu && <Iconfont icon="arrow-left-2" onClick={goBack} />}
-                        {showMenu && <Iconfont icon="menu" onClick={() => setMenuVisible(true)} />}
+                        {!showMenu && <Iconfont icon="arrow-left-2" className={styles['icon']} onClick={goBack} />}
+                        {showMenu && <Iconfont icon="menu" className={styles['icon']} onClick={() => setMenuVisible(true)} />}
                     </div>
                     <div className={styles['middle']}>{title}</div>
                     <div className={styles['right']} />

@@ -1,4 +1,4 @@
-import { Fragment, useCallback, useMemo, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import VirtualizerList from '@/components/VirtualizerList';
 import { CustomSelectProps } from './CustomSelect';
 import styles from './CustomPopup.module.less';
@@ -81,7 +81,8 @@ function CustomPopup<T>({ fieldKeysOpt, setVisible, value, onChange, multiple, l
     );
 
     return (
-        <Fragment>
+        // class popup来自index.css，受强制横屏的max-height高度限制
+        <div className={classNames(styles['wrapper'], 'popup')}>
             <div className={styles['top']}>
                 <div className={styles['button']} onClick={cancel}>
                     取消
@@ -112,7 +113,7 @@ function CustomPopup<T>({ fieldKeysOpt, setVisible, value, onChange, multiple, l
                     );
                 }}
             />
-        </Fragment>
+        </div>
     );
 }
 

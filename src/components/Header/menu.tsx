@@ -2,8 +2,8 @@ import { useNavigate } from 'react-router-dom';
 import styles from './menu.module.less';
 import { Popup } from 'antd-mobile';
 import { MenuProps } from './type';
-import { FC } from 'react';
 import Iconfont from '../Iconfont';
+import { FC } from 'react';
 
 const Menu: FC<MenuProps> = ({ menuVisible, setMenuVisible, routes }) => {
     const navigate = useNavigate();

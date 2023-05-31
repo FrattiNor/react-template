@@ -5,7 +5,7 @@
 
     .header {
         z-index: 2;
-        padding: 12px;
+
         flex-shrink: 0;
         font-size: 18px;
         position: relative;
@@ -18,9 +18,16 @@
         .left {
             width: 50px;
             flex-shrink: 0;
+            display: flex;
+            align-items: center;
+
+            .icon {
+                padding: 12px;
+            }
         }
 
         .middle {
+            padding: 12px 0;
             width: 0;
             flex-grow: 1;
             text-align: center;
