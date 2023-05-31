@@ -1,4 +1,4 @@
-import { FactoryModelHomePage, FactoryModelListItem } from './type';
+import { BuildConfigListItem, FactoryModelHomePage, FactoryModelListItem } from './type';
 import proxyPrefix from '@proxy/proxyPrefix';
 import request from '@/utils/request';
 
@@ -13,5 +13,12 @@ export const getFactoryModelTree = () => {
 export const getFactoryModelHomePage = () => {
     return request.GET<FactoryModelHomePage>({
         url: `${proxyPrefix.basic}/page-config/page-menu/home-page`,
+    });
+};
+
+// 获取跳转参数，点击跳转前获取
+export const getFactoryModelInfo = (factoryModelId: string) => {
+    return request.GET<BuildConfigListItem>({
+        url: `${proxyPrefix.basic}/page-config/factory-model/${factoryModelId}`,
     });
 };

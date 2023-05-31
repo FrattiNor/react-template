@@ -1,4 +1,5 @@
-import { FactoryModelListItem } from '@/services/overview';
+import useIp from '@/hooks/useIp';
+import { BuildConfigListItem, FactoryModelListItem } from '@/services/overview';
 
 export type HandleTreeItem = {
     label: string;
@@ -32,4 +33,42 @@ export const handleFactoryModelTree = (tree2: FactoryModelListItem[], beforeId?:
     });
 
     return { tree, idMap };
+};
+
+export const useUrl = (data: BuildConfigListItem | null | undefined) => {
+    let url = '';
+
+    const constValue = useIp();
+
+    const cabinet = { id: '', system: '' };
+
+    const { type, forwardUrl, pageForward, cabinetForward } = data || {};
+
+    switch (type) {
+        case 'cabinet': {
+            if (cabinetForward) {
+                const { system, cabinetId } = cabinetForward;
+                url = `/systemDiagnosis/${system}/${cabinetId}`;
+                cabinet.id = cabinetId;
+                cabinet.system = system;
+            }
+            break;
+        }
+        case 'page': {
+            if (pageForward) {
+                const { pageCode } = pageForward;
+                const { suposIp, suposPort, suposProtocol } = constValue;
+                url = `${suposProtocol}://${suposIp}:${suposPort}/main/#/runtime-fullscreen/runtime-fullscreen/${pageCode}`;
+            }
+            break;
+        }
+        case 'url': {
+            url = forwardUrl || '';
+            break;
+        }
+        default:
+            break;
+    }
+
+    return { url, type, cabinet };
 };

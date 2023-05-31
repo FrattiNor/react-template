@@ -1,11 +1,9 @@
 import { setTitle } from '@/store/reducer/global';
-import { useConstValue } from '@/services/global';
 import { useMatches } from 'react-router-dom';
 import { useDispatch } from '@/store';
 import { useEffect } from 'react';
 
 const useTitle = () => {
-    useConstValue();
     const matches = useMatches();
     const dispatch = useDispatch();
 
