@@ -15,7 +15,7 @@ const pointItemToValueItem = (v: PointItem[]): EchartsValueItem[] => {
 };
 
 export const getRequestParams = (params: Params) => ({
-    fullPointTags: params.fullPointTags,
+    fullPointTags: params.fullPointTags?.map((item) => item),
     startTime: params.startTime ? timeTool.toNumByDate(params.startTime) : undefined,
     endTime: params.endTime ? timeTool.toNumByDate(params.endTime) : undefined,
 });

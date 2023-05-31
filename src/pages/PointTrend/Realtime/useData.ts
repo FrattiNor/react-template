@@ -50,7 +50,7 @@ const useData = ({ fullPointTags }: Params, play: boolean) => {
             // 播放器将数据重置
             setData(undefined);
             if (Array.isArray(fullPointTags) && fullPointTags.length > 0) {
-                const payload = JSON.stringify(fullPointTags.map((fullPointTag) => ({ fullPointTag })));
+                const payload = JSON.stringify(fullPointTags.map((item) => item).map((fullPointTag) => ({ fullPointTag })));
                 client.publish(publishTopic, payload);
             } else {
                 client.publish(publishTopic, '[]');
