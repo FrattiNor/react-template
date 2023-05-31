@@ -6,11 +6,18 @@ const iconfontJSON = {
     description: '',
     glyphs: [
         {
-            icon_id: '705711',
-            name: '暂停',
+            icon_id: '1444510',
+            name: 'file-tree',
+            font_class: 'tree',
+            unicode: 'e736',
+            unicode_decimal: 59190,
+        },
+        {
+            icon_id: '1262198',
+            name: 'stop',
             font_class: 'stop',
-            unicode: 'e635',
-            unicode_decimal: 58933,
+            unicode: 'e70e',
+            unicode_decimal: 59150,
         },
         {
             icon_id: '2076218',

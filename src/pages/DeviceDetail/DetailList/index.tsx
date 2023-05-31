@@ -1,6 +1,6 @@
 import InfiniteLists from '@/components/InfiniteLists';
 import useAlarmData from '@/pages/Alarm/useAlarmData';
-import useLogData from './handleLog/useLogData';
+import useLogData from './HandleLog2/useLogData';
 import { FC } from 'react';
 
 type Props = {

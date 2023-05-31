@@ -4,6 +4,7 @@ import { Picker, Popup } from 'antd-mobile';
 import Value from '../_components/value';
 import { SelectItem } from '../../type';
 import CustomPopup from './CustomPopup';
+import { getObj } from './utils';
 
 export type CustomSelectProps<T> = Omit<SelectItem<T>, 'option'> & {
     opt: T[];
@@ -18,26 +19,7 @@ function CustomSelect<T>(props: CustomSelectProps<T>) {
     const { value, placeholder, visible, setVisible, opt, fieldKeys } = props;
 
     // 获取{label,value}形式的option，同时获取map，方便展示value
-    const { optObj, fieldKeysOpt } = useMemo(() => {
-        const _optObj: Record<string, string> = {};
-        const _fieldKeysOpt: { label: string; value: string }[] = [];
-
-        opt.forEach((item) => {
-            let _label = '';
-            let _value = '';
-            if (fieldKeys) {
-                _value = (fieldKeys === 'isStringArray' ? item : item[fieldKeys.value]) as string;
-                _label = (fieldKeys === 'isStringArray' ? item : item[fieldKeys.label]) as string;
-            } else {
-                _value = (item as any)['value'];
-                _label = (item as any)['label'];
-            }
-            _optObj[_value] = _label;
-            _fieldKeysOpt.push({ label: _label, value: _value });
-        });
-
-        return { optObj: _optObj, fieldKeysOpt: _fieldKeysOpt };
-    }, [opt]);
+    const { optObj, fieldKeysOpt } = useMemo(() => getObj(opt, fieldKeys), [opt]);
 
     return (
         <Fragment>
