@@ -82,8 +82,9 @@ function List<T>({ data, renderItem, rowKey, enableScroll, enablePullDown, enabl
                                     );
                                 } else {
                                     const item = data[index];
+                                    // data可能突然减少，而list没来得及更新
+                                    if (!item) return null;
                                     const key = getRowKey(item, index);
-
                                     return (
                                         <div
                                             key={key}

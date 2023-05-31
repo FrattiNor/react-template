@@ -11,6 +11,7 @@ import FilterSelect from './Items/Select';
 import FilterInput from './Items/Input';
 import { isEmpty } from '@/utils/tools';
 import { ContentProps } from './type';
+import classNames from 'classnames';
 
 const Content: FC<ContentProps> = ({ params, filterList, setVisible, addAndDelParams }) => {
     const [form] = Form.useForm();
@@ -38,45 +39,44 @@ const Content: FC<ContentProps> = ({ params, filterList, setVisible, addAndDelPa
     };
 
     return (
-        <div className={styles['wrapper']}>
-            <div className={styles['form-container']}>
-                <Form form={form} className={styles['form']} mode="card" initialValues={params}>
-                    {filterList.map((item, i) => {
-                        let res = <Fragment />;
-                        switch (item.type) {
-                            case 'input':
-                                // 如果是array直接返回
-                                if (item.array) return <Fragment key={i}>{renderArray(item.name, item.label, FilterInput, item)}</Fragment>;
-                                res = <FilterInput {...item} />;
-                                break;
-                            case 'select':
-                                res = <FilterSelect {...item} />;
-                                break;
-                            case 'block-select':
-                                res = <FilterBlockSelect {...item} />;
-                                break;
-                            case 'date-picker':
-                                res = <FilterDatePicker {...item} />;
-                                break;
-                            case 'rang-picker':
-                                res = <FilterRangPicker {...item} />;
-                                break;
-                            case 'cascader':
-                                res = <FilterCascader {...item} />;
-                                break;
-                            default:
-                                res = <Fragment />;
-                                break;
-                        }
-                        return (
-                            <Fragment key={i}>
-                                {res}
-                                <Form.Header />
-                            </Fragment>
-                        );
-                    })}
-                </Form>
-            </div>
+        // class popup来自index.css，受强制横屏的max-height高度限制
+        <div className={classNames(styles['wrapper'], 'popup')}>
+            <Form form={form} className={styles['form']} mode="card" initialValues={params}>
+                {filterList.map((item, i) => {
+                    let res = <Fragment />;
+                    switch (item.type) {
+                        case 'input':
+                            // 如果是array直接返回
+                            if (item.array) return <Fragment key={i}>{renderArray(item.name, item.label, FilterInput, item)}</Fragment>;
+                            res = <FilterInput {...item} />;
+                            break;
+                        case 'select':
+                            res = <FilterSelect {...item} />;
+                            break;
+                        case 'block-select':
+                            res = <FilterBlockSelect {...item} />;
+                            break;
+                        case 'date-picker':
+                            res = <FilterDatePicker {...item} />;
+                            break;
+                        case 'rang-picker':
+                            res = <FilterRangPicker {...item} />;
+                            break;
+                        case 'cascader':
+                            res = <FilterCascader {...item} />;
+                            break;
+                        default:
+                            res = <Fragment />;
+                            break;
+                    }
+                    return (
+                        <Fragment key={i}>
+                            {res}
+                            <Form.Header />
+                        </Fragment>
+                    );
+                })}
+            </Form>
 
             <div className={styles['foot']}>
                 <Button color="primary" fill="outline" onClick={reset}>

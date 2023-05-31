@@ -2,7 +2,7 @@ import useRealtimeData from './Realtime/useRealtimeData';
 import SwitchContext, { Type } from './Switch/context';
 import useHistoryData from './History/useHistoryData';
 import BoxShadow from '@/components/Header/boxShadow';
-import Horizontal2 from '@/components/Horizontal';
+import Horizontal2 from '@/components/Horizontal2';
 import Realtime from './Realtime';
 import { useState } from 'react';
 import History from './History';

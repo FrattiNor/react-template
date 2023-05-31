@@ -74,4 +74,8 @@ body {
         transform-origin: 0 0;
         transform: rotate(90deg) translateY(-100vw);
     }
+
+    body.v-h .popup {
+        max-height: 100vw;
+    }
 }
