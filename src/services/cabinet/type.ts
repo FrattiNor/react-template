@@ -20,3 +20,14 @@ export type ECS700Detail = {
     powerCards: CardDetail[];
     racks: number[];
 };
+
+export type CardInfo = {
+    layoutId: string;
+    children: CardInfo[] | null;
+    itemValue: string;
+    itemName: string;
+    itemType: string;
+    diagLevel: number;
+    diagStatus: number;
+    lastUpdateTime: string;
+};

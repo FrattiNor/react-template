@@ -1,18 +1,8 @@
-import {
-    useCabinetStyle,
-    useConnectCards,
-    useConnectStyle,
-    useControlCards,
-    useControlStyle,
-    useDefaultItem,
-    useIoCards,
-    useIoStyle,
-    usePowerStyle,
-} from './utils';
+import { useConnectCards, useControlCards, useDefaultItem, useIoCards, useStyle } from './utils';
 import { useECS700Detail } from '@/services/cabinet';
 import { FC, useCallback, useState } from 'react';
 import styles from './index.module.less';
-import classNames from 'classnames';
+import Info from './Info';
 
 type Props = {
     id: string;
@@ -20,15 +10,10 @@ type Props = {
 };
 
 const Cabinet: FC<Props> = ({ id, system }) => {
-    const { cabinetRef, cabinetStyle } = useCabinetStyle();
-    const { controlRef, controlStyle } = useControlStyle();
-    const { connectRef, connectStyle } = useConnectStyle();
-    const { powerRef, powerStyle } = usePowerStyle();
-    const { ioRef, ioStyle } = useIoStyle();
-
     const { data } = useECS700Detail(id);
-    const [_title, setTitle] = useState('');
+    const [title, setTitle] = useState('');
     const [activeId, setActiveId] = useState('');
+    const { cabinetDemo, cabinetStyle, controlStyle, connectStyle, powerStyle, ioStyle } = useStyle();
 
     const clickItem = useCallback(({ cardId, address, model }: { cardId: string; address: string; model: string }) => {
         setActiveId(cardId);
@@ -44,21 +29,6 @@ const Cabinet: FC<Props> = ({ id, system }) => {
 
     return (
         <div className={styles['wrapper']}>
-            <div ref={cabinetRef} className={classNames(styles['cabinet'], styles['hidden'])}>
-                <div className={styles['top']}>
-                    <div ref={controlRef} className={styles['control']} />
-                    <div ref={connectRef} className={styles['connect']} />
-                </div>
-                <div className={styles['middle-left']}>
-                    <div className={styles['line']}>
-                        <div ref={ioRef} className={styles['io']} />
-                    </div>
-                </div>
-                <div className={styles['bottom']}>
-                    <div ref={powerRef} className={styles['power']} />
-                </div>
-            </div>
-
             {[1, 2].map((currentPos) => (
                 <div key={currentPos} className={styles['cabinet']} style={cabinetStyle}>
                     <div className={styles['top']}>
@@ -80,6 +50,10 @@ const Cabinet: FC<Props> = ({ id, system }) => {
                     </div>
                 </div>
             ))}
+
+            {cabinetDemo}
+
+            <Info activeId={activeId} title={title} />
         </div>
     );
 };

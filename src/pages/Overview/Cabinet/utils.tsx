@@ -68,6 +68,33 @@ export const usePowerStyle = () => {
     return { powerRef, powerStyle };
 };
 
+export const useStyle = () => {
+    const { cabinetRef, cabinetStyle } = useCabinetStyle();
+    const { controlRef, controlStyle } = useControlStyle();
+    const { connectRef, connectStyle } = useConnectStyle();
+    const { powerRef, powerStyle } = usePowerStyle();
+    const { ioRef, ioStyle } = useIoStyle();
+
+    const cabinetDemo = (
+        <div ref={cabinetRef} className={classNames(styles['cabinet'], styles['hidden'])}>
+            <div className={styles['top']}>
+                <div ref={controlRef} className={styles['control']} />
+                <div ref={connectRef} className={styles['connect']} />
+            </div>
+            <div className={styles['middle-left']}>
+                <div className={styles['line']}>
+                    <div ref={ioRef} className={styles['io']} />
+                </div>
+            </div>
+            <div className={styles['bottom']}>
+                <div ref={powerRef} className={styles['power']} />
+            </div>
+        </div>
+    );
+
+    return { cabinetDemo, cabinetStyle, controlStyle, connectStyle, powerStyle, ioStyle };
+};
+
 const getIoCardsMap = (ioCards?: (CardDetail | null)[]) => {
     const ioCardsObj: Record<string, CardDetail> = {};
 
