@@ -1,14 +1,10 @@
 .wrapper {
-    display: flex;
     overflow: hidden;
-    flex-direction: column;
     background-color: var(--m-card-down-bg-color);
 
     .form {
-        min-height: 0;
-        flex-shrink: 1;
         overflow: auto;
-        max-height: 60vh;
+        max-height: 240px;
 
         // 变更form下字体大小
         // label
@@ -18,12 +14,11 @@
     }
 
     .foot {
-        flex-shrink: 0;
-        background-color: var(--m-bg-color);
         padding: 12px;
         display: flex;
         align-items: center;
         justify-content: space-between;
+        background-color: var(--m-bg-color);
         border-top: 1px solid var(--m-border-color);
 
         button {

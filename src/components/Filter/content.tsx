@@ -11,7 +11,6 @@ import FilterSelect from './Items/Select';
 import FilterInput from './Items/Input';
 import { isEmpty } from '@/utils/tools';
 import { ContentProps } from './type';
-import classNames from 'classnames';
 
 const Content: FC<ContentProps> = ({ params, filterList, setVisible, addAndDelParams }) => {
     const [form] = Form.useForm();
@@ -39,8 +38,7 @@ const Content: FC<ContentProps> = ({ params, filterList, setVisible, addAndDelPa
     };
 
     return (
-        // class popup来自index.css，受强制横屏的max-height高度限制
-        <div className={classNames(styles['wrapper'], 'popup')}>
+        <div className={styles['wrapper']}>
             <Form form={form} className={styles['form']} mode="card" initialValues={params}>
                 {filterList.map((item, i) => {
                     let res = <Fragment />;

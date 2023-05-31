@@ -1,64 +1,55 @@
-.wrapper {
+.top {
+    padding: 0;
+    font-size: 15px;
     display: flex;
-    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--m-border-color);
 
-    .top {
-        flex-shrink: 0;
-        padding: 0;
-        font-size: 15px;
+    .button {
+        padding: 12px;
+        color: var(--m-primary-color);
+    }
+}
+
+.search {
+    padding: 12px;
+    border-bottom: 1px solid var(--m-border-color);
+}
+
+.content {
+    height: 240px;
+
+    .item {
+        padding: 12px;
         display: flex;
         align-items: center;
-        justify-content: space-between;
-        border-bottom: 1px solid var(--m-border-color);
 
-        .button {
-            padding: 12px;
-            color: var(--m-primary-color);
+        &:active {
+            background-color: var(--m-bg-hover-color);
         }
-    }
 
-    .search {
-        flex-shrink: 0;
-        padding: 12px;
-        border-bottom: 1px solid var(--m-border-color);
-    }
+        .label {
+            flex-grow: 1;
+            flex-shrink: 1;
+            overflow: hidden;
+            white-space: nowrap;
+            word-break: break-all;
+            text-overflow: ellipsis;
 
-    .content {
-        height: 50vh;
-        min-height: 0;
-        flex-shrink: 1;
-
-        .item {
-            padding: 12px;
-            display: flex;
-            align-items: center;
-
-            &:active {
-                background-color: var(--m-bg-hover-color);
-            }
-
-            .label {
-                flex-grow: 1;
-                flex-shrink: 1;
-                overflow: hidden;
-                white-space: nowrap;
-                word-break: break-all;
-                text-overflow: ellipsis;
-
-                &.checked {
-                    color: var(--m-primary-color);
-                }
-            }
-
-            .icon {
-                opacity: 0;
-                flex-shrink: 0;
-                font-size: 16px;
+            &.checked {
                 color: var(--m-primary-color);
+            }
+        }
 
-                &.show {
-                    opacity: 1;
-                }
+        .icon {
+            opacity: 0;
+            flex-shrink: 0;
+            font-size: 16px;
+            color: var(--m-primary-color);
+
+            &.show {
+                opacity: 1;
             }
         }
     }

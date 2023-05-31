@@ -1,5 +1,5 @@
 import BoxShadow from '@/components/Header/boxShadow';
-import Horizontal2 from '@/components/Horizontal';
+import Horizontal2 from '@/components/Horizontal2';
 import FactorySelect from './factorySelect';
 import styles from './index.module.less';
 
