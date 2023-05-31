@@ -1,6 +1,6 @@
 import { FactoryModelListItem } from '@/services/overview';
 
-type HandleTreeItem = {
+export type HandleTreeItem = {
     label: string;
     value: string;
     ids: string[];
