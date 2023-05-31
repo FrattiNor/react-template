@@ -1,8 +1,7 @@
 import { connect, IClientOptions, MqttClient, OnMessageCallback } from 'mqtt';
-import { useEffect, useMemo, useState } from 'react';
-import { isDev, mqttDevUrl } from '@/env';
-import useMqttUrl from './useMqttUrl';
 import { getWill, replacePublish, replaceSubscribe } from './utils';
+import { useEffect, useMemo, useState } from 'react';
+import useMqttUrl from './useMqttUrl';
 import { nanoid } from 'nanoid';
 
 type OnConnect = ({ client, clientId }: { client: MqttClient; clientId: string }) => void;
@@ -15,8 +14,7 @@ type Option = Omit<IClientOptions, 'will'> & {
 
 const useMqtt = (option: Option) => {
     // url
-    const mqttUrl = useMqttUrl();
-    const url = isDev ? mqttDevUrl : mqttUrl;
+    const url = useMqttUrl();
     // id
     const [clientId] = useState(nanoid());
     // option

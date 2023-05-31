@@ -1,3 +1,4 @@
+import { isDev } from '@/env';
 import { ConstValue, useConstValue } from '@/services/global';
 import { useMemo } from 'react';
 
@@ -8,9 +9,9 @@ const useIp = () => {
         webIp: hostname,
         webPort: port,
         webProtocol: protocol.replace(':', ''),
-        suposIp: hostname,
+        suposIp: '10.50.0.49',
         suposPort: '8080',
-        suposProtocol: protocol.replace(':', ''),
+        suposProtocol: 'http',
         mqttIp: hostname,
         mqttPort: '30326',
         mqttProtocol: 'ws',
@@ -32,7 +33,7 @@ const useIp = () => {
         return c;
     }, [constValues]);
 
-    return constValue;
+    return isDev ? devConstValue : constValue;
 };
 
 export default useIp;

@@ -1,0 +1,142 @@
+.wrapper {
+    height: 100%;
+    padding: 24px;
+    display: flex;
+    box-sizing: border-box;
+
+    .cabinet {
+        width: 0;
+        height: 100%;
+        position: relative;
+        background-size: 100% 100%;
+        background-image: url(../../../assets/cabinetBg.png);
+
+        & + .cabinet {
+            margin-left: 12px;
+        }
+
+        &.hidden {
+            position: absolute;
+            top: 10000px;
+            left: 10000px;
+        }
+
+        .top {
+            position: absolute;
+            width: 70%;
+            height: 8.5%;
+            left: 15%;
+            top: 8%;
+            display: flex;
+            overflow: auto;
+        }
+
+        .middle-left {
+            position: absolute;
+            width: 24%;
+            height: 50%;
+            left: 17%;
+            top: 24.5%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .middle-right {
+            position: absolute;
+            width: 24%;
+            height: 50%;
+            right: 17%;
+            top: 24.5%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .line {
+            width: 65%;
+            height: calc(100% / 9);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            &.circle {
+                border: 0.5px solid var(--m-primary-color);
+                border-radius: 4px;
+            }
+        }
+
+        .bottom {
+            position: absolute;
+            width: 70%;
+            height: 8.5%;
+            left: 15%;
+            bottom: 8.5%;
+            display: flex;
+            overflow: auto;
+        }
+
+        .control {
+            width: 0;
+            height: 100%;
+            flex-shrink: 0;
+            background-size: 100% 100%;
+            background-image: url(../../../assets/masterControl.png);
+            margin-right: 6px;
+
+            &.active {
+                background-image: url(../../../assets/masterControlActive.png);
+            }
+            &.error {
+                background-image: url(../../../assets/masterControlError.png);
+            }
+        }
+
+        .connect {
+            width: 0;
+            height: 100%;
+            flex-shrink: 0;
+            background-size: 100% 100%;
+            background-image: url(../../../assets/connectCards.png);
+            margin-right: 6px;
+
+            &.active {
+                background-image: url(../../../assets/connectCardsActive.png);
+            }
+            &.error {
+                background-image: url(../../../assets/connectCardsError.png);
+            }
+        }
+
+        .io {
+            width: 0;
+            height: 100%;
+            flex-shrink: 0;
+            background-size: 100% 100%;
+            background-image: url(../../../assets/ioCard.png);
+
+            &.active {
+                background-image: url(../../../assets/ioCardActive.png);
+            }
+            &.error {
+                background-image: url(../../../assets/ioCardError.png);
+            }
+        }
+
+        .empty-io {
+            width: 0;
+            height: 100%;
+        }
+
+        .power {
+            width: 0;
+            height: 100%;
+            flex-shrink: 0;
+            background-size: 100% 100%;
+            background-image: url(../../../assets/source.png);
+            margin-right: 6px;
+        }
+    }
+}

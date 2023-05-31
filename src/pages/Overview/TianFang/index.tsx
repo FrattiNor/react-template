@@ -1,11 +1,12 @@
+import styles from './index.module.less';
 import { FC } from 'react';
 
 type Props = {
     url: string;
 };
 
-const TianFang: FC<Props> = () => {
-    return <>TianFang</>;
+const TianFang: FC<Props> = ({ url }) => {
+    return <iframe className={styles['iframe']} src={url} />;
 };
 
 export default TianFang;
