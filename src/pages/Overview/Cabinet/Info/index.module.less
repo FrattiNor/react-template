@@ -21,27 +21,30 @@
         border: 1px solid var(--m-border-color);
 
         .key {
-            width: 50%;
+            width: 60%;
+            flex-shrink: 0;
             padding: 2px 6px;
             overflow: hidden;
             white-space: nowrap;
             text-overflow: ellipsis;
+            box-sizing: border-box;
             border-right: 1px solid var(--m-border-color);
         }
 
         .value {
-            width: 50%;
+            width: 40%;
+            flex-shrink: 0;
             padding: 2px 6px;
             overflow: hidden;
             white-space: nowrap;
+            box-sizing: border-box;
             text-overflow: ellipsis;
         }
     }
 
     .table {
-        height: 0;
-        flex-grow: 1;
         overflow: auto;
+        border-bottom: 1px solid var(--m-border-color);
 
         .line {
             display: flex;
@@ -50,20 +53,40 @@
             border: 1px solid var(--m-border-color);
             border-top: 0;
 
+            &:last-child {
+                border-bottom: 0;
+            }
+
             .key {
-                width: 50%;
+                width: 60%;
+                flex-shrink: 0;
                 padding: 2px 6px;
                 overflow: hidden;
                 white-space: nowrap;
+                box-sizing: border-box;
                 text-overflow: ellipsis;
                 border-right: 1px solid var(--m-border-color);
+
+                .icon {
+                    font-size: 14px;
+                    padding-right: 6px;
+                }
+
+                .empty-icon {
+                    display: inline-block;
+                    vertical-align: middle;
+                    height: 14px;
+                    width: 20px;
+                }
             }
 
             .value {
-                width: 50%;
+                width: 40%;
+                flex-shrink: 0;
                 padding: 2px 6px;
                 overflow: hidden;
                 white-space: nowrap;
+                box-sizing: border-box;
                 text-overflow: ellipsis;
 
                 .error {
@@ -76,5 +99,15 @@
                 }
             }
         }
+    }
+
+    .loading {
+        height: 0;
+        flex-grow: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: 1px solid var(--m-border-color);
+        border-top: 0;
     }
 }
