@@ -4,6 +4,7 @@ import useEcharts from '@/hooks/useEcharts';
 import styles from './index.module.less';
 import { Props } from './type';
 import option from './option';
+import Empty from '@/components/Empty';
 
 type ContentProps = PropsWithChildren<Props>;
 
@@ -23,7 +24,11 @@ const Content: FC<ContentProps> = ({ realtimeData, children }) => {
     return (
         <div className={styles['chart-wrapper']}>
             <div ref={ref} className={styles['chart']} style={{ visibility: empty ? 'hidden' : 'visible' }} />
-            {empty && <div className={styles['empty']}>{emptyTip}</div>}
+            {empty && (
+                <div className={styles['empty']}>
+                    <Empty>{emptyTip}</Empty>
+                </div>
+            )}
             {children}
         </div>
     );

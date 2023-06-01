@@ -2,10 +2,10 @@ import { Fragment, useCallback, useRef } from 'react';
 import useVirtualizer from './hooks/useVirtualizer';
 import useScroll from './hooks/useScroll';
 import LoadingIcon from '../LoadingIcon';
-import EmptySvg from '@/assets/emptySvg';
 import styles from './list.module.less';
 import classNames from 'classnames';
 import { ListProps } from './type';
+import Empty from '../Empty';
 
 function List<T>({ data, renderItem, rowKey, enableScroll, enablePullDown, enableLoadMore, scrollClassName, borderWidth = 0 }: ListProps<T>) {
     const scrollRef = useRef<HTMLDivElement>(null);
@@ -47,10 +47,7 @@ function List<T>({ data, renderItem, rowKey, enableScroll, enablePullDown, enabl
 
                 {empty && (
                     <div className={styles['empty']}>
-                        <div className={styles['empty-inner']}>
-                            <EmptySvg className={styles['icon']} />
-                            <span className={styles['font']}>{`暂无数据`}</span>
-                        </div>
+                        <Empty />
                     </div>
                 )}
 

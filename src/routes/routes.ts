@@ -51,16 +51,16 @@ const routes: Array<Route> = [
                 type: 'second',
                 children: [
                     {
-                        path: 'overview',
-                        icon: 'overview',
-                        title: '总貌图',
-                        LazyComponent: () => import('@/pages/Overview'),
-                    },
-                    {
                         path: 'chart',
                         icon: 'trend',
                         title: '趋势图',
                         LazyComponent: () => import('@/pages/PointTrend'),
+                    },
+                    {
+                        path: 'overview',
+                        icon: 'overview',
+                        title: '工厂报警',
+                        LazyComponent: () => import('@/pages/Overview2'),
                     },
                 ],
             },

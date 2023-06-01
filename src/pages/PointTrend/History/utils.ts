@@ -41,12 +41,12 @@ export const getEmpty = (data: Record<string, PointItem[]> | undefined | null, p
     const start = params.startTime;
     const end = params.endTime;
     const haveTime = start && end;
-    if (!haveTime) return { empty: true, emptyTip: '请选择时间!' };
+    if (!haveTime) return { empty: true, emptyTip: '请选择时间' };
     const point = params.fullPointTags;
     const havePoint = Array.isArray(point) && point.length > 0;
-    if (!havePoint) return { empty: true, emptyTip: '请输入位号!' };
+    if (!havePoint) return { empty: true, emptyTip: '请输入位号' };
     const haveRequest = data === undefined;
     const haveData = data && Object.keys(data).length > 0;
-    if (!(haveData || haveRequest)) return { empty: true, emptyTip: '请输入正确的位号!' };
+    if (!(haveData || haveRequest)) return { empty: true, emptyTip: '请输入正确的位号' };
     return { empty: false, emptyTip: '' };
 };

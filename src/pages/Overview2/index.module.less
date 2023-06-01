@@ -1,0 +1,32 @@
+.wrapper {
+    height: 100%;
+    font-size: 16px;
+    box-sizing: border-box;
+
+    .item {
+        padding: 12px;
+    }
+
+    .empty {
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    table {
+        width: 100%;
+        table-layout: fixed;
+        border-collapse: collapse;
+
+        tr {
+            td {
+                padding: 2px 6px;
+                overflow: hidden;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+                border: 1px solid var(--m-border-color);
+            }
+        }
+    }
+}
