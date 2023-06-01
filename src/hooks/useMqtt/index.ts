@@ -1,5 +1,5 @@
 import { connect, IClientOptions, MqttClient, OnMessageCallback } from 'mqtt';
-import { getWill, replacePublish, replaceSubscribe } from './utils';
+import { getWill, replacePublish, replaceSubscribe, replaceUnSubscribe } from './utils';
 import { useEffect, useMemo, useState } from 'react';
 import useMqttUrl from './useMqttUrl';
 import { nanoid } from 'nanoid';
@@ -22,9 +22,11 @@ const useMqtt = (option: Option) => {
     const clientOption = { ...restOption, will: getWill(clientId, will) };
     // client
     const nativeClient = useMemo(() => connect(url, { clientId, ...clientOption }), []);
+    // replace
     const client = useMemo(() => {
         replaceSubscribe(nativeClient, clientId);
         replacePublish(nativeClient, clientId);
+        replaceUnSubscribe(nativeClient);
         return nativeClient;
     }, [nativeClient]);
     // 初始化函数，onConnect不支持更新

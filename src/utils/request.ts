@@ -53,7 +53,7 @@ class RequestClient {
         const { data, headers } = req;
         switch (Object.prototype.toString.call(data)) {
             case '[object Object]':
-                return this.handleJson(data as ResponseData<T>) as Res<T>;
+                return (this.handleJson(data as ResponseData<T>) || '') as Res<T>;
             case '[object Blob]': {
                 return this.handleBlob(data as Blob, headers) as Res<T>;
             }

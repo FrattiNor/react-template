@@ -22,3 +22,11 @@ export const getFactoryModelInfo = (factoryModelId: string) => {
         url: `${proxyPrefix.basic}/page-config/factory-model/${factoryModelId}`,
     });
 };
+
+// 订阅mqtt【工厂模型订阅】后获取初始值推送
+export const getFactoryMqttInitValue = (data: { type: string; id: string }[]) => {
+    return request.POST({
+        url: `${proxyPrefix.basic}/realtime/alarm-status-mqtt`,
+        data,
+    });
+};

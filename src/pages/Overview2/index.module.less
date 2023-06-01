@@ -5,6 +5,23 @@
 
     .item {
         padding: 12px;
+        display: flex;
+        align-items: center;
+
+        .label {
+            width: 0;
+            min-width: 0;
+            flex-grow: 1;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
+
+        .state {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+        }
     }
 
     .empty {

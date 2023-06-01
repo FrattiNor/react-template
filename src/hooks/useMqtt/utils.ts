@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-types */
 import type {
     ClientSubscribeCallback,
     IClientOptions,
@@ -59,10 +60,7 @@ export const replaceSubscribe = (client: MqttClient, clientId: string) => {
         }
 
         // 执行原生subscribe函数，并替换callback
-        const innerCb = () => {
-            console.log(`已订阅: ${newTopic}`);
-            console.log(newTopic);
-        };
+        const innerCb = () => console.log(`已订阅:`, newTopic);
         if (typeof optsOrCb === 'function' || typeof optsOrCb === 'undefined') {
             nativeSubscribe(newTopic, replaceCallback(innerCb, optsOrCb));
         } else {
@@ -90,18 +88,30 @@ export const replacePublish = (client: MqttClient, clientId: string) => {
         }
 
         // 执行原生publish函数，并替换callback
-        const innerCb = () => {
-            console.log(`已发送: ${newTopic}`);
-            console.log(message);
-        };
+        const innerCb = () => console.log(`已发送:`, newTopic, message);
         if (typeof optsOrCb === 'function' || typeof optsOrCb === 'undefined') {
             nativePublish(newTopic, message, replaceCallback(innerCb, optsOrCb));
         } else {
             nativePublish(newTopic, message, optsOrCb, replaceCallback(innerCb, callback));
         }
-
         return client;
     }
     // 替换publish
     client.publish = publish;
+};
+
+// 替换client的取消订阅函数，内置替换callback
+export const replaceUnSubscribe = (client: MqttClient) => {
+    const nativeUnsubscribe = client.unsubscribe.bind(client);
+    // 重载
+    function unsubscribe(topic: string | string[], opts?: Object, callback?: PacketCallback): MqttClient;
+    // 实现重载
+    function unsubscribe(topic: string | string[], opts?: Object, callback?: PacketCallback) {
+        // 执行原生unsubscribe函数，并替换callback
+        const innerCb = () => console.log(`取消订阅:`, topic);
+        nativeUnsubscribe(topic, opts, replaceCallback(innerCb, callback));
+        return client;
+    }
+    // 替换unsubscribe
+    client.unsubscribe = unsubscribe;
 };

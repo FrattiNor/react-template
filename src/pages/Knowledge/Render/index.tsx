@@ -1,5 +1,6 @@
 import { KnowledgeItem, useDownloadFile, useFileUrl } from '@/services/knowledge';
 import KeyValueTable, { KeyValueProvider, Tr } from '@/components/KeyValueTable';
+import { previewFile } from '@suplink/jssdk';
 import Collapse from '@/components/Collapse';
 import { fileDownload } from '@/utils/file';
 import styles from './index.module.less';
@@ -16,6 +17,12 @@ const useRender = () => {
     const downloadFile = (md5: string, filename: string) => {
         download.mutateAsync(md5).then((res) => {
             if (res) fileDownload(res.blob, filename || res.filename);
+        });
+    };
+
+    const preview = (md5: string) => {
+        fileUrl.mutateAsync(md5).then((url) => {
+            if (url) previewFile({ url }).then((res) => console.log(res));
         });
     };
 
@@ -38,7 +45,7 @@ const useRender = () => {
                         <Button size="small" color="primary" onClick={() => downloadFile(item.md5, item.fileName)}>
                             下载
                         </Button>
-                        <Button size="small" color="primary" disabled={!item.supportView} onClick={() => fileUrl.mutate(item.md5)}>
+                        <Button size="small" color="primary" disabled={!item.supportView} onClick={() => preview(item.md5)}>
                             预览
                         </Button>
                     </div>

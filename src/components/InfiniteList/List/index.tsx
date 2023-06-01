@@ -27,7 +27,7 @@ function List<T>({ query, renderItem, rowKey, enableVisible, itemPadding = true 
             data={data}
             enableScroll
             rowKey={rowKey}
-            borderWidth={3}
+            borderWidth={6}
             loading={isLoading}
             enablePullDown={{ refetch }}
             enableLoadMore={{ hasNextPage: !!hasNextPage, isFetchingNextPage, fetchNextPage }}

@@ -1,4 +1,4 @@
-import { getFactoryModelTree, getFactoryModelHomePage, getFactoryModelInfo } from './api';
+import { getFactoryModelTree, getFactoryModelHomePage, getFactoryModelInfo, getFactoryMqttInitValue } from './api';
 import useQuery2 from '@/hooks/useQuery2';
 
 // 获取工厂模型
@@ -23,5 +23,14 @@ export const useFactoryModelInfo = (id: string) => {
         enabled: !!id,
         queryKey: ['factoryModel-detail', id],
         queryFn: () => getFactoryModelInfo(id),
+    });
+};
+
+// 订阅mqtt【工厂模型订阅】后获取初始值推送
+export const useFactoryMqttInitValue = (data: { type: string; id: string }[]) => {
+    return useQuery2({
+        enabled: Array.isArray(data) && data.length > 0,
+        queryKey: ['factory-mqtt-init-value', data],
+        queryFn: () => getFactoryMqttInitValue(data),
     });
 };
