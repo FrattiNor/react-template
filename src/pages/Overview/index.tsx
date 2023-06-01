@@ -2,7 +2,6 @@ import { useFactoryModelInfo, useFactoryModelTree } from '@/services/overview';
 import { handleFactoryModelTree, useUrl } from './utils';
 import { useCallback, useMemo, useState } from 'react';
 import BoxShadow from '@/components/Header/boxShadow';
-import Horizontal2 from '@/components/Horizontal2';
 import FactorySelect from './FactorySelect';
 import styles from './index.module.less';
 import TianFang from './TianFang';
@@ -44,12 +43,10 @@ const Overview = () => {
 
     return (
         <BoxShadow>
-            <Horizontal2>
-                <div className={styles['wrapper']}>
-                    {getContent()}
-                    <FactorySelect factoryIds={factoryIds} setFactoryIds={setFactoryIds} tree={tree} idMap={idMap} />
-                </div>
-            </Horizontal2>
+            <div className={styles['wrapper']}>
+                {getContent()}
+                <FactorySelect factoryIds={factoryIds} setFactoryIds={setFactoryIds} tree={tree} idMap={idMap} />
+            </div>
         </BoxShadow>
     );
 };

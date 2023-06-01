@@ -55,22 +55,13 @@ body {
     background-color: var(--m-bg-color);
 }
 
-/* 横屏 */
-/* @media (orientation: landscape) {
-    body {
-        width: calc(100vh - env(safe-area-inset-top));
-        height: 100vw;
-        transform-origin: 0 0;
-        transform: rotate(-90deg) translateX(-100vh);
-    }
-} */
-
 /* 竖屏 */
 @media (orientation: portrait) {
     /* 竖屏转横屏 */
     body.v-h {
         height: 100vw;
-        width: 100vh;
+        width: calc(100vh - env(safe-area-inset-bottom));
+        width: calc(100vh - constant(safe-area-inset-bottom));
         transform-origin: 0 0;
         transform: rotate(90deg) translateY(-100vw);
     }
@@ -78,4 +69,8 @@ body {
     body.v-h .popup {
         max-height: 100vw;
     }
+}
+
+.adm-popup {
+    /* transform: translateZ(1000px); */
 }

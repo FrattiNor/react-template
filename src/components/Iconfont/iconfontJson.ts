@@ -6,6 +6,13 @@ const iconfontJSON = {
     description: '',
     glyphs: [
         {
+            icon_id: '807275',
+            name: '全屏',
+            font_class: 'full-screen',
+            unicode: 'e660',
+            unicode_decimal: 58976,
+        },
+        {
             icon_id: '1444510',
             name: 'file-tree',
             font_class: 'tree',
