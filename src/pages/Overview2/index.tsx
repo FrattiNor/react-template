@@ -6,25 +6,28 @@ import FactorySelect from './FactorySelect';
 import { HandleTreeItem } from './useTree';
 import { SwipeAction } from 'antd-mobile';
 import styles from './index.module.less';
+import classNames from 'classnames';
 import { getColor } from './utils';
 import { FC, useRef } from 'react';
 import useMqtt2 from './useMqtt2';
 import useData from './useData';
 
 type ItemProps = {
-    data: HandleTreeItem;
+    item: HandleTreeItem;
     next: (id: string) => void;
+    haveNext: (id: string) => boolean;
     alarmInfo: Record<string, number>;
 };
 
-const Item: FC<ItemProps> = ({ data, next, alarmInfo }) => {
+const Item: FC<ItemProps> = ({ item, next, haveNext, alarmInfo }) => {
+    const { value, label } = item;
     const navigate = useNavigate();
     const { setCache } = useKeepAlive2();
     const ref = useRef<NodeJS.Timeout | number>(0);
 
     const onClick = () => {
         if (ref.current) clearTimeout(ref.current);
-        next(data.value);
+        next(value);
     };
 
     return (
@@ -36,22 +39,22 @@ const Item: FC<ItemProps> = ({ data, next, alarmInfo }) => {
                     color: 'danger',
                     onClick: () => {
                         setCache('overview', true).then(() => {
-                            navigate(`/overview-alarm/${data.value}`);
+                            navigate(`/overview-alarm/${value}`);
                         });
                     },
                 },
             ]}
         >
-            <div className={styles['item']} onClick={onClick}>
-                <div className={styles['label']}>{data.label}</div>
-                <div className={styles['state']} style={{ backgroundColor: getColor(alarmInfo[data.value]) }} />
+            <div className={classNames(styles['item'], { [styles['can-click']]: haveNext(value) })} onClick={onClick}>
+                <div className={styles['label']}>{label}</div>
+                <div className={styles['state']} style={{ backgroundColor: getColor(alarmInfo[value]) }} />
             </div>
         </SwipeAction>
     );
 };
 
 const KeepInner = () => {
-    const { currentShows, next, currentNodes, setCurrentNodes, tree } = useData();
+    const { currentShows, next, currentNodes, setCurrentNodes, haveNext, tree } = useData();
     const alarmInfo = useMqtt2(currentShows);
 
     return (
@@ -62,7 +65,7 @@ const KeepInner = () => {
                 rowKey="value"
                 borderWidth={6}
                 data={currentShows}
-                renderItem={(item) => <Item data={item} next={next} alarmInfo={alarmInfo} />}
+                renderItem={(item) => <Item item={item} alarmInfo={alarmInfo} next={next} haveNext={haveNext} />}
             />
         </div>
     );

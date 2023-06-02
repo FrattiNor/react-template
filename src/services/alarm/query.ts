@@ -2,22 +2,34 @@ import { getAlarmHistoryList, getAlarmRealtimeList, getAreaOption } from './api'
 import useInfiniteQuery2 from '@/hooks/useInfiniteQuery2';
 import useQuery2 from '@/hooks/useQuery2';
 
-// 获取历史报警【设备详情额外添加deviceId参数】
-export const useAlarmHistoryList = (deviceId?: string) => {
+// 获取历史报警【设备详情额外添加deviceId参数】【工厂报警额外添加factoryModelId参数】
+export const useAlarmHistoryList = ({ deviceId, factoryModelId }: { deviceId?: string; factoryModelId?: string }) => {
     return useInfiniteQuery2({
         delay: 700,
-        queryKey: ['alarmHistory', deviceId],
-        queryFn: (p) => getAlarmHistoryList({ pagination: p.paginationParams, param: { ...p.params, ...(deviceId ? { deviceId } : {}) } }),
+        queryKey: ['alarmHistory', deviceId, factoryModelId],
+        queryFn: (p) => {
+            return getAlarmHistoryList({
+                pagination: p.paginationParams,
+                param: { ...p.params, ...(deviceId ? { deviceId } : {}), ...(factoryModelId ? { factoryModelId } : {}) },
+            });
+        },
         formatTime: { startTime: 'YYYY-MM-DD HH:mm:ss', endTime: 'YYYY-MM-DD HH:mm:ss' },
     });
 };
 
-// 获取实时报警【设备详情额外添加deviceId参数】
-export const useAlarmRealtimeList = (deviceId?: string) => {
+// 获取实时报警【设备详情额外添加deviceId参数】【工厂报警额外添加factoryModelId参数】
+export const useAlarmRealtimeList = ({ deviceId, factoryModelId }: { deviceId?: string; factoryModelId?: string }) => {
     return useInfiniteQuery2({
         delay: 700,
-        queryKey: ['alarmRealtime', deviceId],
-        queryFn: (p) => getAlarmRealtimeList({ ...p.paginationParams, ...p.params, ...(deviceId ? { deviceId } : {}) }),
+        queryKey: ['alarmRealtime', deviceId, factoryModelId],
+        queryFn: (p) => {
+            return getAlarmRealtimeList({
+                ...p.params,
+                ...p.paginationParams,
+                ...(deviceId ? { deviceId } : {}),
+                ...(factoryModelId ? { factoryModelId } : {}),
+            });
+        },
         arrayToString: ['areaId', 'alarmType'],
     });
 };

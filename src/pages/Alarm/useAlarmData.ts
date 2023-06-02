@@ -7,11 +7,11 @@ import useFilter from './Filter';
 import { useMemo } from 'react';
 
 // 单独提取出来数据，可以提供给设备台账详情使用
-const useAlarmData = (deviceId?: string) => {
-    const queryHistory = useAlarmHistoryList(deviceId);
-    const queryRealtime = useAlarmRealtimeList(deviceId);
-    const { haveNew, setHaveNew } = useHaveNew(deviceId);
-    const { historyFilter, realtimeFilter } = useFilter();
+const useAlarmData = ({ deviceId, factoryModelId }: { deviceId?: string; factoryModelId?: string }) => {
+    const queryHistory = useAlarmHistoryList({ deviceId, factoryModelId });
+    const queryRealtime = useAlarmRealtimeList({ deviceId, factoryModelId });
+    const { haveNew, setHaveNew } = useHaveNew({ deviceId, factoryModelId });
+    const { historyFilter, realtimeFilter } = useFilter({ deviceId, factoryModelId });
     const { renderHistoryItem, renderRealtimeItem } = useRender();
     const RealtimeRefreshFC = useMemo(() => RealtimeRefresh({ haveNew, setHaveNew }), [haveNew]);
 

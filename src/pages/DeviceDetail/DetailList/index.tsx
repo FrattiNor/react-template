@@ -10,7 +10,7 @@ type Props = {
 
 const DetailList: FC<Props> = ({ deviceId, isdmTag }) => {
     const logData = useLogData(isdmTag);
-    const { historyData, realtimeData } = useAlarmData(deviceId);
+    const { historyData, realtimeData } = useAlarmData({ deviceId });
     return <InfiniteLists items={[historyData, realtimeData, logData]} />;
 };
 

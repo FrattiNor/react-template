@@ -3,13 +3,13 @@ import { useAreaOption } from '@/services/alarm';
 import useConst from '@/hooks/useConst';
 import { useMemo } from 'react';
 
-const useFilter = () => {
+const useFilter = ({ deviceId, factoryModelId }: { deviceId?: string; factoryModelId?: string }) => {
     const { ALARM_STATUS_MAP, ALARM_LEVEL_MAP } = useConst();
 
-    const historyFilter = useMemo(
-        () => [
+    const historyFilter = useMemo(() => {
+        const filter = [
             createFilterItem({
-                label: '报警事件描述',
+                label: '报警事件',
                 name: 'alarmName',
                 type: 'input',
             }),
@@ -56,12 +56,14 @@ const useFilter = () => {
                 type: 'rang-picker',
                 precision: 'minute',
             }),
-        ],
-        [],
-    );
+        ];
+        if (deviceId) filter.filter((item) => item.label !== '装置' && item.label !== 'ISDM位号');
+        if (factoryModelId) filter.filter((item) => item.label !== '装置');
+        return filter;
+    }, []);
 
-    const realtimeFilter = useMemo(
-        () => [
+    const realtimeFilter = useMemo(() => {
+        const filter = [
             createFilterItem({
                 label: 'ISDM位号',
                 name: 'tagName',
@@ -75,7 +77,6 @@ const useFilter = () => {
                 columns: 2,
                 option: Array.from(ALARM_LEVEL_MAP).map(([value, label]) => ({ value, label })),
             }),
-
             createFilterItem({
                 label: '装置',
                 name: 'areaId',
@@ -87,9 +88,11 @@ const useFilter = () => {
                     label: 'areaName',
                 },
             }),
-        ],
-        [],
-    );
+        ];
+        if (deviceId) filter.filter((item) => item.label !== '装置' && item.label !== 'ISDM位号');
+        if (factoryModelId) filter.filter((item) => item.label !== '装置');
+        return filter;
+    }, []);
 
     return { historyFilter, realtimeFilter };
 };

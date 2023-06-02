@@ -19,11 +19,11 @@ const useData = () => {
     const size = haveShow ? Math.ceil(Math.sqrt(currentShows.length)) : 0;
     // 能否返回
     const canBack = currentNodes.length > 1;
+    // 是否有下一级
+    const haveNext = (id: string) => !!idMap[id]?.children;
     // 前进
     const next = (id: string) => {
-        if (idMap[id]?.children) {
-            setCurrentNodes((n) => [...n, id]);
-        }
+        if (haveNext(id)) setCurrentNodes((n) => [...n, id]);
     };
     // 后退
     const prev = () => {
@@ -36,7 +36,7 @@ const useData = () => {
         });
     };
 
-    return { currentShows: currentShows || [], haveShow, size, canBack, next, prev, currentNodes, setCurrentNodes, idMap, tree };
+    return { currentShows: currentShows || [], haveShow, size, canBack, next, haveNext, prev, currentNodes, setCurrentNodes, idMap, tree };
 };
 
 export default useData;
