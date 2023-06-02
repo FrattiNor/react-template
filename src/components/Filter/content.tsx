@@ -1,4 +1,5 @@
 import useRenderArray from './Items/_hooks/useRenderArray';
+import FilterSearchSelect from './Items/SearchSelect';
 import FilterBlockSelect from './Items/BlockSelect';
 import FilterDatePicker from './Items/DatePicker';
 import FilterRangPicker from './Items/RangPicker';
@@ -62,6 +63,9 @@ const Content: FC<ContentProps> = ({ params, filterList, setVisible, addAndDelPa
                             break;
                         case 'cascader':
                             res = <FilterCascader {...item} />;
+                            break;
+                        case 'search-select':
+                            res = <FilterSearchSelect {...item} />;
                             break;
                         default:
                             res = <Fragment />;

@@ -9,6 +9,12 @@ export type FieldKeys<T> =
       }
     | 'isStringArray';
 
+export type SearchSelectFieldKeys<T> =
+    | {
+          value: keyof T;
+      }
+    | 'isStringArray';
+
 export type CascaderFieldKeys<T> = {
     label: keyof T;
     value: keyof T;
@@ -31,6 +37,7 @@ export type SelectItem<T> = {
     multiple?: boolean;
     option: T[] | (() => UseQueryResult<null | T[]>);
     fieldKeys?: FieldKeys<T>;
+    max?: number;
 };
 
 export type BlockSelectItem<T> = {
@@ -70,7 +77,18 @@ export type CascaderItem<T> = {
     fieldKeys?: CascaderFieldKeys<T>;
 };
 
-export type FilterItem<T> = InputItem | SelectItem<T> | BlockSelectItem<T> | DatePickItem | RangPickItem | CascaderItem<T>;
+export type SearchSelectItem<T> = {
+    type: 'search-select';
+    name: string;
+    label: string;
+    multiple?: boolean;
+    placeholder?: string;
+    option: (v: string) => UseQueryResult<null | T[]>;
+    fieldKeys?: SearchSelectFieldKeys<T>;
+    max?: number;
+};
+
+export type FilterItem<T> = InputItem | SelectItem<T> | BlockSelectItem<T> | DatePickItem | RangPickItem | CascaderItem<T> | SearchSelectItem<T>;
 
 export type FilterProps = {
     className?: string;

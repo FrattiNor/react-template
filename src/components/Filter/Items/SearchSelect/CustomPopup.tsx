@@ -1,19 +1,23 @@
-import { Fragment, useCallback, useMemo, useState } from 'react';
+import { Dispatch, Fragment, SetStateAction, useCallback, useMemo, useState } from 'react';
 import VirtualizerList from '@/components/VirtualizerList';
-import { CustomSelectProps } from './CustomSelect';
+import { SearchSelectItem } from '../../type';
 import styles from './CustomPopup.module.less';
 import Iconfont from '@/components/Iconfont';
 import { SearchBar } from 'antd-mobile';
-import classNames from 'classnames';
 import Toast from '@/components/Toast';
+import classNames from 'classnames';
 
-type fieldKeysItem = { label: string | number; value: string | number };
-
-type CustomPopupProps<T> = CustomSelectProps<T> & {
-    fieldKeysOpt: fieldKeysItem[];
+type CustomPopupProps<T> = SearchSelectItem<T> & {
+    setVisible: Dispatch<SetStateAction<boolean>>;
+    value?: string[];
+    onChange?: (v: string[]) => void;
 };
 
-function CustomPopup<T>({ fieldKeysOpt, setVisible, value, onChange, multiple, loading, max = Infinity }: CustomPopupProps<T>) {
+function CustomPopup<T>(props: CustomPopupProps<T>) {
+    const [keyword, setKeyword] = useState('');
+    const { onChange, value, multiple, setVisible, option, fieldKeys, max = Infinity } = props;
+    const { data, isFetching } = option(keyword);
+
     // value 转为 obj，方便查询checked状态
     const valueObj = useMemo(() => {
         const map: Record<string, boolean> = {};
@@ -21,13 +25,15 @@ function CustomPopup<T>({ fieldKeysOpt, setVisible, value, onChange, multiple, l
             map[item] = true;
         });
         return map;
-    }, []);
+    }, [value]);
 
     // 临时value，提交时再onChange
     const [temporaryValue, setTemporaryValue] = useState<Record<string, boolean>>(valueObj);
 
-    // 搜索后的options
-    const [searchedOptions, setSearchedOptions] = useState(fieldKeysOpt);
+    const handledData: string[] = useMemo(() => {
+        if (keyword === '') return Object.keys(temporaryValue);
+        return fieldKeys === 'isStringArray' ? data || [] : (data || []).map((item) => (item as any)[fieldKeys?.value as any]);
+    }, [keyword, data, temporaryValue]);
 
     // 提交
     const submit = useCallback(() => {
@@ -40,50 +46,29 @@ function CustomPopup<T>({ fieldKeysOpt, setVisible, value, onChange, multiple, l
         setVisible(false);
     }, []);
 
-    // 获取checked状态
-    const itemChecked = useCallback(
-        (item: fieldKeysItem) => {
-            return temporaryValue[item.value];
-        },
-        [temporaryValue],
-    );
-
     // 点击变更checked状态
     const onClick = useCallback(
-        (item: fieldKeysItem) => {
+        (item: string) => {
             setTemporaryValue((v) => {
-                const checked = v[item.value];
+                const checked = v[item];
                 if (!checked) {
                     if (multiple) {
-                        const nextValue = { ...v, [item.value]: true };
+                        const nextValue = { ...v, [item]: true };
                         if (Object.keys(nextValue).length > max) {
                             Toast.fail('超过上限');
                             return { ...v };
                         }
                         return nextValue;
                     } else {
-                        return { [item.value]: true };
+                        return { [item]: true };
                     }
                 } else {
-                    delete v[item.value];
+                    delete v[item];
                     return { ...v };
                 }
             });
         },
         [multiple],
-    );
-
-    // 搜索变更searchedOptions
-    const searchChange = useCallback(
-        (val: string) => {
-            if (val) {
-                const nextOpts = fieldKeysOpt.filter((item) => item.label.toString().includes(val));
-                setSearchedOptions([...nextOpts]);
-            } else {
-                setSearchedOptions(fieldKeysOpt);
-            }
-        },
-        [fieldKeysOpt],
     );
 
     return (
@@ -98,20 +83,20 @@ function CustomPopup<T>({ fieldKeysOpt, setVisible, value, onChange, multiple, l
             </div>
 
             <div className={styles['search']}>
-                <SearchBar placeholder="搜索" onChange={searchChange} />
+                <SearchBar placeholder="搜索" onChange={setKeyword} />
             </div>
 
             <VirtualizerList
                 borderWidth={1}
-                loading={loading}
-                data={searchedOptions}
+                data={handledData}
+                loading={isFetching}
                 rowKey={(_, i) => `${i}`}
                 className={styles['content']}
                 renderItem={(item) => {
-                    const checked = itemChecked(item);
+                    const checked = temporaryValue[item];
                     return (
                         <div className={styles['item']} onClick={() => onClick(item)}>
-                            <div className={classNames(styles['label'], { [styles['checked']]: checked })}>{item.label}</div>
+                            <div className={classNames(styles['label'], { [styles['checked']]: checked })}>{item}</div>
                             <div className={classNames(styles['icon'], { [styles['show']]: checked })}>
                                 <Iconfont icon="yes" />
                             </div>

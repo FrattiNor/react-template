@@ -69,7 +69,7 @@ const useMqtt = (option: Option) => {
             const handleOnMessage: OnMessageCallback = (topic, payload) => {
                 try {
                     const res = JSON.parse(payload.toString('utf-8'));
-                    console.log('onMessage', res);
+                    if (localStorage.getItem('mqttMessage') === 'true') console.log('onMessage', res);
                     onMessage(topic, res);
                 } catch (e) {
                     console.error(e);

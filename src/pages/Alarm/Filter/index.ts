@@ -7,7 +7,7 @@ const useFilter = ({ deviceId, factoryModelId }: { deviceId?: string; factoryMod
     const { ALARM_STATUS_MAP, ALARM_LEVEL_MAP } = useConst();
 
     const historyFilter = useMemo(() => {
-        const filter = [
+        let filter = [
             createFilterItem({
                 label: '报警事件',
                 name: 'alarmName',
@@ -57,13 +57,13 @@ const useFilter = ({ deviceId, factoryModelId }: { deviceId?: string; factoryMod
                 precision: 'minute',
             }),
         ];
-        if (deviceId) filter.filter((item) => item.label !== '装置' && item.label !== 'ISDM位号');
-        if (factoryModelId) filter.filter((item) => item.label !== '装置');
+        if (deviceId) filter = filter.filter((item) => item.label !== '装置' && item.label !== 'ISDM位号');
+        if (factoryModelId) filter = filter.filter((item) => item.label !== '装置');
         return filter;
     }, []);
 
     const realtimeFilter = useMemo(() => {
-        const filter = [
+        let filter = [
             createFilterItem({
                 label: 'ISDM位号',
                 name: 'tagName',
@@ -89,8 +89,8 @@ const useFilter = ({ deviceId, factoryModelId }: { deviceId?: string; factoryMod
                 },
             }),
         ];
-        if (deviceId) filter.filter((item) => item.label !== '装置' && item.label !== 'ISDM位号');
-        if (factoryModelId) filter.filter((item) => item.label !== '装置');
+        if (deviceId) filter = filter.filter((item) => item.label !== '装置' && item.label !== 'ISDM位号');
+        if (factoryModelId) filter = filter.filter((item) => item.label !== '装置');
         return filter;
     }, []);
 

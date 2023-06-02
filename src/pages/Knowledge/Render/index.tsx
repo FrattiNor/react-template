@@ -24,7 +24,7 @@ const useRender = () => {
         fileUrl.mutateAsync(md5).then((url) => {
             if (url)
                 previewFile({
-                    url: 'http://10.50.0.49:30331/api/v1/buckets/isdm-knowledge/objects/download?preview=true&prefix=VEVTVC5wZGY=',
+                    url: 'http://10.50.0.49:30330/isdm-knowledge/13ad58c1eea57b90a7d544fb3f51041b',
                     title: '1.pdf',
                 }).then((res) => console.log(res));
         });

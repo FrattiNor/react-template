@@ -6,3 +6,10 @@ export type PointItem = {
     timestamp: string;
     value: string;
 };
+
+export type PointItem2 = {
+    id: string;
+    fullPointTag: string;
+    pointTag: string;
+    datasourceName: string;
+};

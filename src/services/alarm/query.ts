@@ -10,7 +10,11 @@ export const useAlarmHistoryList = ({ deviceId, factoryModelId }: { deviceId?: s
         queryFn: (p) => {
             return getAlarmHistoryList({
                 pagination: p.paginationParams,
-                param: { ...p.params, ...(deviceId ? { deviceId } : {}), ...(factoryModelId ? { factoryModelId } : {}) },
+                param: {
+                    ...p.params,
+                    ...(deviceId ? { deviceId } : {}),
+                    ...(factoryModelId ? { areaId: [factoryModelId] } : {}),
+                },
             });
         },
         formatTime: { startTime: 'YYYY-MM-DD HH:mm:ss', endTime: 'YYYY-MM-DD HH:mm:ss' },
@@ -27,7 +31,7 @@ export const useAlarmRealtimeList = ({ deviceId, factoryModelId }: { deviceId?: 
                 ...p.params,
                 ...p.paginationParams,
                 ...(deviceId ? { deviceId } : {}),
-                ...(factoryModelId ? { factoryModelId } : {}),
+                ...(factoryModelId ? { areaIds: factoryModelId } : {}),
             });
         },
         arrayToString: ['areaId', 'alarmType'],
