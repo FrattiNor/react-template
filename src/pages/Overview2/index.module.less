@@ -6,7 +6,12 @@
     .item {
         padding: 12px;
         display: flex;
+        user-select: none;
         align-items: center;
+
+        &:active {
+            background-color: var(--m-bg-hover-color);
+        }
 
         .label {
             width: 0;

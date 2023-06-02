@@ -93,6 +93,11 @@ const routes: Array<Route> = [
                         title: '设备详情',
                         LazyComponent: () => import('@/pages/DeviceDetail'),
                     },
+                    {
+                        path: 'overview-alarm/:factoryModelId',
+                        title: '报警',
+                        LazyComponent: () => import('@/pages/OverviewAlarm'),
+                    },
                 ],
             },
         ],

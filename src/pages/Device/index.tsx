@@ -37,7 +37,7 @@ const KeepInner = () => {
 
 const Device = () => {
     return (
-        <KeepAlive2 cacheKey="device" wrapperStyle={{ height: '100%' }} contentStyle={'height: 100%'}>
+        <KeepAlive2 cacheKey="device">
             <KeepInner />
         </KeepAlive2>
     );

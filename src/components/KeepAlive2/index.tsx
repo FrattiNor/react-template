@@ -5,7 +5,8 @@ import { Props } from './type';
 
 // 目前缺陷
 // Context在KeepAliveProvider2里面时，缓存时无法获取到
-const KeepAlive2: FC<Props> = ({ children, cacheKey, wrapperClassName, contentClassName, wrapperStyle, contentStyle }) => {
+const KeepAlive2: FC<Props> = (props) => {
+    const { children, cacheKey, wrapperClassName, contentClassName, wrapperStyle = { height: '100%' }, contentStyle = 'height: 100%' } = props;
     const { cacheMap, setCacheMap, setNeedCacheMap } = useContext(Context2);
     const parent = useRef<HTMLDivElement>(null);
     const memoKey = useMemo(() => cacheKey, []);

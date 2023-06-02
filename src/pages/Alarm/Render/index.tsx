@@ -1,13 +1,13 @@
-import { AlarmHistoryItem, AlarmRealtimeItem } from '@/services/alarm';
 import KeyValueTable, { KeyValueProvider, Tr } from '@/components/KeyValueTable';
+import { AlarmHistoryItem, AlarmRealtimeItem } from '@/services/alarm';
 import { Fragment, useCallback } from 'react';
 import Collapse from '@/components/Collapse';
 import styles from './index.module.less';
 import timeTool from '@/utils/timeTool';
 import notEmpty from '@/utils/notEmpty';
 import useConst from '@/hooks/useConst';
-import Tag from './Tag';
 import classNames from 'classnames';
+import Tag from './Tag';
 
 export const useRender = () => {
     const { ALARM_STATUS_MAP, ALARM_LEVEL_COLOR_MAP, ALARM_LEVEL_MAP, ALARM_CONFIRM_COLOR_MAP, ALARM_CONFIRM_MAP } = useConst();

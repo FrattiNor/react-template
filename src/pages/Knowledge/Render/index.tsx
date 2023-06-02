@@ -22,7 +22,11 @@ const useRender = () => {
 
     const preview = (md5: string) => {
         fileUrl.mutateAsync(md5).then((url) => {
-            if (url) previewFile({ url }).then((res) => console.log(res));
+            if (url)
+                previewFile({
+                    url: 'http://10.50.0.49:30331/api/v1/buckets/isdm-knowledge/objects/download?preview=true&prefix=VEVTVC5wZGY=',
+                    title: '1.pdf',
+                }).then((res) => console.log(res));
         });
     };
 
