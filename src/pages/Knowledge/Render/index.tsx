@@ -13,7 +13,7 @@ const useRender = () => {
     const download = useDownloadFile();
     const fileUrl = useFileUrl();
 
-    // 后端传的文件名不正确，使用列表里的文件名
+    // 后端传的文件名不正确|使用列表里的文件名
     const downloadFile = (md5: string, filename: string) => {
         download.mutateAsync(md5).then((res) => {
             if (res) fileDownload(res.blob, filename || res.filename);
@@ -22,13 +22,14 @@ const useRender = () => {
 
     const preview = (md5: string) => {
         fileUrl.mutateAsync(md5).then((url) => {
-            if (url)
-                previewFile({
-                    url: 'http://10.50.0.49:30330/isdm-knowledge/13ad58c1eea57b90a7d544fb3f51041b',
-                    title: '1.pdf',
-                }).then((res) => console.log(res));
+            if (url) previewFile({ url: url });
         });
     };
+
+    // 能否预览
+    // const getCanPreview = (title?: string) => {
+    //     return /.(bmp|jpg|png|tif|gif|webp|avif|apng|mp4|pdf)$/.test(title || '');
+    // };
 
     const renderItem = useCallback(
         (item: KnowledgeItem, { visible }: { visible: boolean }) => (

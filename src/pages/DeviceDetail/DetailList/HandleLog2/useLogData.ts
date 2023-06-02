@@ -1,8 +1,10 @@
 import createInfiniteListItem from '@/components/InfiniteLists/utils/createInfiniteListItem';
 import { useHandleLogList } from '@/services/handleLog';
+import { useFilter } from './Filter';
 import { useRender } from './Render';
 
 const useLogData = (isdmTag?: string) => {
+    const filter = useFilter();
     const query = useHandleLogList(isdmTag);
 
     const renderLogItem = useRender();
@@ -13,7 +15,7 @@ const useLogData = (isdmTag?: string) => {
         query: query,
         enableVisible: true,
         renderItem: renderLogItem,
-        filter: { filterList: [] },
+        filter: { filterList: filter },
     });
 
     return logData;

@@ -2,6 +2,7 @@ import useKeepAlive2 from '@/components/KeepAlive2/useKeepAlive2';
 import VirtualizerList from '@/components/VirtualizerList';
 import KeepAlive2 from '@/components/KeepAlive2';
 import { useNavigate } from 'react-router-dom';
+import FactorySelect2 from './FactorySelect2';
 import FactorySelect from './FactorySelect';
 import { HandleTreeItem } from './useTree';
 import { SwipeAction } from 'antd-mobile';
@@ -54,12 +55,13 @@ const Item: FC<ItemProps> = ({ item, next, haveNext, alarmInfo }) => {
 };
 
 const KeepInner = () => {
-    const { currentShows, next, currentNodes, setCurrentNodes, haveNext, tree } = useData();
+    const { currentShows, next, currentNodes, setCurrentNodes, haveNext, tree, idMap } = useData();
     const alarmInfo = useMqtt2(currentShows);
 
     return (
         <div className={styles['wrapper']}>
             <FactorySelect factoryIds={currentNodes} setFactoryIds={setCurrentNodes} tree={tree} />
+            <FactorySelect2 factoryIds={currentNodes} setFactoryIds={setCurrentNodes} tree={tree} idMap={idMap} />
 
             <VirtualizerList
                 rowKey="value"

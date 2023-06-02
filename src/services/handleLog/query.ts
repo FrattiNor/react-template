@@ -7,12 +7,14 @@ export const useHandleLogList = (isdmTag?: string) => {
         delay: 700,
         queryKey: ['handleLog', isdmTag],
         enabled: typeof isdmTag === 'string',
-        queryFn: (p) =>
-            getHandleLogList({
+        queryFn: (p) => {
+            return getHandleLogList({
                 ...p.params,
                 resName: isdmTag,
                 pageSize: p.paginationParams.pageSize,
                 currentPage: p.paginationParams.current,
-            }),
+            });
+        },
+        formatTime: { startTime: 'YYYY-MM-DD HH:mm:ss', endTime: 'YYYY-MM-DD HH:mm:ss' },
     });
 };
