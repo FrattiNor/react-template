@@ -8,4 +8,7 @@ export type ConstValue = {
     mqttIp: string;
     mqttPort: string;
     mqttProtocol: string;
+    mobileIp: string;
+    mobilePort: string;
+    mobileProtocol: string;
 };

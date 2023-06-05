@@ -7,7 +7,7 @@ const KeepAliveProvider2: FC<PropsWithChildren> = ({ children }) => {
     const [needCacheMap, setNeedCacheMap] = useState({});
 
     useEffect(() => {
-        console.log('KeepAlive', cacheMap);
+        console.log('KeepAlive', cacheMap, Object.keys(cacheMap).length);
     }, [Object.keys(cacheMap).length]);
 
     return (

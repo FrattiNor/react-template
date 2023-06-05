@@ -12,9 +12,12 @@ const useIp = () => {
         suposIp: '10.50.0.49',
         suposPort: '8080',
         suposProtocol: 'http',
-        mqttIp: hostname,
+        mqttIp: '10.50.0.49',
         mqttPort: '30326',
         mqttProtocol: 'ws',
+        mobileIp: hostname,
+        mobilePort: port,
+        mobileProtocol: protocol.replace(':', ''),
     };
 
     const constValues = useConstValue().data;
@@ -23,7 +26,7 @@ const useIp = () => {
         let c = devConstValue;
 
         constValues?.some((item) => {
-            if (item.webIp === hostname && item.webPort === port && item.webProtocol === protocol.replace(':', '')) {
+            if (item.mobileIp === hostname && item.mobilePort === port && item.mobileProtocol === protocol.replace(':', '')) {
                 c = item;
                 return true;
             }
