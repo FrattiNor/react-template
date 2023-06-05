@@ -1,12 +1,12 @@
 {
     "name": "mobile-project",
     "private": true,
-    "version": "0.0.0",
+    "version": "2.3.0",
     "type": "module",
     "scripts": {
         "dev": "vite",
         "build": "webpack --config ./webpack.config.cjs",
-        "build-with-params": "node ./script/buildWithParams.js",
+        "build-with-params": "node ./scripts/buildWithParams.cjs",
         "analyzer": "webpack --config ./webpack.analyzer.cjs",
         "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
         "preview": "vite preview"

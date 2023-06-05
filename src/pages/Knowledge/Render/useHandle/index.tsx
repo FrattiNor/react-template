@@ -2,7 +2,7 @@ import { useDownloadFile, useFileUrl } from '@/services/knowledge';
 import { previewFile } from '@suplink/jssdk';
 import { fileDownload } from '@/utils/file';
 import Toast from '@/components/Toast';
-import { isWebView } from '@/env';
+import { isWebview } from '@/env';
 import copy2 from '@/utils/copy2';
 
 const useHandle = () => {
@@ -11,7 +11,7 @@ const useHandle = () => {
 
     // 后端传的文件名不正确|使用列表里的文件名
     const downloadFile = (md5: string, filename: string) => {
-        if (isWebView) {
+        if (isWebview) {
             fileUrl.mutateAsync(md5).then((url) => {
                 if (url) {
                     setTimeout(() => {
@@ -30,7 +30,7 @@ const useHandle = () => {
     const preview = (md5: string) => {
         fileUrl.mutateAsync(md5).then((url) => {
             if (url) {
-                if (isWebView) {
+                if (isWebview) {
                     previewFile({ url: url });
                 } else {
                     window.open(url);

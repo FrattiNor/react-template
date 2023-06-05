@@ -4,7 +4,7 @@ const path = require('path');
 const exec = require('child_process').exec;
 
 let version = null;
-let webview = true;
+let webview = 'true';
 
 const params = process.argv.splice(2);
 
@@ -25,10 +25,10 @@ for (let i = 0; i < params.length; i++) {
     }
 }
 
-if (typeof webview === 'boolean') {
+if (webview === 'true' || webview === 'false') {
     const envBuildJson = fs.readFileSync(path.join(__dirname, '../src/envBuild.json'), 'utf-8');
     const newJson = JSON.parse(envBuildJson);
-    newJson.isWebview = webview;
+    newJson.isWebview = webview === 'true';
     fs.writeFileSync(path.join(__dirname, '../src/envBuild.json'), JSON.stringify(newJson, null, '\t'), 'utf-8');
 }
 
