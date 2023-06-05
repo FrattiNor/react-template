@@ -2,15 +2,33 @@
     height: 100%;
     font-size: 16px;
     box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+
+    .title {
+        flex-shrink: 0;
+        padding: 8px 12px;
+        border-bottom: 1px solid var(--m-border-color);
+    }
+
+    .content {
+        height: 0;
+        flex-grow: 1;
+    }
 
     .item {
         padding: 12px;
         display: flex;
         user-select: none;
         align-items: center;
+        color: var(--m-notice-font-color);
 
-        &.can-click:active {
-            background-color: var(--m-bg-hover-color);
+        &.can-click {
+            color: var(--m-font-color);
+
+            &:active {
+                background-color: var(--m-bg-hover-color);
+            }
         }
 
         .label {

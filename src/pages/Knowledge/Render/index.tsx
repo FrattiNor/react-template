@@ -1,35 +1,15 @@
-import { KnowledgeItem, useDownloadFile, useFileUrl } from '@/services/knowledge';
 import KeyValueTable, { KeyValueProvider, Tr } from '@/components/KeyValueTable';
-import { previewFile } from '@suplink/jssdk';
+import { KnowledgeItem } from '@/services/knowledge';
 import Collapse from '@/components/Collapse';
-import { fileDownload } from '@/utils/file';
 import styles from './index.module.less';
 import timeTool from '@/utils/timeTool';
 import notEmpty from '@/utils/notEmpty';
 import { Button } from 'antd-mobile';
 import { useCallback } from 'react';
+import useHandle from './useHandle';
 
 const useRender = () => {
-    const download = useDownloadFile();
-    const fileUrl = useFileUrl();
-
-    // 后端传的文件名不正确|使用列表里的文件名
-    const downloadFile = (md5: string, filename: string) => {
-        download.mutateAsync(md5).then((res) => {
-            if (res) fileDownload(res.blob, filename || res.filename);
-        });
-    };
-
-    const preview = (md5: string) => {
-        fileUrl.mutateAsync(md5).then((url) => {
-            if (url) previewFile({ url: url });
-        });
-    };
-
-    // 能否预览
-    // const getCanPreview = (title?: string) => {
-    //     return /.(bmp|jpg|png|tif|gif|webp|avif|apng|mp4|pdf)$/.test(title || '');
-    // };
+    const { downloadFile, preview } = useHandle();
 
     const renderItem = useCallback(
         (item: KnowledgeItem, { visible }: { visible: boolean }) => (

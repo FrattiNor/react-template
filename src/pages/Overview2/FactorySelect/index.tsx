@@ -10,7 +10,7 @@ type Props = {
     setFactoryIds: Dispatch<SetStateAction<string[]>>;
 };
 
-const FactorySelect: FC<Props> = ({ factoryIds, setFactoryIds, tree }) => {
+const FactorySelect: FC<Props> = ({ setFactoryIds, factoryIds, tree }) => {
     const [visible, setVisible] = useState(false);
 
     return (
@@ -20,6 +20,7 @@ const FactorySelect: FC<Props> = ({ factoryIds, setFactoryIds, tree }) => {
             </div>
 
             <Cascader
+                destroyOnClose
                 options={tree}
                 visible={visible}
                 value={factoryIds}

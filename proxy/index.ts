@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 import proxyAddressJSON from './proxyAddress.json';
 import proxyJSON from './proxy.json';
-
 // "10.50.0.40": "40 测试环境",
 // "10.50.0.49": "49 测试环境",
 // "192.168.184.63": "大鹏",

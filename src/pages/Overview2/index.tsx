@@ -2,7 +2,6 @@ import useKeepAlive2 from '@/components/KeepAlive2/useKeepAlive2';
 import VirtualizerList from '@/components/VirtualizerList';
 import KeepAlive2 from '@/components/KeepAlive2';
 import { useNavigate } from 'react-router-dom';
-import FactorySelect2 from './FactorySelect2';
 import FactorySelect from './FactorySelect';
 import { HandleTreeItem } from './useTree';
 import { SwipeAction } from 'antd-mobile';
@@ -12,6 +11,7 @@ import { getColor } from './utils';
 import { FC, useRef } from 'react';
 import useMqtt2 from './useMqtt2';
 import useData from './useData';
+import Iconfont from '@/components/Iconfont';
 
 type ItemProps = {
     item: HandleTreeItem;
@@ -55,18 +55,24 @@ const Item: FC<ItemProps> = ({ item, next, haveNext, alarmInfo }) => {
 };
 
 const KeepInner = () => {
-    const { currentShows, next, currentNodes, setCurrentNodes, haveNext, tree, idMap } = useData();
+    const { currentShows, next, setCurrentNodes, haveNext, tree, canBack, prev, currentNodes } = useData();
     const alarmInfo = useMqtt2(currentShows);
 
     return (
         <div className={styles['wrapper']}>
-            <FactorySelect factoryIds={currentNodes} setFactoryIds={setCurrentNodes} tree={tree} />
-            <FactorySelect2 factoryIds={currentNodes} setFactoryIds={setCurrentNodes} tree={tree} idMap={idMap} />
+            <FactorySelect setFactoryIds={setCurrentNodes} factoryIds={currentNodes} tree={tree} />
+
+            {canBack && (
+                <div className={styles['title']}>
+                    <Iconfont icon="arrow-left-2" onClick={prev} />
+                </div>
+            )}
 
             <VirtualizerList
                 rowKey="value"
                 borderWidth={6}
                 data={currentShows}
+                className={styles['content']}
                 renderItem={(item) => <Item item={item} alarmInfo={alarmInfo} next={next} haveNext={haveNext} />}
             />
         </div>
