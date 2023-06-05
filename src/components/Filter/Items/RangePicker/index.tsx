@@ -1,18 +1,18 @@
 import { PickerActions } from 'antd-mobile/es/components/picker';
 import { useDateUtils } from '../DatePicker/utils';
 import { DatePicker, Form } from 'antd-mobile';
-import { RangPickItem } from '../../type';
+import { RangePickItem } from '../../type';
 import Clear from '../_components/Clear';
 import Value from '../_components/value';
 import { FC, useRef } from 'react';
 import dayjs from 'dayjs';
 
-const FilterRangPicker: FC<RangPickItem> = ({ name, label, format, precision = 'day', placeholder = ['请选择日期', '请选择日期'] }) => {
+const FilterRangPicker: FC<RangePickItem> = ({ name, label, format, precision = 'day', placeholder = ['请选择日期', '请选择日期'], range }) => {
     const handleRef = useRef<number>(0);
     const startRef = useRef<PickerActions>(null);
     const endRef = useRef<PickerActions>(null);
 
-    const { defaultFormat, distance, renderLabel } = useDateUtils(precision);
+    const { defaultFormat, distance, distanceSecond, renderLabel } = useDateUtils(precision);
 
     return (
         <Form.Subscribe to={name}>
@@ -35,6 +35,7 @@ const FilterRangPicker: FC<RangPickItem> = ({ name, label, format, precision = '
                         _precision: precision,
                         _placeholder: placeholder[0],
                         max: endValue ? distance(endValue, 'subtract') : undefined,
+                        min: range ? distanceSecond(distance(endValue, 'subtract'), 'subtract', Math.floor(range / 1000)) : undefined,
                         _format: Array.isArray(format) ? format[0] : format || defaultFormat,
                     },
                     {
@@ -45,6 +46,7 @@ const FilterRangPicker: FC<RangPickItem> = ({ name, label, format, precision = '
                         currentValue: endValue,
                         _precision: precision,
                         _placeholder: placeholder[1],
+                        max: range ? distanceSecond(distance(startValue, 'add'), 'add', Math.floor(range / 1000)) : undefined,
                         min: startValue ? distance(startValue, 'add') : undefined,
                         _format: Array.isArray(format) ? format[1] : format || defaultFormat,
                     },

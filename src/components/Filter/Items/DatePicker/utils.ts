@@ -71,24 +71,24 @@ export const useDateUtils = (precision: DatePickerProps['precision']) => {
     }, [precision]);
 
     const distance = useCallback(
-        (d: Date, handle: 'add' | 'subtract'): Date => {
+        (d: Date, handle: 'add' | 'subtract', count = 1): Date => {
             switch (precision) {
                 case 'year':
-                    return new Date(dayjs(d)[handle](1, 'year').valueOf());
+                    return new Date(dayjs(d)[handle](count, 'year').valueOf());
                 case 'month':
-                    return new Date(dayjs(d)[handle](1, 'month').valueOf());
+                    return new Date(dayjs(d)[handle](count, 'month').valueOf());
                 case 'day':
-                    return new Date(dayjs(d)[handle](1, 'day').valueOf());
+                    return new Date(dayjs(d)[handle](count, 'day').valueOf());
                 case 'hour':
-                    return new Date(dayjs(d)[handle](1, 'hour').valueOf());
+                    return new Date(dayjs(d)[handle](count, 'hour').valueOf());
                 case 'minute':
-                    return new Date(dayjs(d)[handle](1, 'minute').valueOf());
+                    return new Date(dayjs(d)[handle](count, 'minute').valueOf());
                 case 'second':
-                    return new Date(dayjs(d)[handle](1, 'second').valueOf());
+                    return new Date(dayjs(d)[handle](count, 'second').valueOf());
                 case 'week':
-                    return new Date(dayjs(d)[handle](1, 'week').valueOf());
+                    return new Date(dayjs(d)[handle](count, 'week').valueOf());
                 case 'week-day':
-                    return new Date(dayjs(d)[handle](1, 'day').valueOf());
+                    return new Date(dayjs(d)[handle](count, 'day').valueOf());
                 default:
                     return d;
             }
@@ -96,5 +96,13 @@ export const useDateUtils = (precision: DatePickerProps['precision']) => {
         [precision],
     );
 
-    return { renderLabel, defaultFormat, distance };
+    // 按秒计算
+    const distanceSecond = useCallback(
+        (d: Date, handle: 'add' | 'subtract', count = 0): Date => {
+            return new Date(dayjs(d)[handle](count, 'second').valueOf());
+        },
+        [precision],
+    );
+
+    return { renderLabel, defaultFormat, distance, distanceSecond };
 };

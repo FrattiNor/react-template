@@ -6,7 +6,7 @@ import { useDateUtils } from './utils';
 import { FC } from 'react';
 import dayjs from 'dayjs';
 
-const FilterDatePicker: FC<DatePickItem> = ({ name, label, placeholder = '请选择日期', format, precision = 'day' }) => {
+const FilterDatePicker: FC<DatePickItem> = ({ name, label, placeholder = '请选择日期', format, precision = 'day', max, min }) => {
     const { defaultFormat, renderLabel } = useDateUtils(precision);
 
     return (
@@ -27,7 +27,7 @@ const FilterDatePicker: FC<DatePickItem> = ({ name, label, placeholder = '请选
                             datePickerRef.current?.open();
                         }}
                     >
-                        <DatePicker precision={precision} renderLabel={renderLabel} destroyOnClose>
+                        <DatePicker max={max} min={min} precision={precision} renderLabel={renderLabel} destroyOnClose>
                             {(value) => {
                                 const haveValue = !!value;
                                 const showText = haveValue ? dayjs(value).format(format || defaultFormat) : placeholder;

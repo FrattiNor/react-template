@@ -1,14 +1,20 @@
 import createFilterItem from '@/components/Filter/utils/createFilterItem';
+import { useSearchPointList } from '@/services/pointTrend';
 import { useMemo } from 'react';
 
 const useFilter = () => {
     return useMemo(
         () => [
             createFilterItem({
-                type: 'input',
+                type: 'search-select',
                 name: 'fullPointTags',
+                option: useSearchPointList,
+                multiple: true,
                 label: '位号',
-                array: true,
+                max: 5,
+                fieldKeys: {
+                    value: 'fullPointTag',
+                },
             }),
         ],
         [],

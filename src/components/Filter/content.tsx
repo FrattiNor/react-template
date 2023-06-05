@@ -2,7 +2,7 @@ import useRenderArray from './Items/_hooks/useRenderArray';
 import FilterSearchSelect from './Items/SearchSelect';
 import FilterBlockSelect from './Items/BlockSelect';
 import FilterDatePicker from './Items/DatePicker';
-import FilterRangPicker from './Items/RangPicker';
+import FilterRangPicker from './Items/RangePicker';
 import { FC, Fragment, useMemo } from 'react';
 import FilterCascader from './Items/Cascader';
 import { cleanParams } from '@/utils/params';
@@ -58,7 +58,7 @@ const Content: FC<ContentProps> = ({ params, filterList, setVisible, addAndDelPa
                         case 'date-picker':
                             res = <FilterDatePicker {...item} />;
                             break;
-                        case 'rang-picker':
+                        case 'range-picker':
                             res = <FilterRangPicker {...item} />;
                             break;
                         case 'cascader':

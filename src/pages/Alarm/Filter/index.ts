@@ -53,7 +53,7 @@ const useFilter = ({ deviceId, factoryModelId }: { deviceId?: string; factoryMod
             createFilterItem({
                 label: ['结开始时间', '结束时间'],
                 name: ['startTime', 'endTime'],
-                type: 'rang-picker',
+                type: 'range-picker',
                 precision: 'minute',
             }),
         ];

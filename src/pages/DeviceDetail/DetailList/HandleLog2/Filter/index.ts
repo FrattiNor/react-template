@@ -5,7 +5,7 @@ export const useFilter = () => {
     return useMemo(
         () => [
             createFilterItem({
-                type: 'rang-picker',
+                type: 'range-picker',
                 name: ['startTime', 'endTime'],
                 label: ['开始时间', '结束时间'],
             }),

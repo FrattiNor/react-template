@@ -57,15 +57,18 @@ export type DatePickItem = {
     placeholder?: string;
     format?: string;
     precision?: DatePickerProps['precision'];
+    max?: Date;
+    min?: Date;
 };
 
-export type RangPickItem = {
-    type: 'rang-picker';
+export type RangePickItem = {
+    type: 'range-picker';
     name: [string, string];
     label: [string, string];
     placeholder?: [string, string];
     format?: string | [string, string];
     precision?: DatePickerProps['precision'];
+    range?: number;
 };
 
 export type CascaderItem<T> = {
@@ -88,7 +91,7 @@ export type SearchSelectItem<T> = {
     max?: number;
 };
 
-export type FilterItem<T> = InputItem | SelectItem<T> | BlockSelectItem<T> | DatePickItem | RangPickItem | CascaderItem<T> | SearchSelectItem<T>;
+export type FilterItem<T> = InputItem | SelectItem<T> | BlockSelectItem<T> | DatePickItem | RangePickItem | CascaderItem<T> | SearchSelectItem<T>;
 
 export type FilterProps = {
     className?: string;
