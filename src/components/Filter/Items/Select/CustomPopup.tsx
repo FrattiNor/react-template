@@ -110,7 +110,7 @@ function CustomPopup<T>({ fieldKeysOpt, setVisible, value, onChange, multiple, l
                 renderItem={(item) => {
                     const checked = itemChecked(item);
                     return (
-                        <div className={styles['item']} onClick={() => onClick(item)}>
+                        <div className={styles['item']} onClick={() => onClick(item)} title={`${item.label || ''}`}>
                             <div className={classNames(styles['label'], { [styles['checked']]: checked })}>{item.label}</div>
                             <div className={classNames(styles['icon'], { [styles['show']]: checked })}>
                                 <Iconfont icon="yes" />
