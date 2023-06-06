@@ -32,17 +32,14 @@ class Workspace {
             const zoom = Math.min(Math.min(zoom1, zoom2), 1);
             this.editor.canvas.setViewportTransform([1, 0, 0, 1, 0, 0]);
             const center = this.editor.canvas.getCenter();
+            // 将workspace中心对齐canvas中心
+            const workspaceCenter = workspace.getCenterPoint();
+            const workspaceMoveLeft = center.left - workspaceCenter.x;
+            if (typeof workspace.left === 'number') workspace.set('left', workspace.left + workspaceMoveLeft);
+            const workspaceMoveTop = center.top - workspaceCenter.y;
+            if (typeof workspace.top === 'number') workspace.set('top', workspace.top + workspaceMoveTop);
+            // 以canvas中心进行缩放
             this.editor.canvas.zoomToPoint({ x: center.left, y: center.top }, zoom);
-            this.editor.canvas.centerObject(workspace);
-        }
-    }
-
-    changeRulerOffset() {
-        const canvasWidth = this.editor.canvas.width || 0;
-        const canvasHeight = this.editor.canvas.height || 0;
-        if (canvasWidth && canvasHeight) {
-            this.editor.ruler.offsetX = (canvasWidth - this.width) / 2;
-            this.editor.ruler.offsetY = (canvasHeight - this.height) / 2;
         }
     }
 

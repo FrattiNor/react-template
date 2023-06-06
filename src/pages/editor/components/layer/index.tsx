@@ -13,7 +13,6 @@ const Layer: FC = () => {
     useEffect(() => {
         if (editor) {
             editor.eEvent.on('layer:change', (nextLayers: fabric.Object[]) => {
-                console.log(nextLayers);
                 const _layers = [...nextLayers].filter(({ id }: any) => id !== editor.workspace.id);
                 _layers.reverse();
                 setLayers(_layers);

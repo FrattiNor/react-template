@@ -14,12 +14,6 @@ class Ruler {
         this.size = 20;
         this.maskAddSize = 10;
         this.fontSize = 12;
-
-        this.offsetX = this.size;
-        this.offsetY = this.size;
-        this.vpt = (this.editor.canvas.viewportTransform as Vpt) || [1, 0, 0, 1, 0, 0];
-        this.width = this.editor.canvas.width || 0;
-        this.height = this.editor.canvas.width || 0;
     }
 
     editor: Editor;
@@ -32,45 +26,43 @@ class Ruler {
     maskAddSize: number; // 遮罩额外尺寸
     fontSize: number; // 字体大小
 
-    offsetY: number; // 纵向偏移量
-    offsetX: number; // 横向偏移量
-    vpt: Vpt;
-    width: number;
-    height: number;
-
     eventHandlers = {
         afterRender: this.afterRender.bind(this),
     };
 
     afterRender() {
-        const width = this.editor.canvas.width || 0;
-        const height = this.editor.canvas.height || 0;
-        const vpt = this.editor.canvas.viewportTransform as Vpt;
-        this.vpt = vpt;
-        this.width = width;
-        this.height = height;
         this.draw();
     }
 
+    toFixed(n: number) {
+        return Number(n.toFixed(2));
+    }
+
     draw() {
+        const vpt = this.editor.canvas.viewportTransform as [number, number, number, number, number, number];
+        const height = this.editor.canvas.height as number;
+        const width = this.editor.canvas.width as number;
         const ctx = this.editor.canvas.getContext();
-        const hZoom = this.vpt[0];
-        const vZoom = this.vpt[3];
-        const x = this.vpt[4];
-        const y = this.vpt[5];
+        const hZoom = vpt[0];
+        const vZoom = vpt[3];
+        const xMove = this.toFixed(vpt[4]) - this.toFixed((width * (1 - hZoom)) / 2);
+        const yMove = this.toFixed(vpt[5]) - this.toFixed((height * (1 - vZoom)) / 2);
         const hGap = getGap(hZoom);
         const vGap = getGap(vZoom);
+        const xCenter = this.editor.canvas.getCenter().left;
+        const yCenter = this.editor.canvas.getCenter().top;
         // 横向尺子
         drawRect(ctx, {
             left: this.size,
             top: 0,
-            width: this.width - this.size,
+            width: width - this.size,
             height: this.size,
             fill: this.backgroundColor,
             stroke: this.borderColor,
         });
-        const hStart = -((x + this.offsetX) / hZoom);
-        const hLength = this.width / hZoom;
+
+        const hLength = width / hZoom;
+        const hStart = -(xMove + xCenter) / hZoom;
         const hStartValue = Math[hStart > 0 ? 'floor' : 'ceil'](hStart / hGap) * hGap;
         for (let i = hStartValue; i < hLength + hStart; i += hGap) {
             drawLine(ctx, {
@@ -95,12 +87,13 @@ class Ruler {
             left: 0,
             top: this.size,
             width: this.size,
-            height: this.height,
+            height: height,
             fill: this.backgroundColor,
             stroke: this.borderColor,
         });
-        const vStart = -((y + this.offsetY) / vZoom);
-        const vLength = this.height / vZoom;
+
+        const vLength = height / vZoom;
+        const vStart = -(yMove + yCenter) / vZoom;
         const vStartValue = Math[vStart > 0 ? 'floor' : 'ceil'](vStart / vGap) * vGap;
         for (let i = vStartValue; i < vLength + vStart; i += vGap) {
             drawLine(ctx, {
