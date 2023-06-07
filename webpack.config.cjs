@@ -4,7 +4,6 @@ const NodePolyfillPlugin = require('node-polyfill-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
-const { merge } = require('webpack-merge');
 const WebpackBar = require('webpackbar');
 const path = require('path');
 
@@ -12,7 +11,9 @@ const jsPrefix = 'js';
 const cssPrefix = 'css';
 const assetsPrefix = 'assets';
 
-const config = ({ isDev }) => ({
+const prodConfig = {
+    cache: false,
+    mode: 'production',
     entry: {
         main: path.join(__dirname, './src/index.tsx'),
     },
@@ -24,6 +25,32 @@ const config = ({ isDev }) => ({
         publicPath: './',
         clean: true,
     },
+    resolve: {
+        extensions: ['.ts', '.tsx', '.js', '.jsx'],
+        alias: {
+            '@': path.join(__dirname, './src'),
+            '@proxy': path.join(__dirname, './proxy'),
+        },
+    },
+    plugins: [
+        new WebpackBar(),
+        new NodePolyfillPlugin(),
+        new HtmlWebpackPlugin({
+            filename: 'index.html',
+            template: path.join(__dirname, './webpack.index.html'),
+            inject: true,
+            minify: {
+                removeComments: true, // 去掉注释
+                collapseWhitespace: true, // 去掉多余空白
+                removeAttributeQuotes: true, // 去掉一些属性的引号，例如id="moo" => id=moo
+            },
+        }),
+        new MiniCssExtractPlugin({
+            filename: `${cssPrefix}/[name].[contenthash:8].css`,
+            chunkFilename: `${cssPrefix}/[name].[id].[contenthash:8].css`,
+            ignoreOrder: true,
+        }),
+    ],
     module: {
         rules: [
             {
@@ -47,12 +74,12 @@ const config = ({ isDev }) => ({
             },
             {
                 test: /\.css$/,
-                use: [isDev ? 'style-loader' : MiniCssExtractPlugin.loader, 'css-loader', 'postcss-loader'],
+                use: [MiniCssExtractPlugin.loader, 'css-loader', 'postcss-loader'],
             },
             {
                 test: /\.less$/,
                 use: [
-                    isDev ? 'style-loader' : MiniCssExtractPlugin.loader,
+                    MiniCssExtractPlugin.loader,
                     {
                         loader: 'css-loader',
                         options: {
@@ -74,36 +101,6 @@ const config = ({ isDev }) => ({
             },
         ],
     },
-    resolve: {
-        extensions: ['.ts', '.tsx', '.js', '.jsx'],
-        alias: {
-            '@': path.join(__dirname, './src'),
-            '@proxy': path.join(__dirname, './proxy'),
-        },
-    },
-    plugins: [new WebpackBar(), new NodePolyfillPlugin()],
-});
-
-const prodConfig = {
-    mode: 'production',
-    cache: false,
-    plugins: [
-        new HtmlWebpackPlugin({
-            filename: 'index.html',
-            template: path.join(__dirname, './webpack.index.html'),
-            inject: true,
-            minify: {
-                removeComments: true, // 去掉注释
-                collapseWhitespace: true, // 去掉多余空白
-                removeAttributeQuotes: true, // 去掉一些属性的引号，例如id="moo" => id=moo
-            },
-        }),
-        new MiniCssExtractPlugin({
-            filename: `${cssPrefix}/[name].[contenthash:8].css`,
-            chunkFilename: `${cssPrefix}/[name].[id].[contenthash:8].css`,
-            ignoreOrder: true,
-        }),
-    ],
     optimization: {
         minimizer: [
             new CssMinimizerPlugin(),
@@ -148,4 +145,4 @@ const prodConfig = {
     stats: 'normal',
 };
 
-module.exports = merge(config({ isDev: false }), prodConfig);
+module.exports = prodConfig;
