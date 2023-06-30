@@ -2,6 +2,7 @@ import { useSelector as useSelectorOrigin, useDispatch as useDispatchOrigin } fr
 import { configureStore } from '@reduxjs/toolkit';
 import global from './reducer/global';
 
+
 const store = configureStore({
     reducer: {
         global,

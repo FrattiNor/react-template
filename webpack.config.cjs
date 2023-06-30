@@ -4,6 +4,7 @@ const NodePolyfillPlugin = require('node-polyfill-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
+const CopyPlugin = require('copy-webpack-plugin');
 const WebpackBar = require('webpackbar');
 const path = require('path');
 
@@ -18,9 +19,9 @@ const prodConfig = {
         main: path.join(__dirname, './src/index.tsx'),
     },
     output: {
-        filename: `${jsPrefix}/[name].[contenthash:8].bundle.js`,
-        chunkFilename: `${jsPrefix}/[name].[contenthash:8].chunk.js`,
-        assetModuleFilename: `${assetsPrefix}/[contenthash:8][ext][query]`,
+        filename: `${jsPrefix}/[name].[chunkhash].bundle.js`,
+        chunkFilename: `${jsPrefix}/[name].[chunkhash].chunk.js`,
+        assetModuleFilename: `${assetsPrefix}/[chunkhash][ext][query]`,
         path: path.join(__dirname, './dist'),
         publicPath: './',
         clean: true,
@@ -46,8 +47,8 @@ const prodConfig = {
             },
         }),
         new MiniCssExtractPlugin({
-            filename: `${cssPrefix}/[name].[contenthash:8].css`,
-            chunkFilename: `${cssPrefix}/[name].[id].[contenthash:8].css`,
+            filename: `${cssPrefix}/[name].[chunkhash].css`,
+            chunkFilename: `${cssPrefix}/[name].[id].[chunkhash].css`,
             ignoreOrder: true,
         }),
     ],
@@ -62,14 +63,14 @@ const prodConfig = {
                 test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
                 type: 'asset/resource',
                 generator: {
-                    filename: `${assetsPrefix}/[name].[contenthash:8][ext]`,
+                    filename: `${assetsPrefix}/[name].[chunkhash][ext]`,
                 },
             },
             {
                 test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
                 type: 'asset/resource',
                 generator: {
-                    filename: `${assetsPrefix}/[name].[contenthash:8][ext]`,
+                    filename: `${assetsPrefix}/[name].[chunkhash][ext]`,
                 },
             },
             {
@@ -84,7 +85,7 @@ const prodConfig = {
                         loader: 'css-loader',
                         options: {
                             modules: {
-                                localIdentName: '[local]--[hash:base64:6]',
+                                localIdentName: '[local]--[hash:base64]',
                             },
                         },
                     },
