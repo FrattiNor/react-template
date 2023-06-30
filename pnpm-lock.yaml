@@ -11,6 +11,9 @@ dependencies:
   antd:
     specifier: ^5.6.1
     version: 5.6.1(react-dom@18.2.0)(react@18.2.0)
+  cron-parser:
+    specifier: ^4.8.1
+    version: 4.8.1
   react:
     specifier: ^18.2.0
     version: 18.2.0
@@ -3224,6 +3227,13 @@ packages:
       sha.js: 2.4.11
     dev: true
 
+  /cron-parser@4.8.1:
+    resolution: {integrity: sha512-jbokKWGcyU4gl6jAfX97E1gDpY12DJ1cLJZmoDzaAln/shZ+S3KBFBuA2Q6WeUN4gJf/8klnV1EfvhA2lK5IRQ==}
+    engines: {node: '>=12.0.0'}
+    dependencies:
+      luxon: 3.3.0
+    dev: false
+
   /cross-spawn@7.0.3:
     resolution: {integrity: sha512-iRDPJKUPVEND7dHPO8rkbOnPpyDygcDFtWjpeWNCgy8WP2rXcxXL8TskReQl6OrB2G7+UJrags1q15Fudc7G6w==}
     engines: {node: '>= 8'}
@@ -4557,6 +4567,11 @@ packages:
     dependencies:
       yallist: 4.0.0
     dev: true
+
+  /luxon@3.3.0:
+    resolution: {integrity: sha512-An0UCfG/rSiqtAIiBPO0Y9/zAnHUZxAMiCpTd5h2smgsj7GGmcenvrvww2cqNA8/4A5ZrD1gJpHN2mIHZQF+Mg==}
+    engines: {node: '>=12'}
+    dev: false
 
   /magic-string@0.25.9:
     resolution: {integrity: sha512-RmF0AsMzgt25qzqqLc1+MbHmhdx0ojF2Fvs4XnOqz2ZOBXzzkEwc/dJQZCYHAn7v1jbVOjAZfK8msRn4BxO4VQ==}
