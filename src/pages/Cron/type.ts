@@ -1,4 +1,4 @@
-import { cronType } from './useData';
+import { cronType } from './utils';
 
 export type CronType = (typeof cronType)[number];
 
@@ -31,3 +31,5 @@ export interface PeriodValue {
     start: number;
     end: number;
 }
+
+export type DayType = (typeof cronType)[3] | (typeof cronType)[5];

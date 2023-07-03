@@ -1,20 +1,24 @@
-import { RadioType, PeriodType, LoopType, PointType } from './type';
+import { RadioType, PeriodType, LoopType, PointType, DayType } from './type';
 import { useEffect, useMemo, useState } from 'react';
+import { cronParse, cronStringify } from './utils';
 
-export const getNumByStr = (v: string) => {
-    const n = Number(v);
-    return isNaN(n) ? 0 : n;
+type Props = {
+    value?: string;
+    onChange?: (v: string) => void;
 };
 
-// cron 类型
-export const cronType = ['second', 'minute', 'hour', 'day', 'month', 'week', 'year'] as const;
+const useData = ({ value, onChange }: Props) => {
+    const [_expression, _setExpression] = useState('* * * * * ? *');
 
-const useData = () => {
+    const expression = typeof value === 'string' ? value : _expression;
+
+    const setExpression = typeof onChange === 'function' ? onChange : _setExpression;
+
     const currentYear = useMemo(() => new Date().getFullYear(), []);
 
-    const [expression, setExpression] = useState('* * * * * * *');
+    const [error, setError] = useState('');
 
-    const [dayType, setDayType] = useState<'day' | 'week'>('day');
+    const [dayType, setDayType] = useState<DayType>('day');
 
     // 单选 选择执行类型
     const [radioValue, setRadioValue] = useState<RadioType>({
@@ -61,95 +65,32 @@ const useData = () => {
     });
 
     // expression 变更
-    // useEffect(() => {
-    //     // 单选按钮
-    //     const changeRadio = {} as RadioType;
-    //     // 周期数组范围回显
-    //     const initPeriodValue = {} as PeriodType;
-    //     // 从...开始
-    //     const initLoopValue = {} as LoopType;
-    //     // 指定
-    //     const initPointValue = {} as PointType;
-
-    //     try {
-    //         // 拆分表达式
-    //         const cronList = expression.split(' ');
-    //         cronList.forEach((text, index) => {
-    //             const type = cronType[index];
-    //             const isDay = index === 3; //
-
-    //             //
-    //             if (isDay) {
-    //                 setDayType(/^(\*|\d\/\d|\d-\d|\d(,\d)*)$/.test(text) ? 'day' : 'week');
-    //             }
-
-    //             if (/^\?$/.test(text)) {
-    //                 changeRadio[type] = 1;
-    //             } else if (/^\*$/.test(text)) {
-    //                 changeRadio[type] = 1;
-    //             } else if (/^\d+\/\d+$/.test(text)) {
-    //                 changeRadio[type] = 2;
-    //                 const vList = text.split('/');
-    //                 console.log(type, vList);
-    //                 initPeriodValue[type] = { start: getNumByStr(vList[0]), end: getNumByStr(vList[1]) };
-    //             } else if (/^\d+-\d+$/.test(text)) {
-    //                 changeRadio[type] = 3;
-    //                 const vList = text.split('-');
-    //                 initLoopValue[type] = { start: getNumByStr(vList[0]), loop: getNumByStr(vList[1]) };
-    //             } else if (/^\d+(,\d+)*$/.test(text)) {
-    //                 changeRadio[type] = 4;
-    //                 initPointValue[type] = text.split(',').map((item) => Number(item));
-    //             } else {
-    //                 changeRadio[type] = 0;
-    //             }
-    //         });
-    //     } catch (e) {
-    //         console.log(e);
-    //     }
-
-    //     setPeriodValue({ ...periodValue, ...initPeriodValue });
-    //     setLoopValue({ ...loopValue, ...initLoopValue });
-    //     setPointValue({ ...pointValue, ...initPointValue });
-    //     setRadioValue({ ...radioValue, ...changeRadio });
-    // }, [expression]);
+    useEffect(() => {
+        const result = cronParse(expression);
+        console.log('cronParse', result);
+        const { error, nextDayType, nextLoop, nextPeriod, nextPoint, nextRadio } = result;
+        if (error) {
+            setError(error);
+        } else {
+            setError('');
+            if (nextDayType) setDayType(nextDayType);
+            if (nextRadio) setRadioValue((b) => ({ ...b, ...nextRadio }));
+            if (nextPeriod) setPeriodValue((b) => ({ ...b, ...nextPeriod }));
+            if (nextLoop) setLoopValue((b) => ({ ...b, ...nextLoop }));
+            if (nextPoint) setPointValue((b) => ({ ...b, ...nextPoint }));
+        }
+    }, [expression]);
 
     useEffect(() => {
-        let nextExpression = '';
-        cronType.forEach((type, i) => {
-            if (dayType === 'day' && i == 5) {
-                nextExpression += ' ?';
-                return;
-            }
-
-            if (dayType === 'week' && i == 3) {
-                nextExpression += ' ?';
-                return;
-            }
-
-            switch (radioValue[type]) {
-                case 1:
-                    nextExpression += ' *';
-                    break;
-                case 2:
-                    nextExpression += ` ${periodValue[type].start}-${periodValue[type].end}`;
-                    break;
-                case 3:
-                    nextExpression += ` ${loopValue[type].start}/${loopValue[type].loop}`;
-                    break;
-                case 4:
-                    if (pointValue[type].length === 0) {
-                        nextExpression += ' *';
-                    } else {
-                        nextExpression += ` ${pointValue[type].join(',')}`;
-                    }
-                    break;
-                default:
-                    nextExpression += ' ';
-                    break;
-            }
-        });
-        console.log(nextExpression);
-        setExpression(nextExpression);
+        const result = cronStringify({ radioValue, periodValue, loopValue, pointValue, dayType });
+        console.log('cronStringify', result);
+        const { error, nextCron } = result;
+        if (error) {
+            setError(error);
+        } else {
+            setError('');
+            if (nextCron) setExpression(nextCron);
+        }
     }, [radioValue, periodValue, loopValue, pointValue, dayType]);
 
     return {
@@ -166,6 +107,7 @@ const useData = () => {
         currentYear,
         dayType,
         setDayType,
+        error,
     };
 };
 

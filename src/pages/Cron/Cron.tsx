@@ -1,16 +1,22 @@
-import useData, { cronType } from './useData';
 import { FC, PropsWithChildren } from 'react';
 import Normal from './TemplateEdit/Normal';
 import { Tabs, Card, Input } from 'antd';
 import Day from './TemplateEdit/Day';
 import CronContext from './Context';
+import { cronType } from './utils';
+import useData from './useData';
 
 const TabWrapper: FC<PropsWithChildren> = ({ children }) => {
     return <div style={{ padding: '0 6px' }}>{children}</div>;
 };
 
-const Cron: FC = () => {
-    const data = useData();
+type Props = {
+    value?: string;
+    onChange?: (v: string) => void;
+};
+
+const Cron: FC<Props> = ({ value, onChange }) => {
+    const data = useData({ value, onChange });
     const { currentYear, expression, setExpression } = data;
 
     return (
