@@ -1,6 +1,6 @@
+import { Tabs, Card, Input, Alert } from 'antd';
 import { FC, PropsWithChildren } from 'react';
 import Normal from './TemplateEdit/Normal';
-import { Tabs, Card, Input } from 'antd';
 import Day from './TemplateEdit/Day';
 import CronContext from './Context';
 import { cronType } from './utils';
@@ -17,11 +17,18 @@ type Props = {
 
 const Cron: FC<Props> = ({ value, onChange }) => {
     const data = useData({ value, onChange });
-    const { currentYear, expression, setExpression } = data;
+    const { currentYear, error, expression, setExpression } = data;
+
+    const cardTitle = (
+        <div style={{ padding: '12px 0' }}>
+            <Input value={expression} onChange={(e) => setExpression(e.target.value)} readOnly />
+            {error && <Alert message={error || 'test'} type="error" showIcon style={{ marginTop: 12 }} />}
+        </div>
+    );
 
     return (
         <CronContext.Provider value={data}>
-            <Card bodyStyle={{ padding: 0 }} title={<Input value={expression} onChange={(e) => setExpression(e.target.value)} readOnly />}>
+            <Card bodyStyle={{ padding: 0 }} title={cardTitle}>
                 <Tabs
                     tabBarStyle={{ padding: '0 24px', margin: 0 }}
                     items={[

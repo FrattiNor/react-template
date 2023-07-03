@@ -67,7 +67,8 @@ const useData = ({ value, onChange }: Props) => {
     // expression 变更
     useEffect(() => {
         const result = cronParse(expression);
-        console.log('cronParse', result);
+        // console.log('=== cronParse ===');
+        // console.log(result);
         const { error, nextDayType, nextLoop, nextPeriod, nextPoint, nextRadio } = result;
         if (error) {
             setError(error);
@@ -83,7 +84,8 @@ const useData = ({ value, onChange }: Props) => {
 
     useEffect(() => {
         const result = cronStringify({ radioValue, periodValue, loopValue, pointValue, dayType });
-        console.log('cronStringify', result);
+        // console.log('=== cronStringify ===');
+        // console.log(result);
         const { error, nextCron } = result;
         if (error) {
             setError(error);
