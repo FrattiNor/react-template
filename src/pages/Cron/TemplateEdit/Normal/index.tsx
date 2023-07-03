@@ -1,13 +1,21 @@
 import { CronType, LoopValue, PeriodValue } from '../../type';
 import { FC, Fragment, ReactNode, useContext } from 'react';
-import { Input, InputNumber, Radio } from 'antd';
+import { Checkbox, InputNumber, Radio } from 'antd';
 import { getNumByStr } from '../../useData';
 import styles from './index.module.less';
 import CronContext from '../../Context';
 
-type Props = { unit: string; type: CronType; max: number; min: number; Select?: ReactNode };
+export const getArray = (count: number, start = 0) => {
+    return Array(count)
+        .fill('')
+        .map((_, i) => {
+            return start + i;
+        });
+};
 
-const Normal: FC<Props> = ({ unit, type, max, min, Select }) => {
+type Props = { unit: string; type: CronType; max: number; min: number; Select?: ReactNode; checkboxWidth?: number };
+
+const Normal: FC<Props> = ({ unit, type, max, min, Select, checkboxWidth }) => {
     const { radioValue, periodValue, loopValue, pointValue, setRadioValue, setPeriodValue, setLoopValue, setPointValue } = useContext(CronContext);
 
     const radioChange = (v: number) => {
@@ -22,8 +30,8 @@ const Normal: FC<Props> = ({ unit, type, max, min, Select }) => {
         setLoopValue((b) => ({ ...b, [type]: { ...b[type], ...v } }));
     };
 
-    const pointChange = (v: string) => {
-        setPointValue((b) => ({ ...b, [type]: v }));
+    const pointChange = (v: number[]) => {
+        if (v.length > 0) setPointValue((b) => ({ ...b, [type]: v }));
     };
 
     return (
@@ -38,20 +46,22 @@ const Normal: FC<Props> = ({ unit, type, max, min, Select }) => {
                     <span>周期从</span>
                     <InputNumber
                         min={min}
-                        max={periodValue[type].end - 1}
                         size="small"
                         controls={false}
+                        max={periodValue[type].end - 1}
                         value={periodValue[type].start}
+                        disabled={radioValue[type] !== 2}
                         className={styles['input-number']}
                         onChange={(v) => periodChange({ start: getNumByStr(`${v}`) })}
                     />
                     <span>到</span>
                     <InputNumber
-                        min={periodValue[type].start + 1}
                         max={max}
                         size="small"
                         controls={false}
                         value={periodValue[type].end}
+                        min={periodValue[type].start + 1}
+                        disabled={radioValue[type] !== 2}
                         className={styles['input-number']}
                         onChange={(v) => periodChange({ end: getNumByStr(`${v}`) })}
                     />
@@ -65,6 +75,7 @@ const Normal: FC<Props> = ({ unit, type, max, min, Select }) => {
                         size="small"
                         controls={false}
                         value={loopValue[type].start}
+                        disabled={radioValue[type] !== 3}
                         className={styles['input-number']}
                         onChange={(v) => loopChange({ start: getNumByStr(`${v}`) })}
                     />
@@ -75,6 +86,7 @@ const Normal: FC<Props> = ({ unit, type, max, min, Select }) => {
                         size="small"
                         controls={false}
                         value={loopValue[type].loop}
+                        disabled={radioValue[type] !== 3}
                         className={styles['input-number']}
                         onChange={(v) => loopChange({ loop: getNumByStr(`${v}`) })}
                     />
@@ -82,14 +94,19 @@ const Normal: FC<Props> = ({ unit, type, max, min, Select }) => {
                 </Radio>
                 <Radio className={styles['radio']} value={4}>
                     <span>具体{unit}数</span>
-                    <span className={styles['notice-text']}>{`（逗号分隔的${unit}数）`}</span>
                 </Radio>
-                <Input.TextArea
+                <Checkbox.Group
                     value={pointValue[type]}
-                    className={styles['input-textarea']}
-                    autoSize={{ minRows: 2, maxRows: 4 }}
-                    onChange={(e) => pointChange(e.target.value)}
-                />
+                    disabled={radioValue[type] !== 4}
+                    className={styles['checkbox-group']}
+                    onChange={(c) => pointChange(c as number[])}
+                >
+                    {getArray(max - min + 1, min).map((item) => (
+                        <Checkbox key={item} value={item} style={{ width: checkboxWidth }}>
+                            {item}
+                        </Checkbox>
+                    ))}
+                </Checkbox.Group>
             </Radio.Group>
         </div>
     );

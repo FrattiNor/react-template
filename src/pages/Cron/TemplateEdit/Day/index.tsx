@@ -14,6 +14,7 @@ const Day: FC = () => {
             max={max}
             unit="天"
             type={dayType}
+            checkboxWidth={47.5}
             Select={
                 <Select
                     size="small"
