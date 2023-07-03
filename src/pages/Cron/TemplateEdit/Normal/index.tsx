@@ -1,23 +1,24 @@
+import { CronType, LoopValue, PeriodValue } from '../../type';
+import { FC, Fragment, ReactNode, useContext } from 'react';
 import { Input, InputNumber, Radio } from 'antd';
-import { getNumByStr } from '../../utils';
+import { getNumByStr } from '../../useData';
 import styles from './index.module.less';
 import CronContext from '../../Context';
-import { FC, useContext } from 'react';
-import { CronType } from '../../type';
 
-const Normal: FC<{ unit: string; type: CronType; max: number; min: number }> = ({ unit, type, max, min }) => {
+type Props = { unit: string; type: CronType; max: number; min: number; Select?: ReactNode };
+
+const Normal: FC<Props> = ({ unit, type, max, min, Select }) => {
     const { radioValue, periodValue, loopValue, pointValue, setRadioValue, setPeriodValue, setLoopValue, setPointValue } = useContext(CronContext);
 
     const radioChange = (v: number) => {
-        console.log(typeof v);
         setRadioValue((b) => ({ ...b, [type]: v }));
     };
 
-    const periodChange = (v: { [key: string]: number }) => {
+    const periodChange = (v: Partial<PeriodValue>) => {
         setPeriodValue((b) => ({ ...b, [type]: { ...b[type], ...v } }));
     };
 
-    const loopChange = (v: { [key: string]: number }) => {
+    const loopChange = (v: Partial<LoopValue>) => {
         setLoopValue((b) => ({ ...b, [type]: { ...b[type], ...v } }));
     };
 
@@ -27,35 +28,37 @@ const Normal: FC<{ unit: string; type: CronType; max: number; min: number }> = (
 
     return (
         <div className={styles['wrapper']}>
-            <Radio.Group value={radioValue[type]} onChange={(e) => radioChange(e.target.value)}>
+            <Fragment>{Select}</Fragment>
+
+            <Radio.Group className={styles['radio-group']} value={radioValue[type]} onChange={(e) => radioChange(e.target.value)}>
                 <Radio className={styles['radio']} value={1}>
                     <span>每{unit}执行</span>
                 </Radio>
                 <Radio className={styles['radio']} value={2}>
-                    <span>从</span>
+                    <span>周期从</span>
                     <InputNumber
                         min={min}
-                        max={max}
+                        max={periodValue[type].end - 1}
                         size="small"
                         controls={false}
-                        value={periodValue[type].min}
+                        value={periodValue[type].start}
                         className={styles['input-number']}
-                        onChange={(v) => periodChange({ min: getNumByStr(`${v}`) })}
+                        onChange={(v) => periodChange({ start: getNumByStr(`${v}`) })}
                     />
                     <span>到</span>
                     <InputNumber
-                        min={min}
+                        min={periodValue[type].start + 1}
                         max={max}
                         size="small"
                         controls={false}
-                        value={periodValue[type].max}
+                        value={periodValue[type].end}
                         className={styles['input-number']}
-                        onChange={(v) => periodChange({ max: getNumByStr(`${v}`) })}
+                        onChange={(v) => periodChange({ end: getNumByStr(`${v}`) })}
                     />
                     <span>{unit}</span>
                 </Radio>
                 <Radio className={styles['radio']} value={3}>
-                    <span>从</span>
+                    <span>周期从</span>
                     <InputNumber
                         min={min}
                         max={max}
@@ -71,9 +74,9 @@ const Normal: FC<{ unit: string; type: CronType; max: number; min: number }> = (
                         max={max}
                         size="small"
                         controls={false}
-                        value={loopValue[type].end}
+                        value={loopValue[type].loop}
                         className={styles['input-number']}
-                        onChange={(v) => loopChange({ end: getNumByStr(`${v}`) })}
+                        onChange={(v) => loopChange({ loop: getNumByStr(`${v}`) })}
                     />
                     <span>{unit}执行</span>
                 </Radio>

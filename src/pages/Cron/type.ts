@@ -1,4 +1,4 @@
-import { cronType } from './const';
+import { cronType } from './useData';
 
 export type CronType = (typeof cronType)[number];
 
@@ -13,36 +13,36 @@ export interface RadioType {
     year: number;
 }
 
-interface MinMaxType {
-    min: number;
-    max: number;
-}
-
-// 周期
-export interface PeriodType {
-    second: MinMaxType;
-    minute: MinMaxType;
-    hour: MinMaxType;
-    day: MinMaxType;
-    month: MinMaxType;
-    week: MinMaxType;
-    year: MinMaxType;
-}
-
-interface StartEndType {
+export interface PeriodValue {
     start: number;
     end: number;
 }
 
+// 周期
+export interface PeriodType {
+    second: PeriodValue;
+    minute: PeriodValue;
+    hour: PeriodValue;
+    day: PeriodValue;
+    month: PeriodValue;
+    week: PeriodValue;
+    year: PeriodValue;
+}
+
+export interface LoopValue {
+    start: number;
+    loop: number;
+}
+
 // 从 ... 开始
 export interface LoopType {
-    second: StartEndType;
-    minute: StartEndType;
-    hour: StartEndType;
-    day: StartEndType;
-    month: StartEndType;
-    week: StartEndType;
-    year: StartEndType;
+    second: LoopValue;
+    minute: LoopValue;
+    hour: LoopValue;
+    day: LoopValue;
+    month: LoopValue;
+    week: LoopValue;
+    year: LoopValue;
 }
 
 // 指定

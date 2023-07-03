@@ -1,7 +1,13 @@
 import { RadioType, PeriodType, LoopType, PointType } from './type';
 import { useEffect, useMemo, useState } from 'react';
-import { getNumByStr } from './utils';
-import { cronType } from './const';
+
+export const getNumByStr = (v: string) => {
+    const n = Number(v);
+    return isNaN(n) ? 0 : n;
+};
+
+// cron 类型
+export const cronType = ['second', 'minute', 'hour', 'day', 'month', 'week', 'year'] as const;
 
 const useData = () => {
     const currentYear = useMemo(() => new Date().getFullYear(), []);
@@ -21,26 +27,26 @@ const useData = () => {
         year: 1,
     });
 
-    // 周期
+    //
     const [periodValue, setPeriodValue] = useState<PeriodType>({
-        second: { min: 0, max: 1 },
-        minute: { min: 0, max: 1 },
-        hour: { min: 0, max: 1 },
-        day: { min: 1, max: 1 },
-        month: { min: 1, max: 1 },
-        week: { min: 1, max: 1 },
-        year: { min: currentYear, max: currentYear + 1 },
+        second: { start: 0, end: 1 },
+        minute: { start: 0, end: 1 },
+        hour: { start: 0, end: 1 },
+        day: { start: 1, end: 2 },
+        month: { start: 1, end: 2 },
+        week: { start: 1, end: 2 },
+        year: { start: currentYear, end: currentYear + 1 },
     });
 
     // 从 ... 开始
     const [loopValue, setLoopValue] = useState<LoopType>({
-        second: { start: 0, end: 1 },
-        minute: { start: 0, end: 1 },
-        hour: { start: 0, end: 1 },
-        day: { start: 1, end: 1 },
-        month: { start: 1, end: 1 },
-        week: { start: 1, end: 1 },
-        year: { start: currentYear, end: 1 },
+        second: { start: 0, loop: 1 },
+        minute: { start: 0, loop: 1 },
+        hour: { start: 0, loop: 1 },
+        day: { start: 1, loop: 1 },
+        month: { start: 1, loop: 1 },
+        week: { start: 1, loop: 1 },
+        year: { start: currentYear, loop: 1 },
     });
 
     // 指定
@@ -85,11 +91,11 @@ const useData = () => {
                 } else if (/^\d\/\d$/.test(text)) {
                     changeRadio[type] = 2;
                     const vList = text.split('/');
-                    initPeriodValue[type] = { min: getNumByStr(vList[0]), max: getNumByStr(vList[1]) };
+                    initPeriodValue[type] = { start: getNumByStr(vList[0]), end: getNumByStr(vList[1]) };
                 } else if (/^\d-\d$/.test(text)) {
                     changeRadio[type] = 3;
                     const vList = text.split('-');
-                    initLoopValue[type] = { start: getNumByStr(vList[0]), end: getNumByStr(vList[1]) };
+                    initLoopValue[type] = { start: getNumByStr(vList[0]), loop: getNumByStr(vList[1]) };
                 } else if (/^\d(,\d)*$/.test(text)) {
                     changeRadio[type] = 4;
                     initPointValue[type] = text;
@@ -97,7 +103,9 @@ const useData = () => {
                     changeRadio[type] = 0;
                 }
             });
-        } catch (e) {}
+        } catch (e) {
+            console.log(e);
+        }
 
         setPeriodValue({ ...periodValue, ...initPeriodValue });
         setLoopValue({ ...loopValue, ...initLoopValue });
