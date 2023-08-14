@@ -1,6 +1,6 @@
 import { RadioType, PeriodType, LoopType, PointType, DayType } from './type';
 import { useEffect, useMemo, useState } from 'react';
-import { cronParse, cronStringify } from './utils';
+import { cronParser, cronStringify } from './utils';
 
 type Props = {
     value?: string;
@@ -19,7 +19,7 @@ const useData = ({ value, onChange }: Props) => {
     // 解析或者序列化错误
     const [error, setError] = useState('');
     // 日的类型【dayOfMonth | dayOfWeek】
-    const [dayType, setDayType] = useState<DayType>('day');
+    const [dayType, setDayType] = useState<DayType>('dayOfMonth');
     // 内部序列化验证过的值【避免再验证一次表达式】
     const [verifiedStringifyCron, setVerifiedStringifyCron] = useState('* * * * * ? *');
     // 单选 选择执行类型
@@ -27,9 +27,9 @@ const useData = ({ value, onChange }: Props) => {
         second: 1,
         minute: 1,
         hour: 1,
-        day: 1,
+        dayOfMonth: 1,
         month: 1,
-        week: 1,
+        dayOfWeek: 1,
         year: 1,
     });
     // 周期 从start-end
@@ -37,9 +37,9 @@ const useData = ({ value, onChange }: Props) => {
         second: { start: 0, end: 1 },
         minute: { start: 0, end: 1 },
         hour: { start: 0, end: 1 },
-        day: { start: 1, end: 2 },
+        dayOfMonth: { start: 1, end: 2 },
         month: { start: 1, end: 2 },
-        week: { start: 1, end: 2 },
+        dayOfWeek: { start: 1, end: 2 },
         year: { start: currentYear, end: currentYear + 1 },
     });
     // 周期 从start/loop
@@ -47,9 +47,9 @@ const useData = ({ value, onChange }: Props) => {
         second: { start: 0, loop: 1 },
         minute: { start: 0, loop: 1 },
         hour: { start: 0, loop: 1 },
-        day: { start: 1, loop: 1 },
+        dayOfMonth: { start: 1, loop: 1 },
         month: { start: 1, loop: 1 },
-        week: { start: 1, loop: 1 },
+        dayOfWeek: { start: 1, loop: 1 },
         year: { start: currentYear, loop: 1 },
     });
     // 指定
@@ -57,18 +57,16 @@ const useData = ({ value, onChange }: Props) => {
         second: [0],
         minute: [0],
         hour: [0],
-        day: [1],
+        dayOfMonth: [1],
         month: [1],
-        week: [1],
+        dayOfWeek: [1],
         year: [currentYear],
     });
     // expression 变更
     useEffect(() => {
         // 内部验证过的就不需要再设置值了【针对外部值变更的情况】
         if (expression !== verifiedStringifyCron) {
-            const result = cronParse(expression);
-            // console.log('=== cronParse ===');
-            // console.log(result);
+            const result = cronParser(expression);
             const { error, nextDayType, nextLoop, nextPeriod, nextPoint, nextRadio } = result;
             if (error) {
                 setError(error);
@@ -85,8 +83,6 @@ const useData = ({ value, onChange }: Props) => {
     // obj变更
     useEffect(() => {
         const result = cronStringify({ radioValue, periodValue, loopValue, pointValue, dayType });
-        // console.log('=== cronStringify ===');
-        // console.log(result);
         const { error, nextCron } = result;
         if (error) {
             setError(error);

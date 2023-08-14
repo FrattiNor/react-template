@@ -1,8 +1,9 @@
+import { FC, PropsWithChildren, useMemo } from 'react';
 import { Tabs, Card, Input, Alert } from 'antd';
-import { FC, PropsWithChildren } from 'react';
 import Normal from './TemplateEdit/Normal';
 import Day from './TemplateEdit/Day';
 import CronContext from './Context';
+import translate from './translate';
 import { cronType } from './utils';
 import useData from './useData';
 
@@ -17,12 +18,13 @@ type Props = {
 
 const Cron: FC<Props> = ({ value, onChange }) => {
     const data = useData({ value, onChange });
-    const { currentYear, error, expression, setExpression } = data;
+    const { currentYear, error, expression } = data;
+    const showText = useMemo(() => translate(expression), [expression]);
 
     const cardTitle = (
         <div style={{ padding: '12px 0' }}>
-            <Input value={expression} onChange={(e) => setExpression(e.target.value)} readOnly />
-            {error && <Alert message={error || 'test'} type="error" showIcon style={{ marginTop: 12 }} />}
+            <Input value={showText} readOnly />
+            {error && <Alert message={error} type="error" showIcon style={{ marginTop: 12 }} />}
         </div>
     );
 

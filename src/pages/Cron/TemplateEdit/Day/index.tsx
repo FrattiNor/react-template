@@ -6,7 +6,7 @@ import { Select } from 'antd';
 const Day: FC = () => {
     const { dayType, setDayType } = useContext(CronContext);
 
-    const max = useMemo(() => (dayType === 'day' ? 31 : 7), [dayType]);
+    const max = useMemo(() => (dayType === 'dayOfMonth' ? 31 : 7), [dayType]);
 
     return (
         <Normal
@@ -22,8 +22,8 @@ const Day: FC = () => {
                     onChange={setDayType}
                     style={{ width: 100, marginBottom: 8 }}
                     options={[
-                        { label: '按月算', value: 'day' },
-                        { label: '按周算', value: 'week' },
+                        { label: '按月算', value: 'dayOfMonth' },
+                        { label: '按周算', value: 'dayOfWeek' },
                     ]}
                 />
             }

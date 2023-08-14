@@ -6,12 +6,12 @@ export const getNumByStr = (v: string) => {
 };
 
 // cron 类型
-export const cronType = ['second', 'minute', 'hour', 'day', 'month', 'week', 'year'] as const;
+export const cronType = ['second', 'minute', 'hour', 'dayOfMonth', 'month', 'dayOfWeek', 'year'] as const;
 
 // cron
-export const cronParse = (v: string) => {
+export const cronParser = (v: string) => {
     //
-    let nextDayType: DayType = 'day';
+    let nextDayType: DayType = 'dayOfMonth';
     // 单选按钮
     const nextRadio = {} as RadioType;
     // 周期数组范围回显
@@ -38,7 +38,11 @@ export const cronParse = (v: string) => {
         }
 
         if (cronList[3] === '?' && cronList[5] !== '?') {
-            nextDayType = 'week';
+            nextDayType = 'dayOfWeek';
+        }
+
+        if (cronList[3] !== '?' && cronList[5] === '?') {
+            nextDayType = 'dayOfMonth';
         }
 
         for (let i = 0; i < cronList.length; i++) {
@@ -102,12 +106,12 @@ export const cronStringify = ({
         const type = cronType[i];
         const beforeEmpty = i !== 0 ? ' ' : '';
 
-        if (dayType === 'day' && i == 5) {
+        if (dayType === 'dayOfMonth' && i == 5) {
             nextCron += beforeEmpty + '?';
             continue;
         }
 
-        if (dayType === 'week' && i == 3) {
+        if (dayType === 'dayOfWeek' && i == 3) {
             nextCron += beforeEmpty + '?';
             continue;
         }
@@ -139,6 +143,6 @@ export const cronStringify = ({
 type Validator<T> = (rule: any, value: T) => Promise<any>;
 
 export const cronValidator: Validator<string> = async (_, cron) => {
-    const { error } = cronParse(cron);
+    const { error } = cronParser(cron);
     if (error) throw new Error(error);
 };
