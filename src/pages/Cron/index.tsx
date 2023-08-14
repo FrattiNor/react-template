@@ -1,2 +1,2 @@
-import Cron from './Cron';
+import Cron from './Core';
 export default Cron;

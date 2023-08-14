@@ -1,21 +1,36 @@
-import { Checkbox, InputNumber, Radio, notification } from 'antd';
 import { CronType, LoopValue, PeriodValue } from '../../type';
 import { FC, Fragment, ReactNode, useContext } from 'react';
+import { InputNumber, Radio, notification } from 'antd';
+import CheckboxGroup from './CheckboxGroup';
 import { getNumByStr } from '../../utils';
 import styles from './index.module.less';
 import CronContext from '../../Context';
 
-export const getArray = (count: number, start = 0) => {
-    return Array(count)
-        .fill('')
-        .map((_, i) => {
-            return start + i;
-        });
+type Props = {
+    unit: string;
+    type: CronType;
+    max: number;
+    inputMax?: number;
+    min: number;
+    inputMin?: number;
+    Select?: ReactNode;
+    checkboxItemWidth?: number;
+    checkboxGroupHeight?: number;
+    SpecificPicker?: ReactNode;
 };
 
-type Props = { unit: string; type: CronType; max: number; min: number; Select?: ReactNode; checkboxWidth?: number };
-
-const Normal: FC<Props> = ({ unit, type, max, min, Select, checkboxWidth }) => {
+const Normal: FC<Props> = ({
+    unit,
+    type,
+    max,
+    inputMax = max,
+    min,
+    inputMin = min,
+    Select,
+    checkboxItemWidth,
+    checkboxGroupHeight,
+    SpecificPicker,
+}) => {
     const { radioValue, periodValue, loopValue, pointValue, setRadioValue, setPeriodValue, setLoopValue, setPointValue } = useContext(CronContext);
 
     const [notificationApi, contextHolder] = notification.useNotification();
@@ -52,7 +67,7 @@ const Normal: FC<Props> = ({ unit, type, max, min, Select, checkboxWidth }) => {
                     <Radio className={styles['radio']} value={2}>
                         <span>周期从</span>
                         <InputNumber
-                            min={min}
+                            min={inputMin}
                             size="small"
                             controls={false}
                             max={periodValue[type].end - 1}
@@ -63,7 +78,7 @@ const Normal: FC<Props> = ({ unit, type, max, min, Select, checkboxWidth }) => {
                         />
                         <span>到</span>
                         <InputNumber
-                            max={max}
+                            max={inputMax}
                             size="small"
                             controls={false}
                             value={periodValue[type].end}
@@ -77,8 +92,8 @@ const Normal: FC<Props> = ({ unit, type, max, min, Select, checkboxWidth }) => {
                     <Radio className={styles['radio']} value={3}>
                         <span>周期从</span>
                         <InputNumber
-                            min={min}
-                            max={max}
+                            min={inputMin}
+                            max={inputMax}
                             size="small"
                             controls={false}
                             value={loopValue[type].start}
@@ -89,7 +104,7 @@ const Normal: FC<Props> = ({ unit, type, max, min, Select, checkboxWidth }) => {
                         <span>{unit}开始，每</span>
                         <InputNumber
                             min={1}
-                            max={max}
+                            max={inputMax}
                             size="small"
                             controls={false}
                             value={loopValue[type].loop}
@@ -102,18 +117,17 @@ const Normal: FC<Props> = ({ unit, type, max, min, Select, checkboxWidth }) => {
                     <Radio className={styles['radio']} value={4}>
                         <span>具体{unit}数</span>
                     </Radio>
-                    <Checkbox.Group
-                        value={pointValue[type]}
-                        disabled={radioValue[type] !== 4}
-                        className={styles['checkbox-group']}
-                        onChange={(c) => pointChange(c as number[])}
-                    >
-                        {getArray(max - min + 1, min).map((item) => (
-                            <Checkbox key={item} value={item} style={{ width: checkboxWidth }}>
-                                {item}
-                            </Checkbox>
-                        ))}
-                    </Checkbox.Group>
+                    {SpecificPicker || (
+                        <CheckboxGroup
+                            max={max}
+                            min={min}
+                            onChange={pointChange}
+                            value={pointValue[type]}
+                            disabled={radioValue[type] !== 4}
+                            checkboxItemWidth={checkboxItemWidth}
+                            checkboxGroupHeight={checkboxGroupHeight}
+                        />
+                    )}
                 </Radio.Group>
             </div>
 
