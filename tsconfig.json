@@ -1,0 +1,13 @@
+{
+    "compilerOptions": {
+        "target": "es2016",
+        "module": "commonjs",
+        "skipLibCheck": true,
+        "baseUrl": "./",
+        "strict": true,
+        "moduleResolution": "node",
+        "esModuleInterop": true
+    },
+    "include": ["./src"],
+    "exclude": ["./node_modules"]
+}
