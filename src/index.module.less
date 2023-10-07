@@ -1,17 +1,68 @@
 :global {
-    :root {
+    .light-theme {
+        --w-scrollbar-bg: #e5e5e5; /* 滚动条背景 */
+        --w-scrollbar-thumb: #c1c1c1; /* 滚动条 */
+        --w-scrollbar-thumb-hover: #aaa; /* 滚动条hover */
+
         --w-background: #fff; /* 背景色 */
-        --w-second-background: #f5f5f5; /* 二级背景色 */
+        --w-second-background: #f6f6f6; /* 二级背景色 table-row 斑马线二级 */
         --w-third-background: #efefef; /* 三级背景色 */
+        --w-table-header-background: #e6f4ff; /* table-header 背景色 */
+        --w-table-hover-background: #e6f4ff; /* table hover 背景色 */
+        --w-hover-background: rgba(0, 0, 0, 0.07); // 字体hover显示的背景色
+
         --w-foreground: #0f172a; /* 字体色 */
         --w-second-foreground: #8c8c8c; /* 二要字体色 */
+
         --w-primary: #1677ff; /* 主题色 */
         --w-primary-foreground: #fff; /* 主题色背景字体色 */
+
         --w-border: #e0e0e0; /* 边框色 */
         --w-border-radius: 2px; /* 圆角 */
+
+        --w-error: #f5222d;
+        --w-error-deep: #cf1322;
+        --w-warning: #faad14;
+        --w-warning-deep: #d48806;
+        --w-success: #52c41a;
+        --w-success-deep: #389e0d;
+        --w-info: #1890ff;
+        --w-info-deep: #0958d9;
+    }
+
+    .dark-theme {
+        --w-scrollbar-bg: #444; /* 滚动条背景 */
+        --w-scrollbar-thumb: #777; /* 滚动条 */
+        --w-scrollbar-thumb-hover: #999; /* 滚动条hover */
+
+        --w-background: #141414; /* 背景色 */
+        --w-second-background: #1d1d1d; /* 二级背景色 table-row 斑马线二级 */
+        --w-third-background: #1f1f1f; /* 三级背景色 */
+        --w-table-header-background: #112545; /* table-header 背景色 */
+        --w-table-hover-background: #112545; /* table hover 背景色 */
+        --w-hover-background: rgba(255, 255, 255, 0.1); // 字体hover显示的背景色
+
+        --w-foreground: #cecece; /* 字体色 */
+        --w-second-foreground: #8c8c8c; /* 二要字体色 */
+
+        --w-primary: #1677ff; /* 主题色 */
+        --w-primary-foreground: #fff; /* 主题色背景字体色 */
+
+        --w-border: #424242; /* 边框色 */
+        --w-border-radius: 2px; /* 圆角 */
+
+        --w-error: #f5222d;
+        --w-error-deep: #cf1322;
+        --w-warning: #faad14;
+        --w-warning-deep: #d48806;
+        --w-success: #52c41a;
+        --w-success-deep: #389e0d;
+        --w-info: #1890ff;
+        --w-info-deep: #0958d9;
     }
 
     :root {
+        .light-theme();
         line-height: 1.5;
         font-weight: 400;
         font-synthesis: none;
@@ -24,22 +75,26 @@
     }
 
     html,
-    body,
+    body {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        height: 100%;
+    }
+
     #root {
         margin: 0;
         padding: 0;
         width: 100%;
         height: 100%;
         font-size: 14px;
+        min-width: 1500px;
         color: var(--w-foreground);
         background-color: var(--w-third-background);
     }
 
-    #root {
-        min-width: 1500px;
-    }
-
     * {
+        outline: none;
         box-sizing: border-box;
     }
 
@@ -51,32 +106,16 @@
 
     ::-webkit-scrollbar-track,
     ::-webkit-scrollbar-corner {
-        background-color: #e5e5e5;
+        background-color: var(--w-scrollbar-bg);
     }
 
     ::-webkit-scrollbar-thumb {
-        background-color: #c1c1c1;
+        background-color: var(--w-scrollbar-thumb);
     }
 
     ::-webkit-scrollbar-thumb:hover {
-        background-color: #aaa;
+        background-color: var(--w-scrollbar-thumb-hover);
     }
 
-    .dark::-webkit-scrollbar-thumb,
-    .dark ::-webkit-scrollbar-thumb {
-        background-color: #888;
-    }
-
-    .dark::-webkit-scrollbar-thumb:hover,
-    .dark ::-webkit-scrollbar-thumb:hover {
-        background-color: #666;
-    }
-
-    .dark::-webkit-scrollbar-track,
-    .dark::-webkit-scrollbar-corner,
-    .dark ::-webkit-scrollbar-track,
-    .dark ::-webkit-scrollbar-corner {
-        background-color: #444;
-    }
     /* 滚动条 */
 }

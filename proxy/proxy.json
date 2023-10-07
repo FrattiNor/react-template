@@ -7,14 +7,6 @@
         "prefix": "/api/msc/vxidm-audittrail-service",
         "port": 30306
     },
-    "realtime": {
-        "prefix": "/api/msc/vxisdm-realtime",
-        "port": 30313
-    },
-    "history": {
-        "prefix": "/api/msc/vxisdm-history",
-        "port": 30314
-    },
     "report": {
         "prefix": "/api/msc/isdm-statistic",
         "port": 30308
@@ -23,9 +15,29 @@
         "prefix": "/api/msc/isdm-valve",
         "port": 30312
     },
+    "realtime": {
+        "prefix": "/api/msc/vxisdm-realtime",
+        "port": 30313
+    },
+    "history": {
+        "prefix": "/api/msc/vxisdm-history",
+        "port": 30314
+    },
     "knowledge": {
         "prefix": "/api/msc/isdm-knowledge",
         "port": 30316
+    },
+    "interlock": {
+        "prefix": "/api/msc/isdm-interlock",
+        "port": 30341
+    },
+    "business": {
+        "prefix": "/api/msc/isdm-sinopec-business",
+        "port": 30345
+    },
+    "custom": {
+        "prefix": "/api/msc/isdm-custom",
+        "port": 30346
     },
     "gateway": {
         "prefix": "/api",

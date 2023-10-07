@@ -23,7 +23,7 @@ const prodConfig = {
         chunkFilename: `${jsPrefix}/[name].[chunkhash].chunk.js`,
         assetModuleFilename: `${assetsPrefix}/[chunkhash][ext][query]`,
         path: path.join(__dirname, './dist'),
-        publicPath: './',
+        publicPath: '/',
         clean: true,
     },
     resolve: {
@@ -51,6 +51,9 @@ const prodConfig = {
             chunkFilename: `${cssPrefix}/[name].[id].[chunkhash].css`,
             ignoreOrder: true,
         }),
+        new CopyPlugin({
+            patterns: [{ from: path.join(__dirname, './static'), to: 'static' }],
+        }),
     ],
     module: {
         rules: [
@@ -63,14 +66,14 @@ const prodConfig = {
                 test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
                 type: 'asset/resource',
                 generator: {
-                    filename: `${assetsPrefix}/[name].[chunkhash][ext]`,
+                    filename: `${assetsPrefix}/[name].[contenthash][ext]`,
                 },
             },
             {
                 test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
                 type: 'asset/resource',
                 generator: {
-                    filename: `${assetsPrefix}/[name].[chunkhash][ext]`,
+                    filename: `${assetsPrefix}/[name].[contenthash][ext]`,
                 },
             },
             {

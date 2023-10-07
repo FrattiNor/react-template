@@ -1,34 +1,47 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 import proxyAddressJSON from './proxyAddress.json';
 import proxyJSON from './proxy.json';
-// "10.50.0.40": "40 测试环境",
-// "10.50.0.49": "49 测试环境",
-// "192.168.184.63": "大鹏",
-// "192.168.184.72": "晨瀚",
-// "192.168.184.73": "子轩",
-// "192.168.184.70": "蒋逸嘉"
-const proxyIndex = 1;
-// "10.50.0.40:30326": "40 测试环境",
-// "10.50.0.49:30326": "49 测试环境",
-// "192.168.176.75:8083": "大鹏",
-// "192.168.176.78:8083": "晨瀚"
-const mqttDevIndex = 1;
-// 端口
-const proxyPort = 5000;
+
+const getMqttDevIndex = () => {
+    try {
+        const { mqttDevIndex } = require('./local');
+        return mqttDevIndex;
+    } catch (e) {
+        return 1;
+    }
+};
+
+const getProxyPort = () => {
+    try {
+        const { proxyPort } = require('./local');
+        return proxyPort;
+    } catch (e) {
+        return 5000;
+    }
+};
+
+const getProxyIndex = () => {
+    try {
+        const { proxyIndex } = require('./local');
+        return proxyIndex;
+    } catch (e) {
+        return 1;
+    }
+};
 
 // 获取mqtt代理地址
 export const getMqttProxy = () => {
-    return Object.keys(proxyAddressJSON.mqtt)[mqttDevIndex];
+    return Object.keys(proxyAddressJSON.mqtt)[getMqttDevIndex()];
 };
 
 // 获取本地服务端口
 export const getPort = () => {
-    return proxyPort;
+    return getProxyPort();
 };
 
 // 获取http代理地址
 const getHttpProxy = () => {
-    return Object.keys(proxyAddressJSON.http)[proxyIndex];
+    return Object.keys(proxyAddressJSON.http)[getProxyIndex()];
 };
 
 // 获取vite代理对象
