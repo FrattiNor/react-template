@@ -13,6 +13,7 @@
         "lint": "npm run eslint && npm run tslint"
     },
     "dependencies": {
+        "js-cookie": "^3.0.5",
         "react": "^18.2.0",
         "react-dom": "^18.2.0"
     },
@@ -25,6 +26,7 @@
         "@babel/runtime-corejs3": "^7.22.3",
         "@esbuild-plugins/node-globals-polyfill": "^0.2.3",
         "@esbuild-plugins/node-modules-polyfill": "^0.2.2",
+        "@types/js-cookie": "^3.0.4",
         "@types/node": "^20.1.1",
         "@types/react": "^18.2.9",
         "@types/react-dom": "^18.2.4",

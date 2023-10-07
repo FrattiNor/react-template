@@ -56,5 +56,12 @@ export const getProxyObj = () => {
             },
         };
     });
+    obj['/portal'] = {
+        changeOrigin: true,
+        target: `https://portal.supcon.com`,
+        rewrite: (path: string) => {
+            return path.replace(new RegExp(`^/portal`), '');
+        },
+    };
     return obj;
 };
