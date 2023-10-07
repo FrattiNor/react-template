@@ -1,6 +1,0 @@
-{
-    "gateway": {
-        "prefix": "/api",
-        "port": 30304
-    }
-}
