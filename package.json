@@ -3,9 +3,10 @@
     "version": "1.0.0",
     "main": "src/index.ts",
     "private": true,
+    "type": "module",
     "scripts": {
         "dev": "nodemon --config nodemon.json ./src/index.ts",
-        "dev2": "node --inspect-brk=0.0.0.0:9229 --require ts-node/register ./src/index.ts"
+        "dev2": "node --inspect-brk=0.0.0.0:9229 --loader ts-node/esm ./src/index.ts"
     },
     "devDependencies": {
         "@types/node": "^20.8.3",
@@ -20,6 +21,10 @@
         "typescript": "^5.2.2"
     },
     "dependencies": {
-        "axios": "^1.5.1"
+        "axios": "^1.5.1",
+        "dayjs": "^1.11.10",
+        "got": "^13.0.0",
+        "hpagent": "^1.2.0",
+        "https-proxy-agent": "^7.0.2"
     }
 }

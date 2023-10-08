@@ -1,11 +1,11 @@
 {
     "compilerOptions": {
-        "target": "es2016",
-        "module": "commonjs",
+        "target": "ESNext",
+        "module": "ESNext",
         "skipLibCheck": true,
         "baseUrl": "./",
         "strict": true,
-        "moduleResolution": "node",
+        "moduleResolution": "Bundler",
         "esModuleInterop": true
     },
     "include": ["./src"],
