@@ -51,11 +51,11 @@ const questions = [
         const month = _month === '' ? undefined : Number(_month);
 
         if (year !== undefined && isNaN(year)) {
-            console.log('请输入正确年份:', _year);
+            console.log('请输入正确年份');
         }
 
         if (month !== undefined && isNaN(month)) {
-            console.log('请输入正确月份:', _month);
+            console.log('请输入正确月份');
         }
 
         // 开始查询

@@ -7,6 +7,7 @@ type Token = { REDSESSIONID: string; staff_id: string };
 
 const recordUrl = 'https://ehr.supcon.com/RedseaPlatform/redmagicapi/rf_s_kq_data_queryByStaffId/redApiExec.mc';
 const classesUrl = 'https://ehr.supcon.com/RedseaPlatform/redmagicapi/rf_s_kq_count_SelectStaffIDDaily/redApiExec.mc';
+const weekDay = ['周日', '周一', '周二', '周三', '周四', '周五', '周六'];
 
 const secondToHour = (v: number) => {
     return Number((v / 60 / 60).toFixed(2));
@@ -41,7 +42,9 @@ export const countTime = async ({ REDSESSIONID, staff_id }: Token, time?: Time) 
         let holidayTotalTime = 0;
 
         for (let i = minDay; i <= maxDay; i++) {
-            const dayStr = currentMonth.clone().set('date', i).format('YYYY-MM-DD');
+            const currentDay = currentMonth.clone().set('date', i);
+            const dayStr = currentDay.format('YYYY-MM-DD');
+            const weekStr = weekDay[currentDay.get('day')];
 
             const recordBody = {
                 bc_date: dayStr,
@@ -78,7 +81,7 @@ export const countTime = async ({ REDSESSIONID, staff_id }: Token, time?: Time) 
             const dayType = (classesReq.body as any)?.data?.[0]?.kq_status_total;
             const dayTypeStr = dayType === '1' ? '工作日' : dayType === '0' ? '节假日' : '未  知';
             const isOutWork = (classesReq.body as any)?.data?.[0]?.abnormal_name === '出差';
-            const allRecord = (recordReq.body as any)?.data?.list?.map((item: any) => dayjs(item?.kq_time, 'YYYY-MM-DD HH:mm:ss').unix());
+            const allRecord = (recordReq.body as any)?.data?.list?.map((item: any) => dayjs(item?.operate_time, 'YYYY-MM-DD HH:mm:ss').unix());
 
             // 非出差
             if (!isOutWork) {
@@ -125,12 +128,12 @@ export const countTime = async ({ REDSESSIONID, staff_id }: Token, time?: Time) 
                     start = dayjs(allRecord[0], 'YYYY-MM-DD HH:mm:ss').format('HH:mm:ss');
                 }
 
-                const consoleStr1 = `[${dayTypeStr}] ${dayStr}`;
+                const consoleStr1 = `[${dayTypeStr}] [${weekStr}] ${dayStr}`;
                 const consoleStr2 = start || end ? ` [${start}, ${end}]` : '';
                 const consoleStr3 = addTime ? ` ${secondToHour(addTime)}（${secondToHourMinute(addTime)}）` : '';
                 console.log(consoleStr1 + consoleStr2 + consoleStr3);
             } else {
-                console.log(`[出  差] ${dayStr}`);
+                console.log(`[出  差] [${weekStr}] ${dayStr}`);
             }
         }
 
