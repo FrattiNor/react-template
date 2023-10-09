@@ -6,7 +6,7 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 const init = async () => {
-    await loginPortal({ username: 'sunzhibin', password: 'Aa-=-=-=123' });
+    console.log(await loginPortal({ username: 'sunzhibin', password: 'Aa-=-=-=123' }));
     // if (ticket !== undefined) getTime({ month: 9 }, ticket);
 };
 

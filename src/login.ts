@@ -1,5 +1,5 @@
 /* eslint-disable no-debugger */
-import { gotInstance } from './utils.js';
+import { getCookie, gotInstance } from './utils.js';
 
 // 前置登录
 export const preLogin = async (url: string = 'https://portal.supcon.com/cas-web/login') => {
@@ -13,20 +13,7 @@ export const preLogin = async (url: string = 'https://portal.supcon.com/cas-web/
         // 请求结果不为str，失败
         if (typeof preReq.body !== 'string') return defaultRes;
         const lt = /name="lt" value="(.*)"/.exec(preReq.body)?.[1];
-        // 请求结果获取不到lt，失败
-        if (typeof lt !== 'string' || lt === '') return defaultRes;
-        const preReqCookieArr = preReq.headers['set-cookie'];
-        // 请求头没有设置Cookie，失败
-        if (!Array.isArray(preReqCookieArr) || (Array.isArray(preReqCookieArr) && preReqCookieArr.length === 0)) return defaultRes;
-        let JSESSIONID = '';
-        preReqCookieArr.forEach((item) => {
-            const id = /JSESSIONID=(.*?);/.exec(item)?.[1];
-            if (typeof id === 'string' && id !== '') {
-                JSESSIONID = id;
-            }
-        });
-        // Cookie里没有JSESSIONID，失败
-        if (JSESSIONID === '') return defaultRes;
+        const JSESSIONID = getCookie('JSESSIONID', preReq.headers['set-cookie']);
         return { lt, JSESSIONID };
     } catch (e) {
         console.log('error', e);
@@ -57,17 +44,34 @@ export const loginPortal = async ({ username, password }: { username: string; pa
         const loginHeader = {
             Cookie: `JSESSIONID=${JSESSIONID};`,
         };
-        // 登录请求
-        const loginReq = await gotInstance.getInstance()(loginPortalUrl, {
+
+        let ticket: string | undefined = undefined;
+        // 登录请求1
+        const loginReq1 = await gotInstance.getInstance()(loginPortalUrl, {
             method: 'POST',
             form: loginBody,
             headers: loginHeader,
+            followRedirect: false,
         });
-
-        console.log(loginReq);
-        debugger;
-        // 获取登录结果的ticket
-        return defaultRes;
+        // 登录请求2
+        const nextLocation1 = loginReq1.headers.location;
+        if (typeof nextLocation1 === 'string' && nextLocation1 !== '') {
+            const loginReq2 = await gotInstance.getInstance()(nextLocation1, {
+                method: 'GET',
+                followRedirect: false,
+            });
+            // 登录请求3
+            const nextLocation2 = loginReq2.headers.location;
+            if (typeof nextLocation2 === 'string' && nextLocation2 !== '') {
+                const loginReq3 = await gotInstance.getInstance()(nextLocation2, {
+                    method: 'GET',
+                    followRedirect: false,
+                });
+                // 获取登录结果的ticket
+                ticket = getCookie('suposTicket', loginReq3.headers['set-cookie']);
+            }
+        }
+        return { ticket };
     } catch (e) {
         console.log('error', e);
         debugger;
