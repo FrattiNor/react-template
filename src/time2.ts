@@ -1,4 +1,4 @@
-/* eslint-disable no-debugger */
+import chalk from 'chalk';
 import { gotInstance, transformObjToFormData } from './utils.js';
 import dayjs from 'dayjs';
 
@@ -80,6 +80,7 @@ export const countTime = async ({ REDSESSIONID, staff_id }: Token, time?: Time) 
             // 0：休息 1：正常
             const dayType = (classesReq.body as any)?.data?.[0]?.kq_status_total;
             const dayTypeStr = dayType === '1' ? '工作日' : dayType === '0' ? '节假日' : '未  知';
+            const dayColor = dayType === '1' ? chalk.hex('#1677ff') : dayType === '0' ? chalk.hex('#52c41a') : chalk.hex('#8c8c8c');
             const isOutWork = (classesReq.body as any)?.data?.[0]?.abnormal_name === '出差';
             const allRecord = (recordReq.body as any)?.data?.list?.map((item: any) => dayjs(item?.operate_time, 'YYYY-MM-DD HH:mm:ss').unix());
 
@@ -131,14 +132,18 @@ export const countTime = async ({ REDSESSIONID, staff_id }: Token, time?: Time) 
                 const consoleStr1 = `[${dayTypeStr}] [${weekStr}] ${dayStr}`;
                 const consoleStr2 = start || end ? ` [${start}, ${end}]` : '';
                 const consoleStr3 = addTime ? ` ${secondToHour(addTime)}（${secondToHourMinute(addTime)}）` : '';
-                console.log(consoleStr1 + consoleStr2 + consoleStr3);
+                console.log(dayColor(consoleStr1 + consoleStr2 + consoleStr3));
             } else {
-                console.log(`[出  差] [${weekStr}] ${dayStr}`);
+                console.log(chalk.hex('#fa8c16')(`[出  差] [${weekStr}] ${dayStr}`));
             }
         }
 
-        console.log(`[工作日] ${currentMonth.format('YYYY-MM')} ${secondToHour(normalTotalTime)}（${secondToHourMinute(normalTotalTime)}）`);
-        console.log(`[节假日] ${currentMonth.format('YYYY-MM')} ${secondToHour(holidayTotalTime)}（${secondToHourMinute(holidayTotalTime)}）`);
+        const totalColor = chalk.hex('#eb2f96');
+        const currentMonthStr = currentMonth.format('YYYY-MM');
+        const workDayTotal = `[工作日] ${currentMonthStr} ${secondToHour(normalTotalTime)}（${secondToHourMinute(normalTotalTime)}）`;
+        const holidayTotal = `[节假日] ${currentMonthStr} ${secondToHour(holidayTotalTime)}（${secondToHourMinute(holidayTotalTime)}）`;
+        console.log(totalColor(workDayTotal));
+        console.log(totalColor(holidayTotal));
     } catch (e) {
         console.log('error', e);
     }

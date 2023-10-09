@@ -1,19 +1,9 @@
 import { HttpsProxyAgent, HttpProxyAgent } from 'hpagent';
 import FormData from 'form-data';
+import process from 'process';
 import got from 'got';
 
-// 将 obj 转为 formData
-export const transformObjToFormData = (obj: Record<string, any>) => {
-    const newFormData = new FormData();
-    Object.entries(obj).forEach(([k, v]) => {
-        if (Array.isArray(v)) {
-            v.forEach((item) => newFormData.append(k, item));
-        } else {
-            newFormData.append(k, v);
-        }
-    });
-    return newFormData;
-};
+const isDev = process.env.NODE_ENV === 'development';
 
 const httpsAgent = new HttpsProxyAgent({
     proxy: 'http://localhost:8080',
@@ -29,8 +19,8 @@ export const gotInstance = got.extend({
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36',
     },
     agent: {
-        https: httpsAgent,
-        http: httpAgent,
+        https: isDev ? httpsAgent : undefined,
+        http: isDev ? httpAgent : undefined,
     },
     methodRewriting: true,
     followRedirect: false,
@@ -48,4 +38,17 @@ export const getCookie = (key: string, cookieArr?: Array<string>) => {
         });
     }
     return res as string | undefined;
+};
+
+// 将 obj 转为 formData
+export const transformObjToFormData = (obj: Record<string, any>) => {
+    const newFormData = new FormData();
+    Object.entries(obj).forEach(([k, v]) => {
+        if (Array.isArray(v)) {
+            v.forEach((item) => newFormData.append(k, item));
+        } else {
+            newFormData.append(k, v);
+        }
+    });
+    return newFormData;
 };

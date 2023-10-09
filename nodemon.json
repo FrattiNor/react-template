@@ -3,7 +3,7 @@
     "ignore": [".git", "node_modules/"],
     "watch": ["src/"],
     "execMap": {
-        "ts": "node --inspect-brk=0.0.0.0:9229 --loader ts-node/esm"
+        "ts": "node --loader ts-node/esm"
     },
     "env": {
         "NODE_ENV": "development"

@@ -1,8 +1,11 @@
 import { countTime } from './time2.js';
 import { loginEhr } from './login.js';
+import * as readline from 'readline';
 import { Command } from 'commander';
 import inquirer from 'inquirer';
+import process from 'process';
 import dotenv from 'dotenv';
+import chalk from 'chalk';
 
 // 加载环境变量
 dotenv.config();
@@ -43,7 +46,7 @@ const questions = [
         const { username, password, year: _year, month: _month } = answers;
 
         if (username === '') {
-            console.log('请输入用户名');
+            console.log(chalk.red('请输入用户名'));
             return;
         }
 
@@ -51,21 +54,34 @@ const questions = [
         const month = _month === '' ? undefined : Number(_month);
 
         if (year !== undefined && isNaN(year)) {
-            console.log('请输入正确年份');
+            console.log(chalk.red('请输入正确年份'));
+            return;
         }
 
         if (month !== undefined && isNaN(month)) {
-            console.log('请输入正确月份');
+            console.log(chalk.red('请输入正确月份'));
+            return;
         }
 
         // 开始查询
         const { REDSESSIONID, staff_id } = await loginEhr({ username, password });
         if (REDSESSIONID !== undefined && staff_id !== undefined) {
-            countTime({ REDSESSIONID, staff_id }, { month, year });
+            await countTime({ REDSESSIONID, staff_id }, { month, year });
         } else {
-            console.log('登录失败');
+            console.log(chalk.red('登录失败'));
         }
     } catch (e) {
-        console.log('error', e);
+        console.log(chalk.red('error'));
+        console.log(e);
     }
-})();
+})().then(() => {
+    // 按任意键退出
+    readline
+        .createInterface({
+            input: process.stdin,
+            output: process.stdout,
+        })
+        .question(`按任意键退出...`, () => {
+            process.exit(0);
+        });
+});
