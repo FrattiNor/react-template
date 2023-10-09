@@ -1,5 +1,6 @@
 /* eslint-disable no-debugger */
 import { getCookie, gotInstance } from './utils.js';
+import chalk from 'chalk';
 
 // 前置登录
 const preLogin = async (url: string = 'https://portal.supcon.com/cas-web/login') => {
@@ -16,7 +17,8 @@ const preLogin = async (url: string = 'https://portal.supcon.com/cas-web/login')
         const JSESSIONID = getCookie('JSESSIONID', preReq.headers['set-cookie']);
         return { lt, JSESSIONID };
     } catch (e) {
-        console.log('error', e);
+        console.log(chalk.red('error'));
+        console.log(e);
         return defaultRes;
     }
 };
@@ -75,7 +77,8 @@ export const loginPortal = async ({ username, password }: { username: string; pa
         }
         return { ticket };
     } catch (e) {
-        console.log('error', e);
+        console.log(chalk.red('error'));
+        console.log(e);
         return defaultRes;
     }
 };
@@ -128,7 +131,8 @@ export const loginEhr = async ({ username, password }: { username: string; passw
 
         return { REDSESSIONID, staff_id };
     } catch (e) {
-        console.log('error', e);
+        console.log(chalk.red('error'));
+        console.log(e);
         return defaultRes;
     }
 };
