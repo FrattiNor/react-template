@@ -82,7 +82,7 @@ export const countTime = async ({ REDSESSIONID, staff_id }: Token, time?: Time) 
             const dayTypeStr = dayType === '1' ? '工作日' : dayType === '0' ? '节假日' : '未  知';
             const dayColor = dayType === '1' ? chalk.hex('#1677ff') : dayType === '0' ? chalk.hex('#52c41a') : chalk.hex('#8c8c8c');
             const isOutWork = (classesReq.body as any)?.data?.[0]?.abnormal_name === '出差';
-            const allRecord = (recordReq.body as any)?.data?.list?.map((item: any) => dayjs(item?.operate_time, 'YYYY-MM-DD HH:mm:ss').unix());
+            const allRecord = (recordReq.body as any)?.data?.list?.map((item: any) => dayjs(item?.kq_time, 'YYYY-MM-DD HH:mm:ss').unix());
 
             // 非出差
             if (!isOutWork) {
