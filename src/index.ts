@@ -1,41 +1,22 @@
-import { countTime } from './time2.js';
-import { loginEhr } from './login.js';
 import * as readline from 'readline';
-import { Command } from 'commander';
+import convert from './convert.js';
 import inquirer from 'inquirer';
 import process from 'process';
-import dotenv from 'dotenv';
 import chalk from 'chalk';
-
-// 加载环境变量
-dotenv.config();
-
-// 命令行参数
-const program = new Command();
-program.name('统计加班小工具').version('0.1.0').option('-t, --test', 'test commander').parse(process.argv);
 
 // 命令行问答
 const prompt = inquirer.createPromptModule();
+
 const questions = [
     {
         type: 'input',
-        name: 'username',
-        message: '用户名:',
-    },
-    {
-        type: 'password',
-        name: 'password',
-        message: '密码:',
+        name: 'oldAppId',
+        message: '旧AppId:',
     },
     {
         type: 'input',
-        name: 'year',
-        message: '查询年份（默认当年）:',
-    },
-    {
-        type: 'input',
-        name: 'month',
-        message: '查询月份（默认当月）:',
+        name: 'newAppId',
+        message: '新AppId:',
     },
 ];
 
@@ -43,33 +24,8 @@ const questions = [
     try {
         // 开始问答
         const answers = await prompt(questions);
-        const { username, password, year: _year, month: _month } = answers;
-
-        if (username === '') {
-            console.log(chalk.red('请输入用户名'));
-            return;
-        }
-
-        const year = _year === '' ? undefined : Number(_year);
-        const month = _month === '' ? undefined : Number(_month);
-
-        if (year !== undefined && isNaN(year)) {
-            console.log(chalk.red('请输入正确年份'));
-            return;
-        }
-
-        if (month !== undefined && isNaN(month)) {
-            console.log(chalk.red('请输入正确月份'));
-            return;
-        }
-
-        // 开始查询
-        const { REDSESSIONID, staff_id } = await loginEhr({ username, password });
-        if (REDSESSIONID !== undefined && staff_id !== undefined) {
-            await countTime({ REDSESSIONID, staff_id }, { month, year });
-        } else {
-            console.log(chalk.red('登录失败'));
-        }
+        const { oldAppId, newAppId } = answers;
+        convert(oldAppId, newAppId);
     } catch (e) {
         console.log(chalk.red('error'));
         console.log(e);
