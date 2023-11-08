@@ -25,7 +25,7 @@ const questions = [
         // 开始问答
         const answers = await prompt(questions);
         const { oldAppId, newAppId } = answers;
-        convert(oldAppId, newAppId);
+        await convert(oldAppId, newAppId);
     } catch (e) {
         console.log(chalk.red('error'));
         console.log(e);

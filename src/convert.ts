@@ -1,6 +1,6 @@
 /* eslint-disable no-debugger */
+import { btoa, atob, transformFactoryModelId } from './utils.js';
 import { AreaDeviceMap, getImageMap } from './map.js';
-import { btoa, atob } from './utils.js';
 import { fileURLToPath } from 'url';
 import { rimrafSync } from 'rimraf';
 import path from 'path';
@@ -10,7 +10,7 @@ const __filename = fileURLToPath(import.meta.url);
 
 const __dirname = path.dirname(__filename);
 
-const convert = (_oldAppId: string, _newAppId: string) => {
+const convert = async (_oldAppId: string, _newAppId: string) => {
     const oldAppId = _oldAppId === '' ? 'App_754c6dd07fc7c8ad670166bb71b68517' : _oldAppId;
     const newAppId = _newAppId === '' ? 'App_1af1a690b81b7cabc2f5fde0b00d15ad' : _newAppId;
     const ImageMap = getImageMap(newAppId);
@@ -18,23 +18,26 @@ const convert = (_oldAppId: string, _newAppId: string) => {
         return text.replaceAll(oldAppId, newAppId);
     };
 
-    const videoObj: Array<any> = [];
+    const allVideoObj: Array<any> = [];
     const allBgImage: Array<any> = [];
+    const allDataLink: Array<any> = [];
     const allDataKey: Record<string, true> = {};
     const allDataValue: Record<string, Record<string, true>> = {};
 
-    const exec = (convertPath: string, outPath: string) => {
+    const exec = async (convertPath: string, outPath: string) => {
         // 清掉对应文件夹
         rimrafSync(outPath);
+        const items = fs.readdirSync(convertPath);
 
         // 遍历
-        fs.readdirSync(convertPath).forEach((item) => {
+        for (let j = 0; j < items.length; j++) {
+            const item = items[j];
             const itemPath = path.join(convertPath, item);
             const itemOutPath = path.join(outPath, item);
 
             // 是文件夹
             if (fs.statSync(itemPath).isDirectory()) {
-                exec(itemPath, itemOutPath);
+                await exec(itemPath, itemOutPath);
             }
 
             // 文件
@@ -69,7 +72,8 @@ const convert = (_oldAppId: string, _newAppId: string) => {
                             const newContextData = newContextJson?.context?.jsonData?.d;
 
                             if (Array.isArray(contextData)) {
-                                contextData.forEach((contextItem, i) => {
+                                for (let i = 0; i < contextData.length; i++) {
+                                    const contextItem = contextData[i];
                                     const contextItemValue = contextItem?.a;
                                     const newContextItem = newContextData[i];
                                     const newContextItemValue = newContextItem?.a;
@@ -79,6 +83,7 @@ const convert = (_oldAppId: string, _newAppId: string) => {
                                         // 存在 widget
                                         if (typeof widgetName === 'string') {
                                             //  widget是自定义组件 并且 存在组件名称
+
                                             if (widgetName === 'CustomComp' && typeof componentName === 'string') {
                                                 // 背景图自定义组件直接替换为图片组件
                                                 if (ImageMap[componentName]) {
@@ -117,17 +122,13 @@ const convert = (_oldAppId: string, _newAppId: string) => {
 
                                                     if (Object.prototype.toString.call(data) === '[object Object]') {
                                                         if (data.videoObject) {
-                                                            videoObj.push({
+                                                            allVideoObj.push({
                                                                 name: itemJson.content.propertyValues.name,
-                                                                data: contextItem.a.data,
-                                                                htData: contextItem.p,
+                                                                tag: contextItem.p.tag,
+                                                                collector: contextItem.a.data.collector,
+                                                                videoObject: contextItem.a.data.videoObject,
                                                             });
                                                         }
-
-                                                        // if (data.linkId && data.factoryModelId) {
-                                                        //     console.log(data);
-                                                        //     debugger;
-                                                        // }
 
                                                         // 排除统计数据干扰项
                                                         const newData = JSON.parse(JSON.stringify(data));
@@ -152,7 +153,7 @@ const convert = (_oldAppId: string, _newAppId: string) => {
                                                         });
 
                                                         // 将旧的data数据替换为新的data数据
-                                                        const { text, title, fontSize } = data;
+                                                        const { text, title, fontSize, factoryModelId } = data;
                                                         // 只有装置显示title
                                                         if (replaceComponent === 'AreaComponent' || AreaDeviceMap[componentName] === 'AreaOrDeviceOrVideo') {
                                                             const name = title || text;
@@ -163,12 +164,28 @@ const convert = (_oldAppId: string, _newAppId: string) => {
                                                             if (name) newContextItemValue['data'] = { ...newContextItemValue['data'], [nameKey]: name };
                                                             if (size) newContextItemValue['data'] = { ...newContextItemValue['data'], [sizeKey]: size };
                                                         }
+                                                        if (factoryModelId && replaceComponent === 'AreaComponent') {
+                                                            const nextId = (await transformFactoryModelId(data.factoryModelId)).data.id;
+
+                                                            if (typeof nextId === 'string' && nextId !== '' && nextId !== 'null') {
+                                                                console.log(itemJson.content.propertyValues.name);
+                                                                console.log('new', nextId);
+                                                                newContextItemValue['data'] = { ...newContextItemValue['data'], ['area-factoryModelIds']: { factoryModelId: nextId } };
+                                                            }
+                                                        }
                                                     }
                                                 }
                                             }
+
+                                            if (widgetName === 'dataLink') {
+                                                allDataLink.push({
+                                                    name: itemJson.content.propertyValues.name,
+                                                    tag: contextItem.p.tag,
+                                                });
+                                            }
                                         }
                                     }
-                                });
+                                }
                             }
 
                             const newContextText = btoa(JSON.stringify(JSON.stringify(newContextJson)));
@@ -182,7 +199,7 @@ const convert = (_oldAppId: string, _newAppId: string) => {
                     fs.writeFileSync(itemOutPath, fs.readFileSync(itemPath, 'utf-8'));
                 }
             }
-        });
+        }
     };
 
     const convertPath = path.join(__dirname, './BeforeConversion');
@@ -196,12 +213,13 @@ const convert = (_oldAppId: string, _newAppId: string) => {
 
     console.log('开始转换...');
 
-    exec(convertPath, outPath);
+    await exec(convertPath, outPath);
 
-    // 保存video数据
+    // 保存数据
     if (!fs.existsSync(otherData)) fs.mkdirSync(otherData, { recursive: true });
-    fs.writeFileSync(path.join(otherData, 'video.json'), JSON.stringify(videoObj));
+    fs.writeFileSync(path.join(otherData, 'video.json'), JSON.stringify(allVideoObj));
     fs.writeFileSync(path.join(otherData, 'bg.json'), JSON.stringify(allBgImage));
+    fs.writeFileSync(path.join(otherData, 'point.json'), JSON.stringify(allDataLink));
 
     console.log('转换完成...');
 

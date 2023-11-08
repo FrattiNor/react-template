@@ -1,0 +1,3348 @@
+{
+    "context": {
+        "jsonData": {
+            "v": "7.0.5",
+            "p": {
+                "background": "rgba(0,0,0,0)",
+                "autoAdjustIndex": true,
+                "hierarchicalRendering": true
+            },
+            "a": {
+                "rotateAsClock": false,
+                "connectActionType": null,
+                "couldDrag": true,
+                "layoutIndex": "kyjtl9ja0",
+                "width": 1920,
+                "height": 1080,
+                "showAnchor": false,
+                "datagroup": 7,
+                "jsonVersion": "V1",
+                "canvasIsZoom": true,
+                "dataLinkId": 3
+            },
+            "d": [
+                {
+                    "c": "ht.Node",
+                    "i": 215,
+                    "p": {
+                        "displayName": "CustomComp-2-g4",
+                        "tag": "htDiv-kyjtl9ja0-94",
+                        "image": "htDiv",
+                        "position": {
+                            "x": 1097.7461877111982,
+                            "y": 590.0465498322948
+                        },
+                        "width": 76.08315254470534,
+                        "height": 183.67656383675836
+                    },
+                    "a": {
+                        "appDetail": {
+                            "appId": "App_1af1a690b81b7cabc2f5fde0b00d15ad",
+                            "layoutId": "Layout_721681ede8c3402ea607360038f7019f"
+                        },
+                        "widgetName": "CustomComp",
+                        "componentName": "CabinetComponent",
+                        "resource": {
+                            "sourcePath": "/resource/App_1af1a690b81b7cabc2f5fde0b00d15ad/extensions/CabinetComponent/source/index.js",
+                            "compiledPath": "/resource/App_1af1a690b81b7cabc2f5fde0b00d15ad/extensions/CabinetComponent/compiled/index.js",
+                            "propsConfigPath": "/resource/App_1af1a690b81b7cabc2f5fde0b00d15ad/extensions/CabinetComponent/index.json",
+                            "dependenciesPath": "/resource/App_1af1a690b81b7cabc2f5fde0b00d15ad/extensions/CabinetComponent/dependencies.json"
+                        },
+                        "data": {
+                            "dataType": 0,
+                            "text": "DCS REL01",
+                            "title": "DCS REL01",
+                            "isShowName": true,
+                            "factoryModelId": ["#90:0", "#88:3", "#99:3", "#103:18"],
+                            "linkId": 1656,
+                            "alarmOrWork": "alarm",
+                            "fontSize": 20,
+                            "lineHeight": 20
+                        },
+                        "position": {
+                            "top": 498.2082679139156,
+                            "right": 784.2122360164492,
+                            "bottom": 398.1151682493261,
+                            "left": 1059.7046114388456,
+                            "topOfPer": 46.13039517721441,
+                            "rightOfPer": 40.84438729252339,
+                            "bottomOfPer": 36.8625155786413,
+                            "leftOfPer": 55.19294851243988
+                        },
+                        "isPreviewInDesign": true,
+                        "dataReplace": null
+                    }
+                },
+                {
+                    "c": "ht.Node",
+                    "i": 216,
+                    "p": {
+                        "displayName": "CustomComp-2-g4",
+                        "tag": "htDiv95",
+                        "image": "htDiv",
+                        "position": {
+                            "x": 1181.3674382878457,
+                            "y": 590.0465498322948
+                        },
+                        "width": 76.08315254470534,
+                        "height": 183.67656383675836
+                    },
+                    "a": {
+                        "appDetail": {
+                            "appId": "App_1af1a690b81b7cabc2f5fde0b00d15ad",
+                            "layoutId": "Layout_721681ede8c3402ea607360038f7019f"
+                        },
+                        "widgetName": "CustomComp",
+                        "componentName": "CabinetComponent",
+                        "resource": {
+                            "sourcePath": "/resource/App_1af1a690b81b7cabc2f5fde0b00d15ad/extensions/CabinetComponent/source/index.js",
+                            "compiledPath": "/resource/App_1af1a690b81b7cabc2f5fde0b00d15ad/extensions/CabinetComponent/compiled/index.js",
+                            "propsConfigPath": "/resource/App_1af1a690b81b7cabc2f5fde0b00d15ad/extensions/CabinetComponent/index.json",
+                            "dependenciesPath": "/resource/App_1af1a690b81b7cabc2f5fde0b00d15ad/extensions/CabinetComponent/dependencies.json"
+                        },
+                        "data": {
+                            "dataType": 0,
+                            "text": "DCS NET01",
+                            "title": "DCS NET01",
+                            "isShowName": true,
+                            "factoryModelId": ["#90:0", "#88:3", "#99:3", "#77:23"],
+                            "linkId": 1414,
+                            "alarmOrWork": "alarm",
+                            "fontSize": 20,
+                            "lineHeight": 20
+                        },
+                        "position": {
+                            "top": 498.2082679139156,
+                            "right": 700.5909854398017,
+                            "bottom": 398.1151682493261,
+                            "left": 1143.3258620154932,
+                            "topOfPer": 46.13039517721441,
+                            "rightOfPer": 36.48911382498967,
+                            "bottomOfPer": 36.8625155786413,
+                            "leftOfPer": 59.548221979973604
+                        },
+                        "isPreviewInDesign": true,
+                        "dataReplace": null
+                    }
+                },
+                {
+                    "c": "ht.Node",
+                    "i": 217,
+                    "p": {
+                        "displayName": "CustomComp-2-g4",
+                        "tag": "htDiv96",
+                        "image": "htDiv",
+                        "position": {
+                            "x": 629.4939165272569,
+                            "y": 268.5559780423298
+                        },
+                        "width": 76.08315254470534,
+                        "height": 183.67656383675836
+                    },
+                    "a": {
+                        "appDetail": {
+                            "appId": "App_1af1a690b81b7cabc2f5fde0b00d15ad",
+                            "layoutId": "Layout_721681ede8c3402ea607360038f7019f"
+                        },
+                        "widgetName": "CustomComp",
+                        "componentName": "CabinetComponent",
+                        "resource": {
+                            "sourcePath": "/resource/App_1af1a690b81b7cabc2f5fde0b00d15ad/extensions/CabinetComponent/source/index.js",
+                            "compiledPath": "/resource/App_1af1a690b81b7cabc2f5fde0b00d15ad/extensions/CabinetComponent/compiled/index.js",
+                            "propsConfigPath": "/resource/App_1af1a690b81b7cabc2f5fde0b00d15ad/extensions/CabinetComponent/index.json",
+                            "dependenciesPath": "/resource/App_1af1a690b81b7cabc2f5fde0b00d15ad/extensions/CabinetComponent/dependencies.json"
+                        },
+                        "data": {
+                            "dataType": 0,
+                            "text": "GDS03-SYC01",
+                            "title": "GDS03-SYC01",
+                            "isShowName": true,
+                            "factoryModelId": ["#90:0", "#88:3", "#99:3", "#76:24"],
+                            "linkId": 1651,
+                            "alarmOrWork": "alarm",
+                            "fontSize": 20,
+                            "lineHeight": 20
+                        },
+                        "position": {
+                            "top": 176.71769612395062,
+                            "right": 1252.4645072003902,
+                            "bottom": 719.605740039291,
+                            "left": 591.4523402549042,
+                            "topOfPer": 16.36274964110654,
+                            "rightOfPer": 65.23252641668698,
+                            "bottomOfPer": 66.63016111474917,
+                            "leftOfPer": 30.80480938827626
+                        },
+                        "isPreviewInDesign": true,
+                        "dataReplace": null
+                    }
+                },
+                {
+                    "c": "ht.Node",
+                    "i": 218,
+                    "p": {
+                        "displayName": "CustomComp-2-g4",
+                        "tag": "htDiv97",
+                        "image": "htDiv",
+                        "position": {
+                            "x": 717.3413783082017,
+                            "y": 268.5559780423298
+                        },
+                        "width": 76.08315254470534,
+                        "height": 183.67656383675836
+                    },
+                    "a": {
+                        "appDetail": {
+                            "appId": "App_1af1a690b81b7cabc2f5fde0b00d15ad",
+                            "layoutId": "Layout_721681ede8c3402ea607360038f7019f"
+                        },
+                        "widgetName": "CustomComp",
+                        "componentName": "CabinetComponent",
+                        "resource": {
+                            "sourcePath": "/resource/App_1af1a690b81b7cabc2f5fde0b00d15ad/extensions/CabinetComponent/source/index.js",
+                            "compiledPath": "/resource/App_1af1a690b81b7cabc2f5fde0b00d15ad/extensions/CabinetComponent/compiled/index.js",
+                            "propsConfigPath": "/resource/App_1af1a690b81b7cabc2f5fde0b00d15ad/extensions/CabinetComponent/index.json",
+                            "dependenciesPath": "/resource/App_1af1a690b81b7cabc2f5fde0b00d15ad/extensions/CabinetComponent/dependencies.json"
+                        },
+                        "data": {
+                            "dataType": 0,
+                            "text": "无报警",
+                            "title": "Q-102",
+                            "isShowName": true,
+                            "fontSize": 20,
+                            "lineHeight": 20
+                        },
+                        "position": {
+                            "top": 176.71769612395062,
+                            "right": 1164.6170454194455,
+                            "bottom": 719.605740039291,
+                            "left": 679.299802035849,
+                            "topOfPer": 16.36274964110654,
+                            "rightOfPer": 60.65713778226278,
+                            "bottomOfPer": 66.63016111474917,
+                            "leftOfPer": 35.38019802270046
+                        },
+                        "isPreviewInDesign": true,
+                        "dataReplace": null
+                    }
+                },
+                {
+                    "c": "ht.Node",
+                    "i": 219,
+                    "p": {
+                        "displayName": "CustomComp-2-g4",
+                        "tag": "htDiv98",
+                        "image": "htDiv",
+                        "position": {
+                            "x": 805.1888400891468,
+                            "y": 268.5559780423298
+                        },
+                        "width": 76.08315254470534,
+                        "height": 183.67656383675836
+                    },
+                    "a": {
+                        "appDetail": {
+                            "appId": "App_1af1a690b81b7cabc2f5fde0b00d15ad",
+                            "layoutId": "Layout_721681ede8c3402ea607360038f7019f"
+                        },
+                        "widgetName": "CustomComp",
+                        "componentName": "CabinetComponent",
+                        "resource": {
+                            "sourcePath": "/resource/App_1af1a690b81b7cabc2f5fde0b00d15ad/extensions/CabinetComponent/source/index.js",
+                            "compiledPath": "/resource/App_1af1a690b81b7cabc2f5fde0b00d15ad/extensions/CabinetComponent/compiled/index.js",
+                            "propsConfigPath": "/resource/App_1af1a690b81b7cabc2f5fde0b00d15ad/extensions/CabinetComponent/index.json",
+                            "dependenciesPath": "/resource/App_1af1a690b81b7cabc2f5fde0b00d15ad/extensions/CabinetComponent/dependencies.json"
+                        },
+                        "data": {
+                            "dataType": 0,
+                            "text": "AR-101A",
+                            "title": "AR-101A",
+                            "isShowName": true,
+                            "factoryModelId": ["#90:0", "#88:3", "#99:3", "#104:17"],
+                            "linkId": 1410,
+                            "alarmOrWork": "alarm",
+                            "fontSize": 20,
+                            "lineHeight": 20
+                        },
+                        "position": {
+                            "top": 176.71769612395062,
+                            "right": 1076.7695836385005,
+                            "bottom": 719.605740039291,
+                            "left": 767.1472638167941,
+                            "topOfPer": 16.36274964110654,
+                            "rightOfPer": 56.081749147838565,
+                            "bottomOfPer": 66.63016111474917,
+                            "leftOfPer": 39.95558665712469
+                        },
+                        "isPreviewInDesign": true,
+                        "dataReplace": null
+                    }
+                },
+                {
+                    "c": "ht.Node",
+                    "i": 220,
+                    "p": {
+                        "displayName": "CustomComp-2-g4",
+                        "tag": "htDiv99",
+                        "image": "htDiv",
+                        "position": {
+                            "x": 893.0363018700914,
+                            "y": 268.5559780423298
+                        },
+                        "width": 76.08315254470534,
+                        "height": 183.67656383675836
+                    },
+                    "a": {
+                        "appDetail": {
+                            "appId": "App_1af1a690b81b7cabc2f5fde0b00d15ad",
+                            "layoutId": "Layout_721681ede8c3402ea607360038f7019f"
+                        },
+                        "widgetName": "CustomComp",
+                        "componentName": "CabinetComponent",
+                        "resource": {
+                            "sourcePath": "/resource/App_1af1a690b81b7cabc2f5fde0b00d15ad/extensions/CabinetComponent/source/index.js",
+                            "compiledPath": "/resource/App_1af1a690b81b7cabc2f5fde0b00d15ad/extensions/CabinetComponent/compiled/index.js",
+                            "propsConfigPath": "/resource/App_1af1a690b81b7cabc2f5fde0b00d15ad/extensions/CabinetComponent/index.json",
+                            "dependenciesPath": "/resource/App_1af1a690b81b7cabc2f5fde0b00d15ad/extensions/CabinetComponent/dependencies.json"
+                        },
+                        "data": {
+                            "dataType": 0,
+                            "text": "AR-101B",
+                            "factoryModelId": ["#90:0", "#88:3", "#99:3", "#73:9"],
+                            "linkId": 1001,
+                            "title": "AR-101B",
+                            "isShowName": true,
+                            "alarmOrWork": "alarm",
+                            "lineHeight": 20,
+                            "fontSize": 20
+                        },
+                        "position": {
+                            "top": 176.71769612395062,
+                            "right": 988.922121857556,
+                            "bottom": 719.605740039291,
+                            "left": 854.9947255977387,
+                            "topOfPer": 16.36274964110654,
+                            "rightOfPer": 51.50636051341437,
+                            "bottomOfPer": 66.63016111474917,
+                            "leftOfPer": 44.53097529154889
+                        },
+                        "isPreviewInDesign": true,
+                        "dataReplace": null
+                    }
+                },
+                {
+                    "c": "ht.Node",
+                    "i": 221,
+                    "p": {
+                        "displayName": "CustomComp-2-g4",
+                        "tag": "htDiv100",
+                        "image": "htDiv",
+                        "position": {
+                            "x": 980.8837636510366,
+                            "y": 268.5559780423298
+                        },
+                        "width": 76.08315254470534,
+                        "height": 183.67656383675836
+                    },
+                    "a": {
+                        "appDetail": {
+                            "appId": "App_1af1a690b81b7cabc2f5fde0b00d15ad",
+                            "layoutId": "Layout_721681ede8c3402ea607360038f7019f"
+                        },
+                        "widgetName": "CustomComp",
+                        "componentName": "CabinetComponent",
+                        "resource": {
+                            "sourcePath": "/resource/App_1af1a690b81b7cabc2f5fde0b00d15ad/extensions/CabinetComponent/source/index.js",
+                            "compiledPath": "/resource/App_1af1a690b81b7cabc2f5fde0b00d15ad/extensions/CabinetComponent/compiled/index.js",
+                            "propsConfigPath": "/resource/App_1af1a690b81b7cabc2f5fde0b00d15ad/extensions/CabinetComponent/index.json",
+                            "dependenciesPath": "/resource/App_1af1a690b81b7cabc2f5fde0b00d15ad/extensions/CabinetComponent/dependencies.json"
+                        },
+                        "data": {
+                            "dataType": 0,
+                            "text": "无报警",
+                            "title": "AR-101C",
+                            "isShowName": true,
+                            "fontSize": 20,
+                            "lineHeight": 20
+                        },
+                        "position": {
+                            "top": 176.71769612395062,
+                            "right": 901.0746600766107,
+                            "bottom": 719.605740039291,
+                            "left": 942.8421873786839,
+                            "topOfPer": 16.36274964110654,
+                            "rightOfPer": 46.93097187899014,
+                            "bottomOfPer": 66.63016111474917,
+                            "leftOfPer": 49.10636392597312
+                        },
+                        "isPreviewInDesign": true,
+                        "dataReplace": null
+                    }
+                },
+                {
+                    "c": "ht.Node",
+                    "i": 222,
+                    "p": {
+                        "displayName": "CustomComp-2-g4",
+                        "tag": "htDiv101",
+                        "image": "htDiv",
+                        "position": {
+                            "x": 1068.7312254319813,
+                            "y": 268.5559780423298
+                        },
+                        "width": 76.08315254470534,
+                        "height": 183.67656383675836
+                    },
+                    "a": {
+                        "appDetail": {
+                            "appId": "App_1af1a690b81b7cabc2f5fde0b00d15ad",
+                            "layoutId": "Layout_721681ede8c3402ea607360038f7019f"
+                        },
+                        "widgetName": "CustomComp",
+                        "componentName": "CabinetComponent",
+                        "resource": {
+                            "sourcePath": "/resource/App_1af1a690b81b7cabc2f5fde0b00d15ad/extensions/CabinetComponent/source/index.js",
+                            "compiledPath": "/resource/App_1af1a690b81b7cabc2f5fde0b00d15ad/extensions/CabinetComponent/compiled/index.js",
+                            "propsConfigPath": "/resource/App_1af1a690b81b7cabc2f5fde0b00d15ad/extensions/CabinetComponent/index.json",
+                            "dependenciesPath": "/resource/App_1af1a690b81b7cabc2f5fde0b00d15ad/extensions/CabinetComponent/dependencies.json"
+                        },
+                        "data": {
+                            "dataType": 0,
+                            "text": "无报警",
+                            "title": "AR-101D",
+                            "isShowName": true,
+                            "lineHeight": 20,
+                            "fontSize": 20
+                        },
+                        "position": {
+                            "top": 176.71769612395062,
+                            "right": 813.2271982956661,
+                            "bottom": 719.605740039291,
+                            "left": 1030.6896491596287,
+                            "topOfPer": 16.36274964110654,
+                            "rightOfPer": 42.35558324456594,
+                            "bottomOfPer": 66.63016111474917,
+                            "leftOfPer": 53.681752560397335
+                        },
+                        "isPreviewInDesign": true,
+                        "dataReplace": null
+                    }
+                },
+                {
+                    "c": "ht.Node",
+                    "i": 223,
+                    "p": {
+                        "displayName": "CustomComp-2-g4",
+                        "tag": "htDiv102",
+                        "image": "htDiv",
+                        "position": {
+                            "x": 1156.5786872129265,
+                            "y": 268.5559780423298
+                        },
+                        "width": 76.08315254470534,
+                        "height": 183.67656383675836
+                    },
+                    "a": {
+                        "appDetail": {
+                            "appId": "App_1af1a690b81b7cabc2f5fde0b00d15ad",
+                            "layoutId": "Layout_721681ede8c3402ea607360038f7019f"
+                        },
+                        "widgetName": "CustomComp",
+                        "componentName": "CabinetComponent",
+                        "resource": {
+                            "sourcePath": "/resource/App_1af1a690b81b7cabc2f5fde0b00d15ad/extensions/CabinetComponent/source/index.js",
+                            "compiledPath": "/resource/App_1af1a690b81b7cabc2f5fde0b00d15ad/extensions/CabinetComponent/compiled/index.js",
+                            "propsConfigPath": "/resource/App_1af1a690b81b7cabc2f5fde0b00d15ad/extensions/CabinetComponent/index.json",
+                            "dependenciesPath": "/resource/App_1af1a690b81b7cabc2f5fde0b00d15ad/extensions/CabinetComponent/dependencies.json"
+                        },
+                        "data": {
+                            "dataType": 0,
+                            "text": "无报警",
+                            "title": "AR-101E",
+                            "isShowName": true,
+                            "fontSize": 20,
+                            "lineHeight": 20
+                        },
+                        "position": {
+                            "top": 176.71769612395062,
+                            "right": 725.3797365147209,
+                            "bottom": 719.605740039291,
+                            "left": 1118.537110940574,
+                            "topOfPer": 16.36274964110654,
+                            "rightOfPer": 37.78019461014171,
+                            "bottomOfPer": 66.63016111474917,
+                            "leftOfPer": 58.25714119482156
+                        },
+                        "isPreviewInDesign": true,
+                        "dataReplace": null
+                    }
+                },
+                {
+                    "c": "ht.Node",
+                    "i": 224,
+                    "p": {
+                        "displayName": "CustomComp-2-g4",
+                        "tag": "htDiv103",
+                        "image": "htDiv",
+                        "position": {
+                            "x": 1336.973061792729,
+                            "y": 268.5559780423298
+                        },
+                        "width": 76.08315254470534,
+                        "height": 183.67656383675836
+                    },
+                    "a": {
+                        "appDetail": {
+                            "appId": "App_1af1a690b81b7cabc2f5fde0b00d15ad",
+                            "layoutId": "Layout_721681ede8c3402ea607360038f7019f"
+                        },
+                        "widgetName": "CustomComp",
+                        "componentName": "CabinetComponent",
+                        "resource": {
+                            "sourcePath": "/resource/App_1af1a690b81b7cabc2f5fde0b00d15ad/extensions/CabinetComponent/source/index.js",
+                            "compiledPath": "/resource/App_1af1a690b81b7cabc2f5fde0b00d15ad/extensions/CabinetComponent/compiled/index.js",
+                            "propsConfigPath": "/resource/App_1af1a690b81b7cabc2f5fde0b00d15ad/extensions/CabinetComponent/index.json",
+                            "dependenciesPath": "/resource/App_1af1a690b81b7cabc2f5fde0b00d15ad/extensions/CabinetComponent/dependencies.json"
+                        },
+                        "data": {
+                            "dataType": 0,
+                            "text": "无报警",
+                            "title": "AB-101",
+                            "isShowName": true,
+                            "fontSize": 20
+                        },
+                        "position": {
+                            "top": 176.71769612395062,
+                            "right": 544.9853619349185,
+                            "bottom": 719.605740039291,
+                            "left": 1298.9314855203763,
+                            "topOfPer": 16.36274964110654,
+                            "rightOfPer": 28.384654267443672,
+                            "bottomOfPer": 66.63016111474917,
+                            "leftOfPer": 67.6526815375196
+                        },
+                        "isPreviewInDesign": true,
+                        "dataReplace": null
+                    }
+                },
+                {
+                    "c": "ht.Node",
+                    "i": 225,
+                    "p": {
+                        "displayName": "CustomComp-2-g4",
+                        "tag": "htDiv104",
+                        "image": "htDiv",
+                        "position": {
+                            "x": 1428.527133174526,
+                            "y": 268.5559780423298
+                        },
+                        "width": 76.08315254470534,
+                        "height": 183.67656383675836
+                    },
+                    "a": {
+                        "appDetail": {
+                            "appId": "App_1af1a690b81b7cabc2f5fde0b00d15ad",
+                            "layoutId": "Layout_721681ede8c3402ea607360038f7019f"
+                        },
+                        "widgetName": "CustomComp",
+                        "componentName": "CabinetComponent",
+                        "resource": {
+                            "sourcePath": "/resource/App_1af1a690b81b7cabc2f5fde0b00d15ad/extensions/CabinetComponent/source/index.js",
+                            "compiledPath": "/resource/App_1af1a690b81b7cabc2f5fde0b00d15ad/extensions/CabinetComponent/compiled/index.js",
+                            "propsConfigPath": "/resource/App_1af1a690b81b7cabc2f5fde0b00d15ad/extensions/CabinetComponent/index.json",
+                            "dependenciesPath": "/resource/App_1af1a690b81b7cabc2f5fde0b00d15ad/extensions/CabinetComponent/dependencies.json"
+                        },
+                        "data": {
+                            "dataType": 0,
+                            "text": "无报警",
+                            "title": "AB-102",
+                            "isShowName": true,
+                            "fontSize": 20
+                        },
+                        "position": {
+                            "top": 176.71769612395062,
+                            "right": 453.43129055312147,
+                            "bottom": 719.605740039291,
+                            "left": 1390.4855569021734,
+                            "topOfPer": 16.36274964110654,
+                            "rightOfPer": 23.616213049641743,
+                            "bottomOfPer": 66.63016111474917,
+                            "leftOfPer": 72.42112275532153
+                        },
+                        "isPreviewInDesign": true,
+                        "dataReplace": null
+                    }
+                },
+                {
+                    "c": "ht.Node",
+                    "i": 226,
+                    "p": {
+                        "displayName": "CustomComp-2-g4",
+                        "tag": "htDiv105",
+                        "image": "htDiv",
+                        "position": {
+                            "x": 1611.6352759381184,
+                            "y": 268.5559780423298
+                        },
+                        "width": 76.08315254470534,
+                        "height": 183.67656383675836
+                    },
+                    "a": {
+                        "appDetail": {
+                            "appId": "App_1af1a690b81b7cabc2f5fde0b00d15ad",
+                            "layoutId": "Layout_721681ede8c3402ea607360038f7019f"
+                        },
+                        "widgetName": "CustomComp",
+                        "componentName": "CabinetComponent",
+                        "resource": {
+                            "sourcePath": "/resource/App_1af1a690b81b7cabc2f5fde0b00d15ad/extensions/CabinetComponent/source/index.js",
+                            "compiledPath": "/resource/App_1af1a690b81b7cabc2f5fde0b00d15ad/extensions/CabinetComponent/compiled/index.js",
+                            "propsConfigPath": "/resource/App_1af1a690b81b7cabc2f5fde0b00d15ad/extensions/CabinetComponent/index.json",
+                            "dependenciesPath": "/resource/App_1af1a690b81b7cabc2f5fde0b00d15ad/extensions/CabinetComponent/dependencies.json"
+                        },
+                        "data": {
+                            "dataType": 0,
+                            "text": "无报警",
+                            "title": "AP-101",
+                            "isShowName": true,
+                            "fontSize": 20
+                        },
+                        "position": {
+                            "top": 176.71769612395062,
+                            "right": 270.323147789529,
+                            "bottom": 719.605740039291,
+                            "left": 1573.5936996657658,
+                            "topOfPer": 16.36274964110654,
+                            "rightOfPer": 14.07933061403797,
+                            "bottomOfPer": 66.63016111474917,
+                            "leftOfPer": 81.95800519092529
+                        },
+                        "isPreviewInDesign": true,
+                        "dataReplace": null
+                    }
+                },
+                {
+                    "c": "ht.Node",
+                    "i": 227,
+                    "p": {
+                        "displayName": "CustomComp-2-g4",
+                        "tag": "htDiv-kyjtl9ja0-106",
+                        "image": "htDiv",
+                        "position": {
+                            "x": 1520.0812045563212,
+                            "y": 268.5559780423298
+                        },
+                        "width": 76.08315254470534,
+                        "height": 183.67656383675836
+                    },
+                    "a": {
+                        "appDetail": {
+                            "appId": "App_1af1a690b81b7cabc2f5fde0b00d15ad",
+                            "layoutId": "Layout_721681ede8c3402ea607360038f7019f"
+                        },
+                        "widgetName": "CustomComp",
+                        "componentName": "CabinetComponent",
+                        "resource": {
+                            "sourcePath": "/resource/App_1af1a690b81b7cabc2f5fde0b00d15ad/extensions/CabinetComponent/source/index.js",
+                            "compiledPath": "/resource/App_1af1a690b81b7cabc2f5fde0b00d15ad/extensions/CabinetComponent/compiled/index.js",
+                            "propsConfigPath": "/resource/App_1af1a690b81b7cabc2f5fde0b00d15ad/extensions/CabinetComponent/index.json",
+                            "dependenciesPath": "/resource/App_1af1a690b81b7cabc2f5fde0b00d15ad/extensions/CabinetComponent/dependencies.json"
+                        },
+                        "data": {
+                            "dataType": 0,
+                            "text": "无报警",
+                            "title": "AI-101",
+                            "isShowName": true,
+                            "fontSize": 20
+                        },
+                        "position": {
+                            "top": 176.71769612395062,
+                            "right": 361.87721917132626,
+                            "bottom": 719.605740039291,
+                            "left": 1482.0396282839686,
+                            "topOfPer": 16.36274964110654,
+                            "rightOfPer": 18.84777183183991,
+                            "bottomOfPer": 66.63016111474917,
+                            "leftOfPer": 77.18956397312337
+                        },
+                        "isPreviewInDesign": true,
+                        "dataReplace": null
+                    }
+                },
+                {
+                    "c": "ht.Node",
+                    "i": 228,
+                    "p": {
+                        "displayName": "CustomComp-2-g4",
+                        "tag": "htDiv-kyjtl9ja0-107",
+                        "image": "htDiv",
+                        "position": {
+                            "x": 1703.1893473199138,
+                            "y": 268.5559780423298
+                        },
+                        "width": 76.08315254470534,
+                        "height": 183.67656383675836
+                    },
+                    "a": {
+                        "appDetail": {
+                            "appId": "App_1af1a690b81b7cabc2f5fde0b00d15ad",
+                            "layoutId": "Layout_721681ede8c3402ea607360038f7019f"
+                        },
+                        "widgetName": "CustomComp",
+                        "componentName": "CabinetComponent",
+                        "resource": {
+                            "sourcePath": "/resource/App_1af1a690b81b7cabc2f5fde0b00d15ad/extensions/CabinetComponent/source/index.js",
+                            "compiledPath": "/resource/App_1af1a690b81b7cabc2f5fde0b00d15ad/extensions/CabinetComponent/compiled/index.js",
+                            "propsConfigPath": "/resource/App_1af1a690b81b7cabc2f5fde0b00d15ad/extensions/CabinetComponent/index.json",
+                            "dependenciesPath": "/resource/App_1af1a690b81b7cabc2f5fde0b00d15ad/extensions/CabinetComponent/dependencies.json"
+                        },
+                        "data": {
+                            "dataType": 0,
+                            "text": "PDP01",
+                            "title": "PDP01",
+                            "isShowName": true,
+                            "factoryModelId": ["#90:0", "#88:3", "#99:3", "#101:6"],
+                            "linkId": 1000,
+                            "alarmOrWork": "alarm",
+                            "fontSize": 20
+                        },
+                        "position": {
+                            "top": 176.71769612395062,
+                            "right": 178.76907640773356,
+                            "bottom": 719.605740039291,
+                            "left": 1665.1477710475613,
+                            "topOfPer": 16.36274964110654,
+                            "rightOfPer": 9.310889396236123,
+                            "bottomOfPer": 66.63016111474917,
+                            "leftOfPer": 86.72644640872716
+                        },
+                        "isPreviewInDesign": true,
+                        "dataReplace": null
+                    }
+                },
+                {
+                    "c": "ht.Node",
+                    "i": 229,
+                    "p": {
+                        "displayName": "CustomComp-2-g4",
+                        "tag": "htDiv108",
+                        "image": "htDiv",
+                        "position": {
+                            "x": 1794.7434187017102,
+                            "y": 268.5559780423298
+                        },
+                        "width": 76.08315254470534,
+                        "height": 183.67656383675836
+                    },
+                    "a": {
+                        "appDetail": {
+                            "appId": "App_1af1a690b81b7cabc2f5fde0b00d15ad",
+                            "layoutId": "Layout_721681ede8c3402ea607360038f7019f"
+                        },
+                        "widgetName": "CustomComp",
+                        "componentName": "CabinetComponent",
+                        "resource": {
+                            "sourcePath": "/resource/App_1af1a690b81b7cabc2f5fde0b00d15ad/extensions/CabinetComponent/source/index.js",
+                            "compiledPath": "/resource/App_1af1a690b81b7cabc2f5fde0b00d15ad/extensions/CabinetComponent/compiled/index.js",
+                            "propsConfigPath": "/resource/App_1af1a690b81b7cabc2f5fde0b00d15ad/extensions/CabinetComponent/index.json",
+                            "dependenciesPath": "/resource/App_1af1a690b81b7cabc2f5fde0b00d15ad/extensions/CabinetComponent/dependencies.json"
+                        },
+                        "data": {
+                            "dataType": 0,
+                            "text": "PDP02",
+                            "title": "PDP02",
+                            "isShowName": true,
+                            "factoryModelId": ["#90:0", "#88:3", "#99:3", "#102:6"],
+                            "linkId": 984,
+                            "alarmOrWork": "alarm",
+                            "fontSize": 20
+                        },
+                        "position": {
+                            "top": 176.71769612395062,
+                            "right": 87.21500502593722,
+                            "bottom": 719.605740039291,
+                            "left": 1756.7018424293576,
+                            "topOfPer": 16.36274964110654,
+                            "rightOfPer": 4.54244817843423,
+                            "bottomOfPer": 66.63016111474917,
+                            "leftOfPer": 91.49488762652905
+                        },
+                        "isPreviewInDesign": true,
+                        "dataReplace": null
+                    }
+                },
+                {
+                    "c": "ht.Node",
+                    "i": 230,
+                    "p": {
+                        "displayName": "CustomComp-2-g4",
+                        "tag": "htDiv-kyjtl9ja0-109",
+                        "image": "htDiv",
+                        "position": {
+                            "x": 154.22191077643015,
+                            "y": 590.0465498322948
+                        },
+                        "width": 76.08315254470534,
+                        "height": 183.67656383675836
+                    },
+                    "a": {
+                        "appDetail": {
+                            "appId": "App_1af1a690b81b7cabc2f5fde0b00d15ad",
+                            "layoutId": "Layout_721681ede8c3402ea607360038f7019f"
+                        },
+                        "widgetName": "CustomComp",
+                        "componentName": "CabinetComponent",
+                        "resource": {
+                            "sourcePath": "/resource/App_1af1a690b81b7cabc2f5fde0b00d15ad/extensions/CabinetComponent/source/index.js",
+                            "compiledPath": "/resource/App_1af1a690b81b7cabc2f5fde0b00d15ad/extensions/CabinetComponent/compiled/index.js",
+                            "propsConfigPath": "/resource/App_1af1a690b81b7cabc2f5fde0b00d15ad/extensions/CabinetComponent/index.json",
+                            "dependenciesPath": "/resource/App_1af1a690b81b7cabc2f5fde0b00d15ad/extensions/CabinetComponent/dependencies.json"
+                        },
+                        "data": {
+                            "dataType": 0,
+                            "text": "DCS SYS03",
+                            "factoryModelId": ["#90:0", "#88:3", "#99:3", "#98:7"],
+                            "linkId": 982,
+                            "title": "DCS SYS03",
+                            "isShowName": true,
+                            "alarmOrWork": "alarm",
+                            "fontSize": 20,
+                            "lineHeight": 20
+                        },
+                        "position": {
+                            "top": 498.2082679139156,
+                            "right": 1727.736512951217,
+                            "bottom": 398.1151682493261,
+                            "left": 116.18033450407748,
+                            "topOfPer": 46.13039517721441,
+                            "rightOfPer": 89.98627671620922,
+                            "bottomOfPer": 36.8625155786413,
+                            "leftOfPer": 6.051059088754036
+                        },
+                        "isPreviewInDesign": true,
+                        "dataReplace": null
+                    }
+                },
+                {
+                    "c": "ht.Node",
+                    "i": 231,
+                    "p": {
+                        "displayName": "CustomComp-2-g4",
+                        "tag": "htDiv-kyjtl9ja0-110",
+                        "image": "htDiv",
+                        "position": {
+                            "x": 235.18377822613024,
+                            "y": 590.0465498322948
+                        },
+                        "width": 76.08315254470534,
+                        "height": 183.67656383675836
+                    },
+                    "a": {
+                        "appDetail": {
+                            "appId": "App_1af1a690b81b7cabc2f5fde0b00d15ad",
+                            "layoutId": "Layout_721681ede8c3402ea607360038f7019f"
+                        },
+                        "widgetName": "CustomComp",
+                        "componentName": "CabinetComponent",
+                        "resource": {
+                            "sourcePath": "/resource/App_1af1a690b81b7cabc2f5fde0b00d15ad/extensions/CabinetComponent/source/index.js",
+                            "compiledPath": "/resource/App_1af1a690b81b7cabc2f5fde0b00d15ad/extensions/CabinetComponent/compiled/index.js",
+                            "propsConfigPath": "/resource/App_1af1a690b81b7cabc2f5fde0b00d15ad/extensions/CabinetComponent/index.json",
+                            "dependenciesPath": "/resource/App_1af1a690b81b7cabc2f5fde0b00d15ad/extensions/CabinetComponent/dependencies.json"
+                        },
+                        "data": {
+                            "dataType": 0,
+                            "text": "DCS SYS04",
+                            "factoryModelId": ["#90:0", "#88:3", "#99:3", "#99:7"],
+                            "linkId": 981,
+                            "title": "DCS SYS04",
+                            "isShowName": true,
+                            "alarmOrWork": "alarm",
+                            "fontSize": 20,
+                            "lineHeight": 20
+                        },
+                        "position": {
+                            "top": 498.2082679139156,
+                            "right": 1646.774645501517,
+                            "bottom": 398.1151682493261,
+                            "left": 197.14220195377757,
+                            "topOfPer": 46.13039517721441,
+                            "rightOfPer": 85.76951278653733,
+                            "bottomOfPer": 36.8625155786413,
+                            "leftOfPer": 10.267823018425917
+                        },
+                        "isPreviewInDesign": true,
+                        "dataReplace": null
+                    }
+                },
+                {
+                    "c": "ht.Node",
+                    "i": 232,
+                    "p": {
+                        "displayName": "CustomComp-2-g4",
+                        "tag": "htDiv-kyjtl9ja0-111",
+                        "image": "htDiv",
+                        "position": {
+                            "x": 316.1456456758302,
+                            "y": 590.0465498322948
+                        },
+                        "width": 76.08315254470534,
+                        "height": 183.67656383675836
+                    },
+                    "a": {
+                        "appDetail": {
+                            "appId": "App_1af1a690b81b7cabc2f5fde0b00d15ad",
+                            "layoutId": "Layout_721681ede8c3402ea607360038f7019f"
+                        },
+                        "widgetName": "CustomComp",
+                        "componentName": "CabinetComponent",
+                        "resource": {
+                            "sourcePath": "/resource/App_1af1a690b81b7cabc2f5fde0b00d15ad/extensions/CabinetComponent/source/index.js",
+                            "compiledPath": "/resource/App_1af1a690b81b7cabc2f5fde0b00d15ad/extensions/CabinetComponent/compiled/index.js",
+                            "propsConfigPath": "/resource/App_1af1a690b81b7cabc2f5fde0b00d15ad/extensions/CabinetComponent/index.json",
+                            "dependenciesPath": "/resource/App_1af1a690b81b7cabc2f5fde0b00d15ad/extensions/CabinetComponent/dependencies.json"
+                        },
+                        "data": {
+                            "dataType": 0,
+                            "text": "DCS SPD04",
+                            "title": "DCS SPD04",
+                            "isShowName": true,
+                            "factoryModelId": ["#90:0", "#88:3", "#99:3", "#89:30"],
+                            "linkId": 1655,
+                            "alarmOrWork": "alarm",
+                            "fontSize": 20,
+                            "lineHeight": 20
+                        },
+                        "position": {
+                            "top": 498.2082679139156,
+                            "right": 1565.812778051817,
+                            "bottom": 398.1151682493261,
+                            "left": 278.1040694034775,
+                            "topOfPer": 46.13039517721441,
+                            "rightOfPer": 81.55274885686548,
+                            "bottomOfPer": 36.8625155786413,
+                            "leftOfPer": 14.484586948097789
+                        },
+                        "isPreviewInDesign": true,
+                        "dataReplace": null
+                    }
+                },
+                {
+                    "c": "ht.Node",
+                    "i": 233,
+                    "p": {
+                        "displayName": "CustomComp-2-g4",
+                        "tag": "htDiv-kyjtl9ja0-112",
+                        "image": "htDiv",
+                        "position": {
+                            "x": 397.1075131255303,
+                            "y": 590.0465498322948
+                        },
+                        "width": 76.08315254470534,
+                        "height": 183.67656383675836
+                    },
+                    "a": {
+                        "appDetail": {
+                            "appId": "App_1af1a690b81b7cabc2f5fde0b00d15ad",
+                            "layoutId": "Layout_721681ede8c3402ea607360038f7019f"
+                        },
+                        "widgetName": "CustomComp",
+                        "componentName": "CabinetComponent",
+                        "resource": {
+                            "sourcePath": "/resource/App_1af1a690b81b7cabc2f5fde0b00d15ad/extensions/CabinetComponent/source/index.js",
+                            "compiledPath": "/resource/App_1af1a690b81b7cabc2f5fde0b00d15ad/extensions/CabinetComponent/compiled/index.js",
+                            "propsConfigPath": "/resource/App_1af1a690b81b7cabc2f5fde0b00d15ad/extensions/CabinetComponent/index.json",
+                            "dependenciesPath": "/resource/App_1af1a690b81b7cabc2f5fde0b00d15ad/extensions/CabinetComponent/dependencies.json"
+                        },
+                        "data": {
+                            "dataType": 0,
+                            "text": "DCS SPD05",
+                            "title": "DCS SPD05",
+                            "isShowName": true,
+                            "factoryModelId": ["#90:0", "#88:3", "#99:3", "#90:30"],
+                            "linkId": 1654,
+                            "alarmOrWork": "alarm",
+                            "lineHeight": 20,
+                            "fontSize": 20
+                        },
+                        "position": {
+                            "top": 498.2082679139156,
+                            "right": 1484.850910602117,
+                            "bottom": 398.1151682493261,
+                            "left": 359.0659368531776,
+                            "topOfPer": 46.13039517721441,
+                            "rightOfPer": 77.33598492719359,
+                            "bottomOfPer": 36.8625155786413,
+                            "leftOfPer": 18.701350877769666
+                        },
+                        "isPreviewInDesign": true,
+                        "dataReplace": null
+                    }
+                },
+                {
+                    "c": "ht.Node",
+                    "i": 234,
+                    "p": {
+                        "displayName": "CustomComp-2-g4",
+                        "tag": "htDiv-kyjtl9ja0-113",
+                        "image": "htDiv",
+                        "position": {
+                            "x": 478.0693805752303,
+                            "y": 590.0465498322948
+                        },
+                        "width": 76.08315254470534,
+                        "height": 183.67656383675836
+                    },
+                    "a": {
+                        "appDetail": {
+                            "appId": "App_1af1a690b81b7cabc2f5fde0b00d15ad",
+                            "layoutId": "Layout_721681ede8c3402ea607360038f7019f"
+                        },
+                        "widgetName": "CustomComp",
+                        "componentName": "CabinetComponent",
+                        "resource": {
+                            "sourcePath": "/resource/App_1af1a690b81b7cabc2f5fde0b00d15ad/extensions/CabinetComponent/source/index.js",
+                            "compiledPath": "/resource/App_1af1a690b81b7cabc2f5fde0b00d15ad/extensions/CabinetComponent/compiled/index.js",
+                            "propsConfigPath": "/resource/App_1af1a690b81b7cabc2f5fde0b00d15ad/extensions/CabinetComponent/index.json",
+                            "dependenciesPath": "/resource/App_1af1a690b81b7cabc2f5fde0b00d15ad/extensions/CabinetComponent/dependencies.json"
+                        },
+                        "data": {
+                            "dataType": 0,
+                            "text": "DCS REL02",
+                            "title": "DCS REL02",
+                            "isShowName": true,
+                            "factoryModelId": ["#90:0", "#88:3", "#99:3", "#104:18"],
+                            "linkId": 1653,
+                            "alarmOrWork": "alarm",
+                            "fontSize": 20,
+                            "lineHeight": 20
+                        },
+                        "position": {
+                            "top": 498.2082679139156,
+                            "right": 1403.8890431524171,
+                            "bottom": 398.1151682493261,
+                            "left": 440.0278043028776,
+                            "topOfPer": 46.13039517721441,
+                            "rightOfPer": 73.11922099752172,
+                            "bottomOfPer": 36.8625155786413,
+                            "leftOfPer": 22.91811480744154
+                        },
+                        "isPreviewInDesign": true,
+                        "dataReplace": null
+                    }
+                },
+                {
+                    "c": "ht.Node",
+                    "i": 235,
+                    "p": {
+                        "displayName": "CustomComp-2-g4",
+                        "tag": "htDiv114",
+                        "image": "htDiv",
+                        "position": {
+                            "x": 559.0312480249304,
+                            "y": 590.0465498322948
+                        },
+                        "width": 76.08315254470534,
+                        "height": 183.67656383675836
+                    },
+                    "a": {
+                        "appDetail": {
+                            "appId": "App_1af1a690b81b7cabc2f5fde0b00d15ad",
+                            "layoutId": "Layout_721681ede8c3402ea607360038f7019f"
+                        },
+                        "widgetName": "CustomComp",
+                        "componentName": "CabinetComponent",
+                        "resource": {
+                            "sourcePath": "/resource/App_1af1a690b81b7cabc2f5fde0b00d15ad/extensions/CabinetComponent/source/index.js",
+                            "compiledPath": "/resource/App_1af1a690b81b7cabc2f5fde0b00d15ad/extensions/CabinetComponent/compiled/index.js",
+                            "propsConfigPath": "/resource/App_1af1a690b81b7cabc2f5fde0b00d15ad/extensions/CabinetComponent/index.json",
+                            "dependenciesPath": "/resource/App_1af1a690b81b7cabc2f5fde0b00d15ad/extensions/CabinetComponent/dependencies.json"
+                        },
+                        "data": {
+                            "dataType": 0,
+                            "text": "DCS REL03",
+                            "title": "DCS REL03",
+                            "isShowName": true,
+                            "factoryModelId": ["#90:0", "#88:3", "#99:3", "#91:30"],
+                            "linkId": 1652,
+                            "alarmOrWork": "alarm",
+                            "fontSize": 20,
+                            "lineHeight": 20
+                        },
+                        "position": {
+                            "top": 498.2082679139156,
+                            "right": 1322.927175702717,
+                            "bottom": 398.1151682493261,
+                            "left": 520.9896717525777,
+                            "topOfPer": 46.13039517721441,
+                            "rightOfPer": 68.90245706784984,
+                            "bottomOfPer": 36.8625155786413,
+                            "leftOfPer": 27.13487873711342
+                        },
+                        "isPreviewInDesign": true,
+                        "dataReplace": null
+                    }
+                },
+                {
+                    "c": "ht.Node",
+                    "i": 236,
+                    "p": {
+                        "displayName": "CustomComp-2-g4",
+                        "tag": "htDiv-kyjtl9ja0-115",
+                        "image": "htDiv",
+                        "position": {
+                            "x": 679.6399348279608,
+                            "y": 590.0465498322948
+                        },
+                        "width": 76.08315254470534,
+                        "height": 183.67656383675836
+                    },
+                    "a": {
+                        "appDetail": {
+                            "appId": "App_1af1a690b81b7cabc2f5fde0b00d15ad",
+                            "layoutId": "Layout_721681ede8c3402ea607360038f7019f"
+                        },
+                        "widgetName": "CustomComp",
+                        "componentName": "CabinetComponent",
+                        "resource": {
+                            "sourcePath": "/resource/App_1af1a690b81b7cabc2f5fde0b00d15ad/extensions/CabinetComponent/source/index.js",
+                            "compiledPath": "/resource/App_1af1a690b81b7cabc2f5fde0b00d15ad/extensions/CabinetComponent/compiled/index.js",
+                            "propsConfigPath": "/resource/App_1af1a690b81b7cabc2f5fde0b00d15ad/extensions/CabinetComponent/index.json",
+                            "dependenciesPath": "/resource/App_1af1a690b81b7cabc2f5fde0b00d15ad/extensions/CabinetComponent/dependencies.json"
+                        },
+                        "data": {
+                            "dataType": 0,
+                            "text": "DCS SYS01",
+                            "factoryModelId": ["#90:0", "#88:3", "#99:3", "#96:7"],
+                            "linkId": 979,
+                            "title": "DCS SYS01",
+                            "isShowName": true,
+                            "alarmOrWork": "alarm",
+                            "fontSize": 20,
+                            "lineHeight": 20
+                        },
+                        "position": {
+                            "top": 498.2082679139156,
+                            "right": 1202.3184888996864,
+                            "bottom": 398.1151682493261,
+                            "left": 641.5983585556081,
+                            "topOfPer": 46.13039517721441,
+                            "rightOfPer": 62.620754630191996,
+                            "bottomOfPer": 36.8625155786413,
+                            "leftOfPer": 33.41658117477125
+                        },
+                        "isPreviewInDesign": true,
+                        "dataReplace": null
+                    }
+                },
+                {
+                    "c": "ht.Node",
+                    "i": 237,
+                    "p": {
+                        "displayName": "CustomComp-2-g4",
+                        "tag": "htDiv-kyjtl9ja0-116",
+                        "image": "htDiv",
+                        "position": {
+                            "x": 763.2611854046083,
+                            "y": 590.0465498322948
+                        },
+                        "width": 76.08315254470534,
+                        "height": 183.67656383675836
+                    },
+                    "a": {
+                        "appDetail": {
+                            "appId": "App_1af1a690b81b7cabc2f5fde0b00d15ad",
+                            "layoutId": "Layout_721681ede8c3402ea607360038f7019f"
+                        },
+                        "widgetName": "CustomComp",
+                        "componentName": "CabinetComponent",
+                        "resource": {
+                            "sourcePath": "/resource/App_1af1a690b81b7cabc2f5fde0b00d15ad/extensions/CabinetComponent/source/index.js",
+                            "compiledPath": "/resource/App_1af1a690b81b7cabc2f5fde0b00d15ad/extensions/CabinetComponent/compiled/index.js",
+                            "propsConfigPath": "/resource/App_1af1a690b81b7cabc2f5fde0b00d15ad/extensions/CabinetComponent/index.json",
+                            "dependenciesPath": "/resource/App_1af1a690b81b7cabc2f5fde0b00d15ad/extensions/CabinetComponent/dependencies.json"
+                        },
+                        "data": {
+                            "dataType": 0,
+                            "text": "DCS SYS02",
+                            "factoryModelId": ["#90:0", "#88:3", "#99:3", "#97:7"],
+                            "linkId": 980,
+                            "title": "DCS SYS02",
+                            "isShowName": true,
+                            "alarmOrWork": "alarm",
+                            "fontSize": 20,
+                            "lineHeight": 20
+                        },
+                        "position": {
+                            "top": 498.2082679139156,
+                            "right": 1118.6972383230388,
+                            "bottom": 398.1151682493261,
+                            "left": 725.2196091322556,
+                            "topOfPer": 46.13039517721441,
+                            "rightOfPer": 58.265481162658276,
+                            "bottomOfPer": 36.8625155786413,
+                            "leftOfPer": 37.77185464230498
+                        },
+                        "isPreviewInDesign": true,
+                        "dataReplace": null
+                    }
+                },
+                {
+                    "c": "ht.Node",
+                    "i": 238,
+                    "p": {
+                        "displayName": "CustomComp-2-g4",
+                        "tag": "htDiv-kyjtl9ja0-117",
+                        "image": "htDiv",
+                        "position": {
+                            "x": 846.882435981256,
+                            "y": 590.0465498322948
+                        },
+                        "width": 76.08315254470534,
+                        "height": 183.67656383675836
+                    },
+                    "a": {
+                        "appDetail": {
+                            "appId": "App_1af1a690b81b7cabc2f5fde0b00d15ad",
+                            "layoutId": "Layout_721681ede8c3402ea607360038f7019f"
+                        },
+                        "widgetName": "CustomComp",
+                        "componentName": "CabinetComponent",
+                        "resource": {
+                            "sourcePath": "/resource/App_1af1a690b81b7cabc2f5fde0b00d15ad/extensions/CabinetComponent/source/index.js",
+                            "compiledPath": "/resource/App_1af1a690b81b7cabc2f5fde0b00d15ad/extensions/CabinetComponent/compiled/index.js",
+                            "propsConfigPath": "/resource/App_1af1a690b81b7cabc2f5fde0b00d15ad/extensions/CabinetComponent/index.json",
+                            "dependenciesPath": "/resource/App_1af1a690b81b7cabc2f5fde0b00d15ad/extensions/CabinetComponent/dependencies.json"
+                        },
+                        "data": {
+                            "dataType": 0,
+                            "text": "DCS SPD01",
+                            "title": "DCS SPD01",
+                            "isShowName": true,
+                            "factoryModelId": ["#90:0", "#88:3", "#99:3", "#101:6"],
+                            "linkId": 1657,
+                            "alarmOrWork": "alarm",
+                            "fontSize": 20,
+                            "lineHeight": 20
+                        },
+                        "position": {
+                            "top": 498.2082679139156,
+                            "right": 1035.0759877463913,
+                            "bottom": 398.1151682493261,
+                            "left": 808.8408597089033,
+                            "topOfPer": 46.13039517721441,
+                            "rightOfPer": 53.91020769512455,
+                            "bottomOfPer": 36.8625155786413,
+                            "leftOfPer": 42.127128109838715
+                        },
+                        "isPreviewInDesign": true,
+                        "dataReplace": null
+                    }
+                },
+                {
+                    "c": "ht.Node",
+                    "i": 239,
+                    "p": {
+                        "displayName": "CustomComp-2-g4",
+                        "tag": "htDiv-kyjtl9ja0-118",
+                        "image": "htDiv",
+                        "position": {
+                            "x": 930.5036865579036,
+                            "y": 590.0465498322948
+                        },
+                        "width": 76.08315254470534,
+                        "height": 183.67656383675836
+                    },
+                    "a": {
+                        "appDetail": {
+                            "appId": "App_1af1a690b81b7cabc2f5fde0b00d15ad",
+                            "layoutId": "Layout_721681ede8c3402ea607360038f7019f"
+                        },
+                        "widgetName": "CustomComp",
+                        "componentName": "CabinetComponent",
+                        "resource": {
+                            "sourcePath": "/resource/App_1af1a690b81b7cabc2f5fde0b00d15ad/extensions/CabinetComponent/source/index.js",
+                            "compiledPath": "/resource/App_1af1a690b81b7cabc2f5fde0b00d15ad/extensions/CabinetComponent/compiled/index.js",
+                            "propsConfigPath": "/resource/App_1af1a690b81b7cabc2f5fde0b00d15ad/extensions/CabinetComponent/index.json",
+                            "dependenciesPath": "/resource/App_1af1a690b81b7cabc2f5fde0b00d15ad/extensions/CabinetComponent/dependencies.json"
+                        },
+                        "data": {
+                            "dataType": 0,
+                            "text": "DCS SPD02",
+                            "title": "DCS SPD02",
+                            "isShowName": true,
+                            "factoryModelId": ["#90:0", "#88:3", "#99:3", "#102:6"],
+                            "linkId": 1658,
+                            "alarmOrWork": "alarm",
+                            "fontSize": 20,
+                            "lineHeight": 20
+                        },
+                        "position": {
+                            "top": 498.2082679139156,
+                            "right": 951.4547371697438,
+                            "bottom": 398.1151682493261,
+                            "left": 892.4621102855509,
+                            "topOfPer": 46.13039517721441,
+                            "rightOfPer": 49.55493422759083,
+                            "bottomOfPer": 36.8625155786413,
+                            "leftOfPer": 46.48240157737244
+                        },
+                        "isPreviewInDesign": true,
+                        "dataReplace": null
+                    }
+                },
+                {
+                    "c": "ht.Node",
+                    "i": 240,
+                    "p": {
+                        "displayName": "CustomComp-2-g4",
+                        "tag": "htDiv-kyjtl9ja0-119",
+                        "image": "htDiv",
+                        "position": {
+                            "x": 1014.124937134551,
+                            "y": 590.0465498322948
+                        },
+                        "width": 76.08315254470534,
+                        "height": 183.67656383675836
+                    },
+                    "a": {
+                        "appDetail": {
+                            "appId": "App_1af1a690b81b7cabc2f5fde0b00d15ad",
+                            "layoutId": "Layout_721681ede8c3402ea607360038f7019f"
+                        },
+                        "widgetName": "CustomComp",
+                        "componentName": "CabinetComponent",
+                        "resource": {
+                            "sourcePath": "/resource/App_1af1a690b81b7cabc2f5fde0b00d15ad/extensions/CabinetComponent/source/index.js",
+                            "compiledPath": "/resource/App_1af1a690b81b7cabc2f5fde0b00d15ad/extensions/CabinetComponent/compiled/index.js",
+                            "propsConfigPath": "/resource/App_1af1a690b81b7cabc2f5fde0b00d15ad/extensions/CabinetComponent/index.json",
+                            "dependenciesPath": "/resource/App_1af1a690b81b7cabc2f5fde0b00d15ad/extensions/CabinetComponent/dependencies.json"
+                        },
+                        "data": {
+                            "dataType": 0,
+                            "text": "DCS SPD03",
+                            "title": "DCS SPD03",
+                            "isShowName": true,
+                            "factoryModelId": ["#90:0", "#88:3", "#99:3", "#88:30"],
+                            "linkId": 1659,
+                            "alarmOrWork": "alarm",
+                            "fontSize": 20,
+                            "lineHeight": 20
+                        },
+                        "position": {
+                            "top": 498.2082679139156,
+                            "right": 867.8334865930963,
+                            "bottom": 398.1151682493261,
+                            "left": 976.0833608621983,
+                            "topOfPer": 46.13039517721441,
+                            "rightOfPer": 45.1996607600571,
+                            "bottomOfPer": 36.8625155786413,
+                            "leftOfPer": 50.83767504490616
+                        },
+                        "isPreviewInDesign": true,
+                        "dataReplace": null
+                    }
+                },
+                {
+                    "c": "ht.Node",
+                    "i": 241,
+                    "p": {
+                        "displayName": "CustomComp-2-g4",
+                        "tag": "htDiv120",
+                        "image": "htDiv",
+                        "position": {
+                            "x": 453.7989929653672,
+                            "y": 268.5559780423298
+                        },
+                        "width": 76.08315254470534,
+                        "height": 183.67656383675836
+                    },
+                    "a": {
+                        "appDetail": {
+                            "appId": "App_1af1a690b81b7cabc2f5fde0b00d15ad",
+                            "layoutId": "Layout_721681ede8c3402ea607360038f7019f"
+                        },
+                        "widgetName": "CustomComp",
+                        "componentName": "CabinetComponent",
+                        "resource": {
+                            "sourcePath": "/resource/App_1af1a690b81b7cabc2f5fde0b00d15ad/extensions/CabinetComponent/source/index.js",
+                            "compiledPath": "/resource/App_1af1a690b81b7cabc2f5fde0b00d15ad/extensions/CabinetComponent/compiled/index.js",
+                            "propsConfigPath": "/resource/App_1af1a690b81b7cabc2f5fde0b00d15ad/extensions/CabinetComponent/index.json",
+                            "dependenciesPath": "/resource/App_1af1a690b81b7cabc2f5fde0b00d15ad/extensions/CabinetComponent/dependencies.json"
+                        },
+                        "data": {
+                            "dataType": 0,
+                            "text": "PLC通讯",
+                            "title": "PLC通讯",
+                            "isShowName": true,
+                            "alarmOrWork": "alarm",
+                            "fontSize": 20,
+                            "lineHeight": 20,
+                            "factoryModelId": ["#90:0", "#88:3", "#99:3", "#74:25"],
+                            "linkId": 1412
+                        },
+                        "position": {
+                            "top": 176.71769612395062,
+                            "right": 1428.1594307622804,
+                            "bottom": 719.605740039291,
+                            "left": 415.75741669301453,
+                            "topOfPer": 16.36274964110654,
+                            "rightOfPer": 74.38330368553544,
+                            "bottomOfPer": 66.63016111474917,
+                            "leftOfPer": 21.65403211942784
+                        },
+                        "isPreviewInDesign": true,
+                        "dataReplace": null
+                    }
+                },
+                {
+                    "c": "ht.Node",
+                    "i": 242,
+                    "p": {
+                        "displayName": "CustomComp-2-g4",
+                        "tag": "htDiv-kyjtl9ja0-121",
+                        "image": "htDiv",
+                        "position": {
+                            "x": 1294.0062381312814,
+                            "y": 590.0465498322948
+                        },
+                        "width": 76.08315254470534,
+                        "height": 183.67656383675836
+                    },
+                    "a": {
+                        "appDetail": {
+                            "appId": "App_1af1a690b81b7cabc2f5fde0b00d15ad",
+                            "layoutId": "Layout_721681ede8c3402ea607360038f7019f"
+                        },
+                        "widgetName": "CustomComp",
+                        "componentName": "CabinetComponent",
+                        "resource": {
+                            "sourcePath": "/resource/App_1af1a690b81b7cabc2f5fde0b00d15ad/extensions/CabinetComponent/source/index.js",
+                            "compiledPath": "/resource/App_1af1a690b81b7cabc2f5fde0b00d15ad/extensions/CabinetComponent/compiled/index.js",
+                            "propsConfigPath": "/resource/App_1af1a690b81b7cabc2f5fde0b00d15ad/extensions/CabinetComponent/index.json",
+                            "dependenciesPath": "/resource/App_1af1a690b81b7cabc2f5fde0b00d15ad/extensions/CabinetComponent/dependencies.json"
+                        },
+                        "data": {
+                            "dataType": 0,
+                            "text": "风送系统柜",
+                            "title": "风送系统柜",
+                            "isShowName": true,
+                            "alarmOrWork": "alarm",
+                            "fontSize": 20,
+                            "lineHeight": 20,
+                            "factoryModelId": ["#90:0", "#88:3", "#99:3", "#78:23"],
+                            "linkId": 1415
+                        },
+                        "position": {
+                            "top": 498.2082679139156,
+                            "right": 587.952185596366,
+                            "bottom": 398.1151682493261,
+                            "left": 1255.9646618589288,
+                            "topOfPer": 46.13039517721441,
+                            "rightOfPer": 30.6225096664774,
+                            "bottomOfPer": 36.8625155786413,
+                            "leftOfPer": 65.41482613848586
+                        },
+                        "isPreviewInDesign": true,
+                        "dataReplace": null
+                    }
+                },
+                {
+                    "c": "ht.Node",
+                    "i": 243,
+                    "p": {
+                        "displayName": "CustomComp-2-g4",
+                        "tag": "htDiv-kyjtl9ja0-122",
+                        "image": "htDiv",
+                        "position": {
+                            "x": 1377.6274887079285,
+                            "y": 590.0465498322948
+                        },
+                        "width": 76.08315254470534,
+                        "height": 183.67656383675836
+                    },
+                    "a": {
+                        "appDetail": {
+                            "appId": "App_1af1a690b81b7cabc2f5fde0b00d15ad",
+                            "layoutId": "Layout_721681ede8c3402ea607360038f7019f"
+                        },
+                        "widgetName": "CustomComp",
+                        "componentName": "CabinetComponent",
+                        "resource": {
+                            "sourcePath": "/resource/App_1af1a690b81b7cabc2f5fde0b00d15ad/extensions/CabinetComponent/source/index.js",
+                            "compiledPath": "/resource/App_1af1a690b81b7cabc2f5fde0b00d15ad/extensions/CabinetComponent/compiled/index.js",
+                            "propsConfigPath": "/resource/App_1af1a690b81b7cabc2f5fde0b00d15ad/extensions/CabinetComponent/index.json",
+                            "dependenciesPath": "/resource/App_1af1a690b81b7cabc2f5fde0b00d15ad/extensions/CabinetComponent/dependencies.json"
+                        },
+                        "data": {
+                            "dataType": 0,
+                            "text": "无报警 ",
+                            "title": "ICC柜",
+                            "isShowName": true,
+                            "alarmOrWork": "alarm",
+                            "fontSize": 20,
+                            "lineHeight": 20
+                        },
+                        "position": {
+                            "top": 498.2082679139156,
+                            "right": 504.33093501971894,
+                            "bottom": 398.1151682493261,
+                            "left": 1339.585912435576,
+                            "topOfPer": 46.13039517721441,
+                            "rightOfPer": 26.267236198943696,
+                            "bottomOfPer": 36.8625155786413,
+                            "leftOfPer": 69.77009960601957
+                        },
+                        "isPreviewInDesign": true,
+                        "dataReplace": null
+                    }
+                },
+                {
+                    "c": "ht.Node",
+                    "i": 244,
+                    "p": {
+                        "displayName": "CustomComp-2-g4",
+                        "tag": "htDiv-kyjtl9ja0-123",
+                        "image": "htDiv",
+                        "position": {
+                            "x": 1628.491240437871,
+                            "y": 590.0465498322948
+                        },
+                        "width": 76.08315254470534,
+                        "height": 183.67656383675836
+                    },
+                    "a": {
+                        "appDetail": {
+                            "appId": "App_1af1a690b81b7cabc2f5fde0b00d15ad",
+                            "layoutId": "Layout_721681ede8c3402ea607360038f7019f"
+                        },
+                        "widgetName": "CustomComp",
+                        "componentName": "CabinetComponent",
+                        "resource": {
+                            "sourcePath": "/resource/App_1af1a690b81b7cabc2f5fde0b00d15ad/extensions/CabinetComponent/source/index.js",
+                            "compiledPath": "/resource/App_1af1a690b81b7cabc2f5fde0b00d15ad/extensions/CabinetComponent/compiled/index.js",
+                            "propsConfigPath": "/resource/App_1af1a690b81b7cabc2f5fde0b00d15ad/extensions/CabinetComponent/index.json",
+                            "dependenciesPath": "/resource/App_1af1a690b81b7cabc2f5fde0b00d15ad/extensions/CabinetComponent/dependencies.json"
+                        },
+                        "data": {
+                            "dataType": 0,
+                            "text": "无报警 ",
+                            "title": "挤压机PLC柜C",
+                            "isShowName": true,
+                            "alarmOrWork": "alarm",
+                            "fontSize": 20,
+                            "lineHeight": 20
+                        },
+                        "position": {
+                            "top": 498.2082679139156,
+                            "right": 253.46718328977636,
+                            "bottom": 398.1151682493261,
+                            "left": 1590.4496641655185,
+                            "topOfPer": 46.13039517721441,
+                            "rightOfPer": 13.20141579634252,
+                            "bottomOfPer": 36.8625155786413,
+                            "leftOfPer": 82.83592000862076
+                        },
+                        "isPreviewInDesign": true,
+                        "dataReplace": null
+                    }
+                },
+                {
+                    "c": "ht.Node",
+                    "i": 245,
+                    "p": {
+                        "displayName": "CustomComp-2-g4",
+                        "tag": "htDiv124",
+                        "image": "htDiv",
+                        "position": {
+                            "x": 1712.1124910145181,
+                            "y": 590.0465498322948
+                        },
+                        "width": 76.08315254470534,
+                        "height": 183.67656383675836
+                    },
+                    "a": {
+                        "appDetail": {
+                            "appId": "App_1af1a690b81b7cabc2f5fde0b00d15ad",
+                            "layoutId": "Layout_721681ede8c3402ea607360038f7019f"
+                        },
+                        "widgetName": "CustomComp",
+                        "componentName": "CabinetComponent",
+                        "resource": {
+                            "sourcePath": "/resource/App_1af1a690b81b7cabc2f5fde0b00d15ad/extensions/CabinetComponent/source/index.js",
+                            "compiledPath": "/resource/App_1af1a690b81b7cabc2f5fde0b00d15ad/extensions/CabinetComponent/compiled/index.js",
+                            "propsConfigPath": "/resource/App_1af1a690b81b7cabc2f5fde0b00d15ad/extensions/CabinetComponent/index.json",
+                            "dependenciesPath": "/resource/App_1af1a690b81b7cabc2f5fde0b00d15ad/extensions/CabinetComponent/dependencies.json"
+                        },
+                        "data": {
+                            "dataType": 0,
+                            "text": "挤压风送24V DC电源PS柜",
+                            "title": "挤压风送24V DC电源PS柜",
+                            "isShowName": true,
+                            "alarmOrWork": "alarm",
+                            "fontSize": 20,
+                            "lineHeight": 20,
+                            "factoryModelId": ["#90:0", "#88:3", "#99:3", "#95:30"],
+                            "linkId": 1418
+                        },
+                        "position": {
+                            "top": 498.2082679139156,
+                            "right": 169.8459327131293,
+                            "bottom": 398.1151682493261,
+                            "left": 1674.0709147421655,
+                            "topOfPer": 46.13039517721441,
+                            "rightOfPer": 8.846142328808817,
+                            "bottomOfPer": 36.8625155786413,
+                            "leftOfPer": 87.19119347615447
+                        },
+                        "isPreviewInDesign": true,
+                        "dataReplace": null
+                    }
+                },
+                {
+                    "c": "ht.Node",
+                    "i": 246,
+                    "p": {
+                        "displayName": "CustomComp-2-g4",
+                        "tag": "htDiv-kyjtl9ja0-125",
+                        "image": "htDiv",
+                        "position": {
+                            "x": 1461.248739284576,
+                            "y": 590.0465498322948
+                        },
+                        "width": 76.08315254470534,
+                        "height": 183.67656383675836
+                    },
+                    "a": {
+                        "appDetail": {
+                            "appId": "App_1af1a690b81b7cabc2f5fde0b00d15ad",
+                            "layoutId": "Layout_721681ede8c3402ea607360038f7019f"
+                        },
+                        "widgetName": "CustomComp",
+                        "componentName": "CabinetComponent",
+                        "resource": {
+                            "sourcePath": "/resource/App_1af1a690b81b7cabc2f5fde0b00d15ad/extensions/CabinetComponent/source/index.js",
+                            "compiledPath": "/resource/App_1af1a690b81b7cabc2f5fde0b00d15ad/extensions/CabinetComponent/compiled/index.js",
+                            "propsConfigPath": "/resource/App_1af1a690b81b7cabc2f5fde0b00d15ad/extensions/CabinetComponent/index.json",
+                            "dependenciesPath": "/resource/App_1af1a690b81b7cabc2f5fde0b00d15ad/extensions/CabinetComponent/dependencies.json"
+                        },
+                        "data": {
+                            "dataType": 0,
+                            "text": "无报警 ",
+                            "title": "挤压机PLC柜A",
+                            "isShowName": true,
+                            "alarmOrWork": "alarm",
+                            "fontSize": 20,
+                            "lineHeight": 20
+                        },
+                        "position": {
+                            "top": 498.2082679139156,
+                            "right": 420.7096844430714,
+                            "bottom": 398.1151682493261,
+                            "left": 1423.2071630122234,
+                            "topOfPer": 46.13039517721441,
+                            "rightOfPer": 21.91196273140997,
+                            "bottomOfPer": 36.8625155786413,
+                            "leftOfPer": 74.1253730735533
+                        },
+                        "isPreviewInDesign": true,
+                        "dataReplace": null
+                    }
+                },
+                {
+                    "c": "ht.Node",
+                    "i": 247,
+                    "p": {
+                        "displayName": "CustomComp-2-g4",
+                        "tag": "htDiv126",
+                        "image": "htDiv",
+                        "position": {
+                            "x": 1544.8699898612235,
+                            "y": 590.0465498322948
+                        },
+                        "width": 76.08315254470534,
+                        "height": 183.67656383675836
+                    },
+                    "a": {
+                        "appDetail": {
+                            "appId": "App_1af1a690b81b7cabc2f5fde0b00d15ad",
+                            "layoutId": "Layout_721681ede8c3402ea607360038f7019f"
+                        },
+                        "widgetName": "CustomComp",
+                        "componentName": "CabinetComponent",
+                        "resource": {
+                            "sourcePath": "/resource/App_1af1a690b81b7cabc2f5fde0b00d15ad/extensions/CabinetComponent/source/index.js",
+                            "compiledPath": "/resource/App_1af1a690b81b7cabc2f5fde0b00d15ad/extensions/CabinetComponent/compiled/index.js",
+                            "propsConfigPath": "/resource/App_1af1a690b81b7cabc2f5fde0b00d15ad/extensions/CabinetComponent/index.json",
+                            "dependenciesPath": "/resource/App_1af1a690b81b7cabc2f5fde0b00d15ad/extensions/CabinetComponent/dependencies.json"
+                        },
+                        "data": {
+                            "dataType": 0,
+                            "text": "挤压机PLC柜B",
+                            "title": "挤压机PLC柜B",
+                            "isShowName": true,
+                            "alarmOrWork": "alarm",
+                            "fontSize": 20,
+                            "lineHeight": 20,
+                            "factoryModelId": ["#90:0", "#88:3", "#99:3", "#80:22"],
+                            "linkId": 1416
+                        },
+                        "position": {
+                            "top": 498.2082679139156,
+                            "right": 337.0884338664239,
+                            "bottom": 398.1151682493261,
+                            "left": 1506.828413588871,
+                            "topOfPer": 46.13039517721441,
+                            "rightOfPer": 17.556689263876244,
+                            "bottomOfPer": 36.8625155786413,
+                            "leftOfPer": 78.48064654108703
+                        },
+                        "isPreviewInDesign": true,
+                        "dataReplace": null
+                    }
+                },
+                {
+                    "c": "ht.Node",
+                    "i": 248,
+                    "p": {
+                        "displayName": "CustomComp-2-g4",
+                        "tag": "htDiv127",
+                        "image": "htDiv",
+                        "position": {
+                            "x": 1795.733741591166,
+                            "y": 590.0465498322948
+                        },
+                        "width": 76.08315254470534,
+                        "height": 183.67656383675836
+                    },
+                    "a": {
+                        "appDetail": {
+                            "appId": "App_1af1a690b81b7cabc2f5fde0b00d15ad",
+                            "layoutId": "Layout_721681ede8c3402ea607360038f7019f"
+                        },
+                        "widgetName": "CustomComp",
+                        "componentName": "CabinetComponent",
+                        "resource": {
+                            "sourcePath": "/resource/App_1af1a690b81b7cabc2f5fde0b00d15ad/extensions/CabinetComponent/source/index.js",
+                            "compiledPath": "/resource/App_1af1a690b81b7cabc2f5fde0b00d15ad/extensions/CabinetComponent/compiled/index.js",
+                            "propsConfigPath": "/resource/App_1af1a690b81b7cabc2f5fde0b00d15ad/extensions/CabinetComponent/index.json",
+                            "dependenciesPath": "/resource/App_1af1a690b81b7cabc2f5fde0b00d15ad/extensions/CabinetComponent/dependencies.json"
+                        },
+                        "data": {
+                            "dataType": 0,
+                            "text": "挤压机MMS柜",
+                            "title": "挤压机MMS柜",
+                            "isShowName": true,
+                            "alarmOrWork": "alarm",
+                            "fontSize": 20,
+                            "lineHeight": 20,
+                            "factoryModelId": ["#90:0", "#88:3", "#99:3", "#83:21"],
+                            "linkId": 1419
+                        },
+                        "position": {
+                            "top": 498.2082679139156,
+                            "right": 86.2246821364813,
+                            "bottom": 398.1151682493261,
+                            "left": 1757.6921653188135,
+                            "topOfPer": 46.13039517721441,
+                            "rightOfPer": 4.490868861275068,
+                            "bottomOfPer": 36.8625155786413,
+                            "leftOfPer": 91.54646694368822
+                        },
+                        "isPreviewInDesign": true,
+                        "dataReplace": null
+                    }
+                },
+                {
+                    "c": "ht.Node",
+                    "i": 249,
+                    "p": {
+                        "displayName": "CustomComp-2-g4",
+                        "tag": "htDiv1388",
+                        "image": "htDiv",
+                        "position": {
+                            "x": 541.6464547463121,
+                            "y": 268.5559780423298
+                        },
+                        "width": 76.08315254470534,
+                        "height": 183.67656383675836
+                    },
+                    "a": {
+                        "appDetail": {
+                            "appId": "App_1af1a690b81b7cabc2f5fde0b00d15ad",
+                            "layoutId": "Layout_721681ede8c3402ea607360038f7019f"
+                        },
+                        "widgetName": "CustomComp",
+                        "componentName": "CabinetComponent",
+                        "resource": {
+                            "sourcePath": "/resource/App_1af1a690b81b7cabc2f5fde0b00d15ad/extensions/CabinetComponent/source/index.js",
+                            "compiledPath": "/resource/App_1af1a690b81b7cabc2f5fde0b00d15ad/extensions/CabinetComponent/compiled/index.js",
+                            "propsConfigPath": "/resource/App_1af1a690b81b7cabc2f5fde0b00d15ad/extensions/CabinetComponent/index.json",
+                            "dependenciesPath": "/resource/App_1af1a690b81b7cabc2f5fde0b00d15ad/extensions/CabinetComponent/dependencies.json"
+                        },
+                        "data": {
+                            "dataType": 0,
+                            "text": "SIS CABINET AR-101G",
+                            "title": "SIS CABINET AR-101G",
+                            "isShowName": true,
+                            "alarmOrWork": "alarm",
+                            "lineHeight": 20,
+                            "fontSize": 20,
+                            "factoryModelId": ["#90:0", "#88:3", "#99:3", "#91:47"],
+                            "linkId": 2246
+                        },
+                        "position": {
+                            "top": 176.71769612395062,
+                            "right": 1340.3119689813352,
+                            "bottom": 719.605740039291,
+                            "left": 503.6048784739594,
+                            "topOfPer": 16.36274964110654,
+                            "rightOfPer": 69.80791505111121,
+                            "bottomOfPer": 66.63016111474917,
+                            "leftOfPer": 26.22942075385205
+                        },
+                        "isPreviewInDesign": true,
+                        "dataReplace": null
+                    }
+                },
+                {
+                    "c": "ht.Node",
+                    "i": 250,
+                    "p": {
+                        "displayName": "lineArrow-2",
+                        "tag": "htDiv5093",
+                        "image": "lineArrow",
+                        "rotation": 1.5707963267948966,
+                        "position": {
+                            "x": 51.944091636727876,
+                            "y": 364.8046971365446
+                        },
+                        "width": 729.6093942730892,
+                        "height": 18.188936851574486
+                    },
+                    "s": {
+                        "node.script": [
+                            {
+                                "uuid": "uuidc13b2650_6e9e_11ec_9b42_41b2bee30c50",
+                                "action": null,
+                                "actionType": "2",
+                                "linkType": "",
+                                "linkUrl": "",
+                                "linkFlowUrl": "",
+                                "script": ""
+                            }
+                        ]
+                    },
+                    "a": {
+                        "shapeName": "LineArrow",
+                        "widgetName": "lineArrow",
+                        "la.color": "rgba(155,155,155,1)",
+                        "la.leftArrow": false,
+                        "la.rightArrow": false,
+                        "la.circleArrow": false,
+                        "la.dashPattern": [1, 0],
+                        "la.width": 18
+                    }
+                },
+                {
+                    "c": "ht.Node",
+                    "i": 251,
+                    "p": {
+                        "displayName": "lineArrow-2",
+                        "tag": "htDiv5095",
+                        "image": "lineArrow",
+                        "rotation": 1.5707963267948966,
+                        "position": {
+                            "x": 51.944091636727876,
+                            "y": 946.1570143563972
+                        },
+                        "width": 180.2322959733678,
+                        "height": 18.188936851574486
+                    },
+                    "s": {
+                        "node.script": [
+                            {
+                                "uuid": "uuidc13b2650_6e9e_11ec_9b42_41b2bee30c50",
+                                "action": null,
+                                "actionType": "2",
+                                "linkType": "",
+                                "linkUrl": "",
+                                "linkFlowUrl": "",
+                                "script": ""
+                            }
+                        ]
+                    },
+                    "a": {
+                        "shapeName": "LineArrow",
+                        "widgetName": "lineArrow",
+                        "la.color": "rgba(155,155,155,1)",
+                        "la.leftArrow": false,
+                        "la.rightArrow": false,
+                        "la.circleArrow": false,
+                        "la.dashPattern": [1, 0],
+                        "la.width": 18
+                    }
+                },
+                {
+                    "c": "ht.Node",
+                    "i": 252,
+                    "p": {
+                        "displayName": "lineArrow-2",
+                        "tag": "htDiv5096",
+                        "image": "lineArrow",
+                        "position": {
+                            "x": 234.29203481944853,
+                            "y": 1027.6375526568884
+                        },
+                        "width": 381.82911537359985,
+                        "height": 18
+                    },
+                    "s": {
+                        "node.script": [
+                            {
+                                "uuid": "uuidc13b2650_6e9e_11ec_9b42_41b2bee30c50",
+                                "action": null,
+                                "actionType": "2",
+                                "linkType": "",
+                                "linkUrl": "",
+                                "linkFlowUrl": "",
+                                "script": ""
+                            }
+                        ]
+                    },
+                    "a": {
+                        "shapeName": "LineArrow",
+                        "widgetName": "lineArrow",
+                        "la.color": "rgba(155,155,155,1)",
+                        "la.leftArrow": false,
+                        "la.rightArrow": false,
+                        "la.circleArrow": false,
+                        "la.dashPattern": [1, 0],
+                        "la.width": 18
+                    }
+                },
+                {
+                    "c": "ht.Node",
+                    "i": 253,
+                    "p": {
+                        "displayName": "lineArrow-2",
+                        "tag": "htDiv6177",
+                        "image": "lineArrow",
+                        "position": {
+                            "x": 1209.0564009443992,
+                            "y": 1027.6375526568884
+                        },
+                        "width": 1318.0527440606438,
+                        "height": 18
+                    },
+                    "s": {
+                        "node.script": [
+                            {
+                                "uuid": "uuidc13b2650_6e9e_11ec_9b42_41b2bee30c50",
+                                "action": null,
+                                "actionType": "2",
+                                "linkType": "",
+                                "linkUrl": "",
+                                "linkFlowUrl": "",
+                                "script": ""
+                            }
+                        ]
+                    },
+                    "a": {
+                        "shapeName": "LineArrow",
+                        "widgetName": "lineArrow",
+                        "la.color": "rgba(155,155,155,1)",
+                        "la.leftArrow": false,
+                        "la.rightArrow": false,
+                        "la.circleArrow": false,
+                        "la.dashPattern": [1, 0],
+                        "la.width": 18
+                    }
+                },
+                {
+                    "c": "ht.Node",
+                    "i": 254,
+                    "p": {
+                        "displayName": "lineArrow-2",
+                        "tag": "htDiv6178",
+                        "image": "lineArrow",
+                        "rotation": 1.5707963267948966,
+                        "position": {
+                            "x": 1859.516158470642,
+                            "y": 950.2927016013275
+                        },
+                        "width": 172.85883015636733,
+                        "height": 18.188936851574486
+                    },
+                    "s": {
+                        "node.script": [
+                            {
+                                "uuid": "uuidc13b2650_6e9e_11ec_9b42_41b2bee30c50",
+                                "action": null,
+                                "actionType": "2",
+                                "linkType": "",
+                                "linkUrl": "",
+                                "linkFlowUrl": "",
+                                "script": ""
+                            }
+                        ]
+                    },
+                    "a": {
+                        "shapeName": "LineArrow",
+                        "widgetName": "lineArrow",
+                        "la.color": "rgba(155,155,155,1)",
+                        "la.leftArrow": false,
+                        "la.rightArrow": false,
+                        "la.circleArrow": false,
+                        "la.dashPattern": [1, 0],
+                        "la.width": 18
+                    }
+                },
+                {
+                    "c": "ht.Node",
+                    "i": 255,
+                    "p": {
+                        "displayName": "lineArrow-2",
+                        "tag": "htDiv6179",
+                        "image": "lineArrow",
+                        "rotation": 1.5707963267948966,
+                        "position": {
+                            "x": 1859.516158470642,
+                            "y": 360.39425996070895
+                        },
+                        "width": 719.1955252215794,
+                        "height": 18.188936851574486
+                    },
+                    "s": {
+                        "node.script": [
+                            {
+                                "uuid": "uuidc13b2650_6e9e_11ec_9b42_41b2bee30c50",
+                                "action": null,
+                                "actionType": "2",
+                                "linkType": "",
+                                "linkUrl": "",
+                                "linkFlowUrl": "",
+                                "script": ""
+                            }
+                        ]
+                    },
+                    "a": {
+                        "shapeName": "LineArrow",
+                        "widgetName": "lineArrow",
+                        "la.color": "rgba(155,155,155,1)",
+                        "la.leftArrow": false,
+                        "la.rightArrow": false,
+                        "la.circleArrow": false,
+                        "la.dashPattern": [1, 0],
+                        "la.width": 18
+                    }
+                },
+                {
+                    "c": "ht.Node",
+                    "i": 256,
+                    "p": {
+                        "displayName": "lineArrow-2",
+                        "tag": "htDiv6750",
+                        "image": "lineArrow",
+                        "position": {
+                            "x": 955.3438500617152,
+                            "y": 9.43210703611146
+                        },
+                        "width": 1823.932745858133,
+                        "height": 18
+                    },
+                    "s": {
+                        "node.script": [
+                            {
+                                "uuid": "uuidc13b2650_6e9e_11ec_9b42_41b2bee30c50",
+                                "action": null,
+                                "actionType": "2",
+                                "linkType": "",
+                                "linkUrl": "",
+                                "linkFlowUrl": "",
+                                "script": ""
+                            }
+                        ]
+                    },
+                    "a": {
+                        "shapeName": "LineArrow",
+                        "widgetName": "lineArrow",
+                        "la.color": "rgba(155,155,155,1)",
+                        "la.leftArrow": false,
+                        "la.rightArrow": false,
+                        "la.circleArrow": false,
+                        "la.dashPattern": [1, 0],
+                        "la.width": 18
+                    }
+                },
+                {
+                    "c": "ht.Block",
+                    "i": 257,
+                    "p": {
+                        "displayName": "group-4",
+                        "position": {
+                            "x": 30.255353070403544,
+                            "y": 793.1264865996213
+                        },
+                        "width": 60.51070614080746,
+                        "height": 125.82875954018425,
+                        "clickThroughEnabled": true
+                    },
+                    "a": {
+                        "widgetName": "Shape",
+                        "dataReplace": null
+                    }
+                },
+                {
+                    "c": "ht.Shape",
+                    "i": 258,
+                    "p": {
+                        "displayName": "Shape-2-g4",
+                        "parent": {
+                            "__i": 257
+                        },
+                        "rotation": -2.6854878905966426e-16,
+                        "position": {
+                            "x": 30.255353070403856,
+                            "y": 761.6923509654825
+                        },
+                        "width": 60.333448430112,
+                        "height": 62.96048827190672,
+                        "segments": {
+                            "__a": [1, 2, 4, 4]
+                        },
+                        "points": {
+                            "__a": [
+                                {
+                                    "x": 60.422077285459864,
+                                    "y": 730.2121068295297
+                                },
+                                {
+                                    "x": 0.08862885534783871,
+                                    "y": 730.2121068295297
+                                },
+                                {
+                                    "x": 0.08862885534783871,
+                                    "y": 730.2121068295297
+                                },
+                                {
+                                    "x": 8.82947693833836,
+                                    "y": 753.8941585479581
+                                },
+                                {
+                                    "x": 23.912839045866335,
+                                    "y": 769.6342806159357
+                                },
+                                {
+                                    "x": 38.99620115339421,
+                                    "y": 785.374402683913
+                                },
+                                {
+                                    "x": 60.422077285459864,
+                                    "y": 793.1725951014354
+                                },
+                                {
+                                    "x": 60.422077285459864,
+                                    "y": 793.1725951014354
+                                }
+                            ]
+                        },
+                        "closePath": true
+                    },
+                    "s": {
+                        "shape.background": null,
+                        "shape.border.color": "#979797",
+                        "shape.border.width": 1
+                    },
+                    "a": {
+                        "widgetName": "Shape"
+                    }
+                },
+                {
+                    "c": "ht.Shape",
+                    "i": 259,
+                    "p": {
+                        "displayName": "Shape-2-g4",
+                        "parent": {
+                            "__i": 257
+                        },
+                        "rotation": 1.570796326794903,
+                        "position": {
+                            "x": 30.255353070403544,
+                            "y": 824.652839237388
+                        },
+                        "width": 62.77605426465043,
+                        "height": 60.51070614080706,
+                        "segments": {
+                            "__a": [1, 2, 4, 4]
+                        },
+                        "points": {
+                            "__a": [
+                                {
+                                    "x": 61.64338020272895,
+                                    "y": 794.3974861669842
+                                },
+                                {
+                                    "x": -1.132674061921712,
+                                    "y": 794.3974861669842
+                                },
+                                {
+                                    "x": -1.132674061921712,
+                                    "y": 794.3974861669842
+                                },
+                                {
+                                    "x": 7.962048150293654,
+                                    "y": 817.1580731903317
+                                },
+                                {
+                                    "x": 23.656061716455916,
+                                    "y": 832.2857497255362
+                                },
+                                {
+                                    "x": 39.35007528261848,
+                                    "y": 847.4134262607387
+                                },
+                                {
+                                    "x": 61.64338020272895,
+                                    "y": 854.9081923077918
+                                },
+                                {
+                                    "x": 61.64338020272895,
+                                    "y": 854.9081923077918
+                                }
+                            ]
+                        },
+                        "closePath": true
+                    },
+                    "s": {
+                        "shape.background": null,
+                        "shape.border.color": "#979797",
+                        "shape.border.width": 1
+                    },
+                    "a": {
+                        "widgetName": "Shape"
+                    }
+                },
+                {
+                    "c": "ht.Block",
+                    "i": 260,
+                    "p": {
+                        "displayName": "group-5",
+                        "tag": "htDiv9657",
+                        "rotation": 4.71238898038469,
+                        "position": {
+                            "x": 487.61831071016275,
+                            "y": 1049.5009714853481
+                        },
+                        "width": 60.998057029303254,
+                        "height": 124.82343640782904,
+                        "clickThroughEnabled": true
+                    },
+                    "a": {
+                        "widgetName": "Shape"
+                    }
+                },
+                {
+                    "c": "ht.Shape",
+                    "i": 261,
+                    "p": {
+                        "displayName": "Shape-2-g5",
+                        "parent": {
+                            "__i": 260
+                        },
+                        "rotation": -1.5707963267948972,
+                        "position": {
+                            "x": 456.43532166456237,
+                            "y": 1049.5009714853475
+                        },
+                        "width": 60.819371691856816,
+                        "height": 62.45745831662819,
+                        "segments": {
+                            "__a": [1, 2, 4, 4]
+                        },
+                        "points": {
+                            "__a": [
+                                {
+                                    "x": 486.84500751049103,
+                                    "y": 1018.2722423270338
+                                },
+                                {
+                                    "x": 426.02563581863393,
+                                    "y": 1018.2722423270338
+                                },
+                                {
+                                    "x": 426.02563581863393,
+                                    "y": 1018.2722423270338
+                                },
+                                {
+                                    "x": 434.8368823542476,
+                                    "y": 1041.765083609778
+                                },
+                                {
+                                    "x": 450.04172527721187,
+                                    "y": 1057.3794481889352
+                                },
+                                {
+                                    "x": 465.2465682001761,
+                                    "y": 1072.9938127680937
+                                },
+                                {
+                                    "x": 486.84500751049103,
+                                    "y": 1080.729700643661
+                                },
+                                {
+                                    "x": 486.84500751049103,
+                                    "y": 1080.729700643661
+                                }
+                            ]
+                        },
+                        "closePath": true
+                    },
+                    "s": {
+                        "shape.background": null,
+                        "shape.border.color": "#979797",
+                        "shape.border.width": 1
+                    },
+                    "a": {
+                        "widgetName": "Shape"
+                    }
+                },
+                {
+                    "c": "ht.Shape",
+                    "i": 262,
+                    "p": {
+                        "displayName": "Shape-2-g5",
+                        "parent": {
+                            "__i": 260
+                        },
+                        "rotation": 4.579669976578771e-15,
+                        "position": {
+                            "x": 518.8927799811906,
+                            "y": 1049.5009714853481
+                        },
+                        "width": 62.27449786577299,
+                        "height": 60.99805702930314,
+                        "segments": {
+                            "__a": [1, 2, 4, 4]
+                        },
+                        "points": {
+                            "__a": [
+                                {
+                                    "x": 550.0300289140771,
+                                    "y": 1019.0019429706961
+                                },
+                                {
+                                    "x": 487.7555310483042,
+                                    "y": 1019.0019429706961
+                                },
+                                {
+                                    "x": 487.7555310483042,
+                                    "y": 1019.0019429706961
+                                },
+                                {
+                                    "x": 496.7775899468566,
+                                    "y": 1041.945842882225
+                                },
+                                {
+                                    "x": 512.3462144132995,
+                                    "y": 1057.195357139553
+                                },
+                                {
+                                    "x": 527.9148388797427,
+                                    "y": 1072.4448713968793
+                                },
+                                {
+                                    "x": 550.0300289140771,
+                                    "y": 1080
+                                },
+                                {
+                                    "x": 550.0300289140771,
+                                    "y": 1080
+                                }
+                            ]
+                        },
+                        "closePath": true
+                    },
+                    "s": {
+                        "shape.background": null,
+                        "shape.border.color": "#979797",
+                        "shape.border.width": 1
+                    },
+                    "a": {
+                        "widgetName": "Shape"
+                    }
+                },
+                {
+                    "c": "ht.Block",
+                    "i": 263,
+                    "p": {
+                        "displayName": "group-6",
+                        "tag": "htDiv9660",
+                        "rotation": 3.141592653589793,
+                        "position": {
+                            "x": 1885.4747719832808,
+                            "y": 793.2648121050626
+                        },
+                        "width": 69.05045603343751,
+                        "height": 143.58671022865587,
+                        "clickThroughEnabled": true
+                    },
+                    "a": {
+                        "widgetName": "Shape"
+                    }
+                },
+                {
+                    "c": "ht.Shape",
+                    "i": 264,
+                    "p": {
+                        "displayName": "Shape-2-g6",
+                        "parent": {
+                            "__i": 263
+                        },
+                        "rotation": -3.141592653589793,
+                        "position": {
+                            "x": 1885.4747719832815,
+                            "y": 829.1351818129194
+                        },
+                        "width": 68.8481823113215,
+                        "height": 71.8459708129422,
+                        "segments": {
+                            "__a": [1, 2, 4, 4]
+                        },
+                        "points": {
+                            "__a": [
+                                {
+                                    "x": 1919.8988631389427,
+                                    "y": 793.2121964064484
+                                },
+                                {
+                                    "x": 1851.0506808276202,
+                                    "y": 793.2121964064484
+                                },
+                                {
+                                    "x": 1851.0506808276202,
+                                    "y": 793.2121964064484
+                                },
+                                {
+                                    "x": 1861.0251065903117,
+                                    "y": 820.2364467458791
+                                },
+                                {
+                                    "x": 1878.2371521681414,
+                                    "y": 838.1979394491152
+                                },
+                                {
+                                    "x": 1895.4491977459725,
+                                    "y": 856.1594321523534
+                                },
+                                {
+                                    "x": 1919.8988631389427,
+                                    "y": 865.0581672193905
+                                },
+                                {
+                                    "x": 1919.8988631389427,
+                                    "y": 865.0581672193905
+                                }
+                            ]
+                        },
+                        "closePath": true
+                    },
+                    "s": {
+                        "shape.background": null,
+                        "shape.border.color": "#979797",
+                        "shape.border.width": 1
+                    },
+                    "a": {
+                        "widgetName": "Shape"
+                    }
+                },
+                {
+                    "c": "ht.Shape",
+                    "i": 265,
+                    "p": {
+                        "displayName": "Shape-2-g6",
+                        "parent": {
+                            "__i": 263
+                        },
+                        "rotation": -1.5707963267948932,
+                        "position": {
+                            "x": 1885.4747719832808,
+                            "y": 757.289210999977
+                        },
+                        "width": 71.63550801848453,
+                        "height": 69.05045603343711,
+                        "segments": {
+                            "__a": [1, 2, 4, 4]
+                        },
+                        "points": {
+                            "__a": [
+                                {
+                                    "x": 1921.292525992523,
+                                    "y": 722.7639829832583
+                                },
+                                {
+                                    "x": 1849.6570179740388,
+                                    "y": 722.7639829832583
+                                },
+                                {
+                                    "x": 1849.6570179740388,
+                                    "y": 722.7639829832583
+                                },
+                                {
+                                    "x": 1860.035259384569,
+                                    "y": 748.7367242349264
+                                },
+                                {
+                                    "x": 1877.9441363891888,
+                                    "y": 765.9993382432884
+                                },
+                                {
+                                    "x": 1895.8530133938089,
+                                    "y": 783.2619522516477
+                                },
+                                {
+                                    "x": 1921.292525992523,
+                                    "y": 791.8144390166954
+                                },
+                                {
+                                    "x": 1921.292525992523,
+                                    "y": 791.8144390166954
+                                }
+                            ]
+                        },
+                        "closePath": true
+                    },
+                    "s": {
+                        "shape.background": null,
+                        "shape.border.color": "#979797",
+                        "shape.border.width": 1
+                    },
+                    "a": {
+                        "widgetName": "Shape"
+                    }
+                },
+                {
+                    "c": "ht.Node",
+                    "i": 266,
+                    "p": {
+                        "displayName": "CustomComp-2-g4",
+                        "tag": "htDiv53504",
+                        "image": "htDiv",
+                        "position": {
+                            "x": 1711.8155697578634,
+                            "y": 957.2757163765448
+                        },
+                        "width": 180.47017054636115,
+                        "height": 74.10774110870759
+                    },
+                    "a": {
+                        "appDetail": {
+                            "appId": "App_1af1a690b81b7cabc2f5fde0b00d15ad",
+                            "layoutId": "Layout_721681ede8c3402ea607360038f7019f"
+                        },
+                        "widgetName": "CustomComp",
+                        "componentName": "CabinetComponent",
+                        "resource": {
+                            "sourcePath": "/resource/App_1af1a690b81b7cabc2f5fde0b00d15ad/extensions/CabinetComponent/source/index.js",
+                            "compiledPath": "/resource/App_1af1a690b81b7cabc2f5fde0b00d15ad/extensions/CabinetComponent/compiled/index.js",
+                            "propsConfigPath": "/resource/App_1af1a690b81b7cabc2f5fde0b00d15ad/extensions/CabinetComponent/index.json",
+                            "dependenciesPath": "/resource/App_1af1a690b81b7cabc2f5fde0b00d15ad/extensions/CabinetComponent/dependencies.json"
+                        },
+                        "data": {
+                            "dataType": 0,
+                            "text": "软件报警",
+                            "factoryModelId": ["#90:0", "#88:3", "#81:11", "#83:11"],
+                            "title": "软件报警",
+                            "isShowName": true,
+                            "fontSize": 20,
+                            "lineHeight": 20
+                        },
+                        "position": {
+                            "top": 920.221845822191,
+                            "right": 117.94934496895598,
+                            "bottom": 85.67041306910141,
+                            "left": 1621.5804844846828,
+                            "topOfPer": 85.20572646501769,
+                            "rightOfPer": 6.143195050466457,
+                            "bottomOfPer": 7.932445654546427,
+                            "leftOfPer": 84.4573169002439
+                        },
+                        "isPreviewInDesign": true,
+                        "dataReplace": null
+                    }
+                },
+                {
+                    "c": "ht.Node",
+                    "i": 267,
+                    "p": {
+                        "displayName": "CustomComp-2-g4",
+                        "tag": "htDiv5335",
+                        "image": "htDiv",
+                        "position": {
+                            "x": 365.9515311844226,
+                            "y": 268.5559780423298
+                        },
+                        "width": 76.08315254470534,
+                        "height": 183.67656383675836
+                    },
+                    "a": {
+                        "appDetail": {
+                            "appId": "App_1af1a690b81b7cabc2f5fde0b00d15ad",
+                            "layoutId": "Layout_721681ede8c3402ea607360038f7019f"
+                        },
+                        "widgetName": "CustomComp",
+                        "componentName": "CabinetComponent",
+                        "resource": {
+                            "sourcePath": "/resource/App_1af1a690b81b7cabc2f5fde0b00d15ad/extensions/CabinetComponent/source/index.js",
+                            "compiledPath": "/resource/App_1af1a690b81b7cabc2f5fde0b00d15ad/extensions/CabinetComponent/compiled/index.js",
+                            "propsConfigPath": "/resource/App_1af1a690b81b7cabc2f5fde0b00d15ad/extensions/CabinetComponent/index.json",
+                            "dependenciesPath": "/resource/App_1af1a690b81b7cabc2f5fde0b00d15ad/extensions/CabinetComponent/dependencies.json"
+                        },
+                        "data": {
+                            "dataType": 0,
+                            "text": "PDP03",
+                            "title": "PDP03",
+                            "isShowName": true,
+                            "linkId": 1411,
+                            "alarmOrWork": "alarm",
+                            "lineHeight": 20,
+                            "fontSize": 20,
+                            "factoryModelId": ["#90:0", "#88:3", "#99:3", "#88:30"]
+                        },
+                        "position": {
+                            "top": 176.71769612395062,
+                            "right": 1516.0068925432247,
+                            "bottom": 719.605740039291,
+                            "left": 327.9099549120699,
+                            "topOfPer": 16.36274964110654,
+                            "rightOfPer": 78.95869231995962,
+                            "bottomOfPer": 66.63016111474917,
+                            "leftOfPer": 17.078643485003642
+                        },
+                        "isPreviewInDesign": true,
+                        "dataReplace": null
+                    }
+                },
+                {
+                    "c": "ht.Node",
+                    "i": 268,
+                    "p": {
+                        "displayName": "CustomComp-2-g4",
+                        "tag": "htDiv7858",
+                        "image": "htDiv",
+                        "position": {
+                            "x": 278.10406940347764,
+                            "y": 268.5559780423298
+                        },
+                        "width": 76.08315254470534,
+                        "height": 183.67656383675836
+                    },
+                    "a": {
+                        "appDetail": {
+                            "appId": "App_1af1a690b81b7cabc2f5fde0b00d15ad",
+                            "layoutId": "Layout_721681ede8c3402ea607360038f7019f"
+                        },
+                        "widgetName": "CustomComp",
+                        "componentName": "CabinetComponent",
+                        "resource": {
+                            "sourcePath": "/resource/App_1af1a690b81b7cabc2f5fde0b00d15ad/extensions/CabinetComponent/source/index.js",
+                            "compiledPath": "/resource/App_1af1a690b81b7cabc2f5fde0b00d15ad/extensions/CabinetComponent/compiled/index.js",
+                            "propsConfigPath": "/resource/App_1af1a690b81b7cabc2f5fde0b00d15ad/extensions/CabinetComponent/index.json",
+                            "dependenciesPath": "/resource/App_1af1a690b81b7cabc2f5fde0b00d15ad/extensions/CabinetComponent/dependencies.json"
+                        },
+                        "data": {
+                            "dataType": 0,
+                            "text": "无报警",
+                            "title": "APC",
+                            "isShowName": true,
+                            "alarmOrWork": "alarm",
+                            "lineHeight": 20,
+                            "fontSize": 20
+                        },
+                        "position": {
+                            "top": 176.71769612395062,
+                            "right": 1603.8543543241697,
+                            "bottom": 719.605740039291,
+                            "left": 240.06249313112497,
+                            "topOfPer": 16.36274964110654,
+                            "rightOfPer": 83.53408095438384,
+                            "bottomOfPer": 66.63016111474917,
+                            "leftOfPer": 12.503254850579426
+                        },
+                        "isPreviewInDesign": true,
+                        "dataReplace": null
+                    }
+                },
+                {
+                    "c": "ht.Node",
+                    "i": 269,
+                    "p": {
+                        "displayName": "CustomComp-1318-g185",
+                        "tag": "htDiv20827",
+                        "image": "htDiv",
+                        "position": {
+                            "x": 367.2955601639002,
+                            "y": 932.6558730374486
+                        },
+                        "width": 68.89805130040176,
+                        "height": 24.86805443051746
+                    },
+                    "a": {
+                        "appDetail": {
+                            "appId": "App_1af1a690b81b7cabc2f5fde0b00d15ad",
+                            "layoutId": "Layout_5a7e476a96de4bc4ac36ca0921c056cd"
+                        },
+                        "widgetName": "CustomComp",
+                        "componentName": "BuildingComponent",
+                        "resource": {
+                            "sourcePath": "/resource/App_1af1a690b81b7cabc2f5fde0b00d15ad/extensions/BuildingComponent/source/index.js",
+                            "compiledPath": "/resource/App_1af1a690b81b7cabc2f5fde0b00d15ad/extensions/BuildingComponent/compiled/index.js",
+                            "propsConfigPath": "/resource/App_1af1a690b81b7cabc2f5fde0b00d15ad/extensions/BuildingComponent/index.json",
+                            "dependenciesPath": "/resource/App_1af1a690b81b7cabc2f5fde0b00d15ad/extensions/BuildingComponent/dependencies.json"
+                        },
+                        "data": {
+                            "dataType": 0,
+                            "text": "2004_UPS1_ALARM",
+                            "factoryModelId": ["#90:0", "#88:3", "#99:3"],
+                            "title": "1#UPS",
+                            "isShowName": true,
+                            "equipmentId": "#392:92",
+                            "fontSize": 20,
+                            "lineHeight": 20
+                        },
+                        "position": {
+                            "top": 920.2218458221898,
+                            "right": 1518.255414185899,
+                            "bottom": 134.91009974729263,
+                            "left": 332.8465345136993,
+                            "topOfPer": 85.20572646501758,
+                            "rightOfPer": 79.07580282218224,
+                            "bottomOfPer": 12.491675902527096,
+                            "leftOfPer": 17.335757005921838
+                        },
+                        "isPreviewInDesign": true,
+                        "dataReplace": null
+                    }
+                },
+                {
+                    "c": "ht.Node",
+                    "i": 270,
+                    "p": {
+                        "displayName": "CustomComp-1318-g185",
+                        "tag": "htDiv20828",
+                        "image": "htDiv",
+                        "position": {
+                            "x": 367.2955601639002,
+                            "y": 957.5239274679674
+                        },
+                        "width": 68.89805130040176,
+                        "height": 24.86805443051746
+                    },
+                    "a": {
+                        "appDetail": {
+                            "appId": "App_1af1a690b81b7cabc2f5fde0b00d15ad",
+                            "layoutId": "Layout_5a7e476a96de4bc4ac36ca0921c056cd"
+                        },
+                        "widgetName": "CustomComp",
+                        "componentName": "BuildingComponent",
+                        "resource": {
+                            "sourcePath": "/resource/App_1af1a690b81b7cabc2f5fde0b00d15ad/extensions/BuildingComponent/source/index.js",
+                            "compiledPath": "/resource/App_1af1a690b81b7cabc2f5fde0b00d15ad/extensions/BuildingComponent/compiled/index.js",
+                            "propsConfigPath": "/resource/App_1af1a690b81b7cabc2f5fde0b00d15ad/extensions/BuildingComponent/index.json",
+                            "dependenciesPath": "/resource/App_1af1a690b81b7cabc2f5fde0b00d15ad/extensions/BuildingComponent/dependencies.json"
+                        },
+                        "data": {
+                            "dataType": 0,
+                            "text": "2004_UPS2_ALARM",
+                            "factoryModelId": ["#90:0", "#88:3", "#99:3"],
+                            "title": "2#UPS",
+                            "isShowName": true,
+                            "equipmentId": "#362:95",
+                            "fontSize": 20,
+                            "lineHeight": 20
+                        },
+                        "position": {
+                            "top": 945.0899002527086,
+                            "right": 1518.255414185899,
+                            "bottom": 110.04204531677385,
+                            "left": 332.8465345136993,
+                            "topOfPer": 87.50832409747302,
+                            "rightOfPer": 79.07580282218224,
+                            "bottomOfPer": 10.189078270071652,
+                            "leftOfPer": 17.335757005921838
+                        },
+                        "isPreviewInDesign": true,
+                        "dataReplace": null
+                    }
+                },
+                {
+                    "c": "ht.Node",
+                    "i": 271,
+                    "p": {
+                        "displayName": "CustomComp-1318-g185",
+                        "tag": "htDiv20829",
+                        "image": "htDiv",
+                        "position": {
+                            "x": 436.19361146430185,
+                            "y": 932.6558730374486
+                        },
+                        "width": 68.89805130040176,
+                        "height": 24.86805443051746
+                    },
+                    "a": {
+                        "appDetail": {
+                            "appId": "App_1af1a690b81b7cabc2f5fde0b00d15ad",
+                            "layoutId": "Layout_5a7e476a96de4bc4ac36ca0921c056cd"
+                        },
+                        "widgetName": "CustomComp",
+                        "componentName": "BuildingComponent",
+                        "resource": {
+                            "sourcePath": "/resource/App_1af1a690b81b7cabc2f5fde0b00d15ad/extensions/BuildingComponent/source/index.js",
+                            "compiledPath": "/resource/App_1af1a690b81b7cabc2f5fde0b00d15ad/extensions/BuildingComponent/compiled/index.js",
+                            "propsConfigPath": "/resource/App_1af1a690b81b7cabc2f5fde0b00d15ad/extensions/BuildingComponent/index.json",
+                            "dependenciesPath": "/resource/App_1af1a690b81b7cabc2f5fde0b00d15ad/extensions/BuildingComponent/dependencies.json"
+                        },
+                        "data": {
+                            "dataType": 0,
+                            "text": "2004_UPS3_ALARM",
+                            "factoryModelId": ["#90:0", "#88:3", "#99:3"],
+                            "title": "3#UPS",
+                            "isShowName": true,
+                            "equipmentId": "#386:93",
+                            "fontSize": 20,
+                            "lineHeight": 20
+                        },
+                        "position": {
+                            "top": 920.2218458221898,
+                            "right": 1449.3573628854974,
+                            "bottom": 134.91009974729263,
+                            "left": 401.74458581410096,
+                            "topOfPer": 85.20572646501758,
+                            "rightOfPer": 75.48736265028633,
+                            "bottomOfPer": 12.491675902527096,
+                            "leftOfPer": 20.924197177817756
+                        },
+                        "isPreviewInDesign": true,
+                        "dataReplace": null
+                    }
+                },
+                {
+                    "c": "ht.Node",
+                    "i": 272,
+                    "p": {
+                        "displayName": "CustomComp-1318-g185",
+                        "tag": "htDiv24508",
+                        "image": "htDiv",
+                        "position": {
+                            "x": 123.77681372670008,
+                            "y": 932.4076619460265
+                        },
+                        "width": 60.8306463943855,
+                        "height": 24.868054430516448
+                    },
+                    "a": {
+                        "appDetail": {
+                            "appId": "App_1af1a690b81b7cabc2f5fde0b00d15ad",
+                            "layoutId": "Layout_5a7e476a96de4bc4ac36ca0921c056cd"
+                        },
+                        "widgetName": "CustomComp",
+                        "componentName": "BuildingComponent",
+                        "resource": {
+                            "sourcePath": "/resource/App_1af1a690b81b7cabc2f5fde0b00d15ad/extensions/BuildingComponent/source/index.js",
+                            "compiledPath": "/resource/App_1af1a690b81b7cabc2f5fde0b00d15ad/extensions/BuildingComponent/compiled/index.js",
+                            "propsConfigPath": "/resource/App_1af1a690b81b7cabc2f5fde0b00d15ad/extensions/BuildingComponent/index.json",
+                            "dependenciesPath": "/resource/App_1af1a690b81b7cabc2f5fde0b00d15ad/extensions/BuildingComponent/dependencies.json"
+                        },
+                        "data": {
+                            "dataType": 0,
+                            "text": "2004_TI000",
+                            "factoryModelId": ["#90:0", "#88:3", "#99:3"],
+                            "title": "温度:",
+                            "isShowName": true,
+                            "equipmentId": "#374:93",
+                            "fontSize": 20,
+                            "lineHeight": 20
+                        },
+                        "position": {
+                            "top": 919.9736347307683,
+                            "right": 1765.8078630761072,
+                            "bottom": 135.15831083871535,
+                            "left": 93.36149052950734,
+                            "topOfPer": 85.18274395655261,
+                            "rightOfPer": 91.96915953521392,
+                            "bottomOfPer": 12.514658410992164,
+                            "leftOfPer": 4.862577631745173
+                        },
+                        "isPreviewInDesign": true,
+                        "dataReplace": null
+                    }
+                },
+                {
+                    "c": "ht.Node",
+                    "i": 273,
+                    "p": {
+                        "displayName": "CustomComp-1318-g185",
+                        "tag": "htDiv25209",
+                        "image": "htDiv",
+                        "position": {
+                            "x": 123.77681372670008,
+                            "y": 957.2757163765449
+                        },
+                        "width": 60.8306463943855,
+                        "height": 24.868054430516448
+                    },
+                    "a": {
+                        "appDetail": {
+                            "appId": "App_1af1a690b81b7cabc2f5fde0b00d15ad",
+                            "layoutId": "Layout_5a7e476a96de4bc4ac36ca0921c056cd"
+                        },
+                        "widgetName": "CustomComp",
+                        "componentName": "BuildingComponent",
+                        "resource": {
+                            "sourcePath": "/resource/App_1af1a690b81b7cabc2f5fde0b00d15ad/extensions/BuildingComponent/source/index.js",
+                            "compiledPath": "/resource/App_1af1a690b81b7cabc2f5fde0b00d15ad/extensions/BuildingComponent/compiled/index.js",
+                            "propsConfigPath": "/resource/App_1af1a690b81b7cabc2f5fde0b00d15ad/extensions/BuildingComponent/index.json",
+                            "dependenciesPath": "/resource/App_1af1a690b81b7cabc2f5fde0b00d15ad/extensions/BuildingComponent/dependencies.json"
+                        },
+                        "data": {
+                            "dataType": 0,
+                            "text": "2004_RH000",
+                            "factoryModelId": ["#90:0", "#88:3", "#99:3"],
+                            "title": "湿度:",
+                            "isShowName": true,
+                            "equipmentId": "#375:93",
+                            "fontSize": 20,
+                            "lineHeight": 20
+                        },
+                        "position": {
+                            "top": 944.8416891612867,
+                            "right": 1765.8078630761072,
+                            "bottom": 110.29025640819691,
+                            "left": 93.36149052950734,
+                            "topOfPer": 87.48534158900803,
+                            "rightOfPer": 91.96915953521392,
+                            "bottomOfPer": 10.21206077853675,
+                            "leftOfPer": 4.862577631745173
+                        },
+                        "isPreviewInDesign": true,
+                        "dataReplace": null
+                    }
+                },
+                {
+                    "c": "ht.Node",
+                    "i": 274,
+                    "p": {
+                        "displayName": "CustomComp-1318-g185",
+                        "tag": "htDiv501",
+                        "image": "htDiv",
+                        "position": {
+                            "x": 862.179826842042,
+                            "y": 943.9270825673739
+                        },
+                        "width": 121.76641455163762,
+                        "height": 47.90689567321146
+                    },
+                    "a": {
+                        "appDetail": {
+                            "appId": "App_1af1a690b81b7cabc2f5fde0b00d15ad",
+                            "layoutId": "Layout_5a7e476a96de4bc4ac36ca0921c056cd"
+                        },
+                        "widgetName": "CustomComp",
+                        "componentName": "BuildingComponent",
+                        "resource": {
+                            "sourcePath": "/resource/App_1af1a690b81b7cabc2f5fde0b00d15ad/extensions/BuildingComponent/source/index.js",
+                            "compiledPath": "/resource/App_1af1a690b81b7cabc2f5fde0b00d15ad/extensions/BuildingComponent/compiled/index.js",
+                            "propsConfigPath": "/resource/App_1af1a690b81b7cabc2f5fde0b00d15ad/extensions/BuildingComponent/index.json",
+                            "dependenciesPath": "/resource/App_1af1a690b81b7cabc2f5fde0b00d15ad/extensions/BuildingComponent/dependencies.json"
+                        },
+                        "data": {
+                            "dataType": 0,
+                            "text": "2004_WSH1",
+                            "factoryModelId": ["#90:0", "#88:3", "#99:3"],
+                            "title": "浸水开关 西",
+                            "isShowName": true,
+                            "equipmentId": "#371:358",
+                            "fontSize": 20
+                        },
+                        "position": {
+                            "top": 919.9736347307681,
+                            "right": 996.9369658821392,
+                            "bottom": 112.1194695960204,
+                            "left": 801.2966195662232,
+                            "topOfPer": 85.18274395655261,
+                            "rightOfPer": 51.92380030636142,
+                            "bottomOfPer": 10.381432370001889,
+                            "leftOfPer": 41.73419893574079
+                        },
+                        "isPreviewInDesign": true,
+                        "dataReplace": null
+                    }
+                },
+                {
+                    "c": "ht.Node",
+                    "i": 275,
+                    "p": {
+                        "displayName": "CustomComp-1318-g185",
+                        "tag": "htDiv502",
+                        "image": "htDiv",
+                        "position": {
+                            "x": 1026.3818371295154,
+                            "y": 943.9270825673739
+                        },
+                        "width": 121.76641455163762,
+                        "height": 47.90689567321146
+                    },
+                    "a": {
+                        "appDetail": {
+                            "appId": "App_1af1a690b81b7cabc2f5fde0b00d15ad",
+                            "layoutId": "Layout_5a7e476a96de4bc4ac36ca0921c056cd"
+                        },
+                        "widgetName": "CustomComp",
+                        "componentName": "BuildingComponent",
+                        "resource": {
+                            "sourcePath": "/resource/App_1af1a690b81b7cabc2f5fde0b00d15ad/extensions/BuildingComponent/source/index.js",
+                            "compiledPath": "/resource/App_1af1a690b81b7cabc2f5fde0b00d15ad/extensions/BuildingComponent/compiled/index.js",
+                            "propsConfigPath": "/resource/App_1af1a690b81b7cabc2f5fde0b00d15ad/extensions/BuildingComponent/index.json",
+                            "dependenciesPath": "/resource/App_1af1a690b81b7cabc2f5fde0b00d15ad/extensions/BuildingComponent/dependencies.json"
+                        },
+                        "data": {
+                            "dataType": 0,
+                            "text": "2004_WSH2",
+                            "factoryModelId": ["#90:0", "#88:3", "#99:3"],
+                            "title": "浸水开关 北",
+                            "isShowName": true,
+                            "equipmentId": "#391:352",
+                            "fontSize": 20
+                        },
+                        "position": {
+                            "top": 919.9736347307681,
+                            "right": 832.7349555946657,
+                            "bottom": 112.1194695960204,
+                            "left": 965.4986298536966,
+                            "topOfPer": 85.18274395655261,
+                            "rightOfPer": 43.37161227055551,
+                            "bottomOfPer": 10.381432370001889,
+                            "leftOfPer": 50.28638697154669
+                        },
+                        "isPreviewInDesign": true,
+                        "dataReplace": null
+                    }
+                },
+                {
+                    "c": "ht.Node",
+                    "i": 276,
+                    "p": {
+                        "displayName": "CustomComp-1318-g185",
+                        "tag": "htDiv-kyjtl9ja0-503",
+                        "image": "htDiv",
+                        "position": {
+                            "x": 1190.5838474169886,
+                            "y": 943.9270825673739
+                        },
+                        "width": 121.76641455163762,
+                        "height": 47.90689567321146
+                    },
+                    "a": {
+                        "appDetail": {
+                            "appId": "App_1af1a690b81b7cabc2f5fde0b00d15ad",
+                            "layoutId": "Layout_5a7e476a96de4bc4ac36ca0921c056cd"
+                        },
+                        "widgetName": "CustomComp",
+                        "componentName": "BuildingComponent",
+                        "resource": {
+                            "sourcePath": "/resource/App_1af1a690b81b7cabc2f5fde0b00d15ad/extensions/BuildingComponent/source/index.js",
+                            "compiledPath": "/resource/App_1af1a690b81b7cabc2f5fde0b00d15ad/extensions/BuildingComponent/compiled/index.js",
+                            "propsConfigPath": "/resource/App_1af1a690b81b7cabc2f5fde0b00d15ad/extensions/BuildingComponent/index.json",
+                            "dependenciesPath": "/resource/App_1af1a690b81b7cabc2f5fde0b00d15ad/extensions/BuildingComponent/dependencies.json"
+                        },
+                        "data": {
+                            "dataType": 0,
+                            "text": "2004_WSH3",
+                            "factoryModelId": ["#90:0", "#88:3", "#99:3"],
+                            "title": "浸水开关 东",
+                            "isShowName": true,
+                            "equipmentId": "#385:353",
+                            "fontSize": 20
+                        },
+                        "position": {
+                            "top": 919.9736347307681,
+                            "right": 668.5329453071924,
+                            "bottom": 112.1194695960204,
+                            "left": 1129.7006401411697,
+                            "topOfPer": 85.18274395655261,
+                            "rightOfPer": 34.819424234749604,
+                            "bottomOfPer": 10.381432370001889,
+                            "leftOfPer": 58.83857500735259
+                        },
+                        "isPreviewInDesign": true,
+                        "dataReplace": null
+                    }
+                },
+                {
+                    "c": "ht.Node",
+                    "i": 277,
+                    "p": {
+                        "displayName": "CustomComp-1318-g185",
+                        "tag": "htDiv504",
+                        "image": "htDiv",
+                        "position": {
+                            "x": 1354.7858577044622,
+                            "y": 943.9270825673739
+                        },
+                        "width": 121.76641455163762,
+                        "height": 47.90689567321146
+                    },
+                    "a": {
+                        "appDetail": {
+                            "appId": "App_1af1a690b81b7cabc2f5fde0b00d15ad",
+                            "layoutId": "Layout_5a7e476a96de4bc4ac36ca0921c056cd"
+                        },
+                        "widgetName": "CustomComp",
+                        "componentName": "BuildingComponent",
+                        "resource": {
+                            "sourcePath": "/resource/App_1af1a690b81b7cabc2f5fde0b00d15ad/extensions/BuildingComponent/source/index.js",
+                            "compiledPath": "/resource/App_1af1a690b81b7cabc2f5fde0b00d15ad/extensions/BuildingComponent/compiled/index.js",
+                            "propsConfigPath": "/resource/App_1af1a690b81b7cabc2f5fde0b00d15ad/extensions/BuildingComponent/index.json",
+                            "dependenciesPath": "/resource/App_1af1a690b81b7cabc2f5fde0b00d15ad/extensions/BuildingComponent/dependencies.json"
+                        },
+                        "data": {
+                            "dataType": 0,
+                            "text": "2004_WSH4",
+                            "factoryModelId": ["#90:0", "#88:3", "#99:3"],
+                            "title": "浸水开关 南",
+                            "isShowName": true,
+                            "equipmentId": "#362:359",
+                            "fontSize": 20
+                        },
+                        "position": {
+                            "top": 919.9736347307681,
+                            "right": 504.33093501971894,
+                            "bottom": 112.1194695960204,
+                            "left": 1293.9026504286433,
+                            "topOfPer": 85.18274395655261,
+                            "rightOfPer": 26.267236198943696,
+                            "bottomOfPer": 10.381432370001889,
+                            "leftOfPer": 67.39076304315851
+                        },
+                        "isPreviewInDesign": true,
+                        "dataReplace": null
+                    }
+                },
+                {
+                    "c": "ht.Node",
+                    "i": 278,
+                    "p": {
+                        "displayName": "DataLink-1",
+                        "tag": "htDiv12361",
+                        "image": "dataLink",
+                        "position": {
+                            "x": 200.0495945832828,
+                            "y": 932.4076619460254
+                        },
+                        "width": 90,
+                        "height": 24.868054430516448
+                    },
+                    "s": {
+                        "pixelPerfect": false,
+                        "border.width": 0,
+                        "border.color": "#979797"
+                    },
+                    "a": {
+                        "shapeName": "DataLink",
+                        "widgetName": "dataLink",
+                        "rightClick": [
+                            {
+                                "action": "2",
+                                "funcName": "showTrend",
+                                "label": "查看趋势图",
+                                "script": "",
+                                "uuid": "sp_trend"
+                            }
+                        ],
+                        "rightEvent": [
+                            {
+                                "action": "2",
+                                "funcName": "showTrend",
+                                "label": "查看趋势图",
+                                "script": "",
+                                "uuid": "sp_trend"
+                            }
+                        ],
+                        "tb.initColor": "#ff0000",
+                        "DataLink": {
+                            "decimal": 2,
+                            "showValue": true,
+                            "showDescription": true,
+                            "showUnit": true,
+                            "nameType": 0,
+                            "dataSourceType": "object",
+                            "object": {
+                                "selectedInstance": {
+                                    "showName": "化工_2#聚丙烯",
+                                    "name": "da_hg_butadiene2",
+                                    "namespace": "system",
+                                    "description": "",
+                                    "id": 16805
+                                },
+                                "tab": "instance",
+                                "selectedTemplate": {
+                                    "showName": "DA数据模板",
+                                    "name": "da_model",
+                                    "namespace": "system",
+                                    "description": "",
+                                    "id": 17641,
+                                    "type": "ENTITY"
+                                },
+                                "key": "instance",
+                                "selectedProp": {
+                                    "showName": "H1_JBXBZ2_2004_TI000",
+                                    "maxValue": 100,
+                                    "objectShowName": "化工_2#聚丙烯",
+                                    "minValue": 0,
+                                    "unit": "℃",
+                                    "templateShowName": "DA数据模板",
+                                    "readonly": true,
+                                    "propertyName": "H1_JBXBZ2_2004_TI000",
+                                    "templateName": "da_model",
+                                    "propertyDesc": "机柜间温度",
+                                    "namespace": "system",
+                                    "objectName": "da_hg_butadiene2",
+                                    "primitiveType": "DOUBLE"
+                                },
+                                "subTab": "property",
+                                "isCustomGraph": false
+                            },
+                            "dataSource": "system:da_model:da_hg_butadiene2:system:H1_JBXBZ2_2004_TI000",
+                            "objectSelectorShowName": "H1_JBXBZ2_2004_TI000:化工_2#聚丙烯:DA数据模板",
+                            "description": "机柜间温度",
+                            "name": "化工_2#聚丙烯\\H1_JBXBZ2_2004_TI000\n",
+                            "unit": "℃",
+                            "min": "0.0",
+                            "max": "100.0"
+                        },
+                        "tb.content": "?.??℃",
+                        "tb.color": "rgba(255,255,255,1)",
+                        "tb.background": "rgba(102,102,102,1)",
+                        "tb.fontItalic": false,
+                        "tb.fontBold": false,
+                        "tb.textAlign": "left",
+                        "tb.fontFamily": "微软雅黑",
+                        "tb.fontSize": 20
+                    }
+                },
+                {
+                    "c": "ht.Node",
+                    "i": 279,
+                    "p": {
+                        "displayName": "DataLink-2",
+                        "tag": "htDiv12362",
+                        "image": "dataLink",
+                        "position": {
+                            "x": 200.0495945832828,
+                            "y": 957.2757163765439
+                        },
+                        "width": 90,
+                        "height": 24.868054430516448
+                    },
+                    "s": {
+                        "pixelPerfect": false,
+                        "border.width": 0,
+                        "border.color": "#979797"
+                    },
+                    "a": {
+                        "shapeName": "DataLink",
+                        "widgetName": "dataLink",
+                        "rightClick": [
+                            {
+                                "action": "2",
+                                "funcName": "showTrend",
+                                "label": "查看趋势图",
+                                "script": "",
+                                "uuid": "sp_trend"
+                            }
+                        ],
+                        "rightEvent": [
+                            {
+                                "action": "2",
+                                "funcName": "showTrend",
+                                "label": "查看趋势图",
+                                "script": "",
+                                "uuid": "sp_trend"
+                            }
+                        ],
+                        "tb.initColor": "#ff0000",
+                        "DataLink": {
+                            "decimal": 2,
+                            "showValue": true,
+                            "showDescription": true,
+                            "showUnit": true,
+                            "nameType": 0,
+                            "dataSourceType": "object",
+                            "object": {
+                                "selectedInstance": {
+                                    "showName": "化工_2#聚丙烯",
+                                    "name": "da_hg_butadiene2",
+                                    "namespace": "system",
+                                    "description": "",
+                                    "id": 16805
+                                },
+                                "tab": "instance",
+                                "selectedTemplate": {
+                                    "showName": "DA数据模板",
+                                    "name": "da_model",
+                                    "namespace": "system",
+                                    "description": "",
+                                    "id": 17641,
+                                    "type": "ENTITY"
+                                },
+                                "key": "instance",
+                                "selectedProp": {
+                                    "showName": "H1_JBXBZ2_2004_RH000",
+                                    "maxValue": 100,
+                                    "objectShowName": "化工_2#聚丙烯",
+                                    "minValue": 0,
+                                    "unit": "%",
+                                    "templateShowName": "DA数据模板",
+                                    "readonly": true,
+                                    "propertyName": "H1_JBXBZ2_2004_RH000",
+                                    "templateName": "da_model",
+                                    "propertyDesc": "机柜间湿度",
+                                    "namespace": "system",
+                                    "objectName": "da_hg_butadiene2",
+                                    "primitiveType": "DOUBLE"
+                                },
+                                "subTab": "property",
+                                "isCustomGraph": false
+                            },
+                            "dataSource": "system:da_model:da_hg_butadiene2:system:H1_JBXBZ2_2004_RH000",
+                            "objectSelectorShowName": "H1_JBXBZ2_2004_RH000:化工_2#聚丙烯:DA数据模板",
+                            "description": "机柜间湿度",
+                            "name": "化工_2#聚丙烯\\H1_JBXBZ2_2004_RH000\n",
+                            "unit": "%",
+                            "min": "0.0",
+                            "max": "100.0"
+                        },
+                        "tb.content": "?.??%",
+                        "tb.color": "rgba(255,255,255,1)",
+                        "tb.background": "rgba(102,102,102,1)",
+                        "tb.fontItalic": false,
+                        "tb.fontBold": false,
+                        "tb.textAlign": "left",
+                        "tb.fontFamily": "微软雅黑",
+                        "tb.fontSize": 20
+                    }
+                }
+            ],
+            "modified": "Wed Jan 11 2023 14:28:31 GMT+0800 (中国标准时间)",
+            "contentRect": {
+                "x": 0,
+                "y": 0,
+                "width": 1920,
+                "height": 1080
+            }
+        },
+        "type": "display",
+        "name": "Layout_373b0ff55aff455891b667612484145bData"
+    },
+    "version": "v1.0"
+}
