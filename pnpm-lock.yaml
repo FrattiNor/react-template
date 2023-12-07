@@ -95,9 +95,15 @@ importers:
       '@tanstack/react-query':
         specifier: ^5.12.2
         version: registry.npmjs.org/@tanstack/react-query@5.12.2(react@18.2.0)
+      '@types/stats.js':
+        specifier: ^0.17.3
+        version: registry.npmjs.org/@types/stats.js@0.17.3
       antd:
         specifier: ^5.12.1
         version: registry.npmjs.org/antd@5.12.1(react-dom@18.2.0)(react@18.2.0)
+      stats.js:
+        specifier: ^0.17.0
+        version: registry.npmjs.org/stats.js@0.17.0
 
   packages/hooks:
     devDependencies:
@@ -3633,6 +3639,12 @@ packages:
     version: 3.0.0-beta.68
     dev: true
 
+  registry.npmjs.org/@types/stats.js@0.17.3:
+    resolution: {integrity: sha512-pXNfAD3KHOdif9EQXZ9deK82HVNaXP5ZIF5RP2QG6OQFNTaY2YIetfrE9t528vEreGQvEPRDDc8muaoYeK0SxQ==, tarball: https://registry.npmjs.org/@types/stats.js/-/stats.js-0.17.3.tgz}
+    name: '@types/stats.js'
+    version: 0.17.3
+    dev: false
+
   registry.npmjs.org/antd@5.12.1(react-dom@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-lDTg4U/4MxDD4OK0sLM3D0ge+5nHKj27dUj4ufF1FhQKPcRkVnkCWJ43gb1Cn+S3ybvz7yfsiEv0v+QqWJgPlA==, tarball: https://registry.npmjs.org/antd/-/antd-5.12.1.tgz}
     id: registry.npmjs.org/antd/5.12.1
@@ -4641,6 +4653,12 @@ packages:
     version: 1.4.8
     deprecated: Please use @jridgewell/sourcemap-codec instead
     dev: true
+
+  registry.npmjs.org/stats.js@0.17.0:
+    resolution: {integrity: sha512-hNKz8phvYLPEcRkeG1rsGmV5ChMjKDAWU7/OJJdDErPBNChQXxCo3WZurGpnWc6gZhAzEPFad1aVgyOANH1sMw==, tarball: https://registry.npmjs.org/stats.js/-/stats.js-0.17.0.tgz}
+    name: stats.js
+    version: 0.17.0
+    dev: false
 
   registry.npmjs.org/string-convert@0.2.1:
     resolution: {integrity: sha512-u/1tdPl4yQnPBjnVrmdLo9gtuLvELKsAoRapekWggdiQNvvvum+jYF329d84NAa660KQw7pB2n36KrIKVoXa3A==, tarball: https://registry.npmjs.org/string-convert/-/string-convert-0.2.1.tgz}
