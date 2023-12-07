@@ -31,21 +31,21 @@ const columns: Column<Item>[] = [
         title: '年龄2',
         key: 'age2',
     },
-    // {
-    //     width: 800,
-    //     title: '姓名2',
-    //     key: 'name2',
-    // },
-    // {
-    //     width: 800,
-    //     title: '年龄3',
-    //     key: 'age3',
-    // },
-    // {
-    //     width: 200,
-    //     title: '姓名3',
-    //     key: 'name3',
-    // },
+    {
+        width: 800,
+        title: '姓名2',
+        key: 'name2',
+    },
+    {
+        width: 800,
+        title: '年龄3',
+        key: 'age3',
+    },
+    {
+        width: 200,
+        title: '姓名3',
+        key: 'name3',
+    },
     {
         title: '年龄4',
         key: 'age4',

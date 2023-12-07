@@ -6,7 +6,8 @@ import Empty from './Empty';
 import { FC } from 'react';
 
 const Body: FC = () => {
-    const { onBodyScroll, bodyRef, isEmpty } = useContext2();
+    const { scroll, bodyRef, isEmpty } = useContext2();
+    const { onBodyScroll } = scroll;
 
     return (
         <div className={styles['body']} ref={bodyRef} onScroll={onBodyScroll}>

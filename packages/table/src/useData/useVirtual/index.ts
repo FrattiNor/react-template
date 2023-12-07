@@ -29,10 +29,10 @@ const useVirtual = <T extends Record<string, any>>(props: TableProps<T>, opt: Op
     // 横向虚拟
     const horizontalVirtualizer = useVirtualizer({
         // debug: true,
-        overscan: 100,
+        overscan: 0,
         horizontal: true,
         count: columns.length,
-        estimateSize: () => 1, // 默认设置为1，加载后能把columns全部监测一遍
+        estimateSize: () => defaultWidth,
         getScrollElement: () => bodyRef.current,
         getItemKey: (index) => columns[index].key,
         measureElement: MeasureElementNotMathRound,
@@ -50,6 +50,7 @@ const useVirtual = <T extends Record<string, any>>(props: TableProps<T>, opt: Op
     const horizontalTotalSize = horizontalVirtualizer.getTotalSize(); // 横向总宽度
     const horizontalDistance = horizontalVirtualItems[0]?.start ?? 0; // 横向offset距离
     const horizontalMeasureElement = horizontalVirtualizer.measureElement; // 横向监测元素宽度
+    const horizontalRange = horizontalVirtualizer.range; // 横向显示的start和end
 
     // 非空时重置横向监测缓存
     // 原因：非空时可能产生纵向滚动条，empty情况监测不含滚动条
@@ -72,14 +73,15 @@ const useVirtual = <T extends Record<string, any>>(props: TableProps<T>, opt: Op
     }, [firstRowSizeCache]);
 
     return {
-        setRowSize,
-        verticalVirtualItems,
-        verticalTotalSize,
         verticalDistance,
+        verticalTotalSize,
+        verticalVirtualItems,
         verticalMeasureElement,
-        horizontalVirtualItems,
-        horizontalTotalSize,
+
+        horizontalRange,
         horizontalDistance,
+        horizontalTotalSize,
+        horizontalVirtualItems,
         horizontalMeasureElement,
         horizontalItemSizeCache,
     };

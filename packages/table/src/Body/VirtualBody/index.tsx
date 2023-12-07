@@ -5,10 +5,13 @@ import classNames from 'classnames';
 import { FC } from 'react';
 
 const VirtualBody: FC = () => {
-    const { virtual, ping, props, handledColumns } = useContext2();
+    const { virtual, hiddenFixed, scroll, props, handledColumns } = useContext2();
+    const { ping } = scroll;
     const { dataSource, rowKey } = props;
-    const { verticalVirtualItems, verticalTotalSize, verticalDistance, verticalMeasureElement } = virtual;
     const { horizontalVirtualItems, horizontalTotalSize, horizontalDistance } = virtual;
+    const { verticalVirtualItems, verticalTotalSize, verticalDistance, verticalMeasureElement } = virtual;
+    const { hiddenFixedHandledLeftColumns, hiddenFixedHandledRightColumns, hiddenFixedTotalSize } = hiddenFixed;
+    const renderItems = [...hiddenFixedHandledLeftColumns, ...horizontalVirtualItems, ...hiddenFixedHandledRightColumns];
 
     return (
         <div className={styles['virtual-body']} style={{ height: verticalTotalSize, width: horizontalTotalSize }}>
@@ -19,9 +22,12 @@ const VirtualBody: FC = () => {
                     if (rowData) {
                         return (
                             <div key={rowData[rowKey]} ref={verticalMeasureElement} className={styles['body-row']} data-index={verticalItem.index}>
-                                <div className={styles['body-row-inner']} style={{ transform: `translate3d(${horizontalDistance}px, 0, 0)` }}>
-                                    {horizontalVirtualItems.map((horizontalItem) => {
-                                        const column = handledColumns[horizontalItem.index];
+                                <div
+                                    className={styles['body-row-inner']}
+                                    style={{ transform: `translate3d(0, 0, 0)`, paddingLeft: `${horizontalDistance - hiddenFixedTotalSize}px` }}
+                                >
+                                    {renderItems.map((item) => {
+                                        const column = handledColumns[item.index];
                                         if (column) {
                                             const { key, render, width, align, fixed, fixedStyle, showShadow } = column;
                                             const cellValue = notEmpty(render ? render(rowData) : rowData[key]);

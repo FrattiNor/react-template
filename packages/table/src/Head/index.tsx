@@ -5,17 +5,23 @@ import classNames from 'classnames';
 import { FC } from 'react';
 
 const Head: FC = () => {
-    const { virtual, ping, resize, headRef, headPaddingRight, handledColumns } = useContext2();
+    const { virtual, hiddenFixed, scroll, resize, headRef, headPaddingRight, handledColumns } = useContext2();
+    const { ping } = scroll;
     const { renderResizeTitle } = resize;
     const { horizontalVirtualItems, horizontalTotalSize, horizontalDistance } = virtual;
+    const { hiddenFixedHandledLeftColumns, hiddenFixedHandledRightColumns, hiddenFixedTotalSize } = hiddenFixed;
+    const renderItems = [...hiddenFixedHandledLeftColumns, ...horizontalVirtualItems, ...hiddenFixedHandledRightColumns];
 
     return (
         <div className={styles['head']} ref={headRef}>
             <div className={styles['head-inner']} style={{ width: horizontalTotalSize + headPaddingRight }}>
                 <div className={styles['head-row']}>
-                    <div className={styles['head-row-inner']} style={{ transform: `translate3d(${horizontalDistance}px, 0, 0)` }}>
-                        {horizontalVirtualItems.map((horizontalItem) => {
-                            const column = handledColumns[horizontalItem.index];
+                    <div
+                        className={styles['head-row-inner']}
+                        style={{ transform: `translate3d(0, 0, 0)`, paddingLeft: `${horizontalDistance - hiddenFixedTotalSize}px` }}
+                    >
+                        {renderItems.map((item) => {
+                            const column = handledColumns[item.index];
                             if (column) {
                                 const { title, key, width, align, fixed, headFixedStyle, showShadow } = column;
                                 const cellValue = notEmpty(title);

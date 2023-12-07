@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import useHandleColumns from './useHandleColumns';
+import useHiddenFixed from './useHiddenFixed';
 import useResizeWidth from './useResizeWidth';
 import { AnyObj, TableProps } from '../type';
 import { useRef, useState } from 'react';
@@ -19,7 +20,7 @@ const useData = <T extends AnyObj>(props: TableProps<T>) => {
     const resize = useResizeWidth();
     const virtual = useVirtual(props, { bodyRef, isEmpty, defaultWidth });
 
-    const { onBodyScroll, ping } = useScroll({
+    const scroll = useScroll({
         bodyRef,
         headRef,
         setHeadPaddingRight,
@@ -34,22 +35,19 @@ const useData = <T extends AnyObj>(props: TableProps<T>) => {
         horizontalItemSizeCache: virtual.horizontalItemSizeCache,
     });
 
+    const hiddenFixed = useHiddenFixed({ handledLeftColumns, handledRightColumns, horizontalRange: virtual.horizontalRange });
+
     return {
-        ping,
+        scroll,
         resize,
         virtual,
         headRef,
         bodyRef,
         isEmpty,
-        defaultFlex,
-        defaultWidth,
-        onBodyScroll,
+        hiddenFixed,
         handledColumns,
         headPaddingRight,
         props: restProps,
-        handledLeftColumns,
-        handledRightColumns,
-        setHeadPaddingRight,
     };
 };
 
