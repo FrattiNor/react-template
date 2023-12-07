@@ -14,11 +14,15 @@ export const Context2Hoc = (Component: FC) => {
     const NextComponent: NextComponentType = forwardRef((props, ref) => {
         const value = useData(props);
 
-        useImperativeHandle(ref, () => ({
-            headElement: value.headRef.current,
-            bodyElement: value.bodyRef.current,
-            scrollTo: (conf: ScrollToOptions) => value.bodyRef.current?.scrollTo(conf),
-        }));
+        useImperativeHandle(
+            ref,
+            () => ({
+                headElement: value.headRef,
+                bodyElement: value.bodyRef,
+                scrollTo: (conf: ScrollToOptions) => value.bodyRef.current?.scrollTo(conf),
+            }),
+            [],
+        );
 
         return <Context2.Provider value={value}>{<Component />}</Context2.Provider>;
     });

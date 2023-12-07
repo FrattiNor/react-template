@@ -1,4 +1,4 @@
-import { CSSProperties, ReactNode } from 'react';
+import { CSSProperties, ReactNode, RefObject } from 'react';
 
 export type AnyObj = Record<string, any>;
 
@@ -30,7 +30,7 @@ export type HandledColumn<T> = Omit<Column<T>, 'width'> & {
 };
 
 export type TableRef = {
-    headElement: HTMLDivElement | null;
-    bodyElement: HTMLDivElement | null;
+    headElement: RefObject<HTMLDivElement | null>;
+    bodyElement: RefObject<HTMLDivElement | null>;
     scrollTo: (conf: ScrollToOptions) => void;
 };

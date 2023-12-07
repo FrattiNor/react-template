@@ -9,10 +9,10 @@ type Opt = {
     bodyRef: RefObject<HTMLDivElement | null>;
 };
 
-type ItemSizeCache = Map<number, number>;
+type ItemSizeCache = Map<number | string, number>;
 
 const useVirtual = <T extends Record<string, any>>(props: TableProps<T>, opt: Opt) => {
-    const { dataSource, columns } = props;
+    const { dataSource, columns, rowKey } = props;
     const [rowSize, setRowSize] = useState(40);
     const { bodyRef, isEmpty, defaultWidth } = opt;
 
@@ -23,6 +23,7 @@ const useVirtual = <T extends Record<string, any>>(props: TableProps<T>, opt: Op
         estimateSize: () => rowSize,
         count: dataSource?.length || 0,
         getScrollElement: () => bodyRef.current,
+        getItemKey: (index) => dataSource?.[index]?.[rowKey] ?? index,
     });
 
     // 横向虚拟
@@ -33,6 +34,7 @@ const useVirtual = <T extends Record<string, any>>(props: TableProps<T>, opt: Op
         count: columns.length,
         estimateSize: () => 1, // 默认设置为1，加载后能把columns全部监测一遍
         getScrollElement: () => bodyRef.current,
+        getItemKey: (index) => columns[index].key,
         measureElement: MeasureElementNotMathRound,
     });
 
@@ -41,7 +43,7 @@ const useVirtual = <T extends Record<string, any>>(props: TableProps<T>, opt: Op
     const verticalItemSizeCache = (verticalVirtualizer as any).itemSizeCache as ItemSizeCache; // 纵向测量缓存
     const verticalDistance = verticalVirtualItems[0]?.start ?? 0; // 纵向offset距离
     const verticalMeasureElement = verticalVirtualizer.measureElement; // 纵向监测元素高度
-    const firstRowSizeCache = verticalItemSizeCache.get(0); // 纵向第一位监测高度
+    const firstRowSizeCache = verticalItemSizeCache.get(dataSource?.[0]?.[rowKey] ?? 0); // 纵向第一位监测高度
 
     const horizontalVirtualItems = horizontalVirtualizer.getVirtualItems(); // 横向虚拟显示item
     const horizontalItemSizeCache = (horizontalVirtualizer as any).itemSizeCache as ItemSizeCache; // 横向测量缓存
@@ -56,7 +58,7 @@ const useVirtual = <T extends Record<string, any>>(props: TableProps<T>, opt: Op
             const columnsTotalSize = columns.reduce((a, b) => a + (b.width ?? defaultWidth), 0);
             const bodyClientWidth = bodyRef.current?.clientWidth;
             // 能触发flex的情况再清除监测缓存
-            if (bodyClientWidth && columnsTotalSize < bodyClientWidth) {
+            if (bodyClientWidth && horizontalTotalSize > bodyClientWidth && columnsTotalSize < bodyClientWidth) {
                 horizontalVirtualizer.measure();
             }
         }
