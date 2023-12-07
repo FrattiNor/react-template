@@ -23,3 +23,11 @@ export const transformFactoryModelId = (ids: Array<string>) => {
         data: { tree: `,${ids.join(',')},` },
     });
 };
+
+export const transformEquipmentId = (id: string) => {
+    return client<{ isdmTag: string }>({
+        method: 'POST',
+        url: 'http://192.168.188.45:7777/device/isdm-tag',
+        data: { equipmentId: id },
+    });
+};

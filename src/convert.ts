@@ -1,8 +1,9 @@
+/* eslint-disable @typescript-eslint/no-shadow */
 /* eslint-disable no-debugger */
-import { btoa, atob, transformFactoryModelId } from './utils.js';
-import { AreaDeviceMap, getImageMap } from './map.js';
+import { btoa, atob } from './utils.js';
 import { fileURLToPath } from 'url';
 import { rimrafSync } from 'rimraf';
+import { nanoid } from 'nanoid';
 import path from 'path';
 import fs from 'fs';
 
@@ -11,18 +12,15 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const convert = async (_oldAppId: string, _newAppId: string) => {
-    const oldAppId = _oldAppId === '' ? 'App_754c6dd07fc7c8ad670166bb71b68517' : _oldAppId;
-    const newAppId = _newAppId === '' ? 'App_1af1a690b81b7cabc2f5fde0b00d15ad' : _newAppId;
-    const ImageMap = getImageMap(newAppId);
-    const replaceAppId = (text: string) => {
-        return text.replaceAll(oldAppId, newAppId);
-    };
+    const oldAppId = _oldAppId === '' ? '' : _oldAppId;
+    const newAppId = _newAppId === '' ? '' : _newAppId;
 
-    const allVideoObj: Array<any> = [];
-    const allBgImage: Array<any> = [];
-    const allDataLink: Array<any> = [];
-    const allDataKey: Record<string, true> = {};
-    const allDataValue: Record<string, Record<string, true>> = {};
+    const replaceAppId = (text: string) => {
+        if (oldAppId && newAppId) {
+            return text.replaceAll(oldAppId, newAppId);
+        }
+        return text;
+    };
 
     const exec = async (convertPath: string, outPath: string) => {
         // 清掉对应文件夹
@@ -53,11 +51,6 @@ const convert = async (_oldAppId: string, _newAppId: string) => {
                     // context内容，经过base64加密
                     const itemContext = itemJson?.children?.[0]?.content?.propertyValues?.context;
 
-                    // 页面使用了背景图片，先统计内容
-                    const pageLayout = itemJson?.content?.propertyValues?.layout;
-                    const bgImage = /"bgImage":"\/resource\/.+\/(.+?)",/.exec(pageLayout)?.[1];
-                    if (bgImage) allBgImage.push(bgImage); // 统计bgImage
-
                     // 页面类型为1（空白页面）
                     if (pageType === 1) {
                         // 有页面主体
@@ -74,120 +67,60 @@ const convert = async (_oldAppId: string, _newAppId: string) => {
                             if (Array.isArray(contextData)) {
                                 for (let i = 0; i < contextData.length; i++) {
                                     const contextItem = contextData[i];
-                                    const contextItemValue = contextItem?.a;
                                     const newContextItem = newContextData[i];
-                                    const newContextItemValue = newContextItem?.a;
 
-                                    if (Object.prototype.toString.call(contextItemValue) === '[object Object]') {
-                                        const { widgetName, componentName, data } = contextItemValue;
+                                    if (Object.prototype.toString.call(contextItem?.a) === '[object Object]') {
+                                        const { widgetName } = contextItem?.a;
+                                        const bg = contextItem?.s['shape.background'];
                                         // 存在 widget
-                                        if (typeof widgetName === 'string') {
-                                            //  widget是自定义组件 并且 存在组件名称
+                                        if (widgetName === 'Rect' && (bg === 'rgba(29,141,4,1)' || bg === 'rgba(106,109,105,1)')) {
+                                            newContextItem.p = {
+                                                ...contextItem.p,
+                                                displayName: contextItem.p.displayName.replaceAll('Rect', 'CustomComp'),
+                                                tag: nanoid(),
+                                                image: 'htDiv',
+                                            };
+                                            newContextItem.a = {
+                                                appDetail: {
+                                                    appId: 'App_a870b0c69f5a9157a781409e15af6928',
+                                                    layoutId: 'Layout_5a428c5814e540fd9731b0aa8fbf44eb',
+                                                },
+                                                widgetName: 'CustomComp',
+                                                componentName: 'AreaComponent',
+                                                resource: {
+                                                    sourcePath: '/resource/App_a870b0c69f5a9157a781409e15af6928/extensions/AreaComponent/source/index.js',
+                                                    compiledPath: '/resource/App_a870b0c69f5a9157a781409e15af6928/extensions/AreaComponent/compiled/index.js',
+                                                    propsConfigPath: '/resource/App_a870b0c69f5a9157a781409e15af6928/extensions/AreaComponent/index.json',
+                                                    dependenciesPath: '/resource/App_a870b0c69f5a9157a781409e15af6928/extensions/AreaComponent/dependencies.json',
+                                                },
+                                                isPreviewInDesign: true,
+                                                dataReplace: null,
+                                            };
+                                            delete newContextItem.s;
+                                        }
 
-                                            if (widgetName === 'CustomComp' && typeof componentName === 'string') {
-                                                // 背景图自定义组件直接替换为图片组件
-                                                if (ImageMap[componentName]) {
-                                                    newContextItem.a = {
-                                                        widgetName: 'image',
+                                        if (widgetName === 'Text') {
+                                            const text = contextItem?.a?.['tb.content'];
+                                            const size = contextItem?.a?.['tb.fontSize'];
+                                            if (i > 0) {
+                                                const beforeContextItem = contextData[i - 1];
+                                                const beforeNewContextItem = newContextData[i - 1];
+                                                const { widgetName } = beforeContextItem?.a;
+                                                const bg = beforeContextItem?.s['shape.background'];
+                                                if (widgetName === 'Rect' && (bg === 'rgba(29,141,4,1)' || bg === 'rgba(106,109,105,1)')) {
+                                                    beforeNewContextItem.a = {
+                                                        ...beforeNewContextItem.a,
+                                                        data: { 'area-name': text, 'area-fontSize': size },
                                                     };
-                                                    newContextItem.p = {
-                                                        ...newContextItem.p,
-                                                        image: ImageMap[componentName],
-                                                    };
-                                                    newContextItem.s = {
-                                                        image: ImageMap[componentName],
-                                                    };
-                                                } else {
-                                                    let replaceComponent = AreaDeviceMap[componentName];
-
-                                                    // 根据data判断替换组件
-                                                    if (replaceComponent === 'AreaOrDeviceOrVideo') {
-                                                        if (data?.equipmentId) {
-                                                            replaceComponent = 'DeviceComponentV2';
-                                                        } else {
-                                                            replaceComponent = 'AreaComponent';
-                                                        }
-                                                    }
-
-                                                    // 替换自定义组件
-                                                    newContextItemValue['resource']['compiledPath'] = contextItemValue['resource']['compiledPath'].replaceAll(componentName, replaceComponent);
-
-                                                    newContextItemValue['resource']['dependenciesPath'] = contextItemValue['resource']['dependenciesPath'].replaceAll(componentName, replaceComponent);
-
-                                                    newContextItemValue['resource']['propsConfigPath'] = contextItemValue['resource']['propsConfigPath'].replaceAll(componentName, replaceComponent);
-
-                                                    newContextItemValue['resource']['sourcePath'] = contextItemValue['resource']['sourcePath'].replaceAll(componentName, replaceComponent);
-
-                                                    newContextItemValue['componentName'] = replaceComponent;
-
-                                                    if (Object.prototype.toString.call(data) === '[object Object]') {
-                                                        if (data.videoObject) {
-                                                            allVideoObj.push({
-                                                                name: itemJson.content.propertyValues.name,
-                                                                tag: contextItem.p.tag,
-                                                                collector: contextItem.a.data.collector,
-                                                                videoObject: contextItem.a.data.videoObject,
-                                                            });
-                                                        }
-
-                                                        // 排除统计数据干扰项
-                                                        const newData = JSON.parse(JSON.stringify(data));
-                                                        delete newData['lineHeight'];
-                                                        delete newData['alarmOrWork'];
-                                                        delete newData['dataType'];
-                                                        delete newData['fontColor'];
-                                                        delete newData['fontSize'];
-                                                        delete newData['isShowName'];
-                                                        // delete newData['linkId'];
-                                                        delete newData['text'];
-                                                        // 统计自定义组件data数据
-                                                        allDataKey[JSON.stringify(Object.keys(newData).sort())] = true;
-                                                        // 统计自定义组件data数据
-                                                        Object.entries(newData).forEach(([key, value]) => {
-                                                            if (!allDataValue[key]) allDataValue[key] = {};
-                                                            if (typeof value === 'string' || typeof value === 'number') {
-                                                                allDataValue[key][value] = true;
-                                                            } else {
-                                                                allDataValue[key][JSON.stringify(value)] = true;
-                                                            }
-                                                        });
-
-                                                        // 将旧的data数据替换为新的data数据
-                                                        const { text, title, fontSize, factoryModelId } = data;
-                                                        // 只有装置显示title
-                                                        if (replaceComponent === 'AreaComponent' || AreaDeviceMap[componentName] === 'AreaOrDeviceOrVideo') {
-                                                            const name = title || text;
-                                                            const size = fontSize;
-                                                            const nameKey = replaceComponent === 'AreaComponent' ? 'area-name' : 'device-v2-name';
-                                                            const sizeKey = replaceComponent === 'AreaComponent' ? 'area-fontSize' : 'device-v2-fontSize';
-
-                                                            if (name) newContextItemValue['data'] = { ...newContextItemValue['data'], [nameKey]: name };
-                                                            if (size) newContextItemValue['data'] = { ...newContextItemValue['data'], [sizeKey]: size };
-                                                        }
-                                                        if (factoryModelId && replaceComponent === 'AreaComponent') {
-                                                            const nextId = (await transformFactoryModelId(data.factoryModelId)).data.id;
-
-                                                            if (typeof nextId === 'string' && nextId !== '' && nextId !== 'null') {
-                                                                console.log(itemJson.content.propertyValues.name);
-                                                                console.log('new', nextId);
-                                                                newContextItemValue['data'] = { ...newContextItemValue['data'], ['area-factoryModelIds']: { factoryModelId: nextId } };
-                                                            }
-                                                        }
-                                                    }
+                                                    newContextData[i] = null;
                                                 }
-                                            }
-
-                                            if (widgetName === 'dataLink') {
-                                                allDataLink.push({
-                                                    name: itemJson.content.propertyValues.name,
-                                                    tag: contextItem.p.tag,
-                                                });
                                             }
                                         }
                                     }
                                 }
                             }
 
+                            newContextJson.context.jsonData.d = newContextJson?.context?.jsonData?.d.filter((item: any) => !!item);
                             const newContextText = btoa(JSON.stringify(JSON.stringify(newContextJson)));
                             newItemJson.children[0].content.propertyValues.context = newContextText;
                         }
@@ -217,14 +150,9 @@ const convert = async (_oldAppId: string, _newAppId: string) => {
 
     // 保存数据
     if (!fs.existsSync(otherData)) fs.mkdirSync(otherData, { recursive: true });
-    fs.writeFileSync(path.join(otherData, 'video.json'), JSON.stringify(allVideoObj));
-    fs.writeFileSync(path.join(otherData, 'bg.json'), JSON.stringify(allBgImage));
-    fs.writeFileSync(path.join(otherData, 'point.json'), JSON.stringify(allDataLink));
 
     console.log('转换完成...');
 
-    console.log(allDataValue);
-    console.log(allDataKey);
     debugger;
 };
 

@@ -6,6 +6,7 @@
     "bin": "./dist/index.js",
     "scripts": {
         "dev": "cross-env NODE_ENV=development node --loader ts-node/esm ./src/index.ts",
+        "dev2": "cross-env NODE_ENV=development node --loader ts-node/esm ./src/index2.ts",
         "dev-watch": "cross-env NODE_ENV=development nodemon --config nodemon.json ./src/index.ts",
         "dev-brk": "cross-env NODE_ENV=development node --inspect-brk=0.0.0.0:9229 --loader ts-node/esm ./src/index.ts",
         "build": "npx tsc && npx ncc build src2/index.js -o dist && npx rimraf src2 && node ./script/copy.cjs"
@@ -35,6 +36,7 @@
         "form-data": "^4.0.0",
         "got": "^13.0.0",
         "hpagent": "^1.2.0",
-        "inquirer": "^9.2.11"
+        "inquirer": "^9.2.11",
+        "nanoid": "^5.0.3"
     }
 }
