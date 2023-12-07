@@ -10,37 +10,38 @@ function pauseEvent(e: Event) {
     return false;
 }
 
-type StartObj = { clientWidth: number; pageX: number; key: string };
+type ResizeTarget = { width: number; clientWidth: number; pageX: number; key: string };
 
-const useResize = () => {
-    const [start, setStart] = useState<null | StartObj>(null);
-    const [recordWidths, setRecordWidths] = useState<Record<string, number>>({});
+const useResizeWidth = () => {
+    const [resizeTarget, setResizeTarget] = useState<null | ResizeTarget>(null);
+    const resizeActiveKey = resizeTarget?.key;
+    const resizeActiveWidth = resizeTarget?.width;
 
     const onMouseDown = (key: string): MouseEventHandler<HTMLSpanElement> => {
         return (e) => {
             pauseEvent(e as any);
             const pageX = e.pageX;
-            const clientWidth = recordWidths[key] || 0;
+            const clientWidth = (e.target as HTMLDivElement).parentElement?.clientWidth || 0;
             if (typeof pageX === 'number' && typeof clientWidth === 'number') {
-                setStart({ key, pageX, clientWidth });
+                setResizeTarget({ key, pageX, clientWidth, width: clientWidth });
             }
         };
     };
 
     useEffect(() => {
-        if (start) {
+        if (resizeTarget) {
             const mouseMove = (e: MouseEvent) => {
                 pauseEvent(e);
-                const moveX = e.pageX - start.pageX;
-                setRecordWidths((w) => ({
-                    ...w,
-                    [start.key]: Math.min(Math.max(start.clientWidth + moveX, 50), 1000),
-                }));
+                const moveX = e.pageX - resizeTarget.pageX;
+                setResizeTarget({
+                    ...resizeTarget,
+                    width: Math.min(Math.max(resizeTarget.clientWidth + moveX, 50), 1000),
+                });
             };
 
             const mouseUp = (e: MouseEvent) => {
                 pauseEvent(e);
-                setStart(null);
+                setResizeTarget(null);
             };
 
             document.body.addEventListener('mouseup', mouseUp);
@@ -51,12 +52,12 @@ const useResize = () => {
                 document.body.removeEventListener('mousemove', mouseMove);
             };
         }
-    }, [start]);
+    }, [resizeTarget]);
 
     const renderResizeTitle = (key: string, title: ReactNode) => {
         const showResize = !!key;
         if (!showResize) return title;
-        const active = start?.key === key;
+        const active = resizeActiveKey === key;
         return (
             <ResizableTitle onMouseDown={onMouseDown(key)} active={active}>
                 {title}
@@ -64,7 +65,7 @@ const useResize = () => {
         );
     };
 
-    return { renderResizeTitle, setRecordWidths, recordWidths };
+    return { renderResizeTitle, resizeActiveKey, resizeActiveWidth };
 };
 
-export default useResize;
+export default useResizeWidth;

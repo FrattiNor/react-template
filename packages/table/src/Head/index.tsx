@@ -5,9 +5,10 @@ import classNames from 'classnames';
 import { FC } from 'react';
 
 const Head: FC = () => {
-    const { virtual, ping, renderResizeTitle, props, headRef, headPaddingRight } = useContext2();
+    const { virtual, ping, resize, props, headRef, headPaddingRight } = useContext2();
     const { columns } = props;
-    const { horizontalVirtualItems, horizontalTotalSize, horizontalDistance, horizontalMeasureElement } = virtual;
+    const { renderResizeTitle } = resize;
+    const { horizontalVirtualItems, horizontalTotalSize, horizontalDistance } = virtual;
 
     return (
         <div className={styles['head']} ref={headRef}>
@@ -26,8 +27,6 @@ const Head: FC = () => {
                                     <div
                                         key={key}
                                         title={cellTitle}
-                                        ref={horizontalMeasureElement}
-                                        data-index={horizontalItem.index}
                                         style={{ width: width, textAlign: align, ...(headFixedStyle ?? {}) }}
                                         className={classNames(styles['head-cell'], {
                                             [styles[`fixed-${fixed}`]]: !!fixed,
@@ -41,7 +40,7 @@ const Head: FC = () => {
                             }
                         })}
 
-                        <div className={styles['head-cell']} style={{ width: 0, flexGrow: 1 }} />
+                        {/* <div className={styles['head-cell']} style={{ width: 0, flexGrow: 1 }} /> */}
 
                         {headPaddingRight > 0 && (
                             <div style={{ width: headPaddingRight }} className={classNames(styles['head-cell'], styles['fixed-right'])} />

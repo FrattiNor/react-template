@@ -7,6 +7,7 @@ export type TableProps<T> = {
     dataSource?: T[];
     loading?: boolean;
     columns: Column<T>[];
+    autoScrollTop?: boolean;
 };
 
 export type Column<T> = {
@@ -19,14 +20,14 @@ export type Column<T> = {
     render?: (v: T) => ReactNode;
 };
 
-export type FixedColumn<T> = Array<
-    Omit<Column<T>, 'width'> & {
-        width: number;
-        showShadow?: boolean;
-        fixedStyle?: CSSProperties;
-        headFixedStyle?: CSSProperties;
-    }
->;
+export type HandledColumn<T> = Omit<Column<T>, 'width'> & {
+    flex: number;
+    index: number;
+    width: number;
+    showShadow?: boolean;
+    fixedStyle?: CSSProperties;
+    headFixedStyle?: CSSProperties;
+};
 
 export type TableRef = {
     headElement: HTMLDivElement | null;

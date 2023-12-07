@@ -2,6 +2,7 @@ import { notEmpty } from '@pkg/utils/src/empty';
 import { useContext2 } from '../Context2';
 import styles from './index.module.less';
 import classNames from 'classnames';
+import Measure from './Measure';
 import Empty from './Empty';
 import { FC } from 'react';
 
@@ -13,6 +14,7 @@ const Body: FC = () => {
 
     return (
         <div className={styles['body']} ref={bodyRef} onScroll={onBodyScroll}>
+            <Measure />
             {isEmpty && <Empty />}
             {!isEmpty && (
                 <div className={styles['virtual-body']} style={{ height: verticalTotalSize, width: horizontalTotalSize }}>
@@ -55,7 +57,7 @@ const Body: FC = () => {
                                                 }
                                             })}
 
-                                            <div className={styles['body-cell']} style={{ width: 0, flexGrow: 1 }} />
+                                            {/* <div className={styles['body-cell']} style={{ width: 0, flexGrow: 1 }} /> */}
                                         </div>
                                     </div>
                                 );
