@@ -1,0 +1,26 @@
+.resizable-title {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    transition: background-color 0.3s;
+
+    &.active,
+    &:hover {
+        background-color: var(--table-head-hover);
+    }
+
+    .resizable-handle {
+        position: absolute;
+        cursor: col-resize;
+        height: 100%;
+        width: 5px;
+        z-index: 1;
+        bottom: 0;
+        right: 0;
+    }
+
+    &.active .resizable-handle,
+    .resizable-handle:hover {
+        background-color: var(--table-resize-active);
+    }
+}

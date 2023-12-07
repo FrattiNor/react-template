@@ -1,2 +1,5 @@
 iconfont.js
-scrollbar
+node_modules
+.history
+dist
+static

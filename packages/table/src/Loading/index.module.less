@@ -1,0 +1,104 @@
+.loading {
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    position: absolute;
+    pointer-events: none;
+
+    &::after {
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 1;
+        content: '';
+        position: absolute;
+        transition: all 0.3s;
+        pointer-events: none;
+    }
+
+    &.active::after {
+        opacity: 0.4;
+        pointer-events: auto;
+        background-color: var(--table-body-bg);
+    }
+
+    .dot-position {
+        top: 50%;
+        left: 50%;
+        position: absolute;
+        transform-origin: 50% 50%;
+        transform: translate(-50%, -50%);
+
+        .dot-wrapper {
+            z-index: 2;
+            width: 20px;
+            height: 20px;
+            position: relative;
+            transform: rotate(45deg);
+            transform-origin: 50% 50%;
+
+            animation-duration: 1.2s;
+            animation-name: turn-animate;
+            animation-timing-function: linear;
+            animation-iteration-count: infinite;
+
+            .dot {
+                width: 9px;
+                height: 9px;
+                opacity: 0.3;
+                position: absolute;
+                border-radius: 9px;
+                transform: scale(0.75);
+                transform-origin: 50% 50%;
+                background-color: var(--table-active-color);
+
+                animation-duration: 1s;
+                animation-direction: alternate;
+                animation-name: opacity-animate;
+                animation-timing-function: linear;
+                animation-iteration-count: infinite;
+
+                &:nth-child(1) {
+                    top: 0;
+                    left: 0;
+                    animation-delay: 0s;
+                }
+                &:nth-child(2) {
+                    top: 0;
+                    right: 0;
+                    animation-delay: 0.4s;
+                }
+                &:nth-child(3) {
+                    bottom: 0;
+                    right: 0;
+                    animation-delay: 0.8s;
+                }
+                &:nth-child(4) {
+                    bottom: 0;
+                    left: 0;
+                    animation-delay: 1.2s;
+                }
+            }
+        }
+
+        @keyframes opacity-animate {
+            0% {
+                opacity: 0.3;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+
+        @keyframes turn-animate {
+            0% {
+                transform: rotate(45deg);
+            }
+            100% {
+                transform: rotate(405deg);
+            }
+        }
+    }
+}

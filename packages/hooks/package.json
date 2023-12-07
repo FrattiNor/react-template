@@ -1,0 +1,14 @@
+{
+    "private": true,
+    "name": "@pkg/hooks",
+    "version": "0.0.1",
+    "scripts": {
+        "preinstall": "npx only-allow pnpm",
+        "tslint": "npx tsc --noEmit",
+        "eslint": "npx eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0 --fix",
+        "lint": "npm run eslint && npm run tslint"
+    },
+    "devDependencies": {
+        "resize-observer-polyfill": "^1.5.1"
+    }
+}

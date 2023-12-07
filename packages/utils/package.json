@@ -1,0 +1,11 @@
+{
+    "private": true,
+    "name": "@pkg/utils",
+    "version": "1.0.0",
+    "scripts": {
+        "preinstall": "npx only-allow pnpm",
+        "tslint": "npx tsc --noEmit",
+        "eslint": "npx eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0 --fix",
+        "lint": "npm run eslint && npm run tslint"
+    }
+}
