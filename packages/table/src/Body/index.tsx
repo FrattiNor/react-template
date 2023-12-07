@@ -7,15 +7,17 @@ import Empty from './Empty';
 import { FC } from 'react';
 
 const Body: FC = () => {
-    const { virtual, onBodyScroll, ping, props, bodyRef, isEmpty } = useContext2();
-    const { columns, dataSource, rowKey } = props;
+    const { virtual, onBodyScroll, ping, props, bodyRef, isEmpty, handledColumns } = useContext2();
+    const { dataSource, rowKey } = props;
     const { verticalVirtualItems, verticalTotalSize, verticalDistance, verticalMeasureElement } = virtual;
     const { horizontalVirtualItems, horizontalTotalSize, horizontalDistance } = virtual;
 
     return (
         <div className={styles['body']} ref={bodyRef} onScroll={onBodyScroll}>
             <Measure />
+
             {isEmpty && <Empty />}
+
             {!isEmpty && (
                 <div className={styles['virtual-body']} style={{ height: verticalTotalSize, width: horizontalTotalSize }}>
                     <div className={styles['virtual-body-inner']} style={{ transform: `translate3d(0, ${verticalDistance}px, 0)` }}>
@@ -32,7 +34,7 @@ const Body: FC = () => {
                                     >
                                         <div className={styles['body-row-inner']} style={{ transform: `translate3d(${horizontalDistance}px, 0, 0)` }}>
                                             {horizontalVirtualItems.map((horizontalItem) => {
-                                                const column = columns[horizontalItem.index];
+                                                const column = handledColumns[horizontalItem.index];
                                                 if (column) {
                                                     const { key, render, width, align, fixed, fixedStyle, showShadow } = column;
                                                     const cellValue = notEmpty(render ? render(rowData) : rowData[key]);
@@ -56,8 +58,6 @@ const Body: FC = () => {
                                                     );
                                                 }
                                             })}
-
-                                            {/* <div className={styles['body-cell']} style={{ width: 0, flexGrow: 1 }} /> */}
                                         </div>
                                     </div>
                                 );

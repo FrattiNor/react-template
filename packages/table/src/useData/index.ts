@@ -1,7 +1,8 @@
-import { useEffect, useRef, useState } from 'react';
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import useHandleColumns from './useHandleColumns';
 import useResizeWidth from './useResizeWidth';
 import { AnyObj, TableProps } from '../type';
+import { useRef, useState } from 'react';
 import useVirtual from './useVirtual';
 import useScroll from './useScroll';
 
@@ -12,31 +13,26 @@ const useData = <T extends AnyObj>(props: TableProps<T>) => {
     const headRef = useRef<HTMLDivElement>(null);
     const [headPaddingRight, setHeadPaddingRight] = useState(0);
 
+    // 排除掉columns，避免内部使用未处理的columns
+    const { columns: _columns, ...restProps } = props;
     const isEmpty = (props.dataSource || [])?.length === 0;
     const resize = useResizeWidth();
-    const virtual = useVirtual(props, { bodyRef, defaultWidth });
-    const { onBodyScroll, ping } = useScroll({ bodyRef, headRef, setHeadPaddingRight });
-    const newProps = useHandleColumns(props, {
+    const virtual = useVirtual(props, { bodyRef, defaultWidth, isEmpty });
+
+    const { onBodyScroll, ping } = useScroll({
+        bodyRef,
+        headRef,
+        setHeadPaddingRight,
+        dataSource: props.dataSource,
+        autoScrollTop: props.autoScrollTop,
+    });
+
+    const { handledColumns, handledLeftColumns, handledRightColumns } = useHandleColumns(props, {
         defaultFlex,
         defaultWidth,
         headPaddingRight,
         horizontalItemSizeCache: virtual.horizontalItemSizeCache,
     });
-
-    // 非空时重置横向监测缓存
-    // 原因：非空时可能产生纵向滚动条，empty情况监测不含滚动条
-    useEffect(() => {
-        if (!isEmpty) {
-            virtual.horizontalMeasure();
-        }
-    }, [isEmpty]);
-
-    // 数据变更时触发滚动回顶部
-    useEffect(() => {
-        if (props.autoScrollTop === undefined || props.autoScrollTop === true) {
-            bodyRef.current?.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-    }, [props.dataSource]);
 
     return {
         ping,
@@ -48,8 +44,11 @@ const useData = <T extends AnyObj>(props: TableProps<T>) => {
         defaultFlex,
         defaultWidth,
         onBodyScroll,
-        props: newProps,
+        handledColumns,
         headPaddingRight,
+        props: restProps,
+        handledLeftColumns,
+        handledRightColumns,
         setHeadPaddingRight,
     };
 };

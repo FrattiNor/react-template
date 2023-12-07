@@ -1,16 +1,18 @@
-import { Dispatch, RefObject, SetStateAction, useState } from 'react';
+import { Dispatch, RefObject, SetStateAction, useEffect, useState } from 'react';
 import useResizeObserver from '@pkg/hooks/src/useResizeObserver';
 
 type Ping = Record<string, boolean>;
 
 type Opt = {
+    dataSource?: any[];
+    autoScrollTop?: boolean;
     headRef: RefObject<HTMLDivElement | null>;
     bodyRef: RefObject<HTMLDivElement | null>;
     setHeadPaddingRight: Dispatch<SetStateAction<number>>;
 };
 
 const useScroll = (opt: Opt) => {
-    const { headRef, bodyRef, setHeadPaddingRight } = opt;
+    const { headRef, bodyRef, dataSource, autoScrollTop, setHeadPaddingRight } = opt;
     const [pingLeft, setPingLeft] = useState<boolean>(false);
     const [pingRight, setPingRight] = useState<boolean>(false);
 
@@ -57,6 +59,13 @@ const useScroll = (opt: Opt) => {
             calcPaddingRight();
         },
     });
+
+    // 数据变更时触发滚动回顶部
+    useEffect(() => {
+        if (autoScrollTop === undefined || autoScrollTop === true) {
+            bodyRef.current?.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    }, [dataSource]);
 
     return { onBodyScroll, ping };
 };

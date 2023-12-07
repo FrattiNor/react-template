@@ -5,8 +5,7 @@ import classNames from 'classnames';
 import { FC } from 'react';
 
 const Head: FC = () => {
-    const { virtual, ping, resize, props, headRef, headPaddingRight } = useContext2();
-    const { columns } = props;
+    const { virtual, ping, resize, headRef, headPaddingRight, handledColumns } = useContext2();
     const { renderResizeTitle } = resize;
     const { horizontalVirtualItems, horizontalTotalSize, horizontalDistance } = virtual;
 
@@ -16,7 +15,7 @@ const Head: FC = () => {
                 <div className={styles['head-row']}>
                     <div className={styles['head-row-inner']} style={{ transform: `translate3d(${horizontalDistance}px, 0, 0)` }}>
                         {horizontalVirtualItems.map((horizontalItem) => {
-                            const column = columns[horizontalItem.index];
+                            const column = handledColumns[horizontalItem.index];
                             if (column) {
                                 const { title, key, width, align, fixed, headFixedStyle, showShadow } = column;
                                 const cellValue = notEmpty(title);
@@ -39,8 +38,6 @@ const Head: FC = () => {
                                 );
                             }
                         })}
-
-                        {/* <div className={styles['head-cell']} style={{ width: 0, flexGrow: 1 }} /> */}
 
                         {headPaddingRight > 0 && (
                             <div style={{ width: headPaddingRight }} className={classNames(styles['head-cell'], styles['fixed-right'])} />

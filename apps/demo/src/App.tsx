@@ -21,27 +21,26 @@ const columns: Column<Item>[] = [
     },
     {
         width: 60,
+        fixed: 'left',
         title: '姓名',
         key: 'name',
-        fixed: 'left',
         align: 'center',
     },
     {
         width: 70,
-        fixed: 'left',
         title: '年龄2',
         key: 'age2',
     },
-    // {
-    //     width: 80,
-    //     title: '姓名2',
-    //     key: 'name2',
-    // },
-    // {
-    //     width: 250,
-    //     title: '年龄3',
-    //     key: 'age3',
-    // },
+    {
+        width: 800,
+        title: '姓名2',
+        key: 'name2',
+    },
+    {
+        width: 800,
+        title: '年龄3',
+        key: 'age3',
+    },
     // {
     //     width: 200,
     //     title: '姓名3',
@@ -51,14 +50,14 @@ const columns: Column<Item>[] = [
         title: '年龄4',
         key: 'age4',
         fixed: 'right',
+        width: 60,
+    },
+    {
+        title: '姓名4',
+        key: 'name4',
+        fixed: 'right',
         width: 50,
     },
-    // {
-    //     title: '姓名4',
-    //     key: 'name4',
-    //     fixed: 'right',
-    //     width: 50,
-    // },
     // {
     //     title: '年龄5',
     //     key: 'age5',

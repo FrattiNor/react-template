@@ -7,11 +7,17 @@ type Opt = {
     horizontalItemSizeCache: Map<number, number>;
 };
 
+type GetHandledColumnsRes<T> = {
+    handledColumns: HandledColumn<T>[];
+    handledLeftColumns: HandledColumn<T>[];
+    handledRightColumns: HandledColumn<T>[];
+};
+
 // 可以利用Table元素获取宽度
 const useHandleColumns = <T extends Record<string, any>>(props: TableProps<T>, opt: Opt) => {
     const { defaultWidth, defaultFlex, headPaddingRight, horizontalItemSizeCache } = opt;
 
-    const getFixedColumns = (): HandledColumn<T>[] => {
+    const getHandledColumns = (): GetHandledColumnsRes<T> => {
         const midColumns: Column<T>[] = [];
         const leftColumns: Column<T>[] = [];
         const rightColumns: Column<T>[] = [];
@@ -26,8 +32,9 @@ const useHandleColumns = <T extends Record<string, any>>(props: TableProps<T>, o
             }
         });
 
+        const showFixed = midColumns.length > 0;
+
         const getSomeProps = (column: Column<T>, index: number) => {
-            const showFixed = midColumns.length > 0;
             const flex = column.flex ?? defaultFlex;
             const width = horizontalItemSizeCache.get(index) ?? column.width ?? defaultWidth;
             return { flex, width, fixed: showFixed ? column.fixed : undefined };
@@ -35,7 +42,7 @@ const useHandleColumns = <T extends Record<string, any>>(props: TableProps<T>, o
 
         // left
         let leftBefore = 0;
-        const newLeftColumns = leftColumns.map((column, _index) => {
+        const handledLeftColumns = leftColumns.map((column, _index) => {
             const index = _index;
             const { flex, width, fixed } = getSomeProps(column, index);
 
@@ -54,8 +61,9 @@ const useHandleColumns = <T extends Record<string, any>>(props: TableProps<T>, o
             return res;
         });
 
-        const newMidColumns = midColumns.map((column, _index) => {
-            const index = _index + newLeftColumns.length;
+        // mid
+        const handledMidColumns = midColumns.map((column, _index) => {
+            const index = _index + handledLeftColumns.length;
             const { flex, width } = getSomeProps(column, index);
 
             const res = {
@@ -70,10 +78,10 @@ const useHandleColumns = <T extends Record<string, any>>(props: TableProps<T>, o
 
         // right
         let rightBefore = 0;
-        const newRightColumns: HandledColumn<T>[] = [];
+        const handledRightColumns: HandledColumn<T>[] = [];
         const rightColumnsCopy = [...rightColumns].reverse();
         rightColumnsCopy.forEach((column, _index) => {
-            const index = newLeftColumns.length + newMidColumns.length + rightColumnsCopy.length - _index - 1;
+            const index = handledLeftColumns.length + handledMidColumns.length + rightColumnsCopy.length - _index - 1;
             const { flex, width, fixed } = getSomeProps(column, index);
 
             const res = {
@@ -88,13 +96,17 @@ const useHandleColumns = <T extends Record<string, any>>(props: TableProps<T>, o
             };
 
             rightBefore += res.width;
-            newRightColumns.unshift(res);
+            handledRightColumns.unshift(res);
         });
 
-        return [...newLeftColumns, ...newMidColumns, ...newRightColumns];
+        return {
+            handledLeftColumns: showFixed ? [...handledLeftColumns] : [],
+            handledRightColumns: showFixed ? [...handledRightColumns] : [],
+            handledColumns: [...handledLeftColumns, ...handledMidColumns, ...handledRightColumns],
+        };
     };
 
-    return { ...props, columns: getFixedColumns() };
+    return getHandledColumns();
 };
 
 export default useHandleColumns;
