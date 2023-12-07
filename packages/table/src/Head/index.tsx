@@ -45,6 +45,8 @@ const Head: FC = () => {
                             }
                         })}
 
+                        <div className={styles['head-cell']} style={{ width: 0, flexGrow: 1 }} />
+
                         {headPaddingRight > 0 && (
                             <div style={{ width: headPaddingRight }} className={classNames(styles['head-cell'], styles['fixed-right'])} />
                         )}

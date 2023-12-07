@@ -1,8 +1,8 @@
 import { Column, HandledColumn, TableProps } from '../../type';
 
 type Opt = {
-    defaultFlex: number;
     defaultWidth: number;
+    defaultFlexGrow: number;
     headPaddingRight: number;
     horizontalItemSizeCache: Map<number | string, number>;
 };
@@ -15,7 +15,7 @@ type GetHandledColumnsRes<T> = {
 
 // 可以利用Table元素获取宽度
 const useHandleColumns = <T extends Record<string, any>>(props: TableProps<T>, opt: Opt) => {
-    const { defaultWidth, defaultFlex, headPaddingRight, horizontalItemSizeCache } = opt;
+    const { defaultWidth, defaultFlexGrow, headPaddingRight, horizontalItemSizeCache } = opt;
 
     const getHandledColumns = (): GetHandledColumnsRes<T> => {
         const midColumns: Column<T>[] = [];
@@ -35,23 +35,23 @@ const useHandleColumns = <T extends Record<string, any>>(props: TableProps<T>, o
         const showFixed = midColumns.length > 0;
 
         const getSomeProps = (column: Column<T>) => {
-            const flex = column.flex ?? defaultFlex;
+            const flexGrow = column.flexGrow ?? defaultFlexGrow;
             const width = horizontalItemSizeCache.get(column.key) ?? column.width ?? defaultWidth;
-            return { flex, width, fixed: showFixed ? column.fixed : undefined };
+            return { flexGrow, width, fixed: showFixed ? column.fixed : undefined };
         };
 
         // left
         let leftBefore = 0;
         const handledLeftColumns = leftColumns.map((column, _index) => {
             const index = _index;
-            const { flex, width, fixed } = getSomeProps(column);
+            const { flexGrow, width, fixed } = getSomeProps(column);
 
             const res = {
                 ...column,
-                flex,
                 fixed,
                 index,
                 width,
+                flexGrow,
                 fixedStyle: fixed ? { left: leftBefore } : {},
                 headFixedStyle: fixed ? { left: leftBefore } : {},
                 showShadow: fixed ? _index === leftColumns.length - 1 : false,
@@ -64,13 +64,13 @@ const useHandleColumns = <T extends Record<string, any>>(props: TableProps<T>, o
         // mid
         const handledMidColumns = midColumns.map((column, _index) => {
             const index = _index + handledLeftColumns.length;
-            const { flex, width } = getSomeProps(column);
+            const { flexGrow, width } = getSomeProps(column);
 
             const res = {
                 ...column,
-                flex,
                 index,
                 width,
+                flexGrow,
             };
 
             return res;
@@ -82,14 +82,14 @@ const useHandleColumns = <T extends Record<string, any>>(props: TableProps<T>, o
         const rightColumnsCopy = [...rightColumns].reverse();
         rightColumnsCopy.forEach((column, _index) => {
             const index = handledLeftColumns.length + handledMidColumns.length + rightColumnsCopy.length - _index - 1;
-            const { flex, width, fixed } = getSomeProps(column);
+            const { flexGrow, width, fixed } = getSomeProps(column);
 
             const res = {
                 ...column,
-                flex,
                 fixed,
                 index,
                 width,
+                flexGrow,
                 fixedStyle: fixed ? { right: rightBefore } : {},
                 showShadow: fixed ? _index === rightColumnsCopy.length - 1 : false,
                 headFixedStyle: fixed ? { right: rightBefore + headPaddingRight } : {},

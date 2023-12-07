@@ -12,18 +12,18 @@ export type TableProps<T> = {
 
 export type Column<T> = {
     key: string;
-    flex?: number;
     width?: number;
     title: ReactNode;
+    flexGrow?: number;
     fixed?: 'left' | 'right';
     align?: 'left' | 'right' | 'center';
     render?: (v: T) => ReactNode;
 };
 
-export type HandledColumn<T> = Omit<Column<T>, 'width'> & {
-    flex: number;
+export type HandledColumn<T> = Omit<Column<T>, 'width' | 'flexGrow'> & {
     index: number;
     width: number;
+    flexGrow: number;
     showShadow?: boolean;
     fixedStyle?: CSSProperties;
     headFixedStyle?: CSSProperties;

@@ -9,8 +9,8 @@ const HorizontalMeasure: FC = () => {
 
     return (
         <div className={styles['measure']}>
-            {handledColumns.map(({ key, width, flex, index }) => {
-                const trueFlex = resizeActiveKey === key ? 0 : flex;
+            {handledColumns.map(({ key, width, flexGrow, index }) => {
+                const trueFlexGrow = resizeActiveKey === key ? 0 : flexGrow;
                 const trueWidth = resizeActiveKey === key ? resizeActiveWidth : width;
 
                 return (
@@ -19,7 +19,7 @@ const HorizontalMeasure: FC = () => {
                         data-index={index}
                         ref={horizontalMeasureElement}
                         className={styles['measure-item']}
-                        style={{ width: trueWidth, flexGrow: trueFlex }}
+                        style={{ width: trueWidth, flexGrow: trueFlexGrow }}
                     />
                 );
             })}

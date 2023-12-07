@@ -13,11 +13,16 @@
             position: relative;
             border-bottom: 1px solid var(--table-border);
 
+            &:last-child {
+                border: 0;
+            }
+
             &:hover .body-row-inner .body-cell {
                 background-color: var(--table-row-hover-bg);
             }
 
             .body-row-inner {
+                min-width: 100%;
                 position: relative;
                 display: inline-flex;
 

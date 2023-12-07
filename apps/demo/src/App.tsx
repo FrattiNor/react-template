@@ -12,6 +12,7 @@ type Item = {
 
 const columns: Column<Item>[] = [
     {
+        flexGrow: 0,
         width: 50,
         fixed: 'left',
         key: 'age',
@@ -20,39 +21,42 @@ const columns: Column<Item>[] = [
             'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',
     },
     {
+        flexGrow: 0,
         width: 60,
         fixed: 'left',
         title: '姓名',
         key: 'name',
-        align: 'center',
     },
     {
+        flexGrow: 0,
         width: 70,
         title: '年龄2',
         key: 'age2',
     },
+    // {
+    //     width: 800,
+    //     title: '姓名2',
+    //     key: 'name2',
+    // },
+    // {
+    //     width: 800,
+    //     title: '年龄3',
+    //     key: 'age3',
+    // },
+    // {
+    //     width: 200,
+    //     title: '姓名3',
+    //     key: 'name3',
+    // },
     {
-        width: 800,
-        title: '姓名2',
-        key: 'name2',
-    },
-    {
-        width: 800,
-        title: '年龄3',
-        key: 'age3',
-    },
-    {
-        width: 200,
-        title: '姓名3',
-        key: 'name3',
-    },
-    {
+        flexGrow: 0,
         title: '年龄4',
         key: 'age4',
         fixed: 'right',
         width: 60,
     },
     {
+        flexGrow: 0,
         title: '姓名4',
         key: 'name4',
         fixed: 'right',

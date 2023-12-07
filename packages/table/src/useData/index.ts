@@ -8,7 +8,7 @@ import useVirtual from './useVirtual';
 import useScroll from './useScroll';
 
 const useData = <T extends AnyObj>(props: TableProps<T>) => {
-    const defaultFlex = 1;
+    const defaultFlexGrow = 1;
     const defaultWidth = 150;
     const bodyRef = useRef<HTMLDivElement>(null);
     const headRef = useRef<HTMLDivElement>(null);
@@ -29,8 +29,8 @@ const useData = <T extends AnyObj>(props: TableProps<T>) => {
     });
 
     const { handledColumns, handledLeftColumns, handledRightColumns } = useHandleColumns(props, {
-        defaultFlex,
         defaultWidth,
+        defaultFlexGrow,
         headPaddingRight,
         horizontalItemSizeCache: virtual.horizontalItemSizeCache,
     });

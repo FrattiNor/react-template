@@ -50,6 +50,8 @@ const VirtualBody: FC = () => {
                                             );
                                         }
                                     })}
+
+                                    <div className={styles['body-cell']} style={{ width: 0, flexGrow: 1 }} />
                                 </div>
                             </div>
                         );

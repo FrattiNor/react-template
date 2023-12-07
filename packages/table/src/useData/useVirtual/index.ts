@@ -14,7 +14,7 @@ type ItemSizeCache = Map<number | string, number>;
 const useVirtual = <T extends Record<string, any>>(props: TableProps<T>, opt: Opt) => {
     const { dataSource, columns, rowKey } = props;
     const [rowSize, setRowSize] = useState(40);
-    const { bodyRef, isEmpty, defaultWidth } = opt;
+    const { bodyRef, defaultWidth } = opt;
 
     // 竖向虚拟
     const verticalVirtualizer = useVirtualizer({
@@ -54,16 +54,16 @@ const useVirtual = <T extends Record<string, any>>(props: TableProps<T>, opt: Op
 
     // 非空时重置横向监测缓存
     // 原因：非空时可能产生纵向滚动条，empty情况监测不含滚动条
-    useEffect(() => {
-        if (!isEmpty) {
-            const columnsTotalSize = columns.reduce((a, b) => a + (b.width ?? defaultWidth), 0);
-            const bodyClientWidth = bodyRef.current?.clientWidth;
-            // 能触发flex的情况再清除监测缓存
-            if (bodyClientWidth && horizontalTotalSize > bodyClientWidth && columnsTotalSize < bodyClientWidth) {
-                horizontalVirtualizer.measure();
-            }
-        }
-    }, [isEmpty]);
+    // useEffect(() => {
+    //     if (!isEmpty) {
+    //         const columnsTotalSize = columns.reduce((a, b) => a + (b.width ?? defaultWidth), 0);
+    //         const bodyClientWidth = bodyRef.current?.clientWidth;
+    //         // 能触发flex的情况再清除监测缓存
+    //         if (bodyClientWidth && horizontalTotalSize > bodyClientWidth && columnsTotalSize < bodyClientWidth) {
+    //             horizontalVirtualizer.measure();
+    //         }
+    //     }
+    // }, [isEmpty]);
 
     // 设置第一行的高度为默认高度
     useEffect(() => {
