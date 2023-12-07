@@ -1,5 +1,5 @@
+import { keepPreviousData, useQuery } from '@tanstack/react-query';
 import { Column, TableRef } from '@pkg/table/src/type';
-import { useQuery } from '@tanstack/react-query';
 import Table from '@pkg/table/src/index';
 import { useRef, useState } from 'react';
 import { Switch, Button } from 'antd';
@@ -112,15 +112,23 @@ const columns: Column<Item>[] = [
 
 const DemoTable = () => {
     const ref = useRef<TableRef>(null);
+    const [count, setCount] = useState(100);
     const [loading, setLoading] = useState(false);
 
     const query = useQuery({
-        queryKey: ['DemoTable'],
+        gcTime: 0,
+        staleTime: 0,
+        retry: false,
+        refetchOnMount: false,
+        refetchOnReconnect: false,
+        refetchOnWindowFocus: false,
+        placeholderData: keepPreviousData,
+        queryKey: ['DemoTable', count],
         queryFn: () => {
             return new Promise<Item[]>((res) => {
                 setTimeout(() => {
                     res(
-                        Array(100)
+                        Array(count)
                             .fill('')
                             .map((_, i) => ({
                                 id: `${i}`,
@@ -128,14 +136,15 @@ const DemoTable = () => {
                                 name: `AAA_${i}`,
                             })),
                     );
-                }, 1000);
+                }, 2000);
             });
         },
     });
 
+    console.log(query.data);
+
     const onClick = () => {
-        console.log(ref);
-        ref.current?.scrollTo({ top: 100, left: 100, behavior: 'smooth' });
+        setCount((c) => (c === 100 ? 1000 : 100));
     };
 
     return (

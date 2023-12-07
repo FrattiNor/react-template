@@ -17,7 +17,7 @@ const useData = <T extends AnyObj>(props: TableProps<T>) => {
     const { columns: _columns, ...restProps } = props;
     const isEmpty = (props.dataSource || [])?.length === 0;
     const resize = useResizeWidth();
-    const virtual = useVirtual(props, { bodyRef, defaultWidth, isEmpty });
+    const virtual = useVirtual(props, { bodyRef, isEmpty });
 
     const { onBodyScroll, ping } = useScroll({
         bodyRef,

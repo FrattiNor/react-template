@@ -8,10 +8,12 @@ export const horizontalMeasureElement = <TItemElement extends Element>(
 ) => {
     if (entry?.borderBoxSize) {
         const box = entry.borderBoxSize[0];
+
         if (box) {
             const size = box[instance.options.horizontal ? 'inlineSize' : 'blockSize'];
             return size;
         }
     }
+
     return element.getBoundingClientRect()[instance.options.horizontal ? 'width' : 'height'];
 };
