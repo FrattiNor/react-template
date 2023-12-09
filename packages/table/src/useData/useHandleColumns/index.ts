@@ -3,7 +3,7 @@ import { Column, HandledColumn, TableProps } from '../../type';
 type Opt = {
     defaultWidth: number;
     defaultFlexGrow: number;
-    headPaddingRight: number;
+    verticalScrollBarWidth: number;
     horizontalItemSizeCache: Map<number | string, number>;
 };
 
@@ -15,7 +15,7 @@ type GetHandledColumnsRes<T> = {
 
 // 可以利用Table元素获取宽度
 const useHandleColumns = <T extends Record<string, any>>(props: TableProps<T>, opt: Opt) => {
-    const { defaultWidth, defaultFlexGrow, headPaddingRight, horizontalItemSizeCache } = opt;
+    const { defaultWidth, defaultFlexGrow, verticalScrollBarWidth, horizontalItemSizeCache } = opt;
 
     const getHandledColumns = (): GetHandledColumnsRes<T> => {
         const midColumns: Column<T>[] = [];
@@ -92,7 +92,7 @@ const useHandleColumns = <T extends Record<string, any>>(props: TableProps<T>, o
                 flexGrow,
                 fixedStyle: fixed ? { right: rightBefore } : {},
                 showShadow: fixed ? _index === rightColumnsCopy.length - 1 : false,
-                headFixedStyle: fixed ? { right: rightBefore + headPaddingRight } : {},
+                headFixedStyle: fixed ? { right: rightBefore + verticalScrollBarWidth } : {},
             };
 
             rightBefore += res.width;

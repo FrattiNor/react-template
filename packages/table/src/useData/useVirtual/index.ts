@@ -4,7 +4,6 @@ import { MeasureElementNotMathRound } from './utils';
 import { TableProps } from '../../type';
 
 type Opt = {
-    isEmpty: boolean;
     defaultWidth: number;
     bodyRef: RefObject<HTMLDivElement | null>;
 };
@@ -50,20 +49,8 @@ const useVirtual = <T extends Record<string, any>>(props: TableProps<T>, opt: Op
     const horizontalTotalSize = horizontalVirtualizer.getTotalSize(); // 横向总宽度
     const horizontalDistance = horizontalVirtualItems[0]?.start ?? 0; // 横向offset距离
     const horizontalMeasureElement = horizontalVirtualizer.measureElement; // 横向监测元素宽度
+    const horizontalMeasure = horizontalVirtualizer.measure; // 清除横向缓存
     const horizontalRange = horizontalVirtualizer.range; // 横向显示的start和end
-
-    // 非空时重置横向监测缓存
-    // 原因：非空时可能产生纵向滚动条，empty情况监测不含滚动条
-    // useEffect(() => {
-    //     if (!isEmpty) {
-    //         const columnsTotalSize = columns.reduce((a, b) => a + (b.width ?? defaultWidth), 0);
-    //         const bodyClientWidth = bodyRef.current?.clientWidth;
-    //         // 能触发flex的情况再清除监测缓存
-    //         if (bodyClientWidth && horizontalTotalSize > bodyClientWidth && columnsTotalSize < bodyClientWidth) {
-    //             horizontalVirtualizer.measure();
-    //         }
-    //     }
-    // }, [isEmpty]);
 
     // 设置第一行的高度为默认高度
     useEffect(() => {
@@ -79,6 +66,7 @@ const useVirtual = <T extends Record<string, any>>(props: TableProps<T>, opt: Op
         verticalMeasureElement,
 
         horizontalRange,
+        horizontalMeasure,
         horizontalDistance,
         horizontalTotalSize,
         horizontalVirtualItems,

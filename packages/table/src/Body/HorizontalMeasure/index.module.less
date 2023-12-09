@@ -2,15 +2,18 @@
     top: 0;
     left: 0;
     height: 0;
-    width: 100%;
     display: flex;
     z-index: -999;
+    min-width: 100%;
     overflow: hidden;
     visibility: hidden;
-    position: absolute;
+    position: relative;
 
     .measure-item {
+        width: 0;
+        height: 0;
         flex-shrink: 0;
         position: relative;
+        padding-bottom: 1%;
     }
 }

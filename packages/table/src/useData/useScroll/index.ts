@@ -1,4 +1,4 @@
-import { Dispatch, RefObject, SetStateAction, useEffect, useState } from 'react';
+import { Dispatch, RefObject, SetStateAction, useEffect, useRef, useState } from 'react';
 import useResizeObserver from '@pkg/hooks/src/useResizeObserver';
 
 type Ping = Record<string, boolean>;
@@ -6,13 +6,15 @@ type Ping = Record<string, boolean>;
 type Opt = {
     dataSource?: any[];
     autoScrollTop?: boolean;
+    horizontalMeasure: () => void;
     headRef: RefObject<HTMLDivElement | null>;
     bodyRef: RefObject<HTMLDivElement | null>;
-    setHeadPaddingRight: Dispatch<SetStateAction<number>>;
+    setVerticalScrollBarWidth: Dispatch<SetStateAction<number>>;
 };
 
 const useScroll = (opt: Opt) => {
-    const { headRef, bodyRef, dataSource, autoScrollTop, setHeadPaddingRight } = opt;
+    const beforeBodyWidth = useRef(0);
+    const { headRef, bodyRef, dataSource, autoScrollTop, setVerticalScrollBarWidth, horizontalMeasure } = opt;
     const [pingLeft, setPingLeft] = useState<boolean>(false);
     const [pingRight, setPingRight] = useState<boolean>(false);
 
@@ -21,15 +23,16 @@ const useScroll = (opt: Opt) => {
         right: pingRight,
     };
 
-    const calcPaddingRight = () => {
+    const calcScrollBarWidth = () => {
         if (bodyRef.current && headRef.current) {
             const bodyClientWidth = bodyRef.current.clientWidth;
             const headClientWidth = headRef.current.clientWidth;
-            setHeadPaddingRight(headClientWidth - bodyClientWidth);
+            const nextVerticalScrollBarWidth = headClientWidth - bodyClientWidth;
+            setVerticalScrollBarWidth(nextVerticalScrollBarWidth);
         }
     };
 
-    const judgePing = () => {
+    const calcPing = () => {
         if (bodyRef.current) {
             const { scrollWidth, clientWidth, scrollLeft } = bodyRef.current;
 
@@ -48,15 +51,17 @@ const useScroll = (opt: Opt) => {
             const target = e.target as HTMLDivElement;
             headRef.current.scrollTo({ left: target.scrollLeft });
 
-            judgePing();
-            calcPaddingRight();
+            calcPing();
+            calcScrollBarWidth();
         }
     };
 
     useResizeObserver(bodyRef, {
-        callback: () => {
-            judgePing();
-            calcPaddingRight();
+        callback: (size) => {
+            if (size.width < beforeBodyWidth.current) horizontalMeasure();
+            beforeBodyWidth.current = size.width;
+            calcPing();
+            calcScrollBarWidth();
         },
     });
 

@@ -10,10 +10,12 @@ export const MeasureElementNotMathRound = <TItemElement extends Element>(
         const box = entry.borderBoxSize[0];
 
         if (box) {
+            // console.log(box);
             const size = box[instance.options.horizontal ? 'inlineSize' : 'blockSize'];
             return size;
         }
     }
 
+    // console.log(element.getBoundingClientRect());
     return element.getBoundingClientRect()[instance.options.horizontal ? 'width' : 'height'];
 };

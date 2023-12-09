@@ -3,7 +3,7 @@ import { Column, TableRef } from '@pkg/table/src/type';
 import Table from '@pkg/table/src/index';
 import { useRef, useState } from 'react';
 import { Switch, Button } from 'antd';
-import useFps from './useFPS';
+import useFps from './useFps';
 
 type Item = {
     id: string;
@@ -17,7 +17,7 @@ const columns2: Column<Item>[] = Array(3)
         width: Math.max(Math.floor(Math.random() * 150), 50),
         key: `age_${i}`,
         title: `年龄_${i}`,
-        flexGrow: i !== 0 ? 1 : 0,
+        // flexGrow: i !== 0 ? 1 : 0,
         render: ({ age }) => `年龄_${age}`,
         fixed: i === 0 ? 'left' : i === 99 ? 'right' : undefined,
     }));
@@ -61,7 +61,7 @@ const DemoTable = () => {
     };
 
     const reload = () => {
-        setCount((c) => (c === 100 ? 1000 : 100));
+        setCount((c) => (c === 100 ? 10 : 100));
     };
 
     return (

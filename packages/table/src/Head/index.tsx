@@ -5,7 +5,7 @@ import classNames from 'classnames';
 import { FC } from 'react';
 
 const Head: FC = () => {
-    const { virtual, hiddenFixed, scroll, resize, headRef, headPaddingRight, handledColumns } = useContext2();
+    const { virtual, hiddenFixed, scroll, resize, headRef, verticalScrollBarWidth, handledColumns } = useContext2();
     const { ping } = scroll;
     const { renderResizeTitle } = resize;
     const { horizontalVirtualItems, horizontalTotalSize, horizontalDistance } = virtual;
@@ -14,7 +14,7 @@ const Head: FC = () => {
 
     return (
         <div className={styles['head']} ref={headRef}>
-            <div className={styles['head-inner']} style={{ width: horizontalTotalSize + headPaddingRight }}>
+            <div className={styles['head-inner']} style={{ width: horizontalTotalSize + verticalScrollBarWidth }}>
                 <div className={styles['head-row']}>
                     <div
                         className={styles['head-row-inner']}
@@ -47,8 +47,8 @@ const Head: FC = () => {
 
                         <div className={styles['head-cell']} style={{ width: 0, flexGrow: 1 }} />
 
-                        {headPaddingRight > 0 && (
-                            <div style={{ width: headPaddingRight }} className={classNames(styles['head-cell'], styles['fixed-right'])} />
+                        {verticalScrollBarWidth > 0 && (
+                            <div style={{ width: verticalScrollBarWidth }} className={classNames(styles['head-cell'], styles['fixed-right'])} />
                         )}
                     </div>
                 </div>
