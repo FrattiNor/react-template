@@ -5,12 +5,13 @@ import classNames from 'classnames';
 import { FC } from 'react';
 
 const VirtualBody: FC = () => {
-    const { virtual, hiddenFixed, scroll, props, handledColumns } = useContext2();
-    const { ping } = scroll;
-    const { dataSource, rowKey } = props;
+    const { virtual, bodyScrollObserver, newProps, columns } = useContext2();
+
+    const { ping } = bodyScrollObserver;
+    const { dataSource, rowKey } = newProps;
     const { horizontalVirtualItems, horizontalTotalSize, horizontalDistance } = virtual;
     const { verticalVirtualItems, verticalTotalSize, verticalDistance, verticalMeasureElement } = virtual;
-    const { hiddenFixedHandledLeftColumns, hiddenFixedHandledRightColumns, hiddenFixedTotalSize } = hiddenFixed;
+    const { handledColumns, hiddenFixedHandledLeftColumns, hiddenFixedHandledRightColumns, hiddenFixedTotalSize } = columns;
     const renderItems = [...hiddenFixedHandledLeftColumns, ...horizontalVirtualItems, ...hiddenFixedHandledRightColumns];
 
     return (

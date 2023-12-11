@@ -3,9 +3,11 @@ import styles from './index.module.less';
 import { FC } from 'react';
 
 const HorizontalMeasure: FC = () => {
-    const { virtual, resize, handledColumns } = useContext2();
-    const { resizeActiveKey, resizeActiveWidth } = resize;
+    const { virtual, resize, columns } = useContext2();
+
+    const { handledColumns } = columns;
     const { horizontalMeasureElement } = virtual;
+    const { resizeActiveKey, resizeActiveWidth } = resize;
 
     return (
         <div className={styles['measure']}>

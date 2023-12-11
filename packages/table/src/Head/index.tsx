@@ -5,16 +5,17 @@ import classNames from 'classnames';
 import { FC } from 'react';
 
 const Head: FC = () => {
-    const { virtual, hiddenFixed, scroll, resize, headRef, verticalScrollBarWidth, handledColumns } = useContext2();
-    const { ping } = scroll;
+    const { virtual, columns, resize, headRef, bodyScrollObserver } = useContext2();
+
     const { renderResizeTitle } = resize;
+    const { ping, vScrollBarWidth } = bodyScrollObserver;
     const { horizontalVirtualItems, horizontalTotalSize, horizontalDistance } = virtual;
-    const { hiddenFixedHandledLeftColumns, hiddenFixedHandledRightColumns, hiddenFixedTotalSize } = hiddenFixed;
+    const { handledColumns, hiddenFixedHandledLeftColumns, hiddenFixedHandledRightColumns, hiddenFixedTotalSize } = columns;
     const renderItems = [...hiddenFixedHandledLeftColumns, ...horizontalVirtualItems, ...hiddenFixedHandledRightColumns];
 
     return (
         <div className={styles['head']} ref={headRef}>
-            <div className={styles['head-inner']} style={{ width: horizontalTotalSize + verticalScrollBarWidth }}>
+            <div className={styles['head-inner']} style={{ width: horizontalTotalSize + vScrollBarWidth }}>
                 <div className={styles['head-row']}>
                     <div
                         className={styles['head-row-inner']}
@@ -47,8 +48,8 @@ const Head: FC = () => {
 
                         <div className={styles['head-cell']} style={{ width: 0, flexGrow: 1 }} />
 
-                        {verticalScrollBarWidth > 0 && (
-                            <div style={{ width: verticalScrollBarWidth }} className={classNames(styles['head-cell'], styles['fixed-right'])} />
+                        {vScrollBarWidth > 0 && (
+                            <div style={{ width: vScrollBarWidth }} className={classNames(styles['head-cell'], styles['fixed-right'])} />
                         )}
                     </div>
                 </div>

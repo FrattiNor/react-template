@@ -4,8 +4,8 @@ import classNames from 'classnames';
 import { FC } from 'react';
 
 const Loading: FC = () => {
-    const { props } = useContext2();
-    const { loading } = props;
+    const { newProps } = useContext2();
+    const { loading } = newProps;
 
     return (
         <div className={classNames(styles['loading'], { [styles['active']]: loading === true })}>

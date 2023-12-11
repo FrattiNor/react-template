@@ -1,11 +1,15 @@
+import { measureElement, observeElementRect, observeElementOffset } from './utils';
+import useBodyResizeObserver from '../useBodyResizeObserver';
+import useBodyScrollObserver from '../useBodyScrollObserver';
 import { useVirtualizer } from '@tanstack/react-virtual';
 import { RefObject, useEffect, useState } from 'react';
-import { MeasureElementNotMathRound } from './utils';
 import { TableProps } from '../../type';
 
 type Opt = {
     defaultWidth: number;
     bodyRef: RefObject<HTMLDivElement | null>;
+    bodyResizeObserver: ReturnType<typeof useBodyResizeObserver>;
+    bodyScrollObserver: ReturnType<typeof useBodyScrollObserver>;
 };
 
 type ItemSizeCache = Map<number | string, number>;
@@ -13,7 +17,7 @@ type ItemSizeCache = Map<number | string, number>;
 const useVirtual = <T extends Record<string, any>>(props: TableProps<T>, opt: Opt) => {
     const { dataSource, columns, rowKey } = props;
     const [rowSize, setRowSize] = useState(40);
-    const { bodyRef, defaultWidth } = opt;
+    const { bodyRef, defaultWidth, bodyResizeObserver, bodyScrollObserver } = opt;
 
     // 竖向虚拟
     const verticalVirtualizer = useVirtualizer({
@@ -23,6 +27,9 @@ const useVirtual = <T extends Record<string, any>>(props: TableProps<T>, opt: Op
         count: dataSource?.length || 0,
         getScrollElement: () => bodyRef.current,
         getItemKey: (index) => dataSource?.[index]?.[rowKey] ?? index,
+        measureElement: measureElement,
+        observeElementRect: observeElementRect('vRect', bodyResizeObserver),
+        observeElementOffset: observeElementOffset('vOffset', bodyScrollObserver),
     });
 
     // 横向虚拟
@@ -34,7 +41,9 @@ const useVirtual = <T extends Record<string, any>>(props: TableProps<T>, opt: Op
         estimateSize: () => defaultWidth,
         getScrollElement: () => bodyRef.current,
         getItemKey: (index) => columns[index].key,
-        measureElement: MeasureElementNotMathRound,
+        measureElement: measureElement,
+        observeElementRect: observeElementRect('hRect', bodyResizeObserver),
+        observeElementOffset: observeElementOffset('hOffset', bodyScrollObserver),
     });
 
     const verticalVirtualItems = verticalVirtualizer.getVirtualItems(); // 纵向虚拟显示item
