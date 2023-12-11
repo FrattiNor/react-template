@@ -8,6 +8,10 @@ export type TableProps<T> = {
     loading?: boolean;
     columns: Column<T>[];
     autoScrollTop?: boolean;
+    rowSelection?: {
+        rowKeys?: string | number[];
+        onChange?: (v: string | number[]) => void;
+    };
 };
 
 export type Column<T> = {
