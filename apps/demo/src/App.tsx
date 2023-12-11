@@ -14,7 +14,7 @@ type Item = {
 const DemoTable = () => {
     useFps();
     const ref = useRef<TableRef>(null);
-    const [count, setCount] = useState(100000);
+    const [count, setCount] = useState(100);
     const [loading, setLoading] = useState(false);
     const [lineHeight, setLineHeight] = useState(19);
 
@@ -27,7 +27,7 @@ const DemoTable = () => {
                 title: `年龄_${i}`,
                 flexGrow: i !== 0 ? 1 : 0,
                 fixed: i === 0 ? 'left' : i === 99 ? 'right' : undefined,
-                render: (_, index) => <div style={{ lineHeight: `${lineHeight}px` }}>{`年龄_${index}`}</div>,
+                render: (__, index) => <div style={{ lineHeight: `${lineHeight}px` }}>{`年龄_${index}`}</div>,
             }));
     }, [lineHeight]);
 

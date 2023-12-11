@@ -1,4 +1,4 @@
-import { MouseEventHandler, ReactNode, useEffect, useState } from 'react';
+import { MouseEventHandler, ReactNode, useEffect, useRef, useState } from 'react';
 import ResizableTitle from './ResizableTitle';
 
 // 避免触发一些事件导致mouse无法触发
@@ -13,6 +13,7 @@ function pauseEvent(e: Event) {
 type ResizeTarget = { width: number; clientWidth: number; pageX: number; key: string };
 
 const useResizeWidth = () => {
+    const resized = useRef(false);
     const [resizeTarget, setResizeTarget] = useState<null | ResizeTarget>(null);
     const resizeActiveKey = resizeTarget?.key;
     const resizeActiveWidth = resizeTarget?.width;
@@ -32,6 +33,7 @@ const useResizeWidth = () => {
         if (resizeTarget) {
             const mouseMove = (e: MouseEvent) => {
                 pauseEvent(e);
+                resized.current = true;
                 const moveX = e.pageX - resizeTarget.pageX;
                 setResizeTarget({
                     ...resizeTarget,
@@ -65,7 +67,7 @@ const useResizeWidth = () => {
         );
     };
 
-    return { renderResizeTitle, resizeActiveKey, resizeActiveWidth };
+    return { renderResizeTitle, resizeActiveKey, resizeActiveWidth, resized };
 };
 
 export default useResizeWidth;

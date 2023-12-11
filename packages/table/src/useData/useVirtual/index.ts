@@ -1,7 +1,7 @@
 import { measureElement, observeElementRect, observeElementOffset } from './utils';
-import { useVirtualizer, elementScroll } from '@tanstack/react-virtual';
 import useBodyResizeObserver from '../useBodyResizeObserver';
 import useBodyScrollObserver from '../useBodyScrollObserver';
+import { useVirtualizer } from '@tanstack/react-virtual';
 import { RefObject, useEffect, useState } from 'react';
 import { TableProps } from '../../type';
 
