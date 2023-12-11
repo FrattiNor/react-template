@@ -1,7 +1,7 @@
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
 import { Column, TableRef } from '@pkg/table/src/type';
-import Table from '@pkg/table/src/index';
 import { useMemo, useRef, useState } from 'react';
+import Table from '@pkg/table/src/index';
 import { Switch, Button } from 'antd';
 import useFps from './useFps';
 
@@ -14,12 +14,12 @@ type Item = {
 const DemoTable = () => {
     useFps();
     const ref = useRef<TableRef>(null);
-    const [count, setCount] = useState(1000);
+    const [count, setCount] = useState(100000);
     const [loading, setLoading] = useState(false);
     const [lineHeight, setLineHeight] = useState(19);
 
     const columns2: Column<Item>[] = useMemo(() => {
-        return Array(12)
+        return Array(22)
             .fill('')
             .map((_, i) => ({
                 width: Math.max(Math.floor(Math.random() * 150), 50),
@@ -70,21 +70,23 @@ const DemoTable = () => {
     };
 
     return (
-        <div style={{ padding: 64 }}>
-            <div style={{ padding: '24px 24px 0 24px', width: 900, backgroundColor: '#fff' }}>
-                <Switch checked={loading} onChange={setLoading} />
-                <Button onClick={scroll} style={{ marginLeft: 16 }}>
-                    ScrollTo
-                </Button>
-                <Button onClick={reload} style={{ marginLeft: 16 }}>
-                    Reload
-                </Button>
-                <Button onClick={height} style={{ marginLeft: 16 }}>
-                    LineHeight
-                </Button>
-            </div>
-            <div style={{ height: 600, width: 900, padding: 24, backgroundColor: '#fff' }}>
-                <Table ref={ref} rowKey="id" dataSource={query.data} columns={columns2} loading={query.isFetching || loading} />
+        <div style={{ width: '100%', height: '100%', backgroundColor: '#fff' }}>
+            <div style={{ padding: 64 }}>
+                <div style={{ padding: '24px 24px 0 24px', width: 900 }}>
+                    <Switch checked={loading} onChange={setLoading} />
+                    <Button onClick={scroll} style={{ marginLeft: 16 }}>
+                        ScrollTo
+                    </Button>
+                    <Button onClick={reload} style={{ marginLeft: 16 }}>
+                        Reload
+                    </Button>
+                    <Button onClick={height} style={{ marginLeft: 16 }}>
+                        LineHeight
+                    </Button>
+                </div>
+                <div style={{ height: 600, width: 900, padding: 24 }}>
+                    <Table ref={ref} rowKey="id" dataSource={query.data} columns={columns2} loading={query.isFetching || loading} />
+                </div>
             </div>
         </div>
     );
