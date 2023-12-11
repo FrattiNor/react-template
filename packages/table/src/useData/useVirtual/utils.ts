@@ -19,11 +19,9 @@ export const observeElementRect = (key: string, bodyResizeObserver: ReturnType<t
             cb({ width: Math.round(width), height: Math.round(height) });
         };
 
-        console.log('add', key);
         bodyResizeObserver.addHandle(key, handler);
 
         return () => {
-            console.log('remove', key);
             bodyResizeObserver.removeHandle(key);
         };
     };

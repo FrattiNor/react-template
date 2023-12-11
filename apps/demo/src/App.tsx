@@ -17,7 +17,7 @@ const columns2: Column<Item>[] = Array(3)
         width: Math.max(Math.floor(Math.random() * 150), 50),
         key: `age_${i}`,
         title: `年龄_${i}`,
-        // flexGrow: i !== 0 ? 1 : 0,
+        flexGrow: i !== 0 ? 1 : 0,
         render: ({ age }) => `年龄_${age}`,
         fixed: i === 0 ? 'left' : i === 99 ? 'right' : undefined,
     }));

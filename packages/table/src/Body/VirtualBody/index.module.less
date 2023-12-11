@@ -9,7 +9,7 @@
         position: relative;
 
         .body-row {
-            width: 100%;
+            display: flex;
             position: relative;
             border-bottom: 1px solid var(--table-border);
 
@@ -17,40 +17,34 @@
                 border: 0;
             }
 
-            &:hover .body-row-inner .body-cell {
+            &:hover .body-cell {
                 background-color: var(--table-row-hover-bg);
             }
 
-            .body-row-inner {
-                min-width: 100%;
+            .body-cell {
+                flex-shrink: 0;
                 position: relative;
-                display: inline-flex;
+                transition: background-color 0.3s;
+                background-color: var(--table-body-bg);
 
-                .body-cell {
-                    flex-shrink: 0;
+                .body-cell-inner {
+                    width: 100%;
+                    padding: 6px 8px;
+                    overflow: hidden;
                     position: relative;
-                    transition: background-color 0.3s;
-                    background-color: var(--table-body-bg);
-
-                    // &::before {
-                    //     top: 0;
-                    //     right: 0;
-                    //     width: 1px;
-                    //     height: 100%;
-                    //     content: '';
-                    //     position: absolute;
-                    //     background-color: var(--table-border);
-                    // }
-
-                    .body-cell-inner {
-                        width: 100%;
-                        padding: 6px 8px;
-                        overflow: hidden;
-                        position: relative;
-                        white-space: nowrap;
-                        text-overflow: ellipsis;
-                    }
+                    white-space: nowrap;
+                    text-overflow: ellipsis;
                 }
+
+                // &::before {
+                //     top: 0;
+                //     right: 0;
+                //     width: 1px;
+                //     height: 100%;
+                //     content: '';
+                //     position: absolute;
+                //     background-color: var(--table-border);
+                // }
             }
         }
     }

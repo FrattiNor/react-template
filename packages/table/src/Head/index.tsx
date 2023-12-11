@@ -15,12 +15,12 @@ const Head: FC = () => {
 
     return (
         <div className={styles['head']} ref={headRef}>
-            <div className={styles['head-inner']} style={{ width: horizontalTotalSize + vScrollBarWidth }}>
-                <div className={styles['head-row']}>
-                    <div
-                        className={styles['head-row-inner']}
-                        style={{ transform: `translate3d(0, 0, 0)`, paddingLeft: `${horizontalDistance - hiddenFixedTotalSize}px` }}
-                    >
+            <div className={styles['virtual-head']} style={{ width: horizontalTotalSize + vScrollBarWidth }}>
+                <div
+                    className={styles['virtual-head-inner']}
+                    style={{ transform: `translate3d(0, 0, 0)`, paddingLeft: `${horizontalDistance - hiddenFixedTotalSize}px` }}
+                >
+                    <div className={styles['head-row']}>
                         {renderItems.map((item) => {
                             const column = handledColumns[item.index];
                             if (column) {
