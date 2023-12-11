@@ -1,11 +1,11 @@
 /* eslint-disable react-refresh/only-export-components */
-import { FC, createContext, forwardRef, useContext, useImperativeHandle, ReactElement } from 'react';
+import { FC, createContext, forwardRef, useContext, useImperativeHandle, ReactNode } from 'react';
 import { AnyObj, TableProps, TableRef } from './type';
 import useData from './useData';
 
 type Context2Props<T extends AnyObj> = ReturnType<typeof useData<T>>;
 
-type NextComponentType = <T extends AnyObj>(props: TableProps<T> & React.RefAttributes<TableRef>) => ReactElement | null;
+type NextComponentType = <T extends AnyObj>(props: TableProps<T> & React.RefAttributes<TableRef>) => ReactNode | null;
 
 const Context2 = createContext<Context2Props<any>>({} as Context2Props<any>);
 
