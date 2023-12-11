@@ -1,6 +1,5 @@
-import useBodyResizeObserver from './useBodyResizeObserver';
-import useBodyScrollObserver from './useBodyScrollObserver';
 import useHandleColumns from './useHandleColumns';
+import useBodyObserver from './useBodyObserver';
 import useResizeWidth from './useResizeWidth';
 import { AnyObj, TableProps } from '../type';
 import { useEffect, useRef } from 'react';
@@ -15,21 +14,24 @@ const useData = <T extends AnyObj>(props: TableProps<T>) => {
 
     // title resize
     const resize = useResizeWidth();
-    // observer body resize
-    const bodyResizeObserver = useBodyResizeObserver({ bodyRef });
-    // observer body scroll
-    const bodyScrollObserver = useBodyScrollObserver({ bodyRef, headRef });
+    // observer body resize and scroll
+    const bodyObserver = useBodyObserver({ bodyRef, headRef });
     // add and del some props
     const { columns, dataSource, autoScrollTop, newProps } = useProps(props);
     // virtual scroll
-    const virtual = useVirtual(props, { bodyRef, defaultWidth, bodyResizeObserver, bodyScrollObserver });
+    const virtual = useVirtual(props, {
+        bodyRef,
+        defaultWidth,
+        bodyResizeObserver: bodyObserver.bodyResizeObserver,
+        bodyScrollObserver: bodyObserver.bodyScrollObserver,
+    });
     // handle columns
     const _columns = useHandleColumns({
         columns,
         defaultWidth,
         defaultFlexGrow,
         horizontalRange: virtual.horizontalRange,
-        vScrollBarWidth: bodyScrollObserver.vScrollBarWidth,
+        vScrollBarWidth: bodyObserver.vScrollBarWidth,
         horizontalItemSizeCache: virtual.horizontalItemSizeCache,
     });
 
@@ -47,8 +49,8 @@ const useData = <T extends AnyObj>(props: TableProps<T>) => {
         headRef,
         bodyRef,
         newProps,
+        bodyObserver,
         columns: _columns,
-        bodyScrollObserver,
     };
 };
 

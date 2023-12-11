@@ -14,20 +14,20 @@ type Item = {
 const DemoTable = () => {
     useFps();
     const ref = useRef<TableRef>(null);
-    const [count, setCount] = useState(100);
+    const [count, setCount] = useState(100000);
     const [loading, setLoading] = useState(false);
     const [lineHeight, setLineHeight] = useState(19);
 
     const columns2: Column<Item>[] = useMemo(() => {
-        return Array(3)
+        return Array(100)
             .fill('')
             .map((_, i) => ({
                 width: Math.max(Math.floor(Math.random() * 150), 50),
                 key: `age_${i}`,
                 title: `年龄_${i}`,
                 flexGrow: i !== 0 ? 1 : 0,
-                fixed: i === 0 ? 'left' : i === 99 ? 'right' : undefined,
-                render: (__, index) => <div style={{ lineHeight: `${lineHeight}px` }}>{`年龄_${index}`}</div>,
+                fixed: i === 0 ? 'left' : i === 10 ? 'right' : undefined,
+                render: (__, index) => <span style={{ display: 'inline-block', lineHeight: `${lineHeight}px` }}>{`年龄_${index}`}</span>,
             }));
     }, [lineHeight]);
 

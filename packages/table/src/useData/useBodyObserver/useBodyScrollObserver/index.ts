@@ -1,8 +1,10 @@
-import { RefObject, useEffect, useRef, useState } from 'react';
+import { RefObject, useEffect, useRef } from 'react';
 
 type Opt = {
     bodyRef: RefObject<HTMLDivElement | null>;
     headRef: RefObject<HTMLDivElement | null>;
+    calcPing: (target: HTMLDivElement) => void;
+    calcScrollBarWidth: (target: HTMLDivElement) => void;
 };
 
 type Size = { scrollLeft: number; scrollTop: number };
@@ -10,36 +12,9 @@ type Size = { scrollLeft: number; scrollTop: number };
 type Handle = (size: Size) => void;
 
 const useBodyScrollObserver = (opt: Opt) => {
-    const { bodyRef, headRef } = opt;
     const handles = useRef<Record<string, Handle>>({});
-    const [vScrollBarWidth, setVScrollBarWidth] = useState(0);
-    const [pingLeft, setPingLeft] = useState<boolean>(false);
-    const [pingRight, setPingRight] = useState<boolean>(false);
     const size = useRef<Size>({ scrollLeft: 0, scrollTop: 0 });
-
-    const ping: Record<string, boolean> = {
-        left: pingLeft,
-        right: pingRight,
-    };
-
-    // 计算纵向滚动条宽度
-    const calcScrollBarWidth = (target: HTMLDivElement) => {
-        const { clientWidth, offsetWidth } = target;
-        setVScrollBarWidth(offsetWidth - clientWidth);
-    };
-
-    // 计算ping情况
-    const calcPing = (target: HTMLDivElement) => {
-        const { scrollWidth, clientWidth, scrollLeft } = target;
-
-        if (scrollWidth === clientWidth) {
-            setPingLeft(false);
-            setPingRight(false);
-        } else {
-            setPingLeft(scrollLeft > 0);
-            setPingRight(scrollLeft < scrollWidth - clientWidth);
-        }
-    };
+    const { bodyRef, headRef, calcPing, calcScrollBarWidth } = opt;
 
     useEffect(() => {
         if (bodyRef.current) {
@@ -80,7 +55,7 @@ const useBodyScrollObserver = (opt: Opt) => {
         handles.current = { ...newHandles };
     };
 
-    return { vScrollBarWidth, ping, addHandle, removeHandle };
+    return { addHandle, removeHandle };
 };
 
 export default useBodyScrollObserver;

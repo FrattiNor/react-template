@@ -1,5 +1,5 @@
-import useBodyResizeObserver from '../useBodyResizeObserver';
-import useBodyScrollObserver from '../useBodyScrollObserver';
+import useBodyResizeObserver from '../useBodyObserver/useBodyResizeObserver';
+import useBodyScrollObserver from '../useBodyObserver/useBodyScrollObserver';
 import { Virtualizer } from '@tanstack/react-virtual';
 
 interface Rect {

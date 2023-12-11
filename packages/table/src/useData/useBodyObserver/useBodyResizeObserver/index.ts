@@ -2,6 +2,8 @@ import { RefObject, useEffect, useRef } from 'react';
 
 type Opt = {
     bodyRef: RefObject<HTMLDivElement | null>;
+    calcPing: (target: HTMLDivElement) => void;
+    calcScrollBarWidth: (target: HTMLDivElement) => void;
 };
 
 type Size1 = { width: null | number; height: null | number };
@@ -11,8 +13,8 @@ type Size2 = { width: number; height: number };
 type Handle = (size: Size2) => void;
 
 const useBodyResizeObserver = (opt: Opt) => {
-    const { bodyRef } = opt;
     const handles = useRef<Record<string, Handle>>({});
+    const { bodyRef, calcPing, calcScrollBarWidth } = opt;
     const size = useRef<Size1>({ width: null, height: null });
 
     useEffect(() => {
@@ -31,6 +33,11 @@ const useBodyResizeObserver = (opt: Opt) => {
 
                 Object.values(handles.current).forEach((handle) => handle(nextSize));
                 size.current = nextSize;
+
+                if (bodyRef.current) {
+                    calcPing(bodyRef.current);
+                    calcScrollBarWidth(bodyRef.current);
+                }
             });
 
             ob.observe(bodyRef.current, { box: 'border-box' });

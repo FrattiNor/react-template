@@ -5,10 +5,10 @@ import classNames from 'classnames';
 import { FC } from 'react';
 
 const Head: FC = () => {
-    const { virtual, columns, resize, headRef, bodyScrollObserver } = useContext2();
+    const { virtual, columns, resize, headRef, bodyObserver } = useContext2();
 
     const { renderResizeTitle } = resize;
-    const { ping, vScrollBarWidth } = bodyScrollObserver;
+    const { ping, vScrollBarWidth } = bodyObserver;
     const { horizontalVirtualItems, horizontalTotalSize, horizontalDistance } = virtual;
     const { handledColumns, hiddenFixedHandledLeftColumns, hiddenFixedHandledRightColumns, hiddenFixedTotalSize } = columns;
     const renderItems = [...hiddenFixedHandledLeftColumns, ...horizontalVirtualItems, ...hiddenFixedHandledRightColumns];
