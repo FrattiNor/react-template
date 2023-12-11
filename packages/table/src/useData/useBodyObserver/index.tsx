@@ -45,4 +45,5 @@ const useBodyObserver = (opt: Opt) => {
     return { vScrollBarWidth, ping, bodyResizeObserver, bodyScrollObserver };
 };
 
+export type BodyObserver = ReturnType<typeof useBodyObserver>;
 export default useBodyObserver;

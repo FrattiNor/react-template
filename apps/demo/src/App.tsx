@@ -14,12 +14,12 @@ type Item = {
 const DemoTable = () => {
     useFps();
     const ref = useRef<TableRef>(null);
-    const [count, setCount] = useState(100000);
+    const [count, setCount] = useState(1000);
     const [loading, setLoading] = useState(false);
     const [lineHeight, setLineHeight] = useState(19);
 
     const columns2: Column<Item>[] = useMemo(() => {
-        return Array(100)
+        return Array(12)
             .fill('')
             .map((_, i) => ({
                 width: Math.max(Math.floor(Math.random() * 150), 50),

@@ -1,23 +1,23 @@
 import { measureElement, observeElementRect, observeElementOffset } from './utils';
-import useBodyResizeObserver from '../useBodyObserver/useBodyResizeObserver';
-import useBodyScrollObserver from '../useBodyObserver/useBodyScrollObserver';
 import { useVirtualizer } from '@tanstack/react-virtual';
 import { RefObject, useEffect, useState } from 'react';
-import { TableProps } from '../../type';
+import { BodyObserver } from '../../useBodyObserver';
+import { Column } from '../../../type';
 
-type Opt = {
+type Opt<T> = {
+    rowKey: keyof T;
+    dataSource?: T[];
+    columns: Column<T>[];
     defaultWidth: number;
+    bodyObserver: BodyObserver;
     bodyRef: RefObject<HTMLDivElement | null>;
-    bodyResizeObserver: ReturnType<typeof useBodyResizeObserver>;
-    bodyScrollObserver: ReturnType<typeof useBodyScrollObserver>;
 };
 
 type ItemSizeCache = Map<number | string, number>;
 
-const useVirtual = <T extends Record<string, any>>(props: TableProps<T>, opt: Opt) => {
-    const { dataSource, columns, rowKey } = props;
+const useVirtual = <T extends Record<string, any>>(opt: Opt<T>) => {
     const [rowSize, setRowSize] = useState(40);
-    const { bodyRef, defaultWidth, bodyResizeObserver, bodyScrollObserver } = opt;
+    const { dataSource, columns, rowKey, bodyRef, defaultWidth, bodyObserver } = opt;
 
     // 竖向虚拟
     const verticalVirtualizer = useVirtualizer({
@@ -28,8 +28,8 @@ const useVirtual = <T extends Record<string, any>>(props: TableProps<T>, opt: Op
         getScrollElement: () => bodyRef.current,
         getItemKey: (index) => dataSource?.[index]?.[rowKey] ?? index,
         measureElement: measureElement,
-        observeElementRect: observeElementRect('vRect', bodyResizeObserver),
-        observeElementOffset: observeElementOffset('vOffset', bodyScrollObserver),
+        observeElementRect: observeElementRect('vRect', bodyObserver),
+        observeElementOffset: observeElementOffset('vOffset', bodyObserver),
         scrollToFn: () => {
             // 屏蔽掉组件的scrollTo函数
             // 作用为resize时保持item位置不变
@@ -47,8 +47,8 @@ const useVirtual = <T extends Record<string, any>>(props: TableProps<T>, opt: Op
         getScrollElement: () => bodyRef.current,
         getItemKey: (index) => columns[index].key,
         measureElement: measureElement,
-        observeElementRect: observeElementRect('hRect', bodyResizeObserver),
-        observeElementOffset: observeElementOffset('hOffset', bodyScrollObserver),
+        observeElementRect: observeElementRect('hRect', bodyObserver),
+        observeElementOffset: observeElementOffset('hOffset', bodyObserver),
         scrollToFn: () => {
             // 屏蔽掉组件的scrollTo函数
             // 作用为resize时保持item位置不变
@@ -58,20 +58,20 @@ const useVirtual = <T extends Record<string, any>>(props: TableProps<T>, opt: Op
 
     const verticalVirtualItems = verticalVirtualizer.getVirtualItems(); // 纵向虚拟显示item
     const verticalTotalSize = verticalVirtualizer.getTotalSize(); // 纵向总高度
-    const verticalItemSizeCache = (verticalVirtualizer as any).itemSizeCache as ItemSizeCache; // 纵向测量缓存
     const verticalDistance = verticalVirtualItems[0]?.start ?? 0; // 纵向offset距离
     const verticalMeasureElement = verticalVirtualizer.measureElement; // 纵向监测元素高度
-    const firstRowSizeCache = verticalItemSizeCache.get(dataSource?.[0]?.[rowKey] ?? 0); // 纵向第一位监测高度
 
     const horizontalVirtualItems = horizontalVirtualizer.getVirtualItems(); // 横向虚拟显示item
-    const horizontalItemSizeCache = (horizontalVirtualizer as any).itemSizeCache as ItemSizeCache; // 横向测量缓存
     const horizontalTotalSize = horizontalVirtualizer.getTotalSize(); // 横向总宽度
     const horizontalDistance = horizontalVirtualItems[0]?.start ?? 0; // 横向offset距离
     const horizontalMeasureElement = horizontalVirtualizer.measureElement; // 横向监测元素宽度
-    const horizontalMeasure = horizontalVirtualizer.measure; // 清除横向缓存
+    // const horizontalMeasure = horizontalVirtualizer.measure; // 清除横向缓存
     const horizontalRange = horizontalVirtualizer.range; // 横向显示的start和end
+    const horizontalItemSizeCache = (horizontalVirtualizer as any).itemSizeCache as ItemSizeCache; // 横向测量缓存
 
     // 设置第一行的高度为默认高度
+    const verticalItemSizeCache = (verticalVirtualizer as any).itemSizeCache as ItemSizeCache; // 纵向测量缓存
+    const firstRowSizeCache = verticalItemSizeCache.get(dataSource?.[0]?.[rowKey] ?? 0); // 纵向第一位监测高度
     useEffect(() => {
         if (typeof firstRowSizeCache === 'number') {
             setRowSize(firstRowSizeCache);
@@ -85,7 +85,7 @@ const useVirtual = <T extends Record<string, any>>(props: TableProps<T>, opt: Op
         verticalMeasureElement,
 
         horizontalRange,
-        horizontalMeasure,
+        // horizontalMeasure,
         horizontalDistance,
         horizontalTotalSize,
         horizontalVirtualItems,

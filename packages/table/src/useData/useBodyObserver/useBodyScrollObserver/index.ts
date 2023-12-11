@@ -58,4 +58,5 @@ const useBodyScrollObserver = (opt: Opt) => {
     return { addHandle, removeHandle };
 };
 
+export type BodyScrollObserver = ReturnType<typeof useBodyScrollObserver>;
 export default useBodyScrollObserver;

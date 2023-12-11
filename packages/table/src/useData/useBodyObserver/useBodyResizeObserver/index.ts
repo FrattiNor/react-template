@@ -72,4 +72,5 @@ const useBodyResizeObserver = (opt: Opt) => {
     return { addHandle, removeHandle };
 };
 
+export type BodyResizeObserver = ReturnType<typeof useBodyResizeObserver>;
 export default useBodyResizeObserver;

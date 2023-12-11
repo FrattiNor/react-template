@@ -70,4 +70,5 @@ const useResizeWidth = () => {
     return { renderResizeTitle, resizeActiveKey, resizeActiveWidth, resized };
 };
 
+export type ResizeWidth = ReturnType<typeof useResizeWidth>;
 export default useResizeWidth;

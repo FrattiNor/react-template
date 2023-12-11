@@ -1,5 +1,6 @@
 import { HandledColumn } from '../../../type';
-import { Range } from '../index';
+
+type Range = { startIndex: number; endIndex: number } | null;
 
 type Opt<T> = {
     horizontalRange: Range;

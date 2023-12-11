@@ -1,4 +1,4 @@
-import { HandledColumn, Column } from '../../type';
+import { HandledColumn, Column } from '../../../type';
 import { Opt } from './index';
 
 type GetHandledColumnsRes<T> = {
@@ -8,21 +8,7 @@ type GetHandledColumnsRes<T> = {
 };
 
 const getHandledColumns = <T extends Record<string, any>>(opt: Opt<T>): GetHandledColumnsRes<T> => {
-    const { columns, defaultWidth, defaultFlexGrow, vScrollBarWidth, horizontalItemSizeCache } = opt;
-
-    const midColumns: Column<T>[] = [];
-    const leftColumns: Column<T>[] = [];
-    const rightColumns: Column<T>[] = [];
-
-    columns.forEach((column) => {
-        if (column.fixed === 'left') {
-            leftColumns.push(column);
-        } else if (column.fixed === 'right') {
-            rightColumns.push(column);
-        } else {
-            midColumns.push(column);
-        }
-    });
+    const { leftColumns, midColumns, rightColumns, defaultWidth, defaultFlexGrow, vScrollBarWidth, horizontalItemSizeCache } = opt;
 
     const showFixed = midColumns.length > 0;
 

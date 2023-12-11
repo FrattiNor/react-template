@@ -1,13 +1,12 @@
-import useBodyResizeObserver from '../useBodyObserver/useBodyResizeObserver';
-import useBodyScrollObserver from '../useBodyObserver/useBodyScrollObserver';
 import { Virtualizer } from '@tanstack/react-virtual';
+import { BodyObserver } from '../../useBodyObserver';
 
 interface Rect {
     width: number;
     height: number;
 }
 
-export const observeElementRect = (key: string, bodyResizeObserver: ReturnType<typeof useBodyResizeObserver>) => {
+export const observeElementRect = (key: string, bodyObserver: BodyObserver) => {
     return <T extends Element>(instance: Virtualizer<T, any>, cb: (rect: Rect) => void) => {
         const element = instance.scrollElement;
         if (!element) {
@@ -19,15 +18,15 @@ export const observeElementRect = (key: string, bodyResizeObserver: ReturnType<t
             cb({ width: Math.round(width), height: Math.round(height) });
         };
 
-        bodyResizeObserver.addHandle(key, handler);
+        bodyObserver.bodyResizeObserver.addHandle(key, handler);
 
         return () => {
-            bodyResizeObserver.removeHandle(key);
+            bodyObserver.bodyResizeObserver.removeHandle(key);
         };
     };
 };
 
-export const observeElementOffset = (key: string, bodyScrollObserver: ReturnType<typeof useBodyScrollObserver>) => {
+export const observeElementOffset = (key: string, bodyObserver: BodyObserver) => {
     return <T extends Element>(instance: Virtualizer<T, any>, cb: (offset: number) => void) => {
         const element = instance.scrollElement;
         if (!element) {
@@ -38,10 +37,10 @@ export const observeElementOffset = (key: string, bodyScrollObserver: ReturnType
             cb(scrollSize[instance.options.horizontal ? 'scrollLeft' : 'scrollTop']);
         };
 
-        bodyScrollObserver.addHandle(key, handler);
+        bodyObserver.bodyScrollObserver.addHandle(key, handler);
 
         return () => {
-            bodyScrollObserver.removeHandle(key);
+            bodyObserver.bodyScrollObserver.removeHandle(key);
         };
     };
 };
