@@ -24,6 +24,7 @@ const useResizeWidth = () => {
             const pageX = e.pageX;
             const clientWidth = (e.target as HTMLDivElement).parentElement?.clientWidth || 0;
             if (typeof pageX === 'number' && typeof clientWidth === 'number') {
+                resized.current = true;
                 setResizeTarget({ key, pageX, clientWidth, width: clientWidth });
             }
         };
@@ -33,7 +34,6 @@ const useResizeWidth = () => {
         if (resizeTarget) {
             const mouseMove = (e: MouseEvent) => {
                 pauseEvent(e);
-                resized.current = true;
                 const moveX = e.pageX - resizeTarget.pageX;
                 setResizeTarget({
                     ...resizeTarget,

@@ -1,7 +1,6 @@
 /* eslint-disable react-refresh/only-export-components */
 import { Context2Hoc } from './Context2';
 import styles from './index.module.less';
-import MeasureBody from './MeasureBody';
 import Loading from './Loading';
 import { FC } from 'react';
 import Head from './Head';
@@ -13,7 +12,6 @@ const Table: FC = () => {
             <Head />
             <Body />
             <Loading />
-            <MeasureBody />
         </div>
     );
 };

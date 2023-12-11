@@ -28,22 +28,24 @@ const getHandledColumns = <T extends Record<string, any>>(opt: Opt<T>): GetHandl
 
     const getSomeProps = (column: Column<T>) => {
         const flexGrow = column.flexGrow ?? defaultFlexGrow;
-        const width = horizontalItemSizeCache.get(column.key) ?? column.width ?? defaultWidth;
-        return { flexGrow, width, fixed: showFixed ? column.fixed : undefined };
+        const originWidth = column.width ?? defaultWidth;
+        const width = horizontalItemSizeCache.get(column.key) ?? originWidth;
+        return { flexGrow, originWidth, width, fixed: showFixed ? column.fixed : undefined };
     };
 
     // left
     let leftBefore = 0;
     const handledLeftColumns = leftColumns.map((column, _index) => {
         const index = _index;
-        const { flexGrow, width, fixed } = getSomeProps(column);
+        const { flexGrow, fixed, originWidth, width } = getSomeProps(column);
 
         const res = {
             ...column,
             fixed,
             index,
-            width,
             flexGrow,
+            originWidth,
+            width,
             fixedStyle: fixed ? { left: leftBefore } : {},
             headFixedStyle: fixed ? { left: leftBefore } : {},
             showShadow: fixed ? _index === leftColumns.length - 1 : false,
@@ -56,13 +58,14 @@ const getHandledColumns = <T extends Record<string, any>>(opt: Opt<T>): GetHandl
     // mid
     const handledMidColumns = midColumns.map((column, _index) => {
         const index = _index + handledLeftColumns.length;
-        const { flexGrow, width } = getSomeProps(column);
+        const { flexGrow, originWidth, width } = getSomeProps(column);
 
         const res = {
             ...column,
             index,
-            width,
             flexGrow,
+            originWidth,
+            width,
         };
 
         return res;
@@ -74,14 +77,15 @@ const getHandledColumns = <T extends Record<string, any>>(opt: Opt<T>): GetHandl
     const rightColumnsCopy = [...rightColumns].reverse();
     rightColumnsCopy.forEach((column, _index) => {
         const index = handledLeftColumns.length + handledMidColumns.length + rightColumnsCopy.length - _index - 1;
-        const { flexGrow, width, fixed } = getSomeProps(column);
+        const { flexGrow, fixed, originWidth, width } = getSomeProps(column);
 
         const res = {
             ...column,
             fixed,
             index,
-            width,
             flexGrow,
+            originWidth,
+            width,
             fixedStyle: fixed ? { right: rightBefore } : {},
             showShadow: fixed ? _index === rightColumnsCopy.length - 1 : false,
             headFixedStyle: fixed ? { right: rightBefore + vScrollBarWidth } : {},

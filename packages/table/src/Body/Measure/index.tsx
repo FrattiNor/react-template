@@ -1,8 +1,8 @@
-import { useContext2 } from '../Context2';
+import { useContext2 } from '../../Context2';
 import styles from './index.module.less';
 import { FC } from 'react';
 
-const MeasureBody: FC = () => {
+const Measure: FC = () => {
     const { virtual, resize, columns } = useContext2();
 
     const { handledColumns } = columns;
@@ -11,9 +11,9 @@ const MeasureBody: FC = () => {
 
     return (
         <div className={styles['measure']}>
-            {handledColumns.map(({ key, width, flexGrow, index }) => {
+            {handledColumns.map(({ key, width, originWidth, flexGrow, index }) => {
                 const trueFlexGrow = resized.current ? 0 : flexGrow; // 手动调整过宽度后，flexGrow就不生效了
-                const trueWidth = resizeActiveKey === key ? resizeActiveWidth : width;
+                const trueWidth = resizeActiveKey === key ? resizeActiveWidth : resized.current ? width : originWidth; // 手动调整过宽度后，使用flexGrow后的宽度，不然就使用原生宽度
 
                 return (
                     <div
@@ -29,4 +29,4 @@ const MeasureBody: FC = () => {
     );
 };
 
-export default MeasureBody;
+export default Measure;
