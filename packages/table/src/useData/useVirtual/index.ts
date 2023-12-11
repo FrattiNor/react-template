@@ -1,7 +1,7 @@
 import { measureElement, observeElementRect, observeElementOffset } from './utils';
+import { useVirtualizer, elementScroll } from '@tanstack/react-virtual';
 import useBodyResizeObserver from '../useBodyResizeObserver';
 import useBodyScrollObserver from '../useBodyScrollObserver';
-import { useVirtualizer } from '@tanstack/react-virtual';
 import { RefObject, useEffect, useState } from 'react';
 import { TableProps } from '../../type';
 
@@ -30,6 +30,11 @@ const useVirtual = <T extends Record<string, any>>(props: TableProps<T>, opt: Op
         measureElement: measureElement,
         observeElementRect: observeElementRect('vRect', bodyResizeObserver),
         observeElementOffset: observeElementOffset('vOffset', bodyScrollObserver),
+        scrollToFn: () => {
+            // 屏蔽掉组件的scrollTo函数
+            // 作用为resize时保持item位置不变
+            return;
+        },
     });
 
     // 横向虚拟
@@ -44,6 +49,11 @@ const useVirtual = <T extends Record<string, any>>(props: TableProps<T>, opt: Op
         measureElement: measureElement,
         observeElementRect: observeElementRect('hRect', bodyResizeObserver),
         observeElementOffset: observeElementOffset('hOffset', bodyScrollObserver),
+        scrollToFn: () => {
+            // 屏蔽掉组件的scrollTo函数
+            // 作用为resize时保持item位置不变
+            return;
+        },
     });
 
     const verticalVirtualItems = verticalVirtualizer.getVirtualItems(); // 纵向虚拟显示item

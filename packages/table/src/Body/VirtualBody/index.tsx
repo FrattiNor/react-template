@@ -21,7 +21,8 @@ const VirtualBody: FC = () => {
                 style={{ transform: `translate3d(0, ${verticalDistance}px, 0)`, paddingLeft: `${horizontalDistance - hiddenFixedTotalSize}px` }}
             >
                 {verticalVirtualItems.map((verticalItem) => {
-                    const rowData = dataSource?.[verticalItem.index];
+                    const rowIndex = verticalItem.index;
+                    const rowData = dataSource?.[rowIndex];
 
                     if (rowData) {
                         return (
@@ -30,7 +31,7 @@ const VirtualBody: FC = () => {
                                     const column = handledColumns[item.index];
                                     if (column) {
                                         const { key, render, width, align, fixed, fixedStyle, showShadow } = column;
-                                        const cellValue = notEmpty(render ? render(rowData) : rowData[key]);
+                                        const cellValue = notEmpty(render ? render(rowData, rowIndex) : rowData[key]);
                                         const cellTitle = typeof cellValue === 'string' || typeof cellValue === 'number' ? `${cellValue}` : '';
                                         const pinged = ping[fixed as any];
 

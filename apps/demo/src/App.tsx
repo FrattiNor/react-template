@@ -1,7 +1,7 @@
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
 import { Column, TableRef } from '@pkg/table/src/type';
 import Table from '@pkg/table/src/index';
-import { useRef, useState } from 'react';
+import { useMemo, useRef, useState } from 'react';
 import { Switch, Button } from 'antd';
 import useFps from './useFps';
 
@@ -11,24 +11,25 @@ type Item = {
     name: string;
 };
 
-const columns2: Column<Item>[] = Array(3)
-    .fill('')
-    .map((_, i) => ({
-        width: Math.max(Math.floor(Math.random() * 150), 50),
-        key: `age_${i}`,
-        title: `年龄_${i}`,
-        flexGrow: i !== 0 ? 1 : 0,
-        render: ({ age }) => `年龄_${age}`,
-        fixed: i === 0 ? 'left' : i === 99 ? 'right' : undefined,
-    }));
-
-console.log(columns2.map((item) => item.width));
-
 const DemoTable = () => {
     useFps();
     const ref = useRef<TableRef>(null);
     const [count, setCount] = useState(100000);
     const [loading, setLoading] = useState(false);
+    const [lineHeight, setLineHeight] = useState(19);
+
+    const columns2: Column<Item>[] = useMemo(() => {
+        return Array(3)
+            .fill('')
+            .map((_, i) => ({
+                width: Math.max(Math.floor(Math.random() * 150), 50),
+                key: `age_${i}`,
+                title: `年龄_${i}`,
+                flexGrow: i !== 0 ? 1 : 0,
+                fixed: i === 0 ? 'left' : i === 99 ? 'right' : undefined,
+                render: (_, index) => <div style={{ lineHeight: `${lineHeight}px` }}>{`年龄_${index}`}</div>,
+            }));
+    }, [lineHeight]);
 
     const query = useQuery({
         gcTime: 0,
@@ -64,6 +65,10 @@ const DemoTable = () => {
         setCount((c) => (c === 100 ? 10 : 100));
     };
 
+    const height = () => {
+        setLineHeight((c) => (c === 19 ? 29 : 19));
+    };
+
     return (
         <div style={{ padding: 64 }}>
             <div style={{ padding: '24px 24px 0 24px', width: 900, backgroundColor: '#fff' }}>
@@ -73,6 +78,9 @@ const DemoTable = () => {
                 </Button>
                 <Button onClick={reload} style={{ marginLeft: 16 }}>
                     Reload
+                </Button>
+                <Button onClick={height} style={{ marginLeft: 16 }}>
+                    LineHeight
                 </Button>
             </div>
             <div style={{ height: 600, width: 900, padding: 24, backgroundColor: '#fff' }}>

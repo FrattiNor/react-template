@@ -17,7 +17,7 @@ export type Column<T> = {
     flexGrow?: number;
     fixed?: 'left' | 'right';
     align?: 'left' | 'right' | 'center';
-    render?: (v: T) => ReactNode;
+    render?: (v: T, index: number) => ReactNode;
 };
 
 export type HandledColumn<T> = Omit<Column<T>, 'width' | 'flexGrow'> & {
