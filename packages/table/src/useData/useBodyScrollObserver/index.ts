@@ -45,6 +45,7 @@ const useBodyScrollObserver = (opt: Opt) => {
         if (bodyRef.current) {
             const onScroll = (e: Event) => {
                 const target = e.target as HTMLDivElement;
+
                 size.current = { scrollLeft: target.scrollLeft, scrollTop: target.scrollTop };
 
                 Object.values(handles.current).forEach((handle) => handle(size.current));

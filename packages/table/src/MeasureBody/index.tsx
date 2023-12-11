@@ -1,8 +1,8 @@
-import { useContext2 } from '../../Context2';
+import { useContext2 } from '../Context2';
 import styles from './index.module.less';
 import { FC } from 'react';
 
-const HorizontalMeasure: FC = () => {
+const MeasureBody: FC = () => {
     const { virtual, resize, columns } = useContext2();
 
     const { handledColumns } = columns;
@@ -29,4 +29,4 @@ const HorizontalMeasure: FC = () => {
     );
 };
 
-export default HorizontalMeasure;
+export default MeasureBody;

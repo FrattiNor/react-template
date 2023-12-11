@@ -1,4 +1,3 @@
-import HorizontalMeasure from './HorizontalMeasure';
 import { useContext2 } from '../Context2';
 import styles from './index.module.less';
 import VirtualBody from './VirtualBody';
@@ -11,10 +10,7 @@ const Body: FC = () => {
 
     return (
         <div className={styles['body']} ref={bodyRef}>
-            <HorizontalMeasure />
-
             {isEmpty && <Empty />}
-
             {!isEmpty && <VirtualBody />}
         </div>
     );
