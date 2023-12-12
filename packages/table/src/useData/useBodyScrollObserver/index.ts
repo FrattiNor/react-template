@@ -1,5 +1,5 @@
 import { CalcPingAndScrollBarWidth } from '../useCalcPingAndScrollBarWidth';
-import { RefObject, useEffect, useRef, useState } from 'react';
+import { RefObject, useEffect, useRef } from 'react';
 
 type Opt = {
     headRef: RefObject<HTMLDivElement | null>;
@@ -13,7 +13,7 @@ type Handle = (size: Size) => void;
 
 const useBodyScrollObserver = (opt: Opt) => {
     const handles = useRef<Record<string, Handle>>({});
-    const [size, setSize] = useState<Size>({ scrollLeft: 0, scrollTop: 0 });
+    const size = useRef<Size>({ scrollLeft: 0, scrollTop: 0 });
     const { calcPingAndScrollBarWidth, bodyRef, headRef } = opt;
 
     useEffect(() => {
@@ -25,7 +25,7 @@ const useBodyScrollObserver = (opt: Opt) => {
 
                 Object.values(handles.current).forEach((handle) => handle(nextSize));
 
-                setSize(nextSize);
+                size.current = nextSize;
 
                 calcPingAndScrollBarWidth.calcPing(target);
 
@@ -48,7 +48,7 @@ const useBodyScrollObserver = (opt: Opt) => {
             [key]: handle,
         };
         // 添加后立刻执行一次
-        handle(size);
+        handle(size.current);
     };
 
     const removeHandle = (key: string) => {

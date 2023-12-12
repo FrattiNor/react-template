@@ -15,9 +15,9 @@ type Item = {
 const DemoTable = () => {
     useFps();
     const ref = useRef<TableRef>(null);
-    const [count, setCount] = useState(100);
+    const [count, setCount] = useState(10);
     const [loading, setLoading] = useState(false);
-    const [columnsFlag, setColumnsFlag] = useState(true);
+    const [columnsFlag, setColumnsFlag] = useState(false);
 
     // const columns2: Column<Item>[] = useMemo(() => {
     //     return Array(22)

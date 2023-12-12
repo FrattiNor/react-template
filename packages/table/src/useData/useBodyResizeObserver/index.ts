@@ -1,4 +1,4 @@
-import { RefObject, useEffect, useRef, useState } from 'react';
+import { RefObject, useEffect, useRef } from 'react';
 import { CalcPingAndScrollBarWidth } from '../useCalcPingAndScrollBarWidth';
 
 type Opt = {
@@ -15,13 +15,12 @@ type Handle = (size: Size2) => void;
 const useBodyResizeObserver = (opt: Opt) => {
     const handles = useRef<Record<string, Handle>>({});
     const { bodyRef, calcPingAndScrollBarWidth } = opt;
-    const [size, setSize] = useState<Size1>({ width: null, height: null });
+    const size = useRef<Size1>({ width: null, height: null });
 
     useEffect(() => {
         if (bodyRef.current) {
             const ob = new ResizeObserver((entries) => {
                 const entry = entries[0];
-                console.log(entry);
                 const nextSize = { height: 0, width: 0 };
                 if (entry.borderBoxSize) {
                     const box = entry.borderBoxSize[0];
@@ -38,7 +37,7 @@ const useBodyResizeObserver = (opt: Opt) => {
                     calcPingAndScrollBarWidth.calcScrollBarWidth(bodyRef.current);
                 }
 
-                setSize(nextSize);
+                size.current = nextSize;
             });
 
             ob.observe(bodyRef.current);
@@ -56,8 +55,8 @@ const useBodyResizeObserver = (opt: Opt) => {
         };
 
         // 添加后立刻执行一次
-        if (typeof size.height === 'number' && typeof size.width === 'number') {
-            handle(size as Size2);
+        if (typeof size.current.height === 'number' && typeof size.current.width === 'number') {
+            handle(size.current as Size2);
         } else {
             const rect = bodyRef.current?.getBoundingClientRect();
             if (rect) handle(rect);
@@ -70,7 +69,7 @@ const useBodyResizeObserver = (opt: Opt) => {
         handles.current = { ...newHandles };
     };
 
-    return { addHandle, removeHandle, size };
+    return { addHandle, removeHandle };
 };
 
 export type BodyResizeObserver = ReturnType<typeof useBodyResizeObserver>;
