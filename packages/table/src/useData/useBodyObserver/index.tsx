@@ -26,15 +26,18 @@ const useBodyObserver = (opt: Opt) => {
 
     // 计算ping情况
     const calcPing = (target: HTMLDivElement) => {
-        const { scrollWidth, clientWidth, scrollLeft } = target;
+        // 等待滚动条产生或者消失
+        window.requestAnimationFrame(() => {
+            const { scrollWidth, clientWidth, scrollLeft } = target;
 
-        if (scrollWidth === clientWidth) {
-            setPingLeft(false);
-            setPingRight(false);
-        } else {
-            setPingLeft(scrollLeft > 0);
-            setPingRight(scrollLeft < scrollWidth - clientWidth);
-        }
+            if (scrollWidth === clientWidth) {
+                setPingLeft(false);
+                setPingRight(false);
+            } else {
+                setPingLeft(scrollLeft > 0);
+                setPingRight(scrollLeft < scrollWidth - clientWidth);
+            }
+        });
     };
 
     // observer body resize
