@@ -25,7 +25,7 @@ const useData = <T extends AnyObj>(props: TableProps<T>) => {
     // title resize
     const resizeWidth = useResizeWidth();
     // ping
-    const calcPingAndScrollBarWidth = useCalcPingAndScrollBarWidth();
+    const calcPingAndScrollBarWidth = useCalcPingAndScrollBarWidth({ bodyRef });
     // sort columns
     const sortedColumns = useSortColumns({ columns });
     //  body resize observer
@@ -48,6 +48,7 @@ const useData = <T extends AnyObj>(props: TableProps<T>) => {
         sortedColumns,
         bodyResizeObserver,
         bodyScrollObserver,
+        calcPingAndScrollBarWidth,
         resized: resizeWidth.resized,
     });
     // handle columns

@@ -1,4 +1,5 @@
 import { measureElement, observeElementRect, observeElementOffset } from './utils';
+import { CalcPingAndScrollBarWidth } from '../useCalcPingAndScrollBarWidth';
 import { BodyResizeObserver } from '../useBodyResizeObserver';
 import { BodyScrollObserver } from '../useBodyScrollObserver';
 import { useVirtualizer } from '@tanstack/react-virtual';
@@ -14,13 +15,15 @@ type Opt<T extends Record<string, any>> = {
     bodyResizeObserver: BodyResizeObserver;
     bodyScrollObserver: BodyScrollObserver;
     bodyRef: RefObject<HTMLDivElement | null>;
+    calcPingAndScrollBarWidth: CalcPingAndScrollBarWidth;
 };
 
 type ItemSizeCache = Map<number | string, number>;
 
 const useVirtual = <T extends Record<string, any>>(opt: Opt<T>) => {
     const [rowSize, setRowSize] = useState(40);
-    const { dataSource, sortedColumns, rowKey, bodyRef, defaultWidth, bodyResizeObserver, bodyScrollObserver, resized } = opt;
+    const { dataSource, sortedColumns, rowKey, bodyRef, defaultWidth, bodyResizeObserver, bodyScrollObserver, resized, calcPingAndScrollBarWidth } =
+        opt;
 
     // 竖向虚拟
     const verticalVirtualizer = useVirtualizer({
@@ -84,6 +87,11 @@ const useVirtual = <T extends Record<string, any>>(opt: Opt<T>) => {
             setRowSize(firstRowSizeCache);
         }
     }, [firstRowSizeCache]);
+
+    //
+    useEffect(() => {
+        calcPingAndScrollBarWidth.calcPing();
+    }, [horizontalTotalSize]);
 
     return {
         verticalDistance,

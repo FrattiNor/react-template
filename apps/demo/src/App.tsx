@@ -15,7 +15,7 @@ type Item = {
 const DemoTable = () => {
     useFps();
     const ref = useRef<TableRef>(null);
-    const [count, setCount] = useState(10);
+    const [count, setCount] = useState(10000);
     const [loading, setLoading] = useState(false);
     const [columnsFlag, setColumnsFlag] = useState(false);
 
@@ -85,7 +85,7 @@ const DemoTable = () => {
                         LineHeight
                     </Button>
                 </div>
-                <div style={{ height: 600, width: 900, padding: 24 }}>
+                <div style={{ height: 300, width: 900, padding: 24 }}>
                     <Table
                         ref={ref}
                         rowKey="id"

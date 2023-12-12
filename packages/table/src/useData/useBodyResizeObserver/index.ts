@@ -31,12 +31,8 @@ const useBodyResizeObserver = (opt: Opt) => {
                 }
 
                 Object.values(handles.current).forEach((handle) => handle(nextSize));
-
-                if (bodyRef.current) {
-                    calcPingAndScrollBarWidth.calcPing(bodyRef.current);
-                    calcPingAndScrollBarWidth.calcScrollBarWidth(bodyRef.current);
-                }
-
+                calcPingAndScrollBarWidth.calcPing();
+                calcPingAndScrollBarWidth.calcScrollBarWidth();
                 size.current = nextSize;
             });
 
