@@ -1,4 +1,5 @@
 import useVirtualColumns from './useVirtualColumns';
+import useCalcScrollBar from './useCalcScrollBar';
 import useBodyObserver from './useBodyObserver';
 import useResizeWidth from './useResizeWidth';
 import { AnyObj, TableProps } from '../type';
@@ -27,6 +28,11 @@ const useData = <T extends AnyObj>(props: TableProps<T>) => {
         bodyObserver,
         defaultFlexGrow,
     });
+    // calc scroll bar
+    const scrollBar = useCalcScrollBar({
+        bodyObserver,
+        virtual,
+    });
 
     // 数据变更时触发滚动回顶部
     useEffect(() => {
@@ -42,6 +48,7 @@ const useData = <T extends AnyObj>(props: TableProps<T>) => {
         headRef,
         bodyRef,
         newProps,
+        scrollBar,
         bodyObserver,
         columns: _columns,
     };

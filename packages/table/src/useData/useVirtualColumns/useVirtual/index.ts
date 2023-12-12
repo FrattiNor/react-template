@@ -94,4 +94,5 @@ const useVirtual = <T extends Record<string, any>>(opt: Opt<T>) => {
     };
 };
 
+export type Virtual = ReturnType<typeof useVirtual>;
 export default useVirtual;

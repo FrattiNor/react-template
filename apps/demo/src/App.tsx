@@ -15,7 +15,7 @@ type Item = {
 const DemoTable = () => {
     useFps();
     const ref = useRef<TableRef>(null);
-    const [count, setCount] = useState(100000);
+    const [count, setCount] = useState(100);
     const [loading, setLoading] = useState(false);
     const [columnsFlag, setColumnsFlag] = useState(true);
 

@@ -1,4 +1,4 @@
-import { RefObject, useEffect, useRef } from 'react';
+import { RefObject, useEffect, useRef, useState } from 'react';
 
 type Opt = {
     bodyRef: RefObject<HTMLDivElement | null>;
@@ -15,14 +15,13 @@ type Handle = (size: Size2) => void;
 const useBodyResizeObserver = (opt: Opt) => {
     const handles = useRef<Record<string, Handle>>({});
     const { bodyRef, calcPing, calcScrollBarWidth } = opt;
-    const size = useRef<Size1>({ width: null, height: null });
+    const [size, setSize] = useState<Size1>({ width: null, height: null });
 
     useEffect(() => {
         if (bodyRef.current) {
             const ob = new ResizeObserver((entries) => {
                 const entry = entries[0];
                 const nextSize = { height: 0, width: 0 };
-
                 if (entry.borderBoxSize) {
                     const box = entry.borderBoxSize[0];
                     if (box) {
@@ -32,7 +31,7 @@ const useBodyResizeObserver = (opt: Opt) => {
                 }
 
                 Object.values(handles.current).forEach((handle) => handle(nextSize));
-                size.current = nextSize;
+                setSize(nextSize);
 
                 if (bodyRef.current) {
                     calcPing(bodyRef.current);
@@ -55,8 +54,8 @@ const useBodyResizeObserver = (opt: Opt) => {
         };
 
         // 添加后立刻执行一次
-        if (typeof size.current.height === 'number' && typeof size.current.width === 'number') {
-            handle(size.current as Size2);
+        if (typeof size.height === 'number' && typeof size.width === 'number') {
+            handle(size as Size2);
         } else {
             const rect = bodyRef.current?.getBoundingClientRect();
             if (rect) handle(rect);
@@ -69,7 +68,7 @@ const useBodyResizeObserver = (opt: Opt) => {
         handles.current = { ...newHandles };
     };
 
-    return { addHandle, removeHandle };
+    return { addHandle, removeHandle, size };
 };
 
 export type BodyResizeObserver = ReturnType<typeof useBodyResizeObserver>;
