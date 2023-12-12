@@ -3,8 +3,8 @@ import useBodyResizeObserver from './useBodyResizeObserver';
 import useBodyScrollObserver from './useBodyScrollObserver';
 import useHiddenFixedColumns from './useHiddenFixedColumns';
 import useChangeScrollTop from './useChangeScrollTop';
-
 import useHandleColumns from './useHandleColumns';
+import useRowSelection from './useRowSelection';
 import useHandleProps from './useHandleProps';
 import useResizeWidth from './useResizeWidth';
 import useSortColumns from './useSortColumns';
@@ -19,7 +19,10 @@ const useData = <T extends AnyObj>(props: TableProps<T>) => {
     const headRef = useRef<HTMLDivElement>(null);
 
     // props
-    const { columns, rowKey, dataSource, autoScrollTop, newProps } = useHandleProps(props);
+    const { columns, newProps } = useHandleProps(props);
+    const { rowKey, dataSource, autoScrollTop, rowSelection } = newProps;
+    // 增加多选
+    const { rowKeysObj, rowSelectionColumns } = useRowSelection({ columns, rowKey, dataSource, rowSelection });
     // auto scroll top
     useChangeScrollTop({ dataSource, autoScrollTop, bodyRef });
     // title resize
@@ -27,7 +30,7 @@ const useData = <T extends AnyObj>(props: TableProps<T>) => {
     // ping
     const calcPingAndScrollBarWidth = useCalcPingAndScrollBarWidth({ bodyRef });
     // sort columns
-    const sortedColumns = useSortColumns({ columns });
+    const sortedColumns = useSortColumns({ columns: rowSelectionColumns });
     //  body resize observer
     const bodyResizeObserver = useBodyResizeObserver({
         bodyRef,
@@ -67,6 +70,7 @@ const useData = <T extends AnyObj>(props: TableProps<T>) => {
     });
 
     const innerProps = {
+        rowKeysObj,
         ...resizeWidth,
         ...hiddenFixedColumns,
         ping: calcPingAndScrollBarWidth.ping,

@@ -15,9 +15,9 @@ type Item = {
 const DemoTable = () => {
     useFps();
     const ref = useRef<TableRef>(null);
-    const [count, setCount] = useState(10000);
+    const [count, setCount] = useState(100000);
     const [loading, setLoading] = useState(false);
-    const [columnsFlag, setColumnsFlag] = useState(false);
+    const [columnsFlag, setColumnsFlag] = useState(true);
 
     // const columns2: Column<Item>[] = useMemo(() => {
     //     return Array(22)
@@ -82,14 +82,15 @@ const DemoTable = () => {
                         Reload
                     </Button>
                     <Button onClick={height} style={{ marginLeft: 16 }}>
-                        LineHeight
+                        Columns
                     </Button>
                 </div>
                 <div style={{ height: 300, width: 900, padding: 24 }}>
                     <Table
                         ref={ref}
                         rowKey="id"
-                        dataSource={query.data}
+                        rowSelection={{}}
+                        dataSource={query.data || []}
                         loading={query.isFetching || loading}
                         columns={(columnsFlag ? columns : columns2) as any}
                     />

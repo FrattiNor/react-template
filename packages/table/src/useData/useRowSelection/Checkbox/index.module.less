@@ -1,0 +1,95 @@
+.checkbox {
+    margin: 0;
+    width: 16px;
+    height: 16px;
+    outline: none;
+    cursor: pointer;
+    position: relative;
+    transition: all 0.3s;
+    display: inline-block;
+    background-color: var(--table-bg);
+    border: 1px solid var(--table-border);
+    border-radius: var(--table-border-radius);
+
+    &::after {
+        top: 10%;
+        left: 30%;
+        width: 40%;
+        opacity: 0;
+        height: 66%;
+        content: '';
+        position: absolute;
+        box-sizing: border-box;
+        transition: opacity 0.3s;
+        transform: rotate(45deg);
+        transform-origin: 50% 50%;
+        border-right: 2px solid var(--table-bg);
+        border-bottom: 2px solid var(--table-bg);
+    }
+
+    &::before {
+        top: 22%;
+        left: 22%;
+        width: 56%;
+        opacity: 0;
+        height: 56%;
+        content: '';
+        position: absolute;
+        box-sizing: border-box;
+        background-color: var(--table-primary);
+    }
+
+    &.checked {
+        border-color: var(--table-primary);
+        background-color: var(--table-primary);
+
+        &::after {
+            opacity: 1;
+        }
+    }
+
+    &.indeterminate {
+        &::before {
+            opacity: 1;
+        }
+    }
+
+    &.disabled {
+        cursor: not-allowed;
+        background-color: var(--table-disabled-bg);
+    }
+
+    &.disabled.checked {
+        &::after {
+            border-color: var(--table-disabled-foreground);
+        }
+    }
+
+    &.disabled.indeterminate {
+        &::before {
+            background-color: var(--table-disabled-foreground);
+        }
+    }
+
+    .checked-animate {
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        position: absolute;
+        animation: checkbox-out 0.5s;
+        background-color: var(--table-primary);
+        border-radius: var(--table-border-radius);
+    }
+
+    @keyframes checkbox-out {
+        0% {
+            transform: scale(1);
+            opacity: 0.4;
+        }
+        100% {
+            transform: scale(1.6);
+            opacity: 0;
+        }
+    }
+}
