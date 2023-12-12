@@ -1,29 +1,10 @@
 /* eslint-disable react-refresh/only-export-components */
-import { Context2Hoc, useContext2 } from './Context2';
-import styles from './index.module.less';
-import ScrollBarV from './ScrollBarV';
-import ScrollBarH from './ScrollBarH';
-import Loading from './Loading';
+import { Context2Hoc } from './Context2';
 import { FC } from 'react';
-import Head from './Head';
-import Body from './Body';
+import Dom from './Dom';
 
-const Table: FC = () => {
-    const { scrollBar } = useContext2();
-
-    return (
-        <div className={styles['table']}>
-            <Head />
-            <div className={styles['body']}>
-                <Body />
-                <ScrollBarV />
-            </div>
-            <ScrollBarH />
-
-            <Loading />
-            {scrollBar.calcScrollBarDom}
-        </div>
-    );
+const Table2: FC = () => {
+    return <Dom />;
 };
 
-export default Context2Hoc(Table);
+export default Context2Hoc(Table2);

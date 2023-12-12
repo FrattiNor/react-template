@@ -1,8 +1,8 @@
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
-import { Column, TableRef } from '@pkg/table/src/type';
-import { useMemo, useRef, useState } from 'react';
+import { TableRef } from '@pkg/table/src/type';
 import { columns, columns2 } from './utils';
-import Table from '@pkg/table2/src/index';
+import { useRef, useState } from 'react';
+import Table from '@pkg/table/src/index';
 import { Switch, Button } from 'antd';
 import useFps from './useFps';
 

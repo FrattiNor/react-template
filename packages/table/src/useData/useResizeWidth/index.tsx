@@ -1,4 +1,4 @@
-import { MouseEventHandler, ReactNode, useEffect, useRef, useState } from 'react';
+import { MouseEventHandler, ReactNode, useEffect, useState } from 'react';
 import ResizableTitle from './ResizableTitle';
 
 // 避免触发一些事件导致mouse无法触发
@@ -13,7 +13,7 @@ function pauseEvent(e: Event) {
 type ResizeTarget = { width: number; clientWidth: number; pageX: number; key: string };
 
 const useResizeWidth = () => {
-    const resized = useRef(false);
+    const [resized, setResized] = useState(false);
     const [resizeTarget, setResizeTarget] = useState<null | ResizeTarget>(null);
     const resizeActiveKey = resizeTarget?.key;
     const resizeActiveWidth = resizeTarget?.width;
@@ -24,7 +24,6 @@ const useResizeWidth = () => {
             const pageX = e.pageX;
             const clientWidth = (e.target as HTMLDivElement).parentElement?.clientWidth || 0;
             if (typeof pageX === 'number' && typeof clientWidth === 'number') {
-                resized.current = true;
                 setResizeTarget({ key, pageX, clientWidth, width: clientWidth });
             }
         };
@@ -35,6 +34,7 @@ const useResizeWidth = () => {
             const mouseMove = (e: MouseEvent) => {
                 pauseEvent(e);
                 const moveX = e.pageX - resizeTarget.pageX;
+                setResized(true);
                 setResizeTarget({
                     ...resizeTarget,
                     width: Math.min(Math.max(resizeTarget.clientWidth + moveX, 50), 1000),
