@@ -1,6 +1,6 @@
 import { measureElement, observeElementRect, observeElementOffset } from './utils';
-import { useVirtualizer } from '@tanstack/react-virtual';
 import { RefObject, useEffect, useState } from 'react';
+import { useVirtualizer } from '@tanstack/react-virtual';
 import { BodyObserver } from '../../useBodyObserver';
 import { Column } from '../../../type';
 
@@ -43,9 +43,9 @@ const useVirtual = <T extends Record<string, any>>(opt: Opt<T>) => {
         overscan: 0,
         horizontal: true,
         count: columns.length,
-        estimateSize: () => defaultWidth,
         getScrollElement: () => bodyRef.current,
         getItemKey: (index) => columns[index].key,
+        estimateSize: (index) => columns[index].width ?? defaultWidth,
         measureElement: measureElement,
         observeElementRect: observeElementRect('hRect', bodyObserver),
         observeElementOffset: observeElementOffset('hOffset', bodyObserver),
@@ -62,9 +62,9 @@ const useVirtual = <T extends Record<string, any>>(opt: Opt<T>) => {
     const verticalMeasureElement = verticalVirtualizer.measureElement; // 纵向监测元素高度
 
     const horizontalVirtualItems = horizontalVirtualizer.getVirtualItems(); // 横向虚拟显示item
-    const horizontalTotalSize = horizontalVirtualizer.getTotalSize(); // 横向总宽度
     const horizontalDistance = horizontalVirtualItems[0]?.start ?? 0; // 横向offset距离
     const horizontalMeasureElement = horizontalVirtualizer.measureElement; // 横向监测元素宽度
+    const horizontalTotalSize = horizontalVirtualizer.getTotalSize();
     // const horizontalMeasure = horizontalVirtualizer.measure; // 清除横向缓存
     const horizontalRange = horizontalVirtualizer.range; // 横向显示的start和end
     const horizontalItemSizeCache = (horizontalVirtualizer as any).itemSizeCache as ItemSizeCache; // 横向测量缓存

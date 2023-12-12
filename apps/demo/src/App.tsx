@@ -1,6 +1,7 @@
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
 import { Column, TableRef } from '@pkg/table/src/type';
 import { useMemo, useRef, useState } from 'react';
+import { columns, columns2 } from './utils';
 import Table from '@pkg/table/src/index';
 import { Switch, Button } from 'antd';
 import useFps from './useFps';
@@ -16,20 +17,20 @@ const DemoTable = () => {
     const ref = useRef<TableRef>(null);
     const [count, setCount] = useState(100000);
     const [loading, setLoading] = useState(false);
-    const [lineHeight, setLineHeight] = useState(19);
+    const [columnsFlag, setColumnsFlag] = useState(true);
 
-    const columns2: Column<Item>[] = useMemo(() => {
-        return Array(22)
-            .fill('')
-            .map((_, i) => ({
-                width: Math.max(Math.floor(Math.random() * 150), 50),
-                key: `age_${i}`,
-                title: `年龄_${i}`,
-                flexGrow: i !== 0 ? 1 : 0,
-                fixed: i === 0 ? 'left' : i === 10 ? 'right' : undefined,
-                render: (__, index) => <span style={{ display: 'inline-block', lineHeight: `${lineHeight}px` }}>{`年龄_${index}`}</span>,
-            }));
-    }, [lineHeight]);
+    // const columns2: Column<Item>[] = useMemo(() => {
+    //     return Array(22)
+    //         .fill('')
+    //         .map((_, i) => ({
+    //             width: Math.max(Math.floor(Math.random() * 150), 50),
+    //             key: `age_${i}`,
+    //             title: `年龄_${i}`,
+    //             flexGrow: i !== 0 ? 1 : 0,
+    //             fixed: i === 0 ? 'left' : i === 10 ? 'right' : undefined,
+    //             render: (__, index) => <span style={{ display: 'inline-block', lineHeight: `${lineHeight}px` }}>{`年龄_${index}`}</span>,
+    //         }));
+    // }, [lineHeight]);
 
     const query = useQuery({
         gcTime: 0,
@@ -66,7 +67,7 @@ const DemoTable = () => {
     };
 
     const height = () => {
-        setLineHeight((c) => (c === 19 ? 29 : 19));
+        setColumnsFlag((f) => !f);
     };
 
     return (
@@ -85,7 +86,13 @@ const DemoTable = () => {
                     </Button>
                 </div>
                 <div style={{ height: 600, width: 900, padding: 24 }}>
-                    <Table ref={ref} rowKey="id" dataSource={query.data} columns={columns2} loading={query.isFetching || loading} />
+                    <Table
+                        ref={ref}
+                        rowKey="id"
+                        dataSource={query.data}
+                        loading={query.isFetching || loading}
+                        columns={(columnsFlag ? columns : columns2) as any}
+                    />
                 </div>
             </div>
         </div>
