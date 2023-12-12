@@ -21,6 +21,7 @@ const useBodyResizeObserver = (opt: Opt) => {
         if (bodyRef.current) {
             const ob = new ResizeObserver((entries) => {
                 const entry = entries[0];
+                console.log(entry);
                 const nextSize = { height: 0, width: 0 };
                 if (entry.borderBoxSize) {
                     const box = entry.borderBoxSize[0];
@@ -40,7 +41,7 @@ const useBodyResizeObserver = (opt: Opt) => {
                 setSize(nextSize);
             });
 
-            ob.observe(bodyRef.current, { box: 'border-box' });
+            ob.observe(bodyRef.current);
 
             return () => {
                 ob.disconnect();
