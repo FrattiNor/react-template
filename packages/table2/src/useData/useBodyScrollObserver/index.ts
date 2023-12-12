@@ -1,12 +1,10 @@
+import { CalcPingAndScrollBarWidth } from '../useCalcPingAndScrollBarWidth';
 import { RefObject, useEffect, useRef, useState } from 'react';
-import { CalcPing } from '../useCalcPing';
 
 type Opt = {
-    calcPing: CalcPing;
     headRef: RefObject<HTMLDivElement | null>;
     bodyRef: RefObject<HTMLDivElement | null>;
-    vScrollbarRef: RefObject<HTMLDivElement | null>;
-    hScrollbarRef: RefObject<HTMLDivElement | null>;
+    calcPingAndScrollBarWidth: CalcPingAndScrollBarWidth;
 };
 
 type Size = { scrollLeft: number; scrollTop: number };
@@ -16,7 +14,7 @@ type Handle = (size: Size) => void;
 const useBodyScrollObserver = (opt: Opt) => {
     const handles = useRef<Record<string, Handle>>({});
     const [size, setSize] = useState<Size>({ scrollLeft: 0, scrollTop: 0 });
-    const { calcPing, bodyRef, headRef, vScrollbarRef, hScrollbarRef } = opt;
+    const { calcPingAndScrollBarWidth, bodyRef, headRef } = opt;
 
     useEffect(() => {
         if (bodyRef.current) {
@@ -29,11 +27,11 @@ const useBodyScrollObserver = (opt: Opt) => {
 
                 setSize(nextSize);
 
-                calcPing.calcPing(target);
+                calcPingAndScrollBarWidth.calcPing(target);
+
+                calcPingAndScrollBarWidth.calcScrollBarWidth(target);
 
                 if (headRef.current) headRef.current.scrollTo({ left: target.scrollLeft });
-                if (hScrollbarRef.current) hScrollbarRef.current.scrollTo({ left: target.scrollLeft });
-                if (vScrollbarRef.current) vScrollbarRef.current.scrollTo({ top: target.scrollTop });
             };
 
             bodyRef.current.addEventListener('scroll', onScroll, { passive: true });

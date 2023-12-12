@@ -1,9 +1,9 @@
 import { RefObject, useEffect, useRef, useState } from 'react';
-import { CalcPing } from '../useCalcPing';
+import { CalcPingAndScrollBarWidth } from '../useCalcPingAndScrollBarWidth';
 
 type Opt = {
     bodyRef: RefObject<HTMLDivElement | null>;
-    calcPing: CalcPing;
+    calcPingAndScrollBarWidth: CalcPingAndScrollBarWidth;
 };
 
 type Size1 = { width: null | number; height: null | number };
@@ -14,7 +14,7 @@ type Handle = (size: Size2) => void;
 
 const useBodyResizeObserver = (opt: Opt) => {
     const handles = useRef<Record<string, Handle>>({});
-    const { bodyRef, calcPing } = opt;
+    const { bodyRef, calcPingAndScrollBarWidth } = opt;
     const [size, setSize] = useState<Size1>({ width: null, height: null });
 
     useEffect(() => {
@@ -32,7 +32,10 @@ const useBodyResizeObserver = (opt: Opt) => {
 
                 Object.values(handles.current).forEach((handle) => handle(nextSize));
 
-                if (bodyRef.current) calcPing.calcPing(bodyRef.current);
+                if (bodyRef.current) {
+                    calcPingAndScrollBarWidth.calcPing(bodyRef.current);
+                    calcPingAndScrollBarWidth.calcScrollBarWidth(bodyRef.current);
+                }
 
                 setSize(nextSize);
             });

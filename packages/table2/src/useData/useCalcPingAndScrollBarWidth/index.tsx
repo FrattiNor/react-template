@@ -1,8 +1,9 @@
 import { useState } from 'react';
 
-const useCalcPing = () => {
+const useCalcPingAndScrollBarWidth = () => {
     const [pingLeft, setPingLeft] = useState<boolean>(false);
     const [pingRight, setPingRight] = useState<boolean>(false);
+    const [vScrollBarWidth, setVScrollBarWidth] = useState(0);
 
     const ping: Record<string, boolean> = {
         left: pingLeft,
@@ -25,8 +26,14 @@ const useCalcPing = () => {
         });
     };
 
-    return { ping, calcPing };
+    // 计算纵向滚动条宽度
+    const calcScrollBarWidth = (target: HTMLDivElement) => {
+        const { clientWidth, offsetWidth } = target;
+        setVScrollBarWidth(offsetWidth - clientWidth);
+    };
+
+    return { ping, vScrollBarWidth, calcPing, calcScrollBarWidth };
 };
 
-export type CalcPing = ReturnType<typeof useCalcPing>;
-export default useCalcPing;
+export type CalcPingAndScrollBarWidth = ReturnType<typeof useCalcPingAndScrollBarWidth>;
+export default useCalcPingAndScrollBarWidth;

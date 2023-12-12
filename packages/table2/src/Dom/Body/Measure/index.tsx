@@ -1,13 +1,12 @@
-import { useContext2 } from '../../../../Context2';
+import { useContext2 } from '../../../Context2';
 import styles from './index.module.less';
 import { FC } from 'react';
 
 const Measure: FC = () => {
-    const { virtual, resizeWidth, columns } = useContext2();
+    const { virtual, innerProps } = useContext2();
 
-    const { handledColumns } = columns;
     const { horizontalMeasureElement } = virtual;
-    const { resizeActiveKey, resizeActiveWidth, resized } = resizeWidth;
+    const { handledColumns, resizeActiveKey, resizeActiveWidth, resized } = innerProps;
 
     return (
         <div className={styles['measure']}>

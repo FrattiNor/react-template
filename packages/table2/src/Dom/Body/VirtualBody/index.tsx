@@ -1,16 +1,17 @@
-import { useContext2 } from '../../../../Context2';
+import { useContext2 } from '../../../Context2';
 import { notEmpty } from '@pkg/utils/src/empty';
 import styles from './index.module.less';
 import classNames from 'classnames';
 import { FC } from 'react';
 
 const VirtualBody: FC = () => {
-    const { virtual, ping, newProps, columns } = useContext2();
+    const { virtual, newProps, innerProps } = useContext2();
 
+    const { ping } = innerProps;
     const { dataSource, rowKey } = newProps;
     const { horizontalVirtualItems, horizontalTotalSize, horizontalDistance } = virtual;
     const { verticalVirtualItems, verticalTotalSize, verticalDistance, verticalMeasureElement } = virtual;
-    const { handledColumns, hiddenFixedHandledLeftColumns, hiddenFixedHandledRightColumns, hiddenFixedTotalSize } = columns;
+    const { handledColumns, hiddenFixedHandledLeftColumns, hiddenFixedHandledRightColumns, hiddenFixedTotalSize } = innerProps;
     const renderItems = [...hiddenFixedHandledLeftColumns, ...horizontalVirtualItems, ...hiddenFixedHandledRightColumns];
 
     return (

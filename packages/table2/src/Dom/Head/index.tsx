@@ -1,16 +1,15 @@
 import { notEmpty } from '@pkg/utils/src/empty';
-import { useContext2 } from '../../../Context2';
+import { useContext2 } from '../../Context2';
 import styles from './index.module.less';
 import classNames from 'classnames';
 import { FC } from 'react';
 
 const Head: FC = () => {
-    const { virtual, columns, resizeWidth, headRef, ping, calcScrollBar } = useContext2();
+    const { virtual, headRef, innerProps } = useContext2();
 
-    const { renderResizeTitle } = resizeWidth;
-    const { vScrollBarWidth } = calcScrollBar;
+    const { renderResizeTitle, ping, vScrollBarWidth } = innerProps;
     const { horizontalVirtualItems, horizontalTotalSize, horizontalDistance } = virtual;
-    const { handledColumns, hiddenFixedHandledLeftColumns, hiddenFixedHandledRightColumns, hiddenFixedTotalSize } = columns;
+    const { handledColumns, hiddenFixedHandledLeftColumns, hiddenFixedHandledRightColumns, hiddenFixedTotalSize } = innerProps;
     const renderItems = [...hiddenFixedHandledLeftColumns, ...horizontalVirtualItems, ...hiddenFixedHandledRightColumns];
 
     return (

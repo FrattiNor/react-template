@@ -1,11 +1,10 @@
-import { CalcScrollBar } from '../useCalcScrollBar';
 import { SortedColumns } from '../useSortColumns';
 import getHandledColumns from './utils';
 
 export type Opt<T> = {
     defaultWidth: number;
     defaultFlexGrow: number;
-    calcScrollBar: CalcScrollBar;
+    vScrollBarWidth: number;
     sortedColumns: SortedColumns<T>;
     horizontalItemSizeCache: Map<number | string, number>;
 };

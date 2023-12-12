@@ -21,7 +21,7 @@ const useSortColumns = <T>(opt: Opt<T>) => {
         }
     });
 
-    return { midColumns, leftColumns, rightColumns, columns: [...midColumns, ...leftColumns, ...rightColumns] };
+    return { midColumns, leftColumns, rightColumns, columns: [...leftColumns, ...midColumns, ...rightColumns] };
 };
 
 export type SortedColumns<T> = ReturnType<typeof useSortColumns<T>>;

@@ -25,7 +25,7 @@ export const columns = [
         flexGrow: 1,
     },
     {
-        width: 500,
+        width: 50,
         key: 'age_4',
         title: '年龄_4',
         flexGrow: 1,

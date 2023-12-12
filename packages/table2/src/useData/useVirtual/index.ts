@@ -4,11 +4,13 @@ import { BodyScrollObserver } from '../useBodyScrollObserver';
 import { useVirtualizer } from '@tanstack/react-virtual';
 import { RefObject, useEffect, useState } from 'react';
 import { SortedColumns } from '../useSortColumns';
+import { ResizeWidth } from '../useResizeWidth';
 
 type Opt<T extends Record<string, any>> = {
     rowKey: keyof T;
     dataSource?: T[];
     defaultWidth: number;
+    resizeWidth: ResizeWidth;
     sortedColumns: SortedColumns<T>;
     bodyResizeObserver: BodyResizeObserver;
     bodyScrollObserver: BodyScrollObserver;
@@ -19,7 +21,7 @@ type ItemSizeCache = Map<number | string, number>;
 
 const useVirtual = <T extends Record<string, any>>(opt: Opt<T>) => {
     const [rowSize, setRowSize] = useState(40);
-    const { dataSource, sortedColumns, rowKey, bodyRef, defaultWidth, bodyResizeObserver, bodyScrollObserver } = opt;
+    const { dataSource, sortedColumns, rowKey, bodyRef, defaultWidth, bodyResizeObserver, bodyScrollObserver, resizeWidth } = opt;
 
     // 竖向虚拟
     const verticalVirtualizer = useVirtualizer({
@@ -66,10 +68,14 @@ const useVirtual = <T extends Record<string, any>>(opt: Opt<T>) => {
     const horizontalVirtualItems = horizontalVirtualizer.getVirtualItems(); // 横向虚拟显示item
     const horizontalDistance = horizontalVirtualItems[0]?.start ?? 0; // 横向offset距离
     const horizontalMeasureElement = horizontalVirtualizer.measureElement; // 横向监测元素宽度
-    const horizontalTotalSize = horizontalVirtualizer.getTotalSize();
     // const horizontalMeasure = horizontalVirtualizer.measure; // 清除横向缓存
     const horizontalRange = horizontalVirtualizer.range; // 横向显示的start和end
     const horizontalItemSizeCache = (horizontalVirtualizer as any).itemSizeCache as ItemSizeCache; // 横向测量缓存
+
+    // 未resize过使用原生宽度作为宽度，避免横向滚动条闪烁问题
+    const horizontalOriginSize = sortedColumns.columns.reduce((a, b) => a + (b.width ?? defaultWidth), 0);
+    const horizontalVirtualSize = horizontalVirtualizer.getTotalSize();
+    const horizontalTotalSize = resizeWidth.resized ? horizontalVirtualSize : horizontalOriginSize;
 
     // 设置第一行的高度为默认高度
     const verticalItemSizeCache = (verticalVirtualizer as any).itemSizeCache as ItemSizeCache; // 纵向测量缓存

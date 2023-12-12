@@ -8,9 +8,8 @@ type GetHandledColumnsRes<T> = {
 };
 
 const getHandledColumns = <T>(opt: Opt<T>): GetHandledColumnsRes<T> => {
-    const { sortedColumns, defaultWidth, defaultFlexGrow, calcScrollBar, horizontalItemSizeCache } = opt;
+    const { sortedColumns, defaultWidth, defaultFlexGrow, vScrollBarWidth, horizontalItemSizeCache } = opt;
     const { leftColumns, midColumns, rightColumns } = sortedColumns;
-    const { vScrollBarWidth } = calcScrollBar;
 
     const showFixed = midColumns.length > 0;
 
