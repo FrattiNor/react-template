@@ -2,6 +2,7 @@ import { SortedColumns } from '../useSortColumns';
 import getHandledColumns from './utils';
 
 export type Opt<T> = {
+    resized: boolean;
     defaultWidth: number;
     defaultFlexGrow: number;
     vScrollBarWidth: number;

@@ -7,7 +7,7 @@ import { FC } from 'react';
 const VirtualBody: FC = () => {
     const { virtual, newProps, innerProps } = useContext2();
 
-    const { ping } = innerProps;
+    const { ping, resized } = innerProps;
     const { dataSource, rowKey } = newProps;
     const { horizontalVirtualItems, horizontalTotalSize, horizontalDistance } = virtual;
     const { verticalVirtualItems, verticalTotalSize, verticalDistance, verticalMeasureElement } = virtual;
@@ -30,7 +30,7 @@ const VirtualBody: FC = () => {
                                 {renderItems.map((item) => {
                                     const column = handledColumns[item.index];
                                     if (column) {
-                                        const { key, render, width, align, fixed, fixedStyle, showShadow } = column;
+                                        const { key, render, widthStyle, align, fixed, fixedStyle, showShadow } = column;
                                         const cellValue = notEmpty(render ? render(rowData, rowIndex) : rowData[key]);
                                         const cellTitle = typeof cellValue === 'string' || typeof cellValue === 'number' ? `${cellValue}` : '';
                                         const pinged = ping[fixed as any];
@@ -39,7 +39,7 @@ const VirtualBody: FC = () => {
                                             <div
                                                 key={key}
                                                 title={cellTitle}
-                                                style={{ width: width, textAlign: align, ...(fixedStyle ?? {}) }}
+                                                style={{ textAlign: align, ...widthStyle, ...(fixedStyle ?? {}) }}
                                                 className={classNames(styles['body-cell'], {
                                                     [styles[`fixed-${fixed}`]]: !!fixed,
                                                     [styles[`shadow`]]: showShadow,
@@ -52,7 +52,7 @@ const VirtualBody: FC = () => {
                                     }
                                 })}
 
-                                <div className={styles['body-cell']} style={{ width: 0, flexGrow: 1 }} />
+                                {resized && <div className={styles['body-cell']} style={{ width: 0, flexGrow: 1 }} />}
                             </div>
                         );
                     }

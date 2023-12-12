@@ -4,13 +4,12 @@ import { BodyScrollObserver } from '../useBodyScrollObserver';
 import { useVirtualizer } from '@tanstack/react-virtual';
 import { RefObject, useEffect, useState } from 'react';
 import { SortedColumns } from '../useSortColumns';
-import { ResizeWidth } from '../useResizeWidth';
 
 type Opt<T extends Record<string, any>> = {
     rowKey: keyof T;
     dataSource?: T[];
+    resized: boolean;
     defaultWidth: number;
-    resizeWidth: ResizeWidth;
     sortedColumns: SortedColumns<T>;
     bodyResizeObserver: BodyResizeObserver;
     bodyScrollObserver: BodyScrollObserver;
@@ -21,7 +20,7 @@ type ItemSizeCache = Map<number | string, number>;
 
 const useVirtual = <T extends Record<string, any>>(opt: Opt<T>) => {
     const [rowSize, setRowSize] = useState(40);
-    const { dataSource, sortedColumns, rowKey, bodyRef, defaultWidth, bodyResizeObserver, bodyScrollObserver, resizeWidth } = opt;
+    const { dataSource, sortedColumns, rowKey, bodyRef, defaultWidth, bodyResizeObserver, bodyScrollObserver, resized } = opt;
 
     // 竖向虚拟
     const verticalVirtualizer = useVirtualizer({
@@ -75,7 +74,7 @@ const useVirtual = <T extends Record<string, any>>(opt: Opt<T>) => {
     // 未resize过使用原生宽度作为宽度，避免横向滚动条闪烁问题
     const horizontalOriginSize = sortedColumns.columns.reduce((a, b) => a + (b.width ?? defaultWidth), 0);
     const horizontalVirtualSize = horizontalVirtualizer.getTotalSize();
-    const horizontalTotalSize = resizeWidth.resized ? horizontalVirtualSize : horizontalOriginSize;
+    const horizontalTotalSize = resized ? horizontalVirtualSize : horizontalOriginSize;
 
     // 设置第一行的高度为默认高度
     const verticalItemSizeCache = (verticalVirtualizer as any).itemSizeCache as ItemSizeCache; // 纵向测量缓存

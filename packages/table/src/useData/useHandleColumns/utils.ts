@@ -8,30 +8,31 @@ type GetHandledColumnsRes<T> = {
 };
 
 const getHandledColumns = <T>(opt: Opt<T>): GetHandledColumnsRes<T> => {
-    const { sortedColumns, defaultWidth, defaultFlexGrow, vScrollBarWidth, horizontalItemSizeCache } = opt;
+    const { sortedColumns, defaultWidth, defaultFlexGrow, vScrollBarWidth, horizontalItemSizeCache, resized } = opt;
     const { leftColumns, midColumns, rightColumns } = sortedColumns;
 
     const showFixed = midColumns.length > 0;
 
     const getSomeProps = (column: Column<T>) => {
-        const flexGrow = column.flexGrow ?? defaultFlexGrow;
+        const flexGrow = resized ? 0 : column.flexGrow ?? defaultFlexGrow;
         const originWidth = column.width ?? defaultWidth;
         const width = horizontalItemSizeCache.get(column.key) ?? originWidth;
-        return { flexGrow, originWidth, width, fixed: showFixed ? column.fixed : undefined };
+        const fixed = showFixed ? column.fixed : undefined;
+        const widthStyle = resized ? { width, flexGrow } : { width: originWidth, flexGrow };
+        return { width, fixed, widthStyle };
     };
 
     // left
     let leftBefore = 0;
     const handledLeftColumns = leftColumns.map((column, _index) => {
         const index = _index;
-        const { flexGrow, fixed, originWidth, width } = getSomeProps(column);
+        const { fixed, width, widthStyle } = getSomeProps(column);
 
         const res = {
             ...column,
+            widthStyle,
             fixed,
             index,
-            flexGrow,
-            originWidth,
             width,
             fixedStyle: fixed ? { left: leftBefore } : {},
             headFixedStyle: fixed ? { left: leftBefore } : {},
@@ -45,14 +46,13 @@ const getHandledColumns = <T>(opt: Opt<T>): GetHandledColumnsRes<T> => {
     // mid
     const handledMidColumns = midColumns.map((column, _index) => {
         const index = _index + handledLeftColumns.length;
-        const { flexGrow, originWidth, width } = getSomeProps(column);
+        const { width, widthStyle } = getSomeProps(column);
 
         const res = {
             ...column,
             index,
-            flexGrow,
-            originWidth,
             width,
+            widthStyle,
         };
 
         return res;
@@ -64,15 +64,14 @@ const getHandledColumns = <T>(opt: Opt<T>): GetHandledColumnsRes<T> => {
     const rightColumnsCopy = [...rightColumns].reverse();
     rightColumnsCopy.forEach((column, _index) => {
         const index = handledLeftColumns.length + handledMidColumns.length + rightColumnsCopy.length - _index - 1;
-        const { flexGrow, fixed, originWidth, width } = getSomeProps(column);
+        const { fixed, width, widthStyle } = getSomeProps(column);
 
         const res = {
             ...column,
             fixed,
             index,
-            flexGrow,
-            originWidth,
             width,
+            widthStyle,
             fixedStyle: fixed ? { right: rightBefore } : {},
             showShadow: fixed ? _index === rightColumnsCopy.length - 1 : false,
             headFixedStyle: fixed ? { right: rightBefore + vScrollBarWidth } : {},

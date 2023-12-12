@@ -44,17 +44,18 @@ const useData = <T extends AnyObj>(props: TableProps<T>) => {
         rowKey,
         bodyRef,
         dataSource,
-        resizeWidth,
         defaultWidth,
         sortedColumns,
         bodyResizeObserver,
         bodyScrollObserver,
+        resized: resizeWidth.resized,
     });
     // handle columns
     const handledColumns = useHandleColumns({
         defaultWidth,
         sortedColumns,
         defaultFlexGrow,
+        resized: resizeWidth.resized,
         horizontalItemSizeCache: virtual.horizontalItemSizeCache,
         vScrollBarWidth: calcPingAndScrollBarWidth.vScrollBarWidth,
     });

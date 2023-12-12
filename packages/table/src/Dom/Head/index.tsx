@@ -7,7 +7,7 @@ import { FC } from 'react';
 const Head: FC = () => {
     const { virtual, headRef, innerProps } = useContext2();
 
-    const { renderResizeTitle, ping, vScrollBarWidth } = innerProps;
+    const { renderResizeTitle, ping, vScrollBarWidth, resized } = innerProps;
     const { horizontalVirtualItems, horizontalTotalSize, horizontalDistance } = virtual;
     const { handledColumns, hiddenFixedHandledLeftColumns, hiddenFixedHandledRightColumns, hiddenFixedTotalSize } = innerProps;
     const renderItems = [...hiddenFixedHandledLeftColumns, ...horizontalVirtualItems, ...hiddenFixedHandledRightColumns];
@@ -23,7 +23,7 @@ const Head: FC = () => {
                         {renderItems.map((item) => {
                             const column = handledColumns[item.index];
                             if (column) {
-                                const { title, key, width, align, fixed, headFixedStyle, showShadow } = column;
+                                const { title, key, widthStyle, align, fixed, headFixedStyle, showShadow } = column;
                                 const cellValue = notEmpty(title);
                                 const cellTitle = typeof cellValue === 'string' || typeof cellValue === 'number' ? `${cellValue}` : '';
                                 const pinged = ping[fixed as any];
@@ -32,7 +32,7 @@ const Head: FC = () => {
                                     <div
                                         key={key}
                                         title={cellTitle}
-                                        style={{ width: width, textAlign: align, ...(headFixedStyle ?? {}) }}
+                                        style={{ textAlign: align, ...widthStyle, ...(headFixedStyle ?? {}) }}
                                         className={classNames(styles['head-cell'], {
                                             [styles[`fixed-${fixed}`]]: !!fixed,
                                             [styles[`shadow`]]: showShadow,
@@ -45,7 +45,7 @@ const Head: FC = () => {
                             }
                         })}
 
-                        <div className={styles['head-cell']} style={{ width: 0, flexGrow: 1 }} />
+                        {resized && <div className={styles['head-cell']} style={{ width: 0, flexGrow: 1 }} />}
 
                         {vScrollBarWidth > 0 && (
                             <div style={{ width: vScrollBarWidth }} className={classNames(styles['head-cell'], styles['fixed-right'])} />

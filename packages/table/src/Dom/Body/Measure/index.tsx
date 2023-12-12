@@ -6,13 +6,12 @@ const Measure: FC = () => {
     const { virtual, innerProps } = useContext2();
 
     const { horizontalMeasureElement } = virtual;
-    const { handledColumns, resizeActiveKey, resizeActiveWidth, resized } = innerProps;
+    const { handledColumns, resizeActiveKey, resizeActiveWidth } = innerProps;
 
     return (
         <div className={styles['measure']}>
-            {handledColumns.map(({ key, width, originWidth, flexGrow, index }) => {
-                const trueFlexGrow = resized ? 0 : flexGrow; // 手动调整过宽度后，flexGrow就不生效了
-                const trueWidth = resizeActiveKey === key ? resizeActiveWidth : resized ? width : originWidth; // 手动调整过宽度后，使用flexGrow后的宽度，不然就使用原生宽度
+            {handledColumns.map(({ key, widthStyle, index }) => {
+                const activeWidthStyle = resizeActiveKey === key ? { width: resizeActiveWidth } : {};
 
                 return (
                     <div
@@ -20,7 +19,7 @@ const Measure: FC = () => {
                         data-index={index}
                         ref={horizontalMeasureElement}
                         className={styles['measure-item']}
-                        style={{ width: trueWidth, flexGrow: trueFlexGrow }}
+                        style={{ ...widthStyle, ...activeWidthStyle }}
                     />
                 );
             })}

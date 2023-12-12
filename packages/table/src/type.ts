@@ -26,10 +26,9 @@ export type Column<T> = {
 
 export type HandledColumn<T> = Omit<Column<T>, 'width' | 'flexGrow'> & {
     index: number;
-    flexGrow: number;
     width: number;
-    originWidth: number;
     showShadow?: boolean;
+    widthStyle: CSSProperties;
     fixedStyle?: CSSProperties;
     headFixedStyle?: CSSProperties;
 };
