@@ -1,16 +1,17 @@
+import useVirtualScrollHandler from './useVirtualScrollHandler';
 import useBodyResizeObserver from './useBodyResizeObserver';
 import useBodyScrollObserver from './useBodyScrollObserver';
-import useVirtualScrollHandler from './useVirtualScrollHandler';
 import useHiddenFixedColumns from './useHiddenFixedColumns';
+import useChangeScrollTop from './useChangeScrollTop';
 import useCalcScrollBar from './useCalcScrollBar';
 import useHandleColumns from './useHandleColumns';
 import useHandleProps from './useHandleProps';
 import useResizeWidth from './useResizeWidth';
 import useSortColumns from './useSortColumns';
 import { AnyObj, TableProps } from '../type';
-import { useEffect, useRef } from 'react';
 import useCalcPing from './useCalcPing';
 import useVirtual from './useVirtual';
+import { useRef } from 'react';
 
 const useData = <T extends AnyObj>(props: TableProps<T>) => {
     const defaultWidth = 150;
@@ -22,6 +23,8 @@ const useData = <T extends AnyObj>(props: TableProps<T>) => {
 
     // props
     const { columns, rowKey, dataSource, autoScrollTop, newProps } = useHandleProps(props);
+    // auto scroll top
+    useChangeScrollTop({ dataSource, autoScrollTop, bodyRef });
     // ping
     const calcPing = useCalcPing();
     // title resize
@@ -72,25 +75,27 @@ const useData = <T extends AnyObj>(props: TableProps<T>) => {
         horizontalRange: virtual.horizontalRange,
     });
 
-    // 数据变更时触发滚动回顶部
-    useEffect(() => {
-        if (autoScrollTop === undefined || autoScrollTop === true) {
-            bodyRef.current?.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-    }, [dataSource]);
+    const { ping } = calcPing;
+
+    const _columns = {
+        handledColumns: handledColumns.columns,
+        hiddenFixedTotalSize: hiddenFixedColumns.hiddenFixedTotalSize,
+        hiddenFixedHandledLeftColumns: hiddenFixedColumns.hiddenFixedHandledLeftColumns,
+        hiddenFixedHandledRightColumns: hiddenFixedColumns.hiddenFixedHandledRightColumns,
+    };
 
     return {
-        calcPing,
-        resizeWidth,
-        virtual,
         bodyRef,
         headRef,
-        newProps,
         vScrollbarRef,
         hScrollbarRef,
-        hiddenFixedColumns,
+
+        ping,
+        virtual,
+        newProps,
+        resizeWidth,
         calcScrollBar,
-        handledColumns,
+        columns: _columns,
         virtualScrollHandler,
     };
 };

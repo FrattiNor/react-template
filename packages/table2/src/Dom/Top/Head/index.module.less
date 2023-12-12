@@ -1,0 +1,50 @@
+@import url('../../../styles/fixed.module.less');
+
+.head {
+    width: 100%;
+    flex-shrink: 0;
+    overflow: hidden;
+    position: relative;
+
+    .virtual-head {
+        min-width: 100%;
+        position: relative;
+
+        .virtual-head-inner {
+            width: 100%;
+            position: relative;
+
+            .head-row {
+                display: flex;
+                position: relative;
+                border-bottom: 1px solid var(--table-border);
+
+                .head-cell {
+                    flex-shrink: 0;
+                    position: relative;
+                    background-color: var(--table-head-bg);
+
+                    .head-cell-inner {
+                        width: 100%;
+                        padding: 6px 8px;
+                        font-weight: 600;
+                        overflow: hidden;
+                        position: relative;
+                        white-space: nowrap;
+                        text-overflow: ellipsis;
+                    }
+
+                    // &::before {
+                    //     top: 0;
+                    //     right: 0;
+                    //     width: 1px;
+                    //     height: 100%;
+                    //     content: '';
+                    //     position: absolute;
+                    //     background-color: var(--table-border);
+                    // }
+                }
+            }
+        }
+    }
+}

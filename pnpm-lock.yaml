@@ -91,6 +91,9 @@ importers:
     dependencies:
       '@pkg/table':
         specifier: workspace:*
+        version: link:../../packages/table
+      '@pkg/table2':
+        specifier: workspace:*
         version: link:../../packages/table2
       '@tanstack/react-query':
         specifier: ^5.12.2

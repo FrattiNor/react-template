@@ -19,17 +19,13 @@ const useCalcScrollBar = <T,>(opt: Opt<T>) => {
 
     const bodyWidth = bodyResizeObserver.size.width || 0;
     const bodyHeight = bodyResizeObserver.size.height || 0;
-    const bodyInnerWidth = virtual.horizontalTotalSize;
     const bodyInnerHeight = virtual.verticalTotalSize;
+    const bodyInnerWidth1 = virtual.horizontalTotalSize;
+    const bodyInnerWidth2 = sortedColumns.columns.reduce((a, b) => a + (b.width ?? defaultWidth), 0);
+    const bodyInnerWidth = resizeWidth.resized ? bodyInnerWidth1 : bodyInnerWidth2;
 
-    const _vScrollBarWidth = bodyInnerWidth > bodyWidth ? vScrollBarWidth : 0;
-    const _hScrollBarWidth = resizeWidth.resized
-        ? bodyInnerHeight > bodyHeight
-            ? hScrollBarWidth
-            : 0
-        : sortedColumns.columns.reduce((a, b) => a + (b.width ?? defaultWidth), 0) > bodyHeight
-        ? hScrollBarWidth
-        : 0;
+    const _vScrollBarWidth = bodyInnerHeight > bodyHeight ? vScrollBarWidth : 0;
+    const _hScrollBarWidth = bodyInnerWidth > bodyWidth ? hScrollBarWidth : 0;
 
     return { vScrollBarWidth: _vScrollBarWidth, hScrollBarWidth: _hScrollBarWidth, calcScrollBarDom };
 };

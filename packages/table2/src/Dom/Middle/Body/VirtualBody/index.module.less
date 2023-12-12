@@ -1,0 +1,51 @@
+@import url('../../../../styles/fixed.module.less');
+
+.virtual-body {
+    min-width: 100%;
+    position: relative;
+
+    .virtual-body-inner {
+        width: 100%;
+        position: relative;
+
+        .body-row {
+            display: flex;
+            position: relative;
+            border-bottom: 1px solid var(--table-border);
+
+            &:last-child {
+                border: 0;
+            }
+
+            &:hover .body-cell {
+                background-color: var(--table-row-hover-bg);
+            }
+
+            .body-cell {
+                flex-shrink: 0;
+                position: relative;
+                background-color: var(--table-bg);
+                transition: background-color 0.3s;
+
+                .body-cell-inner {
+                    width: 100%;
+                    padding: 6px 8px;
+                    overflow: hidden;
+                    position: relative;
+                    white-space: nowrap;
+                    text-overflow: ellipsis;
+                }
+
+                // &::before {
+                //     top: 0;
+                //     right: 0;
+                //     width: 1px;
+                //     height: 100%;
+                //     content: '';
+                //     position: absolute;
+                //     background-color: var(--table-border);
+                // }
+            }
+        }
+    }
+}
