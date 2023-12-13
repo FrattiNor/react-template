@@ -12,14 +12,7 @@ export type Opt<T> = {
 
 // 可以利用Table元素获取宽度
 const useHandleColumns = <T>(opt: Opt<T>) => {
-    const { handledColumns, handledLeftColumns, handledRightColumns } = getHandledColumns(opt);
-
-    return {
-        columns: handledColumns,
-        leftColumns: handledLeftColumns,
-        rightColumns: handledRightColumns,
-    };
+    return getHandledColumns(opt);
 };
 
-export type HandledColumns<T> = ReturnType<typeof useHandleColumns<T>>;
 export default useHandleColumns;

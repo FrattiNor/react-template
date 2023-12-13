@@ -7,13 +7,7 @@ const justifyContentMap = {
     right: 'flex-end',
 };
 
-type GetHandledColumnsRes<T> = {
-    handledColumns: HandledColumn<T>[];
-    handledLeftColumns: HandledColumn<T>[];
-    handledRightColumns: HandledColumn<T>[];
-};
-
-const getHandledColumns = <T>(opt: Opt<T>): GetHandledColumnsRes<T> => {
+const getHandledColumns = <T>(opt: Opt<T>) => {
     const { totalColumns, defaultWidth, defaultFlexGrow, vScrollBarWidth, horizontalItemSizeCache, resized } = opt;
 
     const handledColumns: HandledColumn<T>[] = [];
@@ -32,6 +26,8 @@ const getHandledColumns = <T>(opt: Opt<T>): GetHandledColumnsRes<T> => {
 
     // left
     let leftBefore = 0;
+    let leftStartPing = 0;
+    let leftPingDistance = 0;
     let leftEndIndex: number | null = null;
     for (let i = 0; i <= totalColumns.length - 1; i++) {
         const column = totalColumns[i];
@@ -52,6 +48,7 @@ const getHandledColumns = <T>(opt: Opt<T>): GetHandledColumnsRes<T> => {
             leftBefore += res.width;
             handledColumns[i] = res;
             handledLeftColumns.push(res);
+            leftPingDistance = leftStartPing;
         }
 
         if (column.fixed !== 'left' && column.fixed !== 'right') {
@@ -66,6 +63,7 @@ const getHandledColumns = <T>(opt: Opt<T>): GetHandledColumnsRes<T> => {
                 headStyle: style,
             };
 
+            leftStartPing += res.width;
             handledColumns[i] = res;
         }
     }
@@ -79,6 +77,8 @@ const getHandledColumns = <T>(opt: Opt<T>): GetHandledColumnsRes<T> => {
 
     // right
     let rightBefore = 0;
+    let rightStartPing = 0;
+    let rightPingDistance = 0;
     let rightEndIndex: number | null = null;
     for (let i = totalColumns.length - 1; i >= 0; i--) {
         const column = totalColumns[i];
@@ -97,6 +97,10 @@ const getHandledColumns = <T>(opt: Opt<T>): GetHandledColumnsRes<T> => {
             rightBefore += res.width;
             handledColumns[i] = res;
             handledRightColumns.push(res);
+            rightPingDistance = rightStartPing;
+        }
+        if (column.fixed !== 'left' && column.fixed !== 'right') {
+            rightStartPing += handledColumns[i].width;
         }
     }
 
@@ -109,6 +113,8 @@ const getHandledColumns = <T>(opt: Opt<T>): GetHandledColumnsRes<T> => {
 
     return {
         handledColumns,
+        leftPingDistance,
+        rightPingDistance,
         handledLeftColumns,
         handledRightColumns,
     };

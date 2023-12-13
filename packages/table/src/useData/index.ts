@@ -1,13 +1,14 @@
-import useCalcPingAndScrollBarWidth from './useCalcPingAndScrollBarWidth';
 import useBodyResizeObserver from './useBodyResizeObserver';
 import useBodyScrollObserver from './useBodyScrollObserver';
 import useHiddenFixedColumns from './useHiddenFixedColumns';
+import useCalcScrollBarWidth from './useCalcScrollBarWidth';
 import useChangeScrollTop from './useChangeScrollTop';
 import useHandleColumns from './useHandleColumns';
 import useRowSelection from './useRowSelection';
 import useHandleProps from './useHandleProps';
 import useResizeWidth from './useResizeWidth';
 import { AnyObj, TableProps } from '../type';
+import useCalcPing from './useCalcPing';
 import useVirtual from './useVirtual';
 import { useRef } from 'react';
 
@@ -34,58 +35,68 @@ const useData = <T extends AnyObj>(props: TableProps<T>) => {
     const resizeWidth = useResizeWidth();
 
     // ping
-    const calcPingAndScrollBarWidth = useCalcPingAndScrollBarWidth({ bodyRef });
+    const { calcPing, pingLeft, pingRight } = useCalcPing({ bodyRef });
+    // v scrollbar
+    const { calcScrollBarWidth, vScrollBarWidth } = useCalcScrollBarWidth({ bodyRef });
 
     //  body resize observer
     const bodyResizeObserver = useBodyResizeObserver({
         bodyRef,
-        calcPingAndScrollBarWidth,
+        calcPing,
+        calcScrollBarWidth,
     });
 
     // body scroll observer
     const bodyScrollObserver = useBodyScrollObserver({
         bodyRef,
         headRef,
-        calcPingAndScrollBarWidth,
+        calcPing,
+        calcScrollBarWidth,
     });
 
     // virtual table core
     const virtual = useVirtual({
         rowKey,
         bodyRef,
+        calcPing,
         rowHeight,
         dataSource,
         defaultWidth,
         totalColumns,
         bodyResizeObserver,
         bodyScrollObserver,
-        calcPingAndScrollBarWidth,
         resized: resizeWidth.resized,
     });
 
     // handle columns
-    const handledColumns = useHandleColumns({
+    const { handledColumns, handledLeftColumns, handledRightColumns, rightPingDistance, leftPingDistance } = useHandleColumns({
         defaultWidth,
         totalColumns,
         defaultFlexGrow,
+        vScrollBarWidth,
         resized: resizeWidth.resized,
         horizontalItemSizeCache: virtual.horizontalItemSizeCache,
-        vScrollBarWidth: calcPingAndScrollBarWidth.vScrollBarWidth,
     });
 
     // calc hidden fixed columns
     const hiddenFixedColumns = useHiddenFixedColumns({
-        handledColumns,
+        handledLeftColumns,
+        handledRightColumns,
         horizontalRange: virtual.horizontalRange,
     });
+
+    const ping: Record<string, boolean> = {
+        left: pingLeft > leftPingDistance,
+        right: pingRight > rightPingDistance,
+    };
 
     const innerProps = {
         ...resizeWidth,
         ...hiddenFixedColumns,
+        ping,
+        handledColumns,
+        vScrollBarWidth,
         selectedRowKeysObj,
-        ping: calcPingAndScrollBarWidth.ping,
-        handledColumns: handledColumns.columns,
-        vScrollBarWidth: calcPingAndScrollBarWidth.vScrollBarWidth,
     };
 
     return {

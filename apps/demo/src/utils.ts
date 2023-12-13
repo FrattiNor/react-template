@@ -19,6 +19,7 @@ export const columns = [
         key: 'age_2',
         title: '年龄_2_0_0_0_0_0',
         flexGrow: 1,
+        fixed: 'left',
         render: () => 'xxxxxxxxxxxxxxx',
     },
     {

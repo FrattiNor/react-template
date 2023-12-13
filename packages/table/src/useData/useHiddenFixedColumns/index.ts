@@ -1,16 +1,15 @@
-import { HandledColumns } from '../useHandleColumns';
 import { HandledColumn } from '../../type';
 
 type Range = { startIndex: number; endIndex: number } | null;
 
 type Opt<T> = {
     horizontalRange: Range;
-    handledColumns: HandledColumns<T>;
+    handledLeftColumns: HandledColumn<T>[];
+    handledRightColumns: HandledColumn<T>[];
 };
 
 const useHiddenFixedColumns = <T>(opt: Opt<T>) => {
-    const { horizontalRange, handledColumns } = opt;
-    const { leftColumns, rightColumns } = handledColumns;
+    const { horizontalRange, handledLeftColumns, handledRightColumns } = opt;
 
     const hiddenFixedHandledLeftColumns: HandledColumn<T>[] = [];
     const hiddenFixedHandledRightColumns: HandledColumn<T>[] = [];
@@ -18,13 +17,13 @@ const useHiddenFixedColumns = <T>(opt: Opt<T>) => {
     if (horizontalRange) {
         const { startIndex, endIndex } = horizontalRange;
 
-        leftColumns.forEach((column) => {
+        handledLeftColumns.forEach((column) => {
             if (column.index < startIndex || column.index > endIndex) {
                 hiddenFixedHandledLeftColumns.push(column);
             }
         });
 
-        rightColumns.forEach((column) => {
+        handledRightColumns.forEach((column) => {
             if (column.index < startIndex || column.index > endIndex) {
                 hiddenFixedHandledRightColumns.push(column);
             }
