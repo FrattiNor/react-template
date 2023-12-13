@@ -36,6 +36,7 @@ const useData = <T extends AnyObj>(props: TableProps<T>) => {
 
     // ping
     const { calcPing, ping } = useCalcPing({ bodyRef });
+
     // v scrollbar
     const { calcScrollBarWidth, vScrollBarWidth } = useCalcScrollBarWidth({ bodyRef });
 

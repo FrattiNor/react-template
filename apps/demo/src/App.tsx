@@ -17,7 +17,7 @@ const DemoTable = () => {
     const ref = useRef<TableRef>(null);
     const [count, setCount] = useState(1000);
     const [loading, setLoading] = useState(false);
-    const [columnsFlag, setColumnsFlag] = useState(true);
+    const [columnsFlag, setColumnsFlag] = useState(false);
 
     // const columns2: Column<Item>[] = useMemo(() => {
     //     return Array(22)

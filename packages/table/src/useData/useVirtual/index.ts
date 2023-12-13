@@ -1,4 +1,4 @@
-import { measureElement, observeElementRect, observeElementOffset } from './utils';
+import { observeElementRect, observeElementOffset } from './utils';
 import { BodyResizeObserver } from '../useBodyResizeObserver';
 import { BodyScrollObserver } from '../useBodyScrollObserver';
 import { useVirtualizer } from '@tanstack/react-virtual';
@@ -32,7 +32,6 @@ const useVirtual = <T extends Record<string, any>>(opt: Opt<T>) => {
         count: dataSource?.length || 0,
         getScrollElement: () => bodyRef.current,
         getItemKey: (index) => dataSource?.[index]?.[rowKey] ?? index,
-        measureElement: measureElement,
         observeElementRect: observeElementRect('vRect', bodyResizeObserver),
         observeElementOffset: observeElementOffset('vOffset', bodyScrollObserver),
         scrollToFn: () => {
@@ -51,7 +50,6 @@ const useVirtual = <T extends Record<string, any>>(opt: Opt<T>) => {
         getScrollElement: () => bodyRef.current,
         getItemKey: (index) => totalColumns[index].key,
         estimateSize: (index) => totalColumns[index].width ?? defaultWidth,
-        measureElement: measureElement,
         observeElementRect: observeElementRect('hRect', bodyResizeObserver),
         observeElementOffset: observeElementOffset('hOffset', bodyScrollObserver),
         scrollToFn: () => {

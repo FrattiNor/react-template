@@ -76,6 +76,12 @@ export const columns2 = [
         flexGrow: 1,
     },
     {
+        width: 50,
+        key: 'age_2',
+        title: '年龄_1_0_0_0_0_0',
+        flexGrow: 1,
+    },
+    {
         width: 141,
         key: 'age_10',
         title: '年龄_10_0_0_0_0_0',
