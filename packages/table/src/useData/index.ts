@@ -35,7 +35,7 @@ const useData = <T extends AnyObj>(props: TableProps<T>) => {
     const resizeWidth = useResizeWidth();
 
     // ping
-    const { calcPing, pingLeft, pingRight } = useCalcPing({ bodyRef });
+    const { calcPing, ping } = useCalcPing({ bodyRef });
     // v scrollbar
     const { calcScrollBarWidth, vScrollBarWidth } = useCalcScrollBarWidth({ bodyRef });
 
@@ -69,7 +69,7 @@ const useData = <T extends AnyObj>(props: TableProps<T>) => {
     });
 
     // handle columns
-    const { handledColumns, handledLeftColumns, handledRightColumns, rightPingDistance, leftPingDistance } = useHandleColumns({
+    const { handledColumns, handledLeftColumns, handledRightColumns } = useHandleColumns({
         defaultWidth,
         totalColumns,
         defaultFlexGrow,
@@ -84,11 +84,6 @@ const useData = <T extends AnyObj>(props: TableProps<T>) => {
         handledRightColumns,
         horizontalRange: virtual.horizontalRange,
     });
-
-    const ping: Record<string, boolean> = {
-        left: pingLeft > leftPingDistance,
-        right: pingRight > rightPingDistance,
-    };
 
     const innerProps = {
         ...resizeWidth,

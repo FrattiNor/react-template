@@ -38,7 +38,7 @@ export type TableProps<T> = {
 export type HandledColumn<T> = Omit<Column<T>, 'width' | 'flexGrow' | 'align'> & {
     index: number;
     width: number;
-    showShadow?: boolean;
+    pingDistance?: number;
     bodyStyle: CSSProperties;
     headStyle: CSSProperties;
     measureStyle: CSSProperties;

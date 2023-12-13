@@ -25,9 +25,9 @@ const Head: FC = () => {
                         {renderItems.map((item) => {
                             const column = handledColumns[item.index];
                             if (column) {
-                                const { resize, title, key, fixed, headStyle } = column;
+                                const { resize, title, key, fixed, headStyle, pingDistance = Infinity } = column;
                                 const cellValue = notEmpty(title);
-                                const pinged = ping[fixed as any];
+                                const pinged = (ping[fixed as any] ?? 0) > pingDistance;
                                 const resizeTitle = resize === undefined || resize === true;
                                 const isStr = typeof cellValue === 'string' || typeof cellValue === 'number';
                                 const cellTitle = isStr ? `${cellValue}` : '';

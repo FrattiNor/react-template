@@ -21,7 +21,7 @@ const useRowSelection = <T,>(opt: Opt<T>) => {
     const dataSourceSelectedRowKeysObj: Record<string, true> = {};
 
     if (rowSelection) {
-        const { width, fixed, getCheckboxProps } = rowSelection;
+        const { width = 50, fixed = 'left', getCheckboxProps } = rowSelection;
 
         let checkedAll = isEmpty ? false : true;
         let checkedSome = false;
@@ -75,10 +75,10 @@ const useRowSelection = <T,>(opt: Opt<T>) => {
         rowSelectionColumns.push({
             title,
             fixed,
+            width,
             flexGrow: 0,
             resize: false,
             align: 'center',
-            width: width ?? 50,
             render: renderItem,
             key: 'table-row-selection',
         });

@@ -51,6 +51,14 @@ export const columns = [
         fixed: 'right',
         render: () => 'xxxxxxxxxxxxxxx',
     },
+    {
+        width: 59,
+        key: 'age_11',
+        title: '年龄_10_0_0_0_0_1',
+        flexGrow: 1,
+        fixed: 'right',
+        render: () => 'xxxxxxxxxxxxxxx',
+    },
 ];
 
 export const columns2 = [

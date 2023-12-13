@@ -9,6 +9,11 @@ const useCalcPing = (opt: Opt) => {
     const [pingLeft, setPingLeft] = useState<number>(0);
     const [pingRight, setPingRight] = useState<number>(0);
 
+    const ping: Record<string, number> = {
+        left: pingLeft,
+        right: pingRight,
+    };
+
     // 计算ping情况
     const calcPing = () => {
         // 等待滚动条产生或者消失
@@ -27,7 +32,7 @@ const useCalcPing = (opt: Opt) => {
         });
     };
 
-    return { pingLeft, pingRight, calcPing };
+    return { ping, calcPing };
 };
 
 export default useCalcPing;

@@ -37,8 +37,8 @@ const VirtualBody: FC = () => {
                                 {renderItems.map((item) => {
                                     const column = handledColumns[item.index];
                                     if (column) {
-                                        const { key, render, bodyStyle, fixed } = column;
-                                        const pinged = ping[fixed as any];
+                                        const { key, render, bodyStyle, fixed, pingDistance = Infinity } = column;
+                                        const pinged = (ping[fixed as any] ?? 0) > pingDistance;
                                         const cellValue = notEmpty(render ? render(currentRowData, currentRowIndex) : currentRowData[key]);
                                         const isStr = typeof cellValue === 'string' || typeof cellValue === 'number';
                                         const cellTitle = isStr ? `${cellValue}` : '';

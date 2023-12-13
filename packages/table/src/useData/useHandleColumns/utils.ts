@@ -24,31 +24,33 @@ const getHandledColumns = <T>(opt: Opt<T>) => {
         return { width, style, measureStyle };
     };
 
+    let fixedCount = 0;
     // left
     let leftBefore = 0;
-    let leftStartPing = 0;
-    let leftPingDistance: number | null = null;
-    let leftEndIndex: number | null = null;
+    let leftPingDistance = 0;
+
     for (let i = 0; i <= totalColumns.length - 1; i++) {
         const column = totalColumns[i];
 
         if (column.fixed === 'left') {
             const { width, style, measureStyle } = getSomeProps(column);
+            const distance = leftPingDistance - leftBefore;
 
             const res: HandledColumn<T> = {
                 ...column,
                 width,
                 index: i,
                 measureStyle,
-                bodyStyle: { ...style, left: leftBefore },
-                headStyle: { ...style, left: leftBefore },
+                pingDistance: distance,
+                bodyStyle: { ...style, left: leftBefore, zIndex: fixedCount + 1 },
+                headStyle: { ...style, left: leftBefore, zIndex: fixedCount + 1 },
             };
 
-            leftEndIndex = i;
+            fixedCount++;
             leftBefore += res.width;
+            leftPingDistance += res.width;
             handledColumns[i] = res;
             handledLeftColumns.push(res);
-            if (leftPingDistance === null) leftPingDistance = leftStartPing;
         }
 
         if (column.fixed !== 'left' && column.fixed !== 'right') {
@@ -63,60 +65,46 @@ const getHandledColumns = <T>(opt: Opt<T>) => {
                 headStyle: style,
             };
 
-            leftStartPing += res.width;
+            leftPingDistance += res.width;
             handledColumns[i] = res;
         }
     }
 
-    if (leftEndIndex) {
-        handledColumns[leftEndIndex] = {
-            ...handledColumns[leftEndIndex],
-            showShadow: true,
-        };
-    }
-
     // right
     let rightBefore = 0;
-    let rightStartPing = 0;
-    let rightPingDistance: number | null = null;
-    let rightEndIndex: number | null = null;
+    let rightPingDistance = 0;
+
     for (let i = totalColumns.length - 1; i >= 0; i--) {
         const column = totalColumns[i];
         if (column.fixed === 'right') {
             const { width, style, measureStyle } = getSomeProps(column);
+            const distance = rightPingDistance - rightBefore;
+
             const res: HandledColumn<T> = {
                 ...column,
                 width,
                 index: i,
                 measureStyle,
-                bodyStyle: { ...style, right: rightBefore },
-                headStyle: { ...style, right: rightBefore + vScrollBarWidth },
+                pingDistance: distance,
+                bodyStyle: { ...style, right: rightBefore, zIndex: fixedCount + 1 },
+                headStyle: { ...style, right: rightBefore + vScrollBarWidth, zIndex: fixedCount + 1 },
             };
 
-            rightEndIndex = i;
+            fixedCount++;
             rightBefore += res.width;
+            rightPingDistance += res.width;
             handledColumns[i] = res;
             handledRightColumns.push(res);
-            if (rightPingDistance === null) rightPingDistance = rightStartPing;
         }
         if (column.fixed !== 'left' && column.fixed !== 'right') {
-            rightStartPing += handledColumns[i].width;
+            rightPingDistance += handledColumns[i].width;
         }
-    }
-
-    if (rightEndIndex) {
-        handledColumns[rightEndIndex] = {
-            ...handledColumns[rightEndIndex],
-            showShadow: true,
-        };
     }
 
     return {
         handledColumns,
         handledLeftColumns,
         handledRightColumns,
-        leftPingDistance: leftPingDistance ?? 0,
-        rightPingDistance: leftPingDistance ?? 0,
     };
 };
 
