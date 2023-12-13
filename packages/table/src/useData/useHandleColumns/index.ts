@@ -8,6 +8,7 @@ export type Opt<T> = {
     vScrollBarWidth: number;
     resizeWidth: ResizeWidth;
     totalColumns: Column<T>[];
+    ping: Record<string, number>;
     horizontalItemSizeCache: Map<number | string, number>;
 };
 

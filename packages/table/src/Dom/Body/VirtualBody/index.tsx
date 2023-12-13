@@ -5,12 +5,12 @@ import classNames from 'classnames';
 import { FC } from 'react';
 
 const VirtualBody: FC = () => {
-    const { virtual, newProps, innerProps } = useContext2();
+    const { newProps, innerProps } = useContext2();
 
     const { dataSource, rowKey, rowHeight } = newProps;
-    const { ping, resized, selectedRowKeysObj } = innerProps;
-    const { horizontalVirtualItems, horizontalTotalSize, horizontalDistance } = virtual;
-    const { verticalVirtualItems, verticalTotalSize, verticalDistance, verticalMeasureElement } = virtual;
+    const { resized, selectedRowKeysObj } = innerProps;
+    const { horizontalVirtualItems, horizontalTotalSize, horizontalDistance } = innerProps;
+    const { verticalVirtualItems, verticalTotalSize, verticalDistance, verticalMeasureElement } = innerProps;
     const { handledColumns, hiddenFixedHandledLeftColumns, hiddenFixedHandledRightColumns, hiddenFixedTotalSize } = innerProps;
     const renderItems = [...hiddenFixedHandledLeftColumns, ...horizontalVirtualItems, ...hiddenFixedHandledRightColumns];
 
@@ -37,8 +37,7 @@ const VirtualBody: FC = () => {
                                 {renderItems.map((item) => {
                                     const column = handledColumns[item.index];
                                     if (column) {
-                                        const { key, render, bodyStyle, fixed, pingDistance = Infinity } = column;
-                                        const pinged = (ping[fixed as any] ?? 0) > pingDistance;
+                                        const { key, render, bodyStyle, fixed, pinged } = column;
                                         const cellValue = notEmpty(render ? render(currentRowData, currentRowIndex) : currentRowData[key]);
                                         const isStr = typeof cellValue === 'string' || typeof cellValue === 'number';
                                         const cellTitle = isStr ? `${cellValue}` : '';

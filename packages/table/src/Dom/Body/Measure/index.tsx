@@ -3,10 +3,8 @@ import styles from './index.module.less';
 import { FC } from 'react';
 
 const Measure: FC = () => {
-    const { virtual, innerProps } = useContext2();
-
-    const { horizontalMeasureElement } = virtual;
-    const { handledColumns } = innerProps;
+    const { innerProps } = useContext2();
+    const { handledColumns, horizontalMeasureElement } = innerProps;
 
     return (
         <div className={styles['measure']}>

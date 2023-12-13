@@ -2,15 +2,13 @@ import { observeElementRect, observeElementOffset } from './utils';
 import { BodyResizeObserver } from '../useBodyResizeObserver';
 import { BodyScrollObserver } from '../useBodyScrollObserver';
 import { useVirtualizer } from '@tanstack/react-virtual';
-import { RefObject, useEffect } from 'react';
 import { Column } from '../../type';
+import { RefObject } from 'react';
 
 type Opt<T extends Record<string, any>> = {
     rowKey: keyof T;
     dataSource?: T[];
-    resized: boolean;
     rowHeight: number;
-    calcPing: () => void;
     defaultWidth: number;
     totalColumns: Column<T>[];
     bodyResizeObserver: BodyResizeObserver;
@@ -22,7 +20,7 @@ type ItemSizeCache = Map<number | string, number>;
 
 const useVirtual = <T extends Record<string, any>>(opt: Opt<T>) => {
     const { dataSource, totalColumns, rowKey, bodyRef, defaultWidth, rowHeight } = opt;
-    const { bodyResizeObserver, bodyScrollObserver, resized, calcPing } = opt;
+    const { bodyResizeObserver, bodyScrollObserver } = opt;
 
     // 竖向虚拟
     const verticalVirtualizer = useVirtualizer({
@@ -72,14 +70,14 @@ const useVirtual = <T extends Record<string, any>>(opt: Opt<T>) => {
     const horizontalItemSizeCache = (horizontalVirtualizer as any).itemSizeCache as ItemSizeCache; // 横向测量缓存
 
     // 未resize过使用原生宽度作为宽度，避免横向滚动条闪烁问题
-    const horizontalOriginSize = totalColumns.reduce((a, b) => a + (b.width ?? defaultWidth), 0);
-    const horizontalVirtualSize = horizontalVirtualizer.getTotalSize();
-    const horizontalTotalSize = resized ? horizontalVirtualSize : horizontalOriginSize;
+    // const horizontalOriginSize = totalColumns.reduce((a, b) => a + (b.width ?? defaultWidth), 0);
+    // const horizontalVirtualSize = horizontalVirtualizer.getTotalSize();
+    // const horizontalTotalSize = resized ? horizontalVirtualSize : horizontalOriginSize;
 
     //
-    useEffect(() => {
-        calcPing();
-    }, [horizontalTotalSize]);
+    // useEffect(() => {
+    //     calcPing();
+    // }, [horizontalTotalSize]);
 
     return {
         verticalDistance,
@@ -90,7 +88,7 @@ const useVirtual = <T extends Record<string, any>>(opt: Opt<T>) => {
         horizontalRange,
         // horizontalMeasure,
         horizontalDistance,
-        horizontalTotalSize,
+        // horizontalTotalSize,
         horizontalVirtualItems,
         horizontalMeasureElement,
         horizontalItemSizeCache,

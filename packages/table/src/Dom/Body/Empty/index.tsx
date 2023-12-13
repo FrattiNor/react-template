@@ -3,8 +3,8 @@ import styles from './index.module.less';
 import { Fragment } from 'react';
 
 const BodyEmpty = () => {
-    const { virtual } = useContext2();
-    const { horizontalTotalSize } = virtual;
+    const { innerProps } = useContext2();
+    const { horizontalTotalSize } = innerProps;
 
     return (
         <Fragment>

@@ -8,7 +8,7 @@ const justifyContentMap = {
 };
 
 const getHandledColumns = <T>(opt: Opt<T>) => {
-    const { totalColumns, defaultWidth, defaultFlexGrow, vScrollBarWidth, horizontalItemSizeCache, resizeWidth } = opt;
+    const { totalColumns, defaultWidth, defaultFlexGrow, vScrollBarWidth, horizontalItemSizeCache, resizeWidth, ping } = opt;
     const { resizeActiveKey, resizeActiveWidth, resized } = resizeWidth;
 
     const handledColumns: HandledColumn<T>[] = [];
@@ -22,7 +22,7 @@ const getHandledColumns = <T>(opt: Opt<T>) => {
         const justifyContent = justifyContentMap[column.align ?? 'left'];
         const measureStyle = resized ? { width, flexGrow } : { width: originWidth, flexGrow };
         const style = { ...measureStyle, justifyContent };
-        return { width, style, measureStyle };
+        return { width, originWidth, style, measureStyle };
     };
 
     let fixedCount = 0;
@@ -34,15 +34,16 @@ const getHandledColumns = <T>(opt: Opt<T>) => {
         const column = totalColumns[i];
 
         if (column.fixed === 'left') {
-            const { width, style, measureStyle } = getSomeProps(column);
+            const { width, originWidth, style, measureStyle } = getSomeProps(column);
             const distance = leftPingDistance - leftBefore;
 
             const res: HandledColumn<T> = {
                 ...column,
                 width,
                 index: i,
+                originWidth,
                 measureStyle,
-                pingDistance: distance,
+                pinged: (ping[column.fixed] ?? 0) > distance,
                 bodyStyle: { ...style, left: leftBefore, zIndex: fixedCount + 1 },
                 headStyle: { ...style, left: leftBefore, zIndex: fixedCount + 1 },
             };
@@ -55,12 +56,13 @@ const getHandledColumns = <T>(opt: Opt<T>) => {
         }
 
         if (column.fixed !== 'left' && column.fixed !== 'right') {
-            const { width, style, measureStyle } = getSomeProps(column);
+            const { width, originWidth, style, measureStyle } = getSomeProps(column);
 
             const res: HandledColumn<T> = {
                 ...column,
                 width,
                 index: i,
+                originWidth,
                 measureStyle,
                 bodyStyle: style,
                 headStyle: style,
@@ -78,15 +80,16 @@ const getHandledColumns = <T>(opt: Opt<T>) => {
     for (let i = totalColumns.length - 1; i >= 0; i--) {
         const column = totalColumns[i];
         if (column.fixed === 'right') {
-            const { width, style, measureStyle } = getSomeProps(column);
+            const { width, originWidth, style, measureStyle } = getSomeProps(column);
             const distance = rightPingDistance - rightBefore;
 
             const res: HandledColumn<T> = {
                 ...column,
                 width,
                 index: i,
+                originWidth,
                 measureStyle,
-                pingDistance: distance,
+                pinged: (ping[column.fixed] ?? 0) > distance,
                 bodyStyle: { ...style, right: rightBefore, zIndex: fixedCount + 1 },
                 headStyle: { ...style, right: rightBefore + vScrollBarWidth, zIndex: fixedCount + 1 },
             };

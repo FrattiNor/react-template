@@ -17,7 +17,7 @@ const DemoTable = () => {
     const ref = useRef<TableRef>(null);
     const [count, setCount] = useState(1000);
     const [loading, setLoading] = useState(false);
-    const [columnsFlag, setColumnsFlag] = useState(false);
+    const [columnsFlag, setColumnsFlag] = useState(true);
 
     // const columns2: Column<Item>[] = useMemo(() => {
     //     return Array(22)
@@ -92,9 +92,9 @@ const DemoTable = () => {
                         dataSource={query.data || []}
                         loading={query.isFetching || loading}
                         columns={(columnsFlag ? columns : columns2) as any}
-                        rowSelection={{
-                            getCheckboxProps: (_, index) => ({ disabled: index % 2 === 0 }),
-                        }}
+                        // rowSelection={{
+                        //     getCheckboxProps: (_, index) => ({ disabled: index % 2 === 0 }),
+                        // }}
                     />
                 </div>
             </div>

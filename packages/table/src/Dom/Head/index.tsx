@@ -6,11 +6,11 @@ import classNames from 'classnames';
 import { FC } from 'react';
 
 const Head: FC = () => {
-    const { virtual, headRef, innerProps, newProps } = useContext2();
+    const { headRef, innerProps, newProps } = useContext2();
 
     const { rowHeight } = newProps;
-    const { ping, vScrollBarWidth, resized, resizeActiveKey } = innerProps;
-    const { horizontalVirtualItems, horizontalTotalSize, horizontalDistance } = virtual;
+    const { vScrollBarWidth, resized, resizeActiveKey } = innerProps;
+    const { horizontalVirtualItems, horizontalTotalSize, horizontalDistance } = innerProps;
     const { handledColumns, hiddenFixedHandledLeftColumns, hiddenFixedHandledRightColumns, hiddenFixedTotalSize } = innerProps;
     const renderItems = [...hiddenFixedHandledLeftColumns, ...horizontalVirtualItems, ...hiddenFixedHandledRightColumns];
 
@@ -25,9 +25,8 @@ const Head: FC = () => {
                         {renderItems.map((item) => {
                             const column = handledColumns[item.index];
                             if (column) {
-                                const { resize, title, key, fixed, headStyle, pingDistance = Infinity } = column;
+                                const { resize, title, key, fixed, headStyle, pinged } = column;
                                 const cellValue = notEmpty(title);
-                                const pinged = (ping[fixed as any] ?? 0) > pingDistance;
                                 const resizeTitle = resize === undefined || resize === true;
                                 const isStr = typeof cellValue === 'string' || typeof cellValue === 'number';
                                 const cellTitle = isStr ? `${cellValue}` : '';
