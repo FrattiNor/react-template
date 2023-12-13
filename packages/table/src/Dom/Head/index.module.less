@@ -41,6 +41,20 @@
                     align-items: center;
                     background-color: var(--table-head-bg);
 
+                    &::before {
+                        top: 30%;
+                        right: 0;
+                        width: 1px;
+                        height: 40%;
+                        content: '';
+                        position: absolute;
+                        background-color: var(--table-border);
+                    }
+
+                    &:last-child::before {
+                        display: none;
+                    }
+
                     & > * {
                         flex-shrink: 0;
                     }

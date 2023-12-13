@@ -4,7 +4,7 @@ const useHandleProps = <T>(props: TableProps<T>) => {
     const { columns, ...restProps } = props;
     const isEmpty = (props.dataSource || [])?.length === 0;
     const { autoScrollTop = true, rowHeight = 32 } = props;
-    const newProps = { ...restProps, autoScrollTop, rowHeight, isEmpty };
+    const newProps = { ...restProps, autoScrollTop, isEmpty, rowHeight: Math.round(rowHeight) };
     return { columns, newProps };
 };
 

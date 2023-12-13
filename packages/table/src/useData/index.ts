@@ -3,6 +3,7 @@ import useBodyScrollObserver from './useBodyScrollObserver';
 import useHiddenFixedColumns from './useHiddenFixedColumns';
 import useCalcScrollBarWidth from './useCalcScrollBarWidth';
 import useChangeScrollTop from './useChangeScrollTop';
+import useHorizontalSize from './useHorizontalSize';
 import useHandleColumns from './useHandleColumns';
 import useRowSelection from './useRowSelection';
 import useHandleProps from './useHandleProps';
@@ -11,7 +12,6 @@ import { AnyObj, TableProps } from '../type';
 import useCalcPing from './useCalcPing';
 import useVirtual from './useVirtual';
 import { useRef } from 'react';
-import useHorizontalSize from './useHorizontalSize';
 
 const useData = <T extends AnyObj>(props: TableProps<T>) => {
     const defaultWidth = 150;

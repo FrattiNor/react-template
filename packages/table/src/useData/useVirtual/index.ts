@@ -47,7 +47,7 @@ const useVirtual = <T extends Record<string, any>>(opt: Opt<T>) => {
         count: totalColumns.length,
         getScrollElement: () => bodyRef.current,
         getItemKey: (index) => totalColumns[index].key,
-        estimateSize: (index) => totalColumns[index].width ?? defaultWidth,
+        estimateSize: (index) => Math.round(totalColumns[index].width ?? defaultWidth),
         observeElementRect: observeElementRect('hRect', bodyResizeObserver),
         observeElementOffset: observeElementOffset('hOffset', bodyScrollObserver),
         scrollToFn: () => {
@@ -65,19 +65,8 @@ const useVirtual = <T extends Record<string, any>>(opt: Opt<T>) => {
     const horizontalVirtualItems = horizontalVirtualizer.getVirtualItems(); // 横向虚拟显示item
     const horizontalDistance = horizontalVirtualItems[0]?.start ?? 0; // 横向offset距离
     const horizontalMeasureElement = horizontalVirtualizer.measureElement; // 横向监测元素宽度
-    // const horizontalMeasure = horizontalVirtualizer.measure; // 清除横向缓存
     const horizontalRange = horizontalVirtualizer.range; // 横向显示的start和end
     const horizontalItemSizeCache = (horizontalVirtualizer as any).itemSizeCache as ItemSizeCache; // 横向测量缓存
-
-    // 未resize过使用原生宽度作为宽度，避免横向滚动条闪烁问题
-    // const horizontalOriginSize = totalColumns.reduce((a, b) => a + (b.width ?? defaultWidth), 0);
-    // const horizontalVirtualSize = horizontalVirtualizer.getTotalSize();
-    // const horizontalTotalSize = resized ? horizontalVirtualSize : horizontalOriginSize;
-
-    //
-    // useEffect(() => {
-    //     calcPing();
-    // }, [horizontalTotalSize]);
 
     return {
         verticalDistance,

@@ -62,3 +62,19 @@ export const measureElement = <TItemElement extends Element>(
 
     return element.getBoundingClientRect()[instance.options.horizontal ? 'width' : 'height'];
 };
+
+export const measureElement2 = <TItemElement extends Element>(
+    element: TItemElement,
+    entry: ResizeObserverEntry | undefined,
+    instance: Virtualizer<any, TItemElement>,
+) => {
+    if (entry?.borderBoxSize) {
+        const box = entry.borderBoxSize[0];
+        if (box) {
+            console.log(box);
+            const size = Math.round(box[instance.options.horizontal ? 'inlineSize' : 'blockSize']);
+            return size;
+        }
+    }
+    return Math.round(element.getBoundingClientRect()[instance.options.horizontal ? 'width' : 'height']);
+};

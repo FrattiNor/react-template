@@ -1,6 +1,6 @@
 export const columns = [
     {
-        width: 63,
+        width: 63.5,
         key: 'age_0',
         title: '年龄_0_0_0_0_0_0',
         flexGrow: 0,
@@ -63,7 +63,7 @@ export const columns = [
 
 export const columns2 = [
     {
-        width: 63,
+        width: 63.5,
         key: 'age_0',
         title: '年龄_0_0_0_0_0_0',
         flexGrow: 0,

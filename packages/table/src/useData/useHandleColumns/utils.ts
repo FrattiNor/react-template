@@ -17,7 +17,7 @@ const getHandledColumns = <T>(opt: Opt<T>) => {
 
     const getSomeProps = (column: Column<T>) => {
         const flexGrow = resized ? 0 : column.flexGrow ?? defaultFlexGrow;
-        const originWidth = column.width ?? defaultWidth;
+        const originWidth = Math.round(column.width ?? defaultWidth);
         const width = resizeActiveKey === column.key ? (resizeActiveWidth as number) : horizontalItemSizeCache.get(column.key) ?? originWidth;
         const justifyContent = justifyContentMap[column.align ?? 'left'];
         const measureStyle = resized ? { width, flexGrow } : { width: originWidth, flexGrow };
