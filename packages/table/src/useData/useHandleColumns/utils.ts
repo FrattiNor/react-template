@@ -1,6 +1,12 @@
 import { HandledColumn, Column } from '../../type';
 import { Opt } from './index';
 
+const justifyContentMap = {
+    left: 'flex-start',
+    center: 'center',
+    right: 'flex-end',
+};
+
 type GetHandledColumnsRes<T> = {
     handledColumns: HandledColumn<T>[];
     handledLeftColumns: HandledColumn<T>[];
@@ -18,8 +24,10 @@ const getHandledColumns = <T>(opt: Opt<T>): GetHandledColumnsRes<T> => {
         const flexGrow = resized ? 0 : column.flexGrow ?? defaultFlexGrow;
         const originWidth = column.width ?? defaultWidth;
         const width = horizontalItemSizeCache.get(column.key) ?? originWidth;
-        const widthStyle = resized ? { width, flexGrow } : { width: originWidth, flexGrow };
-        return { width, widthStyle };
+        const justifyContent = justifyContentMap[column.align ?? 'left'];
+        const measureStyle = resized ? { width, flexGrow } : { width: originWidth, flexGrow };
+        const style = { ...measureStyle, justifyContent };
+        return { width, style, measureStyle };
     };
 
     // left
@@ -29,15 +37,15 @@ const getHandledColumns = <T>(opt: Opt<T>): GetHandledColumnsRes<T> => {
         const column = totalColumns[i];
 
         if (column.fixed === 'left') {
-            const { width, widthStyle } = getSomeProps(column);
+            const { width, style, measureStyle } = getSomeProps(column);
 
             const res: HandledColumn<T> = {
                 ...column,
                 width,
                 index: i,
-                widthStyle,
-                fixedStyle: { left: leftBefore },
-                headFixedStyle: { left: leftBefore },
+                measureStyle,
+                bodyStyle: { ...style, left: leftBefore },
+                headStyle: { ...style, left: leftBefore },
             };
 
             leftEndIndex = i;
@@ -47,13 +55,15 @@ const getHandledColumns = <T>(opt: Opt<T>): GetHandledColumnsRes<T> => {
         }
 
         if (column.fixed !== 'left' && column.fixed !== 'right') {
-            const { width, widthStyle } = getSomeProps(column);
+            const { width, style, measureStyle } = getSomeProps(column);
 
             const res: HandledColumn<T> = {
                 ...column,
                 width,
                 index: i,
-                widthStyle,
+                measureStyle,
+                bodyStyle: style,
+                headStyle: style,
             };
 
             handledColumns[i] = res;
@@ -73,14 +83,14 @@ const getHandledColumns = <T>(opt: Opt<T>): GetHandledColumnsRes<T> => {
     for (let i = totalColumns.length - 1; i >= 0; i--) {
         const column = totalColumns[i];
         if (column.fixed === 'right') {
-            const { width, widthStyle } = getSomeProps(column);
+            const { width, style, measureStyle } = getSomeProps(column);
             const res: HandledColumn<T> = {
                 ...column,
                 width,
                 index: i,
-                widthStyle,
-                fixedStyle: { right: rightBefore },
-                headFixedStyle: { right: rightBefore + vScrollBarWidth },
+                measureStyle,
+                bodyStyle: { ...style, right: rightBefore },
+                headStyle: { ...style, right: rightBefore + vScrollBarWidth },
             };
 
             rightEndIndex = i;

@@ -10,7 +10,7 @@ const Measure: FC = () => {
 
     return (
         <div className={styles['measure']}>
-            {handledColumns.map(({ key, widthStyle }, index) => {
+            {handledColumns.map(({ key, measureStyle }, index) => {
                 const activeWidthStyle = resizeActiveKey === key ? { width: resizeActiveWidth } : {};
 
                 return (
@@ -19,7 +19,7 @@ const Measure: FC = () => {
                         data-index={index}
                         ref={horizontalMeasureElement}
                         className={styles['measure-item']}
-                        style={{ ...widthStyle, ...activeWidthStyle }}
+                        style={{ ...measureStyle, ...activeWidthStyle }}
                     />
                 );
             })}

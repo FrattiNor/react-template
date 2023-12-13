@@ -30,23 +30,17 @@
                 }
 
                 .head-cell {
+                    display: flex;
                     padding: 0 8px;
                     flex-shrink: 0;
                     position: relative;
+                    align-items: center;
                     background-color: var(--table-head-bg);
 
-                    // &::before {
-                    //     width: 0;
-                    //     content: '';
-                    //     height: 100%;
-                    //     display: inline-block;
-                    //     vertical-align: middle;
-                    // }
-
-                    .head-cell-inner {
+                    .head-cell-str {
                         width: 100%;
-                        font-weight: 600;
                         overflow: hidden;
+                        font-weight: 600;
                         position: relative;
                         white-space: nowrap;
                         text-overflow: ellipsis;

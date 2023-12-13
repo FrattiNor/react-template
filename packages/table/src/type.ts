@@ -35,13 +35,13 @@ export type TableProps<T> = {
     rowSelection?: RowSelection<T>;
 };
 
-export type HandledColumn<T> = Omit<Column<T>, 'width' | 'flexGrow'> & {
+export type HandledColumn<T> = Omit<Column<T>, 'width' | 'flexGrow' | 'align'> & {
     index: number;
     width: number;
     showShadow?: boolean;
-    widthStyle: CSSProperties;
-    fixedStyle?: CSSProperties;
-    headFixedStyle?: CSSProperties;
+    bodyStyle: CSSProperties;
+    headStyle: CSSProperties;
+    measureStyle: CSSProperties;
 };
 
 export type TableRef = {

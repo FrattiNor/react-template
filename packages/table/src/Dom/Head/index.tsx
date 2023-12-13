@@ -21,17 +21,17 @@ const Head: FC = () => {
                     className={styles['virtual-head-inner']}
                     style={{ transform: `translate3d(0, 0, 0)`, paddingLeft: `${horizontalDistance - hiddenFixedTotalSize}px` }}
                 >
-                    <div className={styles['head-row']} style={{ height: rowHeight, lineHeight: `${rowHeight}px` }}>
+                    <div className={styles['head-row']} style={{ height: rowHeight }}>
                         {renderItems.map((item) => {
                             const column = handledColumns[item.index];
                             if (column) {
-                                const { resize, title, key, widthStyle, align, fixed, headFixedStyle, showShadow } = column;
+                                const { resize, title, key, fixed, headStyle, showShadow } = column;
                                 const cellValue = notEmpty(title);
                                 const pinged = ping[fixed as any];
                                 const resizeTitle = resize === undefined || resize === true;
-                                const cellTitle = typeof cellValue === 'string' || typeof cellValue === 'number' ? `${cellValue}` : '';
-                                const cellInner = <div className={styles['head-cell-inner']}>{cellValue}</div>;
-                                const style = { textAlign: align, ...widthStyle, ...(headFixedStyle ?? {}) };
+                                const isStr = typeof cellValue === 'string' || typeof cellValue === 'number';
+                                const cellTitle = isStr ? `${cellValue}` : '';
+                                const cellInner = isStr ? <div className={styles['head-cell-str']}>{cellValue}</div> : cellValue;
                                 const className = classNames(styles['head-cell'], {
                                     [styles[`fixed-${fixed}`]]: !!fixed,
                                     [styles[`shadow`]]: showShadow,
@@ -40,13 +40,13 @@ const Head: FC = () => {
 
                                 if (resizeTitle) {
                                     return (
-                                        <ResizableTitle key={key} cellKey={key} title={cellTitle} style={style} className={className}>
+                                        <ResizableTitle key={key} cellKey={key} title={cellTitle} style={headStyle} className={className}>
                                             {cellInner}
                                         </ResizableTitle>
                                     );
                                 } else {
                                     return (
-                                        <div key={key} title={cellTitle} style={style} className={className}>
+                                        <div key={key} title={cellTitle} style={headStyle} className={className}>
                                             {cellInner}
                                         </div>
                                     );

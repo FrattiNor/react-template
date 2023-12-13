@@ -37,21 +37,15 @@
             }
 
             .body-cell {
+                display: flex;
                 padding: 0 8px;
                 flex-shrink: 0;
                 position: relative;
+                align-items: center;
                 background-color: var(--table-bg);
                 transition: background-color 0.3s;
 
-                // &::before {
-                //     width: 0;
-                //     content: '';
-                //     height: 100%;
-                //     display: inline-block;
-                //     vertical-align: middle;
-                // }
-
-                .body-cell-inner {
+                .body-cell-str {
                     width: 100%;
                     overflow: hidden;
                     position: relative;

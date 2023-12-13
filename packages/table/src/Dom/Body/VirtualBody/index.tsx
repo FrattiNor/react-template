@@ -30,30 +30,32 @@ const VirtualBody: FC = () => {
                             <div
                                 key={currentRowKey}
                                 ref={verticalMeasureElement}
+                                style={{ height: rowHeight }}
                                 data-index={verticalItem.index}
-                                style={{ height: rowHeight, lineHeight: `${rowHeight}px` }}
                                 className={classNames(styles['body-row'], { [styles['selected']]: selectedRowKeysObj[currentRowKey] })}
                             >
                                 {renderItems.map((item) => {
                                     const column = handledColumns[item.index];
                                     if (column) {
-                                        const { key, render, widthStyle, align, fixed, fixedStyle, showShadow } = column;
-                                        const cellValue = notEmpty(render ? render(currentRowData, currentRowIndex) : currentRowData[key]);
-                                        const cellTitle = typeof cellValue === 'string' || typeof cellValue === 'number' ? `${cellValue}` : '';
+                                        const { key, render, bodyStyle, fixed, showShadow } = column;
                                         const pinged = ping[fixed as any];
+                                        const cellValue = notEmpty(render ? render(currentRowData, currentRowIndex) : currentRowData[key]);
+                                        const isStr = typeof cellValue === 'string' || typeof cellValue === 'number';
+                                        const cellTitle = isStr ? `${cellValue}` : '';
+                                        const cellInner = isStr ? <div className={styles['body-cell-str']}>{cellValue}</div> : cellValue;
 
                                         return (
                                             <div
                                                 key={key}
                                                 title={cellTitle}
-                                                style={{ textAlign: align, ...widthStyle, ...(fixedStyle ?? {}) }}
+                                                style={bodyStyle}
                                                 className={classNames(styles['body-cell'], {
                                                     [styles[`fixed-${fixed}`]]: !!fixed,
                                                     [styles[`shadow`]]: showShadow,
                                                     [styles[`pinged`]]: pinged,
                                                 })}
                                             >
-                                                <div className={styles['body-cell-inner']}>{cellValue}</div>
+                                                {cellInner}
                                             </div>
                                         );
                                     }
