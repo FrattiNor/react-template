@@ -8,7 +8,8 @@ const justifyContentMap = {
 };
 
 const getHandledColumns = <T>(opt: Opt<T>) => {
-    const { totalColumns, defaultWidth, defaultFlexGrow, vScrollBarWidth, horizontalItemSizeCache, resized } = opt;
+    const { totalColumns, defaultWidth, defaultFlexGrow, vScrollBarWidth, horizontalItemSizeCache, resizeWidth } = opt;
+    const { resizeActiveKey, resizeActiveWidth, resized } = resizeWidth;
 
     const handledColumns: HandledColumn<T>[] = [];
     const handledLeftColumns: HandledColumn<T>[] = [];
@@ -17,7 +18,7 @@ const getHandledColumns = <T>(opt: Opt<T>) => {
     const getSomeProps = (column: Column<T>) => {
         const flexGrow = resized ? 0 : column.flexGrow ?? defaultFlexGrow;
         const originWidth = column.width ?? defaultWidth;
-        const width = horizontalItemSizeCache.get(column.key) ?? originWidth;
+        const width = resizeActiveKey === column.key ? (resizeActiveWidth as number) : horizontalItemSizeCache.get(column.key) ?? originWidth;
         const justifyContent = justifyContentMap[column.align ?? 'left'];
         const measureStyle = resized ? { width, flexGrow } : { width: originWidth, flexGrow };
         const style = { ...measureStyle, justifyContent };

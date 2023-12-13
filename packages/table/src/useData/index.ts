@@ -70,11 +70,11 @@ const useData = <T extends AnyObj>(props: TableProps<T>) => {
 
     // handle columns
     const { handledColumns, handledLeftColumns, handledRightColumns } = useHandleColumns({
+        resizeWidth,
         defaultWidth,
         totalColumns,
         defaultFlexGrow,
         vScrollBarWidth,
-        resized: resizeWidth.resized,
         horizontalItemSizeCache: virtual.horizontalItemSizeCache,
     });
 

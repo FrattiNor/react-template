@@ -1,11 +1,12 @@
+import { ResizeWidth } from '../useResizeWidth';
 import getHandledColumns from './utils';
 import { Column } from '../../type';
 
 export type Opt<T> = {
-    resized: boolean;
     defaultWidth: number;
     defaultFlexGrow: number;
     vScrollBarWidth: number;
+    resizeWidth: ResizeWidth;
     totalColumns: Column<T>[];
     horizontalItemSizeCache: Map<number | string, number>;
 };

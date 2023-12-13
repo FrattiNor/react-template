@@ -9,13 +9,13 @@ const Head: FC = () => {
     const { virtual, headRef, innerProps, newProps } = useContext2();
 
     const { rowHeight } = newProps;
-    const { ping, vScrollBarWidth, resized } = innerProps;
+    const { ping, vScrollBarWidth, resized, resizeActiveKey } = innerProps;
     const { horizontalVirtualItems, horizontalTotalSize, horizontalDistance } = virtual;
     const { handledColumns, hiddenFixedHandledLeftColumns, hiddenFixedHandledRightColumns, hiddenFixedTotalSize } = innerProps;
     const renderItems = [...hiddenFixedHandledLeftColumns, ...horizontalVirtualItems, ...hiddenFixedHandledRightColumns];
 
     return (
-        <div className={styles['head']} ref={headRef}>
+        <div className={classNames(styles['head'], { [styles['resizing']]: !!resizeActiveKey })} ref={headRef}>
             <div className={styles['virtual-head']} style={{ width: horizontalTotalSize + vScrollBarWidth }}>
                 <div
                     className={styles['virtual-head-inner']}
