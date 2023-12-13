@@ -37,7 +37,7 @@ const VirtualBody: FC = () => {
                                 {renderItems.map((item) => {
                                     const column = handledColumns[item.index];
                                     if (column) {
-                                        const { key, render, bodyStyle, fixed, showShadow } = column;
+                                        const { key, render, bodyStyle, fixed } = column;
                                         const pinged = ping[fixed as any];
                                         const cellValue = notEmpty(render ? render(currentRowData, currentRowIndex) : currentRowData[key]);
                                         const isStr = typeof cellValue === 'string' || typeof cellValue === 'number';
@@ -51,8 +51,8 @@ const VirtualBody: FC = () => {
                                                 style={bodyStyle}
                                                 className={classNames(styles['body-cell'], {
                                                     [styles[`fixed-${fixed}`]]: !!fixed,
-                                                    [styles[`shadow`]]: showShadow,
                                                     [styles[`pinged`]]: pinged,
+                                                    [styles[`shadow`]]: true,
                                                 })}
                                             >
                                                 {cellInner}
@@ -61,7 +61,7 @@ const VirtualBody: FC = () => {
                                     }
                                 })}
 
-                                {resized && <div className={styles['body-cell']} style={{ width: 0, flexGrow: 1, padding: 0 }} />}
+                                {resized && <div className={styles['body-cell-other']} style={{ width: 0, flexGrow: 1 }} />}
                             </div>
                         );
                     }

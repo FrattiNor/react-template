@@ -27,12 +27,15 @@
                 display: none;
             }
 
-            &:hover .body-cell,
-            &.selected .body-cell {
+            &:hover > .body-cell,
+            &:hover > .body-cell-other,
+            &.selected > .body-cell,
+            &.selected > .body-cell-other {
                 background-color: var(--table-row-hover-bg);
             }
 
-            &.selected:hover .body-cell {
+            &.selected:hover > .body-cell,
+            &.selected:hover > .body-cell-other {
                 background-color: var(--table-row-selected-hover-bg);
             }
 
@@ -56,6 +59,13 @@
                     white-space: nowrap;
                     text-overflow: ellipsis;
                 }
+            }
+
+            .body-cell-other {
+                flex-shrink: 0;
+                position: relative;
+                background-color: var(--table-bg);
+                transition: background-color 0.3s;
             }
         }
     }

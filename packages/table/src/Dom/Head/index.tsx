@@ -25,7 +25,7 @@ const Head: FC = () => {
                         {renderItems.map((item) => {
                             const column = handledColumns[item.index];
                             if (column) {
-                                const { resize, title, key, fixed, headStyle, showShadow } = column;
+                                const { resize, title, key, fixed, headStyle } = column;
                                 const cellValue = notEmpty(title);
                                 const pinged = ping[fixed as any];
                                 const resizeTitle = resize === undefined || resize === true;
@@ -34,8 +34,8 @@ const Head: FC = () => {
                                 const cellInner = isStr ? <div className={styles['head-cell-str']}>{cellValue}</div> : cellValue;
                                 const className = classNames(styles['head-cell'], {
                                     [styles[`fixed-${fixed}`]]: !!fixed,
-                                    [styles[`shadow`]]: showShadow,
                                     [styles[`pinged`]]: pinged,
+                                    [styles[`shadow`]]: true,
                                 });
 
                                 if (resizeTitle) {
@@ -54,10 +54,10 @@ const Head: FC = () => {
                             }
                         })}
 
-                        {resized && <div className={styles['head-cell']} style={{ width: 0, flexGrow: 1, padding: 0 }} />}
+                        {resized && <div className={styles['head-cell-other']} style={{ width: 0, flexGrow: 1 }} />}
 
                         {vScrollBarWidth > 0 && (
-                            <div className={classNames(styles['head-cell'], styles['fixed-right'])} style={{ width: vScrollBarWidth, padding: 0 }} />
+                            <div className={classNames(styles['head-cell-other'], styles['fixed-right'])} style={{ width: vScrollBarWidth }} />
                         )}
                     </div>
                 </div>

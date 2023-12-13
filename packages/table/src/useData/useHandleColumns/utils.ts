@@ -27,7 +27,7 @@ const getHandledColumns = <T>(opt: Opt<T>) => {
     // left
     let leftBefore = 0;
     let leftStartPing = 0;
-    let leftPingDistance = 0;
+    let leftPingDistance: number | null = null;
     let leftEndIndex: number | null = null;
     for (let i = 0; i <= totalColumns.length - 1; i++) {
         const column = totalColumns[i];
@@ -48,7 +48,7 @@ const getHandledColumns = <T>(opt: Opt<T>) => {
             leftBefore += res.width;
             handledColumns[i] = res;
             handledLeftColumns.push(res);
-            leftPingDistance = leftStartPing;
+            if (leftPingDistance === null) leftPingDistance = leftStartPing;
         }
 
         if (column.fixed !== 'left' && column.fixed !== 'right') {
@@ -78,7 +78,7 @@ const getHandledColumns = <T>(opt: Opt<T>) => {
     // right
     let rightBefore = 0;
     let rightStartPing = 0;
-    let rightPingDistance = 0;
+    let rightPingDistance: number | null = null;
     let rightEndIndex: number | null = null;
     for (let i = totalColumns.length - 1; i >= 0; i--) {
         const column = totalColumns[i];
@@ -97,7 +97,7 @@ const getHandledColumns = <T>(opt: Opt<T>) => {
             rightBefore += res.width;
             handledColumns[i] = res;
             handledRightColumns.push(res);
-            rightPingDistance = rightStartPing;
+            if (rightPingDistance === null) rightPingDistance = rightStartPing;
         }
         if (column.fixed !== 'left' && column.fixed !== 'right') {
             rightStartPing += handledColumns[i].width;
@@ -113,10 +113,10 @@ const getHandledColumns = <T>(opt: Opt<T>) => {
 
     return {
         handledColumns,
-        leftPingDistance,
-        rightPingDistance,
         handledLeftColumns,
         handledRightColumns,
+        leftPingDistance: leftPingDistance ?? 0,
+        rightPingDistance: leftPingDistance ?? 0,
     };
 };
 
