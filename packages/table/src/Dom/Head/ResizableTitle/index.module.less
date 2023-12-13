@@ -1,13 +1,5 @@
-.resizable-title {
-    width: 100%;
-    height: 100%;
-    position: relative;
+.resize-head-cell {
     transition: background-color 0.3s;
-
-    &.active,
-    &:hover {
-        background-color: var(--table-head-hover);
-    }
 
     .resizable-handle {
         position: absolute;
@@ -17,6 +9,7 @@
         z-index: 1;
         bottom: 0;
         right: 0;
+        transition: background-color 0.3s;
     }
 
     &.active .resizable-handle,

@@ -59,7 +59,7 @@ const VirtualBody: FC = () => {
                                     }
                                 })}
 
-                                {resized && <div className={styles['body-cell']} style={{ width: 0, flexGrow: 1 }} />}
+                                {resized && <div className={styles['body-cell']} style={{ width: 0, flexGrow: 1, padding: 0 }} />}
                             </div>
                         );
                     }
