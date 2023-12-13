@@ -15,7 +15,7 @@ type Item = {
 const DemoTable = () => {
     useFps();
     const ref = useRef<TableRef>(null);
-    const [count, setCount] = useState(100000);
+    const [count, setCount] = useState(1000);
     const [loading, setLoading] = useState(false);
     const [columnsFlag, setColumnsFlag] = useState(true);
 
@@ -93,7 +93,7 @@ const DemoTable = () => {
                         loading={query.isFetching || loading}
                         columns={(columnsFlag ? columns : columns2) as any}
                         rowSelection={{
-                            getCheckboxProps: () => ({ disabled: true }),
+                            getCheckboxProps: (_, index) => ({ disabled: index % 2 === 0 }),
                         }}
                     />
                 </div>

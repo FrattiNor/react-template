@@ -5,17 +5,15 @@ import { useState } from 'react';
 type Opt<T> = {
     rowKey: keyof T;
     dataSource?: T[];
-    isEmpty: boolean;
     rowSelection?: RowSelection<T>;
 };
 
 const useRowSelection = <T,>(opt: Opt<T>) => {
+    const { rowKey, dataSource, rowSelection } = opt;
     const [_selectedRowKeys, _setSelectedRowKeys] = useState([]);
-    const { rowKey, dataSource, rowSelection, isEmpty } = opt;
     const selectedRowKeys = rowSelection?.selectedRowKeys ?? _selectedRowKeys;
     const setSelectedRowKeys = (rowSelection?.onChange ?? _setSelectedRowKeys) as (v: (string | number)[]) => void;
 
-    const allRowKeys: (string | number)[] = [];
     const rowSelectionColumns: Column<T>[] = [];
     const selectedRowKeysObj: Record<string, true> = {};
     const dataSourceSelectedRowKeysObj: Record<string, true> = {};
@@ -23,41 +21,51 @@ const useRowSelection = <T,>(opt: Opt<T>) => {
     if (rowSelection) {
         const { width = 50, fixed = 'left', getCheckboxProps } = rowSelection;
 
-        let checkedAll = isEmpty ? false : true;
-        let checkedSome = false;
+        const allCouldCheckRowKeys: (string | number)[] = [];
+        const allCouldCheckedRowKeys: (string | number)[] = [];
 
         selectedRowKeys.forEach((key) => {
             selectedRowKeysObj[key] = true;
         });
 
-        (dataSource || []).forEach((item) => {
+        (dataSource || []).forEach((item, index) => {
+            let disabled = false;
             const key = item[rowKey] as string;
-            allRowKeys.push(key);
+            if (getCheckboxProps) {
+                disabled = getCheckboxProps(item, index).disabled;
+            }
             if (selectedRowKeysObj[key]) {
-                checkedSome = true;
                 dataSourceSelectedRowKeysObj[key] = true;
-            } else {
-                checkedAll = false;
+            }
+            if (disabled !== true) {
+                allCouldCheckRowKeys.push(key);
+                if (selectedRowKeysObj[key]) {
+                    allCouldCheckedRowKeys.push(key);
+                }
             }
         });
 
+        const titleDisabled = allCouldCheckRowKeys.length === 0;
+        const titleChecked = !titleDisabled && allCouldCheckRowKeys.length === allCouldCheckedRowKeys.length;
+        const titleIndeterminate = !titleChecked && allCouldCheckedRowKeys.length > 0;
+
         const title = (
             <Checkbox
-                disabled={isEmpty}
-                checked={checkedAll}
-                indeterminate={!checkedAll && checkedSome}
+                checked={titleChecked}
+                disabled={titleDisabled}
+                indeterminate={titleIndeterminate}
                 onChange={(c) => {
-                    setSelectedRowKeys(c ? allRowKeys : []);
+                    setSelectedRowKeys(c ? allCouldCheckRowKeys : []);
                 }}
             />
         );
 
-        const renderItem = (item: T) => {
+        const renderItem = (item: T, index: number) => {
             const key = item[rowKey] as any;
 
             const checked = selectedRowKeysObj[key];
 
-            const checkboxProps = getCheckboxProps ? getCheckboxProps(item) : {};
+            const checkboxProps = getCheckboxProps ? getCheckboxProps(item, index) : {};
 
             const onChange = (c: boolean) => {
                 const nextRowKeysObj = { ...dataSourceSelectedRowKeysObj };

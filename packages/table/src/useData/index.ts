@@ -20,10 +20,10 @@ const useData = <T extends AnyObj>(props: TableProps<T>) => {
 
     // props
     const { columns, newProps } = useHandleProps(props);
-    const { rowKey, isEmpty, dataSource, rowSelection, autoScrollTop, rowHeight } = newProps;
+    const { rowKey, dataSource, rowSelection, autoScrollTop, rowHeight } = newProps;
 
     // 增加多选
-    const { selectedRowKeysObj, rowSelectionColumns } = useRowSelection({ rowKey, isEmpty, dataSource, rowSelection });
+    const { selectedRowKeysObj, rowSelectionColumns } = useRowSelection({ rowKey, dataSource, rowSelection });
 
     // 整合后的 columns
     const totalColumns = [...rowSelectionColumns, ...columns];

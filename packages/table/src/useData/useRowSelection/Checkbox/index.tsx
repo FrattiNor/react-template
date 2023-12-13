@@ -19,9 +19,9 @@ const Checkbox: FC<Props> = (props) => {
         <div
             onClick={() => !disabled && setChecked(!checked)}
             className={classNames(styles['checkbox'], {
-                [styles['checked']]: checked,
                 [styles['disabled']]: disabled,
                 [styles['indeterminate']]: indeterminate,
+                [styles['checked']]: !indeterminate && checked,
             })}
         >
             {!disabled && checked && <div className={styles['checked-animate']} />}

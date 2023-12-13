@@ -14,7 +14,7 @@ export type Column<T> = {
     resize?: boolean;
     title: ReactNode;
     flexGrow?: number;
-    render?: (v: T, index: number) => ReactNode;
+    render?: (item: T, index: number) => ReactNode;
 };
 
 export type RowSelection<T> = {
@@ -22,7 +22,7 @@ export type RowSelection<T> = {
     width?: number;
     selectedRowKeys?: (string | number)[];
     onChange?: (v: (string | number)[]) => void;
-    getCheckboxProps?: (item: T) => { disabled: boolean };
+    getCheckboxProps?: (item: T, index: number) => { disabled: boolean };
 };
 
 export type TableProps<T> = {
