@@ -3,15 +3,16 @@ import { CalcPingAndScrollBarWidth } from '../useCalcPingAndScrollBarWidth';
 import { BodyResizeObserver } from '../useBodyResizeObserver';
 import { BodyScrollObserver } from '../useBodyScrollObserver';
 import { useVirtualizer } from '@tanstack/react-virtual';
-import { RefObject, useEffect, useState } from 'react';
-import { SortedColumns } from '../useSortColumns';
+import { RefObject, useEffect } from 'react';
+import { Column } from '../../type';
 
 type Opt<T extends Record<string, any>> = {
     rowKey: keyof T;
     dataSource?: T[];
     resized: boolean;
+    rowHeight: number;
     defaultWidth: number;
-    sortedColumns: SortedColumns<T>;
+    totalColumns: Column<T>[];
     bodyResizeObserver: BodyResizeObserver;
     bodyScrollObserver: BodyScrollObserver;
     bodyRef: RefObject<HTMLDivElement | null>;
@@ -21,15 +22,14 @@ type Opt<T extends Record<string, any>> = {
 type ItemSizeCache = Map<number | string, number>;
 
 const useVirtual = <T extends Record<string, any>>(opt: Opt<T>) => {
-    const [rowSize, setRowSize] = useState(40);
-    const { dataSource, sortedColumns, rowKey, bodyRef, defaultWidth, bodyResizeObserver, bodyScrollObserver, resized, calcPingAndScrollBarWidth } =
-        opt;
+    const { dataSource, totalColumns, rowKey, bodyRef, defaultWidth, rowHeight } = opt;
+    const { bodyResizeObserver, bodyScrollObserver, resized, calcPingAndScrollBarWidth } = opt;
 
     // 竖向虚拟
     const verticalVirtualizer = useVirtualizer({
         // debug: true,
         overscan: 1,
-        estimateSize: () => rowSize,
+        estimateSize: () => rowHeight,
         count: dataSource?.length || 0,
         getScrollElement: () => bodyRef.current,
         getItemKey: (index) => dataSource?.[index]?.[rowKey] ?? index,
@@ -48,10 +48,10 @@ const useVirtual = <T extends Record<string, any>>(opt: Opt<T>) => {
         // debug: true,
         overscan: 0,
         horizontal: true,
-        count: sortedColumns.columns.length,
+        count: totalColumns.length,
         getScrollElement: () => bodyRef.current,
-        getItemKey: (index) => sortedColumns.columns[index].key,
-        estimateSize: (index) => sortedColumns.columns[index].width ?? defaultWidth,
+        getItemKey: (index) => totalColumns[index].key,
+        estimateSize: (index) => totalColumns[index].width ?? defaultWidth,
         measureElement: measureElement,
         observeElementRect: observeElementRect('hRect', bodyResizeObserver),
         observeElementOffset: observeElementOffset('hOffset', bodyScrollObserver),
@@ -75,18 +75,9 @@ const useVirtual = <T extends Record<string, any>>(opt: Opt<T>) => {
     const horizontalItemSizeCache = (horizontalVirtualizer as any).itemSizeCache as ItemSizeCache; // 横向测量缓存
 
     // 未resize过使用原生宽度作为宽度，避免横向滚动条闪烁问题
-    const horizontalOriginSize = sortedColumns.columns.reduce((a, b) => a + (b.width ?? defaultWidth), 0);
+    const horizontalOriginSize = totalColumns.reduce((a, b) => a + (b.width ?? defaultWidth), 0);
     const horizontalVirtualSize = horizontalVirtualizer.getTotalSize();
     const horizontalTotalSize = resized ? horizontalVirtualSize : horizontalOriginSize;
-
-    // 设置第一行的高度为默认高度
-    const verticalItemSizeCache = (verticalVirtualizer as any).itemSizeCache as ItemSizeCache; // 纵向测量缓存
-    const firstRowSizeCache = verticalItemSizeCache.get(dataSource?.[0]?.[rowKey] ?? 0); // 纵向第一位监测高度
-    useEffect(() => {
-        if (typeof firstRowSizeCache === 'number') {
-            setRowSize(firstRowSizeCache);
-        }
-    }, [firstRowSizeCache]);
 
     //
     useEffect(() => {

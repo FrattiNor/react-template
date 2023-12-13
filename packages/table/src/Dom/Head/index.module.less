@@ -17,7 +17,17 @@
             .head-row {
                 display: flex;
                 position: relative;
-                border-bottom: 1px solid var(--table-border);
+
+                &::before {
+                    left: 0;
+                    bottom: 0;
+                    width: 100%;
+                    height: 1px;
+                    content: '';
+                    z-index: 999;
+                    position: absolute;
+                    background-color: var(--table-border);
+                }
 
                 .head-cell {
                     flex-shrink: 0;
@@ -25,8 +35,9 @@
                     background-color: var(--table-head-bg);
 
                     .head-cell-inner {
+                        // line-height: 1;
                         width: 100%;
-                        padding: 6px 8px;
+                        padding: 0 8px;
                         font-weight: 600;
                         overflow: hidden;
                         position: relative;

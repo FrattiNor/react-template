@@ -11,10 +11,20 @@
         .body-row {
             display: flex;
             position: relative;
-            border-bottom: 1px solid var(--table-border);
 
-            &:last-child {
-                border: 0;
+            &::before {
+                left: 0;
+                bottom: 0;
+                width: 100%;
+                height: 1px;
+                content: '';
+                z-index: 999;
+                position: absolute;
+                background-color: var(--table-border);
+            }
+
+            &:last-child::before {
+                display: none;
             }
 
             &:hover .body-cell,
@@ -34,7 +44,7 @@
 
                 .body-cell-inner {
                     width: 100%;
-                    padding: 6px 8px;
+                    padding: 0 8px;
                     overflow: hidden;
                     position: relative;
                     white-space: nowrap;

@@ -1,12 +1,12 @@
-import { SortedColumns } from '../useSortColumns';
 import getHandledColumns from './utils';
+import { Column } from '../../type';
 
 export type Opt<T> = {
     resized: boolean;
     defaultWidth: number;
     defaultFlexGrow: number;
     vScrollBarWidth: number;
-    sortedColumns: SortedColumns<T>;
+    totalColumns: Column<T>[];
     horizontalItemSizeCache: Map<number | string, number>;
 };
 

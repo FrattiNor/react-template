@@ -7,7 +7,7 @@ import { FC } from 'react';
 const VirtualBody: FC = () => {
     const { virtual, newProps, innerProps } = useContext2();
 
-    const { dataSource, rowKey } = newProps;
+    const { dataSource, rowKey, rowHeight } = newProps;
     const { ping, resized, selectedRowKeysObj } = innerProps;
     const { horizontalVirtualItems, horizontalTotalSize, horizontalDistance } = virtual;
     const { verticalVirtualItems, verticalTotalSize, verticalDistance, verticalMeasureElement } = virtual;
@@ -31,6 +31,7 @@ const VirtualBody: FC = () => {
                                 key={currentRowKey}
                                 ref={verticalMeasureElement}
                                 data-index={verticalItem.index}
+                                style={{ height: rowHeight, lineHeight: `${rowHeight}px` }}
                                 className={classNames(styles['body-row'], { [styles['selected']]: selectedRowKeysObj[currentRowKey] })}
                             >
                                 {renderItems.map((item) => {

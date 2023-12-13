@@ -5,8 +5,9 @@ import classNames from 'classnames';
 import { FC } from 'react';
 
 const Head: FC = () => {
-    const { virtual, headRef, innerProps } = useContext2();
+    const { virtual, headRef, innerProps, newProps } = useContext2();
 
+    const { rowHeight } = newProps;
     const { renderResizeTitle, ping, vScrollBarWidth, resized } = innerProps;
     const { horizontalVirtualItems, horizontalTotalSize, horizontalDistance } = virtual;
     const { handledColumns, hiddenFixedHandledLeftColumns, hiddenFixedHandledRightColumns, hiddenFixedTotalSize } = innerProps;
@@ -19,7 +20,7 @@ const Head: FC = () => {
                     className={styles['virtual-head-inner']}
                     style={{ transform: `translate3d(0, 0, 0)`, paddingLeft: `${horizontalDistance - hiddenFixedTotalSize}px` }}
                 >
-                    <div className={styles['head-row']}>
+                    <div className={styles['head-row']} style={{ height: rowHeight, lineHeight: `${rowHeight}px` }}>
                         {renderItems.map((item) => {
                             const column = handledColumns[item.index];
                             if (column) {

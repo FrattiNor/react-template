@@ -8,83 +8,99 @@ type GetHandledColumnsRes<T> = {
 };
 
 const getHandledColumns = <T>(opt: Opt<T>): GetHandledColumnsRes<T> => {
-    const { sortedColumns, defaultWidth, defaultFlexGrow, vScrollBarWidth, horizontalItemSizeCache, resized } = opt;
-    const { leftColumns, midColumns, rightColumns } = sortedColumns;
+    const { totalColumns, defaultWidth, defaultFlexGrow, vScrollBarWidth, horizontalItemSizeCache, resized } = opt;
 
-    const showFixed = midColumns.length > 0;
+    const handledColumns: HandledColumn<T>[] = [];
+    const handledLeftColumns: HandledColumn<T>[] = [];
+    const handledRightColumns: HandledColumn<T>[] = [];
 
     const getSomeProps = (column: Column<T>) => {
         const flexGrow = resized ? 0 : column.flexGrow ?? defaultFlexGrow;
         const originWidth = column.width ?? defaultWidth;
         const width = horizontalItemSizeCache.get(column.key) ?? originWidth;
-        const fixed = showFixed ? column.fixed : undefined;
         const widthStyle = resized ? { width, flexGrow } : { width: originWidth, flexGrow };
-        return { width, fixed, widthStyle };
+        return { width, widthStyle };
     };
 
     // left
     let leftBefore = 0;
-    const handledLeftColumns = leftColumns.map((column, _index) => {
-        const index = _index;
-        const { fixed, width, widthStyle } = getSomeProps(column);
+    let leftEndIndex: number | null = null;
+    for (let i = 0; i <= totalColumns.length - 1; i++) {
+        const column = totalColumns[i];
 
-        const res = {
-            ...column,
-            widthStyle,
-            fixed,
-            index,
-            width,
-            fixedStyle: fixed ? { left: leftBefore } : {},
-            headFixedStyle: fixed ? { left: leftBefore } : {},
-            showShadow: fixed ? _index === leftColumns.length - 1 : false,
+        if (column.fixed === 'left') {
+            const { width, widthStyle } = getSomeProps(column);
+
+            const res: HandledColumn<T> = {
+                ...column,
+                width,
+                index: i,
+                widthStyle,
+                fixedStyle: { left: leftBefore },
+                headFixedStyle: { left: leftBefore },
+            };
+
+            leftEndIndex = i;
+            leftBefore += res.width;
+            handledColumns[i] = res;
+            handledLeftColumns.push(res);
+        }
+
+        if (column.fixed !== 'left' && column.fixed !== 'right') {
+            const { width, widthStyle } = getSomeProps(column);
+
+            const res: HandledColumn<T> = {
+                ...column,
+                width,
+                index: i,
+                widthStyle,
+            };
+
+            handledColumns[i] = res;
+        }
+    }
+
+    if (leftEndIndex) {
+        handledColumns[leftEndIndex] = {
+            ...handledColumns[leftEndIndex],
+            showShadow: true,
         };
-
-        leftBefore += res.width;
-        return res;
-    });
-
-    // mid
-    const handledMidColumns = midColumns.map((column, _index) => {
-        const index = _index + handledLeftColumns.length;
-        const { width, widthStyle } = getSomeProps(column);
-
-        const res = {
-            ...column,
-            index,
-            width,
-            widthStyle,
-        };
-
-        return res;
-    });
+    }
 
     // right
     let rightBefore = 0;
-    const handledRightColumns: HandledColumn<T>[] = [];
-    const rightColumnsCopy = [...rightColumns].reverse();
-    rightColumnsCopy.forEach((column, _index) => {
-        const index = handledLeftColumns.length + handledMidColumns.length + rightColumnsCopy.length - _index - 1;
-        const { fixed, width, widthStyle } = getSomeProps(column);
+    let rightEndIndex: number | null = null;
+    for (let i = totalColumns.length - 1; i >= 0; i--) {
+        const column = totalColumns[i];
+        if (column.fixed === 'right') {
+            const { width, widthStyle } = getSomeProps(column);
+            const res: HandledColumn<T> = {
+                ...column,
+                width,
+                index: i,
+                widthStyle,
+                fixedStyle: { right: rightBefore },
+                headFixedStyle: { right: rightBefore + vScrollBarWidth },
+            };
 
-        const res = {
-            ...column,
-            fixed,
-            index,
-            width,
-            widthStyle,
-            fixedStyle: fixed ? { right: rightBefore } : {},
-            showShadow: fixed ? _index === rightColumnsCopy.length - 1 : false,
-            headFixedStyle: fixed ? { right: rightBefore + vScrollBarWidth } : {},
+            rightEndIndex = i;
+            rightBefore += res.width;
+            handledColumns[i] = res;
+            handledRightColumns.push(res);
+        }
+    }
+
+    if (rightEndIndex) {
+        handledColumns[rightEndIndex] = {
+            ...handledColumns[rightEndIndex],
+            showShadow: true,
         };
-
-        rightBefore += res.width;
-        handledRightColumns.unshift(res);
-    });
+    }
 
     return {
-        handledLeftColumns: showFixed ? [...handledLeftColumns] : [],
-        handledRightColumns: showFixed ? [...handledRightColumns] : [],
-        handledColumns: [...handledLeftColumns, ...handledMidColumns, ...handledRightColumns],
+        handledColumns,
+        handledLeftColumns,
+        handledRightColumns,
     };
 };
 

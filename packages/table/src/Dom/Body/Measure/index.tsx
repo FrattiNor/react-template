@@ -10,7 +10,7 @@ const Measure: FC = () => {
 
     return (
         <div className={styles['measure']}>
-            {handledColumns.map(({ key, widthStyle, index }) => {
+            {handledColumns.map(({ key, widthStyle }, index) => {
                 const activeWidthStyle = resizeActiveKey === key ? { width: resizeActiveWidth } : {};
 
                 return (

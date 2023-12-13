@@ -7,7 +7,6 @@ import useHandleColumns from './useHandleColumns';
 import useRowSelection from './useRowSelection';
 import useHandleProps from './useHandleProps';
 import useResizeWidth from './useResizeWidth';
-import useSortColumns from './useSortColumns';
 import { AnyObj, TableProps } from '../type';
 import useVirtual from './useVirtual';
 import { useRef } from 'react';
@@ -20,51 +19,60 @@ const useData = <T extends AnyObj>(props: TableProps<T>) => {
 
     // props
     const { columns, newProps } = useHandleProps(props);
-    const { rowKey, dataSource, autoScrollTop, rowSelection } = newProps;
+    const { rowKey, dataSource, rowSelection, autoScrollTop, rowHeight } = newProps;
+
     // 增加多选
     const { selectedRowKeysObj, rowSelectionColumns } = useRowSelection({ rowKey, dataSource, rowSelection });
+
     // 整合后的 columns
     const totalColumns = [...rowSelectionColumns, ...columns];
+
     // auto scroll top
     useChangeScrollTop({ dataSource, autoScrollTop, bodyRef });
+
     // title resize
     const resizeWidth = useResizeWidth();
+
     // ping
     const calcPingAndScrollBarWidth = useCalcPingAndScrollBarWidth({ bodyRef });
-    // sort columns
-    const sortedColumns = useSortColumns({ columns: totalColumns });
+
     //  body resize observer
     const bodyResizeObserver = useBodyResizeObserver({
         bodyRef,
         calcPingAndScrollBarWidth,
     });
+
     // body scroll observer
     const bodyScrollObserver = useBodyScrollObserver({
         bodyRef,
         headRef,
         calcPingAndScrollBarWidth,
     });
+
     // virtual table core
     const virtual = useVirtual({
         rowKey,
         bodyRef,
+        rowHeight,
         dataSource,
         defaultWidth,
-        sortedColumns,
+        totalColumns,
         bodyResizeObserver,
         bodyScrollObserver,
         calcPingAndScrollBarWidth,
         resized: resizeWidth.resized,
     });
+
     // handle columns
     const handledColumns = useHandleColumns({
         defaultWidth,
-        sortedColumns,
+        totalColumns,
         defaultFlexGrow,
         resized: resizeWidth.resized,
         horizontalItemSizeCache: virtual.horizontalItemSizeCache,
         vScrollBarWidth: calcPingAndScrollBarWidth.vScrollBarWidth,
     });
+
     // calc hidden fixed columns
     const hiddenFixedColumns = useHiddenFixedColumns({
         handledColumns,

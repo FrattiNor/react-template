@@ -2,18 +2,23 @@ import { CSSProperties, ReactNode, RefObject } from 'react';
 
 export type AnyObj = Record<string, any>;
 
+export type Fixed = 'left' | 'right';
+
+export type Align = 'left' | 'right' | 'center';
+
 export type Column<T> = {
     key: string;
     width?: number;
     resize?: boolean;
     title: ReactNode;
     flexGrow?: number;
-    fixed?: 'left' | 'right';
-    align?: 'left' | 'right' | 'center';
+    fixed?: Fixed;
+    align?: Align;
     render?: (v: T, index: number) => ReactNode;
 };
 
 export type RowSelection = {
+    fixed?: Fixed;
     width?: number;
     selectedRowKeys?: (string | number)[];
     onChange?: (v: (string | number)[]) => void;
@@ -23,6 +28,7 @@ export type TableProps<T> = {
     rowKey: keyof T;
     dataSource?: T[];
     loading?: boolean;
+    rowHeight?: number;
     columns: Column<T>[];
     autoScrollTop?: boolean;
     rowSelection?: RowSelection;
