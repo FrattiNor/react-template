@@ -89,10 +89,12 @@ const DemoTable = () => {
                     <Table
                         ref={ref}
                         rowKey="id"
-                        rowSelection={{}}
                         dataSource={query.data || []}
                         loading={query.isFetching || loading}
                         columns={(columnsFlag ? columns : columns2) as any}
+                        rowSelection={{
+                            getCheckboxProps: () => ({ disabled: true }),
+                        }}
                     />
                 </div>
             </div>

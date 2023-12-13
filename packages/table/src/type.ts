@@ -8,20 +8,21 @@ export type Align = 'left' | 'right' | 'center';
 
 export type Column<T> = {
     key: string;
+    fixed?: Fixed;
+    align?: Align;
     width?: number;
     resize?: boolean;
     title: ReactNode;
     flexGrow?: number;
-    fixed?: Fixed;
-    align?: Align;
     render?: (v: T, index: number) => ReactNode;
 };
 
-export type RowSelection = {
+export type RowSelection<T> = {
     fixed?: Fixed;
     width?: number;
     selectedRowKeys?: (string | number)[];
     onChange?: (v: (string | number)[]) => void;
+    getCheckboxProps?: (item: T) => { disabled: boolean };
 };
 
 export type TableProps<T> = {
@@ -31,7 +32,7 @@ export type TableProps<T> = {
     rowHeight?: number;
     columns: Column<T>[];
     autoScrollTop?: boolean;
-    rowSelection?: RowSelection;
+    rowSelection?: RowSelection<T>;
 };
 
 export type HandledColumn<T> = Omit<Column<T>, 'width' | 'flexGrow'> & {

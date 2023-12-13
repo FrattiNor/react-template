@@ -3,11 +3,10 @@
     width: 16px;
     height: 16px;
     outline: none;
+    display: block;
     cursor: pointer;
     position: relative;
     transition: all 0.3s;
-    display: inline-block;
-    vertical-align: middle;
     background-color: var(--table-bg);
     border: 1px solid var(--table-border);
     border-radius: var(--table-border-radius);
@@ -21,11 +20,11 @@
         content: '';
         position: absolute;
         box-sizing: border-box;
-        transition: opacity 0.3s;
         transform: rotate(45deg);
         transform-origin: 50% 50%;
-        border-right: 2px solid var(--table-bg);
-        border-bottom: 2px solid var(--table-bg);
+        border-right: 2px solid transparent;
+        border-bottom: 2px solid transparent;
+        transition: opacity 0.3s, border-color 0.3s;
     }
 
     &::before {
@@ -37,7 +36,8 @@
         content: '';
         position: absolute;
         box-sizing: border-box;
-        background-color: var(--table-primary);
+        background-color: transparent;
+        transition: opacity 0.3s, background-color 0.3s;
     }
 
     &.checked {
@@ -46,17 +46,20 @@
 
         &::after {
             opacity: 1;
+            border-color: var(--table-bg);
         }
     }
 
     &.indeterminate {
         &::before {
             opacity: 1;
+            border-color: var(--table-primary);
         }
     }
 
     &.disabled {
         cursor: not-allowed;
+        border-color: var(--table-border);
         background-color: var(--table-disabled-bg);
     }
 

@@ -24,7 +24,7 @@ const Checkbox: FC<Props> = (props) => {
                 [styles['indeterminate']]: indeterminate,
             })}
         >
-            {checked && <div className={styles['checked-animate']} />}
+            {!disabled && checked && <div className={styles['checked-animate']} />}
         </div>
     );
 };

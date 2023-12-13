@@ -5,13 +5,13 @@ import { useState } from 'react';
 type Opt<T> = {
     rowKey: keyof T;
     dataSource?: T[];
-
-    rowSelection?: RowSelection;
+    isEmpty: boolean;
+    rowSelection?: RowSelection<T>;
 };
 
 const useRowSelection = <T,>(opt: Opt<T>) => {
     const [_selectedRowKeys, _setSelectedRowKeys] = useState([]);
-    const { rowKey, dataSource, rowSelection } = opt;
+    const { rowKey, dataSource, rowSelection, isEmpty } = opt;
     const selectedRowKeys = rowSelection?.selectedRowKeys ?? _selectedRowKeys;
     const setSelectedRowKeys = (rowSelection?.onChange ?? _setSelectedRowKeys) as (v: (string | number)[]) => void;
 
@@ -21,9 +21,9 @@ const useRowSelection = <T,>(opt: Opt<T>) => {
     const dataSourceSelectedRowKeysObj: Record<string, true> = {};
 
     if (rowSelection) {
-        const { width, fixed } = rowSelection;
+        const { width, fixed, getCheckboxProps } = rowSelection;
 
-        let checkedAll = true;
+        let checkedAll = isEmpty ? false : true;
         let checkedSome = false;
 
         selectedRowKeys.forEach((key) => {
@@ -43,6 +43,7 @@ const useRowSelection = <T,>(opt: Opt<T>) => {
 
         const title = (
             <Checkbox
+                disabled={isEmpty}
                 checked={checkedAll}
                 indeterminate={!checkedAll && checkedSome}
                 onChange={(c) => {
@@ -56,6 +57,8 @@ const useRowSelection = <T,>(opt: Opt<T>) => {
 
             const checked = selectedRowKeysObj[key];
 
+            const checkboxProps = getCheckboxProps ? getCheckboxProps(item) : {};
+
             const onChange = (c: boolean) => {
                 const nextRowKeysObj = { ...dataSourceSelectedRowKeysObj };
                 if (c) {
@@ -66,7 +69,7 @@ const useRowSelection = <T,>(opt: Opt<T>) => {
                 setSelectedRowKeys(Object.keys(nextRowKeysObj));
             };
 
-            return <Checkbox checked={checked} onChange={onChange} />;
+            return <Checkbox checked={checked} onChange={onChange} {...checkboxProps} />;
         };
 
         rowSelectionColumns.push({
