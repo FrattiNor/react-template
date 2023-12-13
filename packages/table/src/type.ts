@@ -5,6 +5,7 @@ export type AnyObj = Record<string, any>;
 export type Column<T> = {
     key: string;
     width?: number;
+    resize?: boolean;
     title: ReactNode;
     flexGrow?: number;
     fixed?: 'left' | 'right';
@@ -14,7 +15,7 @@ export type Column<T> = {
 
 export type RowSelection = {
     width?: number;
-    rowKeys?: (string | number)[];
+    selectedRowKeys?: (string | number)[];
     onChange?: (v: (string | number)[]) => void;
 };
 

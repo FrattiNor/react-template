@@ -23,10 +23,12 @@ const Head: FC = () => {
                         {renderItems.map((item) => {
                             const column = handledColumns[item.index];
                             if (column) {
-                                const { title, key, widthStyle, align, fixed, headFixedStyle, showShadow } = column;
+                                const { resize, title, key, widthStyle, align, fixed, headFixedStyle, showShadow } = column;
                                 const cellValue = notEmpty(title);
                                 const cellTitle = typeof cellValue === 'string' || typeof cellValue === 'number' ? `${cellValue}` : '';
                                 const pinged = ping[fixed as any];
+                                const cellInner = <div className={styles['head-cell-inner']}>{cellValue}</div>;
+                                const resizeTitle = resize === undefined || resize === true;
 
                                 return (
                                     <div
@@ -39,7 +41,7 @@ const Head: FC = () => {
                                             [styles[`pinged`]]: pinged,
                                         })}
                                     >
-                                        {renderResizeTitle(key, <div className={styles['head-cell-inner']}>{cellValue}</div>)}
+                                        {resizeTitle ? renderResizeTitle(key, cellInner) : cellInner}
                                     </div>
                                 );
                             }

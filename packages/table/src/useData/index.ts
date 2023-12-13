@@ -22,7 +22,9 @@ const useData = <T extends AnyObj>(props: TableProps<T>) => {
     const { columns, newProps } = useHandleProps(props);
     const { rowKey, dataSource, autoScrollTop, rowSelection } = newProps;
     // 增加多选
-    const { rowKeysObj, rowSelectionColumns } = useRowSelection({ columns, rowKey, dataSource, rowSelection });
+    const { selectedRowKeysObj, rowSelectionColumns } = useRowSelection({ rowKey, dataSource, rowSelection });
+    // 整合后的 columns
+    const totalColumns = [...rowSelectionColumns, ...columns];
     // auto scroll top
     useChangeScrollTop({ dataSource, autoScrollTop, bodyRef });
     // title resize
@@ -30,7 +32,7 @@ const useData = <T extends AnyObj>(props: TableProps<T>) => {
     // ping
     const calcPingAndScrollBarWidth = useCalcPingAndScrollBarWidth({ bodyRef });
     // sort columns
-    const sortedColumns = useSortColumns({ columns: rowSelectionColumns });
+    const sortedColumns = useSortColumns({ columns: totalColumns });
     //  body resize observer
     const bodyResizeObserver = useBodyResizeObserver({
         bodyRef,
@@ -70,9 +72,9 @@ const useData = <T extends AnyObj>(props: TableProps<T>) => {
     });
 
     const innerProps = {
-        rowKeysObj,
         ...resizeWidth,
         ...hiddenFixedColumns,
+        selectedRowKeysObj,
         ping: calcPingAndScrollBarWidth.ping,
         handledColumns: handledColumns.columns,
         vScrollBarWidth: calcPingAndScrollBarWidth.vScrollBarWidth,

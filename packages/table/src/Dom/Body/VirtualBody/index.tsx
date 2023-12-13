@@ -7,8 +7,8 @@ import { FC } from 'react';
 const VirtualBody: FC = () => {
     const { virtual, newProps, innerProps } = useContext2();
 
-    const { ping, resized } = innerProps;
     const { dataSource, rowKey } = newProps;
+    const { ping, resized, selectedRowKeysObj } = innerProps;
     const { horizontalVirtualItems, horizontalTotalSize, horizontalDistance } = virtual;
     const { verticalVirtualItems, verticalTotalSize, verticalDistance, verticalMeasureElement } = virtual;
     const { handledColumns, hiddenFixedHandledLeftColumns, hiddenFixedHandledRightColumns, hiddenFixedTotalSize } = innerProps;
@@ -21,17 +21,23 @@ const VirtualBody: FC = () => {
                 style={{ transform: `translate3d(0, ${verticalDistance}px, 0)`, paddingLeft: `${horizontalDistance - hiddenFixedTotalSize}px` }}
             >
                 {verticalVirtualItems.map((verticalItem) => {
-                    const rowIndex = verticalItem.index;
-                    const rowData = dataSource?.[rowIndex];
+                    const currentRowIndex = verticalItem.index;
+                    const currentRowData = dataSource?.[currentRowIndex];
+                    const currentRowKey = currentRowData[rowKey];
 
-                    if (rowData) {
+                    if (currentRowData) {
                         return (
-                            <div key={rowData[rowKey]} ref={verticalMeasureElement} className={styles['body-row']} data-index={verticalItem.index}>
+                            <div
+                                key={currentRowKey}
+                                ref={verticalMeasureElement}
+                                data-index={verticalItem.index}
+                                className={classNames(styles['body-row'], { [styles['selected']]: selectedRowKeysObj[currentRowKey] })}
+                            >
                                 {renderItems.map((item) => {
                                     const column = handledColumns[item.index];
                                     if (column) {
                                         const { key, render, widthStyle, align, fixed, fixedStyle, showShadow } = column;
-                                        const cellValue = notEmpty(render ? render(rowData, rowIndex) : rowData[key]);
+                                        const cellValue = notEmpty(render ? render(currentRowData, currentRowIndex) : currentRowData[key]);
                                         const cellTitle = typeof cellValue === 'string' || typeof cellValue === 'number' ? `${cellValue}` : '';
                                         const pinged = ping[fixed as any];
 

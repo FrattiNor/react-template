@@ -17,8 +17,13 @@
                 border: 0;
             }
 
-            &:hover .body-cell {
+            &:hover .body-cell,
+            &.selected .body-cell {
                 background-color: var(--table-row-hover-bg);
+            }
+
+            &.selected:hover .body-cell {
+                background-color: var(--table-row-selected-hover-bg);
             }
 
             .body-cell {
