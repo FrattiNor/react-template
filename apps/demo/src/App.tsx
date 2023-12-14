@@ -1,5 +1,5 @@
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useMemo, useRef, useState } from 'react';
 import { TableRef } from '@pkg/table/src/type';
 import { columns, columns2 } from './utils';
 import Table from '@pkg/table/src/index';
@@ -133,14 +133,10 @@ const DemoTable = () => {
                         dataSource={query.data || []}
                         loading={query.isFetching || loading}
                         columns={(columnsMap as any)[`${columnsFlag % 3}` as any] as any}
+                        rowSelection={{}}
                         expandable={{
-                            defaultExpandAllRows: false,
+                            defaultExpandAllRows: true,
                         }}
-                        rowSelection={
-                            {
-                                // getCheckboxProps: (_, index) => ({ disabled: index % 2 === 0 }),
-                            }
-                        }
                     />
                 </div>
             </div>

@@ -7,7 +7,7 @@ import { FC } from 'react';
 const VirtualBody: FC = () => {
     const { newProps, innerProps } = useContext2();
     const { rowKey, rowHeight } = newProps;
-    const { resized, selectedRowKeysObj, totalDataSource } = innerProps;
+    const { resized, selectedRowKeysObj, showDataSource } = innerProps;
     const { handledColumns, hiddenFixedHandledLeftColumns, hiddenFixedHandledRightColumns } = innerProps;
     const { verticalVirtualItems, verticalTotalSize, verticalDistance, verticalMeasureElement } = innerProps;
     const { horizontalVirtualItems, horizontalTotalSize, horizontalPaddingLeft, horizontalPaddingRight } = innerProps;
@@ -27,7 +27,7 @@ const VirtualBody: FC = () => {
         >
             {verticalVirtualItems.map((verticalItem) => {
                 const currentRowIndex = verticalItem.index;
-                const currentRowData = totalDataSource?.[currentRowIndex];
+                const currentRowData = showDataSource?.[currentRowIndex];
 
                 if (currentRowData) {
                     const currentRowKey = currentRowData[rowKey];
@@ -42,12 +42,28 @@ const VirtualBody: FC = () => {
                         >
                             {renderItems.map((item) => {
                                 const column = handledColumns[item.index];
+                                const lastColumn = handledColumns[item.index - 1];
+                                const isAfterExpandable = lastColumn?.key === 'table-row-expandable';
+
                                 if (column) {
                                     const { key, render, bodyStyle, fixed, pinged } = column;
                                     const cellValue = notEmpty(render ? render(currentRowData, currentRowIndex) : currentRowData[key]);
                                     const isStr = typeof cellValue === 'string' || typeof cellValue === 'number';
                                     const cellTitle = isStr ? `${cellValue}` : '';
                                     const cellInner = isStr ? <div className={styles['body-cell-str']}>{cellValue}</div> : cellValue;
+
+                                    const xIndex = typeof currentRowData['xIndex'] === 'number' ? currentRowData['xIndex'] : 0;
+                                    const paddingLeft = isAfterExpandable ? xIndex * 16 : 0;
+                                    const cellInner2 =
+                                        paddingLeft > 0 ? (
+                                            <div className={styles['body-cell-expandable']}>
+                                                <div className={styles['body-cell-expandable-inner']} style={{ paddingLeft }}>
+                                                    {cellInner}
+                                                </div>
+                                            </div>
+                                        ) : (
+                                            cellInner
+                                        );
 
                                     return (
                                         <div
@@ -60,7 +76,7 @@ const VirtualBody: FC = () => {
                                                 [styles[`shadow`]]: true,
                                             })}
                                         >
-                                            {cellInner}
+                                            {cellInner2}
                                         </div>
                                     );
                                 }

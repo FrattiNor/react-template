@@ -21,7 +21,7 @@ const getHandledColumns = <T>(opt: Opt<T>) => {
         const width = resizeActiveKey === column.key ? (resizeActiveWidth as number) : horizontalItemSizeCache.get(column.key) ?? originWidth;
         const justifyContent = justifyContentMap[column.align ?? 'left'];
         const measureStyle = resized ? { width, flexGrow } : { width: originWidth, flexGrow };
-        const style = { ...measureStyle, justifyContent, textAlign: column.align };
+        const style = { ...measureStyle, justifyContent };
         return { width, originWidth, style, measureStyle };
     };
 
@@ -55,8 +55,8 @@ const getHandledColumns = <T>(opt: Opt<T>) => {
                 index: i,
                 originWidth,
                 measureStyle,
-                bodyStyle: { ...style, left: leftBefore, zIndex: fixedCount + 1 },
-                headStyle: { ...style, left: leftBefore, zIndex: fixedCount + 1 },
+                bodyStyle: { ...style, left: leftBefore, zIndex: fixedCount + 2 },
+                headStyle: { ...style, left: leftBefore, zIndex: fixedCount + 2 },
             };
 
             fixedCount++;
@@ -121,8 +121,8 @@ const getHandledColumns = <T>(opt: Opt<T>) => {
                 index: i,
                 originWidth,
                 measureStyle,
-                bodyStyle: { ...style, right: rightBefore, zIndex: fixedCount + 1 },
-                headStyle: { ...style, right: rightBefore + vScrollBarWidth, zIndex: fixedCount + 1 },
+                bodyStyle: { ...style, right: rightBefore, zIndex: fixedCount + 2 },
+                headStyle: { ...style, right: rightBefore + vScrollBarWidth, zIndex: fixedCount + 2 },
             };
 
             fixedCount++;

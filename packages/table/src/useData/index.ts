@@ -26,7 +26,7 @@ const useData = <T extends AnyObj>(props: TableProps<T>) => {
     useChangeScrollTop({ dataSource, autoScrollTop, bodyRef });
 
     // 增加展开
-    const { totalDataSource, expandableColumns } = useExpandable({ rowKey, expandable, dataSource });
+    const { totalDataSource, showDataSource, expandableColumns } = useExpandable({ rowKey, expandable, dataSource });
 
     // 增加多选
     const { selectedRowKeysObj, rowSelectionColumns } = useRowSelection({ rowKey, rowSelection, dataSource: totalDataSource });
@@ -66,7 +66,7 @@ const useData = <T extends AnyObj>(props: TableProps<T>) => {
         totalColumns,
         bodyResizeObserver,
         bodyScrollObserver,
-        dataSource: totalDataSource,
+        dataSource: showDataSource,
     });
 
     // handle columns
@@ -85,7 +85,7 @@ const useData = <T extends AnyObj>(props: TableProps<T>) => {
         ...virtual,
         ...resizeWidth,
         ...handledColumns,
-        totalDataSource,
+        showDataSource,
         vScrollBarWidth,
         selectedRowKeysObj,
     };

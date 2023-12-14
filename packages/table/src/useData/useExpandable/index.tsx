@@ -15,33 +15,35 @@ const useExpandable = <T,>(opt: Opt<T>) => {
 
     const [expandedKeyObj, setExpandedKeyObj] = useState<Record<string, boolean>>({});
 
-    const totalDataSource = useMemo(() => {
+    const { total: totalDataSource, show: showDataSource } = useMemo(() => {
         if (expandable) {
             const { defaultExpandAllRows, childrenColumnName = 'children' } = expandable;
 
-            const handleDataSource = (value: T[], index = 0) => {
-                const res: T[] = [];
+            const handleDataSource = (value: T[], xIndex = 0) => {
+                const show: T[] = [];
+                const total: T[] = [];
 
                 value.forEach((item) => {
-                    res.push(item);
+                    show.push({ ...item, xIndex });
+                    total.push({ ...item, xIndex });
                     const key = item[rowKey] as string;
                     const children = (item as any)[childrenColumnName];
-                    const opened = expandedKeyObj[key] ?? defaultExpandAllRows;
                     const haveChild = Array.isArray(children) && children.length > 0;
-                    if (opened && haveChild) {
-                        res.push(...handleDataSource(children, index + 1));
+                    if (haveChild) {
+                        const opened = expandedKeyObj[key] ?? defaultExpandAllRows;
+                        const childrenRes = handleDataSource(children, xIndex + 1);
+                        total.push(...childrenRes.total);
+                        if (opened) show.push(...childrenRes.show);
                     }
                 });
 
-                return res;
+                return { total, show };
             };
 
-            const res = handleDataSource(dataSource || []);
-
-            return res;
+            return handleDataSource(dataSource || []);
         }
 
-        return dataSource || [];
+        return { total: dataSource || [], show: dataSource || [] };
     }, [expandedKeyObj, dataSource]);
 
     if (expandable) {
@@ -69,7 +71,7 @@ const useExpandable = <T,>(opt: Opt<T>) => {
         });
     }
 
-    return { totalDataSource, expandableColumns };
+    return { totalDataSource, showDataSource, expandableColumns };
 };
 
 export default useExpandable;

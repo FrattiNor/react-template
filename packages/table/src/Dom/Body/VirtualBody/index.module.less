@@ -13,20 +13,6 @@
             border-bottom: 0;
         }
 
-        // &::before {
-        //     left: 0;
-        //     bottom: 0;
-        //     z-index: 99;
-        //     width: 100%;
-        //     height: 1px;
-        //     content: '';
-        //     position: absolute;
-        //     background-color: var(--table-border);
-        // }
-        // &:last-child::before {
-        //     display: none;
-        // }
-
         &:hover > .body-cell,
         &:hover > .body-cell-other,
         &.selected > .body-cell,
@@ -53,11 +39,23 @@
             }
 
             .body-cell-str {
-                width: 100%;
+                max-width: 100%;
                 overflow: hidden;
                 position: relative;
                 white-space: nowrap;
                 text-overflow: ellipsis;
+            }
+
+            .body-cell-expandable {
+                max-width: 100%;
+                overflow: hidden;
+                position: relative;
+
+                .body-cell-expandable-inner {
+                    max-width: 100%;
+                    overflow: hidden;
+                    position: relative;
+                }
             }
         }
 
