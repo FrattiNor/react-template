@@ -10,8 +10,8 @@ const Head: FC = () => {
 
     const { rowHeight } = newProps;
     const { vScrollBarWidth, resized, resizeActiveKey } = innerProps;
-    const { horizontalVirtualItems, horizontalTotalSize, horizontalDistance } = innerProps;
-    const { handledColumns, hiddenFixedHandledLeftColumns, hiddenFixedHandledRightColumns, hiddenFixedTotalSize } = innerProps;
+    const { horizontalVirtualItems, horizontalTotalSize } = innerProps;
+    const { handledColumns, hiddenFixedHandledLeftColumns, hiddenFixedHandledRightColumns, paddingLeft, paddingRight } = innerProps;
     const renderItems = [...hiddenFixedHandledLeftColumns, ...horizontalVirtualItems, ...hiddenFixedHandledRightColumns];
 
     return (
@@ -19,9 +19,10 @@ const Head: FC = () => {
             <div
                 className={styles['virtual-head']}
                 style={{
+                    paddingLeft,
+                    paddingRight,
                     transform: `translate3d(0, 0, 0)`,
                     width: horizontalTotalSize + vScrollBarWidth,
-                    paddingLeft: `${horizontalDistance - hiddenFixedTotalSize}px`,
                 }}
             >
                 <div className={styles['head-row']} style={{ height: rowHeight }}>

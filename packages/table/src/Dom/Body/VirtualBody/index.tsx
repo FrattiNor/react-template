@@ -9,20 +9,21 @@ const VirtualBody: FC = () => {
 
     const { dataSource, rowKey, rowHeight } = newProps;
     const { resized, selectedRowKeysObj } = innerProps;
-    const { horizontalVirtualItems, horizontalTotalSize, horizontalDistance } = innerProps;
+    const { horizontalVirtualItems, horizontalTotalSize } = innerProps;
     const { verticalVirtualItems, verticalTotalSize, verticalDistance, verticalMeasureElement } = innerProps;
-    const { handledColumns, hiddenFixedHandledLeftColumns, hiddenFixedHandledRightColumns, hiddenFixedTotalSize } = innerProps;
+    const { handledColumns, hiddenFixedHandledLeftColumns, hiddenFixedHandledRightColumns, paddingLeft, paddingRight } = innerProps;
     const renderItems = [...hiddenFixedHandledLeftColumns, ...horizontalVirtualItems, ...hiddenFixedHandledRightColumns];
 
     return (
         <div
             className={styles['virtual-body']}
             style={{
+                paddingLeft: paddingLeft,
                 height: verticalTotalSize,
                 width: horizontalTotalSize,
+                paddingRight: paddingRight,
+                paddingTop: verticalDistance,
                 transform: `translate3d(0, 0, 0)`,
-                paddingTop: `${verticalDistance}px`,
-                paddingLeft: `${horizontalDistance - hiddenFixedTotalSize}px`,
             }}
         >
             {verticalVirtualItems.map((verticalItem) => {

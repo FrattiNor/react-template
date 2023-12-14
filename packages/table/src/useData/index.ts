@@ -1,9 +1,7 @@
 import useBodyResizeObserver from './useBodyResizeObserver';
 import useBodyScrollObserver from './useBodyScrollObserver';
-import useHiddenFixedColumns from './useHiddenFixedColumns';
 import useCalcScrollBarWidth from './useCalcScrollBarWidth';
 import useChangeScrollTop from './useChangeScrollTop';
-import useHorizontalSize from './useHorizontalSize';
 import useHandleColumns from './useHandleColumns';
 import useRowSelection from './useRowSelection';
 import useHandleProps from './useHandleProps';
@@ -12,7 +10,6 @@ import { AnyObj, TableProps } from '../type';
 import useCalcPing from './useCalcPing';
 import useVirtual from './useVirtual';
 import { useRef } from 'react';
-import useHandleColumns2 from './useHandleColumns2';
 
 const useData = <T extends AnyObj>(props: TableProps<T>) => {
     const defaultWidth = 150;
@@ -69,31 +66,7 @@ const useData = <T extends AnyObj>(props: TableProps<T>) => {
     });
 
     // handle columns
-    const { handledColumns, handledLeftColumns, handledRightColumns } = useHandleColumns({
-        ping,
-        resizeWidth,
-        defaultWidth,
-        totalColumns,
-        defaultFlexGrow,
-        vScrollBarWidth,
-        horizontalItemSizeCache: virtual.horizontalItemSizeCache,
-    });
-
-    // calc hidden fixed columns
-    const hiddenFixedColumns = useHiddenFixedColumns({
-        handledLeftColumns,
-        handledRightColumns,
-        horizontalRange: virtual.horizontalRange,
-    });
-
-    //
-    const horizontalTotalSize = useHorizontalSize({
-        calcPing,
-        resizeWidth,
-        handledColumns,
-    });
-
-    const handledColumns2 = useHandleColumns2({
+    const handledColumns = useHandleColumns({
         ping,
         resizeWidth,
         defaultWidth,
@@ -107,9 +80,7 @@ const useData = <T extends AnyObj>(props: TableProps<T>) => {
     const innerProps = {
         ...virtual,
         ...resizeWidth,
-        ...hiddenFixedColumns,
-        horizontalTotalSize,
-        handledColumns,
+        ...handledColumns,
         vScrollBarWidth,
         selectedRowKeysObj,
     };
@@ -119,7 +90,6 @@ const useData = <T extends AnyObj>(props: TableProps<T>) => {
         headRef,
         newProps,
         innerProps,
-        handledColumns2,
     };
 };
 

@@ -17,7 +17,7 @@ const DemoTable = () => {
     const ref = useRef<TableRef>(null);
     const [count, setCount] = useState(10000);
     const [loading, setLoading] = useState(false);
-    const [columnsFlag, setColumnsFlag] = useState(0);
+    const [columnsFlag, setColumnsFlag] = useState(1);
 
     const columns3: any[] = useMemo(() => {
         return Array(22)
@@ -27,7 +27,7 @@ const DemoTable = () => {
                 key: `age_${i}`,
                 title: `年龄_${i}`,
                 flexGrow: i !== 0 ? 1 : 0,
-                fixed: i === 0 ? 'left' : i === 10 ? 'right' : undefined,
+                fixed: i === 0 ? 'left' : i === 20 ? 'right' : undefined,
             }));
     }, []);
 

@@ -8,12 +8,12 @@ const justifyContentMap = {
 };
 
 const getHandledColumns = <T>(opt: Opt<T>) => {
-    const { totalColumns, defaultWidth, defaultFlexGrow, vScrollBarWidth, horizontalItemSizeCache, resizeWidth, ping } = opt;
+    const { totalColumns, defaultWidth, defaultFlexGrow, vScrollBarWidth, horizontalItemSizeCache, resizeWidth, ping, horizontalRange } = opt;
     const { resizeActiveKey, resizeActiveWidth, resized } = resizeWidth;
 
     const handledColumns: HandledColumn<T>[] = [];
-    const handledLeftColumns: HandledColumn<T>[] = [];
-    const handledRightColumns: HandledColumn<T>[] = [];
+    const hiddenFixedHandledLeftColumns: HandledColumn<T>[] = [];
+    const hiddenFixedHandledRightColumns: HandledColumn<T>[] = [];
 
     const getSomeProps = (column: Column<T>) => {
         const flexGrow = resized ? 0 : column.flexGrow ?? defaultFlexGrow;
@@ -25,7 +25,16 @@ const getHandledColumns = <T>(opt: Opt<T>) => {
         return { width, originWidth, style, measureStyle };
     };
 
+    const getHidden = (index: number) => {
+        const hiddenLeft = horizontalRange && index < horizontalRange.startIndex;
+        const hiddenRight = horizontalRange && index > horizontalRange.endIndex;
+        return { hiddenLeft, hiddenRight };
+    };
+
+    let paddingLeft = 0;
+    let paddingRight = 0;
     let fixedCount = 0;
+    let horizontalTotalSize = 0;
     // left
     let leftBefore = 0;
     let leftPingDistance = 0;
@@ -34,28 +43,39 @@ const getHandledColumns = <T>(opt: Opt<T>) => {
         const column = totalColumns[i];
 
         if (column.fixed === 'left') {
+            const { hiddenLeft, hiddenRight } = getHidden(i);
             const { width, originWidth, style, measureStyle } = getSomeProps(column);
             const distance = leftPingDistance - leftBefore;
+            const pinged = (ping[column.fixed] ?? 0) > distance;
 
             const res: HandledColumn<T> = {
                 ...column,
                 width,
+                pinged,
                 index: i,
                 originWidth,
                 measureStyle,
-                pinged: (ping[column.fixed] ?? 0) > distance,
                 bodyStyle: { ...style, left: leftBefore, zIndex: fixedCount + 1 },
                 headStyle: { ...style, left: leftBefore, zIndex: fixedCount + 1 },
             };
 
             fixedCount++;
-            leftBefore += res.width;
-            leftPingDistance += res.width;
+            leftBefore += width;
+            leftPingDistance += width;
             handledColumns[i] = res;
-            handledLeftColumns.push(res);
+            horizontalTotalSize += resized ? width : originWidth;
+
+            if (hiddenRight) {
+                paddingRight += width;
+            }
+
+            if (pinged && hiddenLeft) {
+                hiddenFixedHandledLeftColumns.push(res);
+            }
         }
 
         if (column.fixed !== 'left' && column.fixed !== 'right') {
+            const { hiddenLeft, hiddenRight } = getHidden(i);
             const { width, originWidth, style, measureStyle } = getSomeProps(column);
 
             const res: HandledColumn<T> = {
@@ -68,8 +88,17 @@ const getHandledColumns = <T>(opt: Opt<T>) => {
                 headStyle: style,
             };
 
-            leftPingDistance += res.width;
+            leftPingDistance += width;
             handledColumns[i] = res;
+            horizontalTotalSize += resized ? width : originWidth;
+
+            if (hiddenLeft) {
+                paddingLeft += width;
+            }
+
+            if (hiddenRight) {
+                paddingRight += width;
+            }
         }
     }
 
@@ -80,25 +109,35 @@ const getHandledColumns = <T>(opt: Opt<T>) => {
     for (let i = totalColumns.length - 1; i >= 0; i--) {
         const column = totalColumns[i];
         if (column.fixed === 'right') {
+            const { hiddenRight, hiddenLeft } = getHidden(i);
             const { width, originWidth, style, measureStyle } = getSomeProps(column);
             const distance = rightPingDistance - rightBefore;
+            const pinged = (ping[column.fixed] ?? 0) > distance;
 
             const res: HandledColumn<T> = {
                 ...column,
                 width,
+                pinged,
                 index: i,
                 originWidth,
                 measureStyle,
-                pinged: (ping[column.fixed] ?? 0) > distance,
                 bodyStyle: { ...style, right: rightBefore, zIndex: fixedCount + 1 },
                 headStyle: { ...style, right: rightBefore + vScrollBarWidth, zIndex: fixedCount + 1 },
             };
 
             fixedCount++;
-            rightBefore += res.width;
-            rightPingDistance += res.width;
+            rightBefore += width;
+            rightPingDistance += width;
             handledColumns[i] = res;
-            handledRightColumns.push(res);
+            horizontalTotalSize += resized ? width : originWidth;
+
+            if (hiddenLeft) {
+                paddingLeft += width;
+            }
+
+            if (pinged && hiddenRight) {
+                hiddenFixedHandledRightColumns.push(res);
+            }
         }
         if (column.fixed !== 'left' && column.fixed !== 'right') {
             rightPingDistance += handledColumns[i].width;
@@ -106,9 +145,12 @@ const getHandledColumns = <T>(opt: Opt<T>) => {
     }
 
     return {
+        paddingLeft,
+        paddingRight,
         handledColumns,
-        handledLeftColumns,
-        handledRightColumns,
+        horizontalTotalSize,
+        hiddenFixedHandledLeftColumns,
+        hiddenFixedHandledRightColumns,
     };
 };
 

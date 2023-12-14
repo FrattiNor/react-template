@@ -2,8 +2,11 @@ import { ResizeWidth } from '../useResizeWidth';
 import getHandledColumns from './utils';
 import { Column } from '../../type';
 
+type Range = { startIndex: number; endIndex: number } | null;
+
 export type Opt<T> = {
     defaultWidth: number;
+    horizontalRange: Range;
     defaultFlexGrow: number;
     vScrollBarWidth: number;
     resizeWidth: ResizeWidth;
