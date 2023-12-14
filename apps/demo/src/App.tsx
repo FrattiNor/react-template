@@ -1,9 +1,9 @@
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
 import { useMemo, useRef, useState } from 'react';
 import { TableRef } from '@pkg/table/src/type';
+import { columns, columns2 } from './utils';
 import Table from '@pkg/table/src/index';
 import { Switch, Button } from 'antd';
-import { columns, columns2 } from './utils';
 import useFps from './useFps';
 
 type Item = {
@@ -15,19 +15,18 @@ type Item = {
 const DemoTable = () => {
     useFps();
     const ref = useRef<TableRef>(null);
-    const [count, setCount] = useState(10000);
+    const [count, setCount] = useState(100000);
     const [loading, setLoading] = useState(false);
     const [columnsFlag, setColumnsFlag] = useState(1);
 
     const columns3: any[] = useMemo(() => {
-        return Array(22)
+        return Array(100)
             .fill('')
             .map((_, i) => ({
-                width: Math.max(Math.floor(Math.random() * 150), 50),
                 key: `age_${i}`,
                 title: `年龄_${i}`,
-                flexGrow: i !== 0 ? 1 : 0,
-                fixed: i === 0 ? 'left' : i === 20 ? 'right' : undefined,
+                fixed: i === 0 ? 'left' : i === 99 ? 'right' : undefined,
+                width: Math.max(Math.floor(Math.random() * 150), 50),
             }));
     }, []);
 
@@ -97,9 +96,9 @@ const DemoTable = () => {
                         dataSource={query.data || []}
                         loading={query.isFetching || loading}
                         columns={(columnsMap as any)[`${columnsFlag % 3}` as any] as any}
-                        // rowSelection={{
-                        //     getCheckboxProps: (_, index) => ({ disabled: index % 2 === 0 }),
-                        // }}
+                        rowSelection={{
+                            getCheckboxProps: (_, index) => ({ disabled: index % 2 === 0 }),
+                        }}
                     />
                 </div>
             </div>

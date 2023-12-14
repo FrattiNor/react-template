@@ -31,10 +31,10 @@ const getHandledColumns = <T>(opt: Opt<T>) => {
         return { hiddenLeft, hiddenRight };
     };
 
-    let paddingLeft = 0;
-    let paddingRight = 0;
     let fixedCount = 0;
     let horizontalTotalSize = 0;
+    let horizontalPaddingLeft = 0;
+    let horizontalPaddingRight = 0;
     // left
     let leftBefore = 0;
     let leftPingDistance = 0;
@@ -66,7 +66,7 @@ const getHandledColumns = <T>(opt: Opt<T>) => {
             horizontalTotalSize += resized ? width : originWidth;
 
             if (hiddenRight) {
-                paddingRight += width;
+                horizontalPaddingRight += width;
             }
 
             if (pinged && hiddenLeft) {
@@ -93,11 +93,11 @@ const getHandledColumns = <T>(opt: Opt<T>) => {
             horizontalTotalSize += resized ? width : originWidth;
 
             if (hiddenLeft) {
-                paddingLeft += width;
+                horizontalPaddingLeft += width;
             }
 
             if (hiddenRight) {
-                paddingRight += width;
+                horizontalPaddingRight += width;
             }
         }
     }
@@ -132,7 +132,7 @@ const getHandledColumns = <T>(opt: Opt<T>) => {
             horizontalTotalSize += resized ? width : originWidth;
 
             if (hiddenLeft) {
-                paddingLeft += width;
+                horizontalPaddingLeft += width;
             }
 
             if (pinged && hiddenRight) {
@@ -145,10 +145,10 @@ const getHandledColumns = <T>(opt: Opt<T>) => {
     }
 
     return {
-        paddingLeft,
-        paddingRight,
         handledColumns,
         horizontalTotalSize,
+        horizontalPaddingLeft,
+        horizontalPaddingRight,
         hiddenFixedHandledLeftColumns,
         hiddenFixedHandledRightColumns,
     };

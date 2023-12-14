@@ -25,12 +25,18 @@ export type RowSelection<T> = {
     getCheckboxProps?: (item: T, index: number) => { disabled: boolean };
 };
 
+export type Expandable = {
+    defaultExpandAllRows?: boolean;
+    childrenColumnName?: string;
+};
+
 export type TableProps<T> = {
     rowKey: keyof T;
     dataSource?: T[];
     loading?: boolean;
     rowHeight?: number;
     columns: Column<T>[];
+    expandable: Expandable;
     autoScrollTop?: boolean;
     rowSelection?: RowSelection<T>;
 };

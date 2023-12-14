@@ -6,24 +6,23 @@ import { FC } from 'react';
 
 const VirtualBody: FC = () => {
     const { newProps, innerProps } = useContext2();
-
     const { dataSource, rowKey, rowHeight } = newProps;
     const { resized, selectedRowKeysObj } = innerProps;
-    const { horizontalVirtualItems, horizontalTotalSize } = innerProps;
+    const { handledColumns, hiddenFixedHandledLeftColumns, hiddenFixedHandledRightColumns } = innerProps;
     const { verticalVirtualItems, verticalTotalSize, verticalDistance, verticalMeasureElement } = innerProps;
-    const { handledColumns, hiddenFixedHandledLeftColumns, hiddenFixedHandledRightColumns, paddingLeft, paddingRight } = innerProps;
+    const { horizontalVirtualItems, horizontalTotalSize, horizontalPaddingLeft, horizontalPaddingRight } = innerProps;
     const renderItems = [...hiddenFixedHandledLeftColumns, ...horizontalVirtualItems, ...hiddenFixedHandledRightColumns];
 
     return (
         <div
             className={styles['virtual-body']}
             style={{
-                paddingLeft: paddingLeft,
                 height: verticalTotalSize,
                 width: horizontalTotalSize,
-                paddingRight: paddingRight,
                 paddingTop: verticalDistance,
                 transform: `translate3d(0, 0, 0)`,
+                paddingLeft: horizontalPaddingLeft,
+                paddingRight: horizontalPaddingRight,
             }}
         >
             {verticalVirtualItems.map((verticalItem) => {
