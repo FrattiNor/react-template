@@ -29,13 +29,14 @@ const Head: FC = () => {
                     {renderItems.map((item) => {
                         const column = handledColumns[item.index];
                         if (column) {
-                            const { resize, title, key, fixed, headStyle, pinged } = column;
+                            const { resize, title, key, fixed, headStyle, pinged, hiddenDivider } = column;
                             const cellValue = notEmpty(title);
                             const resizeTitle = resize === undefined || resize === true;
                             const isStr = typeof cellValue === 'string' || typeof cellValue === 'number';
                             const cellTitle = isStr ? `${cellValue}` : '';
                             const cellInner = isStr ? <div className={styles['head-cell-str']}>{cellValue}</div> : cellValue;
                             const className = classNames(styles['head-cell'], {
+                                [styles['hidden-divider']]: hiddenDivider,
                                 [styles[`fixed-${fixed}`]]: !!fixed,
                                 [styles[`pinged`]]: pinged,
                                 [styles[`shadow`]]: true,

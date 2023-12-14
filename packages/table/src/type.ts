@@ -14,6 +14,7 @@ export type Column<T> = {
     resize?: boolean;
     title: ReactNode;
     flexGrow?: number;
+    hiddenDivider?: boolean;
     render?: (item: T, index: number) => ReactNode;
 };
 
@@ -26,8 +27,8 @@ export type RowSelection<T> = {
 };
 
 export type Expandable = {
-    defaultExpandAllRows?: boolean;
     childrenColumnName?: string;
+    defaultExpandAllRows?: boolean;
 };
 
 export type TableProps<T> = {
@@ -36,7 +37,7 @@ export type TableProps<T> = {
     loading?: boolean;
     rowHeight?: number;
     columns: Column<T>[];
-    expandable: Expandable;
+    expandable?: Expandable;
     autoScrollTop?: boolean;
     rowSelection?: RowSelection<T>;
 };

@@ -6,8 +6,8 @@ import { FC } from 'react';
 
 const VirtualBody: FC = () => {
     const { newProps, innerProps } = useContext2();
-    const { dataSource, rowKey, rowHeight } = newProps;
-    const { resized, selectedRowKeysObj } = innerProps;
+    const { rowKey, rowHeight } = newProps;
+    const { resized, selectedRowKeysObj, totalDataSource } = innerProps;
     const { handledColumns, hiddenFixedHandledLeftColumns, hiddenFixedHandledRightColumns } = innerProps;
     const { verticalVirtualItems, verticalTotalSize, verticalDistance, verticalMeasureElement } = innerProps;
     const { horizontalVirtualItems, horizontalTotalSize, horizontalPaddingLeft, horizontalPaddingRight } = innerProps;
@@ -27,10 +27,11 @@ const VirtualBody: FC = () => {
         >
             {verticalVirtualItems.map((verticalItem) => {
                 const currentRowIndex = verticalItem.index;
-                const currentRowData = dataSource?.[currentRowIndex];
-                const currentRowKey = currentRowData[rowKey];
+                const currentRowData = totalDataSource?.[currentRowIndex];
 
                 if (currentRowData) {
+                    const currentRowKey = currentRowData[rowKey];
+
                     return (
                         <div
                             key={currentRowKey}

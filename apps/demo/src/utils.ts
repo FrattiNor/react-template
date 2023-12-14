@@ -68,18 +68,21 @@ export const columns2 = [
         title: '年龄_0_0_0_0_0_0',
         flexGrow: 0,
         fixed: 'left',
+        render: ({ id }: any) => `${id}`,
     },
     {
         width: 50,
         key: 'age_1',
         title: '年龄_1_0_0_0_0_0',
         flexGrow: 1,
+        render: () => 'xxxxxxxxxxxxxxx',
     },
     {
         width: 50,
         key: 'age_2',
         title: '年龄_1_0_0_0_0_0',
         flexGrow: 1,
+        render: () => 'xxxxxxxxxxxxxxx',
     },
     {
         width: 141,
@@ -87,5 +90,6 @@ export const columns2 = [
         title: '年龄_10_0_0_0_0_0',
         flexGrow: 1,
         fixed: 'right',
+        render: () => 'xxxxxxxxxxxxxxx',
     },
 ];

@@ -19,7 +19,7 @@ const useRowSelection = <T,>(opt: Opt<T>) => {
     const dataSourceSelectedRowKeysObj: Record<string, true> = {};
 
     if (rowSelection) {
-        const { width = 50, fixed = 'left', getCheckboxProps } = rowSelection;
+        const { width = 42, fixed = 'left', getCheckboxProps } = rowSelection;
 
         const allCouldCheckRowKeys: (string | number)[] = [];
         const allCouldCheckedRowKeys: (string | number)[] = [];

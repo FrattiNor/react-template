@@ -7,6 +7,7 @@ import useRowSelection from './useRowSelection';
 import useHandleProps from './useHandleProps';
 import useResizeWidth from './useResizeWidth';
 import { AnyObj, TableProps } from '../type';
+import useExpandable from './useExpandable';
 import useCalcPing from './useCalcPing';
 import useVirtual from './useVirtual';
 import { useRef } from 'react';
@@ -18,17 +19,20 @@ const useData = <T extends AnyObj>(props: TableProps<T>) => {
     const headRef = useRef<HTMLDivElement>(null);
 
     // props
-    const { columns, newProps } = useHandleProps(props);
-    const { rowKey, dataSource, rowSelection, autoScrollTop, rowHeight } = newProps;
-
-    // 增加多选
-    const { selectedRowKeysObj, rowSelectionColumns } = useRowSelection({ rowKey, dataSource, rowSelection });
-
-    // 整合后的 columns
-    const totalColumns = [...rowSelectionColumns, ...columns];
+    const { columns, dataSource, newProps } = useHandleProps(props);
+    const { rowKey, rowSelection, autoScrollTop, rowHeight, expandable } = newProps;
 
     // auto scroll top
     useChangeScrollTop({ dataSource, autoScrollTop, bodyRef });
+
+    // 增加展开
+    const { totalDataSource, expandableColumns } = useExpandable({ rowKey, expandable, dataSource });
+
+    // 增加多选
+    const { selectedRowKeysObj, rowSelectionColumns } = useRowSelection({ rowKey, rowSelection, dataSource: totalDataSource });
+
+    // 整合后的 columns
+    const totalColumns = [...rowSelectionColumns, ...expandableColumns, ...columns];
 
     // title resize
     const resizeWidth = useResizeWidth();
@@ -58,11 +62,11 @@ const useData = <T extends AnyObj>(props: TableProps<T>) => {
         rowKey,
         bodyRef,
         rowHeight,
-        dataSource,
         defaultWidth,
         totalColumns,
         bodyResizeObserver,
         bodyScrollObserver,
+        dataSource: totalDataSource,
     });
 
     // handle columns
@@ -81,6 +85,7 @@ const useData = <T extends AnyObj>(props: TableProps<T>) => {
         ...virtual,
         ...resizeWidth,
         ...handledColumns,
+        totalDataSource,
         vScrollBarWidth,
         selectedRowKeysObj,
     };
