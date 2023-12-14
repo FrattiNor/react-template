@@ -92,9 +92,6 @@ importers:
       '@pkg/table':
         specifier: workspace:*
         version: link:../../packages/table
-      '@pkg/table2':
-        specifier: workspace:*
-        version: link:../../packages/table2
       '@tanstack/react-query':
         specifier: ^5.12.2
         version: 5.13.4(react@18.2.0)
@@ -115,19 +112,6 @@ importers:
         version: 1.5.1
 
   packages/table:
-    dependencies:
-      '@pkg/hooks':
-        specifier: workspace:*
-        version: link:../hooks
-      '@pkg/utils':
-        specifier: workspace:*
-        version: link:../utils
-    devDependencies:
-      '@tanstack/react-virtual':
-        specifier: 3.0.0-beta.68
-        version: 3.0.0-beta.68(react-dom@18.2.0)(react@18.2.0)
-
-  packages/table2:
     dependencies:
       '@pkg/hooks':
         specifier: workspace:*
