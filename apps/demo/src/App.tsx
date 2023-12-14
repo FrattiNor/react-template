@@ -1,9 +1,9 @@
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
+import { useMemo, useRef, useState } from 'react';
 import { TableRef } from '@pkg/table/src/type';
-import { columns, columns2 } from './utils';
-import { useRef, useState } from 'react';
 import Table from '@pkg/table/src/index';
 import { Switch, Button } from 'antd';
+import { columns, columns2 } from './utils';
 import useFps from './useFps';
 
 type Item = {
@@ -15,22 +15,27 @@ type Item = {
 const DemoTable = () => {
     useFps();
     const ref = useRef<TableRef>(null);
-    const [count, setCount] = useState(1000);
+    const [count, setCount] = useState(10000);
     const [loading, setLoading] = useState(false);
-    const [columnsFlag, setColumnsFlag] = useState(false);
+    const [columnsFlag, setColumnsFlag] = useState(0);
 
-    // const columns2: Column<Item>[] = useMemo(() => {
-    //     return Array(22)
-    //         .fill('')
-    //         .map((_, i) => ({
-    //             width: Math.max(Math.floor(Math.random() * 150), 50),
-    //             key: `age_${i}`,
-    //             title: `年龄_${i}`,
-    //             flexGrow: i !== 0 ? 1 : 0,
-    //             fixed: i === 0 ? 'left' : i === 10 ? 'right' : undefined,
-    //             render: (__, index) => <span style={{ display: 'inline-block', lineHeight: `${lineHeight}px` }}>{`年龄_${index}`}</span>,
-    //         }));
-    // }, [lineHeight]);
+    const columns3: any[] = useMemo(() => {
+        return Array(22)
+            .fill('')
+            .map((_, i) => ({
+                width: Math.max(Math.floor(Math.random() * 150), 50),
+                key: `age_${i}`,
+                title: `年龄_${i}`,
+                flexGrow: i !== 0 ? 1 : 0,
+                fixed: i === 0 ? 'left' : i === 10 ? 'right' : undefined,
+            }));
+    }, []);
+
+    const columnsMap = {
+        0: columns,
+        1: columns2,
+        2: columns3,
+    };
 
     const query = useQuery({
         gcTime: 0,
@@ -67,7 +72,7 @@ const DemoTable = () => {
     };
 
     const height = () => {
-        setColumnsFlag((f) => !f);
+        setColumnsFlag((f) => f + 1);
     };
 
     return (
@@ -91,7 +96,7 @@ const DemoTable = () => {
                         rowKey="id"
                         dataSource={query.data || []}
                         loading={query.isFetching || loading}
-                        columns={(columnsFlag ? columns : columns2) as any}
+                        columns={(columnsMap as any)[`${columnsFlag % 3}` as any] as any}
                         // rowSelection={{
                         //     getCheckboxProps: (_, index) => ({ disabled: index % 2 === 0 }),
                         // }}

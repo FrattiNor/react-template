@@ -12,6 +12,7 @@ import { AnyObj, TableProps } from '../type';
 import useCalcPing from './useCalcPing';
 import useVirtual from './useVirtual';
 import { useRef } from 'react';
+import useHandleColumns2 from './useHandleColumns2';
 
 const useData = <T extends AnyObj>(props: TableProps<T>) => {
     const defaultWidth = 150;
@@ -53,7 +54,6 @@ const useData = <T extends AnyObj>(props: TableProps<T>) => {
         bodyRef,
         headRef,
         calcPing,
-        calcScrollBarWidth,
     });
 
     // virtual table core
@@ -93,6 +93,17 @@ const useData = <T extends AnyObj>(props: TableProps<T>) => {
         handledColumns,
     });
 
+    const handledColumns2 = useHandleColumns2({
+        ping,
+        resizeWidth,
+        defaultWidth,
+        totalColumns,
+        defaultFlexGrow,
+        vScrollBarWidth,
+        horizontalRange: virtual.horizontalRange,
+        horizontalItemSizeCache: virtual.horizontalItemSizeCache,
+    });
+
     const innerProps = {
         ...virtual,
         ...resizeWidth,
@@ -108,6 +119,7 @@ const useData = <T extends AnyObj>(props: TableProps<T>) => {
         headRef,
         newProps,
         innerProps,
+        handledColumns2,
     };
 };
 

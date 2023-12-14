@@ -4,7 +4,6 @@ type Opt = {
     headRef: RefObject<HTMLDivElement | null>;
     bodyRef: RefObject<HTMLDivElement | null>;
     calcPing: () => void;
-    calcScrollBarWidth: () => void;
 };
 
 type Size = { scrollLeft: number; scrollTop: number };
@@ -14,7 +13,7 @@ type Handle = (size: Size) => void;
 const useBodyScrollObserver = (opt: Opt) => {
     const handles = useRef<Record<string, Handle>>({});
     const size = useRef<Size>({ scrollLeft: 0, scrollTop: 0 });
-    const { calcPing, calcScrollBarWidth, bodyRef, headRef } = opt;
+    const { calcPing, bodyRef, headRef } = opt;
 
     useEffect(() => {
         if (bodyRef.current) {
@@ -30,8 +29,6 @@ const useBodyScrollObserver = (opt: Opt) => {
                 if (headRef.current) headRef.current.scrollTo({ left: target.scrollLeft });
 
                 calcPing();
-
-                calcScrollBarWidth();
             };
 
             bodyRef.current.addEventListener('scroll', onScroll, { passive: true });
