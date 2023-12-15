@@ -4,6 +4,7 @@ import useCalcScrollBarWidth from './useCalcScrollBarWidth';
 import useChangeScrollTop from './useChangeScrollTop';
 import useHandleColumns from './useHandleColumns';
 import useRowSelection from './useRowSelection';
+import useSortColumns from './useSortColumns';
 import useHandleProps from './useHandleProps';
 import useResizeWidth from './useResizeWidth';
 import { AnyObj, TableProps } from '../type';
@@ -32,7 +33,7 @@ const useData = <T extends AnyObj>(props: TableProps<T>) => {
     const { selectedRowKeysObj, rowSelectionColumns } = useRowSelection({ rowKey, rowSelection, dataSource: totalDataSource });
 
     // 整合后的 columns
-    const totalColumns = [...rowSelectionColumns, ...expandableColumns, ...columns];
+    const totalColumns = useSortColumns([...rowSelectionColumns, ...expandableColumns, ...columns]);
 
     // title resize
     const resizeWidth = useResizeWidth();

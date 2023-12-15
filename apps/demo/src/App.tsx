@@ -130,11 +130,15 @@ const DemoTable = () => {
                     <Table
                         ref={ref}
                         rowKey="id"
+                        key={`${query.isFetching}`}
                         dataSource={query.data || []}
                         loading={query.isFetching || loading}
                         columns={(columnsMap as any)[`${columnsFlag % 3}` as any] as any}
-                        rowSelection={{}}
+                        rowSelection={{
+                            fixed: false,
+                        }}
                         expandable={{
+                            fixed: false,
                             defaultExpandAllRows: true,
                         }}
                     />

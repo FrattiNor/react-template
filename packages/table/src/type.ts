@@ -2,7 +2,7 @@ import { CSSProperties, ReactNode, RefObject } from 'react';
 
 export type AnyObj = Record<string, any>;
 
-export type Fixed = 'left' | 'right';
+export type Fixed = 'left' | 'right' | false;
 
 export type Align = 'left' | 'right' | 'center';
 
@@ -27,8 +27,12 @@ export type RowSelection<T> = {
 };
 
 export type Expandable = {
+    fixed?: Fixed;
+    width?: number;
     childrenColumnName?: string;
     defaultExpandAllRows?: boolean;
+    expandedRowKeys?: (string | number)[];
+    onChange?: (v: (string | number)[]) => void;
 };
 
 export type TableProps<T> = {
