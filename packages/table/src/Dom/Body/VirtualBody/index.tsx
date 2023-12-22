@@ -36,7 +36,7 @@ const VirtualBody: FC = () => {
                         <div
                             key={currentRowKey}
                             ref={verticalMeasureElement}
-                            style={{ height: rowHeight }}
+                            style={{ minHeight: rowHeight }}
                             data-index={verticalItem.index}
                             className={classNames(styles['body-row'], { [styles['selected']]: selectedRowKeysObj[currentRowKey] })}
                         >

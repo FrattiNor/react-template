@@ -25,7 +25,7 @@ const Head: FC = () => {
                     width: horizontalTotalSize + vScrollBarWidth,
                 }}
             >
-                <div className={styles['head-row']} style={{ height: rowHeight }}>
+                <div className={styles['head-row']} style={{ minHeight: rowHeight }}>
                     {renderItems.map((item) => {
                         const column = handledColumns[item.index];
                         if (column) {

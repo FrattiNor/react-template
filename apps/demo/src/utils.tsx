@@ -5,7 +5,7 @@ export const columns = [
         title: '年龄_0_0_0_0_0_0',
         flexGrow: 0,
         fixed: 'left',
-        render: () => 'xxxxxxxxxxxxxxx',
+        render: () => <div style={{ whiteSpace: 'pre-wrap' }}>{'xxxxxxxxxxxxxxx\nxxxxxxxxxxxxxxx\nxxxxxxxxxxxxxxx'}</div>,
     },
     {
         width: 50,
