@@ -1,48 +1,23 @@
-import { Column, Expandable } from '../../type';
-import { Fragment, useEffect, useRef, useState } from 'react';
+import { HandledProps } from '../useHandleProps';
+import { Fragment, useState } from 'react';
 import ExpandableFC from './Expandable';
+import { Column } from '../../type';
 
 type Opt<T> = {
-    rowKey: keyof T;
-    dataSource?: T[];
-    expandable?: Expandable;
+    handledProps: HandledProps<T>;
 };
 
 const useExpandable = <T,>(opt: Opt<T>) => {
-    const defaultExpandAllHandled = useRef(false);
-    const { rowKey, expandable, dataSource } = opt;
+    const { handledProps } = opt;
+    const { rowKey, expandable, dataSource } = handledProps.outerProps;
 
     const expandableColumns: Column<T>[] = [];
-    const [_expandedRowKeys, _setExpandedRowKeys] = useState<string[]>([]);
+    const defaultExpandAllRows = expandable?.defaultExpandAllRows ?? false;
+    const [_expandedRowKeys, _setExpandedRowKeys] = useState<boolean | string[]>(defaultExpandAllRows);
     const expandedRowKeys = expandable?.expandedRowKeys ?? _expandedRowKeys;
     const setExpandedRowKeys = expandable?.onChange ?? _setExpandedRowKeys;
-    const defaultExpandAllRows = expandable?.defaultExpandAllRows ?? false;
+
     const childrenColumnName = expandable?.childrenColumnName ?? 'children';
-
-    useEffect(() => {
-        if (defaultExpandAllHandled.current === false && defaultExpandAllRows === true && Array.isArray(dataSource) && dataSource.length > 0) {
-            defaultExpandAllHandled.current = true;
-
-            const handleDataSource = (value: T[]) => {
-                const allKeys: string[] = [];
-
-                value.forEach((item) => {
-                    const key = item[rowKey] as string;
-                    const children = (item as any)[childrenColumnName];
-                    const haveChild = Array.isArray(children) && children.length > 0;
-
-                    if (haveChild) {
-                        allKeys.push(key);
-                        allKeys.push(...handleDataSource(children));
-                    }
-                });
-
-                return allKeys;
-            };
-
-            setExpandedRowKeys(handleDataSource(dataSource));
-        }
-    }, [defaultExpandAllRows, dataSource]);
 
     let showDataSource: T[] = dataSource || [];
     let totalDataSource: T[] = dataSource || [];
@@ -50,39 +25,47 @@ const useExpandable = <T,>(opt: Opt<T>) => {
     if (expandable) {
         const { fixed = 'left', width = 33 } = expandable;
 
+        // 由expandedRowKeys为数组时生成
         const expandedKeysObj: Record<string, boolean> = {};
+        // 有expandedRowKeys为boolean时生成【也就是defaultExpandAllRows时】
+        const trueExpandedKeysObj: Record<string, boolean> = {};
 
-        expandedRowKeys.forEach((key) => {
-            expandedKeysObj[key] = true;
-        });
-
-        const handleDataSource = (value: T[], xIndex = 0) => {
-            const show: T[] = [];
-            const total: T[] = [];
-
-            value.forEach((item) => {
-                show.push({ ...item, xIndex });
-                total.push({ ...item, xIndex });
-                const key = item[rowKey] as string;
-                const children = (item as any)[childrenColumnName];
-                const haveChild = Array.isArray(children) && children.length > 0;
-
-                if (haveChild) {
-                    const opened = expandedKeysObj[key];
-                    const childrenRes = handleDataSource(children, xIndex + 1);
-                    total.push(...childrenRes.total);
-                    if (opened) show.push(...childrenRes.show);
-                }
+        if (Array.isArray(expandedRowKeys)) {
+            expandedRowKeys.forEach((key) => {
+                expandedKeysObj[key] = true;
             });
+        }
 
-            return { total, show };
-        };
+        // const handleDataSource = (value: T[], xIndex = 0) => {
+        //     const show: T[] = [];
+        //     const total: T[] = [];
 
-        const { total, show } = handleDataSource(dataSource || []);
+        //     value.forEach((item) => {
+        //         show.push({ ...item, xIndex });
+        //         total.push({ ...item, xIndex });
+        //         const key = item[rowKey] as string;
+        //         const children = (item as any)[childrenColumnName];
+        //         const haveChild = Array.isArray(children) && children.length > 0;
 
-        showDataSource = show;
+        //         if (haveChild) {
+        //             const opened = expandedKeysObj[key] ?? _expandedRowKeys === true;
+        //             const childrenRes = handleDataSource(children, xIndex + 1);
+        //             total.push(...childrenRes.total);
+        //             if (opened) {
+        //                 trueExpandedKeysObj[key] = true;
+        //                 show.push(...childrenRes.show);
+        //             }
+        //         }
+        //     });
 
-        totalDataSource = total;
+        //     return { total, show };
+        // };
+
+        // const { total, show } = handleDataSource(dataSource || []);
+
+        // showDataSource = show;
+
+        // totalDataSource = total;
 
         const renderItem = (item: T) => {
             const key = item[rowKey] as string;
@@ -90,7 +73,7 @@ const useExpandable = <T,>(opt: Opt<T>) => {
             const haveChild = Array.isArray(children) && children.length > 0;
             if (haveChild) {
                 const onChange = (c: boolean) => {
-                    const nextRowKeysObj = { ...expandedKeysObj };
+                    const nextRowKeysObj = { ...trueExpandedKeysObj };
                     if (c) {
                         nextRowKeysObj[key] = true;
                     } else {
@@ -99,7 +82,7 @@ const useExpandable = <T,>(opt: Opt<T>) => {
                     setExpandedRowKeys(Object.keys(nextRowKeysObj));
                 };
 
-                return <ExpandableFC expanded={expandedKeysObj[key]} onChange={onChange} />;
+                return <ExpandableFC expanded={trueExpandedKeysObj[key]} onChange={onChange} />;
             }
             return <Fragment />;
         };

@@ -1,15 +1,16 @@
-import { Column, RowSelection } from '../../type';
+import { HandledProps } from '../useHandleProps';
+import { Column } from '../../type';
 import Checkbox from './Checkbox';
 import { useState } from 'react';
 
 type Opt<T> = {
-    rowKey: keyof T;
-    dataSource?: T[];
-    rowSelection?: RowSelection<T>;
+    totalDataSource?: T[];
+    handledProps: HandledProps<T>;
 };
 
 const useRowSelection = <T,>(opt: Opt<T>) => {
-    const { rowKey, dataSource, rowSelection } = opt;
+    const { handledProps, totalDataSource } = opt;
+    const { rowSelection, rowKey } = handledProps.outerProps;
     const [_selectedRowKeys, _setSelectedRowKeys] = useState([]);
     const selectedRowKeys = rowSelection?.selectedRowKeys ?? _selectedRowKeys;
     const setSelectedRowKeys = (rowSelection?.onChange ?? _setSelectedRowKeys) as (v: (string | number)[]) => void;
@@ -28,7 +29,7 @@ const useRowSelection = <T,>(opt: Opt<T>) => {
             selectedRowKeysObj[key] = true;
         });
 
-        (dataSource || []).forEach((item, index) => {
+        (totalDataSource || []).forEach((item, index) => {
             let disabled = false;
             const key = item[rowKey] as string;
             if (getCheckboxProps) {

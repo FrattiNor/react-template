@@ -15,7 +15,7 @@ type Item = {
 const DemoTable = () => {
     useFps();
     const ref = useRef<TableRef>(null);
-    const [count, setCount] = useState(100);
+    const [count, setCount] = useState(100000);
     const [loading, setLoading] = useState(false);
     const [columnsFlag, setColumnsFlag] = useState(1);
 
@@ -72,7 +72,7 @@ const DemoTable = () => {
     };
 
     const reload = () => {
-        setCount((c) => (c === 100 ? 10 : 100));
+        setCount((c) => (c === 100 ? 5 : 100));
     };
 
     const height = () => {
@@ -135,10 +135,10 @@ const DemoTable = () => {
                         loading={query.isFetching || loading}
                         columns={(columnsMap as any)[`${columnsFlag % 3}` as any] as any}
                         rowSelection={{
-                            fixed: 'default',
+                            fixed: 'left',
                         }}
                         expandable={{
-                            fixed: 'default',
+                            fixed: 'left',
                             defaultExpandAllRows: true,
                         }}
                     />

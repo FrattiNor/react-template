@@ -1,12 +1,6 @@
 import { RefObject, useEffect } from 'react';
 import { TableProps } from '../../type';
 
-const fixedNumMap = {
-    left: -1,
-    default: 0,
-    right: 1,
-};
-
 type Opt = {
     defaultLineHeight: number;
     defaultAutoScrollTop: boolean;
@@ -16,7 +10,7 @@ type Opt = {
 const useHandleProps = <T>(props: TableProps<T>, opt: Opt) => {
     const { defaultAutoScrollTop, defaultLineHeight, bodyRef } = opt;
 
-    const { rowHeight, autoScrollTop, columns } = props;
+    const { rowHeight, autoScrollTop } = props;
 
     const isEmpty = (props.dataSource || [])?.length === 0;
 
@@ -33,12 +27,9 @@ const useHandleProps = <T>(props: TableProps<T>, opt: Opt) => {
         }
     }, [outerProps.dataSource]);
 
-    // 根据fixed排序后的columns
-    const sortedColumns = columns.sort((a, b) => fixedNumMap[a.fixed ?? 'default'] - fixedNumMap[b.fixed ?? 'default']);
-
     return {
         outerProps,
-        innerProps: { isEmpty, sortedColumns },
+        innerProps: { isEmpty },
     };
 };
 

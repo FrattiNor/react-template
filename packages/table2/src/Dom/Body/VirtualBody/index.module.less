@@ -27,18 +27,21 @@
 
         .body-fixed-left {
             .fixed-left();
+            flex-shrink: 0;
             display: flex;
             z-index: 2;
         }
 
         .body-fixed-right {
             .fixed-right();
+            flex-shrink: 0;
             display: flex;
             z-index: 3;
         }
 
         .body-mid {
             position: relative;
+            flex-shrink: 0;
             display: flex;
             z-index: 1;
         }
@@ -76,12 +79,6 @@
                 max-width: 100%;
                 overflow: hidden;
                 position: relative;
-
-                .body-cell-expandable-inner {
-                    max-width: 100%;
-                    overflow: hidden;
-                    position: relative;
-                }
             }
         }
     }

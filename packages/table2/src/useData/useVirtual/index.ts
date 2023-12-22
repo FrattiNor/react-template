@@ -4,9 +4,12 @@ import { BodyScrollObserver } from '../useBodyScrollObserver';
 import { useVirtualizer } from '@tanstack/react-virtual';
 import { HandledProps } from '../useHandleProps';
 import { RefObject } from 'react';
+import { Column } from '../../type';
 
 type Opt<T> = {
+    showDataSource: T[];
     defaultWidth: number;
+    sortedColumns: Column<T>[];
     handledProps: HandledProps<T>;
     bodyResizeObserver: BodyResizeObserver;
     bodyScrollObserver: BodyScrollObserver;
@@ -16,17 +19,16 @@ type Opt<T> = {
 type ItemSizeCache = Map<number | string, number>;
 
 const useVirtual = <T>(opt: Opt<T>) => {
-    const { bodyRef, defaultWidth, handledProps, bodyResizeObserver, bodyScrollObserver } = opt;
-    const { sortedColumns } = handledProps.innerProps;
-    const { dataSource, rowKey, rowHeight } = handledProps.outerProps;
+    const { bodyRef, sortedColumns, showDataSource, defaultWidth, handledProps, bodyResizeObserver, bodyScrollObserver } = opt;
+    const { rowKey, rowHeight } = handledProps.outerProps;
 
     // 竖向虚拟
     const verticalVirtualizer = useVirtualizer({
         overscan: 0,
         estimateSize: () => rowHeight,
-        count: dataSource?.length || 0,
+        count: showDataSource?.length || 0,
         getScrollElement: () => bodyRef.current,
-        getItemKey: (index) => (dataSource?.[index]?.[rowKey] as string) ?? index,
+        getItemKey: (index) => (showDataSource?.[index]?.[rowKey] as string) ?? index,
         observeElementRect: observeElementRect('vRect', bodyResizeObserver),
         observeElementOffset: observeElementOffset('vOffset', bodyScrollObserver),
         scrollToFn: () => {

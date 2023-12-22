@@ -2,9 +2,12 @@ import useBodyResizeObserver from './useBodyResizeObserver';
 import useBodyScrollObserver from './useBodyScrollObserver';
 import useCalcScrollBarWidth from './useCalcScrollBarWidth';
 import useHandleColumns from './useHandleColumns';
+import useRowSelection from './useRowSelection';
+import useSortColumns from './useSortColumns';
 import useResizeWidth from './useResizeWidth';
 import useHandleProps from './useHandleProps';
 import { AnyObj, TableProps } from '../type';
+import useExpandable from './useExpandable';
 import useCalcPing from './useCalcPing';
 import useVirtual from './useVirtual';
 import { useRef } from 'react';
@@ -24,16 +27,16 @@ const useData = <T extends AnyObj>(props: TableProps<T>) => {
         defaultAutoScrollTop,
     });
 
-    // // 增加展开
-    // const { totalDataSource, showDataSource, expandableColumns } = useExpandable({ rowKey, expandable, dataSource });
+    // 增加展开
+    const { totalDataSource, showDataSource, expandableColumns } = useExpandable({ handledProps });
 
-    // // 增加多选
-    // const { selectedRowKeysObj, rowSelectionColumns } = useRowSelection({ rowKey, rowSelection, dataSource: totalDataSource });
+    // 增加多选
+    const { selectedRowKeysObj, rowSelectionColumns } = useRowSelection({ handledProps, totalDataSource });
 
-    // // 整合后的 columns
-    // const totalColumns = useSortColumns([...rowSelectionColumns, ...expandableColumns, ...columns]);
+    //  整合后排序的 columns
+    const sortedColumns = useSortColumns({ columns: [...rowSelectionColumns, ...expandableColumns, ...handledProps.outerProps.columns] });
 
-    // // title resize
+    //  title resize
     const resizeWidth = useResizeWidth();
 
     // ping
@@ -61,6 +64,8 @@ const useData = <T extends AnyObj>(props: TableProps<T>) => {
         bodyRef,
         handledProps,
         defaultWidth,
+        sortedColumns,
+        showDataSource,
         bodyResizeObserver,
         bodyScrollObserver,
     });
@@ -70,7 +75,7 @@ const useData = <T extends AnyObj>(props: TableProps<T>) => {
         virtual,
         resizeWidth,
         defaultWidth,
-        handledProps,
+        sortedColumns,
         defaultFlexGrow,
     });
 
@@ -79,6 +84,8 @@ const useData = <T extends AnyObj>(props: TableProps<T>) => {
         ...resizeWidth,
         ...handledColumns,
         ...handledProps.innerProps,
+        selectedRowKeysObj,
+        showDataSource,
         ping,
         vScrollBarWidth,
     };

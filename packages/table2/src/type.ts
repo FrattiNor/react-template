@@ -46,10 +46,10 @@ export type TableProps<T> = {
     rowSelection?: RowSelection<T>;
 };
 
-export type HandledColumn<T> = Omit<Column<T>, 'width' | 'flexGrow' | 'align'> & {
+export type HandledColumn<T> = Omit<Column<T>, 'width' | 'flexGrow'> & {
     width: number;
+    index: number;
     originWidth: number;
-    style: CSSProperties;
     measureStyle: CSSProperties;
 };
 
