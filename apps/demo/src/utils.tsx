@@ -74,7 +74,7 @@ export const columns2 = [
         width: 50,
         key: 'age_1',
         title: '年龄_1_0_0_0_0_0',
-        flexGrow: 1,
+        flexGrow: 0,
         align: 'center',
         render: () => '123456789987654321',
     },
@@ -82,7 +82,7 @@ export const columns2 = [
         width: 50,
         key: 'age_2',
         title: '年龄_1_0_0_0_0_0',
-        flexGrow: 1,
+        flexGrow: 0,
         render: () => 'xxxxxxxxxxxxxxx',
     },
     {

@@ -2,8 +2,8 @@ import { keepPreviousData, useQuery } from '@tanstack/react-query';
 import { useMemo, useRef, useState } from 'react';
 import { TableRef } from '@pkg/table/src/type';
 import { columns, columns2 } from './utils';
-import Table from '@pkg/table/src/index';
 import { Switch, Button } from 'antd';
+import Table from '@pkg/table2';
 import useFps from './useFps';
 
 type Item = {
@@ -15,7 +15,7 @@ type Item = {
 const DemoTable = () => {
     useFps();
     const ref = useRef<TableRef>(null);
-    const [count, setCount] = useState(10000);
+    const [count, setCount] = useState(100);
     const [loading, setLoading] = useState(false);
     const [columnsFlag, setColumnsFlag] = useState(1);
 
@@ -135,10 +135,10 @@ const DemoTable = () => {
                         loading={query.isFetching || loading}
                         columns={(columnsMap as any)[`${columnsFlag % 3}` as any] as any}
                         rowSelection={{
-                            fixed: false,
+                            fixed: 'default',
                         }}
                         expandable={{
-                            fixed: false,
+                            fixed: 'default',
                             defaultExpandAllRows: true,
                         }}
                     />
