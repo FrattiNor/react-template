@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-shadow */
 import { HandledProps } from '../useHandleProps';
 import { useMemo, useState } from 'react';
 import ExpandableFC from './Expandable';
@@ -20,39 +21,41 @@ const useExpandable = <T,>(opt: Opt<T>) => {
     const expandedKeysObj: Record<string, boolean> = {};
     const childrenColumnName = expandable?.childrenColumnName ?? 'children';
 
-    const { totalDataSource, showDataSource } = useMemo(() => {
-        if (calcObj === false) {
-            calcObj = true;
-            expandedRowKeys.forEach((key) => {
-                expandedKeysObj[key] = true;
-            });
+    const { totalDataSource, showDataSource, dataSourceLevelMap } = useMemo(() => {
+        let showDataSource: T[] = [];
+        let totalDataSource: T[] = [];
+        const dataSourceLevelMap: Record<string, number> = {};
+
+        if (expandable) {
+            if (calcObj === false) {
+                calcObj = true;
+                expandedRowKeys.forEach((key) => {
+                    expandedKeysObj[key] = true;
+                });
+            }
+
+            const handleDataSource = (value: T[], opt?: { level: number; parentOpened: boolean }) => {
+                value.forEach((item) => {
+                    const key = item[rowKey] as string;
+                    const opened = expandedKeysObj[key] ?? false;
+                    const children = (item as any)[childrenColumnName];
+                    const { level = 0, parentOpened = true } = opt || {};
+                    const haveChild = Array.isArray(children) && children.length > 0;
+
+                    totalDataSource.push(item);
+                    if (parentOpened) showDataSource.push(item);
+                    if (parentOpened && level !== 0) dataSourceLevelMap[key] = level;
+                    if (haveChild) handleDataSource(children, { level: level + 1, parentOpened: opened });
+                });
+            };
+
+            handleDataSource(dataSource || []);
+        } else {
+            showDataSource = dataSource || [];
+            totalDataSource = dataSource || [];
         }
 
-        const handleDataSource = (value: T[], xIndex = 0) => {
-            const show: T[] = [];
-            const total: T[] = [];
-
-            value.forEach((item) => {
-                show.push({ ...item, xIndex });
-                total.push({ ...item, xIndex });
-                const key = item[rowKey] as string;
-                const children = (item as any)[childrenColumnName];
-                const haveChild = Array.isArray(children) && children.length > 0;
-
-                if (haveChild) {
-                    const opened = expandedKeysObj[key];
-                    const childrenRes = handleDataSource(children, xIndex + 1);
-                    total.push(...childrenRes.total);
-                    if (opened) show.push(...childrenRes.show);
-                }
-            });
-
-            return { total, show };
-        };
-
-        const { total, show } = handleDataSource(dataSource || []);
-
-        return { totalDataSource: total, showDataSource: show };
+        return { totalDataSource, showDataSource, dataSourceLevelMap };
     }, [dataSource, expandedRowKeys]);
 
     if (expandable) {
@@ -98,7 +101,7 @@ const useExpandable = <T,>(opt: Opt<T>) => {
         });
     }
 
-    return { totalDataSource, showDataSource, expandableColumns };
+    return { totalDataSource, showDataSource, dataSourceLevelMap, expandableColumns };
 };
 
 export default useExpandable;

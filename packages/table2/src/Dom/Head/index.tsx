@@ -1,4 +1,3 @@
-import { justifyContentMap } from '../Body/VirtualBody';
 import { notEmpty } from '@pkg/utils/src/empty';
 import ResizableTitle from './ResizableTitle';
 import { useContext2 } from '../../Context2';
@@ -21,20 +20,20 @@ const Head: FC = () => {
         const resizeTitle = resize === undefined || resize === true;
         const isStr = typeof cellValue === 'string' || typeof cellValue === 'number';
         const cellTitle = isStr ? `${cellValue}` : '';
-        const cellInner = isStr ? <div className={styles['head-cell-str']}>{cellValue}</div> : cellValue;
-        const justifyContent = justifyContentMap[align ?? 'left'];
+        const cellInner = <div className={styles['head-cell-inner']}>{cellValue}</div>;
         const className = classNames(styles['head-cell'], {
             [styles['hidden-divider']]: hiddenDivider,
         });
+
         if (resizeTitle) {
             return (
-                <ResizableTitle key={key} cellKey={key} title={cellTitle} style={{ width, justifyContent }} className={className}>
+                <ResizableTitle cellKey={key} key={key} title={cellTitle} style={{ width, textAlign: align }} className={className}>
                     {cellInner}
                 </ResizableTitle>
             );
         } else {
             return (
-                <div key={key} title={cellTitle} style={{ width, justifyContent }} className={className}>
+                <div key={key} title={cellTitle} style={{ width, textAlign: align }} className={className}>
                     {cellInner}
                 </div>
             );

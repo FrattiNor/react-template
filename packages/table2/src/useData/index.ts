@@ -28,7 +28,7 @@ const useData = <T extends AnyObj>(props: TableProps<T>) => {
     });
 
     // 增加展开
-    const { totalDataSource, showDataSource, expandableColumns } = useExpandable({ handledProps });
+    const { totalDataSource, showDataSource, dataSourceLevelMap, expandableColumns } = useExpandable({ handledProps });
 
     // 增加多选
     const { selectedRowKeysObj, rowSelectionColumns } = useRowSelection({ handledProps, totalDataSource });
@@ -84,10 +84,12 @@ const useData = <T extends AnyObj>(props: TableProps<T>) => {
         ...resizeWidth,
         ...handledColumns,
         ...handledProps.innerProps,
-        selectedRowKeysObj,
-        showDataSource,
+
         ping,
+        showDataSource,
         vScrollBarWidth,
+        selectedRowKeysObj,
+        dataSourceLevelMap,
     };
 
     const outerProps = handledProps.outerProps;
