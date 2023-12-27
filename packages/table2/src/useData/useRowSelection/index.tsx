@@ -23,7 +23,7 @@ const useRowSelection = <T,>(opt: Opt<T>) => {
         const { width = 42, fixed = 'left', getCheckboxProps } = rowSelection;
 
         const allCouldCheckRowKeys: (string | number)[] = [];
-        const allCouldCheckedRowKeys: (string | number)[] = [];
+        const allDatasourceCheckedRowKeys: (string | number)[] = [];
 
         selectedRowKeys.forEach((key) => {
             selectedRowKeysObj[key] = true;
@@ -41,14 +41,14 @@ const useRowSelection = <T,>(opt: Opt<T>) => {
             if (disabled !== true) {
                 allCouldCheckRowKeys.push(key);
                 if (selectedRowKeysObj[key]) {
-                    allCouldCheckedRowKeys.push(key);
+                    allDatasourceCheckedRowKeys.push(key);
                 }
             }
         });
 
         const titleDisabled = allCouldCheckRowKeys.length === 0;
-        const titleChecked = !titleDisabled && allCouldCheckRowKeys.length === allCouldCheckedRowKeys.length;
-        const titleIndeterminate = !titleChecked && allCouldCheckedRowKeys.length > 0;
+        const titleChecked = !titleDisabled && allCouldCheckRowKeys.length === allDatasourceCheckedRowKeys.length;
+        const titleIndeterminate = !titleChecked && allDatasourceCheckedRowKeys.length > 0;
 
         const title = (
             <Checkbox

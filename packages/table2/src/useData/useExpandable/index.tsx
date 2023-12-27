@@ -1,5 +1,5 @@
 import { HandledProps } from '../useHandleProps';
-import { Fragment, useState } from 'react';
+import { useMemo, useState } from 'react';
 import ExpandableFC from './Expandable';
 import { Column } from '../../type';
 
@@ -12,60 +12,58 @@ const useExpandable = <T,>(opt: Opt<T>) => {
     const { rowKey, expandable, dataSource } = handledProps.outerProps;
 
     const expandableColumns: Column<T>[] = [];
-    const defaultExpandAllRows = expandable?.defaultExpandAllRows ?? false;
-    const [_expandedRowKeys, _setExpandedRowKeys] = useState<boolean | string[]>(defaultExpandAllRows);
+    const [_expandedRowKeys, _setExpandedRowKeys] = useState<string[]>([]);
     const expandedRowKeys = expandable?.expandedRowKeys ?? _expandedRowKeys;
     const setExpandedRowKeys = expandable?.onChange ?? _setExpandedRowKeys;
 
+    let calcObj = false;
+    const expandedKeysObj: Record<string, boolean> = {};
     const childrenColumnName = expandable?.childrenColumnName ?? 'children';
 
-    let showDataSource: T[] = dataSource || [];
-    let totalDataSource: T[] = dataSource || [];
-
-    if (expandable) {
-        const { fixed = 'left', width = 33 } = expandable;
-
-        // 由expandedRowKeys为数组时生成
-        const expandedKeysObj: Record<string, boolean> = {};
-        // 有expandedRowKeys为boolean时生成【也就是defaultExpandAllRows时】
-        const trueExpandedKeysObj: Record<string, boolean> = {};
-
-        if (Array.isArray(expandedRowKeys)) {
+    const { totalDataSource, showDataSource } = useMemo(() => {
+        if (calcObj === false) {
+            calcObj = true;
             expandedRowKeys.forEach((key) => {
                 expandedKeysObj[key] = true;
             });
         }
 
-        // const handleDataSource = (value: T[], xIndex = 0) => {
-        //     const show: T[] = [];
-        //     const total: T[] = [];
+        const handleDataSource = (value: T[], xIndex = 0) => {
+            const show: T[] = [];
+            const total: T[] = [];
 
-        //     value.forEach((item) => {
-        //         show.push({ ...item, xIndex });
-        //         total.push({ ...item, xIndex });
-        //         const key = item[rowKey] as string;
-        //         const children = (item as any)[childrenColumnName];
-        //         const haveChild = Array.isArray(children) && children.length > 0;
+            value.forEach((item) => {
+                show.push({ ...item, xIndex });
+                total.push({ ...item, xIndex });
+                const key = item[rowKey] as string;
+                const children = (item as any)[childrenColumnName];
+                const haveChild = Array.isArray(children) && children.length > 0;
 
-        //         if (haveChild) {
-        //             const opened = expandedKeysObj[key] ?? _expandedRowKeys === true;
-        //             const childrenRes = handleDataSource(children, xIndex + 1);
-        //             total.push(...childrenRes.total);
-        //             if (opened) {
-        //                 trueExpandedKeysObj[key] = true;
-        //                 show.push(...childrenRes.show);
-        //             }
-        //         }
-        //     });
+                if (haveChild) {
+                    const opened = expandedKeysObj[key];
+                    const childrenRes = handleDataSource(children, xIndex + 1);
+                    total.push(...childrenRes.total);
+                    if (opened) show.push(...childrenRes.show);
+                }
+            });
 
-        //     return { total, show };
-        // };
+            return { total, show };
+        };
 
-        // const { total, show } = handleDataSource(dataSource || []);
+        const { total, show } = handleDataSource(dataSource || []);
 
-        // showDataSource = show;
+        return { totalDataSource: total, showDataSource: show };
+    }, [dataSource, expandedRowKeys]);
 
-        // totalDataSource = total;
+    if (expandable) {
+        const { fixed = 'left', width = 33 } = expandable;
+
+        if (calcObj === false) {
+            calcObj = true;
+            expandedRowKeys.forEach((key) => {
+                expandedKeysObj[key] = true;
+            });
+        }
 
         const renderItem = (item: T) => {
             const key = item[rowKey] as string;
@@ -73,7 +71,7 @@ const useExpandable = <T,>(opt: Opt<T>) => {
             const haveChild = Array.isArray(children) && children.length > 0;
             if (haveChild) {
                 const onChange = (c: boolean) => {
-                    const nextRowKeysObj = { ...trueExpandedKeysObj };
+                    const nextRowKeysObj = { ...expandedKeysObj };
                     if (c) {
                         nextRowKeysObj[key] = true;
                     } else {
@@ -82,9 +80,9 @@ const useExpandable = <T,>(opt: Opt<T>) => {
                     setExpandedRowKeys(Object.keys(nextRowKeysObj));
                 };
 
-                return <ExpandableFC expanded={trueExpandedKeysObj[key]} onChange={onChange} />;
+                return <ExpandableFC expanded={expandedKeysObj[key]} onChange={onChange} />;
             }
-            return <Fragment />;
+            return <div />;
         };
 
         expandableColumns.push({
@@ -92,9 +90,9 @@ const useExpandable = <T,>(opt: Opt<T>) => {
             fixed,
             flexGrow: 0,
             resize: false,
+            title: <div />,
             align: 'center',
             render: renderItem,
-            title: <Fragment />,
             hiddenDivider: true,
             key: 'table-row-expandable',
         });

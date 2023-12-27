@@ -30,7 +30,6 @@ export type Expandable = {
     fixed?: Fixed;
     width?: number;
     childrenColumnName?: string;
-    defaultExpandAllRows?: boolean;
     expandedRowKeys?: (string | number)[];
     onChange?: (v: (string | number)[]) => void;
 };
