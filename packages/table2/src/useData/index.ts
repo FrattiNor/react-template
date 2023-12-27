@@ -15,7 +15,7 @@ import { useRef } from 'react';
 const useData = <T extends AnyObj>(props: TableProps<T>) => {
     const defaultWidth = 150;
     const defaultFlexGrow = 1;
-    const defaultLineHeight = 32;
+    const defaultLineHeight = 37;
     const defaultAutoScrollTop = true;
     const bodyRef = useRef<HTMLDivElement>(null);
     const headRef = useRef<HTMLDivElement>(null);

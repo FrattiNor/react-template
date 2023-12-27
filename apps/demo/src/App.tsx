@@ -116,7 +116,13 @@ const DemoTable = () => {
             <div style={{ padding: 64 }}>
                 <div style={{ padding: '24px 24px 0 24px', width: 900 }}>
                     <Switch checked={loading} onChange={setLoading} />
-                    <Button onClick={scroll} style={{ marginLeft: 16 }}>
+                    <Button
+                        onClick={scroll}
+                        style={{
+                            marginLeft: 16,
+                            boxShadow: '0 3px 6px -4px rgba(0,0,0,0.48), 0 6px 16px 0 rgba(0,0,0,0.32), 0 9px 28px 8px rgba(0,0,0,0.2)',
+                        }}
+                    >
                         ScrollTo
                     </Button>
                     <Button onClick={reload} style={{ marginLeft: 16 }}>

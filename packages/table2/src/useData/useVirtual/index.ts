@@ -1,10 +1,10 @@
-import { observeElementRect, observeElementOffset } from './utils';
+import { observeElementRect, observeElementOffset, measureElement } from './utils';
 import { BodyResizeObserver } from '../useBodyResizeObserver';
 import { BodyScrollObserver } from '../useBodyScrollObserver';
 import { useVirtualizer } from '@tanstack/react-virtual';
 import { HandledProps } from '../useHandleProps';
-import { RefObject } from 'react';
 import { Column } from '../../type';
+import { RefObject } from 'react';
 
 type Opt<T> = {
     showDataSource: T[];
@@ -43,6 +43,7 @@ const useVirtual = <T>(opt: Opt<T>) => {
         overscan: 0,
         horizontal: true,
         count: sortedColumns.length,
+        measureElement: measureElement,
         getScrollElement: () => bodyRef.current,
         getItemKey: (index) => sortedColumns[index].key,
         estimateSize: (index) => Math.round(sortedColumns[index].width ?? defaultWidth),
