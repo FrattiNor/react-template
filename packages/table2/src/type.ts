@@ -48,7 +48,6 @@ export type TableProps<T> = {
 export type HandledColumn<T> = Omit<Column<T>, 'width' | 'flexGrow'> & {
     width: number;
     index: number;
-    originWidth: number;
     measureStyle: CSSProperties;
 };
 

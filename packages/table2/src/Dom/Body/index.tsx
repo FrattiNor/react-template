@@ -7,10 +7,10 @@ import { FC } from 'react';
 
 const Body: FC = () => {
     const { bodyRef, innerProps } = useContext2();
-    const { isEmpty } = innerProps;
+    const { isEmpty, bodyOverflowX } = innerProps;
 
     return (
-        <div className={styles['body']} ref={bodyRef}>
+        <div className={styles['body']} ref={bodyRef} style={{ overflowX: bodyOverflowX }}>
             <Measure />
             {isEmpty && <Empty />}
             {!isEmpty && <VirtualBody />}

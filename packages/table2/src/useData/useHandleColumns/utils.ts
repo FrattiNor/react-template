@@ -1,3 +1,4 @@
+import { CSSProperties } from 'react';
 import { HandledColumn, Column } from '../../type';
 import { Opt } from './index';
 
@@ -9,6 +10,7 @@ const getHandledColumns = <T>(opt: Opt<T>) => {
     let midLeftPadding = 0;
     let midRightPadding = 0;
     let horizontalTotalSize = 0;
+    let originHorizontalTotalSize = 0;
     const handledColumns: HandledColumn<T>[] = [];
     const handledMidColumns: HandledColumn<T>[] = [];
     const handledFixedLeftColumns: HandledColumn<T>[] = [];
@@ -38,11 +40,11 @@ const getHandledColumns = <T>(opt: Opt<T>) => {
                 ...column,
                 width,
                 index: i,
-                originWidth,
                 measureStyle,
             };
 
             horizontalTotalSize += width;
+            originHorizontalTotalSize += originWidth;
             handledColumns.push(res);
             handledFixedLeftColumns.push(res);
         }
@@ -55,11 +57,11 @@ const getHandledColumns = <T>(opt: Opt<T>) => {
                 ...column,
                 width,
                 index: i,
-                originWidth,
                 measureStyle,
             };
 
             horizontalTotalSize += width;
+            originHorizontalTotalSize += originWidth;
             handledColumns.push(res);
 
             if (hiddenLeft) {
@@ -80,17 +82,20 @@ const getHandledColumns = <T>(opt: Opt<T>) => {
                 ...column,
                 width,
                 index: i,
-                originWidth,
                 measureStyle,
             };
 
             horizontalTotalSize += width;
+            originHorizontalTotalSize += originWidth;
             handledColumns.push(res);
             handledFixedRightColumns.push(res);
         }
     }
 
+    const bodyOverflowX: CSSProperties['overflowX'] = resized ? 'auto' : horizontalTotalSize > originHorizontalTotalSize ? 'hidden' : 'auto';
+
     return {
+        bodyOverflowX,
         midLeftPadding,
         midRightPadding,
         horizontalTotalSize,
