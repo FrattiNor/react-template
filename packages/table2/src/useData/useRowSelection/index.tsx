@@ -10,7 +10,7 @@ type Opt<T> = {
 
 const useRowSelection = <T,>(opt: Opt<T>) => {
     const { handledProps, totalDataSource } = opt;
-    const { rowSelection, rowKey } = handledProps.outerProps;
+    const { rowSelection, rowKey } = handledProps;
     const [_selectedRowKeys, _setSelectedRowKeys] = useState([]);
     const selectedRowKeys = rowSelection?.selectedRowKeys ?? _selectedRowKeys;
     const setSelectedRowKeys = (rowSelection?.onChange ?? _setSelectedRowKeys) as (v: (string | number)[]) => void;

@@ -14,7 +14,7 @@ const useHandleProps = <T>(props: TableProps<T>, opt: Opt) => {
 
     const isEmpty = (props.dataSource || [])?.length === 0;
 
-    const outerProps = {
+    const handledProps = {
         ...props,
         rowHeight: typeof rowHeight === 'number' ? Math.round(rowHeight) : defaultLineHeight,
         autoScrollTop: typeof autoScrollTop === 'boolean' ? autoScrollTop : defaultAutoScrollTop,
@@ -22,16 +22,13 @@ const useHandleProps = <T>(props: TableProps<T>, opt: Opt) => {
 
     // 数据变更时触发滚动回顶部
     useEffect(() => {
-        if (outerProps.autoScrollTop === true) {
+        if (handledProps.autoScrollTop === true) {
             bodyRef.current?.scrollTo({ top: 0, behavior: 'smooth' });
         }
-    }, [outerProps.dataSource]);
+    }, [handledProps.dataSource]);
 
-    return {
-        outerProps,
-        innerProps: { isEmpty },
-    };
+    return { handledProps, isEmpty };
 };
 
-export type HandledProps<T> = ReturnType<typeof useHandleProps<T>>;
+export type HandledProps<T> = ReturnType<typeof useHandleProps<T>>['handledProps'];
 export default useHandleProps;

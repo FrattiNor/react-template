@@ -20,7 +20,7 @@ type ItemSizeCache = Map<number | string, number>;
 
 const useVirtual = <T>(opt: Opt<T>) => {
     const { bodyRef, sortedColumns, showDataSource, defaultWidth, handledProps, bodyResizeObserver, bodyScrollObserver } = opt;
-    const { rowKey, rowHeight } = handledProps.outerProps;
+    const { rowKey, rowHeight } = handledProps;
 
     // 竖向虚拟
     const verticalVirtualizer = useVirtualizer({

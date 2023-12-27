@@ -92,6 +92,9 @@ const getHandledColumns = <T>(opt: Opt<T>) => {
         }
     }
 
+    // 避免纵向滚动条出现导致 body的横向区域变窄出现横向滚动条，然后触发重新计算宽度后恢复正常，横向滚动条又消失的闪烁问题
+    // resized后宽度固定不存在滚动条闪烁
+    // resized前，horizontalTotalSize > originHorizontalTotalSize 说明经过了flexGrow，可以判断没有横向滚动的情况
     const bodyOverflowX: CSSProperties['overflowX'] = resized ? 'auto' : horizontalTotalSize > originHorizontalTotalSize ? 'hidden' : 'auto';
 
     return {

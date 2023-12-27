@@ -10,7 +10,7 @@ type Opt<T> = {
 
 const useExpandable = <T,>(opt: Opt<T>) => {
     const { handledProps } = opt;
-    const { rowKey, expandable, dataSource } = handledProps.outerProps;
+    const { rowKey, expandable, dataSource } = handledProps;
 
     const expandableColumns: Column<T>[] = [];
     const [_expandedRowKeys, _setExpandedRowKeys] = useState<string[]>([]);
