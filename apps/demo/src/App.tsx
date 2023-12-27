@@ -140,9 +140,12 @@ const DemoTable = () => {
                         dataSource={query.data || []}
                         loading={query.isFetching || loading}
                         columns={(columnsMap as any)[`${columnsFlag % 3}` as any] as any}
-                        // rowSelection={{
-                        //     fixed: 'left',
-                        // }}
+                        rowSelection={{
+                            fixed: 'left',
+                            getCheckboxProps: (_, index) => ({
+                                disabled: index === 2,
+                            }),
+                        }}
                         expandable={{
                             fixed: 'left',
                         }}
