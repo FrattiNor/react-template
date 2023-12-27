@@ -15,7 +15,7 @@ type Item = {
 const DemoTable = () => {
     useFps();
     const ref = useRef<TableRef>(null);
-    const [count, setCount] = useState(100000);
+    const [count, setCount] = useState(100);
     const [loading, setLoading] = useState(false);
     const [columnsFlag, setColumnsFlag] = useState(1);
 
@@ -112,7 +112,7 @@ const DemoTable = () => {
     // }, [query.data]);
 
     return (
-        <div style={{ width: '100%', height: '100%', backgroundColor: '#fff' }}>
+        <div style={{ width: '100%', height: '100%', backgroundColor: '#1f1f1f' }}>
             <div style={{ padding: 64 }}>
                 <div style={{ padding: '24px 24px 0 24px', width: 900 }}>
                     <Switch checked={loading} onChange={setLoading} />

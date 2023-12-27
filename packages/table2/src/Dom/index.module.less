@@ -16,23 +16,27 @@
         box-sizing: border-box;
     }
 
-    /* 滚动条 */
     ::-webkit-scrollbar {
         width: var(--table-scrollbar-width);
         height: var(--table-scrollbar-width);
+        background-color: var(--table-scrollbar-bg);
     }
 
-    ::-webkit-scrollbar-track,
     ::-webkit-scrollbar-corner {
         background-color: var(--table-scrollbar-bg);
+    }
+
+    ::-webkit-scrollbar-thumb {
+        border-radius: 2px;
+        border: 2px solid transparent;
     }
 
     ::-webkit-scrollbar-thumb {
         background-color: var(--table-scrollbar-thumb);
     }
 
-    ::-webkit-scrollbar-thumb:hover {
+    ::-webkit-scrollbar-thumb:hover,
+    ::-webkit-scrollbar-thumb:active {
         background-color: var(--table-scrollbar-thumb-hover);
     }
-    // /* 滚动条 */
 }
