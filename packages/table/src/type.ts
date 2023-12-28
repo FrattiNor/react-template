@@ -43,6 +43,7 @@ export type TableProps<T> = {
     dataSource?: T[];
     loading?: boolean;
     rowHeight?: number;
+    calcRowHeight?: number;
     columns: Column<T>[];
     expandable?: Expandable;
     autoScrollTop?: boolean;

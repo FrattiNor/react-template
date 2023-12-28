@@ -20,14 +20,14 @@ type ItemSizeCache = Map<number | string, number>;
 
 const useVirtual = <T>(opt: Opt<T>) => {
     const { bodyRef, sortedColumns, showDataSource, defaultWidth, handledProps, bodyResizeObserver, bodyScrollObserver } = opt;
-    const { rowKey, rowHeight } = handledProps;
+    const { rowKey, rowHeight, calcRowHeight } = handledProps;
 
     // 竖向虚拟
     const verticalVirtualizer = useVirtualizer({
         overscan: 0,
-        estimateSize: () => rowHeight,
         count: showDataSource?.length || 0,
         getScrollElement: () => bodyRef.current,
+        estimateSize: () => calcRowHeight ?? rowHeight,
         getItemKey: (index) => (showDataSource?.[index]?.[rowKey] as string) ?? index,
         observeElementRect: observeElementRect('vRect', bodyResizeObserver),
         observeElementOffset: observeElementOffset('vOffset', bodyScrollObserver),

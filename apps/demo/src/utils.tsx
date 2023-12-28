@@ -72,7 +72,6 @@ export const columns2 = [
     },
     {
         width: 50,
-        edit: true,
         key: 'age_1',
         title: '年龄_1_0_0_0_0_0',
         flexGrow: 1,
@@ -115,6 +114,9 @@ export const columns2 = [
         flexGrow: 1,
         fixed: 'right',
         // align: 'center',
-        render: () => 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',
+        render: (_: any, index: number) =>
+            Array(Math.ceil(index % 5))
+                .fill('xxxxxxx')
+                .join('\n'),
     },
 ];

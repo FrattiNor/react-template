@@ -15,7 +15,7 @@ type Item = {
 const DemoTable = () => {
     useFps();
     const ref = useRef<TableRef>(null);
-    const [count, setCount] = useState(100000);
+    const [count, setCount] = useState(100);
     const [empty, setEmpty] = useState(false);
     const [loading, setLoading] = useState(false);
     const [columnsFlag, setColumnsFlag] = useState(1);
@@ -111,6 +111,7 @@ const DemoTable = () => {
                         ref={ref}
                         rowKey="id"
                         theme={theme}
+                        calcRowHeight={90}
                         loading={query.isFetching || loading}
                         dataSource={empty ? [] : query.data || []}
                         columns={(columnsMap as any)[`${columnsFlag % 3}` as any] as any}
