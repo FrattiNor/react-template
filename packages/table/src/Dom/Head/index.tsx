@@ -1,5 +1,5 @@
 import ResizableTitle from './ResizableTitle';
-import { useContext2 } from '../../Context2';
+import { useTableContext } from '../../TableContext';
 import { notEmpty } from '../../utils/empty';
 import { HandledColumn } from '../../type';
 import styles from './index.module.less';
@@ -7,7 +7,7 @@ import classNames from 'classnames';
 import { FC } from 'react';
 
 const Head: FC = () => {
-    const { headRef, innerProps, outerProps } = useContext2();
+    const { headRef, innerProps, outerProps } = useTableContext();
 
     const { rowHeight } = outerProps;
     const { resizeActiveKey, ping, resized } = innerProps;

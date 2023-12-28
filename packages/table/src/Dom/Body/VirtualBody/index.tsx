@@ -1,4 +1,4 @@
-import { useContext2 } from '../../../Context2';
+import { useTableContext } from '../../../TableContext';
 import { notEmpty } from '../../../utils/empty';
 import { HandledColumn } from '../../../type';
 import styles from './index.module.less';
@@ -7,7 +7,7 @@ import EditCell from './EditCell';
 import { FC } from 'react';
 
 const VirtualBody: FC = () => {
-    const { outerProps, innerProps } = useContext2();
+    const { outerProps, innerProps } = useTableContext();
     const { rowKey, rowHeight } = outerProps;
     const { horizontalTotalSize, midLeftPadding, midRightPadding } = innerProps;
     const { resized, ping, showDataSource, selectedRowKeysObj, dataSourceLevelMap } = innerProps;

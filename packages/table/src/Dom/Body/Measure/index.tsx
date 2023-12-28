@@ -1,9 +1,9 @@
-import { useContext2 } from '../../../Context2';
+import { useTableContext } from '../../../TableContext';
 import styles from './index.module.less';
 import { FC } from 'react';
 
 const Measure: FC = () => {
-    const { innerProps } = useContext2();
+    const { innerProps } = useTableContext();
     const { handledColumns, horizontalMeasureElement } = innerProps;
 
     return (

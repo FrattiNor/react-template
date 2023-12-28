@@ -1,9 +1,9 @@
 import AntdPagination, { PaginationProps } from 'antd/lib/pagination';
-import { useContext2 } from '../../Context2';
+import { useTableContext } from '../../TableContext';
 import styles from './index.module.less';
 
 const Pagination = () => {
-    const { innerProps } = useContext2();
+    const { innerProps } = useTableContext();
     const { pagination } = innerProps;
 
     if (pagination === false) {

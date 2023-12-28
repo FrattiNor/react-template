@@ -1,4 +1,4 @@
-import { useContext2 } from '../Context2';
+import { useTableContext } from '../TableContext';
 import styles from './index.module.less';
 import Pagination from './Pagination';
 import classNames from 'classnames';
@@ -8,7 +8,7 @@ import Head from './Head';
 import Body from './Body';
 
 const Table2: FC = () => {
-    const { outerProps } = useContext2();
+    const { outerProps } = useTableContext();
     const { theme = 'light' } = outerProps;
 
     return (

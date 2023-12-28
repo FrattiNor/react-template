@@ -1,5 +1,5 @@
 import { getShowValue, getEditValue } from './utils';
-import { useContext2 } from '../../../../Context2';
+import { useTableContext } from '../../../../TableContext';
 import { CSSProperties, FC } from 'react';
 import styles from './index.module.less';
 import classNames from 'classnames';
@@ -16,7 +16,7 @@ type Props = {
 
 const EditCell: FC<Props> = ({ rowKey, cellKey, text, style, className, onChange }) => {
     const key = `${cellKey}-${rowKey}`;
-    const { innerProps } = useContext2();
+    const { innerProps } = useTableContext();
     const { cellEdits, setCellEdits, editCellValues, setEditCellValues } = innerProps;
 
     // 是否编辑

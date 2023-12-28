@@ -1,11 +1,11 @@
 /* eslint-disable react-refresh/only-export-components */
-import { Context2Hoc } from './Context2';
+import { TableContextHoc } from './TableContext';
 import { FC } from 'react';
 import Dom from './Dom';
 
-const Table2: FC = () => {
+const Table: FC = () => {
     return <Dom />;
 };
 
-export default Context2Hoc(Table2);
+export default TableContextHoc(Table);
 export * from './type';

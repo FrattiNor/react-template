@@ -1,9 +1,9 @@
-import { useContext2 } from '../../../Context2';
+import { useTableContext } from '../../../TableContext';
 import styles from './index.module.less';
 import { Fragment } from 'react';
 
 const BodyEmpty = () => {
-    const { innerProps } = useContext2();
+    const { innerProps } = useTableContext();
     const { horizontalTotalSize } = innerProps;
 
     return (

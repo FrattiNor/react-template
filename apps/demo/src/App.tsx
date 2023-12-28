@@ -16,7 +16,7 @@ const DemoTable = () => {
     useFps();
     const ref = useRef<TableRef>(null);
     const [empty, setEmpty] = useState(false);
-    const [count, setCount] = useState(100000);
+    const [count, setCount] = useState(10000);
     const [loading, setLoading] = useState(false);
     const [columnsFlag, setColumnsFlag] = useState(1);
     const [theme, setTheme] = useState<TableTheme>('light');
@@ -111,8 +111,8 @@ const DemoTable = () => {
                         ref={ref}
                         rowKey="id"
                         theme={theme}
-                        pagination={false}
                         calcRowHeight={90}
+                        pagination={{ total: 100 }}
                         loading={query.isFetching || loading}
                         dataSource={empty ? [] : query.data || []}
                         columns={(columnsMap as any)[`${columnsFlag % 3}` as any] as any}

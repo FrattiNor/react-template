@@ -1,5 +1,5 @@
 import { CSSProperties, FC, PropsWithChildren } from 'react';
-import { useContext2 } from '../../../Context2';
+import { useTableContext } from '../../../TableContext';
 import styles from './index.module.less';
 import classNames from 'classnames';
 
@@ -11,7 +11,7 @@ type Props = PropsWithChildren<{
 }>;
 
 const ResizableTitle: FC<Props> = (props) => {
-    const { innerProps } = useContext2();
+    const { innerProps } = useTableContext();
     const { onResizeStart, resizeActiveKey } = innerProps;
     const { cellKey, title, style, className, children } = props;
     const active = resizeActiveKey === cellKey;

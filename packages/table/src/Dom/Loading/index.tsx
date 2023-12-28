@@ -1,10 +1,10 @@
-import { useContext2 } from '../../Context2';
+import { useTableContext } from '../../TableContext';
 import styles from './index.module.less';
 import classNames from 'classnames';
 import { FC } from 'react';
 
 const Loading: FC = () => {
-    const { outerProps } = useContext2();
+    const { outerProps } = useTableContext();
     const { loading } = outerProps;
 
     return (

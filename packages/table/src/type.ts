@@ -11,7 +11,7 @@ export type TableTheme = 'light' | 'dark';
 export type TablePagination = {
     total?: number;
     current?: number;
-    pageSize: number;
+    pageSize?: number;
     pageSizeOptions?: number[];
     showTotal?: false | ((total: number) => ReactNode);
     onChange?: (current: number, pageSize: number) => void;
