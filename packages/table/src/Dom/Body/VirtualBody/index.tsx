@@ -3,6 +3,7 @@ import { notEmpty } from '../../../utils/empty';
 import { HandledColumn } from '../../../type';
 import styles from './index.module.less';
 import classNames from 'classnames';
+import EditCell from './EditCell';
 import { FC } from 'react';
 
 const VirtualBody: FC = () => {
@@ -21,21 +22,38 @@ const VirtualBody: FC = () => {
     ) => {
         const lastColumn = handledColumns[column.index - 1];
         const isAfterExpandable = lastColumn?.key === 'table-row-expandable';
+        const innerStyle = isAfterExpandable ? { paddingLeft: 8 + (dataSourceLevelMap[currentRowKey] ?? 0) * 16 } : undefined;
 
-        const { key, render, width, align } = column;
+        const { key, render, width, align, edit, onChange } = column;
         const cellValue = notEmpty(render ? render(currentRowData, currentRowIndex) : currentRowData[key]);
         const isStr = typeof cellValue === 'string' || typeof cellValue === 'number';
         const cellTitle = isStr ? `${cellValue}` : '';
-        const paddingLeft = isAfterExpandable ? (dataSourceLevelMap[currentRowKey] ?? 0) * 16 : 0;
+        const cellStyle = { width, textAlign: align };
+        const cellClassName = styles['body-cell'];
+
+        if (edit === true && isStr) {
+            return (
+                <EditCell
+                    key={key}
+                    cellKey={key}
+                    text={cellValue}
+                    style={cellStyle}
+                    rowKey={currentRowKey}
+                    textStyle={innerStyle}
+                    className={cellClassName}
+                    onChange={(v: string) => onChange && onChange(v, currentRowData, currentRowIndex)}
+                />
+            );
+        }
 
         return (
-            <div key={key} title={cellTitle} className={classNames(styles['body-cell'])} style={{ width, textAlign: align }}>
+            <div key={key} title={cellTitle} className={cellClassName} style={cellStyle}>
                 {isStr ? (
-                    <div className={styles['body-cell-str']} style={{ paddingLeft }}>
+                    <div className={styles['body-cell-str']} style={innerStyle}>
                         {cellValue}
                     </div>
                 ) : (
-                    <div className={styles['body-cell-block']} style={{ paddingLeft }}>
+                    <div className={styles['body-cell-block']} style={innerStyle}>
                         {cellValue}
                     </div>
                 )}

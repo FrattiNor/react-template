@@ -1,0 +1,54 @@
+.body-cell-edit-str {
+    z-index: 1;
+    width: 100%;
+    padding: 8px;
+    flex-shrink: 0;
+    min-width: 100%;
+    max-width: 100%;
+    position: relative;
+    white-space: pre-wrap;
+    word-break: break-all;
+
+    &.edit {
+        opacity: 0;
+        user-select: none;
+        pointer-events: none;
+    }
+}
+
+.border {
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 3;
+    content: '';
+    position: absolute;
+    pointer-events: none;
+    transition: border-color 0.3s;
+    border: 1px solid transparent;
+    border-radius: var(--table-border-radius);
+
+    &.edit {
+        border-color: var(--table-primary);
+    }
+}
+
+.textarea {
+    top: 0;
+    left: 0;
+    right: 0;
+    border: 0;
+    bottom: 0;
+    z-index: 2;
+    resize: none;
+    padding: 8px;
+    outline: none;
+    overflow: hidden;
+    position: absolute;
+    font-size: inherit;
+    font-family: inherit;
+    line-height: inherit;
+    word-break: break-all;
+    background-color: var(--table-bg);
+}

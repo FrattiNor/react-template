@@ -1,6 +1,7 @@
 import useBodyResizeObserver from './useBodyResizeObserver';
 import useBodyScrollObserver from './useBodyScrollObserver';
 import useCalcScrollBarWidth from './useCalcScrollBarWidth';
+import useChangeScrollTop from './useChangeScrollTop';
 import useHandleColumns from './useHandleColumns';
 import useRowSelection from './useRowSelection';
 import useSortColumns from './useSortColumns';
@@ -8,6 +9,7 @@ import useResizeWidth from './useResizeWidth';
 import useHandleProps from './useHandleProps';
 import { AnyObj, TableProps } from '../type';
 import useExpandable from './useExpandable';
+import useEditStore from './useEditStore';
 import useCalcPing from './useCalcPing';
 import useVirtual from './useVirtual';
 import { useRef } from 'react';
@@ -15,17 +17,25 @@ import { useRef } from 'react';
 const useData = <T extends AnyObj>(props: TableProps<T>) => {
     const defaultWidth = 150;
     const defaultFlexGrow = 1;
-    const defaultLineHeight = 37;
+    const defaultLineHeight = 36;
     const defaultAutoScrollTop = true;
     const bodyRef = useRef<HTMLDivElement>(null);
     const headRef = useRef<HTMLDivElement>(null);
 
     // props and auto scrollTop
     const { handledProps, isEmpty } = useHandleProps(props, {
-        bodyRef,
         defaultLineHeight,
         defaultAutoScrollTop,
     });
+
+    // 数据源变更回滚顶部
+    useChangeScrollTop({
+        bodyRef,
+        handledProps,
+    });
+
+    // 编辑格缓存
+    const editStore = useEditStore({ handledProps });
 
     // 增加展开
     const { totalDataSource, showDataSource, dataSourceLevelMap, expandableColumns } = useExpandable({ handledProps });
@@ -81,6 +91,7 @@ const useData = <T extends AnyObj>(props: TableProps<T>) => {
 
     const innerProps = {
         ...virtual,
+        ...editStore,
         ...resizeWidth,
         ...handledColumns,
 

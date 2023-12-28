@@ -1,19 +1,20 @@
 .resize-head-cell {
-    transition: background-color 0.3s;
-
     .resizable-handle {
+        transition: background-color 0.3s;
         position: absolute;
         cursor: ew-resize;
         height: 100%;
-        width: 5px;
+        width: 4px;
         z-index: 1;
         bottom: 0;
         right: 0;
-        transition: background-color 0.3s;
     }
 
-    &.active .resizable-handle,
     .resizable-handle:hover {
+        background-color: var(--table-resize-hover);
+    }
+
+    &.active .resizable-handle {
         background-color: var(--table-resize-active);
     }
 }

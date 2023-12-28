@@ -15,7 +15,7 @@ type Item = {
 const DemoTable = () => {
     useFps();
     const ref = useRef<TableRef>(null);
-    const [count, setCount] = useState(100);
+    const [count, setCount] = useState(100000);
     const [empty, setEmpty] = useState(false);
     const [loading, setLoading] = useState(false);
     const [columnsFlag, setColumnsFlag] = useState(1);
@@ -122,9 +122,9 @@ const DemoTable = () => {
                                 };
                             },
                         }}
-                        expandable={{
-                            fixed: 'left',
-                        }}
+                        // expandable={{
+                        //     fixed: 'left',
+                        // }}
                     />
                 </div>
             </div>

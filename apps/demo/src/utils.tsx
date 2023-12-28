@@ -72,11 +72,12 @@ export const columns2 = [
     },
     {
         width: 50,
+        edit: true,
         key: 'age_1',
         title: '年龄_1_0_0_0_0_0',
         flexGrow: 1,
         // align: 'center',
-        render: () => '123456789987654321',
+        render: () => '123456789987654321123456789987654321',
     },
     {
         width: 50,
@@ -109,10 +110,11 @@ export const columns2 = [
     {
         width: 141,
         key: 'age_10',
+        edit: true,
         title: '年龄_10_0_0_0_0_0',
         flexGrow: 1,
         fixed: 'right',
         // align: 'center',
-        render: () => 'xxxxxxxxxxxxxxx',
+        render: () => 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',
     },
 ];

@@ -12,11 +12,13 @@ export type Column<T> = {
     key: string;
     fixed?: Fixed;
     align?: Align;
+    edit?: boolean;
     width?: number;
     resize?: boolean;
     title: ReactNode;
     flexGrow?: number;
     render?: (item: T, index: number) => ReactNode;
+    onChange?: (value: string, item: T, index: number) => ReactNode;
 };
 
 export type RowSelection<T> = {
