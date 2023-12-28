@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-shadow */
+import { useTableDataContext } from '../../TableDataContext';
 import { HandledProps } from '../useHandleProps';
 import { useMemo, useState } from 'react';
 import { TableColumn } from '../../type';
@@ -15,7 +16,11 @@ const useExpandable = <T,>(opt: Opt<T>) => {
 
     const expandableColumns: TableColumn<T>[] = [];
     const expandedKeysObj: Record<string, boolean> = {};
-    const [_expandedRowKeys, _setExpandedRowKeys] = useState<string[]>([]);
+
+    const dataContext = useTableDataContext();
+    const [__expandedRowKeys, __setExpandedRowKeys] = useState<string[]>([]);
+    const _expandedRowKeys = dataContext?.expandedRowKeys ?? __expandedRowKeys;
+    const _setExpandedRowKeys = dataContext?.setExpandedRowKeys ?? __setExpandedRowKeys;
 
     const width = typeof expandable !== 'boolean' ? expandable?.width ?? 42 : 42;
     const fixed = typeof expandable !== 'boolean' ? expandable?.fixed ?? 'left' : 'left';

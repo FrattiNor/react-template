@@ -1,7 +1,8 @@
+/* eslint-disable react-refresh/only-export-components */
+import Table, { TableTheme, useTableDataContext, TableDataContextHoc } from '@pkg/table';
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
-import Table, { TableRef, TableTheme } from '@pkg/table';
-import { useMemo, useRef, useState } from 'react';
 import { columns, columns2 } from './utils';
+import { useMemo, useState } from 'react';
 import styles from './App.module.less';
 import { Button } from 'antd';
 import useFps from './useFps';
@@ -14,7 +15,7 @@ type Item = {
 
 const DemoTable = () => {
     useFps();
-    const ref = useRef<TableRef>(null);
+    const dataContext = useTableDataContext();
     const [empty, setEmpty] = useState(false);
     const [count, setCount] = useState(10000);
     const [loading, setLoading] = useState(false);
@@ -70,7 +71,7 @@ const DemoTable = () => {
     });
 
     const scroll = () => {
-        ref.current?.scrollTo({ top: 100, left: 100, behavior: 'smooth' });
+        dataContext.tableRef.current?.scrollTo({ top: 100, left: 100, behavior: 'smooth' });
     };
 
     const reload = () => {
@@ -84,6 +85,8 @@ const DemoTable = () => {
     const changeTheme = () => {
         setTheme((t) => (t === 'light' ? 'dark' : 'light'));
     };
+
+    console.log(dataContext);
 
     return (
         <div className={styles[theme]} style={{ width: '100%', height: '100%' }}>
@@ -108,13 +111,12 @@ const DemoTable = () => {
                 </div>
                 <div style={{ height: 400, width: 900, padding: 24 }}>
                     <Table
-                        ref={ref}
                         rowKey="id"
                         theme={theme}
                         calcRowHeight={90}
                         pagination={{ total: 100 }}
                         loading={query.isFetching || loading}
-                        dataSource={empty ? [] : query.data || []}
+                        dataSource={empty ? undefined : query.data}
                         columns={(columnsMap as any)[`${columnsFlag % 3}` as any] as any}
                         rowSelection={{
                             fixed: 'left',
@@ -134,4 +136,4 @@ const DemoTable = () => {
     );
 };
 
-export default DemoTable;
+export default TableDataContextHoc(DemoTable);
