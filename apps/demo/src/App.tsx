@@ -1,5 +1,5 @@
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
-import Table, { TableRef, Theme } from '@pkg/table';
+import Table, { TableRef, TableTheme } from '@pkg/table';
 import { useMemo, useRef, useState } from 'react';
 import { columns, columns2 } from './utils';
 import styles from './App.module.less';
@@ -15,11 +15,11 @@ type Item = {
 const DemoTable = () => {
     useFps();
     const ref = useRef<TableRef>(null);
-    const [count, setCount] = useState(100);
     const [empty, setEmpty] = useState(false);
+    const [count, setCount] = useState(100000);
     const [loading, setLoading] = useState(false);
     const [columnsFlag, setColumnsFlag] = useState(1);
-    const [theme, setTheme] = useState<Theme>('light');
+    const [theme, setTheme] = useState<TableTheme>('light');
 
     const columns3: any[] = useMemo(() => {
         return Array(100)
@@ -111,6 +111,7 @@ const DemoTable = () => {
                         ref={ref}
                         rowKey="id"
                         theme={theme}
+                        pagination={false}
                         calcRowHeight={90}
                         loading={query.isFetching || loading}
                         dataSource={empty ? [] : query.data || []}

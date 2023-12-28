@@ -5,12 +5,13 @@ import ExpandableFC from './Expandable';
 import { Column } from '../../type';
 
 type Opt<T> = {
+    sizedDataSource: T[];
     handledProps: HandledProps<T>;
 };
 
 const useExpandable = <T,>(opt: Opt<T>) => {
-    const { handledProps } = opt;
-    const { rowKey, expandable, dataSource } = handledProps;
+    const { handledProps, sizedDataSource } = opt;
+    const { rowKey, expandable } = handledProps;
 
     const expandableColumns: Column<T>[] = [];
     const [_expandedRowKeys, _setExpandedRowKeys] = useState<string[]>([]);
@@ -47,14 +48,14 @@ const useExpandable = <T,>(opt: Opt<T>) => {
                 });
             };
 
-            handleDataSource(dataSource || []);
+            handleDataSource(sizedDataSource || []);
         } else {
-            showDataSource = dataSource || [];
-            totalDataSource = dataSource || [];
+            showDataSource = sizedDataSource || [];
+            totalDataSource = sizedDataSource || [];
         }
 
         return { totalDataSource, showDataSource, dataSourceLevelMap };
-    }, [dataSource, expandedRowKeys]);
+    }, [sizedDataSource, expandedRowKeys]);
 
     if (expandable) {
         const { fixed = 'left', width = 42 } = expandable;

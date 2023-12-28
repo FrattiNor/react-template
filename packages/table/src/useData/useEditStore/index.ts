@@ -1,11 +1,10 @@
-import { HandledProps } from '../useHandleProps';
 import { useEffect, useState } from 'react';
 
 type Opt<T> = {
-    handledProps: HandledProps<T>;
+    sizedDataSource: T[];
 };
 
-const useEditStore = <T>({ handledProps }: Opt<T>) => {
+const useEditStore = <T>({ sizedDataSource }: Opt<T>) => {
     const [cellEdits, setCellEdits] = useState<Record<string, boolean>>({});
     const [editCellValues, setEditCellValues] = useState<Record<string, string>>({});
 
@@ -13,7 +12,7 @@ const useEditStore = <T>({ handledProps }: Opt<T>) => {
     useEffect(() => {
         setCellEdits({});
         setEditCellValues({});
-    }, [handledProps.dataSource]);
+    }, [sizedDataSource]);
 
     return { cellEdits, setCellEdits, editCellValues, setEditCellValues };
 };

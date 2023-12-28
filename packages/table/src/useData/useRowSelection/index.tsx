@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-shadow */
+import { useEffect, useMemo, useState } from 'react';
 import { HandledProps } from '../useHandleProps';
-import { useMemo, useState } from 'react';
 import { Column } from '../../type';
 import Checkbox from './Checkbox';
 
@@ -9,6 +9,7 @@ type Opt<T> = {
     handledProps: HandledProps<T>;
 };
 
+// 分页多选 存在Bug
 const useRowSelection = <T,>(opt: Opt<T>) => {
     const { handledProps, totalDataSource } = opt;
     const { rowSelection, rowKey } = handledProps;
@@ -18,6 +19,21 @@ const useRowSelection = <T,>(opt: Opt<T>) => {
 
     const rowSelectionColumns: Column<T>[] = [];
     const selectedRowKeysObj: Record<string, true> = {};
+    const titleKey = useMemo(() => `${new Date().valueOf()}`, [totalDataSource]);
+
+    // 数据源变更，清掉不在当前数据源中的数据
+    useEffect(() => {
+        const dataSourceSelectedRowKeysObj: Record<string, true> = {};
+
+        (totalDataSource || []).forEach((item) => {
+            const key = item[rowKey] as string;
+            if (selectedRowKeysObj[key]) {
+                dataSourceSelectedRowKeysObj[key] = true;
+            }
+        });
+
+        setSelectedRowKeys(Object.keys(dataSourceSelectedRowKeysObj));
+    }, [totalDataSource]);
 
     //
     if (rowSelection) {
@@ -62,6 +78,7 @@ const useRowSelection = <T,>(opt: Opt<T>) => {
 
         const title = (
             <Checkbox
+                key={titleKey}
                 checked={titleChecked}
                 disabled={titleDisabled}
                 indeterminate={titleIndeterminate}

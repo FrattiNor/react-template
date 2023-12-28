@@ -2,16 +2,25 @@ import { CSSProperties, ReactNode, RefObject } from 'react';
 
 export type AnyObj = Record<string, any>;
 
-export type Fixed = 'left' | 'right' | 'default';
+export type TableFixed = 'left' | 'right' | 'default';
 
-export type Align = 'left' | 'right' | 'center';
+export type TableAlign = 'left' | 'right' | 'center';
 
-export type Theme = 'light' | 'dark';
+export type TableTheme = 'light' | 'dark';
+
+export type TablePagination = {
+    total?: number;
+    current?: number;
+    pageSize: number;
+    pageSizeOptions?: number[];
+    showTotal?: false | ((total: number) => ReactNode);
+    onChange?: (current: number, pageSize: number) => void;
+};
 
 export type Column<T> = {
     key: string;
-    fixed?: Fixed;
-    align?: Align;
+    fixed?: TableFixed;
+    align?: TableAlign;
     edit?: boolean;
     width?: number;
     resize?: boolean;
@@ -21,16 +30,16 @@ export type Column<T> = {
     onChange?: (value: string, item: T, index: number) => ReactNode;
 };
 
-export type RowSelection<T> = {
-    fixed?: Fixed;
+export type TableRowSelection<T> = {
+    fixed?: TableFixed;
     width?: number;
     selectedRowKeys?: (string | number)[];
     onChange?: (v: (string | number)[]) => void;
     getCheckboxProps?: (item: T) => { disabled: boolean };
 };
 
-export type Expandable = {
-    fixed?: Fixed;
+export type TableExpandable = {
+    fixed?: TableFixed;
     width?: number;
     childrenColumnName?: string;
     expandedRowKeys?: (string | number)[];
@@ -38,16 +47,17 @@ export type Expandable = {
 };
 
 export type TableProps<T> = {
-    theme?: Theme;
+    theme?: TableTheme;
     rowKey: keyof T;
     dataSource?: T[];
     loading?: boolean;
     rowHeight?: number;
-    calcRowHeight?: number;
     columns: Column<T>[];
-    expandable?: Expandable;
+    calcRowHeight?: number;
+    expandable?: TableExpandable;
     autoScrollTop?: boolean;
-    rowSelection?: RowSelection<T>;
+    rowSelection?: TableRowSelection<T>;
+    pagination?: TablePagination | false;
 };
 
 export type HandledColumn<T> = Omit<Column<T>, 'width' | 'flexGrow'> & {

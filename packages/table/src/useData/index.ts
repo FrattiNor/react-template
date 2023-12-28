@@ -13,6 +13,7 @@ import useEditStore from './useEditStore';
 import useCalcPing from './useCalcPing';
 import useVirtual from './useVirtual';
 import { useRef } from 'react';
+import usePagination from './usePagination';
 
 const useData = <T extends AnyObj>(props: TableProps<T>) => {
     const defaultWidth = 150;
@@ -23,22 +24,19 @@ const useData = <T extends AnyObj>(props: TableProps<T>) => {
     const headRef = useRef<HTMLDivElement>(null);
 
     // props and auto scrollTop
-    const { handledProps, isEmpty } = useHandleProps(props, {
-        defaultLineHeight,
-        defaultAutoScrollTop,
-    });
+    const { handledProps, isEmpty } = useHandleProps(props, { defaultLineHeight, defaultAutoScrollTop });
+
+    // 分页
+    const { pagination, sizedDataSource } = usePagination({ handledProps });
 
     // 数据源变更回滚顶部
-    useChangeScrollTop({
-        bodyRef,
-        handledProps,
-    });
+    useChangeScrollTop({ bodyRef, handledProps, sizedDataSource });
 
     // 编辑格缓存
-    const editStore = useEditStore({ handledProps });
+    const editStore = useEditStore({ sizedDataSource });
 
     // 增加展开
-    const { totalDataSource, showDataSource, dataSourceLevelMap, expandableColumns } = useExpandable({ handledProps });
+    const { totalDataSource, showDataSource, dataSourceLevelMap, expandableColumns } = useExpandable({ handledProps, sizedDataSource });
 
     // 增加多选
     const { selectedRowKeysObj, rowSelectionColumns } = useRowSelection({ handledProps, totalDataSource });
@@ -97,6 +95,7 @@ const useData = <T extends AnyObj>(props: TableProps<T>) => {
 
         ping,
         isEmpty,
+        pagination,
         showDataSource,
         vScrollBarWidth,
         selectedRowKeysObj,

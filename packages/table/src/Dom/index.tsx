@@ -1,5 +1,6 @@
 import { useContext2 } from '../Context2';
 import styles from './index.module.less';
+import Pagination from './Pagination';
 import classNames from 'classnames';
 import Loading from './Loading';
 import { FC } from 'react';
@@ -14,6 +15,7 @@ const Table2: FC = () => {
         <div className={classNames(styles['table'], styles[theme])}>
             <Head />
             <Body />
+            <Pagination />
             <Loading />
         </div>
     );
