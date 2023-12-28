@@ -1,8 +1,10 @@
 /* eslint-disable @typescript-eslint/no-shadow */
 import { useEffect, useMemo, useState } from 'react';
 import { HandledProps } from '../useHandleProps';
-import { Column } from '../../type';
+import { TableColumn } from '../../type';
 import Checkbox from './Checkbox';
+
+type setKeys = (v: (string | number)[]) => void;
 
 type Opt<T> = {
     totalDataSource?: T[];
@@ -13,13 +15,17 @@ type Opt<T> = {
 const useRowSelection = <T,>(opt: Opt<T>) => {
     const { handledProps, totalDataSource } = opt;
     const { rowSelection, rowKey } = handledProps;
-    const [_selectedRowKeys, _setSelectedRowKeys] = useState([]);
-    const selectedRowKeys = rowSelection?.selectedRowKeys ?? _selectedRowKeys;
-    const setSelectedRowKeys = (rowSelection?.onChange ?? _setSelectedRowKeys) as (v: (string | number)[]) => void;
 
-    const rowSelectionColumns: Column<T>[] = [];
+    const rowSelectionColumns: TableColumn<T>[] = [];
     const selectedRowKeysObj: Record<string, true> = {};
+    const [_selectedRowKeys, _setSelectedRowKeys] = useState<string[]>([]);
     const titleKey = useMemo(() => `${new Date().valueOf()}`, [totalDataSource]);
+
+    const width = typeof rowSelection !== 'boolean' ? rowSelection?.width ?? 42 : 42;
+    const fixed = typeof rowSelection !== 'boolean' ? rowSelection?.fixed ?? 'left' : 'left';
+    const getCheckboxProps = typeof rowSelection !== 'boolean' ? rowSelection?.getCheckboxProps : undefined;
+    const selectedRowKeys = typeof rowSelection !== 'boolean' ? rowSelection?.selectedRowKeys ?? _selectedRowKeys : _selectedRowKeys;
+    const setSelectedRowKeys = (typeof rowSelection !== 'boolean' ? rowSelection?.onChange ?? _setSelectedRowKeys : _setSelectedRowKeys) as setKeys;
 
     // 数据源变更，清掉不在当前数据源中的数据
     useEffect(() => {
@@ -48,8 +54,6 @@ const useRowSelection = <T,>(opt: Opt<T>) => {
         const allDatasourceCheckedRowKeys: (string | number)[] = [];
 
         if (rowSelection) {
-            const { getCheckboxProps } = rowSelection;
-
             (totalDataSource || []).forEach((item) => {
                 let disabled = false;
                 const key = item[rowKey] as string;
@@ -70,8 +74,6 @@ const useRowSelection = <T,>(opt: Opt<T>) => {
 
     //
     if (rowSelection) {
-        const { width = 42, fixed = 'left', getCheckboxProps } = rowSelection;
-
         const titleDisabled = allCouldCheckRowKeys.length === 0;
         const titleChecked = !titleDisabled && allCouldCheckRowKeys.length === allDatasourceCheckedRowKeys.length;
         const titleIndeterminate = !titleChecked && allDatasourceCheckedRowKeys.length > 0;

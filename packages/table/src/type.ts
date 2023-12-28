@@ -17,30 +17,30 @@ export type TablePagination = {
     onChange?: (current: number, pageSize: number) => void;
 };
 
-export type Column<T> = {
+export type TableColumn<T> = {
     key: string;
-    fixed?: TableFixed;
-    align?: TableAlign;
     edit?: boolean;
     width?: number;
-    resize?: boolean;
     title: ReactNode;
+    resize?: boolean;
     flexGrow?: number;
+    fixed?: TableFixed;
+    align?: TableAlign;
     render?: (item: T, index: number) => ReactNode;
     onChange?: (value: string, item: T, index: number) => ReactNode;
 };
 
 export type TableRowSelection<T> = {
-    fixed?: TableFixed;
     width?: number;
+    fixed?: TableFixed;
     selectedRowKeys?: (string | number)[];
     onChange?: (v: (string | number)[]) => void;
     getCheckboxProps?: (item: T) => { disabled: boolean };
 };
 
 export type TableExpandable = {
-    fixed?: TableFixed;
     width?: number;
+    fixed?: TableFixed;
     childrenColumnName?: string;
     expandedRowKeys?: (string | number)[];
     onChange?: (v: (string | number)[]) => void;
@@ -52,15 +52,15 @@ export type TableProps<T> = {
     dataSource?: T[];
     loading?: boolean;
     rowHeight?: number;
-    columns: Column<T>[];
+    columns: TableColumn<T>[];
     calcRowHeight?: number;
-    expandable?: TableExpandable;
     autoScrollTop?: boolean;
-    rowSelection?: TableRowSelection<T>;
+    expandable?: TableExpandable | true;
     pagination?: TablePagination | false;
+    rowSelection?: TableRowSelection<T> | true;
 };
 
-export type HandledColumn<T> = Omit<Column<T>, 'width' | 'flexGrow'> & {
+export type HandledColumn<T> = Omit<TableColumn<T>, 'width' | 'flexGrow'> & {
     width: number;
     index: number;
     measureStyle: CSSProperties;

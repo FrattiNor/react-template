@@ -8,4 +8,14 @@ const Table: FC = () => {
 };
 
 export default TableContextHoc(Table);
-export * from './type';
+export type {
+    TableRef,
+    TableFixed,
+    TableAlign,
+    TableTheme,
+    TablePagination,
+    TableRowSelection,
+    TableExpandable,
+    TableProps,
+    TableColumn,
+} from './type';

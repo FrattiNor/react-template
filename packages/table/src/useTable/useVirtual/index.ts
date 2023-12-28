@@ -3,14 +3,14 @@ import { BodyResizeObserver } from '../useBodyResizeObserver';
 import { BodyScrollObserver } from '../useBodyScrollObserver';
 import { useVirtualizer } from '@tanstack/react-virtual';
 import { HandledProps } from '../useHandleProps';
-import { Column } from '../../type';
+import { TableColumn } from '../../type';
 import { RefObject } from 'react';
 
 type Opt<T> = {
     showDataSource: T[];
     defaultWidth: number;
-    sortedColumns: Column<T>[];
     handledProps: HandledProps<T>;
+    sortedColumns: TableColumn<T>[];
     bodyResizeObserver: BodyResizeObserver;
     bodyScrollObserver: BodyScrollObserver;
     bodyRef: RefObject<HTMLDivElement | null>;

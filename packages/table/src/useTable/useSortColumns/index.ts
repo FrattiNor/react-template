@@ -1,4 +1,4 @@
-import { Column } from '../../type';
+import { TableColumn } from '../../type';
 
 const fixedNumMap = {
     left: -1,
@@ -7,7 +7,7 @@ const fixedNumMap = {
 };
 
 type Opt<T> = {
-    columns: Column<T>[];
+    columns: TableColumn<T>[];
 };
 
 const useSortColumns = <T>(opt: Opt<T>) => {

@@ -1,5 +1,5 @@
+import { HandledColumn, TableColumn } from '../../type';
 import { CSSProperties } from 'react';
-import { HandledColumn, Column } from '../../type';
 import { Opt } from './index';
 
 const getHandledColumns = <T>(opt: Opt<T>) => {
@@ -16,7 +16,7 @@ const getHandledColumns = <T>(opt: Opt<T>) => {
     const handledFixedLeftColumns: HandledColumn<T>[] = [];
     const handledFixedRightColumns: HandledColumn<T>[] = [];
 
-    const getSomeProps = (column: Column<T>) => {
+    const getSomeProps = (column: TableColumn<T>) => {
         const flexGrow = resized ? 0 : column.flexGrow ?? defaultFlexGrow;
         const originWidth = Math.round(column.width ?? defaultWidth);
         const width = resizeActiveKey === column.key ? (resizeActiveWidth as number) : horizontalItemSizeCache.get(column.key) ?? originWidth;
