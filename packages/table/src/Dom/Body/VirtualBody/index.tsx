@@ -8,7 +8,6 @@ import { FC } from 'react';
 const VirtualBody: FC = () => {
     const { outerProps, innerProps } = useContext2();
     const { rowKey, rowHeight } = outerProps;
-
     const { horizontalTotalSize, midLeftPadding, midRightPadding } = innerProps;
     const { resized, ping, showDataSource, selectedRowKeysObj, dataSourceLevelMap } = innerProps;
     const { verticalVirtualItems, verticalTotalSize, verticalDistance, verticalMeasureElement } = innerProps;
@@ -48,7 +47,9 @@ const VirtualBody: FC = () => {
         <div className={styles['virtual-body']} style={{ height: verticalTotalSize, width: horizontalTotalSize, paddingTop: verticalDistance }}>
             {verticalVirtualItems.map((verticalItem) => {
                 const currentRowIndex = verticalItem.index;
+                const isFirst = currentRowIndex === 0;
                 const currentRowData = showDataSource?.[currentRowIndex];
+
                 if (currentRowData) {
                     const currentRowKey = currentRowData[rowKey];
 
@@ -57,8 +58,11 @@ const VirtualBody: FC = () => {
                             key={currentRowKey}
                             ref={verticalMeasureElement}
                             data-index={verticalItem.index}
-                            style={{ minHeight: rowHeight }}
-                            className={classNames(styles['body-row'], { [styles['selected']]: selectedRowKeysObj[currentRowKey] })}
+                            style={{ minHeight: isFirst ? rowHeight - 1 : rowHeight }}
+                            className={classNames(styles['body-row'], {
+                                [styles['first']]: isFirst,
+                                [styles['selected']]: selectedRowKeysObj[currentRowKey],
+                            })}
                         >
                             {handledFixedLeftColumns.length > 0 && (
                                 <div className={classNames(styles['body-fixed-left'], { [styles['pinged']]: ping['left'] })}>

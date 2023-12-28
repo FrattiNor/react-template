@@ -17,6 +17,7 @@
         .head-row {
             display: flex;
             position: relative;
+            transition: border-color 0.3s;
             border-bottom: 1px solid var(--table-border);
 
             .head-fixed-left {
@@ -33,6 +34,7 @@
                 .head-v-scroll-bar {
                     flex-shrink: 0;
                     position: relative;
+                    transition: background-color 0.3s;
                     background-color: var(--table-head-bg);
                 }
             }
@@ -47,6 +49,7 @@
                 width: 0;
                 flex-grow: 1;
                 position: relative;
+                transition: background-color 0.3s;
                 background-color: var(--table-head-bg);
             }
 
@@ -56,6 +59,7 @@
                 flex-shrink: 0;
                 position: relative;
                 align-items: center;
+                transition: background-color 0.3s;
                 background-color: var(--table-head-bg);
 
                 .head-cell-str {

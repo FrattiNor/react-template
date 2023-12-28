@@ -1,8 +1,9 @@
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
+import Table, { TableRef, Theme } from '@pkg/table';
 import { useMemo, useRef, useState } from 'react';
-import Table, { TableRef } from '@pkg/table';
 import { columns, columns2 } from './utils';
-import { Switch, Button } from 'antd';
+import styles from './App.module.less';
+import { Button } from 'antd';
 import useFps from './useFps';
 
 type Item = {
@@ -15,8 +16,10 @@ const DemoTable = () => {
     useFps();
     const ref = useRef<TableRef>(null);
     const [count, setCount] = useState(100);
+    const [empty, setEmpty] = useState(false);
     const [loading, setLoading] = useState(false);
     const [columnsFlag, setColumnsFlag] = useState(1);
+    const [theme, setTheme] = useState<Theme>('light');
 
     const columns3: any[] = useMemo(() => {
         return Array(100)
@@ -78,66 +81,38 @@ const DemoTable = () => {
         setColumnsFlag((f) => f + 1);
     };
 
-    // useEffect(() => {
-    //     if (query.data) {
-    //         const start1 = new Date().valueOf();
-    //         for (let i = 0; i < 10000; i++) {
-    //             const res = [...(query.data || [])];
-    //         }
-    //         console.log('type1', new Date().valueOf() - start1);
-
-    //         const start2 = new Date().valueOf();
-    //         for (let i = 0; i < 10000; i++) {
-    //             const res = [];
-    //             res.push(...(query.data || []));
-    //         }
-    //         console.log('type2', new Date().valueOf() - start2);
-
-    //         const obj: Record<string, any> = {};
-    //         const start3 = new Date().valueOf();
-    //         for (let i = 0; i < 10000; i++) {
-    //             query.data.forEach((item) => {
-    //                 obj[item.id] = item;
-    //             });
-    //         }
-    //         console.log('type3', new Date().valueOf() - start3);
-
-    //         const start4 = new Date().valueOf();
-    //         for (let i = 0; i < 10000; i++) {
-    //             const obj2 = { ...obj };
-    //         }
-    //         console.log('type4', new Date().valueOf() - start4);
-    //     }
-    // }, [query.data]);
+    const changeTheme = () => {
+        setTheme((t) => (t === 'light' ? 'dark' : 'light'));
+    };
 
     return (
-        <div style={{ width: '100%', height: '100%', backgroundColor: '#1f1f1f' }}>
+        <div className={styles[theme]} style={{ width: '100%', height: '100%' }}>
             <div style={{ padding: 64 }}>
                 <div style={{ padding: '24px 24px 0 24px', width: 900 }}>
-                    <Switch checked={loading} onChange={setLoading} />
-                    <Button
-                        onClick={scroll}
-                        style={{
-                            marginLeft: 16,
-                            boxShadow: '0 3px 6px -4px rgba(0,0,0,0.48), 0 6px 16px 0 rgba(0,0,0,0.32), 0 9px 28px 8px rgba(0,0,0,0.2)',
-                        }}
-                    >
-                        ScrollTo
+                    <Button onClick={scroll}>Scroll</Button>
+                    <Button onClick={() => setLoading((e) => !e)} style={{ marginLeft: 16 }}>
+                        Loading
+                    </Button>
+                    <Button onClick={() => setEmpty((e) => !e)} style={{ marginLeft: 16 }}>
+                        Empty
                     </Button>
                     <Button onClick={reload} style={{ marginLeft: 16 }}>
-                        Reload
+                        Count
                     </Button>
                     <Button onClick={height} style={{ marginLeft: 16 }}>
                         Columns
+                    </Button>
+                    <Button onClick={changeTheme} style={{ marginLeft: 16 }}>
+                        Theme
                     </Button>
                 </div>
                 <div style={{ height: 400, width: 900, padding: 24 }}>
                     <Table
                         ref={ref}
                         rowKey="id"
-                        // key={`${query.isFetching}`}
-                        dataSource={query.data || []}
+                        theme={theme}
                         loading={query.isFetching || loading}
+                        dataSource={empty ? [] : query.data || []}
                         columns={(columnsMap as any)[`${columnsFlag % 3}` as any] as any}
                         rowSelection={{
                             fixed: 'left',
