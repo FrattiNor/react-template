@@ -2,9 +2,11 @@ import { CSSProperties, ReactNode, RefObject } from 'react';
 
 export type AnyObj = Record<string, any>;
 
-export type Fixed = 'left' | 'right' | false;
+export type Fixed = 'left' | 'right' | 'default';
 
 export type Align = 'left' | 'right' | 'center';
+
+export type Theme = 'light' | 'dark';
 
 export type Column<T> = {
     key: string;
@@ -14,7 +16,6 @@ export type Column<T> = {
     resize?: boolean;
     title: ReactNode;
     flexGrow?: number;
-    hiddenDivider?: boolean;
     render?: (item: T, index: number) => ReactNode;
 };
 
@@ -23,19 +24,19 @@ export type RowSelection<T> = {
     width?: number;
     selectedRowKeys?: (string | number)[];
     onChange?: (v: (string | number)[]) => void;
-    getCheckboxProps?: (item: T, index: number) => { disabled: boolean };
+    getCheckboxProps?: (item: T) => { disabled: boolean };
 };
 
 export type Expandable = {
     fixed?: Fixed;
     width?: number;
     childrenColumnName?: string;
-    defaultExpandAllRows?: boolean;
     expandedRowKeys?: (string | number)[];
     onChange?: (v: (string | number)[]) => void;
 };
 
 export type TableProps<T> = {
+    theme?: Theme;
     rowKey: keyof T;
     dataSource?: T[];
     loading?: boolean;
@@ -46,13 +47,9 @@ export type TableProps<T> = {
     rowSelection?: RowSelection<T>;
 };
 
-export type HandledColumn<T> = Omit<Column<T>, 'width' | 'flexGrow' | 'align'> & {
-    index: number;
+export type HandledColumn<T> = Omit<Column<T>, 'width' | 'flexGrow'> & {
     width: number;
-    pinged?: boolean;
-    originWidth: number;
-    bodyStyle: CSSProperties;
-    headStyle: CSSProperties;
+    index: number;
     measureStyle: CSSProperties;
 };
 

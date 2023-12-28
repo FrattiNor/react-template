@@ -8,3 +8,4 @@ const Table2: FC = () => {
 };
 
 export default Context2Hoc(Table2);
+export * from './type';

@@ -1,9 +1,8 @@
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
 import { useMemo, useRef, useState } from 'react';
-import { TableRef } from '@pkg/table/src/type';
+import Table, { TableRef } from '@pkg/table';
 import { columns, columns2 } from './utils';
 import { Switch, Button } from 'antd';
-import Table from '@pkg/table2';
 import useFps from './useFps';
 
 type Item = {
@@ -142,9 +141,11 @@ const DemoTable = () => {
                         columns={(columnsMap as any)[`${columnsFlag % 3}` as any] as any}
                         rowSelection={{
                             fixed: 'left',
-                            getCheckboxProps: (_, index) => ({
-                                disabled: index === 2,
-                            }),
+                            getCheckboxProps: (record) => {
+                                return {
+                                    disabled: record.id === '1',
+                                };
+                            },
                         }}
                         expandable={{
                             fixed: 'left',

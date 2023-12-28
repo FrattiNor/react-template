@@ -1,18 +1,14 @@
 import { ResizeWidth } from '../useResizeWidth';
+import { VirtualCore } from '../useVirtual';
 import getHandledColumns from './utils';
 import { Column } from '../../type';
 
-type Range = { startIndex: number; endIndex: number } | null;
-
 export type Opt<T> = {
+    virtual: VirtualCore;
     defaultWidth: number;
-    horizontalRange: Range;
     defaultFlexGrow: number;
-    vScrollBarWidth: number;
     resizeWidth: ResizeWidth;
-    totalColumns: Column<T>[];
-    ping: Record<string, number>;
-    horizontalItemSizeCache: Map<number | string, number>;
+    sortedColumns: Column<T>[];
 };
 
 // 可以利用Table元素获取宽度

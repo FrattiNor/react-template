@@ -6,11 +6,11 @@ import Empty from './Empty';
 import { FC } from 'react';
 
 const Body: FC = () => {
-    const { bodyRef, newProps } = useContext2();
-    const { isEmpty } = newProps;
+    const { bodyRef, innerProps } = useContext2();
+    const { isEmpty, bodyOverflowX } = innerProps;
 
     return (
-        <div className={styles['body']} ref={bodyRef}>
+        <div className={styles['body']} ref={bodyRef} style={{ overflowX: bodyOverflowX }}>
             <Measure />
             {isEmpty && <Empty />}
             {!isEmpty && <VirtualBody />}

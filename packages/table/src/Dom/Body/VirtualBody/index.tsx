@@ -1,34 +1,54 @@
 import { useContext2 } from '../../../Context2';
-import { notEmpty } from '@pkg/utils/src/empty';
+import { notEmpty } from '../../../utils/empty';
+import { HandledColumn } from '../../../type';
 import styles from './index.module.less';
 import classNames from 'classnames';
 import { FC } from 'react';
 
 const VirtualBody: FC = () => {
-    const { newProps, innerProps } = useContext2();
-    const { rowKey, rowHeight } = newProps;
-    const { resized, selectedRowKeysObj, showDataSource } = innerProps;
-    const { handledColumns, hiddenFixedHandledLeftColumns, hiddenFixedHandledRightColumns } = innerProps;
+    const { outerProps, innerProps } = useContext2();
+    const { rowKey, rowHeight } = outerProps;
+
+    const { horizontalTotalSize, midLeftPadding, midRightPadding } = innerProps;
+    const { resized, ping, showDataSource, selectedRowKeysObj, dataSourceLevelMap } = innerProps;
     const { verticalVirtualItems, verticalTotalSize, verticalDistance, verticalMeasureElement } = innerProps;
-    const { horizontalVirtualItems, horizontalTotalSize, horizontalPaddingLeft, horizontalPaddingRight } = innerProps;
-    const renderItems = [...hiddenFixedHandledLeftColumns, ...horizontalVirtualItems, ...hiddenFixedHandledRightColumns];
+    const { handledColumns, handledFixedLeftColumns, handledFixedRightColumns, handledMidColumns } = innerProps;
+
+    const renderItem = <T extends Record<string, any>>(
+        column: HandledColumn<T>,
+        currentRowData: T,
+        currentRowIndex: number,
+        currentRowKey: string,
+    ) => {
+        const lastColumn = handledColumns[column.index - 1];
+        const isAfterExpandable = lastColumn?.key === 'table-row-expandable';
+
+        const { key, render, width, align } = column;
+        const cellValue = notEmpty(render ? render(currentRowData, currentRowIndex) : currentRowData[key]);
+        const isStr = typeof cellValue === 'string' || typeof cellValue === 'number';
+        const cellTitle = isStr ? `${cellValue}` : '';
+        const paddingLeft = isAfterExpandable ? (dataSourceLevelMap[currentRowKey] ?? 0) * 16 : 0;
+
+        return (
+            <div key={key} title={cellTitle} className={classNames(styles['body-cell'])} style={{ width, textAlign: align }}>
+                {isStr ? (
+                    <div className={styles['body-cell-str']} style={{ paddingLeft }}>
+                        {cellValue}
+                    </div>
+                ) : (
+                    <div className={styles['body-cell-block']} style={{ paddingLeft }}>
+                        {cellValue}
+                    </div>
+                )}
+            </div>
+        );
+    };
 
     return (
-        <div
-            className={styles['virtual-body']}
-            style={{
-                height: verticalTotalSize,
-                width: horizontalTotalSize,
-                paddingTop: verticalDistance,
-                transform: `translate3d(0, 0, 0)`,
-                paddingLeft: horizontalPaddingLeft,
-                paddingRight: horizontalPaddingRight,
-            }}
-        >
+        <div className={styles['virtual-body']} style={{ height: verticalTotalSize, width: horizontalTotalSize, paddingTop: verticalDistance }}>
             {verticalVirtualItems.map((verticalItem) => {
                 const currentRowIndex = verticalItem.index;
                 const currentRowData = showDataSource?.[currentRowIndex];
-
                 if (currentRowData) {
                     const currentRowKey = currentRowData[rowKey];
 
@@ -36,53 +56,32 @@ const VirtualBody: FC = () => {
                         <div
                             key={currentRowKey}
                             ref={verticalMeasureElement}
-                            style={{ minHeight: rowHeight }}
                             data-index={verticalItem.index}
+                            style={{ minHeight: rowHeight }}
                             className={classNames(styles['body-row'], { [styles['selected']]: selectedRowKeysObj[currentRowKey] })}
                         >
-                            {renderItems.map((item) => {
-                                const column = handledColumns[item.index];
-                                const lastColumn = handledColumns[item.index - 1];
-                                const isAfterExpandable = lastColumn?.key === 'table-row-expandable';
-
-                                if (column) {
-                                    const { key, render, bodyStyle, fixed, pinged } = column;
-                                    const cellValue = notEmpty(render ? render(currentRowData, currentRowIndex) : currentRowData[key]);
-                                    const isStr = typeof cellValue === 'string' || typeof cellValue === 'number';
-                                    const cellTitle = isStr ? `${cellValue}` : '';
-                                    const cellInner = isStr ? <div className={styles['body-cell-str']}>{cellValue}</div> : cellValue;
-
-                                    const xIndex = typeof currentRowData['xIndex'] === 'number' ? currentRowData['xIndex'] : 0;
-                                    const paddingLeft = isAfterExpandable ? xIndex * 16 : 0;
-                                    const cellInner2 =
-                                        paddingLeft > 0 ? (
-                                            <div className={styles['body-cell-expandable']}>
-                                                <div className={styles['body-cell-expandable-inner']} style={{ paddingLeft }}>
-                                                    {cellInner}
-                                                </div>
-                                            </div>
-                                        ) : (
-                                            cellInner
-                                        );
-
-                                    return (
-                                        <div
-                                            key={key}
-                                            title={cellTitle}
-                                            style={bodyStyle}
-                                            className={classNames(styles['body-cell'], {
-                                                [styles[`fixed-${fixed}`]]: !!fixed,
-                                                [styles[`pinged`]]: pinged,
-                                                [styles[`shadow`]]: true,
-                                            })}
-                                        >
-                                            {cellInner2}
-                                        </div>
-                                    );
-                                }
-                            })}
-
-                            {resized && <div className={styles['body-cell-other']} style={{ width: 0, flexGrow: 1 }} />}
+                            {handledFixedLeftColumns.length > 0 && (
+                                <div className={classNames(styles['body-fixed-left'], { [styles['pinged']]: ping['left'] })}>
+                                    {handledFixedLeftColumns.map((column) => {
+                                        return renderItem(column, currentRowData, currentRowIndex, currentRowKey);
+                                    })}
+                                </div>
+                            )}
+                            {handledMidColumns.length > 0 && (
+                                <div className={styles['body-mid']} style={{ paddingLeft: midLeftPadding, paddingRight: midRightPadding }}>
+                                    {handledMidColumns.map((column) => {
+                                        return renderItem(column, currentRowData, currentRowIndex, currentRowKey);
+                                    })}
+                                </div>
+                            )}
+                            {handledFixedRightColumns.length > 0 && (
+                                <div className={classNames(styles['body-fixed-right'], { [styles['pinged']]: ping['right'] })}>
+                                    {handledFixedRightColumns.map((column) => {
+                                        return renderItem(column, currentRowData, currentRowIndex, currentRowKey);
+                                    })}
+                                </div>
+                            )}
+                            {resized && <div className={styles['body-seize-a-seat']} />}
                         </div>
                     );
                 }

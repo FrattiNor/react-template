@@ -1,16 +1,16 @@
-import { observeElementRect, observeElementOffset } from './utils';
+import { observeElementRect, observeElementOffset, measureElement } from './utils';
 import { BodyResizeObserver } from '../useBodyResizeObserver';
 import { BodyScrollObserver } from '../useBodyScrollObserver';
 import { useVirtualizer } from '@tanstack/react-virtual';
+import { HandledProps } from '../useHandleProps';
 import { Column } from '../../type';
 import { RefObject } from 'react';
 
-type Opt<T extends Record<string, any>> = {
-    rowKey: keyof T;
-    dataSource?: T[];
-    rowHeight: number;
+type Opt<T> = {
+    showDataSource: T[];
     defaultWidth: number;
-    totalColumns: Column<T>[];
+    sortedColumns: Column<T>[];
+    handledProps: HandledProps<T>;
     bodyResizeObserver: BodyResizeObserver;
     bodyScrollObserver: BodyScrollObserver;
     bodyRef: RefObject<HTMLDivElement | null>;
@@ -18,18 +18,17 @@ type Opt<T extends Record<string, any>> = {
 
 type ItemSizeCache = Map<number | string, number>;
 
-const useVirtual = <T extends Record<string, any>>(opt: Opt<T>) => {
-    const { dataSource, totalColumns, rowKey, bodyRef, defaultWidth, rowHeight } = opt;
-    const { bodyResizeObserver, bodyScrollObserver } = opt;
+const useVirtual = <T>(opt: Opt<T>) => {
+    const { bodyRef, sortedColumns, showDataSource, defaultWidth, handledProps, bodyResizeObserver, bodyScrollObserver } = opt;
+    const { rowKey, rowHeight } = handledProps;
 
     // 竖向虚拟
     const verticalVirtualizer = useVirtualizer({
-        // debug: true,
-        overscan: 1,
+        overscan: 0,
         estimateSize: () => rowHeight,
-        count: dataSource?.length || 0,
+        count: showDataSource?.length || 0,
         getScrollElement: () => bodyRef.current,
-        getItemKey: (index) => dataSource?.[index]?.[rowKey] ?? index,
+        getItemKey: (index) => (showDataSource?.[index]?.[rowKey] as string) ?? index,
         observeElementRect: observeElementRect('vRect', bodyResizeObserver),
         observeElementOffset: observeElementOffset('vOffset', bodyScrollObserver),
         scrollToFn: () => {
@@ -41,13 +40,13 @@ const useVirtual = <T extends Record<string, any>>(opt: Opt<T>) => {
 
     // 横向虚拟
     const horizontalVirtualizer = useVirtualizer({
-        // debug: true,
         overscan: 0,
         horizontal: true,
-        count: totalColumns.length,
+        count: sortedColumns.length,
+        measureElement: measureElement,
         getScrollElement: () => bodyRef.current,
-        getItemKey: (index) => totalColumns[index].key,
-        estimateSize: (index) => Math.round(totalColumns[index].width ?? defaultWidth),
+        getItemKey: (index) => sortedColumns[index].key,
+        estimateSize: (index) => Math.round(sortedColumns[index].width ?? defaultWidth),
         observeElementRect: observeElementRect('hRect', bodyResizeObserver),
         observeElementOffset: observeElementOffset('hOffset', bodyScrollObserver),
         scrollToFn: () => {
@@ -75,9 +74,7 @@ const useVirtual = <T extends Record<string, any>>(opt: Opt<T>) => {
         verticalMeasureElement,
 
         horizontalRange,
-        // horizontalMeasure,
         horizontalDistance,
-        // horizontalTotalSize,
         horizontalVirtualItems,
         horizontalMeasureElement,
         horizontalItemSizeCache,

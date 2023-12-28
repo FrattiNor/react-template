@@ -17,7 +17,7 @@ const ResizableTitle: FC<Props> = (props) => {
     const active = resizeActiveKey === cellKey;
 
     return (
-        <div title={title} style={style} className={classNames(styles['resize-head-cell'], className, { [styles['active']]: active })}>
+        <div title={title} style={style} className={classNames(className, styles['resize-head-cell'], { [styles['active']]: active })}>
             {children}
             <span onMouseDown={onResizeStart(cellKey)} className={styles['resizable-handle']} />
         </div>

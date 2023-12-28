@@ -19,6 +19,37 @@
             position: relative;
             border-bottom: 1px solid var(--table-border);
 
+            .head-fixed-left {
+                .fixed-left();
+                display: flex;
+                z-index: 2;
+            }
+
+            .head-fixed-right {
+                .fixed-right();
+                display: flex;
+                z-index: 3;
+
+                .head-v-scroll-bar {
+                    flex-shrink: 0;
+                    position: relative;
+                    background-color: var(--table-head-bg);
+                }
+            }
+
+            .head-mid {
+                position: relative;
+                display: flex;
+                z-index: 1;
+            }
+
+            .head-seize-a-seat {
+                width: 0;
+                flex-grow: 1;
+                position: relative;
+                background-color: var(--table-head-bg);
+            }
+
             .head-cell {
                 display: flex;
                 padding: 0 8px;
@@ -27,26 +58,10 @@
                 align-items: center;
                 background-color: var(--table-head-bg);
 
-                &::before {
-                    top: 30%;
-                    right: 0;
-                    width: 1px;
-                    height: 40%;
-                    content: '';
-                    position: absolute;
-                    background-color: var(--table-border);
-                }
-
-                &.hidden-divider::before,
-                &:last-child::before {
-                    display: none;
-                }
-
-                & > * {
-                    flex-shrink: 0;
-                }
-
                 .head-cell-str {
+                    width: 100%;
+                    flex-shrink: 0;
+                    min-width: 100%;
                     max-width: 100%;
                     overflow: hidden;
                     font-weight: 600;
@@ -54,13 +69,19 @@
                     white-space: nowrap;
                     text-overflow: ellipsis;
                 }
-            }
 
-            .head-cell-other {
-                z-index: 98;
-                flex-shrink: 0;
-                position: relative;
-                background-color: var(--table-head-bg);
+                .head-cell-block {
+                    width: 100%;
+                    font-size: 0;
+                    flex-shrink: 0;
+                    min-width: 100%;
+                    max-width: 100%;
+                    position: relative;
+
+                    & > * {
+                        font-size: var(--table-font-size);
+                    }
+                }
             }
         }
     }

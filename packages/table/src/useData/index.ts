@@ -1,12 +1,11 @@
 import useBodyResizeObserver from './useBodyResizeObserver';
 import useBodyScrollObserver from './useBodyScrollObserver';
 import useCalcScrollBarWidth from './useCalcScrollBarWidth';
-import useChangeScrollTop from './useChangeScrollTop';
 import useHandleColumns from './useHandleColumns';
 import useRowSelection from './useRowSelection';
 import useSortColumns from './useSortColumns';
-import useHandleProps from './useHandleProps';
 import useResizeWidth from './useResizeWidth';
+import useHandleProps from './useHandleProps';
 import { AnyObj, TableProps } from '../type';
 import useExpandable from './useExpandable';
 import useCalcPing from './useCalcPing';
@@ -16,26 +15,28 @@ import { useRef } from 'react';
 const useData = <T extends AnyObj>(props: TableProps<T>) => {
     const defaultWidth = 150;
     const defaultFlexGrow = 1;
+    const defaultLineHeight = 37;
+    const defaultAutoScrollTop = true;
     const bodyRef = useRef<HTMLDivElement>(null);
     const headRef = useRef<HTMLDivElement>(null);
 
-    // props
-    const { columns, dataSource, newProps } = useHandleProps(props);
-    const { rowKey, rowSelection, autoScrollTop, rowHeight, expandable } = newProps;
-
-    // auto scroll top
-    useChangeScrollTop({ dataSource, autoScrollTop, bodyRef });
+    // props and auto scrollTop
+    const { handledProps, isEmpty } = useHandleProps(props, {
+        bodyRef,
+        defaultLineHeight,
+        defaultAutoScrollTop,
+    });
 
     // 增加展开
-    const { totalDataSource, showDataSource, expandableColumns } = useExpandable({ rowKey, expandable, dataSource });
+    const { totalDataSource, showDataSource, dataSourceLevelMap, expandableColumns } = useExpandable({ handledProps });
 
     // 增加多选
-    const { selectedRowKeysObj, rowSelectionColumns } = useRowSelection({ rowKey, rowSelection, dataSource: totalDataSource });
+    const { selectedRowKeysObj, rowSelectionColumns } = useRowSelection({ handledProps, totalDataSource });
 
-    // 整合后的 columns
-    const totalColumns = useSortColumns([...rowSelectionColumns, ...expandableColumns, ...columns]);
+    //  整合后排序的 columns
+    const sortedColumns = useSortColumns({ columns: [...rowSelectionColumns, ...expandableColumns, ...handledProps.columns] });
 
-    // title resize
+    //  title resize
     const resizeWidth = useResizeWidth();
 
     // ping
@@ -60,41 +61,43 @@ const useData = <T extends AnyObj>(props: TableProps<T>) => {
 
     // virtual table core
     const virtual = useVirtual({
-        rowKey,
         bodyRef,
-        rowHeight,
+        handledProps,
         defaultWidth,
-        totalColumns,
+        sortedColumns,
+        showDataSource,
         bodyResizeObserver,
         bodyScrollObserver,
-        dataSource: showDataSource,
     });
 
     // handle columns
     const handledColumns = useHandleColumns({
-        ping,
+        virtual,
         resizeWidth,
         defaultWidth,
-        totalColumns,
+        sortedColumns,
         defaultFlexGrow,
-        vScrollBarWidth,
-        horizontalRange: virtual.horizontalRange,
-        horizontalItemSizeCache: virtual.horizontalItemSizeCache,
     });
 
     const innerProps = {
         ...virtual,
         ...resizeWidth,
         ...handledColumns,
+
+        ping,
+        isEmpty,
         showDataSource,
         vScrollBarWidth,
         selectedRowKeysObj,
+        dataSourceLevelMap,
     };
+
+    const outerProps = handledProps;
 
     return {
         bodyRef,
         headRef,
-        newProps,
+        outerProps,
         innerProps,
     };
 };

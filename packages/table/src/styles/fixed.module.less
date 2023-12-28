@@ -2,7 +2,7 @@
     left: 0;
     position: sticky !important;
 
-    &.shadow::after {
+    &::after {
         top: 0;
         width: 0;
         left: 100%;
@@ -13,7 +13,7 @@
         transition: box-shadow 0.3s;
     }
 
-    &.pinged.shadow::after {
+    &.pinged::after {
         width: 30px;
         box-shadow: inset 10px 0 8px -8px var(--table-ping-shadow);
     }
@@ -23,7 +23,7 @@
     right: 0;
     position: sticky !important;
 
-    &.shadow::after {
+    &::after {
         top: 0;
         width: 0;
         right: 100%;
@@ -34,7 +34,7 @@
         transition: box-shadow 0.3s;
     }
 
-    &.pinged.shadow::after {
+    &.pinged::after {
         width: 30px;
         box-shadow: inset -10px 0 8px -8px var(--table-ping-shadow);
     }
