@@ -1,5 +1,6 @@
 /* eslint-disable react-refresh/only-export-components */
 import { FC, createContext, forwardRef, useContext, useImperativeHandle, ReactNode } from 'react';
+import { useTableDataContext } from './TableDataContext';
 import { AnyObj, TableProps, TableRef } from './type';
 import useTable from './useTable';
 
@@ -14,8 +15,11 @@ export const TableContextHoc = (Component: FC) => {
     const NextComponent: NextComponentType = forwardRef((props, ref) => {
         const value = useTable(props);
 
+        const dataContext = useTableDataContext();
+        const tableRef = ref ?? dataContext.tableRef;
+
         useImperativeHandle(
-            ref,
+            tableRef,
             () => ({
                 headElement: value.headRef,
                 bodyElement: value.bodyRef,

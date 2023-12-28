@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-shadow */
+import { useTableDataContext } from '../../TableDataContext';
 import { useEffect, useMemo, useState } from 'react';
 import { HandledProps } from '../useHandleProps';
 import { TableColumn } from '../../type';
@@ -18,8 +19,12 @@ const useRowSelection = <T,>(opt: Opt<T>) => {
 
     const rowSelectionColumns: TableColumn<T>[] = [];
     const selectedRowKeysObj: Record<string, true> = {};
-    const [_selectedRowKeys, _setSelectedRowKeys] = useState<string[]>([]);
     const titleKey = useMemo(() => `${new Date().valueOf()}`, [totalDataSource]);
+
+    const dataContext = useTableDataContext();
+    const [__selectedRowKeys, __setSelectedRowKeys] = useState<string[]>([]);
+    const _selectedRowKeys = dataContext?.selectedRowKeys ?? __selectedRowKeys;
+    const _setSelectedRowKeys = dataContext?.setSelectedRowKeys ?? __setSelectedRowKeys;
 
     const width = typeof rowSelection !== 'boolean' ? rowSelection?.width ?? 42 : 42;
     const fixed = typeof rowSelection !== 'boolean' ? rowSelection?.fixed ?? 'left' : 'left';

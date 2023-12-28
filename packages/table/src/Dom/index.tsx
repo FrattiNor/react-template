@@ -7,9 +7,9 @@ import { FC } from 'react';
 import Head from './Head';
 import Body from './Body';
 
-const Table2: FC = () => {
+const Table: FC = () => {
     const { outerProps } = useTableContext();
-    const { theme = 'light' } = outerProps;
+    const { theme } = outerProps;
 
     return (
         <div className={classNames(styles['table'], styles[theme])}>
@@ -21,4 +21,4 @@ const Table2: FC = () => {
     );
 };
 
-export default Table2;
+export default Table;
