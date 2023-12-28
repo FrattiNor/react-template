@@ -17,9 +17,14 @@ const useExpandable = <T,>(opt: Opt<T>) => {
     const expandedRowKeys = expandable?.expandedRowKeys ?? _expandedRowKeys;
     const setExpandedRowKeys = expandable?.onChange ?? _setExpandedRowKeys;
 
-    let calcObj = false;
     const expandedKeysObj: Record<string, boolean> = {};
     const childrenColumnName = expandable?.childrenColumnName ?? 'children';
+
+    if (expandable) {
+        expandedRowKeys.forEach((key) => {
+            expandedKeysObj[key] = true;
+        });
+    }
 
     const { totalDataSource, showDataSource, dataSourceLevelMap } = useMemo(() => {
         let showDataSource: T[] = [];
@@ -27,13 +32,6 @@ const useExpandable = <T,>(opt: Opt<T>) => {
         const dataSourceLevelMap: Record<string, number> = {};
 
         if (expandable) {
-            if (calcObj === false) {
-                calcObj = true;
-                expandedRowKeys.forEach((key) => {
-                    expandedKeysObj[key] = true;
-                });
-            }
-
             const handleDataSource = (value: T[], opt?: { level: number; parentOpened: boolean }) => {
                 value.forEach((item) => {
                     const key = item[rowKey] as string;
@@ -60,13 +58,6 @@ const useExpandable = <T,>(opt: Opt<T>) => {
 
     if (expandable) {
         const { fixed = 'left', width = 42 } = expandable;
-
-        if (calcObj === false) {
-            calcObj = true;
-            expandedRowKeys.forEach((key) => {
-                expandedKeysObj[key] = true;
-            });
-        }
 
         const renderItem = (item: T) => {
             const key = item[rowKey] as string;

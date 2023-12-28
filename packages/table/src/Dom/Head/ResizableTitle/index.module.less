@@ -1,6 +1,5 @@
 .resize-head-cell {
     .resizable-handle {
-        transition: background-color 0.3s;
         position: absolute;
         cursor: ew-resize;
         height: 100%;
@@ -15,6 +14,7 @@
     }
 
     &.active .resizable-handle {
+        transition: background-color 0.3s;
         background-color: var(--table-resize-active);
     }
 }

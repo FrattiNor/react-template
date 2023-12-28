@@ -122,9 +122,9 @@ const DemoTable = () => {
                                 };
                             },
                         }}
-                        // expandable={{
-                        //     fixed: 'left',
-                        // }}
+                        expandable={{
+                            fixed: 'left',
+                        }}
                     />
                 </div>
             </div>

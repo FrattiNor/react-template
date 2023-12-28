@@ -1,7 +1,8 @@
+/* eslint-disable @typescript-eslint/no-shadow */
 import { HandledProps } from '../useHandleProps';
+import { useMemo, useState } from 'react';
 import { Column } from '../../type';
 import Checkbox from './Checkbox';
-import { useState } from 'react';
 
 type Opt<T> = {
     totalDataSource?: T[];
@@ -17,34 +18,43 @@ const useRowSelection = <T,>(opt: Opt<T>) => {
 
     const rowSelectionColumns: Column<T>[] = [];
     const selectedRowKeysObj: Record<string, true> = {};
-    const dataSourceSelectedRowKeysObj: Record<string, true> = {};
 
+    //
     if (rowSelection) {
-        const { width = 42, fixed = 'left', getCheckboxProps } = rowSelection;
-
-        const allCouldCheckRowKeys: (string | number)[] = [];
-        const allDatasourceCheckedRowKeys: (string | number)[] = [];
-
         selectedRowKeys.forEach((key) => {
             selectedRowKeysObj[key] = true;
         });
+    }
 
-        (totalDataSource || []).forEach((item) => {
-            let disabled = false;
-            const key = item[rowKey] as string;
-            if (getCheckboxProps) {
-                disabled = getCheckboxProps(item).disabled;
-            }
-            if (selectedRowKeysObj[key]) {
-                dataSourceSelectedRowKeysObj[key] = true;
-            }
-            if (disabled !== true) {
-                allCouldCheckRowKeys.push(key);
-                if (selectedRowKeysObj[key]) {
-                    allDatasourceCheckedRowKeys.push(key);
+    //
+    const { allCouldCheckRowKeys, allDatasourceCheckedRowKeys } = useMemo(() => {
+        const allCouldCheckRowKeys: (string | number)[] = [];
+        const allDatasourceCheckedRowKeys: (string | number)[] = [];
+
+        if (rowSelection) {
+            const { getCheckboxProps } = rowSelection;
+
+            (totalDataSource || []).forEach((item) => {
+                let disabled = false;
+                const key = item[rowKey] as string;
+                if (getCheckboxProps) {
+                    disabled = getCheckboxProps(item)?.disabled;
                 }
-            }
-        });
+                if (disabled !== true) {
+                    allCouldCheckRowKeys.push(key);
+                    if (selectedRowKeysObj[key]) {
+                        allDatasourceCheckedRowKeys.push(key);
+                    }
+                }
+            });
+        }
+
+        return { allCouldCheckRowKeys, allDatasourceCheckedRowKeys };
+    }, [rowSelection, selectedRowKeys, totalDataSource]);
+
+    //
+    if (rowSelection) {
+        const { width = 42, fixed = 'left', getCheckboxProps } = rowSelection;
 
         const titleDisabled = allCouldCheckRowKeys.length === 0;
         const titleChecked = !titleDisabled && allCouldCheckRowKeys.length === allDatasourceCheckedRowKeys.length;
@@ -69,12 +79,23 @@ const useRowSelection = <T,>(opt: Opt<T>) => {
             const checkboxProps = getCheckboxProps ? getCheckboxProps(item) : {};
 
             const onChange = (c: boolean) => {
+                const dataSourceSelectedRowKeysObj: Record<string, true> = {};
+
+                (totalDataSource || []).forEach((item) => {
+                    const key = item[rowKey] as string;
+                    if (selectedRowKeysObj[key]) {
+                        dataSourceSelectedRowKeysObj[key] = true;
+                    }
+                });
+
                 const nextRowKeysObj = { ...dataSourceSelectedRowKeysObj };
+
                 if (c) {
                     nextRowKeysObj[key] = true;
                 } else {
                     delete nextRowKeysObj[key];
                 }
+
                 setSelectedRowKeys(Object.keys(nextRowKeysObj));
             };
 
@@ -96,7 +117,6 @@ const useRowSelection = <T,>(opt: Opt<T>) => {
     return {
         selectedRowKeysObj,
         rowSelectionColumns,
-        dataSourceSelectedRowKeysObj,
     };
 };
 
