@@ -1,8 +1,9 @@
 import { useTableContext } from '../../../../TableContext';
-import { getShowValue, getEditValue } from './utils';
-import { CSSProperties, FC } from 'react';
+import { CSSProperties, FC, useRef } from 'react';
 import styles from './index.module.less';
+import { getShowValue } from './utils';
 import classNames from 'classnames';
+import useChange from './useChange';
 
 type Props = {
     rowKey: string;
@@ -11,32 +12,20 @@ type Props = {
     style?: CSSProperties;
     text: string | number;
     textStyle?: CSSProperties;
-    onChange: (v: string) => void;
+    saveEdit: (v: string) => void;
 };
 
-const EditCell: FC<Props> = ({ rowKey, cellKey, text, style, className, onChange }) => {
+const EditCell: FC<Props> = ({ rowKey, cellKey, text, style, className, saveEdit }) => {
     const key = `${cellKey}-${rowKey}`;
     const { innerProps } = useTableContext();
+    const textareaRef = useRef<HTMLTextAreaElement>(null);
     const { cellEdits, setCellEdits, editCellValues, setEditCellValues } = innerProps;
-
-    // 是否编辑
-    const isEdit = cellEdits[key] ?? false;
-
-    // 设置是否编辑
-    const setEdit = (v: boolean) => {
-        setCellEdits((old) => {
-            const nextOld = { ...old };
-            if (v === true) {
-                nextOld[key] = true;
-            } else {
-                delete nextOld[key];
-            }
-            return nextOld;
-        });
-    };
 
     // 当前值，未编辑使用原始值，编辑过使用编辑缓存内的值
     const value = editCellValues[key] ?? text;
+
+    // 是否编辑
+    const isEdit = cellEdits[key] ?? false;
 
     // 设置当前值，将数据存入编辑缓存，避免虚拟列表清掉
     const setValue = (v: string) => {
@@ -46,31 +35,48 @@ const EditCell: FC<Props> = ({ rowKey, cellKey, text, style, className, onChange
         }));
     };
 
-    // 结束编辑
-    const endEdit = (endValue: string) => {
-        setEdit(false);
-        onChange(endValue);
+    // 设置是否编辑
+    const setEdit = (v: boolean) => {
+        setCellEdits((old) => {
+            if (v === true) {
+                return { [key]: true };
+            } else {
+                const nextOld = { ...old };
+                delete nextOld[key];
+                return nextOld;
+            }
+        });
+
+        if (v === true) {
+            window.requestAnimationFrame(() => {
+                if (textareaRef.current) {
+                    textareaRef.current.focus({ preventScroll: true });
+                    textareaRef.current.select();
+                }
+            });
+        }
     };
+
+    // 监听isEdit变更，如果从true -> false, 触发保存
+    useChange(isEdit, (nextEdit) => {
+        if (nextEdit === false) {
+            saveEdit(value);
+        }
+    });
 
     return (
         <div className={className} style={style} title={getShowValue(value)} onDoubleClick={() => setEdit(true)}>
             <div className={classNames(styles['body-cell-edit-str'], { [styles['edit']]: isEdit })}>{getShowValue(value)}</div>
 
-            <div className={classNames(styles['border'], { [styles['edit']]: isEdit })} />
+            {isEdit && <div className={styles['border']} />}
 
             {isEdit && (
                 <textarea
-                    autoFocus
-                    value={getEditValue(value)}
+                    value={value}
+                    ref={textareaRef}
+                    onBlur={() => setEdit(false)}
                     className={styles['textarea']}
-                    onFocus={(e) => e.target.select()}
-                    onBlur={(e) => endEdit(e.target.value)}
                     onChange={(e) => setValue(e.target.value)}
-                    // onKeyDown={(e) => {
-                    //     if (e.key === 'Enter' || e.code === 'Enter' || e.keyCode === 13) {
-                    //         endEdit((e.target as any).value);
-                    //     }
-                    // }}
                 />
             )}
         </div>

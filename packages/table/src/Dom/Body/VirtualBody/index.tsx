@@ -24,7 +24,7 @@ const VirtualBody: FC = () => {
         const isAfterExpandable = lastColumn?.key === 'table-row-expandable';
         const innerStyle = isAfterExpandable ? { paddingLeft: 8 + (dataSourceLevelMap[currentRowKey] ?? 0) * 16 } : undefined;
 
-        const { key, render, width, align, edit, onChange } = column;
+        const { key, render, width, align, edit, saveEdit } = column;
         const cellValue = notEmpty(render ? render(currentRowData, currentRowIndex) : currentRowData[key]);
         const isStr = typeof cellValue === 'string' || typeof cellValue === 'number';
         const cellTitle = isStr ? `${cellValue}` : '';
@@ -41,7 +41,7 @@ const VirtualBody: FC = () => {
                     rowKey={currentRowKey}
                     textStyle={innerStyle}
                     className={cellClassName}
-                    onChange={(v: string) => onChange && onChange(v, currentRowData, currentRowIndex)}
+                    saveEdit={(v: string) => saveEdit && saveEdit(v, currentRowData, currentRowIndex)}
                 />
             );
         }

@@ -27,7 +27,7 @@ export type TableColumn<T> = {
     fixed?: TableFixed;
     align?: TableAlign;
     render?: (item: T, index: number) => ReactNode;
-    onChange?: (value: string, item: T, index: number) => ReactNode;
+    saveEdit?: (value: string, item: T, index: number) => ReactNode;
 };
 
 export type TableRowSelection<T> = {

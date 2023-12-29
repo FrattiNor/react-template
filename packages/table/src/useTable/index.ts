@@ -38,9 +38,6 @@ const useTable = <T extends AnyObj>(props: TableProps<T>) => {
     // 数据源变更回滚顶部
     useChangeScrollTop({ bodyRef, handledProps, sizedDataSource });
 
-    // 编辑格缓存
-    const editStore = useEditStore({ sizedDataSource });
-
     // 增加展开
     const { totalDataSource, showDataSource, dataSourceLevelMap, expandableColumns } = useExpandable({ handledProps, sizedDataSource });
 
@@ -72,6 +69,9 @@ const useTable = <T extends AnyObj>(props: TableProps<T>) => {
         headRef,
         calcPing,
     });
+
+    // 编辑格缓存
+    const editStore = useEditStore({ sizedDataSource, bodyScrollObserver });
 
     // virtual table core
     const virtual = useVirtual({

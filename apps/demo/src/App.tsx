@@ -2,7 +2,7 @@
 import Table, { TableTheme, useTableDataContext, TableDataContextHoc } from '@pkg/table';
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
 import { columns, columns2 } from './utils';
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import styles from './App.module.less';
 import { Button } from 'antd';
 import useFps from './useFps';
@@ -15,9 +15,10 @@ type Item = {
 
 const DemoTable = () => {
     useFps();
+    const [flag, setFlag] = useState(true);
     const dataContext = useTableDataContext();
     const [empty, setEmpty] = useState(false);
-    const [count, setCount] = useState(50000);
+    const [count, setCount] = useState(10000);
     const [loading, setLoading] = useState(false);
     const [columnsFlag, setColumnsFlag] = useState(1);
     const [pagination, setPagination] = useState(true);
@@ -50,7 +51,7 @@ const DemoTable = () => {
         refetchOnReconnect: false,
         refetchOnWindowFocus: false,
         placeholderData: keepPreviousData,
-        queryKey: ['DemoTable', count],
+        queryKey: ['DemoTable', count, flag],
         queryFn: () => {
             return new Promise<Item[]>((res) => {
                 setTimeout(() => {
@@ -59,6 +60,7 @@ const DemoTable = () => {
                             .fill('')
                             .map((_, i) => ({
                                 id: `${i}`,
+                                edit: flag ? '123' : 'xxx',
                                 age: Math.floor(Math.random() * 100),
                                 name: `AAA_${i}`,
                                 children: [
@@ -72,6 +74,12 @@ const DemoTable = () => {
             });
         },
     });
+
+    useEffect(() => {
+        setTimeout(() => {
+            setFlag((f) => !f);
+        }, 10000);
+    }, []);
 
     const scroll = () => {
         dataContext.tableRef.current?.scrollTo({ top: 100, left: 100, behavior: 'smooth' });
@@ -125,7 +133,7 @@ const DemoTable = () => {
                     <Table
                         rowKey="id"
                         theme={theme}
-                        calcRowHeight={90}
+                        // calcRowHeight={16}
                         pagination={pagination}
                         expandable={expandable}
                         rowSelection={rowSelection}
