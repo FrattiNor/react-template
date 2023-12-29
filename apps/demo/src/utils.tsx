@@ -114,9 +114,6 @@ export const columns2 = [
         flexGrow: 1,
         fixed: 'right',
         // align: 'center',
-        render: (_: any, index: number) =>
-            Array(Math.ceil(index % 5))
-                .fill('xxxxxxx')
-                .join('\n'),
+        render: () => Array(Math.ceil(2)).fill('xxxxxxx').join('\n'),
     },
 ];

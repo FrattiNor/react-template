@@ -17,9 +17,12 @@ const DemoTable = () => {
     useFps();
     const dataContext = useTableDataContext();
     const [empty, setEmpty] = useState(false);
-    const [count, setCount] = useState(10000);
+    const [count, setCount] = useState(50000);
     const [loading, setLoading] = useState(false);
     const [columnsFlag, setColumnsFlag] = useState(1);
+    const [pagination, setPagination] = useState(true);
+    const [expandable, setExpandable] = useState(false);
+    const [rowSelection, setRowSelection] = useState(false);
     const [theme, setTheme] = useState<TableTheme>('light');
 
     const columns3: any[] = useMemo(() => {
@@ -75,7 +78,7 @@ const DemoTable = () => {
     };
 
     const reload = () => {
-        setCount((c) => (c === 100 ? 5 : 100));
+        setCount((c) => (c === 5 ? 50000 : 5));
     };
 
     const height = () => {
@@ -86,7 +89,7 @@ const DemoTable = () => {
         setTheme((t) => (t === 'light' ? 'dark' : 'light'));
     };
 
-    console.log(dataContext);
+    // console.log(dataContext);
 
     return (
         <div className={styles[theme]} style={{ width: '100%', height: '100%' }}>
@@ -108,15 +111,24 @@ const DemoTable = () => {
                     <Button onClick={changeTheme} style={{ marginLeft: 16 }}>
                         Theme
                     </Button>
+                    <Button onClick={() => setPagination((v) => !v)} style={{ marginLeft: 16 }}>
+                        pagination
+                    </Button>
+                    <Button onClick={() => setExpandable((v) => !v)} style={{ marginLeft: 16 }}>
+                        expandable
+                    </Button>
+                    <Button onClick={() => setRowSelection((v) => !v)} style={{ marginLeft: 16 }}>
+                        rowSelection
+                    </Button>
                 </div>
                 <div style={{ height: 400, width: 900, padding: 24 }}>
                     <Table
                         rowKey="id"
-                        expandable
-                        pagination
-                        rowSelection
                         theme={theme}
                         calcRowHeight={90}
+                        pagination={pagination}
+                        expandable={expandable}
+                        rowSelection={rowSelection}
                         loading={query.isFetching || loading}
                         dataSource={empty ? undefined : query.data}
                         columns={(columnsMap as any)[`${columnsFlag % 3}` as any] as any}

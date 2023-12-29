@@ -4,9 +4,9 @@ import styles from './index.module.less';
 
 const Pagination = () => {
     const { innerProps } = useTableContext();
-    const { pagination } = innerProps;
+    const { pagination, isEmpty } = innerProps;
 
-    if (pagination === false) {
+    if (pagination === false || isEmpty) {
         return null;
     }
 

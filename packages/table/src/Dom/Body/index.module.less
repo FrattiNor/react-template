@@ -1,6 +1,10 @@
 .body {
     overflow: auto;
     position: relative;
-    transition: border-color 0.3s;
+    // transition: border-color 0.3s;
     border-bottom: 1px solid var(--table-border);
+
+    &.empty {
+        border-bottom: 0;
+    }
 }

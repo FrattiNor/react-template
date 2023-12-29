@@ -1,5 +1,5 @@
-import { getShowValue, getEditValue } from './utils';
 import { useTableContext } from '../../../../TableContext';
+import { getShowValue, getEditValue } from './utils';
 import { CSSProperties, FC } from 'react';
 import styles from './index.module.less';
 import classNames from 'classnames';
@@ -66,11 +66,11 @@ const EditCell: FC<Props> = ({ rowKey, cellKey, text, style, className, onChange
                     onFocus={(e) => e.target.select()}
                     onBlur={(e) => endEdit(e.target.value)}
                     onChange={(e) => setValue(e.target.value)}
-                    onKeyDown={(e) => {
-                        if (e.key === 'Enter' || e.code === 'Enter' || e.keyCode === 13) {
-                            endEdit((e.target as any).value);
-                        }
-                    }}
+                    // onKeyDown={(e) => {
+                    //     if (e.key === 'Enter' || e.code === 'Enter' || e.keyCode === 13) {
+                    //         endEdit((e.target as any).value);
+                    //     }
+                    // }}
                 />
             )}
         </div>

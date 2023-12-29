@@ -1,5 +1,5 @@
+import { useEffect, useMemo, useState } from 'react';
 import { HandledProps } from '../useHandleProps';
-import { useMemo, useState } from 'react';
 
 type Opt<T> = {
     handledProps: HandledProps<T>;
@@ -22,14 +22,21 @@ const usePagination = <T>(opt: Opt<T>) => {
     const pageSize = typeof pagination !== 'boolean' ? pagination?.pageSize ?? _pageSize : _pageSize;
     const onChange = typeof pagination !== 'boolean' ? pagination?.onChange ?? _onChange : _onChange;
 
+    // 数据源变更回到第一页
+    useEffect(() => {
+        _setCurrent(1);
+    }, [dataSource]);
+
     const sizedDataSource = useMemo(() => {
-        if (pagination === false || pagination === undefined) {
-            return dataSource || [];
-        } else if (typeof pagination !== 'boolean' && typeof pagination?.total === 'number') {
-            return dataSource || [];
-        } else {
-            return (dataSource || []).slice(pageSize * (current - 1), pageSize * current);
+        if (pagination) {
+            if (typeof pagination !== 'boolean' && typeof pagination?.total === 'number') {
+                return dataSource || [];
+            } else {
+                return (dataSource || []).slice(pageSize * (current - 1), pageSize * current);
+            }
         }
+
+        return dataSource || [];
     }, [dataSource, current, pageSize, havePagination]);
 
     const handledPagination = pagination
@@ -40,7 +47,7 @@ const usePagination = <T>(opt: Opt<T>) => {
               pageSize,
               onChange,
           }
-        : false;
+        : (false as const);
 
     return {
         sizedDataSource,
