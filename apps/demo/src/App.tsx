@@ -112,23 +112,14 @@ const DemoTable = () => {
                 <div style={{ height: 400, width: 900, padding: 24 }}>
                     <Table
                         rowKey="id"
+                        expandable
+                        pagination
+                        rowSelection
                         theme={theme}
                         calcRowHeight={90}
-                        pagination={{ total: 100 }}
                         loading={query.isFetching || loading}
                         dataSource={empty ? undefined : query.data}
                         columns={(columnsMap as any)[`${columnsFlag % 3}` as any] as any}
-                        rowSelection={{
-                            fixed: 'left',
-                            getCheckboxProps: (record) => {
-                                return {
-                                    disabled: record.id === '1',
-                                };
-                            },
-                        }}
-                        expandable={{
-                            fixed: 'left',
-                        }}
                     />
                 </div>
             </div>

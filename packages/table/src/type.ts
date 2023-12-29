@@ -55,9 +55,9 @@ export type TableProps<T> = {
     columns: TableColumn<T>[];
     calcRowHeight?: number;
     autoScrollTop?: boolean;
-    expandable?: TableExpandable | true;
-    pagination?: TablePagination | false;
-    rowSelection?: TableRowSelection<T> | true;
+    expandable?: TableExpandable | boolean; // 处理boolean
+    pagination?: TablePagination | boolean; // 处理boolean
+    rowSelection?: TableRowSelection<T> | boolean; // 处理boolean
 };
 
 export type HandledColumn<T> = Omit<TableColumn<T>, 'width' | 'flexGrow'> & {
