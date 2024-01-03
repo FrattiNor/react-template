@@ -93,7 +93,7 @@ const DemoTable = () => {
     };
 
     return (
-        <ConfigProvider theme={{ algorithm: theme === 'light' ? antdTheme.defaultAlgorithm : antdTheme.darkAlgorithm }}>
+        <ConfigProvider theme={{ token: { borderRadius: 2 }, algorithm: theme === 'light' ? antdTheme.defaultAlgorithm : antdTheme.darkAlgorithm }}>
             <div className={classNames(themeClassName, applyClassName)} style={{ width: '100%', height: '100%' }}>
                 <div style={{ padding: 64 }}>
                     <div style={{ height: 200, width: 900 }}>
