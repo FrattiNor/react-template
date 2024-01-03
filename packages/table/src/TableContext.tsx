@@ -14,7 +14,6 @@ const TableContext = createContext<TableContextProps<any>>({} as TableContextPro
 export const TableContextHoc = (Component: FC) => {
     const NextComponent: NextComponentType = forwardRef((props, ref) => {
         const value = useTable(props);
-
         const dataContext = useTableDataContext();
         const tableRef = ref ?? dataContext.tableRef;
 

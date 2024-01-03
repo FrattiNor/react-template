@@ -1,7 +1,7 @@
 /* eslint-disable react-refresh/only-export-components */
 import { TableDataContextHoc, useTableDataContext } from './TableDataContext';
 import { TableContextHoc } from './TableContext';
-import Table from './Dom';
+import Table from './Table';
 
 export default TableContextHoc(Table);
 
