@@ -1,4 +1,4 @@
-import AntdPagination, { PaginationProps } from 'antd/lib/pagination';
+import { Pagination as AntdPagination, PaginationProps } from 'antd';
 import { useTableContext } from '../../TableContext';
 import styles from './index.module.less';
 
