@@ -8,14 +8,16 @@ const Loading: FC = () => {
     const { loading } = outerProps;
 
     return (
-        <div className={classNames(styles['loading'], { [styles['active']]: loading === true })}>
+        <div className={classNames(styles['loading-wrapper'], { [styles['active']]: loading === true })}>
             {loading === true && (
-                <div className={styles['dot-position']}>
-                    <div className={styles['dot-wrapper']}>
-                        <div className={styles['dot']} />
-                        <div className={styles['dot']} />
-                        <div className={styles['dot']} />
-                        <div className={styles['dot']} />
+                <div className={styles['loading']}>
+                    <div className={styles['dot-position']}>
+                        <div className={styles['dot-wrapper']}>
+                            <div className={styles['dot']} />
+                            <div className={styles['dot']} />
+                            <div className={styles['dot']} />
+                            <div className={styles['dot']} />
+                        </div>
                     </div>
                 </div>
             )}
