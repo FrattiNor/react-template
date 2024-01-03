@@ -42,7 +42,7 @@ const useExpandable = <T,>(opt: Opt<T>) => {
         if (expandable) {
             const handleDataSource = (value: T[], opt?: { level: number; parentOpened: boolean }) => {
                 value.forEach((item) => {
-                    const key = item[rowKey] as string;
+                    const key = (typeof rowKey === 'function' ? rowKey(item) : item[rowKey]) as string;
                     const opened = expandedKeysObj[key] ?? false;
                     const children = (item as any)[childrenColumnName];
                     const { level = 0, parentOpened = true } = opt || {};
@@ -66,7 +66,7 @@ const useExpandable = <T,>(opt: Opt<T>) => {
 
     if (expandable) {
         const renderItem = (item: T) => {
-            const key = item[rowKey] as string;
+            const key = (typeof rowKey === 'function' ? rowKey(item) : item[rowKey]) as string;
             const children = (item as any)[childrenColumnName];
             const haveChild = Array.isArray(children) && children.length > 0;
             if (haveChild) {

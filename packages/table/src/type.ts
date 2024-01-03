@@ -48,13 +48,13 @@ export type TableExpandable = {
 
 export type TableProps<T> = {
     theme?: TableTheme;
-    rowKey: keyof T;
     dataSource?: T[];
     loading?: boolean;
     rowHeight?: number;
     columns: TableColumn<T>[];
     calcRowHeight?: number;
     autoScrollTop?: boolean;
+    rowKey: keyof T | ((v: T) => string);
     expandable?: TableExpandable | boolean; // 处理boolean
     pagination?: TablePagination | boolean; // 处理boolean
     rowSelection?: TableRowSelection<T> | boolean; // 处理boolean

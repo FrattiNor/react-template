@@ -69,7 +69,7 @@ const VirtualBody: FC = () => {
                 const currentRowData = showDataSource?.[currentRowIndex];
 
                 if (currentRowData) {
-                    const currentRowKey = currentRowData[rowKey];
+                    const currentRowKey = typeof rowKey === 'function' ? rowKey(currentRowData) : currentRowData[rowKey];
 
                     return (
                         <div

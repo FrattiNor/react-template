@@ -37,7 +37,7 @@ const useRowSelection = <T,>(opt: Opt<T>) => {
         const dataSourceSelectedRowKeysObj: Record<string, true> = {};
 
         (totalDataSource || []).forEach((item) => {
-            const key = item[rowKey] as string;
+            const key = (typeof rowKey === 'function' ? rowKey(item) : item[rowKey]) as string;
             if (selectedRowKeysObj[key]) {
                 dataSourceSelectedRowKeysObj[key] = true;
             }
@@ -61,7 +61,7 @@ const useRowSelection = <T,>(opt: Opt<T>) => {
         if (rowSelection) {
             (totalDataSource || []).forEach((item) => {
                 let disabled = false;
-                const key = item[rowKey] as string;
+                const key = (typeof rowKey === 'function' ? rowKey(item) : item[rowKey]) as string;
                 if (getCheckboxProps) {
                     disabled = getCheckboxProps(item)?.disabled;
                 }
@@ -96,7 +96,7 @@ const useRowSelection = <T,>(opt: Opt<T>) => {
         );
 
         const renderItem = (item: T) => {
-            const key = item[rowKey] as any;
+            const key = (typeof rowKey === 'function' ? rowKey(item) : item[rowKey]) as string;
 
             const checked = selectedRowKeysObj[key];
 
@@ -106,7 +106,7 @@ const useRowSelection = <T,>(opt: Opt<T>) => {
                 const dataSourceSelectedRowKeysObj: Record<string, true> = {};
 
                 (totalDataSource || []).forEach((item) => {
-                    const key = item[rowKey] as string;
+                    const key = (typeof rowKey === 'function' ? rowKey(item) : item[rowKey]) as string;
                     if (selectedRowKeysObj[key]) {
                         dataSourceSelectedRowKeysObj[key] = true;
                     }

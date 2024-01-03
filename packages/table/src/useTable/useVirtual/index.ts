@@ -28,9 +28,13 @@ const useVirtual = <T>(opt: Opt<T>) => {
         count: showDataSource?.length || 0,
         getScrollElement: () => bodyRef.current,
         estimateSize: () => calcRowHeight ?? rowHeight,
-        getItemKey: (index) => (showDataSource?.[index]?.[rowKey] as string) ?? index,
         observeElementRect: observeElementRect('vRect', bodyResizeObserver),
         observeElementOffset: observeElementOffset('vOffset', bodyScrollObserver),
+        getItemKey: (index) => {
+            const item = showDataSource?.[index];
+            if (item) return ((typeof rowKey === 'function' ? rowKey(item) : item[rowKey]) as string) ?? index;
+            return index;
+        },
         scrollToFn: () => {
             // 屏蔽掉组件的scrollTo函数
             // 作用为resize时保持item位置不变
