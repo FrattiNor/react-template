@@ -8,7 +8,7 @@
     .body-row {
         display: flex;
         position: relative;
-        border-top: 1px solid var(--table-border);
+        border-top: 1px solid var(--theme-border);
 
         &.first {
             border-top: 0;
@@ -51,7 +51,7 @@
             width: 0;
             flex-grow: 1;
             position: relative;
-            background-color: var(--table-bg);
+            background-color: var(--theme-bg);
         }
 
         .body-cell {
@@ -59,7 +59,7 @@
             flex-shrink: 0;
             position: relative;
             align-items: center;
-            background-color: var(--table-bg);
+            background-color: var(--theme-bg);
 
             .body-cell-str {
                 width: 100%;
@@ -83,7 +83,7 @@
                 position: relative;
 
                 & > * {
-                    font-size: var(--table-font-size);
+                    font-size: var(--theme-font-size);
                 }
             }
         }

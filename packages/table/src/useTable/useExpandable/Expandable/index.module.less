@@ -4,9 +4,9 @@
     cursor: pointer;
     position: relative;
     display: inline-block;
-    background-color: var(--table-bg);
-    border: 1px solid var(--table-border);
-    border-radius: var(--table-border-radius);
+    background-color: var(--theme-bg);
+    border: 1px solid var(--theme-border);
+    border-radius: var(--theme-border-radius);
 
     &::after {
         left: 20%;
@@ -17,7 +17,7 @@
         top: calc(50% - 0.5px);
         transform-origin: 50% 50%;
         transition: transform 0.3s;
-        background-color: var(--table-foreground);
+        background-color: var(--theme-foreground);
     }
 
     &::before {
@@ -29,7 +29,7 @@
         left: calc(50% - 0.5px);
         transform-origin: 50% 50%;
         transition: transform 0.3s;
-        background-color: var(--table-foreground);
+        background-color: var(--theme-foreground);
     }
 
     &.expanded {
