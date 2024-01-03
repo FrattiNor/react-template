@@ -113,6 +113,8 @@ importers:
 
   packages/checkbox: {}
 
+  packages/empty: {}
+
   packages/styles:
     dependencies:
       '@pkg/checkbox':
@@ -131,6 +133,9 @@ importers:
       '@pkg/checkbox':
         specifier: workspace:*
         version: link:../checkbox
+      '@pkg/empty':
+        specifier: workspace:*
+        version: link:../empty
     devDependencies:
       '@tanstack/react-virtual':
         specifier: 3.0.0-beta.68

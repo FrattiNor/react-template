@@ -1,6 +1,6 @@
 {
     "private": true,
-    "name": "@pkg/table",
+    "name": "@pkg/empty",
     "version": "0.0.1",
     "main": "./src/index.tsx",
     "module": "./src/index.tsx",
@@ -9,13 +9,5 @@
         "tslint": "npx tsc --noEmit",
         "eslint": "npx eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0 --fix",
         "lint": "npm run eslint && npm run tslint"
-    },
-    "peerDependencies": {
-        "@pkg/checkbox": "workspace:*",
-        "@pkg/empty": "workspace:*"
-    },
-    "devDependencies": {
-        "@tanstack/react-virtual": "3.0.0-beta.68",
-        "antd": "^5.12.1"
     }
 }

@@ -1,21 +1,15 @@
-.space-occupying {
+.empty-wrapper {
+    overflow: auto;
     position: relative;
-    height: 48px;
-}
 
-.empty {
-    left: 0;
-    overflow: hidden;
-    position: sticky;
-    text-align: center;
-    padding: 0 0 48px 0;
-
-    .empty-image {
-        margin-bottom: 8px;
+    .space-occupying {
+        position: relative;
+        height: 48px;
     }
 
-    .empty-description {
-        transition: color 0.3s;
-        color: var(--table-placeholder-foreground);
+    .empty {
+        left: 0;
+        position: sticky;
+        padding: 0 0 48px 0;
     }
 }
