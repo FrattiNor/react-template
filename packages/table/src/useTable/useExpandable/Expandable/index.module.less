@@ -3,7 +3,6 @@
     height: 17px;
     cursor: pointer;
     position: relative;
-    transition: all 0.3s;
     display: inline-block;
     background-color: var(--table-bg);
     border: 1px solid var(--table-border);
@@ -15,9 +14,9 @@
         content: '';
         width: 60%;
         position: absolute;
-        transition: all 0.3s;
         top: calc(50% - 0.5px);
         transform-origin: 50% 50%;
+        transition: transform 0.3s;
         background-color: var(--table-foreground);
     }
 
@@ -27,9 +26,9 @@
         content: '';
         height: 60%;
         position: absolute;
-        transition: all 0.3s;
         left: calc(50% - 0.5px);
         transform-origin: 50% 50%;
+        transition: transform 0.3s;
         background-color: var(--table-foreground);
     }
 
