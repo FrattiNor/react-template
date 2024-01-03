@@ -12,6 +12,7 @@
     },
     "peerDependencies": {
         "@pkg/checkbox": "workspace:*",
+        "@pkg/theme": "workspace:*",
         "@pkg/table": "workspace:*"
     },
     "devDependencies": {

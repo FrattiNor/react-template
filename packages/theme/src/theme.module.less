@@ -1,4 +1,4 @@
-.light-theme {
+.light {
     --theme-font-size: 14px;
 
     --theme-bg: #fff;
@@ -23,7 +23,7 @@
     --theme-scrollbar-thumb-hover: rgba(0, 0, 0, 0.55); /* 滚动条hover */
 }
 
-.dark-theme {
+.dark {
     --theme-font-size: 14px;
 
     --theme-bg: #1f1f1f; // 主题背景
@@ -46,4 +46,30 @@
     --theme-scrollbar-bg: rgba(255, 255, 255, 0.07); /* 滚动条背景 */
     --theme-scrollbar-thumb: rgba(255, 255, 255, 0.35); /* 滚动条 */
     --theme-scrollbar-thumb-hover: rgba(255, 255, 255, 0.55); /* 滚动条hover */
+}
+
+.apply-theme {
+    color: var(--theme-foreground);
+    background-color: var(--theme-bg);
+    font-size: var(--theme-font-size);
+
+    ::-webkit-scrollbar {
+        width: var(--theme-scrollbar-width);
+        height: var(--theme-scrollbar-width);
+        background-color: var(--theme-scrollbar-bg);
+    }
+
+    ::-webkit-scrollbar-corner {
+        background-color: var(--theme-scrollbar-bg);
+    }
+
+    ::-webkit-scrollbar-thumb {
+        background-color: var(--theme-scrollbar-thumb);
+        border-radius: var(--theme-border-radius);
+    }
+
+    ::-webkit-scrollbar-thumb:hover,
+    ::-webkit-scrollbar-thumb:active {
+        background-color: var(--theme-scrollbar-thumb-hover);
+    }
 }

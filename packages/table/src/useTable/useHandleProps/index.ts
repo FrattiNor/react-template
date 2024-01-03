@@ -1,19 +1,17 @@
-import { TableProps, TableTheme } from '../../type';
+import { TableProps } from '../../type';
 
 type Opt = {
-    defaultTheme: TableTheme;
     defaultLineHeight: number;
     defaultAutoScrollTop: boolean;
 };
 
 const useHandleProps = <T>(props: TableProps<T>, opt: Opt) => {
-    const { defaultAutoScrollTop, defaultLineHeight, defaultTheme } = opt;
+    const { defaultAutoScrollTop, defaultLineHeight } = opt;
 
     const isEmpty = (props.dataSource || [])?.length === 0;
 
     const handledProps = {
         ...props,
-        theme: props.theme ?? defaultTheme,
         rowHeight: typeof props.rowHeight === 'number' ? Math.round(props.rowHeight) : defaultLineHeight,
         autoScrollTop: typeof props.autoScrollTop === 'boolean' ? props.autoScrollTop : defaultAutoScrollTop,
     };

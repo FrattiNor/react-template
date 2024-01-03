@@ -1,4 +1,4 @@
-@import url('../styles/theme.module.less');
+@import url('../theme/theme.module.less');
 
 .table {
     width: 100%;
@@ -13,33 +13,5 @@
 
     * {
         box-sizing: border-box;
-    }
-
-    &.light {
-        .light-theme();
-    }
-
-    &.dark {
-        .dark-theme();
-    }
-
-    ::-webkit-scrollbar {
-        width: var(--table-scrollbar-width);
-        height: var(--table-scrollbar-width);
-        background-color: var(--table-scrollbar-bg);
-    }
-
-    ::-webkit-scrollbar-corner {
-        background-color: var(--table-scrollbar-bg);
-    }
-
-    ::-webkit-scrollbar-thumb {
-        background-color: var(--table-scrollbar-thumb);
-        border-radius: var(--table-border-radius);
-    }
-
-    ::-webkit-scrollbar-thumb:hover,
-    ::-webkit-scrollbar-thumb:active {
-        background-color: var(--table-scrollbar-thumb-hover);
     }
 }

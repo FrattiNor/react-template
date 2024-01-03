@@ -6,8 +6,6 @@ export type TableFixed = 'left' | 'right' | 'default';
 
 export type TableAlign = 'left' | 'right' | 'center';
 
-export type TableTheme = 'light' | 'dark';
-
 export type TablePagination = {
     total?: number;
     current?: number;
@@ -47,7 +45,6 @@ export type TableExpandable = {
 };
 
 export type TableProps<T> = {
-    theme?: TableTheme;
     dataSource?: T[];
     loading?: boolean;
     rowHeight?: number;

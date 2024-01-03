@@ -19,7 +19,6 @@ import { useRef } from 'react';
 const useTable = <T extends AnyObj>(props: TableProps<T>) => {
     const defaultWidth = 150;
     const defaultFlexGrow = 1;
-    const defaultTheme = 'light';
     const defaultLineHeight = 36;
     const defaultAutoScrollTop = true;
 
@@ -30,7 +29,7 @@ const useTable = <T extends AnyObj>(props: TableProps<T>) => {
     const headRef = dataContext?.headRef ?? _headRef;
 
     // props and auto scrollTop
-    const { handledProps, isEmpty } = useHandleProps(props, { defaultLineHeight, defaultAutoScrollTop, defaultTheme });
+    const { handledProps, isEmpty } = useHandleProps(props, { defaultLineHeight, defaultAutoScrollTop });
 
     // 分页
     const { pagination, sizedDataSource } = usePagination({ handledProps });

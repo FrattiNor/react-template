@@ -1,11 +1,11 @@
 /* eslint-disable react-refresh/only-export-components */
-import Table, { TableTheme, useTableDataContext, TableDataContextHoc } from '@pkg/table';
+import Table, { useTableDataContext, TableDataContextHoc } from '@pkg/table';
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
-import themeStyles from '@pkg/styles/src/theme.module.less';
 import TableColumnsConf from '@pkg/table-columns-conf';
 import { useEffect, useMemo, useState } from 'react';
+import { ThemeHoc, useTheme } from '@pkg/theme';
 import { columns, columns2 } from './utils';
-import styles from './App.module.less';
+import classNames from 'classnames';
 import { Button } from 'antd';
 import useFps from './useFps';
 
@@ -26,7 +26,7 @@ const DemoTable = () => {
     const [pagination, setPagination] = useState(true);
     const [expandable, setExpandable] = useState(false);
     const [rowSelection, setRowSelection] = useState(false);
-    const [theme, setTheme] = useState<TableTheme>('light');
+    const { themeClassName, applyClassName, setTheme } = useTheme();
 
     const columns3: any[] = useMemo(() => {
         return Array(100)
@@ -99,11 +99,9 @@ const DemoTable = () => {
         setTheme((t) => (t === 'light' ? 'dark' : 'light'));
     };
 
-    // console.log(dataContext);
-
     return (
-        <div className={styles[theme]} style={{ width: '100%', height: '100%' }}>
-            <div style={{ padding: 64 }} className={themeStyles['light-theme']}>
+        <div className={classNames(themeClassName, applyClassName)} style={{ width: '100%', height: '100%' }}>
+            <div style={{ padding: 64 }}>
                 <div style={{ height: 200, width: 900 }}>
                     <TableColumnsConf columns={(columnsMap as any)[`${columnsFlag % 3}` as any] as any} />
                 </div>
@@ -139,8 +137,6 @@ const DemoTable = () => {
                 <div style={{ height: 400, width: 900, padding: 24 }}>
                     <Table
                         rowKey="id"
-                        theme={theme}
-                        // calcRowHeight={16}
                         pagination={pagination}
                         expandable={expandable}
                         rowSelection={rowSelection}
@@ -154,4 +150,4 @@ const DemoTable = () => {
     );
 };
 
-export default TableDataContextHoc(DemoTable);
+export default ThemeHoc(TableDataContextHoc(DemoTable));

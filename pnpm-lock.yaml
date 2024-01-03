@@ -89,15 +89,15 @@ importers:
 
   apps/demo:
     dependencies:
-      '@pkg/styles':
-        specifier: workspace:*
-        version: link:../../packages/styles
       '@pkg/table':
         specifier: workspace:*
         version: link:../../packages/table
       '@pkg/table-columns-conf':
         specifier: workspace:*
         version: link:../../packages/table-columns-conf
+      '@pkg/theme':
+        specifier: workspace:*
+        version: link:../../packages/theme
       '@tanstack/react-query':
         specifier: ^5.12.2
         version: 5.13.4(react@18.2.0)
@@ -111,22 +111,17 @@ importers:
         specifier: ^0.17.0
         version: 0.17.0
 
-  packages/checkbox: {}
-
-  packages/empty: {}
-
-  packages/styles:
+  packages/checkbox:
     dependencies:
-      '@pkg/checkbox':
+      '@pkg/theme':
         specifier: workspace:*
-        version: link:../checkbox
-    devDependencies:
-      '@tanstack/react-virtual':
-        specifier: 3.0.0-beta.68
-        version: 3.0.0-beta.68(react-dom@18.2.0)(react@18.2.0)
-      antd:
-        specifier: ^5.12.1
-        version: 5.12.1(react-dom@18.2.0)(react@18.2.0)
+        version: link:../theme
+
+  packages/empty:
+    dependencies:
+      '@pkg/theme':
+        specifier: workspace:*
+        version: link:../theme
 
   packages/table:
     dependencies:
@@ -136,6 +131,9 @@ importers:
       '@pkg/empty':
         specifier: workspace:*
         version: link:../empty
+      '@pkg/theme':
+        specifier: workspace:*
+        version: link:../theme
     devDependencies:
       '@tanstack/react-virtual':
         specifier: 3.0.0-beta.68
@@ -152,6 +150,9 @@ importers:
       '@pkg/table':
         specifier: workspace:*
         version: link:../table
+      '@pkg/theme':
+        specifier: workspace:*
+        version: link:../theme
     devDependencies:
       '@dnd-kit/core':
         specifier: ^6.0.8
@@ -165,6 +166,8 @@ importers:
       '@dnd-kit/utilities':
         specifier: ^3.2.1
         version: 3.2.2(react@18.2.0)
+
+  packages/theme: {}
 
 packages:
 

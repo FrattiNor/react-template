@@ -12,7 +12,7 @@
     },
     "peerDependencies": {
         "@pkg/table": "workspace:*",
-        "@pkg/styles": "workspace:*",
+        "@pkg/theme": "workspace:*",
         "@pkg/table-columns-conf": "workspace:*"
     },
     "dependencies": {
