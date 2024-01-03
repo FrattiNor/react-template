@@ -1,4 +1,5 @@
 .checkbox {
+    box-sizing: border-box;
     margin: 0;
     width: 16px;
     height: 16px;
@@ -8,9 +9,9 @@
     transition: all 0.3s;
     display: inline-block;
     vertical-align: middle;
-    background-color: var(--table-bg);
-    border: 1px solid var(--table-border);
-    border-radius: var(--table-border-radius);
+    background-color: var(--theme-bg);
+    border: 1px solid var(--theme-border);
+    border-radius: var(--theme-border-radius);
 
     &::after {
         top: 10%;
@@ -42,39 +43,39 @@
     }
 
     &.checked {
-        border-color: var(--table-primary);
-        background-color: var(--table-primary);
+        border-color: var(--theme-primary);
+        background-color: var(--theme-primary);
 
         &::after {
             opacity: 1;
-            border-color: var(--table-primary-foreground);
+            border-color: var(--theme-primary-foreground);
         }
     }
 
     &.indeterminate {
         &::before {
             opacity: 1;
-            background-color: var(--table-primary);
+            background-color: var(--theme-primary);
         }
     }
 
     &.disabled {
         cursor: not-allowed;
-        border-color: var(--table-border);
-        background-color: var(--table-disabled-bg);
+        border-color: var(--theme-border);
+        background-color: var(--theme-disabled-bg);
     }
 
     &.disabled.checked {
-        border-color: var(--table-disabled-bg);
+        border-color: var(--theme-disabled-bg);
 
         &::after {
-            border-color: var(--table-disabled-foreground);
+            border-color: var(--theme-disabled-foreground);
         }
     }
 
     &.disabled.indeterminate {
         &::before {
-            background-color: var(--table-disabled-foreground);
+            background-color: var(--theme-disabled-foreground);
         }
     }
 
@@ -85,8 +86,8 @@
         bottom: 0;
         position: absolute;
         animation: checkbox-out 0.5s;
-        background-color: var(--table-primary);
-        border-radius: var(--table-border-radius);
+        background-color: var(--theme-primary);
+        border-radius: var(--theme-border-radius);
     }
 
     @keyframes checkbox-out {

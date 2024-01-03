@@ -1,6 +1,6 @@
 {
     "private": true,
-    "name": "@pkg/table",
+    "name": "@pkg/table-columns-conf",
     "version": "0.0.1",
     "main": "./src/index.tsx",
     "module": "./src/index.tsx",
@@ -11,10 +11,13 @@
         "lint": "npm run eslint && npm run tslint"
     },
     "peerDependencies": {
-        "@pkg/checkbox": "workspace:*"
+        "@pkg/checkbox": "workspace:*",
+        "@pkg/table": "workspace:*"
     },
     "devDependencies": {
-        "@tanstack/react-virtual": "3.0.0-beta.68",
-        "antd": "^5.12.1"
+        "@dnd-kit/core": "^6.0.8",
+        "@dnd-kit/modifiers": "^6.0.1",
+        "@dnd-kit/sortable": "^7.0.2",
+        "@dnd-kit/utilities": "^3.2.1"
     }
 }

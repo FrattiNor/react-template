@@ -1,8 +1,10 @@
 /* eslint-disable react-refresh/only-export-components */
 import Table, { TableTheme, useTableDataContext, TableDataContextHoc } from '@pkg/table';
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
-import { columns, columns2 } from './utils';
+import themeStyles from '@pkg/styles/src/theme.module.less';
+import TableColumnsConf from '@pkg/table-columns-conf';
 import { useEffect, useMemo, useState } from 'react';
+import { columns, columns2 } from './utils';
 import styles from './App.module.less';
 import { Button } from 'antd';
 import useFps from './useFps';
@@ -101,7 +103,11 @@ const DemoTable = () => {
 
     return (
         <div className={styles[theme]} style={{ width: '100%', height: '100%' }}>
-            <div style={{ padding: 64 }}>
+            <div style={{ padding: 64 }} className={themeStyles['light-theme']}>
+                <div style={{ height: 200, width: 900 }}>
+                    <TableColumnsConf columns={(columnsMap as any)[`${columnsFlag % 3}` as any] as any} />
+                </div>
+
                 <div style={{ padding: '24px 24px 0 24px', width: 900 }}>
                     <Button onClick={scroll}>Scroll</Button>
                     <Button onClick={() => setLoading((e) => !e)} style={{ marginLeft: 16 }}>
@@ -129,6 +135,7 @@ const DemoTable = () => {
                         rowSelection
                     </Button>
                 </div>
+
                 <div style={{ height: 400, width: 900, padding: 24 }}>
                     <Table
                         rowKey="id"

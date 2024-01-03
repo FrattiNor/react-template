@@ -1,9 +1,7 @@
 {
     "private": true,
-    "name": "@pkg/table",
+    "name": "@pkg/styles",
     "version": "0.0.1",
-    "main": "./src/index.tsx",
-    "module": "./src/index.tsx",
     "scripts": {
         "preinstall": "npx only-allow pnpm",
         "tslint": "npx tsc --noEmit",

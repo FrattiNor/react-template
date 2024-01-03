@@ -3,7 +3,7 @@ import { useTableDataContext } from '../../TableDataContext';
 import { useEffect, useMemo, useState } from 'react';
 import { HandledProps } from '../useHandleProps';
 import { TableColumn } from '../../type';
-import Checkbox from './Checkbox';
+import Checkbox from '@pkg/checkbox';
 
 type setKeys = (v: (string | number)[]) => void;
 
