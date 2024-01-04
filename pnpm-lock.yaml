@@ -119,9 +119,14 @@ importers:
 
   packages/empty:
     dependencies:
+      '@pkg/i18n':
+        specifier: workspace:*
+        version: link:../i18n
       '@pkg/theme':
         specifier: workspace:*
         version: link:../theme
+
+  packages/i18n: {}
 
   packages/table:
     dependencies:
@@ -147,6 +152,9 @@ importers:
       '@pkg/checkbox':
         specifier: workspace:*
         version: link:../checkbox
+      '@pkg/i18n':
+        specifier: workspace:*
+        version: link:../i18n
       '@pkg/table':
         specifier: workspace:*
         version: link:../table

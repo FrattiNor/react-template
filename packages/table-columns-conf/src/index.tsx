@@ -1,17 +1,20 @@
 import { useDefaultData, useSubmitData } from './hooks';
 import SortableMultiple from './SortableMultiple';
+import { useTranslation } from '@pkg/i18n';
 import styles from './index.module.less';
 import { FC, useState } from 'react';
 import Checkbox from '@pkg/checkbox';
 import { Props, Data } from './type';
 
-const titleMap: Record<string, string> = {
-    leftColumns: '左固定',
-    midColumns: '不固定',
-    rightColumns: '右固定',
-};
-
 const TableColumnsConf: FC<Props> = (props) => {
+    const { t1 } = useTranslation();
+
+    const titleMap: Record<string, string> = {
+        leftColumns: t1('左固定'),
+        midColumns: t1('不固定'),
+        rightColumns: t1('右固定'),
+    };
+
     const submitData = useSubmitData();
 
     const getDefaultData = useDefaultData(props);

@@ -1,9 +1,16 @@
+import { useTranslation } from '@pkg/i18n';
 import styles from './index.module.less';
 import { useTheme } from '@pkg/theme';
 import classNames from 'classnames';
+import { FC } from 'react';
 
-const Empty = () => {
+type Props = {
+    description?: string;
+};
+
+const Empty: FC<Props> = ({ description }) => {
     const { theme } = useTheme();
+    const { t1 } = useTranslation();
 
     return (
         <div className={classNames(styles['empty'], styles[theme])}>
@@ -21,7 +28,7 @@ const Empty = () => {
                     </g>
                 </svg>
             </div>
-            <div className={styles['empty-description']}>暂无数据</div>
+            <div className={styles['empty-description']}>{description ?? t1('暂无数据')}</div>
         </div>
     );
 };

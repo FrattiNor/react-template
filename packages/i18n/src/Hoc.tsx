@@ -5,9 +5,13 @@ import { Props } from './type';
 // Hoc
 const Hoc = <T,>(Component: T, props?: Props) => {
     const NextComponent = forwardRef((_props, ref) => {
-        const { theme } = props || {};
+        const { local, t1Maps, t2Maps } = props || {};
         const _Component = Component as any;
-        return <Provider theme={theme}>{<_Component {..._props} ref={ref} />}</Provider>;
+        return (
+            <Provider local={local} t1Maps={t1Maps} t2Maps={t2Maps}>
+                {<_Component {..._props} ref={ref} />}
+            </Provider>
+        );
     });
 
     return NextComponent as T;
