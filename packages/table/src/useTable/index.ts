@@ -32,7 +32,7 @@ const useTable = <T extends AnyObj>(props: TableProps<T>) => {
     const { handledProps, isEmpty } = useHandleProps(props, { defaultLineHeight, defaultAutoScrollTop });
 
     // 分页
-    const { pagination, sizedDataSource } = usePagination({ handledProps });
+    const { pagination, sizedDataSource, indexColumns } = usePagination({ handledProps });
 
     // 数据源变更回滚顶部
     useChangeScrollTop({ bodyRef, handledProps, sizedDataSource });
@@ -45,7 +45,7 @@ const useTable = <T extends AnyObj>(props: TableProps<T>) => {
 
     //  整合后排序的 columns
     const { sortedColumns } = useSortColumns({
-        columns: handledProps.columns,
+        columns: [...indexColumns, ...handledProps.columns],
         rowSelectionColumns,
         expandableColumns,
     });

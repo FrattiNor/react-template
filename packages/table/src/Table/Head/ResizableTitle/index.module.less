@@ -14,7 +14,18 @@
     }
 
     &.active .resizable-handle {
-        transition: background-color 0.3s;
         background-color: var(--table-resize-active);
+    }
+
+    &.active::after,
+    &.no-active:hover::after {
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        content: '';
+        position: absolute;
+        pointer-events: none;
+        background-color: var(--table-head-hover);
     }
 }

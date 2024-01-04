@@ -1,5 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { HandledProps } from '../useHandleProps';
+import { TableColumns } from '../../type';
+import { useTranslation } from '@pkg/i18n';
 
 type Opt<T> = {
     handledProps: HandledProps<T>;
@@ -7,6 +9,7 @@ type Opt<T> = {
 
 const usePagination = <T>(opt: Opt<T>) => {
     const { handledProps } = opt;
+    const { t1 } = useTranslation();
     const [_current, _setCurrent] = useState(1);
     const [_pageSize, _setPageSize] = useState(10);
     const _onChange = (c: number, p: number) => {
@@ -14,11 +17,11 @@ const usePagination = <T>(opt: Opt<T>) => {
         _setPageSize(p);
     };
 
-    const { pagination, dataSource } = handledProps;
+    const { pagination, dataSource, showIndex } = handledProps;
     const havePagination = !!pagination;
     const dataSourceLength = (dataSource || []).length;
     const total = typeof pagination !== 'boolean' ? pagination?.total ?? dataSourceLength : dataSourceLength;
-    const current = typeof pagination !== 'boolean' ? pagination?.current ?? _current : _current;
+    const current = !pagination ? 1 : typeof pagination !== 'boolean' ? pagination?.current ?? _current : _current;
     const pageSize = typeof pagination !== 'boolean' ? pagination?.pageSize ?? _pageSize : _pageSize;
     const onChange = typeof pagination !== 'boolean' ? pagination?.onChange ?? _onChange : _onChange;
 
@@ -49,7 +52,22 @@ const usePagination = <T>(opt: Opt<T>) => {
           }
         : (false as const);
 
+    const indexColumns: TableColumns<any> = [];
+
+    if (showIndex) {
+        indexColumns.push({
+            flexGrow: 0,
+            key: 'index',
+            title: t1('序号'),
+            render: (_, index) => (current - 1) * pageSize + index + 1,
+            width: typeof showIndex !== 'boolean' ? showIndex?.width ?? 60 : 60,
+            fixed: typeof showIndex !== 'boolean' ? showIndex?.fixed ?? 'left' : 'left',
+            align: typeof showIndex !== 'boolean' ? showIndex?.align ?? 'center' : 'center',
+        });
+    }
+
     return {
+        indexColumns,
         sizedDataSource,
         pagination: handledPagination,
     };

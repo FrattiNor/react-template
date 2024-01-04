@@ -28,6 +28,8 @@ export type TableColumn<T> = {
     saveEdit?: (value: string, item: T, index: number) => ReactNode;
 };
 
+export type TableColumns<T> = TableColumn<T>[];
+
 export type TableRowSelection<T> = {
     width?: number;
     fixed?: TableFixed;
@@ -44,13 +46,20 @@ export type TableExpandable = {
     onChange?: (v: (string | number)[]) => void;
 };
 
+export type TableIndex = {
+    width?: number;
+    align?: TableAlign;
+    fixed?: TableFixed;
+};
+
 export type TableProps<T> = {
     dataSource?: T[];
     loading?: boolean;
     rowHeight?: number;
-    columns: TableColumn<T>[];
     calcRowHeight?: number;
     autoScrollTop?: boolean;
+    columns: TableColumns<T>;
+    showIndex?: TableIndex | boolean;
     rowKey: keyof T | ((v: T) => string);
     expandable?: TableExpandable | boolean; // 处理boolean
     pagination?: TablePagination | boolean; // 处理boolean

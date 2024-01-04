@@ -17,30 +17,21 @@ const Head: FC = () => {
     const renderItem = (column: HandledColumn<any>) => {
         const { resize, title, key, width, align } = column;
         const cellValue = notEmpty(title);
-        const resizeTitle = resize === undefined || resize === true;
         const isStr = typeof cellValue === 'string' || typeof cellValue === 'number';
         const cellTitle = isStr ? `${cellValue}` : '';
-        const className = styles['head-cell'];
 
-        const cellInner = isStr ? (
-            <div className={styles['head-cell-str']}>{cellValue}</div>
-        ) : (
-            <div className={styles['head-cell-block']}>{cellValue}</div>
+        return (
+            <ResizableTitle
+                key={key}
+                cellKey={key}
+                resize={resize}
+                title={cellTitle}
+                className={styles['head-cell']}
+                style={{ width, textAlign: align }}
+            >
+                {isStr ? <div className={styles['head-cell-str']}>{cellValue}</div> : <div className={styles['head-cell-block']}>{cellValue}</div>}
+            </ResizableTitle>
         );
-
-        if (resizeTitle) {
-            return (
-                <ResizableTitle cellKey={key} key={key} title={cellTitle} style={{ width, textAlign: align }} className={className}>
-                    {cellInner}
-                </ResizableTitle>
-            );
-        } else {
-            return (
-                <div key={key} title={cellTitle} style={{ width, textAlign: align }} className={className}>
-                    {cellInner}
-                </div>
-            );
-        }
     };
 
     return (

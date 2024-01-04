@@ -2,7 +2,7 @@
 import { useTableDataContext } from '../../TableDataContext';
 import { HandledProps } from '../useHandleProps';
 import { useMemo, useState } from 'react';
-import { TableColumn } from '../../type';
+import { TableColumns } from '../../type';
 import ExpandableFC from './Expandable';
 
 type Opt<T> = {
@@ -14,7 +14,7 @@ const useExpandable = <T,>(opt: Opt<T>) => {
     const { handledProps, sizedDataSource } = opt;
     const { rowKey, expandable } = handledProps;
 
-    const expandableColumns: TableColumn<T>[] = [];
+    const expandableColumns: TableColumns<T> = [];
     const expandedKeysObj: Record<string, boolean> = {};
 
     const dataContext = useTableDataContext();

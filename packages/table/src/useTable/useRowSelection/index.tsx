@@ -2,7 +2,7 @@
 import { useTableDataContext } from '../../TableDataContext';
 import { useEffect, useMemo, useState } from 'react';
 import { HandledProps } from '../useHandleProps';
-import { TableColumn } from '../../type';
+import { TableColumns } from '../../type';
 import Checkbox from '@pkg/checkbox';
 
 type setKeys = (v: (string | number)[]) => void;
@@ -17,7 +17,7 @@ const useRowSelection = <T,>(opt: Opt<T>) => {
     const { handledProps, totalDataSource } = opt;
     const { rowSelection, rowKey } = handledProps;
 
-    const rowSelectionColumns: TableColumn<T>[] = [];
+    const rowSelectionColumns: TableColumns<T> = [];
     const selectedRowKeysObj: Record<string, true> = {};
     const titleKey = useMemo(() => `${new Date().valueOf()}`, [totalDataSource]);
 

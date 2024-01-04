@@ -1,11 +1,11 @@
 /* eslint-disable react-refresh/only-export-components */
+import TableColumnsConf, { TableColumnConfRef } from '@pkg/table-columns-conf';
 import Table, { useTableDataContext, TableDataContextHoc } from '@pkg/table';
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
 import { Button, ConfigProvider, theme as antdTheme } from 'antd';
-import TableColumnsConf from '@pkg/table-columns-conf';
 import { ThemeHoc, useTheme } from '@pkg/theme';
 import { columns, columns2 } from './utils';
-import { useMemo, useState } from 'react';
+import { useMemo, useRef, useState } from 'react';
 import classNames from 'classnames';
 import useFps from './useFps';
 
@@ -21,6 +21,7 @@ const DemoTable = () => {
     const dataContext = useTableDataContext();
     const [empty, setEmpty] = useState(false);
     const [count, setCount] = useState(10000);
+    const ref = useRef<TableColumnConfRef>(null);
     const [loading, setLoading] = useState(false);
     const [columnsFlag, setColumnsFlag] = useState(1);
     const [pagination, setPagination] = useState(true);
@@ -97,39 +98,26 @@ const DemoTable = () => {
             <div className={classNames(themeClassName, applyClassName)} style={{ width: '100%', height: '100%' }}>
                 <div style={{ padding: 64 }}>
                     <div style={{ height: 200, width: 900, padding: '0 24px' }}>
-                        <TableColumnsConf columns={(columnsMap as any)[`${columnsFlag % 3}` as any] as any} />
+                        <TableColumnsConf ref={ref} columns={(columnsMap as any)[`${columnsFlag % 3}` as any] as any} />
                     </div>
 
-                    <div style={{ padding: '24px 24px 0 24px', width: 900 }}>
+                    <div style={{ padding: '24px 24px 0 24px', width: 900, display: 'flex', flexWrap: 'wrap', gap: 16 }}>
                         <Button onClick={scroll}>Scroll</Button>
-                        <Button onClick={() => setLoading((e) => !e)} style={{ marginLeft: 16 }}>
-                            Loading
-                        </Button>
-                        <Button onClick={() => setEmpty((e) => !e)} style={{ marginLeft: 16 }}>
-                            Empty
-                        </Button>
-                        <Button onClick={reload} style={{ marginLeft: 16 }}>
-                            Count
-                        </Button>
-                        <Button onClick={height} style={{ marginLeft: 16 }}>
-                            Columns
-                        </Button>
-                        <Button onClick={changeTheme} style={{ marginLeft: 16 }}>
-                            Theme
-                        </Button>
-                        <Button onClick={() => setPagination((v) => !v)} style={{ marginLeft: 16 }}>
-                            pagination
-                        </Button>
-                        <Button onClick={() => setExpandable((v) => !v)} style={{ marginLeft: 16 }}>
-                            expandable
-                        </Button>
-                        <Button onClick={() => setRowSelection((v) => !v)} style={{ marginLeft: 16 }}>
-                            rowSelection
-                        </Button>
+                        <Button onClick={() => setLoading((e) => !e)}>Loading</Button>
+                        <Button onClick={() => setEmpty((e) => !e)}>Empty</Button>
+                        <Button onClick={reload}>Count</Button>
+                        <Button onClick={height}>Columns</Button>
+                        <Button onClick={changeTheme}>Theme</Button>
+                        <Button onClick={() => setPagination((v) => !v)}>pagination</Button>
+                        <Button onClick={() => setExpandable((v) => !v)}>expandable</Button>
+                        <Button onClick={() => setRowSelection((v) => !v)}>rowSelection</Button>
+                        <Button onClick={() => ref.current?.submit()}>Submit</Button>
+                        <Button onClick={() => ref.current?.reset()}>Reset</Button>
                     </div>
 
                     <div style={{ height: 400, width: 900, padding: 24 }}>
                         <Table
+                            showIndex
                             rowKey="id"
                             pagination={pagination}
                             expandable={expandable}

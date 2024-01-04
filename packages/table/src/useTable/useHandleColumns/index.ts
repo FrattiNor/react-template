@@ -1,14 +1,14 @@
 import { ResizeWidth } from '../useResizeWidth';
 import { VirtualCore } from '../useVirtual';
 import getHandledColumns from './utils';
-import { TableColumn } from '../../type';
+import { TableColumns } from '../../type';
 
 export type Opt<T> = {
     virtual: VirtualCore;
     defaultWidth: number;
     defaultFlexGrow: number;
     resizeWidth: ResizeWidth;
-    sortedColumns: TableColumn<T>[];
+    sortedColumns: TableColumns<T>;
 };
 
 // 可以利用Table元素获取宽度

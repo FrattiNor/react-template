@@ -1,6 +1,42 @@
 import { useTableDataContext, TableFixed } from '@pkg/table';
 import { Props, TableConfColumn, Data } from './type';
 
+export const useResetData = ({ columns }: Props) => {
+    const getResetData = () => {
+        const midColumns: TableConfColumn[] = [];
+        const leftColumns: TableConfColumn[] = [];
+        const rightColumns: TableConfColumn[] = [];
+
+        columns.forEach((item, index) => {
+            const fixed = item.fixed ?? 'default';
+
+            const newItem = {
+                ...item,
+                fixed,
+                id: item.key,
+                index: index,
+                hidden: false,
+            };
+
+            if (fixed === 'left') {
+                leftColumns.push(newItem);
+            } else if (fixed === 'right') {
+                rightColumns.push(newItem);
+            } else {
+                midColumns.push(newItem);
+            }
+        });
+
+        return {
+            leftColumns: leftColumns.sort((a, b) => a.index - b.index),
+            midColumns: midColumns.sort((a, b) => a.index - b.index),
+            rightColumns: rightColumns.sort((a, b) => a.index - b.index),
+        };
+    };
+
+    return getResetData;
+};
+
 export const useDefaultData = ({ columns }: Props) => {
     const { indexConf, fixedConf, hiddenConf } = useTableDataContext();
 

@@ -1,12 +1,14 @@
-import { useDefaultData, useSubmitData } from './hooks';
+import { ReactNode, forwardRef, useEffect, useImperativeHandle, useState } from 'react';
+import { useDefaultData, useResetData, useSubmitData } from './hooks';
+import { Props, Data, TableColumnConfRef } from './type';
 import SortableMultiple from './SortableMultiple';
 import { useTranslation } from '@pkg/i18n';
 import styles from './index.module.less';
-import { FC, useState } from 'react';
 import Checkbox from '@pkg/checkbox';
-import { Props, Data } from './type';
 
-const TableColumnsConf: FC<Props> = (props) => {
+type ComponentType = (props: Props & React.RefAttributes<TableColumnConfRef>) => ReactNode | null;
+
+const TableColumnsConf: ComponentType = forwardRef((props, ref) => {
     const { t1 } = useTranslation();
 
     const titleMap: Record<string, string> = {
@@ -17,35 +19,42 @@ const TableColumnsConf: FC<Props> = (props) => {
 
     const submitData = useSubmitData();
 
+    const getResetData = useResetData(props);
+
     const getDefaultData = useDefaultData(props);
 
     const [data, setData] = useState<Data>(getDefaultData);
 
-    const setData2: React.Dispatch<React.SetStateAction<Data>> = (v) => {
-        setData((oldV) => {
-            if (typeof v === 'function') {
-                const res = v(oldV);
-                submitData(res);
-                return res;
-            } else {
-                const res = v;
-                submitData(res);
-                return res;
-            }
-        });
-    };
+    // columns 变更触发
+    useEffect(() => {
+        setData(getDefaultData());
+    }, [props.columns]);
+
+    // 暴露提交和重置
+    useImperativeHandle(
+        ref,
+        () => ({
+            submit: () => {
+                submitData(data);
+            },
+            reset: () => {
+                setData(getResetData());
+            },
+        }),
+        [data],
+    );
 
     return (
         <SortableMultiple
             data={data}
-            setData={setData2}
+            setData={setData}
             titleMap={titleMap}
             renderItem={(item, { containerId, index }) => {
                 const isStr = typeof item.title === 'string' || typeof item.title === 'number';
 
                 const checkedChange = (show: boolean) => {
                     if (containerId && typeof index === 'number') {
-                        setData2((oldData) => {
+                        setData((oldData) => {
                             const items = [...oldData[containerId]];
                             items[index] = { ...items[index], hidden: !show };
                             return { ...oldData, [containerId]: [...items] };
@@ -64,6 +73,7 @@ const TableColumnsConf: FC<Props> = (props) => {
             }}
         />
     );
-};
+});
 
 export default TableColumnsConf;
+export type { TableColumnConfRef } from './type';

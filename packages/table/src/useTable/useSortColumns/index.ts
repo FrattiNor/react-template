@@ -1,5 +1,5 @@
+import { TableColumn, TableColumns, TableFixed } from '../../type';
 import { useTableDataContext } from '../../TableDataContext';
-import { TableColumn, TableFixed } from '../../type';
 import { useState } from 'react';
 
 const fixedNumMap = {
@@ -9,9 +9,9 @@ const fixedNumMap = {
 };
 
 type Opt<T> = {
-    columns: TableColumn<T>[];
-    expandableColumns: TableColumn<T>[];
-    rowSelectionColumns: TableColumn<T>[];
+    columns: TableColumns<T>;
+    expandableColumns: TableColumns<T>;
+    rowSelectionColumns: TableColumns<T>;
 };
 
 const useSortColumns = <T>(opt: Opt<T>) => {
