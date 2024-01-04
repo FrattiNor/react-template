@@ -1,9 +1,9 @@
 import { forwardRef } from 'react';
 import Provider from './Provider';
-import { Props } from './type';
+import { ThemeProps } from './type';
 
 // Hoc
-const Hoc = <T,>(Component: T, props?: Props) => {
+const Hoc = <T,>(Component: T, props?: ThemeProps) => {
     const NextComponent = forwardRef((_props, ref) => {
         const { theme } = props || {};
         const _Component = Component as any;

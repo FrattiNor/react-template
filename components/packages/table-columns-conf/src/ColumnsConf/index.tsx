@@ -1,12 +1,12 @@
 import { ReactNode, forwardRef, useEffect, useImperativeHandle, useState } from 'react';
+import { TableColumnConfProps, TableColumnConfData, TableColumnConfRef } from '../type';
 import { useDefaultData, useResetData, useSubmitData } from './hooks';
-import { Props, Data, TableColumnConfRef } from '../type';
 import SortableMultiple from '../SortableMultiple';
 import { useTranslation } from '@pkg/i18n';
 import styles from './index.module.less';
 import Checkbox from '@pkg/checkbox';
 
-type ComponentType = (props: Props & React.RefAttributes<TableColumnConfRef>) => ReactNode | null;
+type ComponentType = (props: TableColumnConfProps & React.RefAttributes<TableColumnConfRef>) => ReactNode | null;
 
 const TableColumnsConf: ComponentType = forwardRef((props, ref) => {
     const { t1 } = useTranslation();
@@ -23,7 +23,7 @@ const TableColumnsConf: ComponentType = forwardRef((props, ref) => {
 
     const getDefaultData = useDefaultData(props);
 
-    const [data, setData] = useState<Data>(getDefaultData);
+    const [data, setData] = useState<TableColumnConfData>(getDefaultData);
 
     // columns 变更触发
     useEffect(() => {

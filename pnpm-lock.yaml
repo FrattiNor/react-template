@@ -129,11 +129,7 @@ importers:
         specifier: workspace:*
         version: link:packages/theme
 
-  components/packages/checkbox:
-    dependencies:
-      '@pkg/theme':
-        specifier: workspace:*
-        version: link:../theme
+  components/packages/checkbox: {}
 
   components/packages/empty:
     dependencies:
@@ -181,9 +177,6 @@ importers:
       '@pkg/table':
         specifier: workspace:*
         version: link:../table
-      '@pkg/theme':
-        specifier: workspace:*
-        version: link:../theme
     devDependencies:
       '@dnd-kit/core':
         specifier: ^6.0.8

@@ -1,7 +1,7 @@
+import { TableColumnConfProps, TableConfColumn, TableColumnConfData } from '../type';
 import { useTableDataContext, TableFixed } from '@pkg/table';
-import { Props, TableConfColumn, Data } from '../type';
 
-export const useResetData = ({ columns }: Props) => {
+export const useResetData = ({ columns }: TableColumnConfProps) => {
     const getResetData = () => {
         const midColumns: TableConfColumn[] = [];
         const leftColumns: TableConfColumn[] = [];
@@ -37,7 +37,7 @@ export const useResetData = ({ columns }: Props) => {
     return getResetData;
 };
 
-export const useDefaultData = ({ columns }: Props) => {
+export const useDefaultData = ({ columns }: TableColumnConfProps) => {
     const { indexConf, fixedConf, hiddenConf } = useTableDataContext();
 
     const getDefaultData = () => {
@@ -78,7 +78,7 @@ export const useDefaultData = ({ columns }: Props) => {
 export const useSubmitData = () => {
     const { setIndexConf, setFixedConf, setHiddenConf } = useTableDataContext();
 
-    const submitData = (nextData: Data) => {
+    const submitData = (nextData: TableColumnConfData) => {
         const nextIndexConf: Record<string, number> = {};
         const nextHiddenConf: Record<string, boolean> = {};
         const nextFixedConf: Record<string, TableFixed> = {};

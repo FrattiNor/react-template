@@ -1,8 +1,8 @@
 import styles from './theme.module.less';
-import { Props, Theme } from './type';
+import { ThemeProps, Theme } from './type';
 import { useState } from 'react';
 
-const useData = ({ theme: _theme = 'light' }: Props) => {
+const useData = ({ theme: _theme = 'light' }: ThemeProps) => {
     const [theme, setTheme] = useState<Theme>(_theme);
     const themeClassName = styles[theme];
     const applyClassName = styles['apply-theme'];

@@ -1,9 +1,9 @@
+import { TranslationProps } from './type';
 import { forwardRef } from 'react';
 import Provider from './Provider';
-import { Props } from './type';
 
 // Hoc
-const Hoc = <T,>(Component: T, props?: Props) => {
+const Hoc = <T,>(Component: T, props?: TranslationProps) => {
     const NextComponent = forwardRef((_props, ref) => {
         const { local, t1Maps, t2Maps } = props || {};
         const _Component = Component as any;

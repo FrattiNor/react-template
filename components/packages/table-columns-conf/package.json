@@ -13,7 +13,6 @@
     "peerDependencies": {
         "@pkg/i18n": "workspace:*",
         "@pkg/checkbox": "workspace:*",
-        "@pkg/theme": "workspace:*",
         "@pkg/table": "workspace:*"
     },
     "devDependencies": {
