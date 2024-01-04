@@ -96,7 +96,7 @@ const DemoTable = () => {
         <ConfigProvider theme={{ token: { borderRadius: 2 }, algorithm: theme === 'light' ? antdTheme.defaultAlgorithm : antdTheme.darkAlgorithm }}>
             <div className={classNames(themeClassName, applyClassName)} style={{ width: '100%', height: '100%' }}>
                 <div style={{ padding: 64 }}>
-                    <div style={{ height: 200, width: 900 }}>
+                    <div style={{ height: 200, width: 900, padding: '0 24px' }}>
                         <TableColumnsConf columns={(columnsMap as any)[`${columnsFlag % 3}` as any] as any} />
                     </div>
 

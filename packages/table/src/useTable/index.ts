@@ -44,7 +44,11 @@ const useTable = <T extends AnyObj>(props: TableProps<T>) => {
     const { selectedRowKeysObj, rowSelectionColumns } = useRowSelection({ handledProps, totalDataSource });
 
     //  整合后排序的 columns
-    const { sortedColumns } = useSortColumns({ columns: [...rowSelectionColumns, ...expandableColumns, ...handledProps.columns] });
+    const { sortedColumns } = useSortColumns({
+        columns: handledProps.columns,
+        rowSelectionColumns,
+        expandableColumns,
+    });
 
     //  title resize
     const resizeWidth = useResizeWidth();

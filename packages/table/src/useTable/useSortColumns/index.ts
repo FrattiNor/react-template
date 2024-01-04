@@ -1,6 +1,6 @@
 import { useTableDataContext } from '../../TableDataContext';
 import { TableColumn, TableFixed } from '../../type';
-import { useMemo, useState } from 'react';
+import { useState } from 'react';
 
 const fixedNumMap = {
     left: -1,
@@ -10,11 +10,13 @@ const fixedNumMap = {
 
 type Opt<T> = {
     columns: TableColumn<T>[];
+    expandableColumns: TableColumn<T>[];
+    rowSelectionColumns: TableColumn<T>[];
 };
 
 const useSortColumns = <T>(opt: Opt<T>) => {
-    const { columns } = opt;
     const dataContext = useTableDataContext();
+    const { columns, expandableColumns, rowSelectionColumns } = opt;
     const [_indexConf, _setIndexConf] = useState<Record<string, number>>({});
     const [_widthConf, _setWidthConf] = useState<Record<string, number>>({});
     const [_hiddenConf, _setHiddenConf] = useState<Record<string, boolean>>({});
@@ -29,29 +31,43 @@ const useSortColumns = <T>(opt: Opt<T>) => {
     const fixedConf = dataContext.fixedConf ?? _fixedConf;
     const setFixedConf = dataContext.setFixedConf ?? _setFixedConf;
 
-    const sortedColumns = useMemo(() => {
-        const newColumns: (TableColumn<T> & { index: number })[] = [];
+    const newColumns: (TableColumn<T> & { index: number })[] = [];
 
-        columns.forEach((item, index) => {
-            if (!hiddenConf[item.key]) {
-                newColumns.push({
-                    ...item,
-                    index: indexConf[item.key] ?? index,
-                    fixed: fixedConf[item.key] ?? item.fixed,
-                    width: widthConf[item.key] ?? item.width,
-                });
-            }
-        });
+    rowSelectionColumns.forEach((item) => {
+        if (!hiddenConf[item.key]) {
+            newColumns.push({
+                ...item,
+                index: -2,
+            });
+        }
+    });
 
-        // 根据index排序后的columns
-        const indexSortedColumns = newColumns.sort((a, b) => a.index - b.index);
-        // 根据fixed排序后的columns
-        const fixedSortedColumns = indexSortedColumns.sort((a, b) => fixedNumMap[a.fixed ?? 'default'] - fixedNumMap[b.fixed ?? 'default']);
+    expandableColumns.forEach((item) => {
+        if (!hiddenConf[item.key]) {
+            newColumns.push({
+                ...item,
+                index: -1,
+            });
+        }
+    });
 
-        return fixedSortedColumns;
-    }, [columns, indexConf, widthConf, hiddenConf, fixedConf]);
+    columns.forEach((item) => {
+        if (!hiddenConf[item.key]) {
+            newColumns.push({
+                ...item,
+                index: indexConf[item.key] ?? 9999,
+                fixed: fixedConf[item.key] ?? item.fixed,
+                width: widthConf[item.key] ?? item.width,
+            });
+        }
+    });
 
-    return { sortedColumns, setIndexConf, setWidthConf, setHiddenConf, setFixedConf };
+    // 根据index排序后的columns
+    const indexSortedColumns = newColumns.sort((a, b) => a.index - b.index);
+    // 根据fixed排序后的columns
+    const fixedSortedColumns = indexSortedColumns.sort((a, b) => fixedNumMap[a.fixed ?? 'default'] - fixedNumMap[b.fixed ?? 'default']);
+
+    return { sortedColumns: fixedSortedColumns, setIndexConf, setWidthConf, setHiddenConf, setFixedConf };
 };
 
 export default useSortColumns;
