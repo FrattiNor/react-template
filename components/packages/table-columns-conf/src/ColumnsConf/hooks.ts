@@ -1,5 +1,5 @@
 import { useTableDataContext, TableFixed } from '@pkg/table';
-import { Props, TableConfColumn, Data } from './type';
+import { Props, TableConfColumn, Data } from '../type';
 
 export const useResetData = ({ columns }: Props) => {
     const getResetData = () => {
