@@ -1,0 +1,36 @@
+@import url('../theme/theme.module.less');
+
+.notification {
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 99999;
+    position: fixed;
+    pointer-events: none;
+    background-color: transparent !important;
+
+    .top-right {
+        top: 16px;
+        right: 16px;
+        position: absolute;
+    }
+
+    .top-left {
+        top: 16px;
+        left: 16px;
+        position: absolute;
+    }
+
+    .bottom-right {
+        right: 16px;
+        bottom: 16px;
+        position: absolute;
+    }
+
+    .bottom-left {
+        left: 16px;
+        bottom: 16px;
+        position: absolute;
+    }
+}

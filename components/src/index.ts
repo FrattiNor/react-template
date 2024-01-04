@@ -13,3 +13,5 @@ export { default as TableColumnsConf } from '@pkg/table-columns-conf';
 export * from '@pkg/table-columns-conf';
 
 export * from '@pkg/theme';
+
+export { default as NotificationClient } from '@pkg/notification';

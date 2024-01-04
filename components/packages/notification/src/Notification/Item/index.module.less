@@ -1,0 +1,136 @@
+.item-wrapper {
+    position: relative;
+    box-sizing: content-box;
+    @ease-in-circ: cubic-bezier(0.08, 0.82, 0.17, 1);
+    @ease-out-circ: cubic-bezier(0.6, 0.04, 0.98, 0.34);
+
+    @keyframes right-fate-in {
+        0% {
+            transform: translate3d(100%, 0, 0);
+            opacity: 0;
+        }
+        100% {
+            transform: translate3d(0, 0, 0);
+            opacity: 1;
+        }
+    }
+
+    @keyframes left-fate-in {
+        0% {
+            transform: translate3d(-100%, 0, 0);
+            opacity: 0;
+        }
+        100% {
+            transform: translate3d(0, 0, 0);
+            opacity: 1;
+        }
+    }
+
+    @keyframes right-fate-out {
+        0% {
+            transform: translate3d(0, 0, 0);
+            opacity: 1;
+        }
+        50% {
+            opacity: 0;
+        }
+        100% {
+            transform: translate3d(100%, 0, 0);
+            opacity: 0;
+            margin: 0;
+            height: 0;
+        }
+    }
+
+    @keyframes left-fate-out {
+        0% {
+            transform: translate3d(0, 0, 0);
+            opacity: 1;
+        }
+        50% {
+            opacity: 0;
+        }
+        100% {
+            transform: translate3d(-100%, 0, 0);
+            opacity: 0;
+            margin: 0;
+            height: 0;
+        }
+    }
+
+    &.top {
+        margin-bottom: 12px;
+    }
+
+    &.bottom {
+        margin-top: 12px;
+    }
+
+    &.enter {
+        animation-duration: 0.2s;
+        animation-fill-mode: both;
+        animation-timing-function: @ease-in-circ;
+
+        &.left {
+            animation-name: left-fate-in;
+        }
+
+        &.right {
+            animation-name: right-fate-in;
+        }
+    }
+
+    &.leave {
+        animation-duration: 0.15s;
+        animation-fill-mode: both;
+        animation-timing-function: linear;
+
+        &.left {
+            animation-name: left-fate-out;
+        }
+
+        &.right {
+            animation-name: right-fate-out;
+        }
+    }
+
+    .item {
+        gap: 8px;
+        width: 350px;
+        display: flex;
+        padding: 12px;
+        font-size: 16px;
+        position: relative;
+        pointer-events: auto;
+        box-sizing: border-box;
+        align-items: flex-start;
+        transform: translate3d(0, 0, 0);
+        background-color: var(--theme-bg);
+        border-radius: var(--theme-border-radius);
+        box-shadow: var(--notification-box-shadow);
+
+        .message {
+            width: 0;
+            flex-grow: 1;
+            position: relative;
+            word-break: break-word;
+        }
+
+        .close-x {
+            width: 21px;
+            height: 21px;
+            display: flex;
+            cursor: pointer;
+            align-items: center;
+            justify-content: center;
+            color: var(--theme-second-foreground);
+            border-radius: var(--theme-border-radius);
+            transition: color 0.3s, background-color 0.3s;
+
+            &:hover {
+                color: var(--theme-foreground);
+                background-color: var(--theme-hover-bg);
+            }
+        }
+    }
+}

@@ -1,9 +1,18 @@
 /* eslint-disable react-refresh/only-export-components */
-import { ThemeHoc, useTheme, TableColumnsConf, TableColumnConfRef, Table, useTableDataContext, TableDataContextHoc } from '@react/components';
+import {
+    ThemeHoc,
+    useTheme,
+    TableColumnsConf,
+    TableColumnConfRef,
+    Table,
+    useTableDataContext,
+    TableDataContextHoc,
+    NotificationClient,
+} from '@react/components';
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
 import { Button, ConfigProvider, theme as antdTheme } from 'antd';
-import { columns, columns2 } from './utils';
 import { useMemo, useRef, useState } from 'react';
+import { columns, columns2 } from './utils';
 import classNames from 'classnames';
 import useFps from './useFps';
 
@@ -12,6 +21,13 @@ type Item = {
     age: number;
     name: string;
 };
+
+const notification = new NotificationClient();
+
+notification.setConfig({
+    duration: 0,
+    placement: 'topLeft',
+});
 
 const DemoTable = () => {
     useFps();
@@ -93,7 +109,7 @@ const DemoTable = () => {
 
     return (
         <ConfigProvider theme={{ token: { borderRadius: 2 }, algorithm: theme === 'light' ? antdTheme.defaultAlgorithm : antdTheme.darkAlgorithm }}>
-            <div className={classNames(themeClassName, applyClassName)} style={{ width: '100%', height: '100%' }}>
+            <div className={classNames(themeClassName, applyClassName)} style={{ width: '100%', height: '200%' }}>
                 <div style={{ padding: 64 }}>
                     <div style={{ height: 200, width: 900, padding: '0 24px' }}>
                         <TableColumnsConf ref={ref} columns={(columnsMap as any)[`${columnsFlag % 3}` as any] as any} />
@@ -111,6 +127,9 @@ const DemoTable = () => {
                         <Button onClick={() => setRowSelection((v) => !v)}>rowSelection</Button>
                         <Button onClick={() => ref.current?.submit()}>Submit</Button>
                         <Button onClick={() => ref.current?.reset()}>Reset</Button>
+                        <Button onClick={() => notification.open({ message: '123123123123123123123123123123123123123123123123123123123123123' })}>
+                            notification
+                        </Button>
                     </div>
 
                     <div style={{ height: 400, width: 900, padding: 24 }}>

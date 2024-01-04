@@ -142,7 +142,11 @@ importers:
 
   components/packages/i18n: {}
 
-  components/packages/notification: {}
+  components/packages/notification:
+    dependencies:
+      '@pkg/theme':
+        specifier: workspace:*
+        version: link:../theme
 
   components/packages/table:
     dependencies:
