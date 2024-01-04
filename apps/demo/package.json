@@ -11,9 +11,7 @@
         "lint": "npm run eslint && npm run tslint"
     },
     "peerDependencies": {
-        "@pkg/table": "workspace:*",
-        "@pkg/theme": "workspace:*",
-        "@pkg/table-columns-conf": "workspace:*"
+        "@react/components": "workspace:*"
     },
     "dependencies": {
         "@tanstack/react-query": "^5.12.2",

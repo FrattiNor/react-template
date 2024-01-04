@@ -89,15 +89,9 @@ importers:
 
   apps/demo:
     dependencies:
-      '@pkg/table':
+      '@react/components':
         specifier: workspace:*
-        version: link:../../packages/table
-      '@pkg/table-columns-conf':
-        specifier: workspace:*
-        version: link:../../packages/table-columns-conf
-      '@pkg/theme':
-        specifier: workspace:*
-        version: link:../../packages/theme
+        version: link:../../components
       '@tanstack/react-query':
         specifier: ^5.12.2
         version: 5.13.4(react@18.2.0)
@@ -111,13 +105,37 @@ importers:
         specifier: ^0.17.0
         version: 0.17.0
 
-  packages/checkbox:
+  components:
+    dependencies:
+      '@pkg/checkbox':
+        specifier: workspace:*
+        version: link:packages/checkbox
+      '@pkg/empty':
+        specifier: workspace:*
+        version: link:packages/empty
+      '@pkg/i18n':
+        specifier: workspace:*
+        version: link:packages/i18n
+      '@pkg/notification':
+        specifier: workspace:*
+        version: link:packages/notification
+      '@pkg/table':
+        specifier: workspace:*
+        version: link:packages/table
+      '@pkg/table-columns-conf':
+        specifier: workspace:*
+        version: link:packages/table-columns-conf
+      '@pkg/theme':
+        specifier: workspace:*
+        version: link:packages/theme
+
+  components/packages/checkbox:
     dependencies:
       '@pkg/theme':
         specifier: workspace:*
         version: link:../theme
 
-  packages/empty:
+  components/packages/empty:
     dependencies:
       '@pkg/i18n':
         specifier: workspace:*
@@ -126,9 +144,11 @@ importers:
         specifier: workspace:*
         version: link:../theme
 
-  packages/i18n: {}
+  components/packages/i18n: {}
 
-  packages/table:
+  components/packages/notification: {}
+
+  components/packages/table:
     dependencies:
       '@pkg/checkbox':
         specifier: workspace:*
@@ -150,7 +170,7 @@ importers:
         specifier: ^5.12.1
         version: 5.12.1(react-dom@18.2.0)(react@18.2.0)
 
-  packages/table-columns-conf:
+  components/packages/table-columns-conf:
     dependencies:
       '@pkg/checkbox':
         specifier: workspace:*
@@ -178,7 +198,7 @@ importers:
         specifier: ^3.2.1
         version: 3.2.2(react@18.2.0)
 
-  packages/theme: {}
+  components/packages/theme: {}
 
 packages:
 

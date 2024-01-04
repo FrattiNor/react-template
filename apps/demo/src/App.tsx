@@ -1,9 +1,7 @@
 /* eslint-disable react-refresh/only-export-components */
-import TableColumnsConf, { TableColumnConfRef } from '@pkg/table-columns-conf';
-import Table, { useTableDataContext, TableDataContextHoc } from '@pkg/table';
+import { ThemeHoc, useTheme, TableColumnsConf, TableColumnConfRef, Table, useTableDataContext, TableDataContextHoc } from '@react/components';
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
 import { Button, ConfigProvider, theme as antdTheme } from 'antd';
-import { ThemeHoc, useTheme } from '@pkg/theme';
 import { columns, columns2 } from './utils';
 import { useMemo, useRef, useState } from 'react';
 import classNames from 'classnames';
