@@ -10,7 +10,7 @@ const VirtualBody: FC = () => {
     const { outerProps, innerProps } = useTableContext();
     const { rowKey, rowHeight } = outerProps;
     const { horizontalTotalSize, midLeftPadding, midRightPadding } = innerProps;
-    const { resized, ping, showDataSource, selectedRowKeysObj, dataSourceLevelMap } = innerProps;
+    const { ping, showDataSource, selectedRowKeysObj, dataSourceLevelMap } = innerProps;
     const { verticalVirtualItems, verticalTotalSize, verticalDistance, verticalMeasureElement } = innerProps;
     const { handledColumns, handledFixedLeftColumns, handledFixedRightColumns, handledMidColumns } = innerProps;
 
@@ -82,28 +82,25 @@ const VirtualBody: FC = () => {
                                 [styles['selected']]: selectedRowKeysObj[currentRowKey],
                             })}
                         >
-                            {handledFixedLeftColumns.length > 0 && (
-                                <div className={classNames(styles['body-fixed-left'], { [styles['pinged']]: ping['left'] })}>
-                                    {handledFixedLeftColumns.map((column) => {
-                                        return renderItem(column, currentRowData, currentRowIndex, currentRowKey);
-                                    })}
-                                </div>
-                            )}
-                            {handledMidColumns.length > 0 && (
-                                <div className={styles['body-mid']} style={{ paddingLeft: midLeftPadding, paddingRight: midRightPadding }}>
-                                    {handledMidColumns.map((column) => {
-                                        return renderItem(column, currentRowData, currentRowIndex, currentRowKey);
-                                    })}
-                                </div>
-                            )}
-                            {handledFixedRightColumns.length > 0 && (
-                                <div className={classNames(styles['body-fixed-right'], { [styles['pinged']]: ping['right'] })}>
-                                    {handledFixedRightColumns.map((column) => {
-                                        return renderItem(column, currentRowData, currentRowIndex, currentRowKey);
-                                    })}
-                                </div>
-                            )}
-                            {resized && <div className={styles['body-seize-a-seat']} />}
+                            <div className={classNames(styles['body-fixed-left'], { [styles['pinged']]: ping['left'] })}>
+                                {handledFixedLeftColumns.map((column) => {
+                                    return renderItem(column, currentRowData, currentRowIndex, currentRowKey);
+                                })}
+                            </div>
+
+                            <div className={styles['body-mid']} style={{ paddingLeft: midLeftPadding, paddingRight: midRightPadding }}>
+                                {handledMidColumns.map((column) => {
+                                    return renderItem(column, currentRowData, currentRowIndex, currentRowKey);
+                                })}
+                            </div>
+
+                            <div className={classNames(styles['body-fixed-right'], { [styles['pinged']]: ping['right'] })}>
+                                {handledFixedRightColumns.map((column) => {
+                                    return renderItem(column, currentRowData, currentRowIndex, currentRowKey);
+                                })}
+                            </div>
+
+                            <div className={styles['body-seize-a-seat']} />
                         </div>
                     );
                 }

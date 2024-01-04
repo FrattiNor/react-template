@@ -58,15 +58,17 @@
         }
     }
 
+    &:hover {
+        border-color: var(--theme-primary);
+    }
+
     &.disabled {
         cursor: not-allowed;
-        border-color: var(--theme-border);
+        border-color: var(--theme-disabled-border);
         background-color: var(--theme-disabled-bg);
     }
 
     &.disabled.checked {
-        border-color: var(--theme-disabled-bg);
-
         &::after {
             border-color: var(--theme-disabled-foreground);
         }

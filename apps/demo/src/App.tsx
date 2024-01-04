@@ -24,8 +24,8 @@ const DemoTable = () => {
     const [loading, setLoading] = useState(false);
     const [columnsFlag, setColumnsFlag] = useState(1);
     const [pagination, setPagination] = useState(true);
-    const [expandable, setExpandable] = useState(false);
-    const [rowSelection, setRowSelection] = useState(false);
+    const [expandable, setExpandable] = useState(true);
+    const [rowSelection, setRowSelection] = useState(true);
     const { theme, themeClassName, applyClassName, setTheme } = useTheme();
 
     const columns3: any[] = useMemo(() => {
