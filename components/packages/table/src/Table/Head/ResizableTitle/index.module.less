@@ -1,12 +1,13 @@
 .resize-head-cell {
     .resizable-handle {
-        position: absolute;
-        cursor: ew-resize;
-        height: 100%;
-        width: 5px;
-        z-index: 1;
-        bottom: 0;
         right: 0;
+        bottom: 0;
+        z-index: 1;
+        width: 5px;
+        height: 100%;
+        cursor: ew-resize;
+        position: absolute;
+        transition: background-color 0.3s;
     }
 
     .resizable-handle:hover {
@@ -17,8 +18,7 @@
         background-color: var(--table-resize-active);
     }
 
-    &.active::after,
-    &.no-active:hover::after {
+    &::after {
         top: 0;
         left: 0;
         right: 0;
@@ -26,6 +26,12 @@
         content: '';
         position: absolute;
         pointer-events: none;
+        background-color: transparent;
+        transition: background-color 0.3s;
+    }
+
+    &.active::after,
+    &.no-active:hover::after {
         background-color: var(--table-head-hover);
     }
 }
