@@ -42,29 +42,29 @@ const Notification: FC<Props> = ({ queen, zIndex }) => {
         <div className={classNames(styles['notification'], styles[theme], themeClassName, applyClassName)} style={{ zIndex }}>
             {topLeft.length > 0 && (
                 <div className={styles['top-left']}>
-                    {topLeft.map((item) => (
-                        <Item key={item.key} props={item} />
+                    {[...topLeft].reverse().map((item, index) => (
+                        <Item key={item.key} item={item} first={index === topLeft.length - 1} />
                     ))}
                 </div>
             )}
             {topRight.length > 0 && (
                 <div className={styles['top-right']}>
-                    {topRight.map((item) => (
-                        <Item key={item.key} props={item} />
+                    {[...topRight].reverse().map((item, index) => (
+                        <Item key={item.key} item={item} first={index === topRight.length - 1} />
                     ))}
                 </div>
             )}
             {bottomLeft.length > 0 && (
                 <div className={styles['bottom-left']}>
-                    {bottomLeft.map((item) => (
-                        <Item key={item.key} props={item} />
+                    {bottomLeft.map((item, index) => (
+                        <Item key={item.key} item={item} first={index === 0} />
                     ))}
                 </div>
             )}
             {bottomRight.length > 0 && (
                 <div className={styles['bottom-right']}>
-                    {bottomRight.map((item) => (
-                        <Item key={item.key} props={item} />
+                    {bottomRight.map((item, index) => (
+                        <Item key={item.key} item={item} first={index === 0} />
                     ))}
                 </div>
             )}

@@ -15,7 +15,6 @@ import { useMemo, useRef, useState } from 'react';
 import { columns, columns2 } from './utils';
 import classNames from 'classnames';
 import useFps from './useFps';
-import { RemovableItems } from './stories/2 - Presets/Sortable/1-Vertical.story';
 
 type Item = {
     id: string;
@@ -27,7 +26,7 @@ const notification = new NotificationClient();
 
 notification.setConfig({
     duration: 0,
-    placement: 'topLeft',
+    placement: 'bottomLeft',
 });
 
 const DemoTable = () => {

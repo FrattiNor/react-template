@@ -16,8 +16,8 @@ type Props<T> = {
 function Sortable<T extends { id: string }>(props: Props<T>) {
     const sensors = useSensors(
         // 增加距离延迟，来可以触发onClick事件
-        useSensor(MouseSensor),
-        useSensor(TouchSensor),
+        useSensor(MouseSensor, { activationConstraint: { distance: 1 } }),
+        useSensor(TouchSensor, { activationConstraint: { distance: 1 } }),
     );
 
     const [activeItem, setActiveItem] = useState<T | null>(null);
