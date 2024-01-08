@@ -38,18 +38,24 @@ const Head: FC = () => {
         <div className={classNames(styles['head'], { [styles['resizing']]: !!resizeActiveKey })} ref={headRef}>
             <div className={styles['virtual-head']} style={{ transform: `translate3d(0, 0, 0)`, width: horizontalTotalSize + vScrollBarWidth }}>
                 <div className={styles['head-row']} style={{ minHeight: rowHeight }}>
-                    <div className={classNames(styles['head-fixed-left'], { [styles['pinged']]: ping['left'] })}>
-                        {handledFixedLeftColumns.map((column) => renderItem(column))}
-                    </div>
+                    {handledFixedLeftColumns.length > 0 && (
+                        <div className={classNames(styles['head-fixed-left'], { [styles['pinged']]: ping['left'] })}>
+                            {handledFixedLeftColumns.map((column) => renderItem(column))}
+                        </div>
+                    )}
 
-                    <div className={styles['head-mid']} style={{ paddingLeft: midLeftPadding, paddingRight: midRightPadding }}>
-                        {handledMidColumns.map((column) => renderItem(column))}
-                    </div>
+                    {handledMidColumns.length > 0 && (
+                        <div className={styles['head-mid']} style={{ paddingLeft: midLeftPadding, paddingRight: midRightPadding }}>
+                            {handledMidColumns.map((column) => renderItem(column))}
+                        </div>
+                    )}
 
-                    <div className={classNames(styles['head-fixed-right'], { [styles['pinged']]: ping['right'] })}>
-                        {handledFixedRightColumns.map((column) => renderItem(column))}
-                        {vScrollBarWidth > 0 && <div className={classNames(styles['head-v-scroll-bar'])} style={{ width: vScrollBarWidth }} />}
-                    </div>
+                    {handledFixedRightColumns.length > 0 && (
+                        <div className={classNames(styles['head-fixed-right'], { [styles['pinged']]: ping['right'] })}>
+                            {handledFixedRightColumns.map((column) => renderItem(column))}
+                            {vScrollBarWidth > 0 && <div className={classNames(styles['head-v-scroll-bar'])} style={{ width: vScrollBarWidth }} />}
+                        </div>
+                    )}
 
                     <div className={styles['head-seize-a-seat']} />
                 </div>

@@ -104,7 +104,7 @@ const TableColumnsConf: ComponentType = forwardRef((props, ref) => {
             <Sortable
                 items={data}
                 setItems={setData}
-                renderItem={(item, { index }) => {
+                renderItem={(item, { index, sortProps }) => {
                     const isStr = typeof item.title === 'string' || typeof item.title === 'number';
 
                     return (
@@ -112,7 +112,9 @@ const TableColumnsConf: ComponentType = forwardRef((props, ref) => {
                             <div className={styles['checkbox']}>
                                 <Checkbox checked={!item.hidden} onChange={(v) => checkedChange(v, index)} />
                             </div>
+
                             <div className={styles['text']}>{item.title}</div>
+
                             <div className={styles['fixed']}>
                                 <span className={styles['label']}>{t1('固定')}</span>
                                 <Select
@@ -123,10 +125,20 @@ const TableColumnsConf: ComponentType = forwardRef((props, ref) => {
                                     onChange={(v) => fixedChange(v, index)}
                                 />
                             </div>
+
                             <div className={styles['width']}>
                                 <span className={styles['label']}>{t1('宽度')}</span>
                                 <input type="number" style={{ width: 85 }} value={item.width} onChange={(e) => widthChange(e.target.value, index)} />
                                 <span className={styles['label']}>{'px'}</span>
+                            </div>
+
+                            <div className={styles['handle']} {...sortProps}>
+                                <svg viewBox="0 0 20 20" width="12">
+                                    <path
+                                        fill="currentColor"
+                                        d="M7 2a2 2 0 1 0 .001 4.001A2 2 0 0 0 7 2zm0 6a2 2 0 1 0 .001 4.001A2 2 0 0 0 7 8zm0 6a2 2 0 1 0 .001 4.001A2 2 0 0 0 7 14zm6-8a2 2 0 1 0-.001-4.001A2 2 0 0 0 13 6zm0 2a2 2 0 1 0 .001 4.001A2 2 0 0 0 13 8zm0 6a2 2 0 1 0 .001 4.001A2 2 0 0 0 13 14z"
+                                    ></path>
+                                </svg>
                             </div>
                         </div>
                     );

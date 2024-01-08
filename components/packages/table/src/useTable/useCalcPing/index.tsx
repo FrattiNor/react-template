@@ -6,10 +6,10 @@ type Opt = {
 
 const useCalcPing = (opt: Opt) => {
     const { bodyRef } = opt;
-    const [pingLeft, setPingLeft] = useState<number>(0);
-    const [pingRight, setPingRight] = useState<number>(0);
+    const [pingLeft, setPingLeft] = useState<boolean>(false);
+    const [pingRight, setPingRight] = useState<boolean>(false);
 
-    const ping: Record<string, number> = {
+    const ping: Record<string, boolean> = {
         left: pingLeft,
         right: pingRight,
     };
@@ -22,11 +22,11 @@ const useCalcPing = (opt: Opt) => {
                 const { scrollWidth, clientWidth, scrollLeft } = bodyRef.current;
 
                 if (scrollWidth === clientWidth) {
-                    setPingLeft(0);
-                    setPingRight(0);
+                    setPingLeft(false);
+                    setPingRight(false);
                 } else {
-                    setPingLeft(scrollLeft);
-                    setPingRight(scrollWidth - clientWidth - scrollLeft);
+                    setPingLeft(scrollLeft > 0);
+                    setPingRight(scrollWidth - clientWidth - scrollLeft > 0);
                 }
             }
         });

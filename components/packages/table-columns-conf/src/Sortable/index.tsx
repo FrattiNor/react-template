@@ -5,16 +5,16 @@ import { useState } from 'react';
 
 type Props<T> = {
     items: T[];
-    renderItem: (v: T, opt: { index: number }) => JSX.Element;
     setItems: (v: T[] | ((v: T[]) => T[])) => void;
     onDragEnd?: (e: DragEndEvent, nextItems: T[]) => void;
+    renderItem: (v: T, opt: { index: number; sortProps: Record<string, any> }) => JSX.Element;
 };
 
 function Sortable<T extends { id: string }>(props: Props<T>) {
     const sensors = useSensors(
         // 增加距离延迟，来可以触发onClick事件
-        useSensor(MouseSensor, { activationConstraint: { distance: 1 } }),
-        useSensor(TouchSensor, { activationConstraint: { distance: 1 } }),
+        useSensor(MouseSensor),
+        useSensor(TouchSensor),
     );
 
     const [activeItem, setActiveItem] = useState<T | null>(null);
@@ -77,14 +77,12 @@ function Sortable<T extends { id: string }>(props: Props<T>) {
         <DndContext sensors={sensors} onDragStart={onDragStart} onDragEnd={onDragEnd}>
             <SortableContext items={items} strategy={verticalListSortingStrategy}>
                 {items.map((item, index) => (
-                    <SortableItem key={item.id} id={item.id}>
-                        {renderItem(item, { index })}
-                    </SortableItem>
+                    <SortableItem key={item.id} id={item.id} renderItem={(sortProps) => renderItem(item, { index, sortProps })} />
                 ))}
             </SortableContext>
 
             <DragOverlay zIndex={99999}>
-                {activeItem && <SortableItem id={activeItem.id}>{renderItem(activeItem, { index: -1 })}</SortableItem>}
+                {activeItem && <SortableItem id={activeItem.id} renderItem={(sortProps) => renderItem(activeItem, { index: -1, sortProps })} />}
             </DragOverlay>
         </DndContext>
     );

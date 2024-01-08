@@ -1,10 +1,13 @@
-import { CSSProperties, FC, PropsWithChildren } from 'react';
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
+import { CSSProperties } from 'react';
 
-type Props = PropsWithChildren<{ id: number | string }>;
+type Props = {
+    id: number | string;
+    renderItem: (sortProps: Record<string, any>) => JSX.Element;
+};
 
-const SortableItem: FC<Props> = ({ id, children }) => {
+const SortableItem = ({ id, renderItem }: Props) => {
     const { attributes, listeners, transform, transition, setNodeRef, isDragging } = useSortable({ id });
 
     const style: CSSProperties = {
@@ -16,8 +19,8 @@ const SortableItem: FC<Props> = ({ id, children }) => {
     };
 
     return (
-        <div ref={setNodeRef} style={style} {...attributes} {...listeners}>
-            {children}
+        <div ref={setNodeRef} style={style}>
+            {renderItem({ ...attributes, ...listeners })}
         </div>
     );
 };

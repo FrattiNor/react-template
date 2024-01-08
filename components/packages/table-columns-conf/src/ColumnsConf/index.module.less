@@ -1,11 +1,10 @@
 .wrapper {
-    gap: 4px;
+    gap: 6px;
     display: flex;
     flex-direction: column;
 
     .item {
         height: 32px;
-        cursor: grab;
         display: flex;
         align-items: center;
         background-color: var(--theme-bg);
@@ -14,8 +13,7 @@
 
         .checkbox {
             font-size: 0;
-            padding-left: 8px;
-            padding-right: 8px;
+            padding: 0 8px;
         }
 
         .text {
@@ -64,6 +62,20 @@
 
             .label {
                 color: var(--theme-second-foreground);
+            }
+        }
+
+        .handle {
+            cursor: grab;
+            margin: 0 8px;
+            padding: 2px 4px;
+            position: relative;
+            transition: background-color 0.3s;
+            color: var(--theme-second-foreground);
+            border-radius: var(--theme-border-radius);
+
+            &:hover {
+                background-color: var(--theme-second-bg);
             }
         }
     }
