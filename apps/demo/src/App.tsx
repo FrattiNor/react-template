@@ -26,7 +26,7 @@ const notification = new NotificationClient();
 
 notification.setConfig({
     duration: 0,
-    placement: 'bottomLeft',
+    placement: 'topRight',
 });
 
 const DemoTable = () => {
@@ -127,7 +127,18 @@ const DemoTable = () => {
                         <Button onClick={() => setRowSelection((v) => !v)}>rowSelection</Button>
                         <Button onClick={() => ref.current?.submit()}>Submit</Button>
                         <Button onClick={() => ref.current?.reset()}>Reset</Button>
-                        <Button onClick={() => notification.open({ message: '123123123123123123123123123123123123123123123123123123123123123' })}>
+                        <Button
+                            onClick={() => {
+                                notification.error({
+                                    message:
+                                        '123123123123123123123123123123123123123123123123123123123123123\n123123123123123123123123123123123123123123123123123123123123123',
+                                });
+                                notification.warning({ message: '123123123123123123123123123123123123123123123123123123123123123' });
+                                notification.info({ message: '123123123123123123123123123123123123123123123123123123123123123' });
+                                notification.success({ message: '123123123123123123123123123123123123123123123123123123123123123' });
+                                notification.open({ message: '123123123123123123123123123123123123123123123123123123123123123' });
+                            }}
+                        >
                             notification
                         </Button>
                     </div>

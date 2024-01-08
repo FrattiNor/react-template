@@ -1,14 +1,25 @@
+import { NotificationRenderQueenItem, NotificationType } from '../../type';
 import { FC, useEffect, useReducer, useRef, useState } from 'react';
-import { NotificationRenderQueenItem } from '../../type';
+import SuccessSvg from './Icons/SuccessSvg';
+import WarningSvg from './Icons/WarningSvg';
 import styles from './index.module.less';
+import CloseSvg from './Icons/CloseSvg';
+import ErrorSvg from './Icons/ErrorSvg';
+import InfoSvg from './Icons/InfoSvg';
 import classNames from 'classnames';
-import CloseSvg from './CloseSvg';
 
 type Status = 'beforeEnter' | 'enter' | 'beforeLeave' | 'leave';
 
 type Props = {
     first: boolean; // 第一条
     item: NotificationRenderQueenItem;
+};
+
+const typeIcon: Record<NotificationType, FC> = {
+    info: InfoSvg,
+    error: ErrorSvg,
+    warning: WarningSvg,
+    success: SuccessSvg,
 };
 
 const Item: FC<Props> = ({ item, first }) => {
@@ -19,7 +30,8 @@ const Item: FC<Props> = ({ item, first }) => {
     const [hover, setHover] = useState(false);
     const rerender = useReducer(() => ({}), {})[1];
     const timeout = useRef<NodeJS.Timeout | null>(null);
-    const { message, duration, dispose, placement } = item;
+    const { type, message, duration, dispose, placement } = item;
+    const Icon = type ? typeIcon[type] : undefined;
 
     const onAnimationEnd = () => {
         if (statusRef.current === 'enter') {
@@ -76,6 +88,11 @@ const Item: FC<Props> = ({ item, first }) => {
             })}
         >
             <div ref={itemRef} className={styles['item']} onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)}>
+                {Icon && (
+                    <div className={styles['icon']}>
+                        <Icon />
+                    </div>
+                )}
                 <div className={styles['message']}>{message}</div>
                 <div className={styles['close-x']} onClick={close}>
                     <CloseSvg />

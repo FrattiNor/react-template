@@ -12,5 +12,8 @@
     },
     "peerDependencies": {
         "@pkg/theme": "workspace:*"
+    },
+    "devDependencies": {
+        "nanoid": "^5.0.4"
     }
 }

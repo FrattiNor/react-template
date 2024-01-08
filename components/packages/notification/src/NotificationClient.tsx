@@ -2,6 +2,7 @@ import { NotificationConfProps, NotificationProps, NotificationRenderQueenItem }
 import NotificationConf from './NotificationConf';
 import Notification from './Notification';
 import ReactDOM from 'react-dom/client';
+import { nanoid } from 'nanoid';
 
 class NotificationClient {
     constructor(props?: NotificationConfProps) {
@@ -65,7 +66,7 @@ class NotificationClient {
     }
 
     open(props: NotificationProps) {
-        const key = `${new Date().valueOf()}`;
+        const key = nanoid();
 
         const item: NotificationRenderQueenItem = {
             key,
