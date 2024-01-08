@@ -1,0 +1,70 @@
+.wrapper {
+    gap: 4px;
+    display: flex;
+    flex-direction: column;
+
+    .item {
+        height: 32px;
+        cursor: grab;
+        display: flex;
+        align-items: center;
+        background-color: var(--theme-bg);
+        border: 1px solid var(--theme-border);
+        border-radius: var(--theme-border-radius);
+
+        .checkbox {
+            font-size: 0;
+            padding-left: 8px;
+            padding-right: 8px;
+        }
+
+        .text {
+            width: 0;
+            flex-grow: 1;
+            overflow: hidden;
+            padding-right: 36px;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
+
+        .fixed {
+            gap: 4px;
+            line-height: 1;
+            padding-right: 36px;
+            align-items: center;
+            display: inline-flex;
+
+            .label {
+                color: var(--theme-second-foreground);
+            }
+        }
+
+        .width {
+            gap: 4px;
+            line-height: 1;
+            padding-right: 16px;
+            align-items: center;
+            display: inline-flex;
+
+            input {
+                margin: 0;
+                padding: 0;
+                height: 24px;
+                outline: none;
+                padding: 0 7px;
+                box-sizing: border-box;
+                border: 1px solid var(--theme-border);
+                border-radius: var(--theme-border-radius);
+
+                &::-webkit-outer-spin-button,
+                &::-webkit-inner-spin-button {
+                    -webkit-appearance: none;
+                }
+            }
+
+            .label {
+                color: var(--theme-second-foreground);
+            }
+        }
+    }
+}
