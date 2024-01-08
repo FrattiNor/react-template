@@ -1,15 +1,20 @@
 .wrapper {
-    gap: 6px;
-    display: flex;
-    flex-direction: column;
+    position: relative;
 
     .item {
-        height: 32px;
         display: flex;
+        padding: 4px 0;
         align-items: center;
         background-color: var(--theme-bg);
-        border: 1px solid var(--theme-border);
         border-radius: var(--theme-border-radius);
+        border-left: 1px solid var(--theme-border);
+        border-right: 1px solid var(--theme-border);
+        border-bottom: 1px solid var(--theme-border);
+
+        &.overlay,
+        &.first-child {
+            border-top: 1px solid var(--theme-border);
+        }
 
         .checkbox {
             font-size: 0;
@@ -50,13 +55,20 @@
                 height: 24px;
                 outline: none;
                 padding: 0 7px;
+                color: inherit;
                 box-sizing: border-box;
+                background-color: transparent;
+                transition: border-color 0.3s;
                 border: 1px solid var(--theme-border);
                 border-radius: var(--theme-border-radius);
 
                 &::-webkit-outer-spin-button,
                 &::-webkit-inner-spin-button {
                     -webkit-appearance: none;
+                }
+
+                &:focus {
+                    border-color: var(--theme-primary);
                 }
             }
 
@@ -66,15 +78,16 @@
         }
 
         .handle {
+            padding: 4px;
             cursor: grab;
             margin: 0 8px;
-            padding: 2px 4px;
             position: relative;
             transition: background-color 0.3s;
             color: var(--theme-second-foreground);
             border-radius: var(--theme-border-radius);
 
-            &:hover {
+            &:hover,
+            &.overlay {
                 background-color: var(--theme-second-bg);
             }
         }

@@ -4,6 +4,7 @@ import { useDefaultData, useResetData, useSubmitData } from './hooks';
 import { useTranslation } from '@pkg/i18n';
 import styles from './index.module.less';
 import Checkbox from '@pkg/checkbox';
+import classNames from 'classnames';
 import Sortable from '../Sortable';
 import { Select } from 'antd';
 
@@ -104,13 +105,18 @@ const TableColumnsConf: ComponentType = forwardRef((props, ref) => {
             <Sortable
                 items={data}
                 setItems={setData}
-                renderItem={(item, { index, sortProps }) => {
+                renderItem={(item, { index, newIndex, wrapperProps, sortProps, overlay }) => {
                     const isStr = typeof item.title === 'string' || typeof item.title === 'number';
 
                     return (
-                        <div key={item.key} className={styles['item']} title={isStr ? `${item.title}` : undefined}>
+                        <div
+                            key={item.key}
+                            {...wrapperProps}
+                            title={isStr ? `${item.title}` : undefined}
+                            className={classNames(styles['item'], { [styles['first-child']]: newIndex === 0, [styles['overlay']]: overlay })}
+                        >
                             <div className={styles['checkbox']}>
-                                <Checkbox checked={!item.hidden} onChange={(v) => checkedChange(v, index)} />
+                                <Checkbox checked={!item.hidden} onChange={(v) => checkedChange(v, index ?? -1)} />
                             </div>
 
                             <div className={styles['text']}>{item.title}</div>
@@ -122,17 +128,22 @@ const TableColumnsConf: ComponentType = forwardRef((props, ref) => {
                                     value={item.fixed}
                                     style={{ width: 85 }}
                                     options={fixedOption}
-                                    onChange={(v) => fixedChange(v, index)}
+                                    onChange={(v) => fixedChange(v, index ?? -1)}
                                 />
                             </div>
 
                             <div className={styles['width']}>
                                 <span className={styles['label']}>{t1('宽度')}</span>
-                                <input type="number" style={{ width: 85 }} value={item.width} onChange={(e) => widthChange(e.target.value, index)} />
+                                <input
+                                    type="number"
+                                    style={{ width: 85 }}
+                                    defaultValue={item.width}
+                                    onChange={(e) => widthChange(e.target.value, index ?? -1)}
+                                />
                                 <span className={styles['label']}>{'px'}</span>
                             </div>
 
-                            <div className={styles['handle']} {...sortProps}>
+                            <div className={classNames(styles['handle'], { [styles['overlay']]: overlay })} {...sortProps}>
                                 <svg viewBox="0 0 20 20" width="12">
                                     <path
                                         fill="currentColor"
