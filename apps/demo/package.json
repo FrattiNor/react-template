@@ -17,7 +17,11 @@
         "@tanstack/react-query": "^5.12.2",
         "@types/stats.js": "^0.17.3",
         "antd": "^5.12.1",
-        "stats.js": "^0.17.0"
+        "stats.js": "^0.17.0",
+        "@dnd-kit/core": "^6.0.8",
+        "@dnd-kit/modifiers": "^6.0.1",
+        "@dnd-kit/sortable": "^7.0.2",
+        "@dnd-kit/utilities": "^3.2.1"
     },
     "sideEffects": [
         "./src/index.module.less"

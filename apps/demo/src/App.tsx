@@ -15,6 +15,7 @@ import { useMemo, useRef, useState } from 'react';
 import { columns, columns2 } from './utils';
 import classNames from 'classnames';
 import useFps from './useFps';
+import { RerenderBeforeSorting } from './stories/2 - Presets/Sortable/1-Vertical.story';
 
 type Item = {
     id: string;
@@ -111,6 +112,7 @@ const DemoTable = () => {
         <ConfigProvider theme={{ token: { borderRadius: 2 }, algorithm: theme === 'light' ? antdTheme.defaultAlgorithm : antdTheme.darkAlgorithm }}>
             <div className={classNames(themeClassName, applyClassName)} style={{ width: '100%', height: '200%' }}>
                 <div style={{ padding: 64 }}>
+                    <RerenderBeforeSorting />
                     <div style={{ height: 200, width: 900, padding: '0 24px' }}>
                         <TableColumnsConf ref={ref} columns={(columnsMap as any)[`${columnsFlag % 3}` as any] as any} />
                     </div>
