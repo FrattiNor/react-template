@@ -34,7 +34,7 @@ const DemoTable = () => {
 
     const dataContext = useTableDataContext();
     const [empty, setEmpty] = useState(false);
-    const [count, setCount] = useState(10000);
+    const [count, setCount] = useState(50000);
     const ref = useRef<TableColumnConfRef>(null);
     const [loading, setLoading] = useState(false);
     const [columnsFlag, setColumnsFlag] = useState(1);

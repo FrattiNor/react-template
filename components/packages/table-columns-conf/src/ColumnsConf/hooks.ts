@@ -1,5 +1,6 @@
+import { useTableDataContext, TableColumnsConfItem } from '@pkg/table';
 import { TableColumnConfProps, TableConfColumn } from '../type';
-import { useTableDataContext, TableFixed } from '@pkg/table';
+import { defaultWidth } from '@pkg/table/src/useTable';
 
 export const useResetData = ({ columns }: TableColumnConfProps) => {
     const getResetData = (): TableConfColumn[] => {
@@ -8,8 +9,8 @@ export const useResetData = ({ columns }: TableColumnConfProps) => {
             id: item.key,
             index: index,
             hidden: false,
-            width: item.width ?? 150,
             fixed: item.fixed ?? 'default',
+            width: item.width ?? defaultWidth,
         }));
 
         return newColumns;
@@ -19,16 +20,16 @@ export const useResetData = ({ columns }: TableColumnConfProps) => {
 };
 
 export const useDefaultData = ({ columns }: TableColumnConfProps) => {
-    const { indexConf, fixedConf, hiddenConf, widthConf } = useTableDataContext();
+    const { columnsConf } = useTableDataContext();
 
     const getDefaultData = (): TableConfColumn[] => {
         const newColumns = [...columns].map((item, index) => ({
             ...item,
             id: item.key,
-            index: indexConf[item.key] ?? index,
-            hidden: hiddenConf[item.key] ?? false,
-            width: widthConf[item.key] ?? item.width ?? 150,
-            fixed: fixedConf[item.key] ?? item.fixed ?? 'default',
+            index: columnsConf[item.key]?.index ?? index,
+            hidden: columnsConf[item.key]?.hidden ?? false,
+            width: columnsConf[item.key]?.width ?? item.width ?? 150,
+            fixed: columnsConf[item.key]?.fixed ?? item.fixed ?? 'default',
         }));
 
         return newColumns;
@@ -38,28 +39,25 @@ export const useDefaultData = ({ columns }: TableColumnConfProps) => {
 };
 
 export const useSubmitData = () => {
-    const { setIndexConf, setFixedConf, setHiddenConf, setWidthConf } = useTableDataContext();
+    const { setColumnsConf } = useTableDataContext();
 
     const submitData = (nextData: TableConfColumn[]) => {
-        const nextWidthConf: Record<string, number> = {};
-        const nextIndexConf: Record<string, number> = {};
-        const nextHiddenConf: Record<string, boolean> = {};
-        const nextFixedConf: Record<string, TableFixed> = {};
+        const nextColumnsConf: Record<string, TableColumnsConfItem> = {};
 
         let index = 0;
 
         nextData.forEach((item) => {
-            nextIndexConf[item.key] = index;
-            nextFixedConf[item.key] = item.fixed;
-            nextWidthConf[item.key] = item.width;
-            nextHiddenConf[item.key] = item.hidden;
+            nextColumnsConf[item.key] = {
+                index,
+                fixed: item.fixed,
+                width: item.width,
+                hidden: item.hidden,
+            };
+
             index++;
         });
 
-        setWidthConf(nextWidthConf);
-        setIndexConf(nextIndexConf);
-        setFixedConf(nextFixedConf);
-        setHiddenConf(nextHiddenConf);
+        setColumnsConf(nextColumnsConf);
     };
 
     return submitData;

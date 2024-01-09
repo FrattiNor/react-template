@@ -1,4 +1,4 @@
-import { TableColumn, TableColumns, TableFixed } from '../../type';
+import { TableColumnsConfItem, TableColumn, TableColumns } from '../../type';
 import { useTableDataContext } from '../../TableDataContext';
 import { useState } from 'react';
 
@@ -18,24 +18,14 @@ type Opt<T> = {
 const useSortColumns = <T>(opt: Opt<T>) => {
     const dataContext = useTableDataContext();
     const { columns, indexColumns, expandableColumns, rowSelectionColumns } = opt;
-    const [_indexConf, _setIndexConf] = useState<Record<string, number>>({});
-    const [_widthConf, _setWidthConf] = useState<Record<string, number>>({});
-    const [_hiddenConf, _setHiddenConf] = useState<Record<string, boolean>>({});
-    const [_fixedConf, _setFixedConf] = useState<Record<string, TableFixed>>({});
-
-    const indexConf = dataContext.indexConf ?? _indexConf;
-    const setIndexConf = dataContext.setIndexConf ?? _setIndexConf;
-    const widthConf = dataContext.widthConf ?? _widthConf;
-    const setWidthConf = dataContext.setWidthConf ?? _setWidthConf;
-    const hiddenConf = dataContext.hiddenConf ?? _hiddenConf;
-    const setHiddenConf = dataContext.setHiddenConf ?? _setHiddenConf;
-    const fixedConf = dataContext.fixedConf ?? _fixedConf;
-    const setFixedConf = dataContext.setFixedConf ?? _setFixedConf;
+    const [_columnsConf, _setColumnsConf] = useState<Record<string, TableColumnsConfItem>>({});
+    const columnsConf = dataContext.columnsConf ?? _columnsConf;
+    const setColumnsConf = dataContext.setColumnsConf ?? _setColumnsConf;
 
     const newColumns: (TableColumn<T> & { index: number })[] = [];
 
     rowSelectionColumns.forEach((item) => {
-        if (!hiddenConf[item.key]) {
+        if (!columnsConf[item.key]?.hidden) {
             newColumns.push({
                 ...item,
                 index: -3,
@@ -44,7 +34,7 @@ const useSortColumns = <T>(opt: Opt<T>) => {
     });
 
     expandableColumns.forEach((item) => {
-        if (!hiddenConf[item.key]) {
+        if (!columnsConf[item.key]?.hidden) {
             newColumns.push({
                 ...item,
                 index: -2,
@@ -53,7 +43,7 @@ const useSortColumns = <T>(opt: Opt<T>) => {
     });
 
     indexColumns.forEach((item) => {
-        if (!hiddenConf[item.key]) {
+        if (!columnsConf[item.key]?.hidden) {
             newColumns.push({
                 ...item,
                 index: -1,
@@ -62,12 +52,15 @@ const useSortColumns = <T>(opt: Opt<T>) => {
     });
 
     columns.forEach((item) => {
-        if (!hiddenConf[item.key]) {
+        if (!columnsConf[item.key]?.hidden) {
+            const confWidth = columnsConf[item.key]?.width;
+
             newColumns.push({
                 ...item,
-                index: indexConf[item.key] ?? 9999,
-                fixed: fixedConf[item.key] ?? item.fixed,
-                width: widthConf[item.key] ?? item.width,
+                width: confWidth ?? item.width,
+                index: columnsConf[item.key]?.index ?? 9999,
+                fixed: columnsConf[item.key]?.fixed ?? item.fixed,
+                flexGrow: typeof confWidth === 'number' ? 0 : item.flexGrow,
             });
         }
     });
@@ -77,7 +70,7 @@ const useSortColumns = <T>(opt: Opt<T>) => {
     // 根据fixed排序后的columns
     const fixedSortedColumns = indexSortedColumns.sort((a, b) => fixedNumMap[a.fixed ?? 'default'] - fixedNumMap[b.fixed ?? 'default']);
 
-    return { sortedColumns: fixedSortedColumns, setIndexConf, setWidthConf, setHiddenConf, setFixedConf };
+    return { sortedColumns: fixedSortedColumns, setColumnsConf };
 };
 
 export default useSortColumns;

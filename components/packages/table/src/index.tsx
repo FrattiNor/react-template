@@ -17,4 +17,5 @@ export type {
     TablePagination,
     TableExpandable,
     TableRowSelection,
+    TableColumnsConfItem,
 } from './type';

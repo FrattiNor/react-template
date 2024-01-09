@@ -77,3 +77,10 @@ export type TableRef = {
     bodyElement: RefObject<HTMLDivElement | null>;
     scrollTo: (conf: ScrollToOptions) => void;
 };
+
+export type TableColumnsConfItem = {
+    index: number;
+    width: number;
+    hidden: boolean;
+    fixed: TableFixed;
+};

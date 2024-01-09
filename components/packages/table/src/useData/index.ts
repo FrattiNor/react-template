@@ -1,4 +1,4 @@
-import { TableFixed, TableRef } from '../type';
+import { TableColumnsConfItem, TableRef } from '../type';
 import { useRef, useState } from 'react';
 
 const useData = () => {
@@ -7,10 +7,11 @@ const useData = () => {
     const headRef = useRef<HTMLDivElement>(null);
     const [expandedRowKeys, setExpandedRowKeys] = useState<string[]>([]);
     const [selectedRowKeys, setSelectedRowKeys] = useState<string[]>([]);
-    const [indexConf, setIndexConf] = useState<Record<string, number>>({});
-    const [widthConf, setWidthConf] = useState<Record<string, number>>({});
-    const [hiddenConf, setHiddenConf] = useState<Record<string, boolean>>({});
-    const [fixedConf, setFixedConf] = useState<Record<string, TableFixed>>({});
+    // const [indexConf, setIndexConf] = useState<Record<string, number>>({});
+    // const [widthConf, setWidthConf] = useState<Record<string, number>>({});
+    // const [hiddenConf, setHiddenConf] = useState<Record<string, boolean>>({});
+    // const [fixedConf, setFixedConf] = useState<Record<string, TableFixed>>({});
+    const [columnsConf, setColumnsConf] = useState<Record<string, TableColumnsConfItem>>({});
 
     return {
         bodyRef,
@@ -20,14 +21,8 @@ const useData = () => {
         setExpandedRowKeys,
         selectedRowKeys,
         setSelectedRowKeys,
-        indexConf,
-        setIndexConf,
-        widthConf,
-        setWidthConf,
-        hiddenConf,
-        setHiddenConf,
-        fixedConf,
-        setFixedConf,
+        columnsConf,
+        setColumnsConf,
     };
 };
 

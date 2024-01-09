@@ -16,12 +16,12 @@ import useCalcPing from './useCalcPing';
 import useVirtual from './useVirtual';
 import { useRef } from 'react';
 
-const useTable = <T extends AnyObj>(props: TableProps<T>) => {
-    const defaultWidth = 150;
-    const defaultFlexGrow = 1;
-    const defaultLineHeight = 36;
-    const defaultAutoScrollTop = true;
+export const defaultWidth = 150;
+export const defaultFlexGrow = 1;
+export const defaultLineHeight = 36;
+export const defaultAutoScrollTop = true;
 
+const useTable = <T extends AnyObj>(props: TableProps<T>) => {
     const dataContext = useTableDataContext();
     const _bodyRef = useRef<HTMLDivElement>(null);
     const _headRef = useRef<HTMLDivElement>(null);
