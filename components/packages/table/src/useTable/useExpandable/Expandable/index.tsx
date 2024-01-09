@@ -12,7 +12,17 @@ const Expandable: FC<Props> = (props) => {
     const expanded = props.expanded ?? _expanded;
     const setExpanded = props.onChange ?? _setExpanded;
 
-    return <div className={classNames(styles['expandable'], { [styles['expanded']]: expanded })} onClick={() => setExpanded(!expanded)} />;
+    return (
+        <div
+            onClick={(e) => {
+                e.stopPropagation();
+                setExpanded(!expanded);
+            }}
+            className={classNames(styles['expandable'], {
+                [styles['expanded']]: expanded,
+            })}
+        />
+    );
 };
 
 export default Expandable;

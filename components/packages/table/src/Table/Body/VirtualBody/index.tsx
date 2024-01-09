@@ -9,7 +9,7 @@ import { FC } from 'react';
 const VirtualBody: FC = () => {
     const { outerProps, innerProps } = useTableContext();
     const { rowKey, rowHeight } = outerProps;
-    const { horizontalTotalSize, midLeftPadding, midRightPadding } = innerProps;
+    const { horizontalTotalSize, midLeftPadding, midRightPadding, clickedRow, setClickedRow } = innerProps;
     const { verticalVirtualItems, verticalTotalSize, verticalDistance, verticalMeasureElement } = innerProps;
     const { handledColumns, handledFixedLeftColumns, handledFixedRightColumns, handledMidColumns } = innerProps;
     const { ping, showDataSource, selectedRowKeysObj, dataSourceLevelMap, resizeActiveKey, resizeReadyKey } = innerProps;
@@ -29,8 +29,10 @@ const VirtualBody: FC = () => {
         const isStr = typeof cellValue === 'string' || typeof cellValue === 'number';
         const cellTitle = isStr ? `${cellValue}` : '';
         const cellStyle = { width, textAlign: align };
+
         const cellClassName = classNames(styles['body-cell'], {
             [styles['resize-active']]: resizeActive,
+            [styles['clicked-row']]: clickedRow === currentRowKey,
         });
 
         if (edit === true && isStr) {
@@ -72,15 +74,18 @@ const VirtualBody: FC = () => {
 
                 if (currentRowData) {
                     const currentRowKey = typeof rowKey === 'function' ? rowKey(currentRowData) : currentRowData[rowKey];
+                    const rowClick = () => setClickedRow((v) => (v !== currentRowKey ? currentRowKey : null));
 
                     return (
                         <div
+                            onClick={rowClick}
                             key={currentRowKey}
                             ref={verticalMeasureElement}
                             data-index={verticalItem.index}
                             style={{ minHeight: isFirst ? rowHeight - 1 : rowHeight }}
                             className={classNames(styles['body-row'], {
                                 [styles['first']]: isFirst,
+
                                 [styles['selected']]: selectedRowKeysObj[currentRowKey],
                             })}
                         >

@@ -4,14 +4,17 @@ import { FC, useState } from 'react';
 import classNames from 'classnames';
 
 const Checkbox: FC<CheckboxProps> = (props) => {
-    const { disabled, indeterminate, className } = props;
     const [_checked, _setChecked] = useState(false);
+    const { disabled, indeterminate, className, onClick } = props;
     const checked = indeterminate ? false : props.checked ?? _checked;
     const setChecked = props.onChange ?? _setChecked;
 
     return (
         <div
-            onClick={() => !disabled && setChecked(!checked)}
+            onClick={(e) => {
+                if (typeof onClick === 'function') onClick(e);
+                if (!disabled) setChecked(!checked);
+            }}
             className={classNames(
                 styles['checkbox'],
                 {

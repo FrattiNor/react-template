@@ -88,6 +88,7 @@ const useRowSelection = <T,>(opt: Opt<T>) => {
                 key={titleKey}
                 checked={titleChecked}
                 disabled={titleDisabled}
+                onClick={(e) => e.stopPropagation()}
                 indeterminate={titleIndeterminate}
                 onChange={(c) => {
                     setSelectedRowKeys(c ? allCouldCheckRowKeys : []);
@@ -123,7 +124,7 @@ const useRowSelection = <T,>(opt: Opt<T>) => {
                 setSelectedRowKeys(Object.keys(nextRowKeysObj));
             };
 
-            return <Checkbox checked={checked} onChange={onChange} {...checkboxProps} />;
+            return <Checkbox checked={checked} onChange={onChange} onClick={(e) => e.stopPropagation()} {...checkboxProps} />;
         };
 
         rowSelectionColumns.push({

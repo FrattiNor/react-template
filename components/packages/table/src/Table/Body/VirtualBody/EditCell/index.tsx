@@ -9,6 +9,7 @@ type Props = {
     rowKey: string;
     cellKey: string;
     className?: string;
+    onClick?: () => void;
     style?: CSSProperties;
     text: string | number;
     textStyle?: CSSProperties;
@@ -85,6 +86,7 @@ const EditCell: FC<Props> = ({ rowKey, cellKey, text, style, className, saveEdit
                     ref={textareaRef}
                     onBlur={() => setEdit(false)}
                     className={styles['textarea']}
+                    onClick={(e) => e.stopPropagation()}
                     onChange={(e) => setValue(e.target.value)}
                 />
             )}

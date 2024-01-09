@@ -4,4 +4,5 @@ export type CheckboxProps = {
     disabled?: boolean;
     indeterminate?: boolean;
     onChange?: (c: boolean) => void;
+    onClick?: React.MouseEventHandler<HTMLDivElement>;
 };

@@ -16,6 +16,7 @@
 
         &:hover .body-cell,
         &.selected .body-cell,
+        .body-cell.clicked-row,
         .body-cell.resize-active,
         &:hover .body-seize-a-seat,
         &.selected .body-seize-a-seat {
@@ -23,6 +24,7 @@
         }
 
         &.selected:hover .body-cell,
+        &.selected .body-cell.clicked-row,
         &.selected .body-cell.resize-active,
         &.selected:hover .body-seize-a-seat {
             background-color: var(--table-row-selected-hover-bg);

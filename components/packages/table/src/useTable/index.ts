@@ -11,6 +11,7 @@ import useHandleProps from './useHandleProps';
 import { AnyObj, TableProps } from '../type';
 import usePagination from './usePagination';
 import useExpandable from './useExpandable';
+import useClickedRow from './useClickedRow';
 import useEditStore from './useEditStore';
 import useCalcPing from './useCalcPing';
 import useVirtual from './useVirtual';
@@ -94,9 +95,12 @@ const useTable = <T extends AnyObj>(props: TableProps<T>) => {
         sortedColumns,
     });
 
+    const clickedRow = useClickedRow();
+
     const innerProps = {
         ...virtual,
         ...editStore,
+        ...clickedRow,
         ...resizeWidth,
         ...handledColumns,
 
