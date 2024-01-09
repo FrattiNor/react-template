@@ -1,6 +1,6 @@
-import { ReactNode, forwardRef, useEffect, useImperativeHandle, useState } from 'react';
-import { TableColumnConfProps, TableColumnConfRef, TableConfColumn } from '../type';
-import { useDefaultData, useResetData, useSubmitData } from './hooks';
+import { ReactNode, forwardRef, useImperativeHandle, useState } from 'react';
+import { TableColumnConfProps, TableColumnConfRef } from '../type';
+import { useResetData, useSubmitData } from './hooks';
 import { useTranslation } from '@pkg/i18n';
 import styles from './index.module.less';
 import Checkbox from '@pkg/checkbox';
@@ -13,18 +13,11 @@ type ComponentType = (props: TableColumnConfProps & React.RefAttributes<TableCol
 const TableColumnsConf: ComponentType = forwardRef((props, ref) => {
     const { t1 } = useTranslation();
 
-    const submitData = useSubmitData();
+    const submitData = useSubmitData(props);
 
     const getResetData = useResetData(props);
 
-    const getDefaultData = useDefaultData(props);
-
-    const [data, setData] = useState<TableConfColumn[]>(getDefaultData);
-
-    // columns 变更触发
-    useEffect(() => {
-        setData(getDefaultData());
-    }, [props.columns]);
+    const [data, setData] = useState(props.columns);
 
     // 暴露提交和重置
     useImperativeHandle(

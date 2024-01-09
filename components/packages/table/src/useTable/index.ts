@@ -2,10 +2,10 @@ import useBodyResizeObserver from './useBodyResizeObserver';
 import useBodyScrollObserver from './useBodyScrollObserver';
 import useCalcScrollBarWidth from './useCalcScrollBarWidth';
 import { useTableDataContext } from '../TableDataContext';
+import useSortConfColumns from './useSortConfColumns';
 import useChangeScrollTop from './useChangeScrollTop';
 import useHandleColumns from './useHandleColumns';
 import useRowSelection from './useRowSelection';
-import useSortColumns from './useSortColumns';
 import useResizeWidth from './useResizeWidth';
 import useHandleProps from './useHandleProps';
 import { AnyObj, TableProps } from '../type';
@@ -29,7 +29,7 @@ const useTable = <T extends AnyObj>(props: TableProps<T>) => {
     const headRef = dataContext?.headRef ?? _headRef;
 
     // props and auto scrollTop
-    const { handledProps, isEmpty } = useHandleProps(props, { defaultLineHeight, defaultAutoScrollTop });
+    const { handledProps, isEmpty } = useHandleProps(props);
 
     // 分页
     const { pagination, sizedDataSource, indexColumns } = usePagination({ handledProps });
@@ -44,7 +44,7 @@ const useTable = <T extends AnyObj>(props: TableProps<T>) => {
     const { selectedRowKeysObj, rowSelectionColumns } = useRowSelection({ handledProps, totalDataSource });
 
     //  整合后排序的 columns
-    const { sortedColumns } = useSortColumns({
+    const { sortedColumns, columnsConf, setColumnsConf } = useSortConfColumns({
         indexColumns,
         expandableColumns,
         rowSelectionColumns,
@@ -81,7 +81,6 @@ const useTable = <T extends AnyObj>(props: TableProps<T>) => {
     const virtual = useVirtual({
         bodyRef,
         handledProps,
-        defaultWidth,
         sortedColumns,
         showDataSource,
         bodyResizeObserver,
@@ -92,9 +91,7 @@ const useTable = <T extends AnyObj>(props: TableProps<T>) => {
     const handledColumns = useHandleColumns({
         virtual,
         resizeWidth,
-        defaultWidth,
         sortedColumns,
-        defaultFlexGrow,
     });
 
     const innerProps = {
@@ -106,7 +103,10 @@ const useTable = <T extends AnyObj>(props: TableProps<T>) => {
         ping,
         isEmpty,
         pagination,
+        columnsConf,
+        indexColumns,
         showDataSource,
+        setColumnsConf,
         vScrollBarWidth,
         selectedRowKeysObj,
         dataSourceLevelMap,

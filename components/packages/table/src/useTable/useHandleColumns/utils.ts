@@ -1,9 +1,10 @@
+import { defaultFlexGrow, defaultWidth } from '../index';
 import { HandledColumn, TableColumn } from '../../type';
 import { CSSProperties } from 'react';
 import { Opt } from './index';
 
 const getHandledColumns = <T>(opt: Opt<T>) => {
-    const { sortedColumns, defaultWidth, defaultFlexGrow, resizeWidth, virtual } = opt;
+    const { sortedColumns, resizeWidth, virtual } = opt;
     const { resizeActiveKey, resizeActiveWidth, resized } = resizeWidth;
     const { horizontalRange, horizontalItemSizeCache } = virtual;
 

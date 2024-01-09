@@ -1,4 +1,5 @@
 import { CSSProperties, ReactNode, RefObject } from 'react';
+import useTable from './useTable';
 
 export type AnyObj = Record<string, any>;
 
@@ -72,10 +73,13 @@ export type HandledColumn<T> = Omit<TableColumn<T>, 'width' | 'flexGrow'> & {
     measureStyle: CSSProperties;
 };
 
+export type TableInstance<T extends AnyObj> = ReturnType<typeof useTable<T>>;
+
 export type TableRef = {
+    scrollTo: (conf: ScrollToOptions) => void;
     headElement: RefObject<HTMLDivElement | null>;
     bodyElement: RefObject<HTMLDivElement | null>;
-    scrollTo: (conf: ScrollToOptions) => void;
+    getTableInstance: <T extends AnyObj>() => TableInstance<T>;
 };
 
 export type TableColumnsConfItem = {

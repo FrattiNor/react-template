@@ -4,11 +4,11 @@ import { BodyScrollObserver } from '../useBodyScrollObserver';
 import { useVirtualizer } from '@tanstack/react-virtual';
 import { HandledProps } from '../useHandleProps';
 import { TableColumns } from '../../type';
+import { defaultWidth } from '../index';
 import { RefObject } from 'react';
 
 type Opt<T> = {
     showDataSource: T[];
-    defaultWidth: number;
     handledProps: HandledProps<T>;
     sortedColumns: TableColumns<T>;
     bodyResizeObserver: BodyResizeObserver;
@@ -19,7 +19,7 @@ type Opt<T> = {
 type ItemSizeCache = Map<number | string, number>;
 
 const useVirtual = <T>(opt: Opt<T>) => {
-    const { bodyRef, sortedColumns, showDataSource, defaultWidth, handledProps, bodyResizeObserver, bodyScrollObserver } = opt;
+    const { bodyRef, sortedColumns, showDataSource, handledProps, bodyResizeObserver, bodyScrollObserver } = opt;
     const { rowKey, rowHeight, calcRowHeight } = handledProps;
 
     // 竖向虚拟

@@ -17,15 +17,12 @@ export const TableContextHoc = (Component: FC) => {
         const dataContext = useTableDataContext();
         const tableRef = ref ?? dataContext.tableRef;
 
-        useImperativeHandle(
-            tableRef,
-            () => ({
-                headElement: value.headRef,
-                bodyElement: value.bodyRef,
-                scrollTo: (conf: ScrollToOptions) => value.bodyRef.current?.scrollTo(conf),
-            }),
-            [],
-        );
+        useImperativeHandle(tableRef, () => ({
+            headElement: value.headRef,
+            bodyElement: value.bodyRef,
+            getTableInstance: () => value as any,
+            scrollTo: (conf: ScrollToOptions) => value.bodyRef.current?.scrollTo(conf),
+        }));
 
         return <TableContext.Provider value={value}>{<Component />}</TableContext.Provider>;
     });

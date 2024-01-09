@@ -5,8 +5,6 @@ import { TableColumns } from '../../type';
 
 export type Opt<T> = {
     virtual: VirtualCore;
-    defaultWidth: number;
-    defaultFlexGrow: number;
     resizeWidth: ResizeWidth;
     sortedColumns: TableColumns<T>;
 };

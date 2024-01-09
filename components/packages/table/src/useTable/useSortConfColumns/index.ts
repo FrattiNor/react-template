@@ -15,7 +15,7 @@ type Opt<T> = {
     rowSelectionColumns: TableColumns<T>;
 };
 
-const useSortColumns = <T>(opt: Opt<T>) => {
+const useSortConfColumns = <T>(opt: Opt<T>) => {
     const dataContext = useTableDataContext();
     const { columns, indexColumns, expandableColumns, rowSelectionColumns } = opt;
     const [_columnsConf, _setColumnsConf] = useState<Record<string, TableColumnsConfItem>>({});
@@ -42,16 +42,7 @@ const useSortColumns = <T>(opt: Opt<T>) => {
         }
     });
 
-    indexColumns.forEach((item) => {
-        if (!columnsConf[item.key]?.hidden) {
-            newColumns.push({
-                ...item,
-                index: -1,
-            });
-        }
-    });
-
-    columns.forEach((item) => {
+    [...indexColumns, ...columns].forEach((item) => {
         if (!columnsConf[item.key]?.hidden) {
             const confWidth = columnsConf[item.key]?.width;
 
@@ -70,7 +61,7 @@ const useSortColumns = <T>(opt: Opt<T>) => {
     // 根据fixed排序后的columns
     const fixedSortedColumns = indexSortedColumns.sort((a, b) => fixedNumMap[a.fixed ?? 'default'] - fixedNumMap[b.fixed ?? 'default']);
 
-    return { sortedColumns: fixedSortedColumns, setColumnsConf };
+    return { sortedColumns: fixedSortedColumns, columnsConf, setColumnsConf };
 };
 
-export default useSortColumns;
+export default useSortConfColumns;

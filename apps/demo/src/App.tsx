@@ -8,6 +8,8 @@ import {
     useTableDataContext,
     TableDataContextHoc,
     NotificationClient,
+    TableRef,
+    getTableConfColumns,
 } from '@react/components';
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
 import { Button, ConfigProvider, Select, theme as antdTheme } from 'antd';
@@ -31,15 +33,16 @@ notification.setConfig({
 
 const DemoTable = () => {
     useFps();
-
+    const tableRef = useRef<TableRef>(null);
     const dataContext = useTableDataContext();
     const [empty, setEmpty] = useState(false);
     const [count, setCount] = useState(50000);
-    const ref = useRef<TableColumnConfRef>(null);
     const [loading, setLoading] = useState(false);
     const [columnsFlag, setColumnsFlag] = useState(1);
     const [pagination, setPagination] = useState(true);
     const [expandable, setExpandable] = useState(true);
+    const [renderConf, setRenderConf] = useState(false);
+    const tableConfRef = useRef<TableColumnConfRef>(null);
     const [rowSelection, setRowSelection] = useState(true);
     const { theme, themeClassName, applyClassName, setTheme } = useTheme();
 
@@ -112,7 +115,18 @@ const DemoTable = () => {
             <div className={classNames(themeClassName, applyClassName)} style={{ width: '100%', height: '200%' }}>
                 <div style={{ padding: 64 }}>
                     <div style={{ width: 900, padding: '0 24px' }}>
-                        <TableColumnsConf ref={ref} columns={(columnsMap as any)[`${columnsFlag % 3}` as any] as any} />
+                        {renderConf && (
+                            <TableColumnsConf
+                                ref={tableConfRef}
+                                columns={getTableConfColumns(tableRef.current?.getTableInstance() as any)}
+                                setColumnsConf={
+                                    tableRef.current?.getTableInstance().innerProps.setColumnsConf ??
+                                    (() => {
+                                        //
+                                    })
+                                }
+                            />
+                        )}
                     </div>
 
                     <div style={{ padding: '24px 24px 0 24px', width: 900, display: 'flex', flexWrap: 'wrap', gap: 16 }}>
@@ -125,8 +139,9 @@ const DemoTable = () => {
                         <Button onClick={() => setPagination((v) => !v)}>pagination</Button>
                         <Button onClick={() => setExpandable((v) => !v)}>expandable</Button>
                         <Button onClick={() => setRowSelection((v) => !v)}>rowSelection</Button>
-                        <Button onClick={() => ref.current?.submit()}>Submit</Button>
-                        <Button onClick={() => ref.current?.reset()}>Reset</Button>
+                        <Button onClick={() => setRenderConf((v) => !v)}>renderConf</Button>
+                        <Button onClick={() => tableConfRef.current?.submit()}>Submit</Button>
+                        <Button onClick={() => tableConfRef.current?.reset()}>Reset</Button>
                         <Button
                             onClick={() => {
                                 notification.error({
@@ -141,6 +156,7 @@ const DemoTable = () => {
                         >
                             notification
                         </Button>
+                        <Button onClick={() => console.log(tableRef.current?.getTableInstance())}>showTable</Button>
                         <Select
                             open
                             style={{ width: 85 }}
@@ -155,6 +171,7 @@ const DemoTable = () => {
                         <Table
                             showIndex
                             rowKey="id"
+                            ref={tableRef}
                             pagination={pagination}
                             expandable={expandable}
                             rowSelection={rowSelection ? { getCheckboxProps: (item) => ({ disabled: item.id === '1' }) } : false}

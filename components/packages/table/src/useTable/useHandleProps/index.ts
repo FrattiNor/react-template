@@ -1,13 +1,7 @@
+import { defaultAutoScrollTop, defaultLineHeight } from '../index';
 import { TableProps } from '../../type';
 
-type Opt = {
-    defaultLineHeight: number;
-    defaultAutoScrollTop: boolean;
-};
-
-const useHandleProps = <T>(props: TableProps<T>, opt: Opt) => {
-    const { defaultAutoScrollTop, defaultLineHeight } = opt;
-
+const useHandleProps = <T>(props: TableProps<T>) => {
     const isEmpty = (props.dataSource || [])?.length === 0;
 
     const handledProps = {

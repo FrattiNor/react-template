@@ -1,6 +1,6 @@
-import { useTableDataContext, TableColumnsConfItem } from '@pkg/table';
 import { TableColumnConfProps, TableConfColumn } from '../type';
 import { defaultWidth } from '@pkg/table/src/useTable';
+import { TableColumnsConfItem } from '@pkg/table';
 
 export const useResetData = ({ columns }: TableColumnConfProps) => {
     const getResetData = (): TableConfColumn[] => {
@@ -19,28 +19,7 @@ export const useResetData = ({ columns }: TableColumnConfProps) => {
     return getResetData;
 };
 
-export const useDefaultData = ({ columns }: TableColumnConfProps) => {
-    const { columnsConf } = useTableDataContext();
-
-    const getDefaultData = (): TableConfColumn[] => {
-        const newColumns = [...columns].map((item, index) => ({
-            ...item,
-            id: item.key,
-            index: columnsConf[item.key]?.index ?? index,
-            hidden: columnsConf[item.key]?.hidden ?? false,
-            width: columnsConf[item.key]?.width ?? item.width ?? 150,
-            fixed: columnsConf[item.key]?.fixed ?? item.fixed ?? 'default',
-        }));
-
-        return newColumns;
-    };
-
-    return getDefaultData;
-};
-
-export const useSubmitData = () => {
-    const { setColumnsConf } = useTableDataContext();
-
+export const useSubmitData = ({ setColumnsConf }: TableColumnConfProps) => {
     const submitData = (nextData: TableConfColumn[]) => {
         const nextColumnsConf: Record<string, TableColumnsConfItem> = {};
 
