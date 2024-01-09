@@ -10,13 +10,14 @@ const fixedNumMap = {
 
 type Opt<T> = {
     columns: TableColumns<T>;
+    indexColumns: TableColumns<T>;
     expandableColumns: TableColumns<T>;
     rowSelectionColumns: TableColumns<T>;
 };
 
 const useSortColumns = <T>(opt: Opt<T>) => {
     const dataContext = useTableDataContext();
-    const { columns, expandableColumns, rowSelectionColumns } = opt;
+    const { columns, indexColumns, expandableColumns, rowSelectionColumns } = opt;
     const [_indexConf, _setIndexConf] = useState<Record<string, number>>({});
     const [_widthConf, _setWidthConf] = useState<Record<string, number>>({});
     const [_hiddenConf, _setHiddenConf] = useState<Record<string, boolean>>({});
@@ -37,12 +38,21 @@ const useSortColumns = <T>(opt: Opt<T>) => {
         if (!hiddenConf[item.key]) {
             newColumns.push({
                 ...item,
-                index: -2,
+                index: -3,
             });
         }
     });
 
     expandableColumns.forEach((item) => {
+        if (!hiddenConf[item.key]) {
+            newColumns.push({
+                ...item,
+                index: -2,
+            });
+        }
+    });
+
+    indexColumns.forEach((item) => {
         if (!hiddenConf[item.key]) {
             newColumns.push({
                 ...item,

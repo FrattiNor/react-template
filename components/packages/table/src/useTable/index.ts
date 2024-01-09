@@ -45,9 +45,10 @@ const useTable = <T extends AnyObj>(props: TableProps<T>) => {
 
     //  整合后排序的 columns
     const { sortedColumns } = useSortColumns({
-        columns: [...indexColumns, ...handledProps.columns],
-        rowSelectionColumns,
+        indexColumns,
         expandableColumns,
+        rowSelectionColumns,
+        columns: handledProps.columns,
     });
 
     //  title resize
