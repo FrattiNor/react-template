@@ -9,7 +9,7 @@ const Measure: FC = () => {
     return (
         <div className={styles['measure']}>
             {handledColumns.map(({ key, measureStyle }, index) => {
-                return <div key={key} data-index={index} ref={horizontalMeasureElement} className={styles['measure-item']} style={measureStyle} />;
+                return <div key={key} data-index={index} style={measureStyle} ref={horizontalMeasureElement} className={styles['measure-item']} />;
             })}
         </div>
     );

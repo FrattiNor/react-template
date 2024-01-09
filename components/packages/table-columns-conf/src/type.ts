@@ -1,5 +1,4 @@
 import { TableColumn, TableFixed, TableColumnsConfItem } from '@pkg/table';
-import { Dispatch, SetStateAction } from 'react';
 
 export type TableConfColumn = Omit<TableColumn<any>, 'fixed' | 'width'> & {
     id: string;
@@ -13,7 +12,7 @@ export type TableConfColumnData = Record<string, TableConfColumn[]>;
 
 export type TableColumnConfProps = {
     columns: TableConfColumn[];
-    setColumnsConf: Dispatch<SetStateAction<Record<string, TableColumnsConfItem>>>;
+    setColumnsConf: (v: Record<string, TableColumnsConfItem>) => void;
 };
 
 export type TableColumnConfRef = {

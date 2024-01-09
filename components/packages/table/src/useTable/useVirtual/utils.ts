@@ -60,7 +60,8 @@ export const measureElement = <TItemElement extends Element>(
         }
     }
 
-    return element.getBoundingClientRect()[instance.options.horizontal ? 'width' : 'height'];
+    const size = element.getBoundingClientRect()[instance.options.horizontal ? 'width' : 'height'];
+    return size;
 };
 
 export const measureElement2 = <TItemElement extends Element>(
@@ -71,7 +72,6 @@ export const measureElement2 = <TItemElement extends Element>(
     if (entry?.borderBoxSize) {
         const box = entry.borderBoxSize[0];
         if (box) {
-            console.log(box);
             const size = Math.round(box[instance.options.horizontal ? 'inlineSize' : 'blockSize']);
             return size;
         }

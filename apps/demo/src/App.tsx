@@ -5,8 +5,6 @@ import {
     TableColumnsConf,
     TableColumnConfRef,
     Table,
-    useTableDataContext,
-    TableDataContextHoc,
     NotificationClient,
     TableRef,
     getTableConfColumns,
@@ -34,7 +32,6 @@ notification.setConfig({
 const DemoTable = () => {
     useFps();
     const tableRef = useRef<TableRef>(null);
-    const dataContext = useTableDataContext();
     const [empty, setEmpty] = useState(false);
     const [count, setCount] = useState(50000);
     const [loading, setLoading] = useState(false);
@@ -95,7 +92,7 @@ const DemoTable = () => {
     });
 
     const scroll = () => {
-        dataContext.tableRef.current?.scrollTo({ top: 100, left: 100, behavior: 'smooth' });
+        tableRef.current?.scrollTo({ top: 100, left: 100, behavior: 'smooth' });
     };
 
     const reload = () => {
@@ -186,4 +183,4 @@ const DemoTable = () => {
     );
 };
 
-export default ThemeHoc(TableDataContextHoc(DemoTable));
+export default ThemeHoc(DemoTable);

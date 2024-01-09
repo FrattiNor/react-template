@@ -17,10 +17,10 @@ type Opt<T> = {
 
 const useSortConfColumns = <T>(opt: Opt<T>) => {
     const dataContext = useTableDataContext();
-    const { columns, indexColumns, expandableColumns, rowSelectionColumns } = opt;
     const [_columnsConf, _setColumnsConf] = useState<Record<string, TableColumnsConfItem>>({});
     const columnsConf = dataContext.columnsConf ?? _columnsConf;
     const setColumnsConf = dataContext.setColumnsConf ?? _setColumnsConf;
+    const { columns, indexColumns, expandableColumns, rowSelectionColumns } = opt;
 
     const newColumns: (TableColumn<T> & { index: number })[] = [];
 
