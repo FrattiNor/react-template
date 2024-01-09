@@ -1,4 +1,5 @@
 import { MouseEventHandler, useEffect, useRef, useState } from 'react';
+import { HandledProps } from '../useHandleProps';
 
 // 避免触发一些事件导致mouse无法触发
 function pauseEvent(e: Event) {
@@ -12,7 +13,13 @@ function pauseEvent(e: Event) {
 type ResizeTarget = { clientWidth: number; pageX: number; key: string };
 type ResizeActive = { width: number; key: string };
 
-const useResizeWidth = () => {
+type Opt<T> = {
+    handledProps: HandledProps<T>;
+};
+
+const useResizeWidth = <T,>(opt: Opt<T>) => {
+    const { handledProps } = opt;
+    const { onResizeEnd } = handledProps;
     const resizedRef = useRef(false);
     const [resizeTarget, setResizeTarget] = useState<null | ResizeTarget>(null);
     const [resizeActive, setResizeActive] = useState<null | ResizeActive>(null);
@@ -48,6 +55,9 @@ const useResizeWidth = () => {
                 pauseEvent(e);
                 setResizeActive(null);
                 setResizeTarget(null);
+                if (typeof onResizeEnd === 'function') {
+                    onResizeEnd();
+                }
             };
 
             document.body.addEventListener('mouseup', mouseUp);

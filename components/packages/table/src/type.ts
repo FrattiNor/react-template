@@ -60,6 +60,7 @@ export type TableProps<T> = {
     calcRowHeight?: number;
     autoScrollTop?: boolean;
     columns: TableColumns<T>;
+    onResizeEnd?: () => void;
     showIndex?: TableIndex | boolean;
     rowKey: keyof T | ((v: T) => string);
     expandable?: TableExpandable | boolean; // 处理boolean
@@ -84,7 +85,6 @@ export type TableRef = {
 
 export type TableColumnsConfItem = {
     index: number;
-    width: number;
     hidden: boolean;
     fixed: TableFixed;
 };

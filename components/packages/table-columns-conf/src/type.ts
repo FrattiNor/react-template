@@ -1,17 +1,17 @@
 import { TableColumn, TableFixed, TableColumnsConfItem } from '@pkg/table';
 
-export type TableConfColumn = Omit<TableColumn<any>, 'fixed' | 'width'> & {
+export type TableConfColumn = Omit<TableColumn<any>, 'fixed'> & {
     id: string;
     index: number;
     hidden: boolean;
     fixed: TableFixed;
-    width: number;
 };
 
 export type TableConfColumnData = Record<string, TableConfColumn[]>;
 
 export type TableColumnConfProps = {
     columns: TableConfColumn[];
+    defaultColumns: TableConfColumn[];
     setColumnsConf: (v: Record<string, TableColumnsConfItem>) => void;
 };
 

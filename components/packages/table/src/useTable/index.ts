@@ -4,7 +4,6 @@ import useCalcScrollBarWidth from './useCalcScrollBarWidth';
 import { useTableDataContext } from '../TableDataContext';
 import useSortConfColumns from './useSortConfColumns';
 import useChangeScrollTop from './useChangeScrollTop';
-import useSetColumnsConf from './useSetColumnsConf';
 import useHandleColumns from './useHandleColumns';
 import useRowSelection from './useRowSelection';
 import useResizeWidth from './useResizeWidth';
@@ -53,7 +52,7 @@ const useTable = <T extends AnyObj>(props: TableProps<T>) => {
     });
 
     //  title resize
-    const resizeWidth = useResizeWidth();
+    const resizeWidth = useResizeWidth({ handledProps });
 
     // ping
     const { calcPing, ping } = useCalcPing({ bodyRef });
@@ -95,9 +94,6 @@ const useTable = <T extends AnyObj>(props: TableProps<T>) => {
         sortedColumns,
     });
 
-    // 改变列配置前修改横向宽度缓存
-    const { newSetColumnsConf } = useSetColumnsConf({ setColumnsConf, virtual });
-
     const innerProps = {
         ...virtual,
         ...editStore,
@@ -113,7 +109,7 @@ const useTable = <T extends AnyObj>(props: TableProps<T>) => {
         vScrollBarWidth,
         selectedRowKeysObj,
         dataSourceLevelMap,
-        setColumnsConf: newSetColumnsConf,
+        setColumnsConf,
     };
 
     const outerProps = handledProps;

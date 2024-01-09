@@ -8,6 +8,7 @@ import {
     NotificationClient,
     TableRef,
     getTableConfColumns,
+    getDefaultTableConfColumns,
 } from '@react/components';
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
 import { Button, ConfigProvider, Select, theme as antdTheme } from 'antd';
@@ -116,12 +117,8 @@ const DemoTable = () => {
                             <TableColumnsConf
                                 ref={tableConfRef}
                                 columns={getTableConfColumns(tableRef.current?.getTableInstance() as any)}
-                                setColumnsConf={
-                                    tableRef.current?.getTableInstance().innerProps.setColumnsConf ??
-                                    (() => {
-                                        //
-                                    })
-                                }
+                                defaultColumns={getDefaultTableConfColumns(tableRef.current?.getTableInstance() as any)}
+                                setColumnsConf={tableRef.current?.getTableInstance().innerProps.setColumnsConf as any}
                             />
                         )}
                     </div>
@@ -175,6 +172,9 @@ const DemoTable = () => {
                             loading={query.isFetching || loading}
                             dataSource={empty ? undefined : query.data}
                             columns={(columnsMap as any)[`${columnsFlag % 3}` as any] as any}
+                            onResizeEnd={() => {
+                                console.log(tableRef.current?.getTableInstance().innerProps.horizontalItemSizeCache);
+                            }}
                         />
                     </div>
                 </div>

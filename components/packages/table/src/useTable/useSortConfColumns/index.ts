@@ -44,14 +44,10 @@ const useSortConfColumns = <T>(opt: Opt<T>) => {
 
     [...indexColumns, ...columns].forEach((item) => {
         if (!columnsConf[item.key]?.hidden) {
-            const confWidth = columnsConf[item.key]?.width;
-
             newColumns.push({
                 ...item,
-                width: confWidth ?? item.width,
                 index: columnsConf[item.key]?.index ?? 9999,
                 fixed: columnsConf[item.key]?.fixed ?? item.fixed,
-                flexGrow: typeof confWidth === 'number' ? 0 : item.flexGrow,
             });
         }
     });

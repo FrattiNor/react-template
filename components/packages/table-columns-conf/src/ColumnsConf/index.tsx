@@ -1,8 +1,8 @@
 import { ReactNode, forwardRef, useImperativeHandle, useState } from 'react';
 import { TableColumnConfProps, TableColumnConfRef } from '../type';
-import { useResetData, useSubmitData } from './hooks';
 import { useTranslation } from '@pkg/i18n';
 import styles from './index.module.less';
+import { useSubmitData } from './hooks';
 import Checkbox from '@pkg/checkbox';
 import classNames from 'classnames';
 import Sortable from '../Sortable';
@@ -15,8 +15,6 @@ const TableColumnsConf: ComponentType = forwardRef((props, ref) => {
 
     const submitData = useSubmitData(props);
 
-    const getResetData = useResetData(props);
-
     const [data, setData] = useState(props.columns);
 
     // 暴露提交和重置
@@ -27,7 +25,7 @@ const TableColumnsConf: ComponentType = forwardRef((props, ref) => {
                 submitData(data);
             },
             reset: () => {
-                setData(getResetData());
+                setData(props.defaultColumns);
             },
         }),
         [data],
@@ -55,21 +53,6 @@ const TableColumnsConf: ComponentType = forwardRef((props, ref) => {
                 oldData[index] = {
                     ...currentItem,
                     hidden: !show,
-                };
-                return [...oldData];
-            } else {
-                return oldData;
-            }
-        });
-    };
-
-    const widthChange = (v: string, index: number) => {
-        setData((oldData) => {
-            const currentItem = oldData[index];
-            if (currentItem) {
-                oldData[index] = {
-                    ...currentItem,
-                    width: Number(v),
                 };
                 return [...oldData];
             } else {
@@ -123,17 +106,6 @@ const TableColumnsConf: ComponentType = forwardRef((props, ref) => {
                                     options={fixedOption}
                                     onChange={(v) => fixedChange(v, index ?? -1)}
                                 />
-                            </div>
-
-                            <div className={styles['width']}>
-                                <span className={styles['label']}>{t1('宽度')}</span>
-                                <input
-                                    type="number"
-                                    style={{ width: 85 }}
-                                    defaultValue={item.width}
-                                    onChange={(e) => widthChange(e.target.value, index ?? -1)}
-                                />
-                                <span className={styles['label']}>{'px'}</span>
                             </div>
 
                             <div className={classNames(styles['handle'], { [styles['overlay']]: overlay })} {...sortProps}>
