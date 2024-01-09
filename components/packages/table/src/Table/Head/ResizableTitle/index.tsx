@@ -14,13 +14,23 @@ type Props = PropsWithChildren<{
 const ResizableTitle: FC<Props> = (props) => {
     const { innerProps } = useTableContext();
     const { cellKey, title, style, className, children, resize = true } = props;
-    const { onResizeStart, resizeActiveKey, addHeadHover, removeHeadHover } = innerProps;
+    const { onResizeStart, resizeActiveKey, colHoverObj, addColHover, removeColHover } = innerProps;
     const noResizeActive = !resizeActiveKey;
     const resizeActive = resizeActiveKey === cellKey;
 
     if (!resize) {
         return (
-            <div title={title} style={style} className={className}>
+            <div
+                title={title}
+                style={style}
+                onMouseEnter={() => addColHover(cellKey)}
+                onMouseLeave={() => removeColHover(cellKey)}
+                className={classNames(className, styles['resize-head-cell'], {
+                    [styles['col-hover']]: colHoverObj[cellKey],
+                    [styles['resize-active']]: resizeActive,
+                    [styles['no-resize-active']]: noResizeActive,
+                })}
+            >
                 {children}
             </div>
         );
@@ -30,9 +40,10 @@ const ResizableTitle: FC<Props> = (props) => {
         <div
             title={title}
             style={style}
-            onMouseEnter={() => addHeadHover(cellKey)}
-            onMouseLeave={() => removeHeadHover(cellKey)}
+            onMouseEnter={() => addColHover(cellKey)}
+            onMouseLeave={() => removeColHover(cellKey)}
             className={classNames(className, styles['resize-head-cell'], {
+                [styles['col-hover']]: colHoverObj[cellKey],
                 [styles['resize-active']]: resizeActive,
                 [styles['no-resize-active']]: noResizeActive,
             })}

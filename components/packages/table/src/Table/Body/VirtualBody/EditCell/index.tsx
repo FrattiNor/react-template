@@ -13,9 +13,11 @@ type Props = {
     text: string | number;
     textStyle?: CSSProperties;
     saveEdit: (v: string) => void;
+    onMouseEnter?: () => void;
+    onMouseLeave?: () => void;
 };
 
-const EditCell: FC<Props> = ({ rowKey, cellKey, text, style, className, saveEdit }) => {
+const EditCell: FC<Props> = ({ rowKey, cellKey, text, style, className, saveEdit, onMouseEnter, onMouseLeave }) => {
     const key = `${cellKey}-${rowKey}`;
     const { innerProps } = useTableContext();
     const textareaRef = useRef<HTMLTextAreaElement>(null);
@@ -65,7 +67,14 @@ const EditCell: FC<Props> = ({ rowKey, cellKey, text, style, className, saveEdit
     });
 
     return (
-        <div className={className} style={style} title={getShowValue(value)} onDoubleClick={() => setEdit(true)}>
+        <div
+            style={style}
+            className={className}
+            title={getShowValue(value)}
+            onMouseEnter={onMouseEnter}
+            onMouseLeave={onMouseLeave}
+            onDoubleClick={() => setEdit(true)}
+        >
             <div className={classNames(styles['body-cell-edit-str'], { [styles['edit']]: isEdit })}>{getShowValue(value)}</div>
 
             {isEdit && <div className={styles['border']} />}

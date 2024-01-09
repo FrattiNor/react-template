@@ -19,14 +19,14 @@
         .body-cell.resize-active,
         &:hover .body-seize-a-seat,
         &.selected .body-seize-a-seat,
-        .body-cell.no-resize-active.head-hover {
+        .body-cell.no-resize-active.col-hover {
             background-color: var(--table-row-hover-bg);
         }
 
         &.selected:hover .body-cell,
         &.selected .body-cell.resize-active,
         &.selected:hover .body-seize-a-seat,
-        &.selected .body-cell.no-resize-active.head-hover {
+        &.selected .body-cell.no-resize-active.col-hover {
             background-color: var(--table-row-selected-hover-bg);
         }
 
@@ -56,7 +56,7 @@
             flex-grow: 1;
             position: relative;
             background-color: var(--theme-bg);
-            transition: background-color 0.3s;
+            // transition: background-color 0.3s;
         }
 
         .body-cell {
@@ -65,7 +65,7 @@
             position: relative;
             align-items: center;
             background-color: var(--theme-bg);
-            transition: background-color 0.3s;
+            // transition: background-color 0.3s;
 
             .body-cell-str {
                 width: 100%;

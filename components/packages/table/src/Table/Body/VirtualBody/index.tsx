@@ -9,10 +9,10 @@ import { FC } from 'react';
 const VirtualBody: FC = () => {
     const { outerProps, innerProps } = useTableContext();
     const { rowKey, rowHeight } = outerProps;
-    const { horizontalTotalSize, midLeftPadding, midRightPadding, headHoverObj } = innerProps;
+    const { horizontalTotalSize, midLeftPadding, midRightPadding, colHoverObj } = innerProps;
     const { ping, showDataSource, selectedRowKeysObj, dataSourceLevelMap, resizeActiveKey } = innerProps;
     const { verticalVirtualItems, verticalTotalSize, verticalDistance, verticalMeasureElement } = innerProps;
-    const { handledColumns, handledFixedLeftColumns, handledFixedRightColumns, handledMidColumns } = innerProps;
+    const { handledColumns, handledFixedLeftColumns, handledFixedRightColumns, handledMidColumns, addColHover, removeColHover } = innerProps;
 
     const renderItem = <T extends Record<string, any>>(
         column: HandledColumn<T>,
@@ -32,8 +32,8 @@ const VirtualBody: FC = () => {
         const cellTitle = isStr ? `${cellValue}` : '';
         const cellStyle = { width, textAlign: align };
         const cellClassName = classNames(styles['body-cell'], {
+            [styles['col-hover']]: colHoverObj[key],
             [styles['resize-active']]: resizeActive,
-            [styles['head-hover']]: headHoverObj[key],
             [styles['no-resize-active']]: noResizeActive,
         });
 
@@ -47,13 +47,22 @@ const VirtualBody: FC = () => {
                     rowKey={currentRowKey}
                     textStyle={innerStyle}
                     className={cellClassName}
+                    onMouseEnter={() => addColHover(key)}
+                    onMouseLeave={() => removeColHover(key)}
                     saveEdit={(v: string) => saveEdit && saveEdit(v, currentRowData, currentRowIndex)}
                 />
             );
         }
 
         return (
-            <div key={key} title={cellTitle} className={cellClassName} style={cellStyle}>
+            <div
+                key={key}
+                title={cellTitle}
+                style={cellStyle}
+                className={cellClassName}
+                onMouseEnter={() => addColHover(key)}
+                onMouseLeave={() => removeColHover(key)}
+            >
                 {isStr ? (
                     <div className={styles['body-cell-str']} style={innerStyle}>
                         {cellValue}
