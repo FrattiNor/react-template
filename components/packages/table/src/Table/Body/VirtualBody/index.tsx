@@ -9,8 +9,8 @@ import { FC } from 'react';
 const VirtualBody: FC = () => {
     const { outerProps, innerProps } = useTableContext();
     const { rowKey, rowHeight } = outerProps;
-    const { horizontalTotalSize, midLeftPadding, midRightPadding } = innerProps;
-    const { ping, showDataSource, selectedRowKeysObj, dataSourceLevelMap } = innerProps;
+    const { horizontalTotalSize, midLeftPadding, midRightPadding, headHoverObj } = innerProps;
+    const { ping, showDataSource, selectedRowKeysObj, dataSourceLevelMap, resizeActiveKey } = innerProps;
     const { verticalVirtualItems, verticalTotalSize, verticalDistance, verticalMeasureElement } = innerProps;
     const { handledColumns, handledFixedLeftColumns, handledFixedRightColumns, handledMidColumns } = innerProps;
 
@@ -25,11 +25,17 @@ const VirtualBody: FC = () => {
         const innerStyle = isAfterExpandable ? { paddingLeft: 8 + (dataSourceLevelMap[currentRowKey] ?? 0) * 16 } : undefined;
 
         const { key, render, width, align, edit, saveEdit } = column;
+        const resizeActive = resizeActiveKey === key;
+        const noResizeActive = !resizeActiveKey;
         const cellValue = notEmpty(render ? render(currentRowData, currentRowIndex) : currentRowData[key]);
         const isStr = typeof cellValue === 'string' || typeof cellValue === 'number';
         const cellTitle = isStr ? `${cellValue}` : '';
         const cellStyle = { width, textAlign: align };
-        const cellClassName = styles['body-cell'];
+        const cellClassName = classNames(styles['body-cell'], {
+            [styles['resize-active']]: resizeActive,
+            [styles['head-hover']]: headHoverObj[key],
+            [styles['no-resize-active']]: noResizeActive,
+        });
 
         if (edit === true && isStr) {
             return (

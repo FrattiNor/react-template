@@ -13,10 +13,10 @@ type Props = PropsWithChildren<{
 
 const ResizableTitle: FC<Props> = (props) => {
     const { innerProps } = useTableContext();
-    const { onResizeStart, resizeActiveKey } = innerProps;
     const { cellKey, title, style, className, children, resize = true } = props;
-    const noActive = !resizeActiveKey;
-    const active = resizeActiveKey === cellKey;
+    const { onResizeStart, resizeActiveKey, addHeadHover, removeHeadHover } = innerProps;
+    const noResizeActive = !resizeActiveKey;
+    const resizeActive = resizeActiveKey === cellKey;
 
     if (!resize) {
         return (
@@ -30,9 +30,11 @@ const ResizableTitle: FC<Props> = (props) => {
         <div
             title={title}
             style={style}
+            onMouseEnter={() => addHeadHover(cellKey)}
+            onMouseLeave={() => removeHeadHover(cellKey)}
             className={classNames(className, styles['resize-head-cell'], {
-                [styles['active']]: active,
-                [styles['no-active']]: noActive,
+                [styles['resize-active']]: resizeActive,
+                [styles['no-resize-active']]: noResizeActive,
             })}
         >
             {children}

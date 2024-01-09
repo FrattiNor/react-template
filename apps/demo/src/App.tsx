@@ -10,7 +10,7 @@ import {
     NotificationClient,
 } from '@react/components';
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
-import { Button, ConfigProvider, theme as antdTheme } from 'antd';
+import { Button, ConfigProvider, Select, theme as antdTheme } from 'antd';
 import { useMemo, useRef, useState } from 'react';
 import { columns, columns2 } from './utils';
 import classNames from 'classnames';
@@ -141,6 +141,14 @@ const DemoTable = () => {
                         >
                             notification
                         </Button>
+                        <Select
+                            open
+                            style={{ width: 85 }}
+                            options={[
+                                { label: '1111', value: '1' },
+                                { label: '2222', value: '2' },
+                            ]}
+                        />
                     </div>
 
                     <div style={{ height: 400, width: 900, padding: 24 }}>
