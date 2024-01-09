@@ -18,15 +18,13 @@
         &.selected .body-cell,
         .body-cell.resize-active,
         &:hover .body-seize-a-seat,
-        &.selected .body-seize-a-seat,
-        .body-cell.no-resize-active.col-hover {
+        &.selected .body-seize-a-seat {
             background-color: var(--table-row-hover-bg);
         }
 
         &.selected:hover .body-cell,
         &.selected .body-cell.resize-active,
-        &.selected:hover .body-seize-a-seat,
-        &.selected .body-cell.no-resize-active.col-hover {
+        &.selected:hover .body-seize-a-seat {
             background-color: var(--table-row-selected-hover-bg);
         }
 
@@ -56,6 +54,7 @@
             flex-grow: 1;
             position: relative;
             background-color: var(--theme-bg);
+            // border-top: 1px solid var(--theme-border-second);
             // transition: background-color 0.3s;
         }
 
@@ -65,6 +64,7 @@
             position: relative;
             align-items: center;
             background-color: var(--theme-bg);
+            // border-top: 1px solid var(--theme-border-second);
             // transition: background-color 0.3s;
 
             .body-cell-str {

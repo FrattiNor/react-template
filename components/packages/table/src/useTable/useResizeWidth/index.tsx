@@ -17,6 +17,7 @@ const useResizeWidth = () => {
     const [resizeTarget, setResizeTarget] = useState<null | ResizeTarget>(null);
     const [resizeActive, setResizeActive] = useState<null | ResizeActive>(null);
     const resized = resizedRef.current;
+    const resizeReadyKey = resizeTarget?.key;
     const resizeActiveKey = resizeActive?.key;
     const resizeActiveWidth = resizeActive?.width;
 
@@ -59,7 +60,7 @@ const useResizeWidth = () => {
         }
     }, [resizeTarget]);
 
-    return { resizeActiveKey, resizeActiveWidth, resized, onResizeStart: onMouseDown };
+    return { resizeReadyKey, resizeActiveKey, resizeActiveWidth, resized, onResizeStart: onMouseDown };
 };
 
 export type ResizeWidth = ReturnType<typeof useResizeWidth>;

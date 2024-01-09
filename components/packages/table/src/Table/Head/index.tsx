@@ -10,8 +10,7 @@ const Head: FC = () => {
     const { headRef, innerProps, outerProps } = useTableContext();
 
     const { rowHeight } = outerProps;
-    const { resizeActiveKey, ping } = innerProps;
-    const { midLeftPadding, midRightPadding, vScrollBarWidth } = innerProps;
+    const { ping, midLeftPadding, midRightPadding, vScrollBarWidth } = innerProps;
     const { handledFixedLeftColumns, handledFixedRightColumns, handledMidColumns, horizontalTotalSize } = innerProps;
 
     const renderItem = (column: HandledColumn<any>) => {
@@ -35,7 +34,7 @@ const Head: FC = () => {
     };
 
     return (
-        <div className={classNames(styles['head'], { [styles['resizing']]: !!resizeActiveKey })} ref={headRef}>
+        <div className={styles['head']} ref={headRef}>
             <div className={styles['virtual-head']} style={{ transform: `translate3d(0, 0, 0)`, width: horizontalTotalSize + vScrollBarWidth }}>
                 <div className={styles['head-row']} style={{ minHeight: rowHeight }}>
                     {handledFixedLeftColumns.length > 0 && (

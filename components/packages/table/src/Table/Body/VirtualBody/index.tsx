@@ -9,10 +9,10 @@ import { FC } from 'react';
 const VirtualBody: FC = () => {
     const { outerProps, innerProps } = useTableContext();
     const { rowKey, rowHeight } = outerProps;
-    const { horizontalTotalSize, midLeftPadding, midRightPadding, colHoverObj } = innerProps;
-    const { ping, showDataSource, selectedRowKeysObj, dataSourceLevelMap, resizeActiveKey } = innerProps;
+    const { horizontalTotalSize, midLeftPadding, midRightPadding } = innerProps;
     const { verticalVirtualItems, verticalTotalSize, verticalDistance, verticalMeasureElement } = innerProps;
-    const { handledColumns, handledFixedLeftColumns, handledFixedRightColumns, handledMidColumns, addColHover, removeColHover } = innerProps;
+    const { handledColumns, handledFixedLeftColumns, handledFixedRightColumns, handledMidColumns } = innerProps;
+    const { ping, showDataSource, selectedRowKeysObj, dataSourceLevelMap, resizeActiveKey, resizeReadyKey } = innerProps;
 
     const renderItem = <T extends Record<string, any>>(
         column: HandledColumn<T>,
@@ -23,18 +23,14 @@ const VirtualBody: FC = () => {
         const lastColumn = handledColumns[column.index - 1];
         const isAfterExpandable = lastColumn?.key === 'table-row-expandable';
         const innerStyle = isAfterExpandable ? { paddingLeft: 8 + (dataSourceLevelMap[currentRowKey] ?? 0) * 16 } : undefined;
-
         const { key, render, width, align, edit, saveEdit } = column;
-        const resizeActive = resizeActiveKey === key;
-        const noResizeActive = !resizeActiveKey;
+        const resizeActive = resizeReadyKey === key || resizeActiveKey === key;
         const cellValue = notEmpty(render ? render(currentRowData, currentRowIndex) : currentRowData[key]);
         const isStr = typeof cellValue === 'string' || typeof cellValue === 'number';
         const cellTitle = isStr ? `${cellValue}` : '';
         const cellStyle = { width, textAlign: align };
         const cellClassName = classNames(styles['body-cell'], {
-            [styles['col-hover']]: colHoverObj[key],
             [styles['resize-active']]: resizeActive,
-            [styles['no-resize-active']]: noResizeActive,
         });
 
         if (edit === true && isStr) {
@@ -47,22 +43,13 @@ const VirtualBody: FC = () => {
                     rowKey={currentRowKey}
                     textStyle={innerStyle}
                     className={cellClassName}
-                    onMouseEnter={() => addColHover(key)}
-                    onMouseLeave={() => removeColHover(key)}
                     saveEdit={(v: string) => saveEdit && saveEdit(v, currentRowData, currentRowIndex)}
                 />
             );
         }
 
         return (
-            <div
-                key={key}
-                title={cellTitle}
-                style={cellStyle}
-                className={cellClassName}
-                onMouseEnter={() => addColHover(key)}
-                onMouseLeave={() => removeColHover(key)}
-            >
+            <div key={key} title={cellTitle} style={cellStyle} className={cellClassName}>
                 {isStr ? (
                     <div className={styles['body-cell-str']} style={innerStyle}>
                         {cellValue}

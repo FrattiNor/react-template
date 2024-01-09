@@ -13,7 +13,6 @@ import usePagination from './usePagination';
 import useExpandable from './useExpandable';
 import useEditStore from './useEditStore';
 import useCalcPing from './useCalcPing';
-import useColHover from './useColHover';
 import useVirtual from './useVirtual';
 import { useRef } from 'react';
 
@@ -28,9 +27,6 @@ const useTable = <T extends AnyObj>(props: TableProps<T>) => {
     const _headRef = useRef<HTMLDivElement>(null);
     const bodyRef = dataContext?.bodyRef ?? _bodyRef;
     const headRef = dataContext?.headRef ?? _headRef;
-
-    // col hover
-    const colHover = useColHover();
 
     // props and auto scrollTop
     const { handledProps, isEmpty } = useHandleProps(props, { defaultLineHeight, defaultAutoScrollTop });
@@ -102,7 +98,6 @@ const useTable = <T extends AnyObj>(props: TableProps<T>) => {
 
     const innerProps = {
         ...virtual,
-        ...colHover,
         ...editStore,
         ...resizeWidth,
         ...handledColumns,

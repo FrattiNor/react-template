@@ -14,40 +14,25 @@ type Props = PropsWithChildren<{
 const ResizableTitle: FC<Props> = (props) => {
     const { innerProps } = useTableContext();
     const { cellKey, title, style, className, children, resize = true } = props;
-    const { onResizeStart, resizeActiveKey, colHoverObj, addColHover, removeColHover } = innerProps;
+    const { onResizeStart, resizeActiveKey, resizeReadyKey } = innerProps;
     const noResizeActive = !resizeActiveKey;
-    const resizeActive = resizeActiveKey === cellKey;
+    const resizeActive = resizeActiveKey === cellKey || resizeReadyKey === cellKey;
+    const currentClassName = classNames(className, styles['resize-head-cell'], {
+        [styles['resize-active']]: resizeActive,
+        [styles['no-resize-active']]: noResizeActive,
+        [styles['any-cell-resizing']]: !!resizeActiveKey,
+    });
 
     if (!resize) {
         return (
-            <div
-                title={title}
-                style={style}
-                onMouseEnter={() => addColHover(cellKey)}
-                onMouseLeave={() => removeColHover(cellKey)}
-                className={classNames(className, styles['resize-head-cell'], {
-                    [styles['col-hover']]: colHoverObj[cellKey],
-                    [styles['resize-active']]: resizeActive,
-                    [styles['no-resize-active']]: noResizeActive,
-                })}
-            >
+            <div title={title} style={style} className={currentClassName}>
                 {children}
             </div>
         );
     }
 
     return (
-        <div
-            title={title}
-            style={style}
-            onMouseEnter={() => addColHover(cellKey)}
-            onMouseLeave={() => removeColHover(cellKey)}
-            className={classNames(className, styles['resize-head-cell'], {
-                [styles['col-hover']]: colHoverObj[cellKey],
-                [styles['resize-active']]: resizeActive,
-                [styles['no-resize-active']]: noResizeActive,
-            })}
-        >
+        <div title={title} style={style} className={classNames(currentClassName)}>
             {children}
             <span onMouseDown={onResizeStart(cellKey)} className={styles['resizable-handle']} />
         </div>
