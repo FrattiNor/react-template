@@ -1,5 +1,4 @@
 import { TableColumnConfProps, TableConfColumn } from '../type';
-import { defaultWidth } from '@pkg/table/src/useTable';
 import { TableColumnsConfItem } from '@pkg/table';
 
 export const useResetData = ({ columns }: TableColumnConfProps) => {
@@ -10,7 +9,6 @@ export const useResetData = ({ columns }: TableColumnConfProps) => {
             index: index,
             hidden: false,
             fixed: item.fixed ?? 'default',
-            width: item.width ?? defaultWidth,
         }));
 
         return newColumns;
@@ -29,7 +27,6 @@ export const useSubmitData = ({ setColumnsConf }: TableColumnConfProps) => {
             nextColumnsConf[item.key] = {
                 index,
                 fixed: item.fixed,
-                width: item.width,
                 hidden: item.hidden,
             };
 

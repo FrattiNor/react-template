@@ -16,8 +16,7 @@
     "dependencies": {
         "@tanstack/react-query": "^5.12.2",
         "@types/stats.js": "^0.17.3",
-        "stats.js": "^0.17.0",
-        "antd": "^5.12.1"
+        "stats.js": "^0.17.0"
     },
     "sideEffects": [
         "./src/index.module.less"

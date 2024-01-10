@@ -9,6 +9,7 @@
         "prettier": "npx prettier **/* --write --ignore-unknown"
     },
     "devDependencies": {
+        "antd": "^5.11.5",
         "@babel/core": "^7.22.1",
         "@babel/plugin-transform-runtime": "^7.22.2",
         "@babel/preset-env": "^7.22.2",

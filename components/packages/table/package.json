@@ -17,7 +17,6 @@
         "@pkg/theme": "workspace:*"
     },
     "devDependencies": {
-        "@tanstack/react-virtual": "3.0.0-beta.68",
-        "antd": "^5.12.1"
+        "@tanstack/react-virtual": "3.0.0-beta.68"
     }
 }
