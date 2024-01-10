@@ -116,6 +116,9 @@ importers:
       '@pkg/i18n':
         specifier: workspace:*
         version: link:packages/i18n
+      '@pkg/loading':
+        specifier: workspace:*
+        version: link:packages/loading
       '@pkg/notification':
         specifier: workspace:*
         version: link:packages/notification
@@ -128,6 +131,9 @@ importers:
       '@pkg/theme':
         specifier: workspace:*
         version: link:packages/theme
+      '@pkg/virtual-tree':
+        specifier: workspace:*
+        version: link:packages/virtual-tree
 
   components/packages/checkbox: {}
 
@@ -141,6 +147,12 @@ importers:
         version: link:../theme
 
   components/packages/i18n: {}
+
+  components/packages/loading:
+    dependencies:
+      '@pkg/theme':
+        specifier: workspace:*
+        version: link:../theme
 
   components/packages/notification:
     dependencies:
@@ -163,6 +175,9 @@ importers:
       '@pkg/i18n':
         specifier: workspace:*
         version: link:../i18n
+      '@pkg/loading':
+        specifier: workspace:*
+        version: link:../loading
       '@pkg/theme':
         specifier: workspace:*
         version: link:../theme
@@ -194,6 +209,19 @@ importers:
         version: 3.2.2(react@18.2.0)
 
   components/packages/theme: {}
+
+  components/packages/virtual-tree:
+    dependencies:
+      '@pkg/empty':
+        specifier: workspace:*
+        version: link:../empty
+      '@pkg/loading':
+        specifier: workspace:*
+        version: link:../loading
+    devDependencies:
+      '@tanstack/react-virtual':
+        specifier: 3.0.0-beta.68
+        version: 3.0.0-beta.68(react-dom@18.2.0)(react@18.2.0)
 
 packages:
 

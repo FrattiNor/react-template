@@ -1,6 +1,6 @@
 {
     "private": true,
-    "name": "@pkg/table",
+    "name": "@pkg/virtual-tree",
     "version": "0.0.1",
     "main": "./src/index.tsx",
     "module": "./src/index.tsx",
@@ -11,11 +11,8 @@
         "lint": "npm run eslint && npm run tslint"
     },
     "peerDependencies": {
-        "@pkg/i18n": "workspace:*",
         "@pkg/loading": "workspace:*",
-        "@pkg/checkbox": "workspace:*",
-        "@pkg/empty": "workspace:*",
-        "@pkg/theme": "workspace:*"
+        "@pkg/empty": "workspace:*"
     },
     "devDependencies": {
         "@tanstack/react-virtual": "3.0.0-beta.68"

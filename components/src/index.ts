@@ -15,3 +15,8 @@ export * from '@pkg/table-columns-conf';
 export * from '@pkg/theme';
 
 export { default as NotificationClient } from '@pkg/notification';
+
+export { default as Loading } from '@pkg/loading';
+
+export { default as VirtualTree } from '@pkg/virtual-tree';
+export * from '@pkg/virtual-tree';

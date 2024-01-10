@@ -80,7 +80,7 @@ export type TableRef = {
     scrollTo: (conf: ScrollToOptions) => void;
     headElement: RefObject<HTMLDivElement | null>;
     bodyElement: RefObject<HTMLDivElement | null>;
-    getTableInstance: <T extends AnyObj>() => TableInstance<T>;
+    getInstance: <T extends AnyObj>() => TableInstance<T>;
 };
 
 export type TableColumnsConfItem = {

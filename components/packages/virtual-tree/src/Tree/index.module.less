@@ -1,0 +1,60 @@
+.wrapper {
+    width: 100%;
+    height: 100%;
+    position: relative;
+
+    .tree {
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        position: relative;
+        box-sizing: border-box;
+
+        .empty {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .virtual-tree {
+            position: relative;
+            box-sizing: border-box;
+            transform: translate3d(0, 0, 0);
+
+            .tree-row {
+                gap: 4px;
+                display: flex;
+                align-items: center;
+
+                .arrow {
+                    display: flex;
+                    cursor: pointer;
+                    transition: transform 0.15s;
+                    color: var(--theme-second-foreground);
+
+                    &.visible {
+                        transform: rotate(90deg);
+                    }
+                }
+
+                .empty-arrow {
+                    width: 1em;
+                    height: 1em;
+                }
+
+                .label {
+                    width: 0;
+                    flex-grow: 1;
+
+                    .label-text {
+                        padding-right: 8px;
+                        white-space: nowrap;
+                        display: inline-block;
+                    }
+                }
+            }
+        }
+    }
+}

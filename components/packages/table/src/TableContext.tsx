@@ -20,7 +20,7 @@ export const TableContextHoc = (Component: FC) => {
         useImperativeHandle(tableRef, () => ({
             headElement: value.headRef,
             bodyElement: value.bodyRef,
-            getTableInstance: () => value as any,
+            getInstance: () => value as any,
             scrollTo: (conf: ScrollToOptions) => value.bodyRef.current?.scrollTo(conf),
         }));
 

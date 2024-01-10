@@ -1,3 +1,5 @@
+@import url('../theme/theme.module.less');
+
 .loading-wrapper {
     top: 0;
     left: 0;
@@ -21,7 +23,7 @@
 
     &.active::after {
         pointer-events: auto;
-        background-color: var(--table-loading-bg);
+        background-color: var(--loading-bg);
     }
 
     .loading {

@@ -9,6 +9,7 @@ import {
     TableRef,
     getTableConfColumns,
     getDefaultTableConfColumns,
+    VirtualTree,
 } from '@react/components';
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
 import { Button, ConfigProvider, Select, theme as antdTheme } from 'antd';
@@ -16,6 +17,7 @@ import { useMemo, useRef, useState } from 'react';
 import { columns, columns2 } from './utils';
 import classNames from 'classnames';
 import useFps from './useFps';
+import { treeData } from './treeData';
 
 type Item = {
     id: string;
@@ -109,16 +111,24 @@ const DemoTable = () => {
     };
 
     return (
-        <ConfigProvider theme={{ token: { borderRadius: 2 }, algorithm: theme === 'light' ? antdTheme.defaultAlgorithm : antdTheme.darkAlgorithm }}>
+        <ConfigProvider theme={{ algorithm: theme === 'light' ? antdTheme.defaultAlgorithm : antdTheme.darkAlgorithm }}>
             <div className={classNames(themeClassName, applyClassName)} style={{ width: '100%', height: '200%' }}>
                 <div style={{ padding: 64 }}>
+                    <VirtualTree
+                        data={treeData}
+                        loading={loading}
+                        wrapperStyle={{ width: 300, height: 200 }}
+                        fieldKeys={{ key: 'id', label: 'nodeName', children: 'childList' }}
+                        style={{ border: '1px solid var(--theme-border)', borderRadius: 2, paddingLeft: 6 }}
+                    />
+
                     <div style={{ width: 900, padding: '0 24px' }}>
                         {renderConf && (
                             <TableColumnsConf
                                 ref={tableConfRef}
-                                columns={getTableConfColumns(tableRef.current?.getTableInstance() as any)}
-                                defaultColumns={getDefaultTableConfColumns(tableRef.current?.getTableInstance() as any)}
-                                setColumnsConf={tableRef.current?.getTableInstance().innerProps.setColumnsConf as any}
+                                columns={getTableConfColumns(tableRef.current?.getInstance() as any)}
+                                defaultColumns={getDefaultTableConfColumns(tableRef.current?.getInstance() as any)}
+                                setColumnsConf={tableRef.current?.getInstance().innerProps.setColumnsConf as any}
                             />
                         )}
                     </div>
@@ -150,7 +160,7 @@ const DemoTable = () => {
                         >
                             notification
                         </Button>
-                        <Button onClick={() => console.log(tableRef.current?.getTableInstance())}>showTable</Button>
+                        <Button onClick={() => console.log(tableRef.current?.getInstance())}>showTable</Button>
                         <Select
                             open
                             style={{ width: 85 }}
@@ -173,7 +183,7 @@ const DemoTable = () => {
                             dataSource={empty ? undefined : query.data}
                             columns={(columnsMap as any)[`${columnsFlag % 3}` as any] as any}
                             onResizeEnd={() => {
-                                console.log(tableRef.current?.getTableInstance().innerProps.horizontalItemSizeCache);
+                                console.log(tableRef.current?.getInstance().innerProps.horizontalItemSizeCache);
                             }}
                         />
                     </div>

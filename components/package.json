@@ -14,9 +14,11 @@
         "@pkg/checkbox": "workspace:*",
         "@pkg/empty": "workspace:*",
         "@pkg/i18n": "workspace:*",
+        "@pkg/loading": "workspace:*",
         "@pkg/notification": "workspace:*",
         "@pkg/table": "workspace:*",
         "@pkg/table-columns-conf": "workspace:*",
-        "@pkg/theme": "workspace:*"
+        "@pkg/theme": "workspace:*",
+        "@pkg/virtual-tree": "workspace:*"
     }
 }
