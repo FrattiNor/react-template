@@ -3,8 +3,8 @@ import styles from './index.module.less';
 import { FC } from 'react';
 
 const Measure: FC = () => {
-    const { innerProps } = useTableContext();
-    const { handledColumns, horizontalMeasureElement } = innerProps;
+    const tableContext = useTableContext();
+    const { handledColumns, horizontalMeasureElement } = tableContext;
 
     return (
         <div className={styles['measure']}>

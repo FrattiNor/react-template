@@ -128,7 +128,7 @@ const DemoTable = () => {
                                 ref={tableConfRef}
                                 columns={getTableConfColumns(tableRef.current?.getInstance() as any)}
                                 defaultColumns={getDefaultTableConfColumns(tableRef.current?.getInstance() as any)}
-                                setColumnsConf={tableRef.current?.getInstance().innerProps.setColumnsConf as any}
+                                setColumnsConf={tableRef.current?.getInstance().setColumnsConf as any}
                             />
                         )}
                     </div>
@@ -183,7 +183,7 @@ const DemoTable = () => {
                             dataSource={empty ? undefined : query.data}
                             columns={(columnsMap as any)[`${columnsFlag % 3}` as any] as any}
                             onResizeEnd={() => {
-                                console.log(tableRef.current?.getInstance().innerProps.horizontalItemSizeCache);
+                                console.log(tableRef.current?.getInstance().horizontalItemSizeCache);
                             }}
                         />
                     </div>

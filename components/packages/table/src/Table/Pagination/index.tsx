@@ -3,8 +3,7 @@ import { useTableContext } from '../../TableContext';
 import styles from './index.module.less';
 
 const Pagination = () => {
-    const { innerProps } = useTableContext();
-    const { pagination, isEmpty } = innerProps;
+    const { pagination, isEmpty } = useTableContext();
 
     if (pagination === false || isEmpty) {
         return null;

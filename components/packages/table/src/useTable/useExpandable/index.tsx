@@ -6,12 +6,12 @@ import { TableColumns } from '../../type';
 import ExpandableFC from './Expandable';
 
 type Opt<T> = {
-    sizedDataSource: T[];
+    paginationDatasource: T[];
     handledProps: HandledProps<T>;
 };
 
 const useExpandable = <T,>(opt: Opt<T>) => {
-    const { handledProps, sizedDataSource } = opt;
+    const { handledProps, paginationDatasource } = opt;
     const { rowKey, expandable } = handledProps;
 
     const expandableColumns: TableColumns<T> = [];
@@ -34,9 +34,10 @@ const useExpandable = <T,>(opt: Opt<T>) => {
         });
     }
 
-    const { totalDataSource, showDataSource, dataSourceLevelMap } = useMemo(() => {
+    const { totalDataSource, showDataSource, dataSourceLevelMap, totalRowKeys } = useMemo(() => {
         let showDataSource: T[] = [];
         let totalDataSource: T[] = [];
+        const totalRowKeys: string[] = [];
         const dataSourceLevelMap: Record<string, number> = {};
 
         if (expandable) {
@@ -49,20 +50,21 @@ const useExpandable = <T,>(opt: Opt<T>) => {
                     const haveChild = Array.isArray(children) && children.length > 0;
 
                     totalDataSource.push(item);
+                    if (haveChild) totalRowKeys.push(key);
                     if (parentOpened) showDataSource.push(item);
                     if (parentOpened && level !== 0) dataSourceLevelMap[key] = level;
                     if (haveChild) handleDataSource(children, { level: level + 1, parentOpened: opened });
                 });
             };
 
-            handleDataSource(sizedDataSource || []);
+            handleDataSource(paginationDatasource || []);
         } else {
-            showDataSource = sizedDataSource || [];
-            totalDataSource = sizedDataSource || [];
+            showDataSource = paginationDatasource || [];
+            totalDataSource = paginationDatasource || [];
         }
 
-        return { totalDataSource, showDataSource, dataSourceLevelMap };
-    }, [sizedDataSource, expandedRowKeys]);
+        return { totalDataSource, showDataSource, dataSourceLevelMap, totalRowKeys };
+    }, [paginationDatasource, expandedRowKeys]);
 
     if (expandable) {
         const renderItem = (item: T) => {
@@ -97,7 +99,8 @@ const useExpandable = <T,>(opt: Opt<T>) => {
         });
     }
 
-    return { totalDataSource, showDataSource, dataSourceLevelMap, expandableColumns };
+    return { totalDataSource, showDataSource, totalRowKeys, dataSourceLevelMap, expandableColumns, expandedRowKeys, setExpandedRowKeys };
 };
 
+export type Expandable<T> = ReturnType<typeof useExpandable<T>>;
 export default useExpandable;

@@ -7,12 +7,12 @@ import EditCell from './EditCell';
 import { FC } from 'react';
 
 const VirtualBody: FC = () => {
-    const { outerProps, innerProps } = useTableContext();
-    const { rowKey, rowHeight } = outerProps;
-    const { horizontalTotalSize, midLeftPadding, midRightPadding, clickedRow, setClickedRow } = innerProps;
-    const { verticalVirtualItems, verticalTotalSize, verticalDistance, verticalMeasureElement } = innerProps;
-    const { handledColumns, handledFixedLeftColumns, handledFixedRightColumns, handledMidColumns } = innerProps;
-    const { ping, showDataSource, selectedRowKeysObj, dataSourceLevelMap, resizeActiveKey, resizeReadyKey } = innerProps;
+    const tableContext = useTableContext();
+    const { rowKey, rowHeight } = tableContext.props;
+    const { horizontalTotalSize, midLeftPadding, midRightPadding, clickedRow, setClickedRow } = tableContext;
+    const { verticalVirtualItems, verticalTotalSize, verticalDistance, verticalMeasureElement } = tableContext;
+    const { handledColumns, handledFixedLeftColumns, handledFixedRightColumns, handledMidColumns } = tableContext;
+    const { ping, showDataSource, selectedRowKeysObj, dataSourceLevelMap, resizeActiveKey, resizeReadyKey } = tableContext;
 
     const renderItem = <T extends Record<string, any>>(
         column: HandledColumn<T>,

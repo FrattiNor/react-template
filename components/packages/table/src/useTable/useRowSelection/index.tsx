@@ -140,6 +140,8 @@ const useRowSelection = <T,>(opt: Opt<T>) => {
     }
 
     return {
+        selectedRowKeys,
+        setSelectedRowKeys,
         selectedRowKeysObj,
         rowSelectionColumns,
     };

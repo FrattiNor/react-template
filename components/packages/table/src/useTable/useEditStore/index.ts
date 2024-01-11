@@ -2,11 +2,11 @@ import { BodyScrollObserver } from '../useBodyScrollObserver';
 import { useEffect, useState } from 'react';
 
 type Opt<T> = {
-    sizedDataSource: T[];
+    paginationDatasource: T[];
     bodyScrollObserver: BodyScrollObserver;
 };
 
-const useEditStore = <T>({ sizedDataSource, bodyScrollObserver }: Opt<T>) => {
+const useEditStore = <T>({ paginationDatasource, bodyScrollObserver }: Opt<T>) => {
     const [cellEdits, setCellEdits] = useState<Record<string, boolean>>({});
     const [editCellValues, setEditCellValues] = useState<Record<string, string>>({});
 
@@ -14,7 +14,7 @@ const useEditStore = <T>({ sizedDataSource, bodyScrollObserver }: Opt<T>) => {
     useEffect(() => {
         setCellEdits({});
         setEditCellValues({});
-    }, [sizedDataSource]);
+    }, [paginationDatasource]);
 
     // 监听滚动取消编辑状态
     useEffect(() => {

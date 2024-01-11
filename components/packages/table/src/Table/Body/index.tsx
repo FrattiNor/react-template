@@ -7,8 +7,8 @@ import Empty from './Empty';
 import { FC } from 'react';
 
 const Body: FC = () => {
-    const { bodyRef, innerProps } = useTableContext();
-    const { isEmpty, bodyOverflowX } = innerProps;
+    const tableContext = useTableContext();
+    const { bodyRef, isEmpty, bodyOverflowX } = tableContext;
 
     return (
         <div ref={bodyRef} className={classNames(styles['body'], { [styles['empty']]: isEmpty })} style={{ overflowX: bodyOverflowX }}>

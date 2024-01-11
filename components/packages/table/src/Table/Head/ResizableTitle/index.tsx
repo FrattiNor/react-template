@@ -12,9 +12,9 @@ type Props = PropsWithChildren<{
 }>;
 
 const ResizableTitle: FC<Props> = (props) => {
-    const { innerProps } = useTableContext();
+    const tableContext = useTableContext();
     const { cellKey, title, style, className, children, resize = true } = props;
-    const { onResizeStart, resizeActiveKey, resizeReadyKey } = innerProps;
+    const { onResizeStart, resizeActiveKey, resizeReadyKey } = tableContext;
     const noResizeActive = !resizeActiveKey;
     const resizeActive = resizeActiveKey === cellKey || resizeReadyKey === cellKey;
     const currentClassName = classNames(className, styles['resize-head-cell'], {

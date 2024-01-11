@@ -4,8 +4,7 @@ import { Fragment } from 'react';
 import Empty from '@pkg/empty';
 
 const BodyEmpty = () => {
-    const { innerProps } = useTableContext();
-    const { horizontalTotalSize } = innerProps;
+    const { horizontalTotalSize } = useTableContext();
 
     return (
         <Fragment>

@@ -20,9 +20,9 @@ type Props = {
 
 const EditCell: FC<Props> = ({ rowKey, cellKey, text, style, className, saveEdit, onMouseEnter, onMouseLeave }) => {
     const key = `${cellKey}-${rowKey}`;
-    const { innerProps } = useTableContext();
+    const tableContext = useTableContext();
     const textareaRef = useRef<HTMLTextAreaElement>(null);
-    const { cellEdits, setCellEdits, editCellValues, setEditCellValues } = innerProps;
+    const { cellEdits, setCellEdits, editCellValues, setEditCellValues } = tableContext;
 
     // 当前值，未编辑使用原始值，编辑过使用编辑缓存内的值
     const value = editCellValues[key] ?? text;

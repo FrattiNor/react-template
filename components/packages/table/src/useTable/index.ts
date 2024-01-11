@@ -16,6 +16,8 @@ import useEditStore from './useEditStore';
 import useCalcPing from './useCalcPing';
 import useVirtual from './useVirtual';
 import { useRef } from 'react';
+import usePaginationDatasource from './usePaginationDatasource';
+import useIndexColumns from './useIndexColumns';
 
 export const defaultWidth = 150;
 export const defaultFlexGrow = 1;
@@ -29,27 +31,52 @@ const useTable = <T extends AnyObj>(props: TableProps<T>) => {
     const bodyRef = dataContext?.bodyRef ?? _bodyRef;
     const headRef = dataContext?.headRef ?? _headRef;
 
-    // props and auto scrollTop
-    const { handledProps, isEmpty } = useHandleProps(props);
+    // 给了默认值的props
+    const handledProps = useHandleProps(props);
+
+    // 空
+    const isEmpty = (handledProps.dataSource || [])?.length === 0;
 
     // 分页
-    const { pagination, sizedDataSource, indexColumns } = usePagination({ handledProps });
+    const pagination = usePagination({ handledProps });
+
+    // 分页后的数据源
+    const paginationDatasource = usePaginationDatasource({
+        pagination,
+        handledProps,
+    });
+
+    // 序号列
+    const indexColumns = useIndexColumns({
+        pagination,
+        handledProps,
+    });
 
     // 数据源变更回滚顶部
-    useChangeScrollTop({ bodyRef, handledProps, sizedDataSource });
+    useChangeScrollTop({
+        bodyRef,
+        handledProps,
+        paginationDatasource,
+    });
 
     // 增加展开
-    const { totalDataSource, showDataSource, dataSourceLevelMap, expandableColumns } = useExpandable({ handledProps, sizedDataSource });
+    const expandable = useExpandable({
+        handledProps,
+        paginationDatasource,
+    });
 
     // 增加多选
-    const { selectedRowKeysObj, rowSelectionColumns } = useRowSelection({ handledProps, totalDataSource });
+    const rowSelection = useRowSelection({
+        handledProps,
+        totalDataSource: expandable.totalDataSource,
+    });
 
     //  整合后排序的 columns
-    const { sortedColumns, columnsConf, setColumnsConf } = useSortConfColumns({
+    const sortConfColumns = useSortConfColumns({
         indexColumns,
-        expandableColumns,
-        rowSelectionColumns,
         columns: handledProps.columns,
+        expandableColumns: expandable.expandableColumns,
+        rowSelectionColumns: rowSelection.rowSelectionColumns,
     });
 
     //  title resize
@@ -76,53 +103,47 @@ const useTable = <T extends AnyObj>(props: TableProps<T>) => {
     });
 
     // 编辑格缓存
-    const editStore = useEditStore({ sizedDataSource, bodyScrollObserver });
+    const editStore = useEditStore({
+        bodyScrollObserver,
+        paginationDatasource,
+    });
 
     // virtual table core
     const virtual = useVirtual({
         bodyRef,
         handledProps,
-        sortedColumns,
-        showDataSource,
-        bodyResizeObserver,
         bodyScrollObserver,
+        bodyResizeObserver,
+        showDataSource: expandable.showDataSource,
+        sortedColumns: sortConfColumns.sortedColumns,
     });
 
     // handle columns
     const handledColumns = useHandleColumns({
         virtual,
         resizeWidth,
-        sortedColumns,
+        sortedColumns: sortConfColumns.sortedColumns,
     });
 
     const clickedRow = useClickedRow();
 
-    const innerProps = {
-        ...virtual,
-        ...editStore,
-        ...clickedRow,
-        ...resizeWidth,
-        ...handledColumns,
-
-        ping,
-        isEmpty,
-        pagination,
-        columnsConf,
-        indexColumns,
-        showDataSource,
-        vScrollBarWidth,
-        selectedRowKeysObj,
-        dataSourceLevelMap,
-        setColumnsConf,
-    };
-
-    const outerProps = handledProps;
-
     return {
+        ping,
         bodyRef,
         headRef,
-        outerProps,
-        innerProps,
+        isEmpty,
+        pagination,
+        indexColumns,
+        vScrollBarWidth,
+        ...virtual,
+        ...editStore,
+        ...expandable,
+        ...clickedRow,
+        ...resizeWidth,
+        ...rowSelection,
+        ...handledColumns,
+        ...sortConfColumns,
+        props: handledProps,
     };
 };
 

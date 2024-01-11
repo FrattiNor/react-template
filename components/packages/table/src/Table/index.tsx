@@ -11,8 +11,8 @@ import Body from './Body';
 
 const Table: FC = () => {
     const { theme } = useTheme();
-    const { outerProps } = useTableContext();
-    const { loading } = outerProps;
+    const tableContext = useTableContext();
+    const { loading } = tableContext.props;
 
     return (
         <div className={classNames(styles['table'], styles[theme])}>

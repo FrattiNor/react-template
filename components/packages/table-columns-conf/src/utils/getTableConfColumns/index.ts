@@ -1,9 +1,8 @@
 import { TableInstance } from '@pkg/table';
 
 const getTableConfColumns = (table: TableInstance<any>) => {
-    const { outerProps, innerProps } = table;
-    const { columnsConf } = innerProps;
-    return [...innerProps.indexColumns, ...outerProps.columns].map((item, index) => ({
+    const { indexColumns, columnsConf, props } = table;
+    return [...indexColumns, ...props.columns].map((item, index) => ({
         ...item,
         id: item.key,
         index: columnsConf[item.key]?.index ?? index,

@@ -7,11 +7,10 @@ import classNames from 'classnames';
 import { FC } from 'react';
 
 const Head: FC = () => {
-    const { headRef, innerProps, outerProps } = useTableContext();
-
-    const { rowHeight } = outerProps;
-    const { ping, midLeftPadding, midRightPadding, vScrollBarWidth } = innerProps;
-    const { handledFixedLeftColumns, handledFixedRightColumns, handledMidColumns, horizontalTotalSize } = innerProps;
+    const tableContext = useTableContext();
+    const { rowHeight } = tableContext.props;
+    const { headRef, ping, midLeftPadding, midRightPadding, vScrollBarWidth } = tableContext;
+    const { handledFixedLeftColumns, handledFixedRightColumns, handledMidColumns, horizontalTotalSize } = tableContext;
 
     const renderItem = (column: HandledColumn<any>) => {
         const { resize, title, key, width, align } = column;
