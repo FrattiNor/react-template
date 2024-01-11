@@ -116,6 +116,7 @@ const DemoTable = () => {
                 <div style={{ padding: 64 }}>
                     <VirtualTree
                         data={treeData}
+                        select="checkbox"
                         loading={loading}
                         wrapperStyle={{ width: 300, height: 200 }}
                         fieldKeys={{ key: 'id', label: 'nodeName', children: 'childList' }}

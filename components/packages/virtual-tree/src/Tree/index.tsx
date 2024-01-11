@@ -1,6 +1,7 @@
 /* eslint-disable react-refresh/only-export-components */
 import { VirtualTreeContextHoc, useVirtualTreeContext } from '../TreeContext';
 import styles from './index.module.less';
+import Checkbox from '@pkg/checkbox';
 import classNames from 'classnames';
 import Loading from '@pkg/loading';
 import ArrowSvg from './ArrowSvg';
@@ -8,9 +9,12 @@ import Empty from '@pkg/empty';
 import { FC } from 'react';
 
 const Tree: FC = () => {
-    const { wrapperRef, lineHeight, virtual, showData, setVisibles, isEmpty, props } = useVirtualTreeContext();
+    const contextData = useVirtualTreeContext();
+    const { virtual, props } = contextData;
+    const { select } = props;
     const { virtualItems, totalSize, measureElement, distance } = virtual;
     const { renderItem, loading, style, className, wrapperClassName, wrapperStyle } = props;
+    const { wrapperRef, lineHeight, showData, setVisibles, isEmpty, selectedKeysObj, setSelectedKeysObj } = contextData;
 
     return (
         <div className={classNames(styles['wrapper'], wrapperClassName)} style={wrapperStyle}>
@@ -51,8 +55,12 @@ const Tree: FC = () => {
                                             <div className={styles['empty-arrow']} />
                                         )}
 
-                                        <div className={styles['label']}>
-                                            {renderItem ? renderItem(data, currentRowData) : <div className={styles['label-text']}>{label}</div>}
+                                        {select === 'checkbox' && (
+                                            <Checkbox checked={selectedKeysObj[key]} onChange={(c) => setSelectedKeysObj({ [key]: c })} />
+                                        )}
+
+                                        <div className={styles['content']}>
+                                            {renderItem ? renderItem(data, currentRowData) : <div className={styles['label']}>{label}</div>}
                                         </div>
                                     </div>
                                 );

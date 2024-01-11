@@ -212,6 +212,9 @@ importers:
 
   components/packages/virtual-tree:
     dependencies:
+      '@pkg/checkbox':
+        specifier: workspace:*
+        version: link:../checkbox
       '@pkg/empty':
         specifier: workspace:*
         version: link:../empty
