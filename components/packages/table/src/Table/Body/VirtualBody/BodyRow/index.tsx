@@ -13,7 +13,7 @@ type Props<T> = {
 
 const BodyRow = <T extends AnyObj>(props: Props<T>) => {
     const tableContext = useTableContext<T>();
-    const { rowHeight, virtual = 'both' } = tableContext.props;
+    const { rowHeight, virtual = true } = tableContext.props;
     const { currentRowData, currentRowIndex, currentRowKey, measure } = props;
     const { handledFixedLeftColumns, handledFixedRightColumns, handledMidColumns, handledTotalMidColumns } = tableContext;
     const { ping, selectedRowKeysObj, verticalMeasureElement, midLeftPadding, midRightPadding, setClickedRow } = tableContext;
@@ -21,8 +21,8 @@ const BodyRow = <T extends AnyObj>(props: Props<T>) => {
     const isFirst = currentRowIndex === 0;
     const rowClick = () => setClickedRow((v) => (v !== currentRowKey ? currentRowKey : null));
     const measureProps = measure ? { ['data-index']: currentRowIndex, ref: verticalMeasureElement } : {};
-    const midColumns = virtual === 'both' || virtual === 'horizontal' ? handledMidColumns : handledTotalMidColumns;
-    const midStyle = virtual === 'both' || virtual === 'horizontal' ? { paddingLeft: midLeftPadding, paddingRight: midRightPadding } : {};
+    const midColumns = virtual === true || virtual === 'horizontal' ? handledMidColumns : handledTotalMidColumns;
+    const midStyle = virtual === true || virtual === 'horizontal' ? { paddingLeft: midLeftPadding, paddingRight: midRightPadding } : {};
 
     return (
         <div

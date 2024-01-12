@@ -67,7 +67,7 @@ export type TableProps<T> = {
     rowKey: keyof T | ((v: T) => string);
     expandable?: TableExpandable | boolean;
     pagination?: TablePagination | boolean;
-    virtual?: 'both' | 'vertical' | 'horizontal';
+    virtual?: boolean | 'vertical' | 'horizontal';
     rowSelection?: TableRowSelection<T> | boolean;
 };
 

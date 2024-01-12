@@ -36,10 +36,10 @@ const DemoTable = () => {
     useFps();
     const tableRef = useRef<TableRef>(null);
     const [empty, setEmpty] = useState(false);
-    const [count, setCount] = useState(50000);
+    const [count, setCount] = useState(100);
     const [loading, setLoading] = useState(false);
-    const [columnsFlag, setColumnsFlag] = useState(2);
-    const [pagination, setPagination] = useState(true);
+    const [columnsFlag, setColumnsFlag] = useState(1);
+    const [pagination, setPagination] = useState(false);
     const [expandable, setExpandable] = useState(true);
     const [renderConf, setRenderConf] = useState(false);
     const tableConfRef = useRef<TableColumnConfRef>(null);
@@ -183,7 +183,7 @@ const DemoTable = () => {
                             showIndex
                             rowKey="id"
                             ref={tableRef}
-                            virtual="both"
+                            virtual={false}
                             pagination={pagination}
                             expandable={expandable}
                             rowSelection={rowSelection ? { getCheckboxProps: (item) => ({ disabled: item.id === '1' }) } : false}
