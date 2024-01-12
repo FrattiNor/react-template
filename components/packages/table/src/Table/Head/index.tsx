@@ -7,14 +7,15 @@ import { FC } from 'react';
 const Head: FC = () => {
     const tableContext = useTableContext();
     const { rowHeight, virtual = true } = tableContext.props;
+    const virtualH = virtual === true || virtual === 'horizontal';
     const { headRef, ping, midLeftPadding, midRightPadding, vScrollBarWidth } = tableContext;
     const { horizontalTotalSize, handledFixedLeftColumns, handledFixedRightColumns, handledMidColumns, handledTotalMidColumns } = tableContext;
-    const midColumns = virtual === true || virtual === 'horizontal' ? handledMidColumns : handledTotalMidColumns;
-    const midStyle = virtual === true || virtual === 'horizontal' ? { paddingLeft: midLeftPadding, paddingRight: midRightPadding } : {};
+    const midColumns = virtualH ? handledMidColumns : handledTotalMidColumns;
+    const midStyle = virtualH ? { paddingLeft: midLeftPadding, paddingRight: midRightPadding } : {};
 
     return (
         <div className={styles['head']} ref={headRef}>
-            <div className={styles['virtual-head']} style={{ transform: `translate3d(0, 0, 0)`, width: horizontalTotalSize + vScrollBarWidth }}>
+            <div className={styles['virtual-head']} style={{ width: horizontalTotalSize + vScrollBarWidth }}>
                 <div className={styles['head-row']} style={{ minHeight: rowHeight }}>
                     {handledFixedLeftColumns.length > 0 && (
                         <div className={classNames(styles['head-fixed-left'], { [styles['pinged']]: ping['left'] })}>
