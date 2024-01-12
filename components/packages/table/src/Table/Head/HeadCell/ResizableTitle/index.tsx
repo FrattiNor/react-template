@@ -1,5 +1,5 @@
 import { CSSProperties, FC, PropsWithChildren } from 'react';
-import { useTableContext } from '../../../TableContext';
+import { useTableContext } from '../../../../TableContext';
 import styles from './index.module.less';
 import classNames from 'classnames';
 

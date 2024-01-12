@@ -26,7 +26,7 @@ export type TableColumn<T> = {
     align?: TableAlign;
     render?: (item: T, index: number) => ReactNode;
     edit?: boolean | ((item: T, index: number) => boolean);
-    saveEdit?: (value: string, item: T, index: number) => ReactNode;
+    saveEdit?: (value: string, item: T, index: number) => void;
 };
 
 export type TableColumns<T> = TableColumn<T>[];

@@ -1,4 +1,4 @@
-import { useTableContext } from '../../../../TableContext';
+import { useTableContext } from '../../../../../TableContext';
 import { CSSProperties, FC, useRef } from 'react';
 import styles from './index.module.less';
 import { getShowValue } from './utils';
