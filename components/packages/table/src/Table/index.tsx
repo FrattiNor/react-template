@@ -12,10 +12,10 @@ import Body from './Body';
 const Table: FC = () => {
     const { theme } = useTheme();
     const tableContext = useTableContext();
-    const { loading } = tableContext.props;
+    const { loading, className, style } = tableContext.props;
 
     return (
-        <div className={classNames(styles['table'], styles[theme])}>
+        <div className={classNames(styles['table'], styles[theme], className)} style={style}>
             <Head />
             <Body />
             <Pagination />

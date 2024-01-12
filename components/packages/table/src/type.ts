@@ -57,6 +57,8 @@ export type TableProps<T> = {
     dataSource?: T[];
     loading?: boolean;
     rowHeight?: number;
+    className?: string;
+    style?: CSSProperties;
     calcRowHeight?: number;
     autoScrollTop?: boolean;
     columns: TableColumns<T>;
