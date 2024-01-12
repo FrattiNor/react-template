@@ -16,10 +16,11 @@ const usePagination = <T>(opt: Opt<T>) => {
 
     const { pagination, dataSource } = handledProps;
     const dataSourceLength = (dataSource || []).length;
-    const total = typeof pagination !== 'boolean' ? pagination?.total ?? dataSourceLength : dataSourceLength;
-    const current = !pagination ? 1 : typeof pagination !== 'boolean' ? pagination?.current ?? _current : _current;
-    const pageSize = typeof pagination !== 'boolean' ? pagination?.pageSize ?? _pageSize : _pageSize;
-    const onChange = typeof pagination !== 'boolean' ? pagination?.onChange ?? _onChange : _onChange;
+    const localPagination = typeof pagination !== 'boolean' ? !pagination?.total : pagination; // 是否本地分页
+    const total = typeof pagination !== 'boolean' ? pagination?.total ?? dataSourceLength : dataSourceLength; // total值
+    const current = !pagination ? 1 : typeof pagination !== 'boolean' ? pagination?.current ?? _current : _current; // 当前页
+    const pageSize = typeof pagination !== 'boolean' ? pagination?.pageSize ?? _pageSize : _pageSize; // 每页数量
+    const onChange = typeof pagination !== 'boolean' ? pagination?.onChange ?? _onChange : _onChange; // 变更回调
 
     // 数据源变更回到第一页
     useEffect(() => {
@@ -33,6 +34,7 @@ const usePagination = <T>(opt: Opt<T>) => {
               current,
               pageSize,
               onChange,
+              localPagination,
           }
         : (false as const);
 };

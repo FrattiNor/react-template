@@ -13,10 +13,11 @@ const usePaginationDatasource = <T>(opt: Opt<T>) => {
     const havePagination = !!pagination;
     const current = !pagination ? 1 : pagination?.current;
     const pageSize = !pagination ? 10 : pagination?.pageSize;
+    const localPagination = !pagination ? false : pagination.localPagination;
 
     return useMemo(() => {
-        if (pagination) {
-            if (typeof pagination !== 'boolean' && typeof pagination?.total === 'number') {
+        if (havePagination) {
+            if (!localPagination) {
                 return dataSource || [];
             } else {
                 return (dataSource || []).slice(pageSize * (current - 1), pageSize * current);
@@ -24,7 +25,7 @@ const usePaginationDatasource = <T>(opt: Opt<T>) => {
         }
 
         return dataSource || [];
-    }, [dataSource, current, pageSize, havePagination]);
+    }, [dataSource, current, pageSize, localPagination, havePagination]);
 };
 
 export default usePaginationDatasource;

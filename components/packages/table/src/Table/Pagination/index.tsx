@@ -10,7 +10,6 @@ const Pagination = () => {
     }
 
     const defaultProps: PaginationProps = {
-        // size: 'small',
         showLessItems: true,
         showSizeChanger: true,
         showQuickJumper: true,
