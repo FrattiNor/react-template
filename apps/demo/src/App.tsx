@@ -115,9 +115,9 @@ const DemoTable = () => {
             <div className={classNames(themeClassName, applyClassName)} style={{ width: '100%', height: '200%' }}>
                 <div style={{ padding: 64 }}>
                     <VirtualTree
-                        select="label"
                         multipleSelect
                         data={treeData}
+                        select="label"
                         loading={loading}
                         wrapperStyle={{ width: 300, height: 200 }}
                         fieldKeys={{ key: 'id', label: 'nodeName', children: 'childList' }}

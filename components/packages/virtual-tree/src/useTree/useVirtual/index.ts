@@ -3,7 +3,7 @@ import { AnyObj, HandledDataItem } from '../../type';
 import { useRef } from 'react';
 
 const useVirtual = <T extends AnyObj>(showData: HandledDataItem<T>[]) => {
-    const lineHeight = 24;
+    const lineHeight = 26;
     const wrapperRef = useRef<HTMLDivElement>(null);
 
     // 竖向虚拟

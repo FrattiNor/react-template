@@ -68,10 +68,11 @@ const Tree: FC = () => {
 
                                         {select === 'label' && (
                                             <div
+                                                style={{ minHeight: lineHeight }}
                                                 onClick={() => setSelectedKeysObj({ [key]: !selectedKeysObj[key] })}
                                                 className={classNames(styles['label-select-content'], { [styles['selected']]: selectedKeysObj[key] })}
                                             >
-                                                {renderItem ? renderItem(data, currentRowData) : label}
+                                                <div className={styles['label']}>{renderItem ? renderItem(data, currentRowData) : label}</div>
                                             </div>
                                         )}
 

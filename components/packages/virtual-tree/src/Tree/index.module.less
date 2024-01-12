@@ -69,18 +69,24 @@
                 }
 
                 .label-select-content {
-                    padding: 0 4px;
                     flex-shrink: 0;
                     cursor: pointer;
-                    white-space: nowrap;
-                    border-radius: var(--theme-border-radius);
-                    transition: background-color 0.3s, color 0.3s;
+                    align-items: center;
+                    display: inline-flex;
 
-                    &:hover {
+                    .label {
+                        padding: 0 4px;
+                        white-space: nowrap;
+                        display: inline-block;
+                        border-radius: var(--theme-border-radius);
+                        transition: background-color 0.3s, color 0.3s;
+                    }
+
+                    &:hover .label {
                         background-color: var(--theme-hover-bg);
                     }
 
-                    &.selected {
+                    &.selected .label {
                         color: var(--theme-primary-foreground);
                         background-color: var(--theme-primary);
                     }
