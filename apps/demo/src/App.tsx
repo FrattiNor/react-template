@@ -115,12 +115,18 @@ const DemoTable = () => {
             <div className={classNames(themeClassName, applyClassName)} style={{ width: '100%', height: '200%' }}>
                 <div style={{ padding: 64 }}>
                     <VirtualTree
+                        select="label"
+                        multipleSelect
                         data={treeData}
-                        select="checkbox"
                         loading={loading}
                         wrapperStyle={{ width: 300, height: 200 }}
                         fieldKeys={{ key: 'id', label: 'nodeName', children: 'childList' }}
                         style={{ border: '1px solid var(--theme-border)', borderRadius: 2, paddingLeft: 6 }}
+                        shouldSelectedKeysChange={(v) => {
+                            const canDo = v.length > 0;
+                            if (!canDo) notification.error({ message: '至少保留一位' });
+                            return canDo;
+                        }}
                     />
 
                     <div style={{ width: 900, padding: '0 24px' }}>

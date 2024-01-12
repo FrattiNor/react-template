@@ -65,15 +65,15 @@ class NotificationClient {
         this.config.setConfig(props);
     }
 
-    open(props: NotificationProps) {
+    open(props: NotificationProps | string) {
         const key = nanoid();
 
         const item: NotificationRenderQueenItem = {
             key,
-            type: props.type,
-            message: props.message,
-            duration: props.duration ?? this.config.duration,
-            placement: props.placement ?? this.config.placement,
+            type: typeof props !== 'string' ? props.type : undefined,
+            message: typeof props !== 'string' ? props.message : props,
+            duration: typeof props !== 'string' ? props.duration ?? this.config.duration : this.config.duration,
+            placement: typeof props !== 'string' ? props.placement ?? this.config.placement : this.config.placement,
             dispose: () => {
                 const newQueen = { ...this.renderQueen };
                 delete newQueen[key];

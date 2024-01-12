@@ -44,17 +44,52 @@
                     height: 1em;
                 }
 
-                .content {
-                    width: 0;
-                    flex-grow: 1;
+                .checkbox-select-content {
+                    gap: 4px;
+                    flex-shrink: 0;
+                    cursor: pointer;
+                    align-items: center;
+                    display: inline-flex;
+
+                    .checkbox {
+                        flex-shrink: 0;
+                    }
 
                     .label {
                         padding: 0 4px;
                         white-space: nowrap;
                         display: inline-block;
-                        // background-color: rgba(0, 0, 0, 0.1);
+                        transition: background-color 0.3s;
                         border-radius: var(--theme-border-radius);
                     }
+
+                    &:hover .label {
+                        background-color: var(--theme-hover-bg);
+                    }
+                }
+
+                .label-select-content {
+                    padding: 0 4px;
+                    flex-shrink: 0;
+                    cursor: pointer;
+                    white-space: nowrap;
+                    border-radius: var(--theme-border-radius);
+                    transition: background-color 0.3s, color 0.3s;
+
+                    &:hover {
+                        background-color: var(--theme-hover-bg);
+                    }
+
+                    &.selected {
+                        color: var(--theme-primary-foreground);
+                        background-color: var(--theme-primary);
+                    }
+                }
+
+                .content {
+                    padding: 0 4px;
+                    flex-shrink: 0;
+                    white-space: nowrap;
                 }
             }
         }

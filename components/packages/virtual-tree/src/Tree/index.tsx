@@ -42,7 +42,7 @@ const Tree: FC = () => {
                                         ref={measureElement}
                                         data-index={currentRowIndex}
                                         className={styles['tree-row']}
-                                        style={{ minHeight: lineHeight, paddingLeft: level * 18 }}
+                                        style={{ minHeight: lineHeight, paddingLeft: level * 20 }}
                                     >
                                         {!isLeaf ? (
                                             <div
@@ -56,12 +56,28 @@ const Tree: FC = () => {
                                         )}
 
                                         {select === 'checkbox' && (
-                                            <Checkbox checked={selectedKeysObj[key]} onChange={(c) => setSelectedKeysObj({ [key]: c })} />
+                                            <div
+                                                style={{ minHeight: lineHeight }}
+                                                className={styles['checkbox-select-content']}
+                                                onClick={() => setSelectedKeysObj({ [key]: !selectedKeysObj[key] })}
+                                            >
+                                                <Checkbox className={styles['checkbox']} checked={selectedKeysObj[key]} />
+                                                <div className={styles['label']}>{renderItem ? renderItem(data, currentRowData) : label}</div>
+                                            </div>
                                         )}
 
-                                        <div className={styles['content']}>
-                                            {renderItem ? renderItem(data, currentRowData) : <div className={styles['label']}>{label}</div>}
-                                        </div>
+                                        {select === 'label' && (
+                                            <div
+                                                onClick={() => setSelectedKeysObj({ [key]: !selectedKeysObj[key] })}
+                                                className={classNames(styles['label-select-content'], { [styles['selected']]: selectedKeysObj[key] })}
+                                            >
+                                                {renderItem ? renderItem(data, currentRowData) : label}
+                                            </div>
+                                        )}
+
+                                        {select !== 'checkbox' && select !== 'label' && (
+                                            <div className={styles['content']}>{renderItem ? renderItem(data, currentRowData) : label}</div>
+                                        )}
                                     </div>
                                 );
                             }
