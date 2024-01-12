@@ -18,7 +18,6 @@ export type TablePagination = {
 
 export type TableColumn<T> = {
     key: string;
-    edit?: boolean;
     width?: number;
     title: ReactNode;
     resize?: boolean;
@@ -26,6 +25,7 @@ export type TableColumn<T> = {
     fixed?: TableFixed;
     align?: TableAlign;
     render?: (item: T, index: number) => ReactNode;
+    edit?: boolean | ((item: T, index: number) => boolean);
     saveEdit?: (value: string, item: T, index: number) => ReactNode;
 };
 
@@ -63,9 +63,10 @@ export type TableProps<T> = {
     onResizeEnd?: () => void;
     showIndex?: TableIndex | boolean;
     rowKey: keyof T | ((v: T) => string);
-    expandable?: TableExpandable | boolean; // 处理boolean
-    pagination?: TablePagination | boolean; // 处理boolean
-    rowSelection?: TableRowSelection<T> | boolean; // 处理boolean
+    expandable?: TableExpandable | boolean;
+    pagination?: TablePagination | boolean;
+    virtual?: 'both' | 'vertical' | 'horizontal';
+    rowSelection?: TableRowSelection<T> | boolean;
 };
 
 export type HandledColumn<T> = Omit<TableColumn<T>, 'width' | 'flexGrow'> & {

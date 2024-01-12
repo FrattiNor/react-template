@@ -22,6 +22,7 @@ const useHandleColumns = <T>(opt: Opt<T>) => {
     let originHorizontalTotalSize = 0;
     const handledColumns: HandledColumn<T>[] = [];
     const handledMidColumns: HandledColumn<T>[] = [];
+    const handledTotalMidColumns: HandledColumn<T>[] = [];
     const handledFixedLeftColumns: HandledColumn<T>[] = [];
     const handledFixedRightColumns: HandledColumn<T>[] = [];
 
@@ -82,6 +83,8 @@ const useHandleColumns = <T>(opt: Opt<T>) => {
             if (!hiddenLeft && !hiddenRight) {
                 handledMidColumns.push(res);
             }
+
+            handledTotalMidColumns.push(res);
         }
 
         if (column.fixed === 'right') {
@@ -115,6 +118,7 @@ const useHandleColumns = <T>(opt: Opt<T>) => {
         handledFixedLeftColumns,
         handledFixedRightColumns,
         handledMidColumns,
+        handledTotalMidColumns,
     };
 };
 

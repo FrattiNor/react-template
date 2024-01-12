@@ -31,6 +31,6 @@ export const TableContextHoc = (Component: FC) => {
 };
 
 // Hook
-export const useTableContext = () => {
-    return useContext(TableContext);
+export const useTableContext = <T extends AnyObj>() => {
+    return useContext<TableContextProps<T>>(TableContext as any);
 };

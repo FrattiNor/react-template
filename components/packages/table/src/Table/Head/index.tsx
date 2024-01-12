@@ -8,11 +8,13 @@ import { FC } from 'react';
 
 const Head: FC = () => {
     const tableContext = useTableContext();
-    const { rowHeight } = tableContext.props;
+    const { rowHeight, virtual = 'both' } = tableContext.props;
     const { headRef, ping, midLeftPadding, midRightPadding, vScrollBarWidth } = tableContext;
-    const { handledFixedLeftColumns, handledFixedRightColumns, handledMidColumns, horizontalTotalSize } = tableContext;
+    const { horizontalTotalSize, handledFixedLeftColumns, handledFixedRightColumns, handledMidColumns, handledTotalMidColumns } = tableContext;
+    const midColumns = virtual === 'both' || virtual === 'horizontal' ? handledMidColumns : handledTotalMidColumns;
+    const midStyle = virtual === 'both' || virtual === 'horizontal' ? { paddingLeft: midLeftPadding, paddingRight: midRightPadding } : {};
 
-    const renderItem = (column: HandledColumn<any>) => {
+    const renderCell = (column: HandledColumn<any>) => {
         const { resize, title, key, width, align } = column;
         const cellValue = notEmpty(title);
         const isStr = typeof cellValue === 'string' || typeof cellValue === 'number';
@@ -38,19 +40,19 @@ const Head: FC = () => {
                 <div className={styles['head-row']} style={{ minHeight: rowHeight }}>
                     {handledFixedLeftColumns.length > 0 && (
                         <div className={classNames(styles['head-fixed-left'], { [styles['pinged']]: ping['left'] })}>
-                            {handledFixedLeftColumns.map((column) => renderItem(column))}
+                            {handledFixedLeftColumns.map((column) => renderCell(column))}
                         </div>
                     )}
 
-                    {handledMidColumns.length > 0 && (
-                        <div className={styles['head-mid']} style={{ paddingLeft: midLeftPadding, paddingRight: midRightPadding }}>
-                            {handledMidColumns.map((column) => renderItem(column))}
+                    {midColumns.length > 0 && (
+                        <div className={styles['head-mid']} style={midStyle}>
+                            {midColumns.map((column) => renderCell(column))}
                         </div>
                     )}
 
                     {handledFixedRightColumns.length > 0 && (
                         <div className={classNames(styles['head-fixed-right'], { [styles['pinged']]: ping['right'] })}>
-                            {handledFixedRightColumns.map((column) => renderItem(column))}
+                            {handledFixedRightColumns.map((column) => renderCell(column))}
                             {vScrollBarWidth > 0 && <div className={classNames(styles['head-v-scroll-bar'])} style={{ width: vScrollBarWidth }} />}
                         </div>
                     )}
