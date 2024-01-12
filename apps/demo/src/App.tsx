@@ -117,7 +117,7 @@ const DemoTable = () => {
                     <VirtualTree
                         multipleSelect
                         data={treeData}
-                        select="label"
+                        select="checkbox"
                         loading={loading}
                         wrapperStyle={{ width: 300, height: 200 }}
                         fieldKeys={{ key: 'id', label: 'nodeName', children: 'childList' }}
