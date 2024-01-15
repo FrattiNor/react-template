@@ -13,11 +13,12 @@ import {
 } from '@react/components';
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
 import { Button, ConfigProvider, Select, theme as antdTheme } from 'antd';
-import { useMemo, useRef, useState } from 'react';
-import { columns, columns2 } from './utils';
+import { useRef, useState } from 'react';
 import classNames from 'classnames';
 import useFps from './useFps';
 import { treeData } from './treeData';
+import useColumns from './useColumns';
+import { tableData } from './tableData';
 
 type Item = {
     id: string;
@@ -34,34 +35,18 @@ notification.setConfig({
 
 const DemoTable = () => {
     useFps();
+    const columns = useColumns();
     const tableRef = useRef<TableRef>(null);
     const [empty, setEmpty] = useState(false);
     const [count, setCount] = useState(100);
     const [loading, setLoading] = useState(false);
-    const [columnsFlag, setColumnsFlag] = useState(1);
+
     const [pagination, setPagination] = useState(false);
     const [expandable, setExpandable] = useState(true);
     const [renderConf, setRenderConf] = useState(false);
     const tableConfRef = useRef<TableColumnConfRef>(null);
     const [rowSelection, setRowSelection] = useState(true);
     const { theme, themeClassName, applyClassName, setTheme } = useTheme();
-
-    const columns3: any[] = useMemo(() => {
-        return Array(100)
-            .fill('')
-            .map((_, i) => ({
-                key: `age_${i}`,
-                title: `年龄_${i}`,
-                fixed: i === 0 ? 'left' : i === 99 ? 'right' : undefined,
-                width: Math.max(Math.floor(Math.random() * 150), 50),
-            }));
-    }, []);
-
-    const columnsMap = {
-        0: columns,
-        1: columns2,
-        2: columns3,
-    };
 
     const query = useQuery({
         gcTime: 0,
@@ -100,10 +85,6 @@ const DemoTable = () => {
 
     const reload = () => {
         setCount((c) => (c === 5 ? 50000 : 5));
-    };
-
-    const height = () => {
-        setColumnsFlag((f) => f + 1);
     };
 
     const changeTheme = () => {
@@ -145,7 +126,6 @@ const DemoTable = () => {
                         <Button onClick={() => setLoading((e) => !e)}>Loading</Button>
                         <Button onClick={() => setEmpty((e) => !e)}>Empty</Button>
                         <Button onClick={reload}>Count</Button>
-                        <Button onClick={height}>Columns</Button>
                         <Button onClick={changeTheme}>Theme</Button>
                         <Button onClick={() => setPagination((v) => !v)}>pagination</Button>
                         <Button onClick={() => setExpandable((v) => !v)}>expandable</Button>
@@ -183,13 +163,13 @@ const DemoTable = () => {
                             showIndex
                             rowKey="id"
                             ref={tableRef}
-                            virtual={false}
+                            virtual="vertical"
                             pagination={pagination}
                             expandable={expandable}
                             rowSelection={rowSelection ? { getCheckboxProps: (item) => ({ disabled: item.id === '1' }) } : false}
                             loading={query.isFetching || loading}
-                            dataSource={empty ? undefined : query.data}
-                            columns={(columnsMap as any)[`${columnsFlag % 3}` as any] as any}
+                            dataSource={empty ? undefined : tableData}
+                            columns={columns}
                             onResizeEnd={() => {
                                 console.log(tableRef.current?.getInstance().horizontalItemSizeCache);
                             }}
