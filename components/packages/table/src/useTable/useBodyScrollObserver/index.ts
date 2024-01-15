@@ -1,6 +1,8 @@
 import { RefObject, useEffect, useRef } from 'react';
+import { TimeDebug } from '../useTimeDebug';
 
 type Opt = {
+    timeDebug: TimeDebug;
     headRef: RefObject<HTMLDivElement | null>;
     bodyRef: RefObject<HTMLDivElement | null>;
     calcPing: () => void;
@@ -13,22 +15,32 @@ type Handle = (size: Size) => void;
 const useBodyScrollObserver = (opt: Opt) => {
     const handles = useRef<Record<string, Handle>>({});
     const size = useRef<Size>({ scrollLeft: 0, scrollTop: 0 });
-    const { calcPing, bodyRef, headRef } = opt;
+    const { calcPing, bodyRef, headRef, timeDebug } = opt;
 
     useEffect(() => {
         if (bodyRef.current) {
             const onScroll = (e: Event) => {
+                timeDebug.start('scroll');
+
                 const target = e.target as HTMLDivElement;
 
                 const nextSize = { scrollLeft: target.scrollLeft, scrollTop: target.scrollTop };
 
-                Object.values(handles.current).forEach((handle) => handle(nextSize));
+                Object.entries(handles.current).forEach(([key, handle]) => {
+                    timeDebug.start(`scroll ${key}`);
+
+                    handle(nextSize);
+
+                    timeDebug.end(`scroll ${key}`);
+                });
 
                 size.current = nextSize;
 
                 if (headRef.current) headRef.current.scrollTo({ left: target.scrollLeft });
 
                 calcPing();
+
+                timeDebug.end('scroll');
             };
 
             bodyRef.current.addEventListener('scroll', onScroll, { passive: true });

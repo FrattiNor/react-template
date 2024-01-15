@@ -1,12 +1,17 @@
 import { HandledProps } from '../useHandleProps';
 import { useEffect, useState } from 'react';
+import { TimeDebug } from '../useTimeDebug';
 
 type Opt<T> = {
+    timeDebug: TimeDebug;
     handledProps: HandledProps<T>;
 };
 
 const usePagination = <T>(opt: Opt<T>) => {
-    const { handledProps } = opt;
+    const { handledProps, timeDebug } = opt;
+
+    timeDebug.start('usePagination');
+
     const [_current, _setCurrent] = useState(1);
     const [_pageSize, _setPageSize] = useState(10);
     const _onChange = (c: number, p: number) => {
@@ -27,7 +32,7 @@ const usePagination = <T>(opt: Opt<T>) => {
         _setCurrent(1);
     }, [dataSource]);
 
-    return pagination
+    const ref = pagination
         ? {
               ...(typeof pagination !== 'boolean' ? pagination : {}),
               total,
@@ -37,6 +42,10 @@ const usePagination = <T>(opt: Opt<T>) => {
               localPagination,
           }
         : (false as const);
+
+    timeDebug.end('usePagination');
+
+    return ref;
 };
 
 export type Pagination = ReturnType<typeof usePagination>;

@@ -1,6 +1,7 @@
 import { TableColumnsConfItem, TableColumn, TableColumns } from '../../type';
-import { useTableDataContext } from '../../TableDataContext';
+
 import { useState } from 'react';
+import { TimeDebug } from '../useTimeDebug';
 
 const fixedNumMap = {
     left: -1,
@@ -9,6 +10,7 @@ const fixedNumMap = {
 };
 
 type Opt<T> = {
+    timeDebug: TimeDebug;
     columns: TableColumns<T>;
     indexColumns: TableColumns<T>;
     expandableColumns: TableColumns<T>;
@@ -16,11 +18,11 @@ type Opt<T> = {
 };
 
 const useSortConfColumns = <T>(opt: Opt<T>) => {
-    const dataContext = useTableDataContext();
-    const [_columnsConf, _setColumnsConf] = useState<Record<string, TableColumnsConfItem>>({});
-    const columnsConf = dataContext.columnsConf ?? _columnsConf;
-    const setColumnsConf = dataContext.setColumnsConf ?? _setColumnsConf;
-    const { columns, indexColumns, expandableColumns, rowSelectionColumns } = opt;
+    const { columns, indexColumns, expandableColumns, rowSelectionColumns, timeDebug } = opt;
+
+    timeDebug.start('useSortConfColumns');
+
+    const [columnsConf, setColumnsConf] = useState<Record<string, TableColumnsConfItem>>({});
 
     const newColumns: (TableColumn<T> & { index: number })[] = [];
 
@@ -56,6 +58,8 @@ const useSortConfColumns = <T>(opt: Opt<T>) => {
     const indexSortedColumns = newColumns.sort((a, b) => a.index - b.index);
     // 根据fixed排序后的columns
     const fixedSortedColumns = indexSortedColumns.sort((a, b) => fixedNumMap[a.fixed ?? 'default'] - fixedNumMap[b.fixed ?? 'default']);
+
+    timeDebug.end('useSortConfColumns');
 
     return { sortedColumns: fixedSortedColumns, columnsConf, setColumnsConf };
 };

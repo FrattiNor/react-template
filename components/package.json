@@ -17,7 +17,6 @@
         "@pkg/loading": "workspace:*",
         "@pkg/notification": "workspace:*",
         "@pkg/table": "workspace:*",
-        "@pkg/table2": "workspace:*",
         "@pkg/table-columns-conf": "workspace:*",
         "@pkg/theme": "workspace:*",
         "@pkg/virtual-tree": "workspace:*"

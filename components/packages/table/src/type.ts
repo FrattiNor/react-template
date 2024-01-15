@@ -54,6 +54,7 @@ export type TableIndex = {
 };
 
 export type TableProps<T> = {
+    debug?: boolean;
     dataSource?: T[];
     loading?: boolean;
     rowHeight?: number;

@@ -1,27 +1,25 @@
 /* eslint-disable @typescript-eslint/no-shadow */
-import { useTableDataContext } from '../../TableDataContext';
 import { HandledProps } from '../useHandleProps';
 import { useMemo, useState } from 'react';
 import { TableColumns } from '../../type';
 import ExpandableFC from './Expandable';
+import { TimeDebug } from '../useTimeDebug';
 
 type Opt<T> = {
+    timeDebug: TimeDebug;
     paginationDatasource: T[];
     handledProps: HandledProps<T>;
 };
 
 const useExpandable = <T,>(opt: Opt<T>) => {
-    const { handledProps, paginationDatasource } = opt;
-    const { rowKey, expandable } = handledProps;
+    const { handledProps, paginationDatasource, timeDebug } = opt;
 
+    timeDebug.start('useExpandable');
+
+    const { rowKey, expandable } = handledProps;
     const expandableColumns: TableColumns<T> = [];
     const expandedKeysObj: Record<string, boolean> = {};
-
-    const dataContext = useTableDataContext();
-    const [__expandedRowKeys, __setExpandedRowKeys] = useState<string[]>([]);
-    const _expandedRowKeys = dataContext?.expandedRowKeys ?? __expandedRowKeys;
-    const _setExpandedRowKeys = dataContext?.setExpandedRowKeys ?? __setExpandedRowKeys;
-
+    const [_expandedRowKeys, _setExpandedRowKeys] = useState<string[]>([]);
     const width = typeof expandable !== 'boolean' ? expandable?.width ?? 42 : 42;
     const fixed = typeof expandable !== 'boolean' ? expandable?.fixed ?? 'left' : 'left';
     const childrenColumnName = typeof expandable !== 'boolean' ? expandable?.childrenColumnName ?? 'children' : 'children';
@@ -98,6 +96,8 @@ const useExpandable = <T,>(opt: Opt<T>) => {
             key: 'table-row-expandable',
         });
     }
+
+    timeDebug.end('useExpandable');
 
     return { totalDataSource, showDataSource, totalRowKeys, dataSourceLevelMap, expandableColumns, expandedRowKeys, setExpandedRowKeys };
 };

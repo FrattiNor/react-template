@@ -1,10 +1,6 @@
-/* eslint-disable react-refresh/only-export-components */
-import { TableDataContextHoc, useTableDataContext } from './TableDataContext';
 import Table from './Table';
 
 export default Table;
-
-export { TableDataContextHoc, useTableDataContext };
 
 export type {
     TableRef,

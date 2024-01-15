@@ -1,6 +1,8 @@
 import { RefObject, useEffect, useRef } from 'react';
+import { TimeDebug } from '../useTimeDebug';
 
 type Opt = {
+    timeDebug: TimeDebug;
     bodyRef: RefObject<HTMLDivElement | null>;
     calcPing: () => void;
     calcScrollBarWidth: () => void;
@@ -14,12 +16,14 @@ type Handle = (size: Size2) => void;
 
 const useBodyResizeObserver = (opt: Opt) => {
     const handles = useRef<Record<string, Handle>>({});
-    const { bodyRef, calcPing, calcScrollBarWidth } = opt;
+    const { bodyRef, calcPing, calcScrollBarWidth, timeDebug } = opt;
     const size = useRef<Size1>({ width: null, height: null });
 
     useEffect(() => {
         if (bodyRef.current) {
             const ob = new ResizeObserver((entries) => {
+                timeDebug.start('resize');
+
                 const entry = entries[0];
                 const nextSize = { height: 0, width: 0 };
                 if (entry.borderBoxSize) {
@@ -37,6 +41,8 @@ const useBodyResizeObserver = (opt: Opt) => {
                 calcScrollBarWidth();
 
                 size.current = nextSize;
+
+                timeDebug.end('resize');
             });
 
             ob.observe(bodyRef.current);

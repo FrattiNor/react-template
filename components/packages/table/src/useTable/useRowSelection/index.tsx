@@ -1,31 +1,29 @@
 /* eslint-disable @typescript-eslint/no-shadow */
-import { useTableDataContext } from '../../TableDataContext';
 import { useEffect, useMemo, useState } from 'react';
 import { HandledProps } from '../useHandleProps';
 import { TableColumns } from '../../type';
 import Checkbox from '@pkg/checkbox';
+import { TimeDebug } from '../useTimeDebug';
 
 type setKeys = (v: (string | number)[]) => void;
 
 type Opt<T> = {
+    timeDebug: TimeDebug;
     totalDataSource?: T[];
     handledProps: HandledProps<T>;
 };
 
 // 分页多选 存在Bug
 const useRowSelection = <T,>(opt: Opt<T>) => {
-    const { handledProps, totalDataSource } = opt;
-    const { rowSelection, rowKey } = handledProps;
+    const { handledProps, totalDataSource, timeDebug } = opt;
 
+    timeDebug.start('useRowSelection');
+
+    const { rowSelection, rowKey } = handledProps;
     const rowSelectionColumns: TableColumns<T> = [];
     const selectedRowKeysObj: Record<string, true> = {};
     const titleKey = useMemo(() => `${new Date().valueOf()}`, [totalDataSource]);
-
-    const dataContext = useTableDataContext();
-    const [__selectedRowKeys, __setSelectedRowKeys] = useState<string[]>([]);
-    const _selectedRowKeys = dataContext?.selectedRowKeys ?? __selectedRowKeys;
-    const _setSelectedRowKeys = dataContext?.setSelectedRowKeys ?? __setSelectedRowKeys;
-
+    const [_selectedRowKeys, _setSelectedRowKeys] = useState<string[]>([]);
     const width = typeof rowSelection !== 'boolean' ? rowSelection?.width ?? 42 : 42;
     const fixed = typeof rowSelection !== 'boolean' ? rowSelection?.fixed ?? 'left' : 'left';
     const getCheckboxProps = typeof rowSelection !== 'boolean' ? rowSelection?.getCheckboxProps : undefined;
@@ -138,6 +136,8 @@ const useRowSelection = <T,>(opt: Opt<T>) => {
             key: 'table-row-selection',
         });
     }
+
+    timeDebug.end('useRowSelection');
 
     return {
         selectedRowKeys,

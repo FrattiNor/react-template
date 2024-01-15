@@ -1,13 +1,15 @@
 import { observeElementRect, observeElementOffset, measureElement } from './utils';
 import { BodyResizeObserver } from '../useBodyResizeObserver';
 import { BodyScrollObserver } from '../useBodyScrollObserver';
-import { useVirtualizer } from '@tanstack/react-virtual';
+import { useVirtualizer } from './useVirtualizer';
 import { HandledProps } from '../useHandleProps';
+import { TimeDebug } from '../useTimeDebug';
 import { TableColumns } from '../../type';
 import { defaultWidth } from '../index';
 import { RefObject } from 'react';
 
 type Opt<T> = {
+    timeDebug: TimeDebug;
     showDataSource: T[];
     handledProps: HandledProps<T>;
     sortedColumns: TableColumns<T>;
@@ -19,8 +21,10 @@ type Opt<T> = {
 type ItemSizeCache = Map<number | string, number>;
 
 const useVirtual = <T>(opt: Opt<T>) => {
-    const { bodyRef, sortedColumns, showDataSource, handledProps, bodyResizeObserver, bodyScrollObserver } = opt;
+    const { bodyRef, sortedColumns, showDataSource, handledProps, bodyResizeObserver, bodyScrollObserver, timeDebug } = opt;
     const { rowKey, rowHeight, calcRowHeight } = handledProps;
+
+    timeDebug.start('useVirtual');
 
     // 竖向虚拟
     const verticalVirtualizer = useVirtualizer({
@@ -70,6 +74,8 @@ const useVirtual = <T>(opt: Opt<T>) => {
     const horizontalMeasureElement = horizontalVirtualizer.measureElement; // 横向监测元素宽度
     const horizontalRange = horizontalVirtualizer.range; // 横向显示的start和end
     const horizontalItemSizeCache = (horizontalVirtualizer as any).itemSizeCache as ItemSizeCache; // 横向测量缓存
+
+    timeDebug.end('useVirtual');
 
     return {
         verticalDistance,
