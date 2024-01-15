@@ -1,18 +1,14 @@
 import { HandledProps } from '../useHandleProps';
 import { Pagination } from '../usePagination';
 import { useMemo } from 'react';
-import { TimeDebug } from '../useTimeDebug';
 
 type Opt<T> = {
-    timeDebug: TimeDebug;
     pagination: Pagination;
     handledProps: HandledProps<T>;
 };
 
 const usePaginationDatasource = <T>(opt: Opt<T>) => {
-    const { handledProps, pagination, timeDebug } = opt;
-
-    timeDebug.start('usePaginationDatasource');
+    const { handledProps, pagination } = opt;
 
     const { dataSource } = handledProps;
     const havePagination = !!pagination;
@@ -31,8 +27,6 @@ const usePaginationDatasource = <T>(opt: Opt<T>) => {
 
         return dataSource || [];
     }, [dataSource, current, pageSize, localPagination, havePagination]);
-
-    timeDebug.end('usePaginationDatasource');
 
     return res;
 };

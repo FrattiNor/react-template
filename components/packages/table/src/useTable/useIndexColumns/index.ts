@@ -2,18 +2,14 @@ import { HandledProps } from '../useHandleProps';
 import { Pagination } from '../usePagination';
 import { useTranslation } from '@pkg/i18n';
 import { TableColumns } from '../../type';
-import { TimeDebug } from '../useTimeDebug';
 
 type Opt<T> = {
-    timeDebug: TimeDebug;
     pagination: Pagination;
     handledProps: HandledProps<T>;
 };
 
 const useIndexColumns = <T>(opt: Opt<T>) => {
-    const { handledProps, pagination, timeDebug } = opt;
-
-    timeDebug.start('useIndexColumns');
+    const { handledProps, pagination } = opt;
 
     const { t1 } = useTranslation();
     const { showIndex } = handledProps;
@@ -33,8 +29,6 @@ const useIndexColumns = <T>(opt: Opt<T>) => {
             align: typeof showIndex !== 'boolean' ? showIndex?.align ?? 'center' : 'center',
         });
     }
-
-    timeDebug.start('useIndexColumns');
 
     return indexColumns;
 };

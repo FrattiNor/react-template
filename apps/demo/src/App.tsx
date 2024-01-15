@@ -160,7 +160,6 @@ const DemoTable = () => {
 
                     <div style={{ height: 400, width: 900, padding: 24 }}>
                         <Table
-                            debug
                             showIndex
                             rowKey="id"
                             ref={tableRef}

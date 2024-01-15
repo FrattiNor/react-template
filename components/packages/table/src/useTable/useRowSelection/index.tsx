@@ -3,21 +3,17 @@ import { useEffect, useMemo, useState } from 'react';
 import { HandledProps } from '../useHandleProps';
 import { TableColumns } from '../../type';
 import Checkbox from '@pkg/checkbox';
-import { TimeDebug } from '../useTimeDebug';
 
 type setKeys = (v: (string | number)[]) => void;
 
 type Opt<T> = {
-    timeDebug: TimeDebug;
     totalDataSource?: T[];
     handledProps: HandledProps<T>;
 };
 
 // 分页多选 存在Bug
 const useRowSelection = <T,>(opt: Opt<T>) => {
-    const { handledProps, totalDataSource, timeDebug } = opt;
-
-    timeDebug.start('useRowSelection');
+    const { handledProps, totalDataSource } = opt;
 
     const { rowSelection, rowKey } = handledProps;
     const rowSelectionColumns: TableColumns<T> = [];
@@ -136,8 +132,6 @@ const useRowSelection = <T,>(opt: Opt<T>) => {
             key: 'table-row-selection',
         });
     }
-
-    timeDebug.end('useRowSelection');
 
     return {
         selectedRowKeys,

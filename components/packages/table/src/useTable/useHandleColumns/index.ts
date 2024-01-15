@@ -1,12 +1,11 @@
 import { HandledColumn, TableColumn, TableColumns } from '../../type';
 import { defaultFlexGrow, defaultWidth } from '../index';
 import { ResizeWidth } from '../useResizeWidth';
-import { TimeDebug } from '../useTimeDebug';
+
 import { VirtualCore } from '../useVirtual';
 import { CSSProperties } from 'react';
 
 export type Opt<T> = {
-    timeDebug: TimeDebug;
     virtual: VirtualCore;
     resizeWidth: ResizeWidth;
     sortedColumns: TableColumns<T>;
@@ -14,11 +13,9 @@ export type Opt<T> = {
 
 // 可以利用Table元素获取宽度
 const useHandleColumns = <T>(opt: Opt<T>) => {
-    const { sortedColumns, resizeWidth, virtual, timeDebug } = opt;
+    const { sortedColumns, resizeWidth, virtual } = opt;
     const { resizeActiveKey, resizeActiveWidth, resized } = resizeWidth;
     const { horizontalRange, horizontalItemSizeCache } = virtual;
-
-    timeDebug.start('useHandleColumns');
 
     let midLeftPadding = 0;
     let midRightPadding = 0;
@@ -112,8 +109,6 @@ const useHandleColumns = <T>(opt: Opt<T>) => {
     // resized后宽度固定不存在滚动条闪烁
     // resized前，horizontalTotalSize > originHorizontalTotalSize 说明经过了flexGrow，可以判断没有横向滚动的情况
     const bodyOverflowX: CSSProperties['overflowX'] = resized ? 'auto' : horizontalTotalSize > originHorizontalTotalSize ? 'hidden' : 'auto';
-
-    timeDebug.end('useHandleColumns');
 
     return {
         bodyOverflowX,

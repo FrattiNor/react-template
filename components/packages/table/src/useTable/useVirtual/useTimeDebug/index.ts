@@ -1,16 +1,11 @@
-import { HandledProps } from '../useHandleProps';
 import { useRef } from 'react';
 
-type Opt<T> = {
-    handledProps: HandledProps<T>;
-};
-
-const useTimeDebug = <T>(opt: Opt<T>) => {
+const useTimeDebug = () => {
     const ref = useRef<Record<string, number>>({});
-    const { debug } = opt.handledProps;
+
     const isDev = process.env.NODE_ENV === 'development';
     const start = (key: string) => {
-        if (debug && isDev) {
+        if (isDev) {
             console.log('%c%s', 'color: #4096ff;', `${key} start`);
             ref.current = {
                 ...ref.current,
@@ -19,7 +14,7 @@ const useTimeDebug = <T>(opt: Opt<T>) => {
         }
     };
     const end = (key: string) => {
-        if (debug && isDev) {
+        if (isDev) {
             if (ref.current[key]) {
                 const now = new Date().valueOf();
                 const distance = now - ref.current[key];

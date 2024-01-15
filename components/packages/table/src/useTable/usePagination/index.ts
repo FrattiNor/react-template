@@ -1,16 +1,12 @@
 import { HandledProps } from '../useHandleProps';
 import { useEffect, useState } from 'react';
-import { TimeDebug } from '../useTimeDebug';
 
 type Opt<T> = {
-    timeDebug: TimeDebug;
     handledProps: HandledProps<T>;
 };
 
 const usePagination = <T>(opt: Opt<T>) => {
-    const { handledProps, timeDebug } = opt;
-
-    timeDebug.start('usePagination');
+    const { handledProps } = opt;
 
     const [_current, _setCurrent] = useState(1);
     const [_pageSize, _setPageSize] = useState(10);
@@ -42,8 +38,6 @@ const usePagination = <T>(opt: Opt<T>) => {
               localPagination,
           }
         : (false as const);
-
-    timeDebug.end('usePagination');
 
     return ref;
 };

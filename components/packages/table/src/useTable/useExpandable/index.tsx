@@ -3,18 +3,14 @@ import { HandledProps } from '../useHandleProps';
 import { useMemo, useState } from 'react';
 import { TableColumns } from '../../type';
 import ExpandableFC from './Expandable';
-import { TimeDebug } from '../useTimeDebug';
 
 type Opt<T> = {
-    timeDebug: TimeDebug;
     paginationDatasource: T[];
     handledProps: HandledProps<T>;
 };
 
 const useExpandable = <T,>(opt: Opt<T>) => {
-    const { handledProps, paginationDatasource, timeDebug } = opt;
-
-    timeDebug.start('useExpandable');
+    const { handledProps, paginationDatasource } = opt;
 
     const { rowKey, expandable } = handledProps;
     const expandableColumns: TableColumns<T> = [];
@@ -96,8 +92,6 @@ const useExpandable = <T,>(opt: Opt<T>) => {
             key: 'table-row-expandable',
         });
     }
-
-    timeDebug.end('useExpandable');
 
     return { totalDataSource, showDataSource, totalRowKeys, dataSourceLevelMap, expandableColumns, expandedRowKeys, setExpandedRowKeys };
 };

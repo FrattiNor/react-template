@@ -1,13 +1,11 @@
 import { RefObject, useState } from 'react';
-import { TimeDebug } from '../useTimeDebug';
 
 type Opt = {
-    timeDebug: TimeDebug;
     bodyRef: RefObject<HTMLDivElement | null>;
 };
 
 const useCalcPing = (opt: Opt) => {
-    const { bodyRef, timeDebug } = opt;
+    const { bodyRef } = opt;
     const [pingLeft, setPingLeft] = useState<boolean>(false);
     const [pingRight, setPingRight] = useState<boolean>(false);
 
@@ -20,8 +18,6 @@ const useCalcPing = (opt: Opt) => {
     const calcPing = () => {
         // 等待滚动条产生或者消失
         window.requestAnimationFrame(() => {
-            timeDebug.start('calcPing');
-
             if (bodyRef.current) {
                 const { scrollWidth, clientWidth, scrollLeft } = bodyRef.current;
 
@@ -33,8 +29,6 @@ const useCalcPing = (opt: Opt) => {
                     setPingRight(scrollWidth - clientWidth - scrollLeft > 0);
                 }
             }
-
-            timeDebug.end('calcPing');
         });
     };
 

@@ -10,7 +10,8 @@ import {
     windowScroll,
 } from '@tanstack/react-virtual';
 import * as React from 'react';
-// import { flushSync } from 'react-dom';
+import { flushSync } from 'react-dom';
+import useTimeDebug from '../useTimeDebug';
 
 //
 
@@ -19,17 +20,21 @@ const useIsomorphicLayoutEffect = typeof document !== 'undefined' ? React.useLay
 function useVirtualizerBase<TScrollElement extends Element | Window, TItemElement extends Element>(
     options: VirtualizerOptions<TScrollElement, TItemElement>,
 ): Virtualizer<TScrollElement, TItemElement> {
+    const timeDebug = useTimeDebug();
     const rerender = React.useReducer(() => ({}), {})[1];
 
     const resolvedOptions: VirtualizerOptions<TScrollElement, TItemElement> = {
         ...options,
         onChange: (instance, sync) => {
-            // if (sync) {
-            //     flushSync(rerender);
-            // } else {
-            //     rerender();
-            // }
-            rerender();
+            if (sync) {
+                requestAnimationFrame(() => {
+                    timeDebug.start('flushSync');
+                    flushSync(rerender);
+                    timeDebug.end('flushSync');
+                });
+            } else {
+                rerender();
+            }
             options.onChange?.(instance, sync);
         },
     };

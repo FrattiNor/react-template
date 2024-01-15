@@ -14,7 +14,6 @@ import usePagination from './usePagination';
 import useExpandable from './useExpandable';
 import useClickedRow from './useClickedRow';
 import useEditStore from './useEditStore';
-import useTimeDebug from './useTimeDebug';
 import useCalcPing from './useCalcPing';
 import useVirtual from './useVirtual';
 import { useRef } from 'react';
@@ -31,25 +30,20 @@ const useTable = <T extends AnyObj>(props: TableProps<T>) => {
     // 给了默认值的props
     const handledProps = useHandleProps(props);
 
-    //
-    const timeDebug = useTimeDebug({ handledProps });
-
     // 空
     const isEmpty = (handledProps.dataSource || [])?.length === 0;
 
     // 分页
-    const pagination = usePagination({ handledProps, timeDebug });
+    const pagination = usePagination({ handledProps });
 
     // 分页后的数据源
     const paginationDatasource = usePaginationDatasource({
-        timeDebug,
         pagination,
         handledProps,
     });
 
     // 序号列
     const indexColumns = useIndexColumns({
-        timeDebug,
         pagination,
         handledProps,
     });
@@ -63,21 +57,18 @@ const useTable = <T extends AnyObj>(props: TableProps<T>) => {
 
     // 增加展开
     const expandable = useExpandable({
-        timeDebug,
         handledProps,
         paginationDatasource,
     });
 
     // 增加多选
     const rowSelection = useRowSelection({
-        timeDebug,
         handledProps,
         totalDataSource: expandable.totalDataSource,
     });
 
     //  整合后排序的 columns
     const sortConfColumns = useSortConfColumns({
-        timeDebug,
         indexColumns,
         columns: handledProps.columns,
         expandableColumns: expandable.expandableColumns,
@@ -88,14 +79,13 @@ const useTable = <T extends AnyObj>(props: TableProps<T>) => {
     const resizeWidth = useResizeWidth({ handledProps });
 
     // ping
-    const { calcPing, ping } = useCalcPing({ timeDebug, bodyRef });
+    const { calcPing, ping } = useCalcPing({ bodyRef });
 
     // v scrollbar
-    const { calcScrollBarWidth, vScrollBarWidth } = useCalcScrollBarWidth({ timeDebug, bodyRef });
+    const { calcScrollBarWidth, vScrollBarWidth } = useCalcScrollBarWidth({ bodyRef });
 
     //  body resize observer
     const bodyResizeObserver = useBodyResizeObserver({
-        timeDebug,
         bodyRef,
         calcPing,
         calcScrollBarWidth,
@@ -103,7 +93,6 @@ const useTable = <T extends AnyObj>(props: TableProps<T>) => {
 
     // body scroll observer
     const bodyScrollObserver = useBodyScrollObserver({
-        timeDebug,
         bodyRef,
         headRef,
         calcPing,
@@ -117,7 +106,6 @@ const useTable = <T extends AnyObj>(props: TableProps<T>) => {
 
     // virtual table core
     const virtual = useVirtual({
-        timeDebug,
         bodyRef,
         handledProps,
         bodyScrollObserver,
@@ -128,7 +116,6 @@ const useTable = <T extends AnyObj>(props: TableProps<T>) => {
 
     // handle columns
     const handledColumns = useHandleColumns({
-        timeDebug,
         virtual,
         resizeWidth,
         sortedColumns: sortConfColumns.sortedColumns,
