@@ -1,0 +1,42 @@
+.resize-head-cell {
+    &::after {
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        content: '';
+        position: absolute;
+        pointer-events: none;
+        background-color: transparent;
+        transition: background-color 0.3s;
+    }
+
+    .resizable-handle {
+        right: 0;
+        bottom: 0;
+        z-index: 1;
+        width: 5px;
+        height: 100%;
+        cursor: ew-resize;
+        position: absolute;
+        transition: background-color 0.3s;
+
+        &:hover {
+            background-color: var(--table-resize-hover);
+        }
+    }
+
+    &.resize-active .resizable-handle {
+        background-color: var(--table-resize-active);
+    }
+
+    &.resize-active::after,
+    &.no-resize-active:hover::after {
+        background-color: var(--table-head-hover);
+    }
+
+    // 避免鼠标出现图标闪烁
+    &.any-cell-resizing {
+        cursor: ew-resize;
+    }
+}

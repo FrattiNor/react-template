@@ -4,7 +4,7 @@ import {
     useTheme,
     TableColumnsConf,
     TableColumnConfRef,
-    Table,
+    Table2,
     NotificationClient,
     TableRef,
     getTableConfColumns,
@@ -159,14 +159,10 @@ const DemoTable = () => {
                     </div>
 
                     <div style={{ height: 400, width: 900, padding: 24 }}>
-                        <Table
-                            showIndex
+                        <Table2
                             rowKey="id"
                             ref={tableRef}
                             virtual="vertical"
-                            pagination={pagination}
-                            expandable={expandable}
-                            rowSelection={rowSelection ? { getCheckboxProps: (item) => ({ disabled: item.id === '1' }) } : false}
                             loading={query.isFetching || loading}
                             dataSource={empty ? undefined : tableData}
                             columns={columns}

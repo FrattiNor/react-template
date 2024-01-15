@@ -1,0 +1,98 @@
+@import url('../../../theme/fixed.module.less');
+
+.virtual-body {
+    min-width: 100%;
+    position: relative;
+    transform: translate3d(0, 0, 0);
+
+    .body-row {
+        display: flex;
+        position: relative;
+        border-top: 1px solid var(--theme-border-second);
+
+        &.first {
+            border-top: 0;
+        }
+
+        &:hover .body-cell,
+        &.selected .body-cell,
+        .body-cell.clicked-row,
+        .body-cell.resize-active,
+        &:hover .body-seize-a-seat,
+        &.selected .body-seize-a-seat {
+            background-color: var(--table-row-hover-bg);
+        }
+
+        &.selected:hover .body-cell,
+        &.selected .body-cell.clicked-row,
+        &.selected .body-cell.resize-active,
+        &.selected:hover .body-seize-a-seat {
+            background-color: var(--table-row-selected-hover-bg);
+        }
+
+        .body-fixed-left {
+            .fixed-left();
+            flex-shrink: 0;
+            display: flex;
+            z-index: 2;
+        }
+
+        .body-fixed-right {
+            .fixed-right();
+            flex-shrink: 0;
+            display: flex;
+            z-index: 3;
+        }
+
+        .body-mid {
+            position: relative;
+            flex-shrink: 0;
+            display: flex;
+            z-index: 1;
+        }
+
+        .body-seize-a-seat {
+            width: 0;
+            flex-grow: 1;
+            position: relative;
+            background-color: var(--theme-bg);
+            transition: background-color 0.3s;
+        }
+
+        .body-cell {
+            display: flex;
+            flex-shrink: 0;
+            overflow: hidden;
+            position: relative;
+            align-items: center;
+            background-color: var(--theme-bg);
+            transition: background-color 0.3s;
+
+            .body-cell-str {
+                width: 100%;
+                padding: 0 8px;
+                flex-shrink: 0;
+                min-width: 100%;
+                max-width: 100%;
+                overflow: hidden;
+                position: relative;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+            }
+
+            .body-cell-block {
+                width: 100%;
+                font-size: 0;
+                padding: 0 8px;
+                flex-shrink: 0;
+                min-width: 100%;
+                max-width: 100%;
+                position: relative;
+
+                & > * {
+                    font-size: var(--theme-font-size);
+                }
+            }
+        }
+    }
+}

@@ -128,6 +128,9 @@ importers:
       '@pkg/table-columns-conf':
         specifier: workspace:*
         version: link:packages/table-columns-conf
+      '@pkg/table2':
+        specifier: workspace:*
+        version: link:packages/table2
       '@pkg/theme':
         specifier: workspace:*
         version: link:packages/theme
@@ -207,6 +210,28 @@ importers:
       '@dnd-kit/utilities':
         specifier: ^3.2.1
         version: 3.2.2(react@18.2.0)
+
+  components/packages/table2:
+    dependencies:
+      '@pkg/checkbox':
+        specifier: workspace:*
+        version: link:../checkbox
+      '@pkg/empty':
+        specifier: workspace:*
+        version: link:../empty
+      '@pkg/i18n':
+        specifier: workspace:*
+        version: link:../i18n
+      '@pkg/loading':
+        specifier: workspace:*
+        version: link:../loading
+      '@pkg/theme':
+        specifier: workspace:*
+        version: link:../theme
+    devDependencies:
+      '@tanstack/react-virtual':
+        specifier: 3.0.0-beta.68
+        version: 3.0.0-beta.68(react-dom@18.2.0)(react@18.2.0)
 
   components/packages/theme: {}
 

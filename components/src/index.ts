@@ -7,6 +7,7 @@ export * from '@pkg/empty';
 export * from '@pkg/i18n';
 
 export { default as Table } from '@pkg/table';
+export { default as Table2 } from '@pkg/table2';
 export * from '@pkg/table';
 
 export { default as TableColumnsConf } from '@pkg/table-columns-conf';
