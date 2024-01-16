@@ -163,7 +163,7 @@ const DemoTable = () => {
                             showIndex
                             rowKey="id"
                             ref={tableRef}
-                            virtual="vertical"
+                            // virtual="vertical"
                             pagination={pagination}
                             expandable={expandable}
                             rowSelection={rowSelection ? { getCheckboxProps: (item) => ({ disabled: item.id === '1' }) } : false}

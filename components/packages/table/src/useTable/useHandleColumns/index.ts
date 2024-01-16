@@ -61,7 +61,6 @@ const useHandleColumns = <T>(opt: Opt<T>) => {
         }
 
         if (column.fixed !== 'left' && column.fixed !== 'right') {
-            const { hiddenLeft, hiddenRight } = getHidden(i);
             const { width, originWidth, measureStyle } = getSomeProps(column);
 
             const res: HandledColumn<T> = {
@@ -74,18 +73,24 @@ const useHandleColumns = <T>(opt: Opt<T>) => {
             horizontalTotalSize += width;
             originHorizontalTotalSize += originWidth;
             handledColumns.push(res);
-
-            if (hiddenLeft) {
-                midLeftPadding += width;
-            }
-            if (hiddenRight) {
-                midRightPadding += width;
-            }
-            if (!hiddenLeft && !hiddenRight) {
-                handledMidColumns.push(res);
-            }
-
             handledTotalMidColumns.push(res);
+
+            // 强制渲染
+            if (!!column.edit || column.forceRender === true) {
+                handledMidColumns.push(res);
+            } else {
+                const { hiddenLeft, hiddenRight } = getHidden(i);
+
+                if (hiddenLeft) {
+                    midLeftPadding += width;
+                }
+                if (hiddenRight) {
+                    midRightPadding += width;
+                }
+                if (!hiddenLeft && !hiddenRight) {
+                    handledMidColumns.push(res);
+                }
+            }
         }
 
         if (column.fixed === 'right') {
