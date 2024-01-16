@@ -1,5 +1,5 @@
 import { NotificationRenderQueenItem, NotificationType } from '../../type';
-import { FC, useEffect, useReducer, useRef, useState } from 'react';
+import { FC, useEffect, useRef, useState } from 'react';
 import SuccessSvg from './Icons/SuccessSvg';
 import WarningSvg from './Icons/WarningSvg';
 import { useAnimate } from '@react/hooks';
@@ -23,7 +23,6 @@ const typeIcon: Record<NotificationType, FC> = {
 
 const Item: FC<Props> = ({ item, first }) => {
     const itemRef = useRef<HTMLDivElement>(null);
-    const rerender = useReducer(() => ({}), {})[1];
     const timeout = useRef<NodeJS.Timeout | null>(null);
     const heightRef = useRef<number | undefined>(undefined);
 
@@ -31,20 +30,16 @@ const Item: FC<Props> = ({ item, first }) => {
     const { type, message, duration, dispose, placement } = item;
     const Icon = type ? typeIcon[type] : undefined;
 
-    //
-    const { status, leave, onAnimationEnd } = useAnimate({
+    const { status, leave, listeners } = useAnimate({
         autoEnter: true,
         beforeEnter: () => {
             if (itemRef.current) heightRef.current = itemRef.current.clientHeight;
-            rerender();
         },
         afterEnter: () => {
             heightRef.current = undefined;
-            rerender();
         },
         beforeLeave: () => {
             if (itemRef.current) heightRef.current = itemRef.current.clientHeight;
-            rerender();
         },
         afterLeave: () => {
             dispose();
@@ -67,7 +62,7 @@ const Item: FC<Props> = ({ item, first }) => {
 
     return (
         <div
-            onAnimationEnd={onAnimationEnd}
+            {...listeners}
             style={{ height: heightRef.current }}
             className={classNames(styles['item-wrapper'], {
                 [styles['first']]: first,
@@ -75,9 +70,9 @@ const Item: FC<Props> = ({ item, first }) => {
                 [styles['left']]: placement.includes('Left'),
                 [styles['right']]: placement.includes('Right'),
                 [styles['bottom']]: placement.includes('bottom'),
-                [styles['enter']]: status === 'Enter',
-                [styles['leave']]: status === 'Leave',
-                [styles['before-enter']]: status === 'BeforeEnter',
+                [styles['before-enter']]: status.beforeEnter, // 初始状态
+                [styles['enter']]: status.isEnter, // 执行动画
+                [styles['leave']]: status.isLeave, // 执行动画
             })}
         >
             <div ref={itemRef} className={styles['item']} onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)}>
