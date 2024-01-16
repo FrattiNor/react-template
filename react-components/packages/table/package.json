@@ -12,6 +12,7 @@
     },
     "peerDependencies": {
         "@pkg/i18n": "workspace:*",
+        "@react/utils": "workspace:*",
         "@pkg/loading": "workspace:*",
         "@pkg/checkbox": "workspace:*",
         "@pkg/empty": "workspace:*",

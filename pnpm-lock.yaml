@@ -94,7 +94,10 @@ importers:
     dependencies:
       '@react/components':
         specifier: workspace:*
-        version: link:../../components
+        version: link:../../react-components
+      '@react/utils':
+        specifier: workspace:*
+        version: link:../../react-utils
       '@tanstack/react-query':
         specifier: ^5.12.2
         version: 5.13.4(react@18.2.0)
@@ -105,7 +108,7 @@ importers:
         specifier: ^0.17.0
         version: 0.17.0
 
-  components:
+  react-components:
     dependencies:
       '@pkg/checkbox':
         specifier: workspace:*
@@ -135,9 +138,11 @@ importers:
         specifier: workspace:*
         version: link:packages/virtual-tree
 
-  components/packages/checkbox: {}
+  react-components/packages/checkbox: {}
 
-  components/packages/empty:
+  react-components/packages/dropdown: {}
+
+  react-components/packages/empty:
     dependencies:
       '@pkg/i18n':
         specifier: workspace:*
@@ -146,25 +151,28 @@ importers:
         specifier: workspace:*
         version: link:../theme
 
-  components/packages/i18n: {}
+  react-components/packages/i18n: {}
 
-  components/packages/loading:
+  react-components/packages/loading:
     dependencies:
       '@pkg/theme':
         specifier: workspace:*
         version: link:../theme
 
-  components/packages/notification:
+  react-components/packages/notification:
     dependencies:
       '@pkg/theme':
         specifier: workspace:*
         version: link:../theme
+      '@react/hooks':
+        specifier: workspace:*
+        version: link:../../../react-hooks
     devDependencies:
       nanoid:
         specifier: ^5.0.4
         version: 5.0.4
 
-  components/packages/table:
+  react-components/packages/table:
     dependencies:
       '@pkg/checkbox':
         specifier: workspace:*
@@ -181,12 +189,15 @@ importers:
       '@pkg/theme':
         specifier: workspace:*
         version: link:../theme
+      '@react/utils':
+        specifier: workspace:*
+        version: link:../../../react-utils
     devDependencies:
       '@tanstack/react-virtual':
         specifier: 3.0.0-beta.68
         version: 3.0.0-beta.68(react-dom@18.2.0)(react@18.2.0)
 
-  components/packages/table-columns-conf:
+  react-components/packages/table-columns-conf:
     dependencies:
       '@pkg/checkbox':
         specifier: workspace:*
@@ -208,9 +219,9 @@ importers:
         specifier: ^3.2.1
         version: 3.2.2(react@18.2.0)
 
-  components/packages/theme: {}
+  react-components/packages/theme: {}
 
-  components/packages/virtual-tree:
+  react-components/packages/virtual-tree:
     dependencies:
       '@pkg/checkbox':
         specifier: workspace:*
@@ -225,6 +236,10 @@ importers:
       '@tanstack/react-virtual':
         specifier: 3.0.0-beta.68
         version: 3.0.0-beta.68(react-dom@18.2.0)(react@18.2.0)
+
+  react-hooks: {}
+
+  react-utils: {}
 
 packages:
 

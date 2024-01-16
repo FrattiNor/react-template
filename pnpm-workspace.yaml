@@ -1,4 +1,6 @@
 packages:
     - 'apps/*'
-    - 'components'
-    - 'components/packages/*'
+    - 'react-hooks'
+    - 'react-utils'
+    - 'react-components'
+    - 'react-components/packages/*'

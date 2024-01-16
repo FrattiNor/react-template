@@ -1,6 +1,6 @@
 {
     "private": true,
-    "name": "@pkg/notification",
+    "name": "@pkg/dropdown",
     "version": "0.0.1",
     "main": "./src/index.tsx",
     "module": "./src/index.tsx",
@@ -9,11 +9,5 @@
         "tslint": "npx tsc --noEmit",
         "eslint": "npx eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0 --fix",
         "lint": "npm run eslint && npm run tslint"
-    },
-    "peerDependencies": {
-        "@pkg/theme": "workspace:*"
-    },
-    "devDependencies": {
-        "nanoid": "^5.0.4"
     }
 }

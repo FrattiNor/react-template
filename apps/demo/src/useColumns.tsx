@@ -1,6 +1,6 @@
 /* eslint-disable react-refresh/only-export-components */
-import { notEmpty } from '@react/components/packages/table/src/utils/empty';
 import { TableColumns } from '@react/components';
+import { notEmpty } from '@react/utils';
 
 const App2 = () => {
     return notEmpty(undefined);

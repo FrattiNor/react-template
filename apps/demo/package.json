@@ -11,7 +11,8 @@
         "lint": "npm run eslint && npm run tslint"
     },
     "peerDependencies": {
-        "@react/components": "workspace:*"
+        "@react/components": "workspace:*",
+        "@react/utils": "workspace:*"
     },
     "dependencies": {
         "@tanstack/react-query": "^5.12.2",
