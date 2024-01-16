@@ -1,5 +1,10 @@
+/* eslint-disable react-refresh/only-export-components */
 import { notEmpty } from '@react/components/packages/table/src/utils/empty';
 import { TableColumns } from '@react/components';
+
+const App2 = () => {
+    return notEmpty(undefined);
+};
 
 const useColumns = () => {
     const columns: TableColumns<any> = [
@@ -7,7 +12,7 @@ const useColumns = () => {
             title: '数据源类型',
             key: 'alarmSource',
             width: 100,
-            render: ({ alarmSource }: any) => notEmpty(alarmSource),
+            render: () => <App2 />,
         },
         {
             title: '报警等级',

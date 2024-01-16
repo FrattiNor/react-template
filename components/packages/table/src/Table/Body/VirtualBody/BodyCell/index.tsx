@@ -24,7 +24,6 @@ const BodyCell = <T extends AnyObj>(props: Props<T>) => {
     const { key, render, width, align, edit, saveEdit } = column;
     const resizeActive = resizeReadyKey === key || resizeActiveKey === key;
     const cellValue = notEmpty(render ? render(currentRowData, currentRowIndex) : currentRowData[key]);
-    const isStr = typeof cellValue === 'string' || typeof cellValue === 'number';
     const cellTitle = getCellTitle(cellValue);
     const cellStyle = { width, textAlign: align };
     const cellClassName = classNames(styles['body-cell'], {
@@ -32,8 +31,10 @@ const BodyCell = <T extends AnyObj>(props: Props<T>) => {
         [styles['clicked-row']]: clickedRow === currentRowKey,
     });
 
+    // cellValue直接是str
+    const cellIsStr = typeof cellValue === 'string' || typeof cellValue === 'number';
     const canEdit = typeof edit === 'function' ? edit(currentRowData, currentRowIndex) : edit;
-    if (canEdit === true && isStr) {
+    if (canEdit === true && cellIsStr) {
         return (
             <EditCell
                 cellKey={key}
@@ -47,9 +48,11 @@ const BodyCell = <T extends AnyObj>(props: Props<T>) => {
         );
     }
 
+    // 渲染完是str
+    const renderIsStr = !!cellTitle;
     return (
         <div title={cellTitle} style={cellStyle} className={cellClassName}>
-            {isStr ? (
+            {renderIsStr ? (
                 <div className={styles['body-cell-str']} style={innerStyle}>
                     {cellValue}
                 </div>

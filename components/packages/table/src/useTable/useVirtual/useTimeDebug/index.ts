@@ -6,7 +6,7 @@ const useTimeDebug = () => {
     const isDev = process.env.NODE_ENV === 'development';
     const start = (key: string) => {
         if (isDev) {
-            console.log('%c%s', 'color: #4096ff;', `${key} start`);
+            // console.log('%c%s', 'color: #4096ff;', `${key} start`);
             ref.current = {
                 ...ref.current,
                 [key]: new Date().valueOf(),

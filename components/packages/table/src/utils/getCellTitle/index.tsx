@@ -1,10 +1,26 @@
 import React from 'react';
 
-const getCellTitle = (children: any) => {
-    if (typeof children === 'string' || typeof children === 'number') {
-        return children.toString();
-    } else if (React.isValidElement(children) && typeof (children.props as any).children === 'string') {
-        return (children.props as any).children;
+const isStrNum = (element: any) => {
+    return typeof element === 'string' || typeof element === 'number';
+};
+
+const getCellTitle = (element: any) => {
+    if (isStrNum(element)) {
+        return element.toString();
+    } else if (React.isValidElement(element)) {
+        try {
+            const { children } = element.props as any;
+            if (isStrNum(children)) {
+                return children;
+            } else if (typeof element.type === 'function') {
+                const renderedElement = (element.type as any)(element.props);
+                if (isStrNum(renderedElement)) {
+                    return renderedElement;
+                }
+            }
+        } catch (e) {
+            console.error(e);
+        }
     }
     return null;
 };

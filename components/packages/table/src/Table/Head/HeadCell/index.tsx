@@ -13,12 +13,12 @@ const HeadCell = <T extends AnyObj>(props: Props<T>) => {
     const { column } = props;
     const { resize, title, key, width, align } = column;
     const cellValue = notEmpty(title);
-    const isStr = typeof cellValue === 'string' || typeof cellValue === 'number';
     const cellTitle = getCellTitle(cellValue);
+    const renderIsStr = !!cellTitle;
 
     return (
         <ResizableTitle cellKey={key} resize={resize} title={cellTitle} className={styles['head-cell']} style={{ width, textAlign: align }}>
-            {isStr ? <div className={styles['head-cell-str']}>{cellValue}</div> : <div className={styles['head-cell-block']}>{cellValue}</div>}
+            {renderIsStr ? <div className={styles['head-cell-str']}>{cellValue}</div> : <div className={styles['head-cell-block']}>{cellValue}</div>}
         </ResizableTitle>
     );
 };
