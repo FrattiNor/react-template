@@ -1,4 +1,27 @@
 .resize-head-cell {
+    // handle
+    .resizable-handle {
+        right: 0;
+        bottom: 0;
+        z-index: 1;
+        width: 5px;
+        height: 100%;
+        cursor: ew-resize;
+        position: absolute;
+        transition: background-color 0.3s;
+    }
+
+    // 没有active时，handle hover
+    &.no-resize-active .resizable-handle:hover {
+        background-color: var(--table-resize-hover);
+    }
+
+    // 有active时，active的handle高亮
+    &.resize-active .resizable-handle {
+        background-color: var(--table-resize-active);
+    }
+
+    // 遮罩
     &::after {
         top: 0;
         left: 0;
@@ -11,25 +34,7 @@
         transition: background-color 0.3s;
     }
 
-    .resizable-handle {
-        right: 0;
-        bottom: 0;
-        z-index: 1;
-        width: 5px;
-        height: 100%;
-        cursor: ew-resize;
-        position: absolute;
-        transition: background-color 0.3s;
-
-        &:hover {
-            background-color: var(--table-resize-hover);
-        }
-    }
-
-    &.resize-active .resizable-handle {
-        background-color: var(--table-resize-active);
-    }
-
+    //
     &.resize-active::after,
     &.no-resize-active:hover::after {
         background-color: var(--table-head-hover);
