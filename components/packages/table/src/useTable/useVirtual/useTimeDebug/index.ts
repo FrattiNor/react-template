@@ -18,7 +18,15 @@ const useTimeDebug = () => {
             if (ref.current[key]) {
                 const now = new Date().valueOf();
                 const distance = now - ref.current[key];
-                console.log('%c%s %c%s', 'color: #4096ff;', `${key} isEnd`, `color: ${distance > 30 ? '#f5222d' : '#389e0d'};`, `[${distance}ms]`);
+                if (distance > 30) {
+                    console.log(
+                        '%c%s %c%s',
+                        'color: #4096ff;',
+                        `${key} isEnd`,
+                        `color: ${distance > 30 ? '#f5222d' : '#389e0d'};`,
+                        `[${distance}ms]`,
+                    );
+                }
                 const nextRef = { ...ref.current };
                 delete nextRef[key];
                 ref.current = nextRef;
