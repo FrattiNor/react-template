@@ -170,8 +170,8 @@ const DemoTable = () => {
                             loading={query.isFetching || loading}
                             dataSource={empty ? undefined : tableData}
                             columns={columns}
-                            onResizeEnd={() => {
-                                console.log(tableRef.current?.getInstance().horizontalItemSizeCache);
+                            onResizeEnd={(widths) => {
+                                console.log(widths);
                             }}
                         />
                     </div>

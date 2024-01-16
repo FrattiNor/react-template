@@ -65,13 +65,13 @@ export type TableProps<T> = {
     calcRowHeight?: number;
     autoScrollTop?: boolean;
     columns: TableColumns<T>;
-    onResizeEnd?: () => void;
     showIndex?: TableIndex | boolean;
     rowKey: keyof T | ((v: T) => string);
     expandable?: TableExpandable | boolean;
     pagination?: TablePagination | boolean;
     virtual?: boolean | 'vertical' | 'horizontal';
     rowSelection?: TableRowSelection<T> | boolean;
+    onResizeEnd?: (widths: Record<string, number>) => void;
 };
 
 export type HandledColumn<T> = Omit<TableColumn<T>, 'width' | 'flexGrow'> & {

@@ -1,5 +1,8 @@
 import { MouseEventHandler, useEffect, useRef, useState } from 'react';
 import { HandledProps } from '../useHandleProps';
+import { VirtualCore } from '../useVirtual';
+import { TableColumns } from '../../type';
+import { defaultWidth } from '../index';
 
 // 避免触发一些事件导致mouse无法触发
 function pauseEvent(e: Event) {
@@ -14,19 +17,21 @@ type ResizeTarget = { clientWidth: number; pageX: number; key: string };
 type ResizeActive = { width: number; key: string };
 
 type Opt<T> = {
+    virtual: VirtualCore;
     handledProps: HandledProps<T>;
+    sortedColumns: TableColumns<T>;
 };
 
 const useResizeWidth = <T,>(opt: Opt<T>) => {
-    const { handledProps } = opt;
-    const { onResizeEnd } = handledProps;
     const resizedRef = useRef(false);
+    const { handledProps, virtual, sortedColumns } = opt;
     const [resizeTarget, setResizeTarget] = useState<null | ResizeTarget>(null);
     const [resizeActive, setResizeActive] = useState<null | ResizeActive>(null);
     const resized = resizedRef.current;
     const resizeReadyKey = resizeTarget?.key;
     const resizeActiveKey = resizeActive?.key;
     const resizeActiveWidth = resizeActive?.width;
+    const [resizeEndFlag, setResizeEndFlag] = useState(0);
 
     const onMouseDown = (key: string): MouseEventHandler<HTMLSpanElement> => {
         return (e) => {
@@ -55,9 +60,7 @@ const useResizeWidth = <T,>(opt: Opt<T>) => {
                 pauseEvent(e);
                 setResizeActive(null);
                 setResizeTarget(null);
-                if (typeof onResizeEnd === 'function') {
-                    onResizeEnd();
-                }
+                setResizeEndFlag((c) => c + 1);
             };
 
             document.body.addEventListener('mouseup', mouseUp);
@@ -69,6 +72,19 @@ const useResizeWidth = <T,>(opt: Opt<T>) => {
             };
         }
     }, [resizeTarget]);
+
+    // 触发结束事件
+    useEffect(() => {
+        if (resizeEndFlag > 0) {
+            if (typeof handledProps.onResizeEnd === 'function') {
+                const widths: Record<string, number> = {};
+                sortedColumns.forEach(({ key, width }) => {
+                    widths[key] = virtual.horizontalItemSizeCache.get(key) ?? width ?? defaultWidth;
+                });
+                handledProps.onResizeEnd(widths);
+            }
+        }
+    }, [resizeEndFlag]);
 
     return { resizeReadyKey, resizeActiveKey, resizeActiveWidth, resized, onResizeStart: onMouseDown };
 };

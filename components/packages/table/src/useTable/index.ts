@@ -75,9 +75,6 @@ const useTable = <T extends AnyObj>(props: TableProps<T>) => {
         rowSelectionColumns: rowSelection.rowSelectionColumns,
     });
 
-    //  title resize
-    const resizeWidth = useResizeWidth({ handledProps });
-
     // ping
     const { calcPing, ping } = useCalcPing({ bodyRef });
 
@@ -111,6 +108,13 @@ const useTable = <T extends AnyObj>(props: TableProps<T>) => {
         bodyScrollObserver,
         bodyResizeObserver,
         showDataSource: expandable.showDataSource,
+        sortedColumns: sortConfColumns.sortedColumns,
+    });
+
+    //  title resize
+    const resizeWidth = useResizeWidth({
+        virtual,
+        handledProps,
         sortedColumns: sortConfColumns.sortedColumns,
     });
 

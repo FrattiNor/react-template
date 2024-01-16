@@ -1,7 +1,6 @@
 import { HandledColumn, TableColumn, TableColumns } from '../../type';
 import { defaultFlexGrow, defaultWidth } from '../index';
 import { ResizeWidth } from '../useResizeWidth';
-
 import { VirtualCore } from '../useVirtual';
 import { CSSProperties } from 'react';
 
