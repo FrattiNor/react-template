@@ -1,4 +1,5 @@
 import { useTableContext } from '../../../../TableContext';
+import getCellTitle from '../../../../utils/getCellTitle';
 import { AnyObj, HandledColumn } from '../../../../type';
 import { notEmpty } from '../../../../utils/empty';
 import styles from '../index.module.less';
@@ -24,7 +25,7 @@ const BodyCell = <T extends AnyObj>(props: Props<T>) => {
     const resizeActive = resizeReadyKey === key || resizeActiveKey === key;
     const cellValue = notEmpty(render ? render(currentRowData, currentRowIndex) : currentRowData[key]);
     const isStr = typeof cellValue === 'string' || typeof cellValue === 'number';
-    const cellTitle = isStr ? `${cellValue}` : '';
+    const cellTitle = getCellTitle(cellValue);
     const cellStyle = { width, textAlign: align };
     const cellClassName = classNames(styles['body-cell'], {
         [styles['resize-active']]: resizeActive,

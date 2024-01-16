@@ -1,3 +1,4 @@
+import getCellTitle from '../../../utils/getCellTitle';
 import { notEmpty } from '../../../utils/empty';
 import { HandledColumn } from '../../../type';
 import ResizableTitle from './ResizableTitle';
@@ -13,7 +14,7 @@ const HeadCell = <T extends AnyObj>(props: Props<T>) => {
     const { resize, title, key, width, align } = column;
     const cellValue = notEmpty(title);
     const isStr = typeof cellValue === 'string' || typeof cellValue === 'number';
-    const cellTitle = isStr ? `${cellValue}` : '';
+    const cellTitle = getCellTitle(cellValue);
 
     return (
         <ResizableTitle cellKey={key} resize={resize} title={cellTitle} className={styles['head-cell']} style={{ width, textAlign: align }}>
