@@ -21,20 +21,19 @@ const BodyCell = <T extends AnyObj>(props: Props<T>) => {
     const lastColumn = handledColumns[column.index - 1];
     const isAfterExpandable = lastColumn?.key === 'table-row-expandable';
     const innerStyle = isAfterExpandable ? { paddingLeft: 8 + (dataSourceLevelMap[currentRowKey] ?? 0) * 16 } : undefined;
-    const { key, render, width, align, edit, saveEdit } = column;
+    const { key, render, width, align, edit, saveEdit, renderAs, renderDomTitle } = column;
     const resizeActive = resizeReadyKey === key || resizeActiveKey === key;
     const cellValue = notEmpty(render ? render(currentRowData, currentRowIndex) : currentRowData[key]);
-    const cellTitle = getCellTitle(cellValue);
+    const isStr = typeof cellValue === 'string' || typeof cellValue === 'number';
+    const cellTitle = typeof renderDomTitle === 'function' ? renderDomTitle(currentRowData, currentRowIndex) : getCellTitle(cellValue);
     const cellStyle = { width, textAlign: align };
     const cellClassName = classNames(styles['body-cell'], {
         [styles['resize-active']]: resizeActive,
         [styles['clicked-row']]: clickedRow === currentRowKey,
     });
 
-    // cellValue直接是str
-    const cellIsStr = typeof cellValue === 'string' || typeof cellValue === 'number';
     const canEdit = typeof edit === 'function' ? edit(currentRowData, currentRowIndex) : edit;
-    if (canEdit === true && cellIsStr) {
+    if (canEdit === true && isStr) {
         return (
             <EditCell
                 cellKey={key}
@@ -48,11 +47,10 @@ const BodyCell = <T extends AnyObj>(props: Props<T>) => {
         );
     }
 
-    // 渲染完是str
-    const renderIsStr = !!cellTitle;
+    const renderAsStr = renderAs ? renderAs === 'str' : isStr;
     return (
         <div title={cellTitle} style={cellStyle} className={cellClassName}>
-            {renderIsStr ? (
+            {renderAsStr ? (
                 <div className={styles['body-cell-str']} style={innerStyle}>
                     {cellValue}
                 </div>

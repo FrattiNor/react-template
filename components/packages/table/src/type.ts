@@ -25,7 +25,9 @@ export type TableColumn<T> = {
     fixed?: TableFixed;
     align?: TableAlign;
     forceRender?: boolean;
+    renderAs?: 'str' | 'block';
     render?: (item: T, index: number) => ReactNode;
+    renderDomTitle?: (item: T, index: number) => string;
     edit?: boolean | ((item: T, index: number) => boolean);
     saveEdit?: (value: string, item: T, index: number) => void;
 };
