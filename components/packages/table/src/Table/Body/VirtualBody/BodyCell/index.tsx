@@ -1,3 +1,4 @@
+import { tableExpandableKey } from '../../../../useTable/useExpandable';
 import { useTableContext } from '../../../../TableContext';
 import getCellTitle from '../../../../utils/getCellTitle';
 import { AnyObj, HandledColumn } from '../../../../type';
@@ -19,7 +20,7 @@ const BodyCell = <T extends AnyObj>(props: Props<T>) => {
     const { dataSourceLevelMap, resizeActiveKey, resizeReadyKey, handledColumns, clickedRow } = tableContext;
     //
     const lastColumn = handledColumns[column.index - 1];
-    const isAfterExpandable = lastColumn?.key === 'table-row-expandable';
+    const isAfterExpandable = lastColumn?.key === tableExpandableKey;
     const innerStyle = isAfterExpandable ? { paddingLeft: 8 + (dataSourceLevelMap[currentRowKey] ?? 0) * 16 } : undefined;
     const { key, render, width, align, edit, saveEdit, renderAs, renderDomTitle } = column;
     const resizeActive = resizeReadyKey === key || resizeActiveKey === key;

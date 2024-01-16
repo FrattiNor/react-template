@@ -11,6 +11,8 @@ type Opt<T> = {
     handledProps: HandledProps<T>;
 };
 
+export const tableRowSelectionKey = 'table-row-selection';
+
 // 分页多选 存在Bug
 const useRowSelection = <T,>(opt: Opt<T>) => {
     const { handledProps, totalDataSource } = opt;
@@ -129,7 +131,7 @@ const useRowSelection = <T,>(opt: Opt<T>) => {
             resize: false,
             align: 'center',
             render: renderItem,
-            key: 'table-row-selection',
+            key: tableRowSelectionKey,
         });
     }
 

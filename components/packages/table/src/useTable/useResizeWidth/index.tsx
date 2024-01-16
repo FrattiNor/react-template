@@ -3,6 +3,8 @@ import { HandledProps } from '../useHandleProps';
 import { VirtualCore } from '../useVirtual';
 import { TableColumns } from '../../type';
 import { defaultWidth } from '../index';
+import { tableRowSelectionKey } from '../useRowSelection';
+import { tableExpandableKey } from '../useExpandable';
 
 // 避免触发一些事件导致mouse无法触发
 function pauseEvent(e: Event) {
@@ -79,7 +81,10 @@ const useResizeWidth = <T,>(opt: Opt<T>) => {
             if (typeof handledProps.onResizeEnd === 'function') {
                 const widths: Record<string, number> = {};
                 sortedColumns.forEach(({ key, width }) => {
-                    widths[key] = virtual.horizontalItemSizeCache.get(key) ?? width ?? defaultWidth;
+                    // 排除掉多选和展开的列
+                    if (key !== tableRowSelectionKey && key !== tableExpandableKey) {
+                        widths[key] = virtual.horizontalItemSizeCache.get(key) ?? width ?? defaultWidth;
+                    }
                 });
                 handledProps.onResizeEnd(widths);
             }

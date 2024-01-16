@@ -8,6 +8,8 @@ type Opt<T> = {
     handledProps: HandledProps<T>;
 };
 
+export const tableIndexKey = 'index';
+
 const useIndexColumns = <T>(opt: Opt<T>) => {
     const { handledProps, pagination } = opt;
 
@@ -21,8 +23,8 @@ const useIndexColumns = <T>(opt: Opt<T>) => {
     if (showIndex) {
         indexColumns.push({
             flexGrow: 0,
-            key: 'index',
             title: t1('序号'),
+            key: tableIndexKey,
             render: (_, index) => (current - 1) * pageSize + index + 1,
             width: typeof showIndex !== 'boolean' ? showIndex?.width ?? 60 : 60,
             fixed: typeof showIndex !== 'boolean' ? showIndex?.fixed ?? 'left' : 'left',

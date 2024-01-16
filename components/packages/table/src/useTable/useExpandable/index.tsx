@@ -9,6 +9,8 @@ type Opt<T> = {
     handledProps: HandledProps<T>;
 };
 
+export const tableExpandableKey = 'table-row-expandable';
+
 const useExpandable = <T,>(opt: Opt<T>) => {
     const { handledProps, paginationDatasource } = opt;
 
@@ -89,7 +91,7 @@ const useExpandable = <T,>(opt: Opt<T>) => {
             title: <div />,
             align: 'center',
             render: renderItem,
-            key: 'table-row-expandable',
+            key: tableExpandableKey,
         });
     }
 
