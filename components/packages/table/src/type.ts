@@ -1,4 +1,4 @@
-import { CSSProperties, ReactNode, RefObject } from 'react';
+import { CSSProperties, Dispatch, ReactNode, RefObject, SetStateAction } from 'react';
 import useTable from './useTable';
 
 export type AnyObj = Record<string, any>;
@@ -37,8 +37,8 @@ export type TableColumns<T> = TableColumn<T>[];
 export type TableRowSelection<T> = {
     width?: number;
     fixed?: TableFixed;
-    selectedRowKeys?: (string | number)[];
-    onChange?: (v: (string | number)[]) => void;
+    selectedRowKeys?: string[];
+    onChange?: Dispatch<SetStateAction<string[]>>;
     getCheckboxProps?: (item: T) => { disabled: boolean };
 };
 
@@ -46,8 +46,8 @@ export type TableExpandable = {
     width?: number;
     fixed?: TableFixed;
     childrenColumnName?: string;
-    expandedRowKeys?: (string | number)[];
-    onChange?: (v: (string | number)[]) => void;
+    expandedRowKeys?: string[];
+    onChange?: (v: string[]) => void;
 };
 
 export type TableIndex = {

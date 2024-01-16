@@ -46,7 +46,10 @@ const DemoTable = () => {
     const [renderConf, setRenderConf] = useState(false);
     const tableConfRef = useRef<TableColumnConfRef>(null);
     const [rowSelection, setRowSelection] = useState(true);
+    const [obj, setObj] = useState({ 1: 1 });
     const { theme, themeClassName, applyClassName, setTheme } = useTheme();
+
+    console.log(obj);
 
     const query = useQuery({
         gcTime: 0,
@@ -122,6 +125,7 @@ const DemoTable = () => {
                     </div>
 
                     <div style={{ padding: '24px 24px 0 24px', width: 900, display: 'flex', flexWrap: 'wrap', gap: 16 }}>
+                        <Button onClick={() => setObj((old) => old)}>Obj</Button>
                         <Button onClick={scroll}>Scroll</Button>
                         <Button onClick={() => setLoading((e) => !e)}>Loading</Button>
                         <Button onClick={() => setEmpty((e) => !e)}>Empty</Button>

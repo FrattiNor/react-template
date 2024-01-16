@@ -4,8 +4,6 @@ import { HandledProps } from '../useHandleProps';
 import { TableColumns } from '../../type';
 import Checkbox from '@pkg/checkbox';
 
-type setKeys = (v: (string | number)[]) => void;
-
 type Opt<T> = {
     totalDataSource?: T[];
     handledProps: HandledProps<T>;
@@ -26,20 +24,29 @@ const useRowSelection = <T,>(opt: Opt<T>) => {
     const fixed = typeof rowSelection !== 'boolean' ? rowSelection?.fixed ?? 'left' : 'left';
     const getCheckboxProps = typeof rowSelection !== 'boolean' ? rowSelection?.getCheckboxProps : undefined;
     const selectedRowKeys = typeof rowSelection !== 'boolean' ? rowSelection?.selectedRowKeys ?? _selectedRowKeys : _selectedRowKeys;
-    const setSelectedRowKeys = (typeof rowSelection !== 'boolean' ? rowSelection?.onChange ?? _setSelectedRowKeys : _setSelectedRowKeys) as setKeys;
+    const setSelectedRowKeys = typeof rowSelection !== 'boolean' ? rowSelection?.onChange ?? _setSelectedRowKeys : _setSelectedRowKeys;
 
     // 数据源变更，清掉不在当前数据源中的数据
     useEffect(() => {
-        const dataSourceSelectedRowKeysObj: Record<string, true> = {};
-
-        (totalDataSource || []).forEach((item) => {
-            const key = (typeof rowKey === 'function' ? rowKey(item) : item[rowKey]) as string;
-            if (selectedRowKeysObj[key]) {
-                dataSourceSelectedRowKeysObj[key] = true;
-            }
-        });
-
-        setSelectedRowKeys(Object.keys(dataSourceSelectedRowKeysObj));
+        if (totalDataSource) {
+            setSelectedRowKeys((prevKeys) => {
+                // prev
+                const prevRowKeysObj: Record<string, true> = {};
+                prevKeys.forEach((key) => (prevRowKeysObj[key] = true));
+                // next
+                let haveNotSame = false; // 是否有不同
+                const nextKeys: string[] = [];
+                (totalDataSource || []).forEach((item) => {
+                    const key = (typeof rowKey === 'function' ? rowKey(item) : item[rowKey]) as string;
+                    if (prevRowKeysObj[key]) {
+                        nextKeys.push(key);
+                    } else {
+                        haveNotSame = true;
+                    }
+                });
+                return haveNotSame ? nextKeys : prevKeys;
+            });
+        }
     }, [totalDataSource]);
 
     //
@@ -51,8 +58,8 @@ const useRowSelection = <T,>(opt: Opt<T>) => {
 
     //
     const { allCouldCheckRowKeys, allDatasourceCheckedRowKeys } = useMemo(() => {
-        const allCouldCheckRowKeys: (string | number)[] = [];
-        const allDatasourceCheckedRowKeys: (string | number)[] = [];
+        const allCouldCheckRowKeys: string[] = [];
+        const allDatasourceCheckedRowKeys: string[] = [];
 
         if (rowSelection) {
             (totalDataSource || []).forEach((item) => {
