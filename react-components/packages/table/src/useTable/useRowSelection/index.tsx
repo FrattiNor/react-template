@@ -30,21 +30,29 @@ const useRowSelection = <T,>(opt: Opt<T>) => {
     useEffect(() => {
         if (totalDataSource) {
             setSelectedRowKeys((prevKeys) => {
-                // prev
-                const prevRowKeysObj: Record<string, true> = {};
-                prevKeys.forEach((key) => (prevRowKeysObj[key] = true));
-                // next
-                let haveNotSame = false; // 是否有不同
-                const nextKeys: string[] = [];
-                (totalDataSource || []).forEach((item) => {
-                    const key = (typeof rowKey === 'function' ? rowKey(item) : item[rowKey]) as string;
-                    if (prevRowKeysObj[key]) {
-                        nextKeys.push(key);
-                    } else {
-                        haveNotSame = true;
-                    }
-                });
-                return haveNotSame ? nextKeys : prevKeys;
+                if (totalDataSource.length !== 0) {
+                    // prev
+                    const prevRowKeysObj: Record<string, true> = {};
+                    prevKeys.forEach((key) => (prevRowKeysObj[key] = true));
+                    // next
+                    let haveNotSame = false; // 是否有不同
+                    const nextKeys: string[] = [];
+                    (totalDataSource || []).forEach((item) => {
+                        const key = (typeof rowKey === 'function' ? rowKey(item) : item[rowKey]) as string;
+                        if (prevRowKeysObj[key]) {
+                            nextKeys.push(key);
+                        } else {
+                            haveNotSame = true;
+                        }
+                    });
+                    return haveNotSame ? nextKeys : prevKeys;
+                } else {
+                    return prevKeys.length === 0 ? prevKeys : [];
+                }
+            });
+        } else {
+            setSelectedRowKeys((prevKeys) => {
+                return prevKeys.length === 0 ? prevKeys : [];
             });
         }
     }, [totalDataSource]);
