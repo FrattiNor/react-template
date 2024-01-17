@@ -1,31 +1,19 @@
-import { DropdownItem, DropdownPlacement } from '../../type';
-import { useAnimate, useClickBlank } from '@react/hooks';
+import { useAnimate, useMousedownBlank } from '@react/hooks';
+import { FC, useEffect, useReducer, useRef } from 'react';
 import usePosition, { Position } from './usePosition';
-import { FC, useEffect, useRef } from 'react';
+import { OverlayProps } from '../../type';
 import styles from './index.module.less';
+import useObserver from './useObserver';
 import classNames from 'classnames';
-import { Theme } from '@pkg/theme';
 
-type Props = {
-    theme: Theme;
-    visible: boolean;
-    target: HTMLElement;
-    destroy: () => void;
-    items: DropdownItem[];
-    themeClassName: string;
-    applyClassName: string;
-    container: HTMLElement;
-    placement: DropdownPlacement;
-};
-
-const Overlay: FC<Props> = (props) => {
+const Overlay: FC<OverlayProps> = (props) => {
     const getPosition = usePosition();
+    const rerender = useReducer(() => ({}), {})[1];
     const overlayRef = useRef<HTMLDivElement>(null);
     const positionRef = useRef<Position | null>(null);
     const { x, y, topBottom = 'top' } = positionRef.current || {};
-    const { theme, themeClassName, applyClassName } = props;
     const { target, container, items, visible, placement, destroy } = props;
-    const targetWidth = target.clientWidth;
+    const { theme, themeClassName, applyClassName, overlaySameWidth, targetWidth, overlayFollow } = props;
 
     const { status, listeners, enter, leave } = useAnimate({
         beforeEnter: () => {
@@ -45,8 +33,19 @@ const Overlay: FC<Props> = (props) => {
     }, [visible]);
 
     // 点击空白位置
-    useClickBlank(overlayRef, () => {
+    useMousedownBlank(overlayRef, () => {
         leave();
+    });
+
+    // 监听target位置变化
+    useObserver(target, {
+        overlayFollow,
+        callback: () => {
+            if (overlayRef.current) {
+                positionRef.current = getPosition({ target, container, placement, overlay: overlayRef.current });
+                rerender();
+            }
+        },
     });
 
     return (
@@ -60,7 +59,7 @@ const Overlay: FC<Props> = (props) => {
             })}
         >
             <div ref={overlayRef} className={styles['content-wrapper']}>
-                <div style={{ minWidth: targetWidth }} className={styles['content']}>
+                <div style={{ minWidth: overlaySameWidth ? targetWidth : 0 }} className={styles['content']}>
                     {items.map(({ key, label, onClick }) => {
                         const itemClick: React.MouseEventHandler<HTMLDivElement> = (e) => {
                             let canLeave = true;

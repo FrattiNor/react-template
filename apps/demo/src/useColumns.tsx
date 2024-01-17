@@ -1,5 +1,6 @@
 /* eslint-disable react-refresh/only-export-components */
 import { TableColumns } from '@react/components';
+import { Dropdown } from '@react/components';
 import { notEmpty } from '@react/utils';
 
 const App2 = () => {
@@ -18,13 +19,34 @@ const useColumns = () => {
             title: '报警等级',
             key: 'alarmLevel',
             width: 100,
-            render: ({ alarmLevel }) => alarmLevel,
+            render: ({ alarmLevel }) => (
+                <Dropdown
+                    items={[
+                        { label: '123', key: '1' },
+                        { label: '1234', key: '2' },
+                    ]}
+                >
+                    <span>{alarmLevel}</span>
+                </Dropdown>
+            ),
         },
         {
             title: '设备类别',
             key: 'deviceCategory',
             width: 150,
-            render: ({ deviceCategory }: any) => notEmpty(deviceCategory),
+            render: ({ deviceCategory }: any) =>
+                notEmpty(deviceCategory, () => (
+                    <Dropdown
+                        overlayFollow
+                        placement="topRight"
+                        items={[
+                            { label: '123', key: '1' },
+                            { label: '1234', key: '2' },
+                        ]}
+                    >
+                        <span>{deviceCategory}</span>
+                    </Dropdown>
+                )),
         },
         {
             title: '报警时间',

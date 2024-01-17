@@ -1,8 +1,8 @@
 import { useEffect } from 'react';
 
-const useClickBlank = (ref: React.RefObject<HTMLElement>, callback: () => void) => {
+const useMousedownBlank = (ref: React.RefObject<HTMLElement>, callback: () => void) => {
     useEffect(() => {
-        const documentClick = (e: MouseEvent) => {
+        const documentMousedown = (e: MouseEvent) => {
             const target = e.target as HTMLElement;
             if (ref.current) {
                 if (!target.contains(ref.current)) {
@@ -13,12 +13,12 @@ const useClickBlank = (ref: React.RefObject<HTMLElement>, callback: () => void) 
             }
         };
 
-        document.addEventListener('click', documentClick);
+        document.addEventListener('mousedown', documentMousedown);
 
         return () => {
-            document.removeEventListener('click', documentClick);
+            document.removeEventListener('mousedown', documentMousedown);
         };
     }, []);
 };
 
-export default useClickBlank;
+export default useMousedownBlank;
