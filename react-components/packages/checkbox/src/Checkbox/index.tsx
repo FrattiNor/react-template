@@ -1,9 +1,11 @@
 import styles from './index.module.less';
 import { CheckboxProps } from '../type';
+import { useTheme } from '@pkg/theme';
 import { FC, useState } from 'react';
 import classNames from 'classnames';
 
 const Checkbox: FC<CheckboxProps> = (props) => {
+    const { themeClassName } = useTheme();
     const [_checked, _setChecked] = useState(false);
     const { disabled, indeterminate, className, onClick } = props;
     const checked = indeterminate ? false : props.checked ?? _checked;
@@ -17,6 +19,7 @@ const Checkbox: FC<CheckboxProps> = (props) => {
             }}
             className={classNames(
                 styles['checkbox'],
+                themeClassName,
                 {
                     [styles['disabled']]: disabled,
                     [styles['indeterminate']]: indeterminate,

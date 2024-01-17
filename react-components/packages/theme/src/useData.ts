@@ -6,7 +6,8 @@ const useData = ({ theme: _theme = 'light' }: ThemeProps) => {
     const [theme, setTheme] = useState<Theme>(_theme);
     const themeClassName = styles[theme];
     const applyClassName = styles['apply-theme'];
-    return { theme, setTheme, themeClassName, applyClassName };
+    const applyBgClassName = styles['apply-bg-theme'];
+    return { theme, setTheme, themeClassName, applyClassName, applyBgClassName };
 };
 
 export default useData;

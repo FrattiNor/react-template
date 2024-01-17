@@ -141,7 +141,11 @@ importers:
         specifier: workspace:*
         version: link:packages/virtual-tree
 
-  react-components/packages/checkbox: {}
+  react-components/packages/checkbox:
+    dependencies:
+      '@pkg/theme':
+        specifier: workspace:*
+        version: link:../theme
 
   react-components/packages/dropdown:
     dependencies:
@@ -218,6 +222,9 @@ importers:
       '@pkg/table':
         specifier: workspace:*
         version: link:../table
+      '@pkg/theme':
+        specifier: workspace:*
+        version: link:../theme
     devDependencies:
       '@dnd-kit/core':
         specifier: ^6.0.8

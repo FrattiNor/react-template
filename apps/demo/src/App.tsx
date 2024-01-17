@@ -49,7 +49,7 @@ const DemoTable = () => {
     const tableConfRef = useRef<TableColumnConfRef>(null);
     const [rowSelection, setRowSelection] = useState(true);
 
-    const { theme, themeClassName, applyClassName, setTheme } = useTheme();
+    const { theme, themeClassName, applyClassName, applyBgClassName, setTheme } = useTheme();
 
     const query = useQuery({
         gcTime: 0,
@@ -96,7 +96,7 @@ const DemoTable = () => {
 
     return (
         <ConfigProvider theme={{ algorithm: theme === 'light' ? antdTheme.defaultAlgorithm : antdTheme.darkAlgorithm }}>
-            <div className={classNames(themeClassName, applyClassName)} style={{ width: '100%', height: '100%' }}>
+            <div className={classNames(themeClassName, applyClassName, applyBgClassName)} style={{ width: '100%', height: '100%' }}>
                 <div style={{ padding: 64 }}>
                     <VirtualTree
                         multipleSelect

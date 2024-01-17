@@ -1,6 +1,7 @@
 /* eslint-disable react-refresh/only-export-components */
 import { VirtualTreeContextHoc, useVirtualTreeContext } from '../TreeContext';
 import styles from './index.module.less';
+import { useTheme } from '@pkg/theme';
 import Checkbox from '@pkg/checkbox';
 import classNames from 'classnames';
 import Loading from '@pkg/loading';
@@ -10,14 +11,14 @@ import { FC } from 'react';
 
 const Tree: FC = () => {
     const contextData = useVirtualTreeContext();
-    const { virtual, props } = contextData;
-    const { select } = props;
+    const { virtual, props, wrapperRef } = contextData;
+    const { themeClassName, applyClassName } = useTheme();
     const { virtualItems, totalSize, measureElement, distance } = virtual;
-    const { renderItem, loading, style, className, wrapperClassName, wrapperStyle } = props;
-    const { wrapperRef, lineHeight, showData, setVisibles, isEmpty, selectedKeysObj, setSelectedKeysObj } = contextData;
+    const { renderItem, loading, style, className, wrapperClassName, wrapperStyle, select } = props;
+    const { lineHeight, showData, setVisibles, isEmpty, selectedKeysObj, setSelectedKeysObj } = contextData;
 
     return (
-        <div className={classNames(styles['wrapper'], wrapperClassName)} style={wrapperStyle}>
+        <div className={classNames(styles['wrapper'], themeClassName, applyClassName, wrapperClassName)} style={wrapperStyle}>
             <Loading loading={loading} />
 
             <div ref={wrapperRef} className={classNames(styles['tree'], className)} style={style}>

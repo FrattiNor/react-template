@@ -3,6 +3,7 @@ import { TableColumnConfProps, TableColumnConfRef } from '../type';
 import { useTranslation } from '@pkg/i18n';
 import styles from './index.module.less';
 import { useSubmitData } from './hooks';
+import { useTheme } from '@pkg/theme';
 import Checkbox from '@pkg/checkbox';
 import classNames from 'classnames';
 import Sortable from '../Sortable';
@@ -16,6 +17,8 @@ const TableColumnsConf: ComponentType = forwardRef((props, ref) => {
     const submitData = useSubmitData(props);
 
     const [data, setData] = useState(props.columns);
+
+    const { themeClassName, applyClassName } = useTheme();
 
     // 暴露提交和重置
     useImperativeHandle(
@@ -77,7 +80,7 @@ const TableColumnsConf: ComponentType = forwardRef((props, ref) => {
     };
 
     return (
-        <div className={styles['wrapper']}>
+        <div className={classNames(styles['wrapper'], themeClassName, applyClassName)}>
             <Sortable
                 items={data}
                 setItems={setData}
