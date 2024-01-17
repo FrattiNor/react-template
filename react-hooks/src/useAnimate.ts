@@ -65,6 +65,7 @@ const useAnimate = (props: Props) => {
         enter,
         leave,
         listeners: { onAnimationEnd, onAnimationStart },
+        statusStr: statusRef.current,
         status: {
             beforeEnter: statusRef.current === 'BeforeEnter',
             isEnter: statusRef.current === 'Enter',

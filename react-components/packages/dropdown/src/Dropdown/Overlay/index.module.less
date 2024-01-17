@@ -1,0 +1,93 @@
+@import url('./theme.module.less');
+
+.overlay {
+    z-index: 88888;
+    position: absolute;
+    background-color: transparent !important;
+
+    @keyframes fate-in {
+        0% {
+            transform: scaleY(0.8);
+            opacity: 0;
+        }
+        100% {
+            transform: scaleY(1);
+            opacity: 1;
+        }
+    }
+
+    @keyframes fate-out {
+        0% {
+            transform: scaleY(1);
+            opacity: 1;
+        }
+        100% {
+            transform: scaleY(0.8);
+            opacity: 0;
+        }
+    }
+
+    &.enter {
+        animation-duration: 0.15s;
+        animation-fill-mode: forwards;
+        animation-timing-function: cubic-bezier(0.23, 1, 0.32, 1);
+        animation-name: fate-in;
+    }
+
+    &.leave {
+        animation-duration: 0.15s;
+        animation-fill-mode: forwards;
+        animation-timing-function: cubic-bezier(0.755, 0.05, 0.855, 0.06);
+        animation-name: fate-out;
+    }
+
+    // 初始状态隐藏，但不能影响子元素的大小
+    &.before-enter {
+        width: 0;
+        height: 0;
+        opacity: 0;
+        z-index: -999;
+        overflow: hidden;
+        user-select: none;
+        visibility: hidden;
+        pointer-events: none;
+
+        .content-wrapper {
+            position: absolute;
+        }
+    }
+
+    &.top {
+        transform-origin: 50% 100%;
+    }
+
+    &.bottom {
+        transform-origin: 50% 0%;
+    }
+
+    .content-wrapper {
+        padding: 4px 0;
+        position: relative;
+
+        .content {
+            padding: 4px;
+            position: relative;
+            box-sizing: border-box;
+            background-color: var(--theme-bg);
+            border-radius: var(--theme-border-radius);
+            box-shadow: var(--dropdown-overlay-box-shadow);
+
+            .item {
+                cursor: pointer;
+                padding: 5px 10px;
+                white-space: nowrap;
+                transition: background-color 0.3s;
+                border-radius: var(--theme-border-radius);
+
+                &:hover {
+                    background-color: var(--theme-active-bg);
+                }
+            }
+        }
+    }
+}

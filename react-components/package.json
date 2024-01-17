@@ -12,6 +12,7 @@
     },
     "peerDependencies": {
         "@pkg/checkbox": "workspace:*",
+        "@pkg/dropdown": "workspace:*",
         "@pkg/empty": "workspace:*",
         "@pkg/i18n": "workspace:*",
         "@pkg/loading": "workspace:*",

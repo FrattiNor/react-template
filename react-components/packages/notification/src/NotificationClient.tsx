@@ -74,7 +74,7 @@ class NotificationClient {
             message: typeof props !== 'string' ? props.message : props,
             duration: typeof props !== 'string' ? props.duration ?? this.config.duration : this.config.duration,
             placement: typeof props !== 'string' ? props.placement ?? this.config.placement : this.config.placement,
-            dispose: () => {
+            destroy: () => {
                 const newQueen = { ...this.renderQueen };
                 delete newQueen[key];
                 this.renderQueen = { ...newQueen };

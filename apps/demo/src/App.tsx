@@ -10,6 +10,7 @@ import {
     getTableConfColumns,
     getDefaultTableConfColumns,
     VirtualTree,
+    Dropdown,
 } from '@react/components';
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
 import { Button, ConfigProvider, Select, theme as antdTheme } from 'antd';
@@ -35,6 +36,7 @@ notification.setConfig({
 
 const DemoTable = () => {
     useFps();
+    const btnRef = useRef(null);
     const columns = useColumns();
     const tableRef = useRef<TableRef>(null);
     const [empty, setEmpty] = useState(false);
@@ -46,10 +48,8 @@ const DemoTable = () => {
     const [renderConf, setRenderConf] = useState(false);
     const tableConfRef = useRef<TableColumnConfRef>(null);
     const [rowSelection, setRowSelection] = useState(true);
-    const [obj, setObj] = useState({ 1: 1 });
-    const { theme, themeClassName, applyClassName, setTheme } = useTheme();
 
-    console.log(obj);
+    const { theme, themeClassName, applyClassName, setTheme } = useTheme();
 
     const query = useQuery({
         gcTime: 0,
@@ -125,7 +125,6 @@ const DemoTable = () => {
                     </div>
 
                     <div style={{ padding: '24px 24px 0 24px', width: 900, display: 'flex', flexWrap: 'wrap', gap: 16 }}>
-                        <Button onClick={() => setObj((old) => old)}>Obj</Button>
                         <Button onClick={scroll}>Scroll</Button>
                         <Button onClick={() => setLoading((e) => !e)}>Loading</Button>
                         <Button onClick={() => setEmpty((e) => !e)}>Empty</Button>
@@ -152,9 +151,40 @@ const DemoTable = () => {
                             notification
                         </Button>
                         <Button onClick={() => console.log(tableRef.current?.getInstance())}>showTable</Button>
+                        <Dropdown
+                            // placement="topRight"
+                            items={[
+                                {
+                                    key: '1',
+                                    label: 'label11111111111111',
+                                    onClick: (e) => {
+                                        e.preventDefault();
+                                        e.stopPropagation();
+                                        return false;
+                                    },
+                                },
+                                { label: 'label222222222222', key: '2' },
+                            ]}
+                        >
+                            <Button
+                                style={{
+                                    position: 'fixed',
+                                    bottom: 24,
+                                    right: 24,
+                                }}
+                                ref={btnRef}
+                            >
+                                Dropdown
+                            </Button>
+                        </Dropdown>
                         <Select
                             open
-                            style={{ width: 85 }}
+                            style={{
+                                width: 85,
+                                // position: 'fixed',
+                                // bottom: 24,
+                                // right: 24,
+                            }}
                             options={[
                                 { label: '1111', value: '1' },
                                 { label: '2222', value: '2' },
@@ -167,7 +197,6 @@ const DemoTable = () => {
                             showIndex
                             rowKey="id"
                             ref={tableRef}
-                            // virtual="vertical"
                             pagination={pagination}
                             expandable={expandable}
                             rowSelection={rowSelection ? { getCheckboxProps: (item) => ({ disabled: item.id === '1' }) } : false}

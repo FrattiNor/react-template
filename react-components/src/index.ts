@@ -1,6 +1,9 @@
 export { default as Checkbox } from '@pkg/checkbox';
 export * from '@pkg/checkbox';
 
+export { default as Dropdown } from '@pkg/dropdown';
+export * from '@pkg/dropdown';
+
 export { default as Empty } from '@pkg/empty';
 export * from '@pkg/empty';
 

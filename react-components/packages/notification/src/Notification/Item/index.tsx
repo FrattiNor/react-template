@@ -27,7 +27,7 @@ const Item: FC<Props> = ({ item, first }) => {
     const heightRef = useRef<number | undefined>(undefined);
 
     const [hover, setHover] = useState(false);
-    const { type, message, duration, dispose, placement } = item;
+    const { type, message, duration, destroy, placement } = item;
     const Icon = type ? typeIcon[type] : undefined;
 
     const { status, leave, listeners } = useAnimate({
@@ -42,7 +42,7 @@ const Item: FC<Props> = ({ item, first }) => {
             if (itemRef.current) heightRef.current = itemRef.current.clientHeight;
         },
         afterLeave: () => {
-            dispose();
+            destroy();
         },
     });
 

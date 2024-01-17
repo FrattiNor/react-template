@@ -23,7 +23,7 @@ export type NotificationRenderQueenItem = {
     key: string;
     message: string;
     duration: number;
-    dispose: () => void;
+    destroy: () => void;
     type?: NotificationType;
     placement: NotificationPlacement;
 };

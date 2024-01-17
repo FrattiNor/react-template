@@ -113,6 +113,9 @@ importers:
       '@pkg/checkbox':
         specifier: workspace:*
         version: link:packages/checkbox
+      '@pkg/dropdown':
+        specifier: workspace:*
+        version: link:packages/dropdown
       '@pkg/empty':
         specifier: workspace:*
         version: link:packages/empty
@@ -140,7 +143,14 @@ importers:
 
   react-components/packages/checkbox: {}
 
-  react-components/packages/dropdown: {}
+  react-components/packages/dropdown:
+    dependencies:
+      '@pkg/theme':
+        specifier: workspace:*
+        version: link:../theme
+      '@react/hooks':
+        specifier: workspace:*
+        version: link:../../../react-hooks
 
   react-components/packages/empty:
     dependencies:
