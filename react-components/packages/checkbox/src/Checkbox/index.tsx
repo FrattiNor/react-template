@@ -1,13 +1,13 @@
+import { FC, MouseEventHandler } from 'react';
 import { useMergeState } from '@react/hooks';
 import styles from './index.module.less';
 import { CheckboxProps } from '../type';
 import { useTheme } from '@pkg/theme';
 import classNames from 'classnames';
-import { FC } from 'react';
 
 const Checkbox: FC<CheckboxProps> = (props) => {
     const { themeClassName } = useTheme();
-    const { disabled, indeterminate, className, onClick } = props;
+    const { disabled, indeterminate, className, onClick, children } = props;
 
     const [_checked, setChecked] = useMergeState({
         defaultValue: false,
@@ -17,18 +17,32 @@ const Checkbox: FC<CheckboxProps> = (props) => {
 
     const checked = indeterminate ? false : _checked;
 
-    return (
+    const haveChildren = !!children;
+
+    const clickFun: MouseEventHandler<HTMLDivElement> = (e) => {
+        if (typeof onClick === 'function') onClick(e);
+        if (!disabled) setChecked(!checked);
+    };
+
+    const checkboxDom = (
         <div
-            onClick={(e) => {
-                if (typeof onClick === 'function') onClick(e);
-                if (!disabled) setChecked(!checked);
-            }}
+            // 有children时使用外部的点击
+            onClick={(e) => !haveChildren && clickFun(e)}
             className={classNames(themeClassName, styles['checkbox'], className, {
                 [styles['checked']]: checked,
                 [styles['disabled']]: disabled,
                 [styles['indeterminate']]: indeterminate,
             })}
         />
+    );
+
+    if (!haveChildren) return checkboxDom;
+
+    return (
+        <div onClick={clickFun} className={styles['checkbox-wrapper']}>
+            {checkboxDom}
+            {children}
+        </div>
     );
 };
 

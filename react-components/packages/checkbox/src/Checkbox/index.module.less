@@ -8,6 +8,7 @@
     display: inline-block;
     vertical-align: middle;
     box-sizing: border-box;
+    transition: border-color 0.3s;
     background-color: var(--theme-bg);
     border: 1px solid var(--theme-border);
     border-radius: var(--theme-border-radius);
@@ -78,5 +79,18 @@
         &::before {
             background-color: var(--theme-disabled-foreground);
         }
+    }
+}
+
+.checkbox-wrapper {
+    gap: 6px;
+    cursor: pointer;
+    position: relative;
+    align-items: center;
+    display: inline-flex;
+    vertical-align: middle;
+
+    &:hover .checkbox {
+        border-color: var(--theme-primary);
     }
 }
