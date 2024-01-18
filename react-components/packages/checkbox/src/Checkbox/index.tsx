@@ -1,15 +1,21 @@
+import { useMergeState } from '@react/hooks';
 import styles from './index.module.less';
 import { CheckboxProps } from '../type';
 import { useTheme } from '@pkg/theme';
-import { FC, useState } from 'react';
 import classNames from 'classnames';
+import { FC } from 'react';
 
 const Checkbox: FC<CheckboxProps> = (props) => {
     const { themeClassName } = useTheme();
-    const [_checked, _setChecked] = useState(false);
     const { disabled, indeterminate, className, onClick } = props;
-    const checked = indeterminate ? false : props.checked ?? _checked;
-    const setChecked = props.onChange ?? _setChecked;
+
+    const [_checked, setChecked] = useMergeState({
+        defaultValue: false,
+        state: props.checked,
+        setState: props.onChange,
+    });
+
+    const checked = indeterminate ? false : _checked;
 
     return (
         <div
@@ -17,16 +23,11 @@ const Checkbox: FC<CheckboxProps> = (props) => {
                 if (typeof onClick === 'function') onClick(e);
                 if (!disabled) setChecked(!checked);
             }}
-            className={classNames(
-                styles['checkbox'],
-                themeClassName,
-                {
-                    [styles['disabled']]: disabled,
-                    [styles['indeterminate']]: indeterminate,
-                    [styles['checked']]: !indeterminate && checked,
-                },
-                className,
-            )}
+            className={classNames(themeClassName, styles['checkbox'], className, {
+                [styles['checked']]: checked,
+                [styles['disabled']]: disabled,
+                [styles['indeterminate']]: indeterminate,
+            })}
         />
     );
 };

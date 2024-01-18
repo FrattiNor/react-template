@@ -21,7 +21,7 @@ export type VirtualTreeProps<T> = {
     fieldKeys?: VirtualTreeFieldKeys<T>;
     renderItem?: (data: T, handleData: HandledDataItem<T>) => ReactNode;
     multipleSelect?: boolean;
-    selectStrictly?: boolean; // 状态下节点选择完全受控
+    // selectStrictly?: boolean; // 状态下节点选择完全受控
     select?: 'checkbox' | 'label';
     selectedKeys?: string[];
     setSelectedKeys?: (keys: string[]) => void;

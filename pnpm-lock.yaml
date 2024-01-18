@@ -146,6 +146,9 @@ importers:
       '@pkg/theme':
         specifier: workspace:*
         version: link:../theme
+      '@react/hooks':
+        specifier: workspace:*
+        version: link:../../../react-hooks
 
   react-components/packages/dropdown:
     dependencies:
@@ -172,6 +175,15 @@ importers:
       '@pkg/theme':
         specifier: workspace:*
         version: link:../theme
+
+  react-components/packages/modal:
+    dependencies:
+      '@pkg/theme':
+        specifier: workspace:*
+        version: link:../theme
+      '@react/hooks':
+        specifier: workspace:*
+        version: link:../../../react-hooks
 
   react-components/packages/notification:
     dependencies:
@@ -203,6 +215,9 @@ importers:
       '@pkg/theme':
         specifier: workspace:*
         version: link:../theme
+      '@react/hooks':
+        specifier: workspace:*
+        version: link:../../../react-hooks
       '@react/utils':
         specifier: workspace:*
         version: link:../../../react-utils
@@ -249,6 +264,12 @@ importers:
       '@pkg/loading':
         specifier: workspace:*
         version: link:../loading
+      '@pkg/theme':
+        specifier: workspace:*
+        version: link:../theme
+      '@react/hooks':
+        specifier: workspace:*
+        version: link:../../../react-hooks
     devDependencies:
       '@tanstack/react-virtual':
         specifier: 3.0.0-beta.68

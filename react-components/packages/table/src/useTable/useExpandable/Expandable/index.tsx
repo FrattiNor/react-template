@@ -1,6 +1,7 @@
+import { useMergeState } from '@react/hooks';
 import styles from './index.module.less';
-import { FC, useState } from 'react';
 import classNames from 'classnames';
+import { FC } from 'react';
 
 type Props = {
     expanded?: boolean;
@@ -8,9 +9,11 @@ type Props = {
 };
 
 const Expandable: FC<Props> = (props) => {
-    const [_expanded, _setExpanded] = useState(false);
-    const expanded = props.expanded ?? _expanded;
-    const setExpanded = props.onChange ?? _setExpanded;
+    const [expanded, setExpanded] = useMergeState({
+        defaultValue: false,
+        state: props.expanded,
+        setState: props.onChange,
+    });
 
     return (
         <div

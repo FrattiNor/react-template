@@ -1,11 +1,15 @@
+import { useMergeState } from '@react/hooks';
 import { AnyObj, VirtualTreeProps } from '../../type';
-import { useState, useMemo } from 'react';
+import { useMemo } from 'react';
 
 const useSelect = <T extends AnyObj>(props: VirtualTreeProps<T>) => {
     const { shouldSelectedKeysChange, multipleSelect } = props;
-    const [_selectedKeys, __setSelectedKeys] = useState<string[]>([]);
-    const selectedKeys = props.selectedKeys ?? _selectedKeys;
-    const _setSelectedKeys = props?.setSelectedKeys ?? __setSelectedKeys;
+
+    const [selectedKeys, _setSelectedKeys] = useMergeState<string[]>({
+        defaultValue: [],
+        state: props.selectedKeys,
+        setState: props.setSelectedKeys,
+    });
 
     //
     const setSelectedKeys = (key: string[]) => {
