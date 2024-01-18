@@ -40,9 +40,10 @@ const DemoTable = () => {
     useFps();
     const btnRef = useRef(null);
     const columns = useColumns();
+    const [count, setCount] = useState(100);
     const tableRef = useRef<TableRef>(null);
     const [empty, setEmpty] = useState(false);
-    const [count, setCount] = useState(100);
+    const [visible, setVisible] = useState(false);
     const [loading, setLoading] = useState(false);
 
     const [pagination, setPagination] = useState(false);
@@ -182,7 +183,6 @@ const DemoTable = () => {
                             </Button>
                         </Dropdown>
                         <Select
-                            open
                             style={{
                                 width: 85,
                                 // position: 'fixed',
@@ -194,6 +194,7 @@ const DemoTable = () => {
                                 { label: '2222', value: '2' },
                             ]}
                         />
+                        <Button onClick={() => setVisible(true)}>Modal</Button>
                     </div>
 
                     <div style={{ height: 600, width: 900, padding: 24 }}>
@@ -215,8 +216,11 @@ const DemoTable = () => {
                 </div>
             </div>
 
-            <Modal title="modal" visible>
-                x123123
+            <Modal title="新增" width={800} visible={visible} onVisibleChange={setVisible}>
+                <div style={{ height: 3000, background: 'rgba(0,0,0,0.1)' }}></div>
+            </Modal>
+            <Modal title="新增2" width={700} visible={visible} onVisibleChange={setVisible}>
+                <div style={{ height: 300, background: 'rgba(0,0,0,0.1)' }}></div>
             </Modal>
         </ConfigProvider>
     );

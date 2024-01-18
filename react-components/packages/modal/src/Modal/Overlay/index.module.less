@@ -1,0 +1,151 @@
+@import url('./theme.module.less');
+
+.mask {
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 77777;
+    position: fixed;
+    background-color: rgba(0, 0, 0, 0.45);
+
+    @keyframes mask-fate-in {
+        0% {
+            background-color: transparent;
+        }
+    }
+
+    @keyframes mask-fate-out {
+        100% {
+            background-color: transparent;
+        }
+    }
+
+    &.before-enter {
+        background-color: transparent;
+    }
+
+    &.enter {
+        animation-duration: 0.2s;
+        animation-fill-mode: forwards;
+        animation-timing-function: ease-out;
+        animation-name: mask-fate-in;
+    }
+
+    &.leave {
+        animation-duration: 0.2s;
+        animation-fill-mode: forwards;
+        animation-timing-function: ease-in;
+        animation-name: mask-fate-out;
+    }
+
+    .modal-position {
+        top: 50%;
+        left: 50%;
+        position: absolute;
+        transform: translate3d(-50%, -50%, 0);
+
+        .modal {
+            width: 500px;
+            display: flex;
+            max-height: 90vh;
+            flex-direction: column;
+            transform-origin: 50% 0%;
+            background-color: var(--theme-bg);
+            border-radius: var(--theme-border-radius);
+            box-shadow: var(--modal-overlay-box-shadow);
+
+            @keyframes modal-fate-in {
+                0% {
+                    transform: scale(0.8);
+                    opacity: 0;
+                }
+                100% {
+                    transform: scale(1);
+                    opacity: 1;
+                }
+            }
+
+            @keyframes modal-fate-out {
+                0% {
+                    transform: scale(1);
+                    opacity: 1;
+                }
+                100% {
+                    transform: scale(0.8);
+                    opacity: 0;
+                }
+            }
+
+            &.before-enter {
+                opacity: 0;
+            }
+
+            &.enter {
+                animation-duration: 0.2s;
+                animation-fill-mode: forwards;
+                animation-timing-function: ease-out;
+                animation-name: modal-fate-in;
+            }
+
+            &.leave {
+                animation-duration: 0.2s;
+                animation-fill-mode: forwards;
+                animation-timing-function: ease-in;
+                animation-name: modal-fate-out;
+            }
+
+            &.fill-up {
+                width: 100vw !important;
+                height: 100vh !important;
+                border-radius: 0 !important;
+                max-height: 100vh !important;
+
+                .head {
+                    cursor: initial;
+                }
+            }
+
+            .head {
+                cursor: move;
+                display: flex;
+                font-size: 16px;
+                font-weight: 600;
+                padding: 16px 20px 16px 24px;
+
+                &.bordered {
+                    border-bottom: 1px solid var(--theme-border);
+                }
+
+                .title {
+                    width: 0;
+                    flex-grow: 1;
+                }
+            }
+
+            .body {
+                overflow: auto;
+                padding: 0 24px 0 24px;
+
+                &.head-bordered {
+                    padding-top: 16px;
+                }
+
+                &.foot-bordered {
+                    padding-bottom: 16px;
+                }
+            }
+
+            .foot {
+                gap: 12px;
+                display: flex;
+                justify-content: flex-end;
+                padding: 16px 24px 16px 24px;
+
+                &.bordered {
+                    border-top: 1px solid var(--theme-border);
+                }
+            }
+        }
+    }
+}

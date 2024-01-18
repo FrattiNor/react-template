@@ -1,0 +1,22 @@
+{
+    "private": true,
+    "name": "@pkg/modal",
+    "version": "0.0.1",
+    "main": "./src/index.tsx",
+    "module": "./src/index.tsx",
+    "scripts": {
+        "preinstall": "npx only-allow pnpm",
+        "tslint": "npx tsc --noEmit",
+        "eslint": "npx eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0 --fix",
+        "lint": "npm run eslint && npm run tslint"
+    },
+    "peerDependencies": {
+        "@pkg/theme": "workspace:*",
+        "@pkg/widgets": "workspace:*",
+        "@react/hooks": "workspace:*",
+        "@pkg/i18n": "workspace:*"
+    },
+    "devDependencies": {
+        "nanoid": "^5.0.4"
+    }
+}

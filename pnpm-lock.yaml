@@ -190,9 +190,15 @@ importers:
 
   react-components/packages/modal:
     dependencies:
+      '@pkg/i18n':
+        specifier: workspace:*
+        version: link:../i18n
       '@pkg/theme':
         specifier: workspace:*
         version: link:../theme
+      '@pkg/widgets':
+        specifier: workspace:*
+        version: link:../widgets
       '@react/hooks':
         specifier: workspace:*
         version: link:../../../react-hooks
