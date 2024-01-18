@@ -2,8 +2,6 @@ export type NotificationType = 'success' | 'error' | 'warning' | 'info';
 
 export type NotificationPlacement = 'topLeft' | 'topRight' | 'bottomLeft' | 'bottomRight';
 
-export type NotificationGetContainer = () => HTMLElement | undefined;
-
 export type NotificationProps = {
     message: string;
     duration?: number;
@@ -16,7 +14,7 @@ export type NotificationConfProps = {
     maxCount?: number;
     duration?: number;
     placement?: NotificationPlacement;
-    getContainer?: NotificationGetContainer;
+    getContainer?: () => HTMLElement | undefined;
 };
 
 export type NotificationRenderQueenItem = {

@@ -1,7 +1,7 @@
 import { createContext } from 'react';
-import useData from './useData';
+import useProvider from './useProvider';
 
-type ContextProps = ReturnType<typeof useData>;
+type ContextProps = ReturnType<typeof useProvider>;
 
 const Context = createContext<ContextProps>({} as ContextProps);
 

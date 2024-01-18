@@ -3,17 +3,12 @@ import { TableColumns } from '@react/components';
 import { Dropdown } from '@react/components';
 import { notEmpty } from '@react/utils';
 
-const App2 = () => {
-    return notEmpty(undefined);
-};
-
 const useColumns = () => {
     const columns: TableColumns<any> = [
         {
             title: '数据源类型',
             key: 'alarmSource',
             width: 100,
-            render: () => <App2 />,
         },
         {
             title: '报警等级',

@@ -1,12 +1,8 @@
+import { InfoSvg, ErrorSvg, WarningSvg, SuccessSvg, CloseX } from '@pkg/widgets';
 import { NotificationRenderQueenItem, NotificationType } from '../../type';
 import { FC, useEffect, useRef, useState } from 'react';
-import SuccessSvg from './Icons/SuccessSvg';
-import WarningSvg from './Icons/WarningSvg';
 import { useAnimate } from '@react/hooks';
 import styles from './index.module.less';
-import CloseSvg from './Icons/CloseSvg';
-import ErrorSvg from './Icons/ErrorSvg';
-import InfoSvg from './Icons/InfoSvg';
 import classNames from 'classnames';
 
 type Props = {
@@ -82,9 +78,7 @@ const Item: FC<Props> = ({ item, first }) => {
                     </div>
                 )}
                 <div className={styles['message']}>{message}</div>
-                <div className={styles['close-x']} onClick={leave}>
-                    <CloseSvg />
-                </div>
+                <CloseX onClick={leave} />
             </div>
         </div>
     );

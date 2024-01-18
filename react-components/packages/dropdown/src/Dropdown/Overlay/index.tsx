@@ -1,9 +1,10 @@
 import { useAnimate, useMousedownBlank } from '@react/hooks';
-import { FC, useEffect, useReducer, useRef } from 'react';
+import { useReducer, useRef, FC, useEffect } from 'react';
 import usePosition, { Position } from './usePosition';
 import { OverlayProps } from '../../type';
 import styles from './index.module.less';
 import useObserver from './useObserver';
+import { useTheme } from '@pkg/theme';
 import classNames from 'classnames';
 
 const Overlay: FC<OverlayProps> = (props) => {
@@ -11,16 +12,17 @@ const Overlay: FC<OverlayProps> = (props) => {
     const rerender = useReducer(() => ({}), {})[1];
     const overlayRef = useRef<HTMLDivElement>(null);
     const positionRef = useRef<Position | null>(null);
+    const { themeClassName, applyClassName, theme } = useTheme();
     const { x, y, topBottom = 'top' } = positionRef.current || {};
-    const { target, container, items, visible, placement, destroy } = props;
-    const { theme, themeClassName, applyClassName, overlaySameWidth, targetWidth, overlayFollow } = props;
+    const { target, container, items, placement, afterClose, visible, setVisible, overlaySameWidth, overlayFollow } = props;
+    const targetWidth = target.offsetWidth;
 
     const { status, listeners, enter, leave } = useAnimate({
         beforeEnter: () => {
             if (overlayRef.current) positionRef.current = getPosition({ target, container, placement, overlay: overlayRef.current });
         },
         afterLeave: () => {
-            destroy();
+            if (typeof afterClose === 'function') afterClose();
         },
     });
 
@@ -32,9 +34,11 @@ const Overlay: FC<OverlayProps> = (props) => {
         }
     }, [visible]);
 
-    // 点击空白位置
-    useMousedownBlank(overlayRef, () => {
-        leave();
+    // 点击空白位置【排除overlay和target】
+    useMousedownBlank({
+        callback: () => setVisible(false),
+        elements: [target],
+        refs: [overlayRef],
     });
 
     // 监听target位置变化
@@ -68,7 +72,7 @@ const Overlay: FC<OverlayProps> = (props) => {
                                 canLeave = clickRes !== false;
                             }
                             if (canLeave) {
-                                leave();
+                                setVisible(false);
                             }
                         };
 

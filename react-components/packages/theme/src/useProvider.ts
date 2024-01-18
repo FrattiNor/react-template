@@ -2,7 +2,7 @@ import styles from './theme.module.less';
 import { ThemeProps, Theme } from './type';
 import { useState } from 'react';
 
-const useData = ({ theme: _theme = 'light' }: ThemeProps) => {
+const useProvider = ({ theme: _theme = 'light' }: ThemeProps) => {
     const [theme, setTheme] = useState<Theme>(_theme);
     const themeClassName = styles[theme];
     const applyClassName = styles['apply-theme'];
@@ -10,4 +10,4 @@ const useData = ({ theme: _theme = 'light' }: ThemeProps) => {
     return { theme, setTheme, themeClassName, applyClassName, applyBgClassName };
 };
 
-export default useData;
+export default useProvider;

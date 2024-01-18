@@ -1,4 +1,4 @@
-import { NotificationConfProps, NotificationGetContainer, NotificationPlacement } from './type';
+import { NotificationConfProps, NotificationPlacement } from './type';
 
 class NotificationConf {
     constructor(props?: NotificationConfProps) {
@@ -14,7 +14,7 @@ class NotificationConf {
     maxCount: number;
     duration: number;
     placement: NotificationPlacement;
-    getContainer: NotificationGetContainer;
+    getContainer: () => HTMLElement | undefined;
 
     setConfig(props: Partial<NotificationConfProps>) {
         const { zIndex, maxCount, duration, placement, getContainer } = props;

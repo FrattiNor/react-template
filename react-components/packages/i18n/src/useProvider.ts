@@ -1,7 +1,7 @@
 import { TranslationProps, Local } from './type';
 import { useState } from 'react';
 
-const useData = ({ local: _local = 'zh_ch', t1Maps, t2Maps }: TranslationProps) => {
+const useProvider = ({ local: _local = 'zh_ch', t1Maps, t2Maps }: TranslationProps) => {
     const [local, setLocal] = useState<Local>(_local);
 
     const t1Map = t1Maps?.[local];
@@ -23,4 +23,4 @@ const useData = ({ local: _local = 'zh_ch', t1Maps, t2Maps }: TranslationProps) 
     return { local, setLocal, t1, t2 };
 };
 
-export default useData;
+export default useProvider;

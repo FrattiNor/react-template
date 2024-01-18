@@ -11,6 +11,8 @@ import {
     getDefaultTableConfColumns,
     VirtualTree,
     Dropdown,
+    Checkbox,
+    Modal,
 } from '@react/components';
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
 import { Button, ConfigProvider, Select, theme as antdTheme } from 'antd';
@@ -125,6 +127,7 @@ const DemoTable = () => {
                     </div>
 
                     <div style={{ padding: '24px 24px 0 24px', width: 900, display: 'flex', flexWrap: 'wrap', gap: 16 }}>
+                        <Checkbox>ABC</Checkbox>
                         <Button onClick={scroll}>Scroll</Button>
                         <Button onClick={() => setLoading((e) => !e)}>Loading</Button>
                         <Button onClick={() => setEmpty((e) => !e)}>Empty</Button>
@@ -152,6 +155,7 @@ const DemoTable = () => {
                         </Button>
                         <Button onClick={() => console.log(tableRef.current?.getInstance())}>showTable</Button>
                         <Dropdown
+                            // visible
                             // placement="topRight"
                             items={[
                                 {
@@ -192,7 +196,7 @@ const DemoTable = () => {
                         />
                     </div>
 
-                    <div style={{ height: 400, width: 900, padding: 24 }}>
+                    <div style={{ height: 600, width: 900, padding: 24 }}>
                         <Table
                             showIndex
                             rowKey="id"
@@ -210,6 +214,10 @@ const DemoTable = () => {
                     </div>
                 </div>
             </div>
+
+            <Modal title="modal" visible>
+                x123123
+            </Modal>
         </ConfigProvider>
     );
 };

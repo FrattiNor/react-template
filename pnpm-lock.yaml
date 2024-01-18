@@ -125,6 +125,9 @@ importers:
       '@pkg/loading':
         specifier: workspace:*
         version: link:packages/loading
+      '@pkg/modal':
+        specifier: workspace:*
+        version: link:packages/modal
       '@pkg/notification':
         specifier: workspace:*
         version: link:packages/notification
@@ -140,6 +143,15 @@ importers:
       '@pkg/virtual-tree':
         specifier: workspace:*
         version: link:packages/virtual-tree
+      '@pkg/widgets':
+        specifier: workspace:*
+        version: link:packages/widgets
+
+  react-components/packages/button:
+    dependencies:
+      '@pkg/theme':
+        specifier: workspace:*
+        version: link:../theme
 
   react-components/packages/checkbox:
     dependencies:
@@ -184,12 +196,19 @@ importers:
       '@react/hooks':
         specifier: workspace:*
         version: link:../../../react-hooks
+    devDependencies:
+      nanoid:
+        specifier: ^5.0.4
+        version: 5.0.4
 
   react-components/packages/notification:
     dependencies:
       '@pkg/theme':
         specifier: workspace:*
         version: link:../theme
+      '@pkg/widgets':
+        specifier: workspace:*
+        version: link:../widgets
       '@react/hooks':
         specifier: workspace:*
         version: link:../../../react-hooks
@@ -274,6 +293,8 @@ importers:
       '@tanstack/react-virtual':
         specifier: 3.0.0-beta.68
         version: 3.0.0-beta.68(react-dom@18.2.0)(react@18.2.0)
+
+  react-components/packages/widgets: {}
 
   react-hooks: {}
 
