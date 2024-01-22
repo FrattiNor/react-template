@@ -1,2 +1,2 @@
 export { default as AutoModalRender } from './AutoModalRender';
-export { default as useAutoModalRender } from './useAutoModalRender';
+export { default as useCurrentAutoModal } from './useCurrentAutoModal';

@@ -15,7 +15,6 @@ import {
     AutoModalProvider,
     AutoModalRender,
     useAutoModal,
-    useAutoModalProvider,
 } from '@react/components';
 import { lazy, useRef, useState } from 'react';
 import { Button, ConfigProvider, Select, theme as antdTheme } from 'antd';
@@ -54,8 +53,8 @@ const DemoTable = () => {
     const [count, setCount] = useState(100);
     const tableRef = useRef<TableRef>(null);
     const [empty, setEmpty] = useState(false);
-    const { openModal } = useAutoModalProvider<Modals>();
-    const { openModal: openModal2 } = useAutoModal<Modals>();
+    const { openModal } = useAutoModal<Modals>();
+
     const [loading, setLoading] = useState(false);
     const [pagination, setPagination] = useState(false);
     const [expandable, setExpandable] = useState(true);
@@ -206,7 +205,6 @@ const DemoTable = () => {
                         />
                         <Button
                             onClick={() => {
-                                openModal2('modal1', { a: 12 });
                                 openModal('modal3', { c: 13 });
                             }}
                         >

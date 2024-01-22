@@ -53,10 +53,10 @@ export type OverlayProps = PropsWithChildren<{
     setVisible: Dispatch<boolean>;
 }>;
 
+export type ConfirmModalProps = Omit<ModalProps, 'children' | 'title'> & {
+    message: string;
+};
+
 export type AutoModals = {
     readonly [key: string]: LazyExoticComponent<FC<any> | ComponentClass<any>>;
 };
-
-export type ModalProviderProps = PropsWithChildren<{
-    modals: AutoModals;
-}>;

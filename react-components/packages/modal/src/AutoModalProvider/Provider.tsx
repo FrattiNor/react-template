@@ -1,9 +1,13 @@
-import { ModalProviderProps } from '../type';
+import { FC, PropsWithChildren } from 'react';
 import useProvider from './useProvider';
+import { AutoModals } from '../type';
 import Context from './Context';
-import { FC } from 'react';
 
-const Provider: FC<ModalProviderProps> = ({ children, modals }) => {
+type Props = PropsWithChildren<{
+    modals: AutoModals;
+}>;
+
+const Provider: FC<Props> = ({ children, modals }) => {
     const value = useProvider({ modals });
     return <Context.Provider value={value}>{children}</Context.Provider>;
 };

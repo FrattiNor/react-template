@@ -1,9 +1,9 @@
-import { useAutoModalProvider } from '../AutoModalProvider';
+import { useAutoModal } from '../AutoModalProvider';
 import { FC, Suspense } from 'react';
 import Provider from './Provider';
 
 const AutoModalRender: FC = () => {
-    const { modalDisplay, modalData, modals, parseKeyId } = useAutoModalProvider();
+    const { modalDisplay, modalData, modals, parseKeyId } = useAutoModal();
 
     return (
         <Suspense>
@@ -13,7 +13,7 @@ const AutoModalRender: FC = () => {
                     const Component = modals[key];
                     const data = modalData[id] ?? {};
                     return (
-                        <Provider key={id} modalKey={key} id={id}>
+                        <Provider key={id} keyId={keyId}>
                             <Component {...data} />
                         </Provider>
                     );

@@ -1,13 +1,12 @@
-import { useAutoModalProvider } from '../AutoModalProvider';
+import { useAutoModal } from '../AutoModalProvider';
 
-const useProvider = ({ key, id }: { key: string; id: string }) => {
-    const { closeModal, stringifyKeyId, modalData } = useAutoModalProvider();
-
-    const keyId = stringifyKeyId(key, id);
+const useProvider = (keyId: string) => {
+    const { closeModal, parseKeyId, modalData } = useAutoModal();
 
     const data = modalData[keyId];
 
     const _closeModal = () => {
+        const { key, id } = parseKeyId(keyId);
         closeModal(key, id);
     };
 
