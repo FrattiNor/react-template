@@ -1,4 +1,4 @@
-/* eslint-disable react-refresh/only-export-components */
+ 
 import { TableColumns } from '@react/components';
 import { Dropdown } from '@react/components';
 import { notEmpty } from '@react/utils';

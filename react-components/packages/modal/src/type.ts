@@ -53,10 +53,10 @@ export type OverlayProps = PropsWithChildren<{
     setVisible: Dispatch<boolean>;
 }>;
 
-export type AutoModalObj = {
+export type AutoModals = {
     readonly [key: string]: LazyExoticComponent<FC<any> | ComponentClass<any>>;
 };
 
 export type ModalProviderProps = PropsWithChildren<{
-    modals: AutoModalObj;
+    modals: AutoModals;
 }>;

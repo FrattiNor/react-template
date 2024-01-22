@@ -14,16 +14,17 @@ import {
     Checkbox,
     AutoModalProvider,
     AutoModalRender,
+    useAutoModal,
     useAutoModalProvider,
 } from '@react/components';
-import { keepPreviousData, useQuery } from '@tanstack/react-query';
-import { Button, ConfigProvider, Select, theme as antdTheme } from 'antd';
 import { lazy, useRef, useState } from 'react';
-import classNames from 'classnames';
-import useFps from './useFps';
+import { Button, ConfigProvider, Select, theme as antdTheme } from 'antd';
+import { keepPreviousData, useQuery } from '@tanstack/react-query';
+import { tableData } from './tableData';
 import { treeData } from './treeData';
 import useColumns from './useColumns';
-import { tableData } from './tableData';
+import classNames from 'classnames';
+import useFps from './useFps';
 
 type Item = {
     id: string;
@@ -38,6 +39,14 @@ notification.setConfig({
     placement: 'topRight',
 });
 
+const modals = {
+    modal1: lazy(() => import('./Modal1')),
+    modal2: lazy(() => import('./Modal2')),
+    modal3: lazy(() => import('./Modal3')),
+} as const;
+
+type Modals = typeof modals;
+
 const DemoTable = () => {
     useFps();
     const btnRef = useRef(null);
@@ -45,15 +54,14 @@ const DemoTable = () => {
     const [count, setCount] = useState(100);
     const tableRef = useRef<TableRef>(null);
     const [empty, setEmpty] = useState(false);
-    const { openModal } = useAutoModalProvider();
+    const { openModal } = useAutoModalProvider<Modals>();
+    const { openModal: openModal2 } = useAutoModal<Modals>();
     const [loading, setLoading] = useState(false);
-
     const [pagination, setPagination] = useState(false);
     const [expandable, setExpandable] = useState(true);
     const [renderConf, setRenderConf] = useState(false);
     const tableConfRef = useRef<TableColumnConfRef>(null);
     const [rowSelection, setRowSelection] = useState(true);
-
     const { theme, themeClassName, applyClassName, applyBgClassName, setTheme } = useTheme();
 
     const query = useQuery({
@@ -198,8 +206,8 @@ const DemoTable = () => {
                         />
                         <Button
                             onClick={() => {
-                                openModal({ key: 'modal1', data: { a: 12 } });
-                                openModal({ key: 'modal2', data: { b: 13 } });
+                                openModal2('modal1', { a: 12 });
+                                openModal('modal3', { c: 13 });
                             }}
                         >
                             Modal
@@ -230,35 +238,9 @@ const DemoTable = () => {
 
 export default ThemeHoc(() => {
     return (
-        <AutoModalProvider
-            modals={
-                {
-                    modal1: lazy(() => import('./Modal1')),
-                    modal2: lazy(() => import('./Modal2')),
-                } as const
-            }
-        >
+        <AutoModalProvider modals={modals}>
             <DemoTable />
             <AutoModalRender />
         </AutoModalProvider>
     );
 });
-
-// const modals = {
-//     modal1: () => import('./Modal1'),
-//     modal2: () => import('./Modal2'),
-// } as const;
-
-// type Modals = typeof modals;
-
-// type ModalReturnType<T> = T extends () => Promise<{ default: FC<infer R> }>
-//     ? R
-//     : T extends () => Promise<{ default: ComponentClass<infer R2> }>
-//     ? R2
-//     : never;
-
-// type Props<T extends keyof Modals> = ModalReturnType<(typeof modals)[T]>;
-
-// type Data1 = Props<'modal1'>;
-
-// type Data2 = Props<'modal2'>;
