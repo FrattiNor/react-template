@@ -9,6 +9,14 @@ import { useTheme } from '@pkg/theme';
 import classNames from 'classnames';
 import { Button } from 'antd';
 
+const bodyOverflowHiddenStyle = (
+    <style>
+        {`html body {
+            overflow: hidden;
+        }`}
+    </style>
+);
+
 const Overlay: FC<OverlayProps> = (props) => {
     const { t1 } = useTranslation();
     const { closeableByConfirmLoading = true } = props;
@@ -75,6 +83,8 @@ const Overlay: FC<OverlayProps> = (props) => {
                     </div>
                 </div>
             </div>
+
+            {bodyOverflowHiddenStyle}
         </div>
     );
 };
