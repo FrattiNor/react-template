@@ -1,4 +1,4 @@
-import { CSSProperties, ComponentClass, Dispatch, FC, PropsWithChildren, ReactNode } from 'react';
+import { CSSProperties, ComponentClass, Dispatch, FC, LazyExoticComponent, PropsWithChildren, ReactNode } from 'react';
 
 export type ModalProps = PropsWithChildren<{
     visible?: boolean;
@@ -54,7 +54,7 @@ export type OverlayProps = PropsWithChildren<{
 }>;
 
 export type AutoModalObj = {
-    readonly [key: string]: () => Promise<{ default: FC<any> | ComponentClass<any> }>;
+    readonly [key: string]: LazyExoticComponent<FC<any> | ComponentClass<any>>;
 };
 
 export type ModalProviderProps = PropsWithChildren<{

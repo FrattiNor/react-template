@@ -18,7 +18,7 @@ import {
 } from '@react/components';
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
 import { Button, ConfigProvider, Select, theme as antdTheme } from 'antd';
-import { useRef, useState } from 'react';
+import { lazy, useRef, useState } from 'react';
 import classNames from 'classnames';
 import useFps from './useFps';
 import { treeData } from './treeData';
@@ -233,8 +233,8 @@ export default ThemeHoc(() => {
         <AutoModalProvider
             modals={
                 {
-                    modal1: () => import('./Modal1'),
-                    modal2: () => import('./Modal2'),
+                    modal1: lazy(() => import('./Modal1')),
+                    modal2: lazy(() => import('./Modal2')),
                 } as const
             }
         >
