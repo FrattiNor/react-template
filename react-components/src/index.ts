@@ -11,7 +11,6 @@ export * from '@pkg/i18n';
 
 export { default as Loading } from '@pkg/loading';
 
-export { default as Modal } from '@pkg/modal';
 export * from '@pkg/modal';
 
 export { default as NotificationClient } from '@pkg/notification';

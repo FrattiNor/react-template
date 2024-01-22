@@ -12,7 +12,9 @@ import {
     VirtualTree,
     Dropdown,
     Checkbox,
-    Modal,
+    AutoModalProvider,
+    AutoModalRender,
+    useAutoModalProvider,
 } from '@react/components';
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
 import { Button, ConfigProvider, Select, theme as antdTheme } from 'antd';
@@ -43,7 +45,7 @@ const DemoTable = () => {
     const [count, setCount] = useState(100);
     const tableRef = useRef<TableRef>(null);
     const [empty, setEmpty] = useState(false);
-    const [visible, setVisible] = useState(false);
+    const { openModal } = useAutoModalProvider();
     const [loading, setLoading] = useState(false);
 
     const [pagination, setPagination] = useState(false);
@@ -194,7 +196,14 @@ const DemoTable = () => {
                                 { label: '2222', value: '2' },
                             ]}
                         />
-                        <Button onClick={() => setVisible(true)}>Modal</Button>
+                        <Button
+                            onClick={() => {
+                                openModal({ key: 'modal1', data: { a: 12 } });
+                                openModal({ key: 'modal2', data: { b: 13 } });
+                            }}
+                        >
+                            Modal
+                        </Button>
                     </div>
 
                     <div style={{ height: 600, width: 900, padding: 24 }}>
@@ -215,15 +224,41 @@ const DemoTable = () => {
                     </div>
                 </div>
             </div>
-
-            <Modal title="新增" width={800} visible={visible} onVisibleChange={setVisible}>
-                <div style={{ height: 3000, background: 'rgba(0,0,0,0.1)' }}></div>
-            </Modal>
-            <Modal title="新增2" width={700} visible={visible} onVisibleChange={setVisible}>
-                <div style={{ height: 300, background: 'rgba(0,0,0,0.1)' }}></div>
-            </Modal>
         </ConfigProvider>
     );
 };
 
-export default ThemeHoc(DemoTable);
+export default ThemeHoc(() => {
+    return (
+        <AutoModalProvider
+            modals={
+                {
+                    modal1: () => import('./Modal1'),
+                    modal2: () => import('./Modal2'),
+                } as const
+            }
+        >
+            <DemoTable />
+            <AutoModalRender />
+        </AutoModalProvider>
+    );
+});
+
+// const modals = {
+//     modal1: () => import('./Modal1'),
+//     modal2: () => import('./Modal2'),
+// } as const;
+
+// type Modals = typeof modals;
+
+// type ModalReturnType<T> = T extends () => Promise<{ default: FC<infer R> }>
+//     ? R
+//     : T extends () => Promise<{ default: ComponentClass<infer R2> }>
+//     ? R2
+//     : never;
+
+// type Props<T extends keyof Modals> = ModalReturnType<(typeof modals)[T]>;
+
+// type Data1 = Props<'modal1'>;
+
+// type Data2 = Props<'modal2'>;

@@ -1,4 +1,4 @@
-import { CSSProperties, Dispatch, PropsWithChildren, ReactNode } from 'react';
+import { CSSProperties, ComponentClass, Dispatch, FC, PropsWithChildren, ReactNode } from 'react';
 
 export type ModalProps = PropsWithChildren<{
     visible?: boolean;
@@ -51,4 +51,12 @@ export type OverlayProps = PropsWithChildren<{
 
     visible: boolean;
     setVisible: Dispatch<boolean>;
+}>;
+
+export type AutoModalObj = {
+    readonly [key: string]: () => Promise<{ default: FC<any> | ComponentClass<any> }>;
+};
+
+export type ModalProviderProps = PropsWithChildren<{
+    modals: AutoModalObj;
 }>;
