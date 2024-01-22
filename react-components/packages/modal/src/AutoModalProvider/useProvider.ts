@@ -62,6 +62,12 @@ const useProvider = <M extends AutoModals>({ modals }: { modals: M }) => {
         });
     };
 
+    // 销毁所有Modal
+    const destroyAllModal = () => {
+        dataRef.current = {};
+        setModalDisplay({});
+    };
+
     // 前置Modal
     const preModal = <K extends keyof M>(key: K, id: string) => {
         setModalDisplay((oldDisplay) => {
@@ -88,6 +94,7 @@ const useProvider = <M extends AutoModals>({ modals }: { modals: M }) => {
         parseKeyId,
         modalDisplay,
         stringifyKeyId,
+        destroyAllModal,
         closeSomeKModal,
         modalData: dataRef.current,
     };

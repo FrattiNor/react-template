@@ -1,11 +1,11 @@
-import { useAutoModalRender } from '../AutoModalRender';
+import { useCurrentAutoModal } from '../AutoModalRender';
 import { useMergeState } from '@react/hooks';
 import { ModalProps } from '../type';
 import Modal from '../Modal';
 import { FC } from 'react';
 
 const AutoModal: FC<ModalProps> = (props) => {
-    const { closeModal } = useAutoModalRender();
+    const { closeModal } = useCurrentAutoModal();
 
     const [visible, onVisibleChange] = useMergeState({
         defaultValue: true,

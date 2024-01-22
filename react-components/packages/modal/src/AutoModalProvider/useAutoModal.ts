@@ -1,17 +1,9 @@
-import { LazyExoticComponent, ComponentType } from 'react';
-import useAutoModalProvider from './useAutoModalProvider';
+import Context, { ContextProps } from './Context';
 import { AutoModals } from '../type';
-
-type ModalData<T> = T extends LazyExoticComponent<ComponentType<infer R>> ? R : never;
+import { useContext } from 'react';
 
 const useAutoModal = <M extends AutoModals>() => {
-    const { openModal } = useAutoModalProvider<M>();
-
-    const _openModal = <K extends keyof M>(key: K, data: ModalData<M[K]>) => {
-        openModal(key, data);
-    };
-
-    return { openModal: _openModal };
+    return useContext<ContextProps<M>>(Context as any);
 };
 
 export default useAutoModal;

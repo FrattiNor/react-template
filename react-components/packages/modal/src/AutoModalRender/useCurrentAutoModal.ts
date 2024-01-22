@@ -1,8 +1,8 @@
 import { useContext } from 'react';
 import Context from './Context';
 
-const useAutoModalRender = () => {
+const useCurrentAutoModal = () => {
     return useContext(Context);
 };
 
-export default useAutoModalRender;
+export default useCurrentAutoModal;
