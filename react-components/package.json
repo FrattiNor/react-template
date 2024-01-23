@@ -19,6 +19,7 @@
         "@pkg/loading": "workspace:*",
         "@pkg/modal": "workspace:*",
         "@pkg/notification": "workspace:*",
+        "@pkg/routes": "workspace:*",
         "@pkg/table": "workspace:*",
         "@pkg/table-columns-conf": "workspace:*",
         "@pkg/theme": "workspace:*",
