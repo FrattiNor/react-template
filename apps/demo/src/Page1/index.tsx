@@ -16,6 +16,7 @@ import {
     AutoModalProvider,
     AutoModalRender,
     useAutoModal,
+    VirtualList,
 } from '@react/components';
 import { lazy, useRef, useState } from 'react';
 import { ConfigProvider, Select, theme as antdTheme, Button as AntdButton } from 'antd';
@@ -121,7 +122,22 @@ const DemoTable = () => {
                         loading={loading}
                         wrapperStyle={{ width: 300, height: 200 }}
                         fieldKeys={{ key: 'id', label: 'nodeName', children: 'childList' }}
-                        style={{ border: '1px solid var(--theme-border)', borderRadius: 2, paddingLeft: 6 }}
+                        style={{ border: '1px solid var(--theme-border)', borderRadius: 2 }}
+                        shouldSelectedKeysChange={(v) => {
+                            const canDo = v.length > 0;
+                            if (!canDo) notification.error({ message: '至少保留一位' });
+                            return canDo;
+                        }}
+                    />
+
+                    <VirtualList
+                        multipleSelect
+                        select="checkbox"
+                        loading={loading}
+                        data={treeData[0].childList[5].childList as any}
+                        wrapperStyle={{ width: 300, height: 200, marginTop: 8 }}
+                        fieldKeys={{ key: 'id', label: 'nodeName' }}
+                        style={{ border: '1px solid var(--theme-border)', borderRadius: 2 }}
                         shouldSelectedKeysChange={(v) => {
                             const canDo = v.length > 0;
                             if (!canDo) notification.error({ message: '至少保留一位' });

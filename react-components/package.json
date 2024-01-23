@@ -23,6 +23,7 @@
         "@pkg/table": "workspace:*",
         "@pkg/table-columns-conf": "workspace:*",
         "@pkg/theme": "workspace:*",
+        "@pkg/virtual-list": "workspace:*",
         "@pkg/virtual-tree": "workspace:*",
         "@pkg/widgets": "workspace:*"
     }

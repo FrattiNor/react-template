@@ -152,6 +152,9 @@ importers:
       '@pkg/theme':
         specifier: workspace:*
         version: link:packages/theme
+      '@pkg/virtual-list':
+        specifier: workspace:*
+        version: link:packages/virtual-list
       '@pkg/virtual-tree':
         specifier: workspace:*
         version: link:packages/virtual-tree
@@ -301,6 +304,28 @@ importers:
         version: 3.2.2(react@18.2.0)
 
   react-components/packages/theme: {}
+
+  react-components/packages/virtual-list:
+    dependencies:
+      '@pkg/checkbox':
+        specifier: workspace:*
+        version: link:../checkbox
+      '@pkg/empty':
+        specifier: workspace:*
+        version: link:../empty
+      '@pkg/loading':
+        specifier: workspace:*
+        version: link:../loading
+      '@pkg/theme':
+        specifier: workspace:*
+        version: link:../theme
+      '@react/hooks':
+        specifier: workspace:*
+        version: link:../../../react-hooks
+    devDependencies:
+      '@tanstack/react-virtual':
+        specifier: 3.0.0-beta.68
+        version: 3.0.0-beta.68(react-dom@18.2.0)(react@18.2.0)
 
   react-components/packages/virtual-tree:
     dependencies:

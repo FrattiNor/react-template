@@ -1,27 +1,27 @@
 /* eslint-disable react-refresh/only-export-components */
-import { VirtualTreeContextHoc, useVirtualTreeContext } from '../TreeContext';
+import { VirtualListContextHoc, useVirtualListContext } from '../ListContext';
+import { HandledDataItem } from '../type';
 import styles from './index.module.less';
 import { useTheme } from '@pkg/theme';
 import Checkbox from '@pkg/checkbox';
 import classNames from 'classnames';
 import Loading from '@pkg/loading';
-import ArrowSvg from './ArrowSvg';
 import Empty from '@pkg/empty';
 import { FC } from 'react';
 
 const Tree: FC = () => {
-    const contextData = useVirtualTreeContext();
+    const contextData = useVirtualListContext();
     const { virtual, props, wrapperRef } = contextData;
     const { themeClassName, applyClassName } = useTheme();
     const { virtualItems, totalSize, measureElement, distance } = virtual;
-    const { renderItem, loading, style, className, wrapperClassName, wrapperStyle, select } = props;
-    const { lineHeight, showData, setVisibles, isEmpty, selectedKeysObj, setSelectedKeysObj } = contextData;
+    const { renderItem, loading, style, className, wrapperClassName, wrapperStyle, select, data } = props;
+    const { lineHeight, isEmpty, selectedKeysObj, setSelectedKeysObj, getKeyLabelDisabled } = contextData;
 
     return (
         <div className={classNames(styles['wrapper'], themeClassName, applyClassName, wrapperClassName)} style={wrapperStyle}>
             <Loading loading={loading} />
 
-            <div ref={wrapperRef} className={classNames(styles['tree'], className)} style={style}>
+            <div ref={wrapperRef} className={classNames(styles['list'], className)} style={style}>
                 {isEmpty && (
                     <div className={styles['empty']}>
                         <Empty />
@@ -29,34 +29,30 @@ const Tree: FC = () => {
                 )}
 
                 {!isEmpty && (
-                    <div className={styles['virtual-tree']} style={{ height: totalSize, paddingTop: distance }}>
+                    <div className={styles['virtual-list']} style={{ height: totalSize, paddingTop: distance }}>
                         {virtualItems.map((verticalItem) => {
                             const currentRowIndex = verticalItem.index;
-                            const currentRowData = showData?.[currentRowIndex];
+                            const currentRowData = data?.[currentRowIndex];
 
                             if (currentRowData) {
-                                const { data, key, label, isLeaf, visible, level } = currentRowData;
+                                const { key, label, disabled } = getKeyLabelDisabled(currentRowData);
                                 const selected = selectedKeysObj[key];
+
+                                const handleData: HandledDataItem<any> = {
+                                    data: currentRowData,
+                                    key,
+                                    label,
+                                    disabled,
+                                };
 
                                 return (
                                     <div
                                         key={key}
                                         ref={measureElement}
                                         data-index={currentRowIndex}
-                                        className={styles['tree-row']}
-                                        style={{ minHeight: lineHeight, paddingLeft: level * 20 }}
+                                        className={styles['list-row']}
+                                        style={{ minHeight: lineHeight }}
                                     >
-                                        {!isLeaf ? (
-                                            <div
-                                                onClick={() => setVisibles((old) => ({ ...old, [key]: !old[key] }))}
-                                                className={classNames(styles['arrow'], { [styles['visible']]: visible })}
-                                            >
-                                                <ArrowSvg />
-                                            </div>
-                                        ) : (
-                                            <div className={styles['empty-arrow']} />
-                                        )}
-
                                         {select === 'checkbox' && (
                                             <div
                                                 style={{ minHeight: lineHeight }}
@@ -64,7 +60,7 @@ const Tree: FC = () => {
                                                 onClick={() => setSelectedKeysObj({ [key]: !selected })}
                                             >
                                                 <Checkbox className={styles['checkbox']} checked={selected} />
-                                                <div className={styles['label']}>{renderItem ? renderItem(data, currentRowData) : label}</div>
+                                                <div className={styles['label']}>{renderItem ? renderItem(currentRowData, handleData) : label}</div>
                                             </div>
                                         )}
 
@@ -74,12 +70,12 @@ const Tree: FC = () => {
                                                 onClick={() => setSelectedKeysObj({ [key]: !selected })}
                                                 className={classNames(styles['label-select-content'], { [styles['selected']]: selected })}
                                             >
-                                                <div className={styles['label']}>{renderItem ? renderItem(data, currentRowData) : label}</div>
+                                                <div className={styles['label']}>{renderItem ? renderItem(currentRowData, handleData) : label}</div>
                                             </div>
                                         )}
 
                                         {select !== 'checkbox' && select !== 'label' && (
-                                            <div className={styles['content']}>{renderItem ? renderItem(data, currentRowData) : label}</div>
+                                            <div className={styles['content']}>{renderItem ? renderItem(currentRowData, handleData) : label}</div>
                                         )}
                                     </div>
                                 );
@@ -92,4 +88,4 @@ const Tree: FC = () => {
     );
 };
 
-export default VirtualTreeContextHoc(Tree);
+export default VirtualListContextHoc(Tree);

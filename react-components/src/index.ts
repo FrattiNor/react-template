@@ -29,6 +29,9 @@ export * from '@pkg/table-columns-conf';
 
 export * from '@pkg/theme';
 
+export { default as VirtualList } from '@pkg/virtual-list';
+export * from '@pkg/virtual-list';
+
 export { default as VirtualTree } from '@pkg/virtual-tree';
 export * from '@pkg/virtual-tree';
 
