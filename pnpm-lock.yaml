@@ -199,6 +199,9 @@ importers:
 
   react-components/packages/modal:
     dependencies:
+      '@pkg/button':
+        specifier: workspace:*
+        version: link:../button
       '@pkg/i18n':
         specifier: workspace:*
         version: link:../i18n

@@ -14,7 +14,8 @@
         "@pkg/theme": "workspace:*",
         "@pkg/widgets": "workspace:*",
         "@react/hooks": "workspace:*",
-        "@pkg/i18n": "workspace:*"
+        "@pkg/i18n": "workspace:*",
+        "@pkg/button": "workspace:*"
     },
     "devDependencies": {
         "nanoid": "^5.0.4"

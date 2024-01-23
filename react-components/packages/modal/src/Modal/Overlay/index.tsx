@@ -7,7 +7,7 @@ import styles from './index.module.less';
 import { CloseX } from '@pkg/widgets';
 import { useTheme } from '@pkg/theme';
 import classNames from 'classnames';
-import { Button } from 'antd';
+import Button from '@pkg/button';
 
 const bodyOverflowHiddenStyle = (
     <style>
