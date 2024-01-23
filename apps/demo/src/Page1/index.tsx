@@ -26,6 +26,7 @@ import { treeData } from './treeData';
 import useColumns from './useColumns';
 import classNames from 'classnames';
 import useFps from './useFps';
+import { useNavigate } from 'react-router-dom';
 
 type Item = {
     id: string;
@@ -50,6 +51,7 @@ type Modals = typeof modals;
 
 const DemoTable = () => {
     useFps();
+    const n = useNavigate();
     const btnRef = useRef(null);
     const columns = useColumns();
     const [count, setCount] = useState(100);
@@ -143,7 +145,10 @@ const DemoTable = () => {
                         <AntdButton icon={<DownloadOutlined />} disabled type="primary" danger loading={loading} onClick={scroll}>
                             Scroll
                         </AntdButton>
-                        <Button icon={<DownloadOutlined />} type="danger" loading={loading} onClick={scroll} shape="circle">
+                        <Button icon={<DownloadOutlined />} type="danger" loading={loading} onClick={() => n('/Page2')} shape="circle">
+                            Scroll
+                        </Button>
+                        <Button icon={<DownloadOutlined />} type="danger" loading={loading} onClick={() => n('/Page1/Detail')} shape="circle">
                             Scroll
                         </Button>
                         <Button icon={<DownloadOutlined />} shape="circle" loading={loading}>

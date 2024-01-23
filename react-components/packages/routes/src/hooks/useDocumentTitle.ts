@@ -1,19 +1,22 @@
 import { useMatches } from 'react-router-dom';
-import { useEffect, useMemo } from 'react';
+import { useEffect } from 'react';
 
 const useDocumentTitle = () => {
     const matches = useMatches();
 
-    const info = useMemo(() => {
-        const lastMatches = matches[matches.length - 1];
-        const lastTitle = (lastMatches.handle as any)?.title;
-        const title = typeof lastTitle === 'string' ? lastTitle : null;
-        return { title };
-    }, [matches]);
-
     useEffect(() => {
-        if (info.title) document.title = info.title;
-    }, [info.title]);
+        let matchIndex = matches.length - 1;
+        while (matchIndex >= 0) {
+            const lastMatches = matches[matchIndex];
+            if ((lastMatches.handle as any)?.index === true) {
+                matchIndex--;
+            } else {
+                const title = (lastMatches.handle as any)?.title;
+                if (title) document.title = title;
+                break;
+            }
+        }
+    }, [matches]);
 };
 
 export default useDocumentTitle;
