@@ -5,6 +5,7 @@
     cursor: pointer;
     padding: 0 15px;
     user-select: none;
+    position: relative;
     align-items: center;
     display: inline-flex;
     transition: all 0.2s;
@@ -13,19 +14,29 @@
     border-radius: var(--theme-border-radius);
     box-shadow: 0 2px 0 rgba(0, 0, 0, 0.02);
 
-    &.default {
+    &.no-children {
+        padding: 0;
+        width: 32px;
+        justify-content: center;
+    }
+
+    &.shape-circle {
+        border-radius: 16px;
+    }
+
+    &.type-default {
         color: var(--theme-foreground);
         background-color: var(--theme-bg);
         border-color: var(--theme-border);
     }
 
-    &.primary {
+    &.type-primary {
         color: var(--theme-primary-foreground);
         background-color: var(--theme-primary);
         border-color: var(--theme-primary);
     }
 
-    &.danger {
+    &.type-danger {
         color: var(--theme-danger-foreground);
         background-color: var(--theme-danger);
         border-color: var(--theme-danger);
@@ -36,26 +47,26 @@
     }
 
     &.not-disabled.not-loading {
-        &.default:hover {
+        &.type-default:hover {
             color: var(--theme-primary);
             border-color: var(--theme-primary);
         }
 
-        &.primary:hover {
+        &.type-primary:hover {
             opacity: 0.8;
         }
 
-        &.danger:hover {
+        &.type-danger:hover {
             opacity: 0.8;
         }
     }
 
     &.not-disabled {
-        &.ghost.primary {
+        &.ghost.type-primary {
             color: var(--theme-primary);
         }
 
-        &.ghost.danger {
+        &.ghost.type-danger {
             color: var(--theme-danger);
         }
     }

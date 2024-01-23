@@ -8,5 +8,6 @@ export type ButtonProps = PropsWithChildren<{
     className?: string;
     style?: CSSProperties;
     onClick?: MouseEventHandler;
+    shape?: 'default' | 'circle';
     type?: 'primary' | 'danger' | 'default';
 }>;

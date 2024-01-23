@@ -143,8 +143,14 @@ const DemoTable = () => {
                         <AntdButton icon={<DownloadOutlined />} disabled type="primary" danger loading={loading} onClick={scroll}>
                             Scroll
                         </AntdButton>
-                        <Button icon={<DownloadOutlined />} type="danger" loading={loading} onClick={scroll}>
+                        <Button icon={<DownloadOutlined />} type="danger" loading={loading} onClick={scroll} shape="circle">
                             Scroll
+                        </Button>
+                        <Button icon={<DownloadOutlined />} shape="circle" loading={loading}>
+                            {null}
+                        </Button>
+                        <Button icon={<DownloadOutlined />} loading={loading}>
+                            {null}
                         </Button>
                         <Button onClick={() => setLoading((e) => !e)}>Loading</Button>
                         <Button type="primary" onClick={() => setEmpty((e) => !e)}>
