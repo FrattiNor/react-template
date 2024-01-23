@@ -11,6 +11,7 @@
         "lint": "npm run eslint && npm run tslint"
     },
     "peerDependencies": {
-        "@pkg/theme": "workspace:*"
+        "@pkg/theme": "workspace:*",
+        "@pkg/widgets": "workspace:*"
     }
 }

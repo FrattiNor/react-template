@@ -1,5 +1,6 @@
 /* eslint-disable react-refresh/only-export-components */
 import {
+    Button,
     ThemeHoc,
     useTheme,
     TableColumnsConf,
@@ -17,8 +18,9 @@ import {
     useAutoModal,
 } from '@react/components';
 import { lazy, useRef, useState } from 'react';
-import { Button, ConfigProvider, Select, theme as antdTheme } from 'antd';
+import { ConfigProvider, Select, theme as antdTheme, Button as AntdButton } from 'antd';
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
+import { DownloadOutlined } from '@ant-design/icons';
 import { tableData } from './tableData';
 import { treeData } from './treeData';
 import useColumns from './useColumns';
@@ -107,7 +109,7 @@ const DemoTable = () => {
     };
 
     return (
-        <ConfigProvider theme={{ algorithm: theme === 'light' ? antdTheme.defaultAlgorithm : antdTheme.darkAlgorithm }}>
+        <ConfigProvider theme={{ token: { borderRadius: 2 }, algorithm: theme === 'light' ? antdTheme.defaultAlgorithm : antdTheme.darkAlgorithm }}>
             <div className={classNames(themeClassName, applyClassName, applyBgClassName)} style={{ width: '100%', height: '100%' }}>
                 <div style={{ padding: 64 }}>
                     <VirtualTree
@@ -138,11 +140,22 @@ const DemoTable = () => {
 
                     <div style={{ padding: '24px 24px 0 24px', width: 900, display: 'flex', flexWrap: 'wrap', gap: 16 }}>
                         <Checkbox>ABC</Checkbox>
-                        <Button onClick={scroll}>Scroll</Button>
+                        <AntdButton icon={<DownloadOutlined />} disabled type="primary" danger loading={loading} onClick={scroll}>
+                            Scroll
+                        </AntdButton>
+                        <Button icon={<DownloadOutlined />} type="danger" loading={loading} onClick={scroll}>
+                            Scroll
+                        </Button>
                         <Button onClick={() => setLoading((e) => !e)}>Loading</Button>
-                        <Button onClick={() => setEmpty((e) => !e)}>Empty</Button>
-                        <Button onClick={reload}>Count</Button>
-                        <Button onClick={changeTheme}>Theme</Button>
+                        <Button type="primary" onClick={() => setEmpty((e) => !e)}>
+                            Empty
+                        </Button>
+                        <Button type="danger" onClick={reload}>
+                            Count
+                        </Button>
+                        <Button type="primary" ghost onClick={changeTheme}>
+                            Theme
+                        </Button>
                         <Button onClick={() => setPagination((v) => !v)}>pagination</Button>
                         <Button onClick={() => setExpandable((v) => !v)}>expandable</Button>
                         <Button onClick={() => setRowSelection((v) => !v)}>rowSelection</Button>

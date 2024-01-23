@@ -1,3 +1,6 @@
+export { default as Button } from '@pkg/button';
+export * from '@pkg/button';
+
 export { default as Checkbox } from '@pkg/checkbox';
 export * from '@pkg/checkbox';
 

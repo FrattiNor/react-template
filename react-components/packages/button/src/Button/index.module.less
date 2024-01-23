@@ -1,0 +1,75 @@
+.button {
+    gap: 8px;
+    height: 32px;
+    outline: none;
+    cursor: pointer;
+    padding: 0 15px;
+    user-select: none;
+    align-items: center;
+    display: inline-flex;
+    transition: all 0.2s;
+    box-sizing: border-box;
+    border: 1px solid transparent;
+    border-radius: var(--theme-border-radius);
+    box-shadow: 0 2px 0 rgba(0, 0, 0, 0.02);
+
+    &.default {
+        color: var(--theme-foreground);
+        background-color: var(--theme-bg);
+        border-color: var(--theme-border);
+    }
+
+    &.primary {
+        color: var(--theme-primary-foreground);
+        background-color: var(--theme-primary);
+        border-color: var(--theme-primary);
+    }
+
+    &.danger {
+        color: var(--theme-danger-foreground);
+        background-color: var(--theme-danger);
+        border-color: var(--theme-danger);
+    }
+
+    &.ghost {
+        background-color: transparent;
+    }
+
+    &.not-disabled.not-loading {
+        &.default:hover {
+            color: var(--theme-primary);
+            border-color: var(--theme-primary);
+        }
+
+        &.primary:hover {
+            opacity: 0.8;
+        }
+
+        &.danger:hover {
+            opacity: 0.8;
+        }
+    }
+
+    &.not-disabled {
+        &.ghost.primary {
+            color: var(--theme-primary);
+        }
+
+        &.ghost.danger {
+            color: var(--theme-danger);
+        }
+    }
+
+    &.loading {
+        opacity: 0.65;
+        cursor: initial;
+    }
+
+    &.disabled {
+        opacity: 1;
+        cursor: not-allowed;
+        color: var(--theme-disabled-foreground);
+        background-color: var(--theme-disabled-bg);
+        border-color: var(--theme-disabled-border);
+    }
+}

@@ -4,3 +4,5 @@ export { default as InfoSvg } from './Widgets/InfoSvg';
 export { default as SuccessSvg } from './Widgets/SuccessSvg';
 export { default as WarningSvg } from './Widgets/WarningSvg';
 export { default as CloseX } from './Widgets/CloseX';
+export { default as LoadingSvg } from './Widgets/LoadingSvg';
+export { default as LoadingCircle } from './Widgets/LoadingCircle';

@@ -11,6 +11,7 @@
         "lint": "npm run eslint && npm run tslint"
     },
     "peerDependencies": {
+        "@pkg/button": "workspace:*",
         "@pkg/checkbox": "workspace:*",
         "@pkg/dropdown": "workspace:*",
         "@pkg/empty": "workspace:*",
