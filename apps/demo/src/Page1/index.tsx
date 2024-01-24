@@ -161,6 +161,9 @@ const DemoTable = () => {
                         <AntdButton icon={<DownloadOutlined />} disabled type="primary" danger loading={loading} onClick={scroll}>
                             Scroll
                         </AntdButton>
+                        <Button icon={<DownloadOutlined />} disabled type="primary" loading={loading} onClick={scroll}>
+                            Scroll
+                        </Button>
                         <Button icon={<DownloadOutlined />} type="danger" loading={loading} onClick={() => n('/Page2')} shape="circle">
                             Scroll
                         </Button>
