@@ -6,20 +6,21 @@
     "scripts": {
         "preinstall": "npx only-allow pnpm",
         "dev": "npx vite",
+        "build": "npx vite build",
+        "preview": "npx vite preview",
         "tslint": "npx tsc --noEmit",
         "eslint": "npx eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0 --fix",
         "lint": "npm run eslint && npm run tslint"
     },
     "peerDependencies": {
         "@react/components": "workspace:*",
+        "@react/hooks": "workspace:*",
         "@react/utils": "workspace:*"
     },
     "dependencies": {
         "@ant-design/icons": "^5.2.6",
         "@tanstack/react-query": "^5.12.2",
-        "@types/stats.js": "^0.17.3",
-        "react-router-dom": "^6.21.3",
-        "stats.js": "^0.17.0"
+        "antd": "^5.11.5"
     },
     "sideEffects": [
         "./src/index.module.less"

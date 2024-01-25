@@ -4,6 +4,7 @@ const useTimeDebug = () => {
     const ref = useRef<Record<string, number>>({});
 
     const isDev = process.env.NODE_ENV === 'development';
+
     const start = (key: string) => {
         if (isDev) {
             // console.log('%c%s', 'color: #4096ff;', `${key} start`);

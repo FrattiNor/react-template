@@ -1,3 +1,4 @@
+export { default as useFps } from './useFps';
 export { default as useAnimate } from './useAnimate';
 export { default as useContainer } from './useContainer';
 export { default as useMergeState } from './useMergeState';

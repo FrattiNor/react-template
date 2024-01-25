@@ -22,12 +22,12 @@ import { lazy, useRef, useState } from 'react';
 import { ConfigProvider, Select, theme as antdTheme, Button as AntdButton } from 'antd';
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
 import { DownloadOutlined } from '@ant-design/icons';
+import { useNavigate } from 'react-router-dom';
 import { tableData } from './tableData';
 import { treeData } from './treeData';
 import useColumns from './useColumns';
+import { useFps } from '@react/hooks';
 import classNames from 'classnames';
-import useFps from './useFps';
-import { useNavigate } from 'react-router-dom';
 
 type Item = {
     id: string;
@@ -66,7 +66,7 @@ const DemoTable = () => {
     const [renderConf, setRenderConf] = useState(false);
     const tableConfRef = useRef<TableColumnConfRef>(null);
     const [rowSelection, setRowSelection] = useState(true);
-    const { theme, themeClassName, applyClassName, applyBgClassName, setTheme } = useTheme();
+    const { theme, themeClassName, applyClassName, setTheme } = useTheme();
 
     const query = useQuery({
         gcTime: 0,
@@ -113,7 +113,7 @@ const DemoTable = () => {
 
     return (
         <ConfigProvider theme={{ token: { borderRadius: 2 }, algorithm: theme === 'light' ? antdTheme.defaultAlgorithm : antdTheme.darkAlgorithm }}>
-            <div className={classNames(themeClassName, applyClassName, applyBgClassName)} style={{ width: '100%', height: '100%' }}>
+            <div className={classNames(themeClassName, applyClassName)} style={{ width: '100%', height: '100%' }}>
                 <div style={{ padding: 64 }}>
                     <VirtualTree
                         multipleSelect

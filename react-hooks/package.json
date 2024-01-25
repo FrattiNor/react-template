@@ -9,5 +9,9 @@
         "tslint": "npx tsc --noEmit",
         "eslint": "npx eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0 --fix",
         "lint": "npm run eslint && npm run tslint"
+    },
+    "devDependencies": {
+        "@types/stats.js": "^0.17.3",
+        "stats.js": "^0.17.0"
     }
 }

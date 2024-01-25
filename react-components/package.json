@@ -26,5 +26,8 @@
         "@pkg/virtual-list": "workspace:*",
         "@pkg/virtual-tree": "workspace:*",
         "@pkg/widgets": "workspace:*"
+    },
+    "devDependencies": {
+        "antd": "^5.11.5"
     }
 }
