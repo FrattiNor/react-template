@@ -3,7 +3,7 @@
     height: 32px;
     outline: none;
     cursor: pointer;
-    padding: 0 15px;
+    padding: 0 14px;
     user-select: none;
     position: relative;
     align-items: center;
@@ -43,7 +43,7 @@
     }
 
     &.ghost {
-        background-color: transparent;
+        background-color: transparent !important;
     }
 
     &.not-disabled.not-loading {
@@ -53,11 +53,13 @@
         }
 
         &.type-primary:hover {
-            opacity: 0.8;
+            border-color: var(--theme-primary-hover);
+            background-color: var(--theme-primary-hover);
         }
 
         &.type-danger:hover {
-            opacity: 0.8;
+            border-color: var(--theme-danger-hover);
+            background-color: var(--theme-danger-hover);
         }
     }
 

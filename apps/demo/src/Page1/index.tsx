@@ -157,6 +157,10 @@ const DemoTable = () => {
                     </div>
 
                     <div style={{ padding: '24px 24px 0 24px', width: 900, display: 'flex', flexWrap: 'wrap', gap: 16 }}>
+                        <Checkbox disabled checked></Checkbox>
+                        <Checkbox disabled checked>
+                            ABC
+                        </Checkbox>
                         <Checkbox>ABC</Checkbox>
                         <AntdButton icon={<DownloadOutlined />} disabled type="primary" danger loading={loading} onClick={scroll}>
                             Scroll

@@ -13,6 +13,10 @@
     border: 1px solid var(--theme-border);
     border-radius: var(--theme-border-radius);
 
+    &:hover {
+        border-color: var(--theme-primary);
+    }
+
     &::after {
         top: 10%;
         left: 30%;
@@ -29,6 +33,16 @@
         transition: opacity 0.2s, border-color 0.2s;
     }
 
+    &.checked {
+        border-color: var(--theme-primary);
+        background-color: var(--theme-primary);
+
+        &::after {
+            opacity: 1;
+            border-color: var(--theme-primary-foreground);
+        }
+    }
+
     &::before {
         top: 22%;
         left: 22%;
@@ -42,25 +56,11 @@
         transition: opacity 0.2s, background-color 0.2s;
     }
 
-    &.checked {
-        border-color: var(--theme-primary);
-        background-color: var(--theme-primary);
-
-        &::after {
-            opacity: 1;
-            border-color: var(--theme-primary-foreground);
-        }
-    }
-
     &.indeterminate {
         &::before {
             opacity: 1;
             background-color: var(--theme-primary);
         }
-    }
-
-    &:hover {
-        border-color: var(--theme-primary);
     }
 
     &.disabled {
@@ -92,5 +92,13 @@
 
     &:hover .checkbox {
         border-color: var(--theme-primary);
+    }
+
+    &.disabled .checkbox {
+        border-color: var(--theme-disabled-border);
+    }
+
+    &.disabled {
+        cursor: not-allowed;
     }
 }

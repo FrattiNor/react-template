@@ -39,7 +39,7 @@ const Checkbox: FC<CheckboxProps> = (props) => {
     if (!haveChildren) return checkboxDom;
 
     return (
-        <div onClick={clickFun} className={styles['checkbox-wrapper']}>
+        <div onClick={clickFun} className={classNames(styles['checkbox-wrapper'], { [styles['disabled']]: disabled })}>
             {checkboxDom}
             {children}
         </div>
