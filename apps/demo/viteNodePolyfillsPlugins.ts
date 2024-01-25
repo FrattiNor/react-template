@@ -43,11 +43,11 @@ function NodePolyFillsPlugin(): Plugin {
                         //     global: 'globalThis',
                         // },
                         plugins: [
+                            NodeModulesPolyfillPlugin(),
                             NodeGlobalsPolyfillPlugin({
                                 // process: true,
                                 buffer: true,
-                            }),
-                            NodeModulesPolyfillPlugin(),
+                            }) as any,
                         ],
                     },
                 },
