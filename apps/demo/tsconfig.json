@@ -22,11 +22,11 @@
 
         /* alias */
         "paths": {
-            "@/*": ["./src/*"]
-        }
+            "@/*": ["./src/*"],
+        },
     },
 
     "include": ["src"],
     "exclude": [],
-    "references": [{ "path": "./tsconfig.node.json" }]
+    "references": [{ "path": "./tsconfig.node.json" }],
 }

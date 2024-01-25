@@ -8,7 +8,8 @@
         "preinstall": "npx only-allow pnpm",
         "tslint": "npx tsc --noEmit",
         "eslint": "npx eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0 --fix",
-        "lint": "npm run eslint && npm run tslint"
+        "lint": "npm run eslint && npm run tslint",
+        "rm-dep": "npx rimraf ./node_modules"
     },
     "peerDependencies": {
         "@pkg/i18n": "workspace:*",
