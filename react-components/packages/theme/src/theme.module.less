@@ -4,7 +4,6 @@
 .apply-theme {
     color: var(--theme-foreground);
     font-size: var(--theme-font-size);
-    font-family: var(--theme-font-family);
 
     &::-webkit-scrollbar,
     ::-webkit-scrollbar {
@@ -30,4 +29,9 @@
     ::-webkit-scrollbar-thumb:active {
         background-color: var(--theme-scrollbar-thumb-hover);
     }
+}
+
+.apply-theme-bg {
+    .apply-theme();
+    background-color: var(--theme-bg);
 }

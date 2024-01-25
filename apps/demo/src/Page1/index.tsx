@@ -113,7 +113,14 @@ const DemoTable = () => {
 
     return (
         <ConfigProvider theme={{ token: { borderRadius: 2 }, algorithm: theme === 'light' ? antdTheme.defaultAlgorithm : antdTheme.darkAlgorithm }}>
-            <div className={classNames(themeClassName, applyClassName)} style={{ width: '100%', height: '100%' }}>
+            <div
+                className={classNames(themeClassName, applyClassName)}
+                style={{
+                    width: '100%',
+                    height: '100%',
+                    fontFamily: `-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';`,
+                }}
+            >
                 <div style={{ padding: 64 }}>
                     <VirtualTree
                         multipleSelect
