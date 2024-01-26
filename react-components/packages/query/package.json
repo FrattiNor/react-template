@@ -1,10 +1,9 @@
 {
     "private": true,
-    "name": "@react/hooks",
+    "name": "@pkg/query",
     "version": "0.0.1",
-    "publishConfig": {
-        "directory": "src"
-    },
+    "main": "./src/index.ts",
+    "module": "./src/index.ts",
     "scripts": {
         "preinstall": "npx only-allow pnpm",
         "tslint": "npx tsc --noEmit",
@@ -13,10 +12,10 @@
         "rm-dep": "npx rimraf ./node_modules"
     },
     "peerDependencies": {
+        "@react/hooks": "workspace:*",
         "@react/utils": "workspace:*"
     },
-    "devDependencies": {
-        "@types/stats.js": "^0.17.3",
-        "stats.js": "^0.17.0"
+    "dependencies": {
+        "axios": "^1.6.7"
     }
 }

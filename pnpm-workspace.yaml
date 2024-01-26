@@ -4,3 +4,4 @@ packages:
     - 'react-utils'
     - 'react-components'
     - 'react-components/packages/*'
+    - 'react-components/packages-ui/*'

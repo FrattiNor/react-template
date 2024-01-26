@@ -98,55 +98,58 @@ importers:
     dependencies:
       '@pkg/button':
         specifier: workspace:*
-        version: link:packages/button
+        version: link:packages-ui/button
       '@pkg/checkbox':
         specifier: workspace:*
-        version: link:packages/checkbox
+        version: link:packages-ui/checkbox
       '@pkg/dropdown':
         specifier: workspace:*
-        version: link:packages/dropdown
+        version: link:packages-ui/dropdown
       '@pkg/empty':
         specifier: workspace:*
-        version: link:packages/empty
+        version: link:packages-ui/empty
       '@pkg/i18n':
         specifier: workspace:*
-        version: link:packages/i18n
+        version: link:packages-ui/i18n
       '@pkg/loading':
         specifier: workspace:*
-        version: link:packages/loading
+        version: link:packages-ui/loading
       '@pkg/modal':
         specifier: workspace:*
-        version: link:packages/modal
+        version: link:packages-ui/modal
       '@pkg/notification':
         specifier: workspace:*
-        version: link:packages/notification
+        version: link:packages-ui/notification
+      '@pkg/query':
+        specifier: workspace:*
+        version: link:packages/query
       '@pkg/routes':
         specifier: workspace:*
-        version: link:packages/routes
+        version: link:packages-ui/routes
       '@pkg/table':
         specifier: workspace:*
-        version: link:packages/table
+        version: link:packages-ui/table
       '@pkg/table-columns-conf':
         specifier: workspace:*
-        version: link:packages/table-columns-conf
+        version: link:packages-ui/table-columns-conf
       '@pkg/theme':
         specifier: workspace:*
-        version: link:packages/theme
+        version: link:packages-ui/theme
       '@pkg/virtual-list':
         specifier: workspace:*
-        version: link:packages/virtual-list
+        version: link:packages-ui/virtual-list
       '@pkg/virtual-tree':
         specifier: workspace:*
-        version: link:packages/virtual-tree
+        version: link:packages-ui/virtual-tree
       '@pkg/widgets':
         specifier: workspace:*
-        version: link:packages/widgets
+        version: link:packages-ui/widgets
     devDependencies:
       antd:
         specifier: ^5.11.5
         version: 5.12.1(react-dom@18.2.0)(react@18.2.0)
 
-  react-components/packages/button:
+  react-components/packages-ui/button:
     dependencies:
       '@pkg/theme':
         specifier: workspace:*
@@ -155,7 +158,7 @@ importers:
         specifier: workspace:*
         version: link:../widgets
 
-  react-components/packages/checkbox:
+  react-components/packages-ui/checkbox:
     dependencies:
       '@pkg/theme':
         specifier: workspace:*
@@ -164,7 +167,7 @@ importers:
         specifier: workspace:*
         version: link:../../../react-hooks/src
 
-  react-components/packages/dropdown:
+  react-components/packages-ui/dropdown:
     dependencies:
       '@pkg/theme':
         specifier: workspace:*
@@ -173,7 +176,7 @@ importers:
         specifier: workspace:*
         version: link:../../../react-hooks/src
 
-  react-components/packages/empty:
+  react-components/packages-ui/empty:
     dependencies:
       '@pkg/i18n':
         specifier: workspace:*
@@ -182,15 +185,15 @@ importers:
         specifier: workspace:*
         version: link:../theme
 
-  react-components/packages/i18n: {}
+  react-components/packages-ui/i18n: {}
 
-  react-components/packages/loading:
+  react-components/packages-ui/loading:
     dependencies:
       '@pkg/theme':
         specifier: workspace:*
         version: link:../theme
 
-  react-components/packages/modal:
+  react-components/packages-ui/modal:
     dependencies:
       '@pkg/button':
         specifier: workspace:*
@@ -212,7 +215,7 @@ importers:
         specifier: ^5.0.4
         version: 5.0.4
 
-  react-components/packages/notification:
+  react-components/packages-ui/notification:
     dependencies:
       '@pkg/theme':
         specifier: workspace:*
@@ -228,13 +231,13 @@ importers:
         specifier: ^5.0.4
         version: 5.0.4
 
-  react-components/packages/routes:
+  react-components/packages-ui/routes:
     devDependencies:
       react-router-dom:
         specifier: ^6.21.3
         version: 6.21.3(react-dom@18.2.0)(react@18.2.0)
 
-  react-components/packages/table:
+  react-components/packages-ui/table:
     dependencies:
       '@pkg/checkbox':
         specifier: workspace:*
@@ -262,7 +265,7 @@ importers:
         specifier: 3.0.0-beta.68
         version: 3.0.0-beta.68(react-dom@18.2.0)(react@18.2.0)
 
-  react-components/packages/table-columns-conf:
+  react-components/packages-ui/table-columns-conf:
     dependencies:
       '@pkg/checkbox':
         specifier: workspace:*
@@ -287,9 +290,9 @@ importers:
         specifier: ^3.2.1
         version: 3.2.2(react@18.2.0)
 
-  react-components/packages/theme: {}
+  react-components/packages-ui/theme: {}
 
-  react-components/packages/virtual-list:
+  react-components/packages-ui/virtual-list:
     dependencies:
       '@pkg/checkbox':
         specifier: workspace:*
@@ -311,7 +314,7 @@ importers:
         specifier: 3.0.0-beta.68
         version: 3.0.0-beta.68(react-dom@18.2.0)(react@18.2.0)
 
-  react-components/packages/virtual-tree:
+  react-components/packages-ui/virtual-tree:
     dependencies:
       '@pkg/checkbox':
         specifier: workspace:*
@@ -333,7 +336,19 @@ importers:
         specifier: 3.0.0-beta.68
         version: 3.0.0-beta.68(react-dom@18.2.0)(react@18.2.0)
 
-  react-components/packages/widgets: {}
+  react-components/packages-ui/widgets: {}
+
+  react-components/packages/query:
+    dependencies:
+      '@react/hooks':
+        specifier: workspace:*
+        version: link:../../../react-hooks/src
+      '@react/utils':
+        specifier: workspace:*
+        version: link:../../../react-utils/src
+      axios:
+        specifier: ^1.6.7
+        version: 1.6.7
 
   react-hooks:
     dependencies:
@@ -344,9 +359,6 @@ importers:
       '@types/stats.js':
         specifier: ^0.17.3
         version: 0.17.3
-      axios:
-        specifier: ^1.6.7
-        version: 1.6.7
       stats.js:
         specifier: ^0.17.0
         version: 0.17.0
@@ -1534,7 +1546,7 @@ packages:
 
   /asynckit@0.4.0:
     resolution: {integrity: sha512-Oei9OH4tRh0YqU3GxhX79dM/mwVgvbZJaSNaRk+bshkj0S5cfHcgYakreBjrHwatXKbz+IoIdYLxrKim2MjW0Q==}
-    dev: true
+    dev: false
 
   /axios@1.6.7:
     resolution: {integrity: sha512-/hDJGff6/c7u0hDkvkGxR/oy6CbCs8ziCsC7SqmhjfozqiJGc8Z11wrv9z9lYfY4K8l+H9TpjcMDX0xOZmx+RA==}
@@ -1544,7 +1556,7 @@ packages:
       proxy-from-env: 1.1.0
     transitivePeerDependencies:
       - debug
-    dev: true
+    dev: false
 
   /balanced-match@1.0.2:
     resolution: {integrity: sha512-3oSeUO0TMV67hN1AmbXsK4yaqU7tjiHlbxRDZOpH0KW9+CeX4bRAaX0Anxt0tx2MrpRpWwQaPwIlISEJhYU5Pw==}
@@ -1602,7 +1614,7 @@ packages:
     engines: {node: '>= 0.8'}
     dependencies:
       delayed-stream: 1.0.0
-    dev: true
+    dev: false
 
   /compute-scroll-into-view@3.1.0:
     resolution: {integrity: sha512-rj8l8pD4bJ1nx+dAkMhV1xB5RuZEyVysfxJqB1pRchh1KVvwOv9b7CGB8ZfjTImVv2oF+sYMUkMZq6Na5Ftmbg==}
@@ -1660,7 +1672,7 @@ packages:
   /delayed-stream@1.0.0:
     resolution: {integrity: sha512-ZySD7Nf91aLB0RxL4KGrKHBXl7Eds1DAmEdcoVawXnLD7SDhpNgtuII2aAkg7a7QS41jxPSZ17p4VdGnMHk3MQ==}
     engines: {node: '>=0.4.0'}
-    dev: true
+    dev: false
 
   /dir-glob@3.0.1:
     resolution: {integrity: sha512-WkrWp9GR4KXfKGYzOLmTuGVi1UWFfws377n9cc55/tb6DuqyF6pcQ5AbiHEshaDpY9v6oaSr2XCDidGmMwdzIA==}
@@ -1961,7 +1973,7 @@ packages:
     peerDependenciesMeta:
       debug:
         optional: true
-    dev: true
+    dev: false
 
   /foreground-child@3.1.1:
     resolution: {integrity: sha512-TMKDUnIte6bfb5nWv7V/caI169OHgvwjb7V4WkeUvbQQdjr5rWKqHFiKWb/fcOwB+CzBT+qbWjvj+DVwRskpIg==}
@@ -1978,7 +1990,7 @@ packages:
       asynckit: 0.4.0
       combined-stream: 1.0.8
       mime-types: 2.1.35
-    dev: true
+    dev: false
 
   /fs.realpath@1.0.0:
     resolution: {integrity: sha512-OO0pH2lK6a0hZnAdau5ItzHPI6pUlvI7jMVnxUQRtw4owF2wk8lOSabtGDCTP4Ggrg2MbGnWO9X8K1t4+fGMDw==}
@@ -2273,14 +2285,14 @@ packages:
   /mime-db@1.52.0:
     resolution: {integrity: sha512-sPU4uV7dYlvtWJxwwxHD0PuihVNiE7TyAbQ5SWxDCB9mUYvOgroQOwYQQOKPJ8CIbE+1ETVlOoK1UC2nU3gYvg==}
     engines: {node: '>= 0.6'}
-    dev: true
+    dev: false
 
   /mime-types@2.1.35:
     resolution: {integrity: sha512-ZDY+bPm5zTTF+YpCrAU9nK0UgICYPT0QtT1NZWFv4s++TNkcgVaT0g6+4R2uI4MjQjzysHB1zxuWL50hzaeXiw==}
     engines: {node: '>= 0.6'}
     dependencies:
       mime-db: 1.52.0
-    dev: true
+    dev: false
 
   /mime@1.6.0:
     resolution: {integrity: sha512-x0Vn8spI+wuJ1O6S7gnbaQg8Pxh4NNHb7KSINmEWKiPE4RKOplvijn+NkmYmmRgP68mc70j2EbeTFRsrswaQeg==}
@@ -2452,7 +2464,7 @@ packages:
 
   /proxy-from-env@1.1.0:
     resolution: {integrity: sha512-D+zkORCbA9f1tdWRK0RaCR3GPv50cMxcrz4X8k5LTSUD1Dkw47mKJEZQNunItRTkWwgtaUSo1RVFRIG9ZXiFYg==}
-    dev: true
+    dev: false
 
   /prr@1.0.1:
     resolution: {integrity: sha512-yPw4Sng1gWghHQWj0B3ZggWUm4qVbPwPFcRG8KyxiU7J2OHFSoEHKS+EZ3fv5l1t9CyCiop6l/ZYeWbrgoQejw==}

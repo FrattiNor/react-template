@@ -10,45 +10,49 @@ class RequestClient {
         });
     }
 
-    axiosClient: AxiosInstance;
-    cancelSource: CancelTokenSource;
+    private axiosClient: AxiosInstance;
+    private cancelSource: CancelTokenSource;
 
-    private request(config: AxiosRequestConfig) {
+    private request<T>(config: AxiosRequestConfig) {
         if (isObject(config.params)) config.params = cleanRecord(config.params);
         if (isObject(config.data) || isFormData(config.data)) config.data = cleanRecord(config.data);
-        return this.axiosClient(config);
+        return this.axiosClient<T>(config);
     }
 
-    GET(config: Omit<AxiosRequestConfig, 'method'>) {
-        return this.request({
+    cancel() {
+        this.cancelSource.cancel();
+    }
+
+    GET<T>(config: Omit<AxiosRequestConfig, 'method'>) {
+        return this.request<T>({
             method: 'GET',
             ...config,
         });
     }
 
-    PUT(config: Omit<AxiosRequestConfig, 'method'>) {
-        return this.request({
+    PUT<T>(config: Omit<AxiosRequestConfig, 'method'>) {
+        return this.request<T>({
             method: 'PUT',
             ...config,
         });
     }
 
-    POST(config: Omit<AxiosRequestConfig, 'method'>) {
-        return this.request({
+    POST<T>(config: Omit<AxiosRequestConfig, 'method'>) {
+        return this.request<T>({
             method: 'POST',
             ...config,
         });
     }
 
-    PATCH(config: Omit<AxiosRequestConfig, 'method'>) {
-        return this.request({
+    PATCH<T>(config: Omit<AxiosRequestConfig, 'method'>) {
+        return this.request<T>({
             method: 'PATCH',
             ...config,
         });
     }
 
-    DELETE(config: Omit<AxiosRequestConfig, 'method'>) {
-        return this.request({
+    DELETE<T>(config: Omit<AxiosRequestConfig, 'method'>) {
+        return this.request<T>({
             method: 'DELETE',
             ...config,
         });

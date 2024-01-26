@@ -18,6 +18,8 @@ export * from '@pkg/modal';
 
 export { default as NotificationClient } from '@pkg/notification';
 
+export * from '@pkg/query';
+
 export { default as Routes } from '@pkg/routes';
 export * from '@pkg/routes';
 
