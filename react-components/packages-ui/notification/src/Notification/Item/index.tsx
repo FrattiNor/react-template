@@ -1,7 +1,7 @@
 import { InfoSvg, ErrorSvg, WarningSvg, SuccessSvg, CloseX } from '@pkg/widgets';
 import { NotificationRenderQueenItem, NotificationType } from '../../type';
 import { FC, useEffect, useRef, useState } from 'react';
-import useAnimate from '@react/hooks/useAnimate';
+import { useAnimate } from '@react/hooks';
 import styles from './index.module.less';
 import classNames from 'classnames';
 

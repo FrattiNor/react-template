@@ -87,9 +87,6 @@ importers:
       '@react/utils':
         specifier: workspace:*
         version: link:../../react-utils/src
-      '@tanstack/react-query':
-        specifier: ^5.12.2
-        version: 5.13.4(react@18.2.0)
       antd:
         specifier: ^5.11.5
         version: 5.12.1(react-dom@18.2.0)(react@18.2.0)
@@ -131,16 +128,16 @@ importers:
         version: link:packages-ui/table
       '@pkg/table-columns-conf':
         specifier: workspace:*
-        version: link:packages-ui/table-columns-conf
+        version: link:packages-ui/tableColumnsConf
       '@pkg/theme':
         specifier: workspace:*
         version: link:packages-ui/theme
       '@pkg/virtual-list':
         specifier: workspace:*
-        version: link:packages-ui/virtual-list
+        version: link:packages-ui/virtualList
       '@pkg/virtual-tree':
         specifier: workspace:*
-        version: link:packages-ui/virtual-tree
+        version: link:packages-ui/virtualTree
       '@pkg/widgets':
         specifier: workspace:*
         version: link:packages-ui/widgets
@@ -265,7 +262,7 @@ importers:
         specifier: 3.0.0-beta.68
         version: 3.0.0-beta.68(react-dom@18.2.0)(react@18.2.0)
 
-  react-components/packages-ui/table-columns-conf:
+  react-components/packages-ui/tableColumnsConf:
     dependencies:
       '@pkg/checkbox':
         specifier: workspace:*
@@ -292,7 +289,7 @@ importers:
 
   react-components/packages-ui/theme: {}
 
-  react-components/packages-ui/virtual-list:
+  react-components/packages-ui/virtualList:
     dependencies:
       '@pkg/checkbox':
         specifier: workspace:*
@@ -314,7 +311,7 @@ importers:
         specifier: 3.0.0-beta.68
         version: 3.0.0-beta.68(react-dom@18.2.0)(react@18.2.0)
 
-  react-components/packages-ui/virtual-tree:
+  react-components/packages-ui/virtualTree:
     dependencies:
       '@pkg/checkbox':
         specifier: workspace:*
@@ -1209,19 +1206,6 @@ packages:
   /@swc/types@0.1.5:
     resolution: {integrity: sha512-myfUej5naTBWnqOCc/MdVOLVjXUXtIA+NpDrDBKJtLLg2shUjBu3cZmB/85RyitKc55+lUUyl7oRfLOvkr2hsw==}
     dev: true
-
-  /@tanstack/query-core@5.13.4:
-    resolution: {integrity: sha512-8+rJucXvC/xlr4OrxHhEIob/cTlbT4fgmz1VsvB0D12FRStKaXeLORNGcOhSAynRd2NL74SV/Qq0IIb4DedLcA==}
-    dev: false
-
-  /@tanstack/react-query@5.13.4(react@18.2.0):
-    resolution: {integrity: sha512-3HjvkFFriEQwffUXtKHPiwkfFXUGbs46YATTzzyK1+Pw6Ekd3kwzS50e45qdamWuEXmXxyo5S1zp534LdFG0Rw==}
-    peerDependencies:
-      react: ^18.0.0
-    dependencies:
-      '@tanstack/query-core': 5.13.4
-      react: 18.2.0
-    dev: false
 
   /@tanstack/react-virtual@3.0.0-beta.68(react-dom@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-YEFNCf+N3ZlNou2r4qnh+GscMe24foYEjTL05RS0ZHvah2RoUDPGuhnuedTv0z66dO2vIq6+Bl4TXatht5T7GQ==}

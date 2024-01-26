@@ -1,4 +1,4 @@
-import useMergeState from '@react/hooks/useMergeState';
+import { useMergeState } from '@react/hooks';
 import styles from './index.module.less';
 import classNames from 'classnames';
 import { FC } from 'react';

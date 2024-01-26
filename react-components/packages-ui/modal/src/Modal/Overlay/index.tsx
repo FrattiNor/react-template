@@ -1,6 +1,6 @@
-import useAnimate from '@react/hooks/useAnimate';
 import { FC, Fragment, useEffect } from 'react';
 import { useTranslation } from '@pkg/i18n';
+import { useAnimate } from '@react/hooks';
 import { OverlayProps } from '../../type';
 import useMoveModal from './useMoveModal';
 import styles from './index.module.less';

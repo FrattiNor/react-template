@@ -17,14 +17,15 @@ import {
     AutoModalRender,
     useAutoModal,
     VirtualList,
+    QueryProvider,
+    useQuery,
 } from '@react/components';
 import { lazy, useRef, useState } from 'react';
 import { ConfigProvider, Select, theme as antdTheme, Button as AntdButton } from 'antd';
-import { keepPreviousData, useQuery } from '@tanstack/react-query';
 import { DownloadOutlined } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
-import useFps from '@react/hooks/useFps';
 import { tableData } from './tableData';
+import { useFps } from '@react/hooks';
 import { treeData } from './treeData';
 import useColumns from './useColumns';
 import classNames from 'classnames';
@@ -69,13 +70,6 @@ const DemoTable = () => {
     const { theme, themeClassName, applyClassName, setTheme } = useTheme();
 
     const query = useQuery({
-        gcTime: 0,
-        staleTime: 0,
-        retry: false,
-        refetchOnMount: false,
-        refetchOnReconnect: false,
-        refetchOnWindowFocus: false,
-        placeholderData: keepPreviousData,
         queryKey: ['DemoTable', count],
         queryFn: () => {
             return new Promise<Item[]>((res) => {
@@ -274,7 +268,7 @@ const DemoTable = () => {
                             pagination={pagination}
                             expandable={expandable}
                             rowSelection={rowSelection ? { getCheckboxProps: (item) => ({ disabled: item.id === '1' }) } : false}
-                            loading={query.isFetching || loading}
+                            loading={query.loading || loading}
                             dataSource={empty ? undefined : tableData}
                             columns={columns}
                             onResizeEnd={(widths) => {
@@ -291,8 +285,10 @@ const DemoTable = () => {
 export default ThemeHoc(() => {
     return (
         <AutoModalProvider modals={modals}>
-            <DemoTable />
-            <AutoModalRender />
+            <QueryProvider>
+                <DemoTable />
+                <AutoModalRender />
+            </QueryProvider>
         </AutoModalProvider>
     );
 });

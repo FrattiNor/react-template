@@ -1,5 +1,5 @@
 import { useCurrentAutoModal } from '../AutoModalRender';
-import useMergeState from '@react/hooks/useMergeState';
+import { useMergeState } from '@react/hooks';
 import { ModalProps } from '../type';
 import Modal from '../Modal';
 import { FC } from 'react';

@@ -1,7 +1,6 @@
-import useMousedownBlank from '@react/hooks/useMousedownBlank';
+import { useMousedownBlank, useAnimate } from '@react/hooks';
 import { useReducer, useRef, FC, useEffect } from 'react';
 import usePosition, { Position } from './usePosition';
-import useAnimate from '@react/hooks/useAnimate';
 import { OverlayProps } from '../../type';
 import styles from './index.module.less';
 import useObserver from './useObserver';

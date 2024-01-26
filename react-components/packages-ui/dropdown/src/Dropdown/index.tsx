@@ -1,6 +1,5 @@
 import { FC, Fragment, cloneElement, isValidElement, useRef } from 'react';
-import useDisplayVisible from '@react/hooks/useDisplayVisible';
-import useContainer from '@react/hooks/useContainer';
+import { useDisplayVisible, useContainer } from '@react/hooks';
 import { createPortal } from 'react-dom';
 import { DropdownProps } from '../type';
 import Overlay from './Overlay';

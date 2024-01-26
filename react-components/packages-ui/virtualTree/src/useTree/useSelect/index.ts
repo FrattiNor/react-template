@@ -1,5 +1,5 @@
-import useMergeState from '@react/hooks/useMergeState';
 import { AnyObj, VirtualTreeProps } from '../../type';
+import { useMergeState } from '@react/hooks';
 import { useMemo } from 'react';
 
 const useSelect = <T extends AnyObj>(props: VirtualTreeProps<T>) => {

@@ -1,4 +1,4 @@
-import useDelayWithLoading from '@react/hooks/useDelayWithLoading';
+import { useDelayWithLoading } from '@react/hooks';
 import RequestClient from './RequestClient';
 import { useEffect, useMemo } from 'react';
 
