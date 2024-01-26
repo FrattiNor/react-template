@@ -7,17 +7,7 @@ export const useQueryProvider = () => {
     const queryDataRef = useRef<Record<string, any>>({});
     const queryLoadingRef = useRef<Record<string, boolean>>({});
 
-    const queryData = queryDataRef.current;
-    const setQueryData = (data: Record<string, any>) => {
-        queryDataRef.current = { ...queryDataRef.current, ...data };
-    };
-
-    const queryLoading = queryLoadingRef.current;
-    const setQueryLoading = (data: Record<string, boolean>) => {
-        queryLoadingRef.current = { ...queryLoadingRef.current, ...data };
-    };
-
-    return { queryData, setQueryData, queryLoading, setQueryLoading, rerender };
+    return { rerender, queryDataRef, queryLoadingRef };
 };
 
 const QueryProvider: FC<PropsWithChildren> = ({ children }) => {
