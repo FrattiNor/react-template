@@ -1,4 +1,5 @@
-import { useContainer, useDisplayVisible } from '@react/hooks';
+import useDisplayVisible from '@react/hooks/useDisplayVisible';
+import useContainer from '@react/hooks/useContainer';
 import { createPortal } from 'react-dom';
 import { ModalProps } from '../type';
 import { FC, Fragment } from 'react';

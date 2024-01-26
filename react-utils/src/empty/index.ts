@@ -1,12 +1,14 @@
+import { isArr, isNull, isNumber, isObject, isString, isUndefined } from '../valueType';
+
 // 判断是否为空
 export const isEmpty = (v: any) => {
     if (
-        v === '' ||
-        v === null ||
-        v === undefined ||
-        (typeof v === 'number' && isNaN(v)) ||
-        (Array.isArray(v) && v.length === 0) ||
-        (Object.prototype.toString.call(v) === '[object Object]' && Object.keys(v).length === 0)
+        isNull(v) ||
+        isUndefined(v) ||
+        (isString(v) && v === '') ||
+        (isNumber(v) && isNaN(v)) ||
+        (isArr(v) && v.length === 0) ||
+        (isObject(v) && Object.keys(v).length === 0)
     ) {
         return true;
     }

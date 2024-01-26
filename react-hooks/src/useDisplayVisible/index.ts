@@ -1,5 +1,5 @@
 import { Dispatch, useLayoutEffect, useState } from 'react';
-import useMergeState from './useMergeState';
+import useMergeState from '../useMergeState';
 
 type Props = {
     visible?: boolean;

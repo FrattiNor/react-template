@@ -23,10 +23,10 @@ import { ConfigProvider, Select, theme as antdTheme, Button as AntdButton } from
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
 import { DownloadOutlined } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
+import useFps from '@react/hooks/useFps';
 import { tableData } from './tableData';
 import { treeData } from './treeData';
 import useColumns from './useColumns';
-import { useFps } from '@react/hooks';
 import classNames from 'classnames';
 
 type Item = {

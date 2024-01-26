@@ -1,5 +1,5 @@
+import useMergeState from '@react/hooks/useMergeState';
 import { FC, MouseEventHandler } from 'react';
-import { useMergeState } from '@react/hooks';
 import styles from './index.module.less';
 import { CheckboxProps } from '../type';
 import { useTheme } from '@pkg/theme';

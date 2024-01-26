@@ -1,4 +1,4 @@
-import { useMergeState } from '@react/hooks';
+import useMergeState from '@react/hooks/useMergeState';
 import { AnyObj, VirtualListProps } from '../../type';
 import { useMemo } from 'react';
 
