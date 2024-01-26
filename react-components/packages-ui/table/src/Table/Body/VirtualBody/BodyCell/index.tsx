@@ -2,8 +2,8 @@ import { tableExpandableKey } from '../../../../useTable/useExpandable';
 import { useTableContext } from '../../../../TableContext';
 import getCellTitle from '../../../../utils/getCellTitle';
 import { AnyObj, HandledColumn } from '../../../../type';
-import { notEmpty } from '@react/utils/empty';
 import styles from '../index.module.less';
+import { notEmpty } from '@react/utils';
 import classNames from 'classnames';
 import EditCell from './EditCell';
 

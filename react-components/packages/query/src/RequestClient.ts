@@ -1,6 +1,5 @@
 import axios, { AxiosInstance, AxiosRequestConfig, CancelTokenSource } from 'axios';
-import { isFormData, isObject } from '@react/utils/valueType';
-import cleanRecord from '@react/utils/cleanRecord';
+import { isFormData, isObject, cleanRecord } from '@react/utils';
 
 class RequestClient {
     constructor() {

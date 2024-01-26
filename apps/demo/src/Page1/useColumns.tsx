@@ -1,6 +1,6 @@
 import { TableColumns } from '@react/components';
 import { Dropdown } from '@react/components';
-import { notEmpty } from '@react/utils/empty';
+import { notEmpty } from '@react/utils';
 
 const useColumns = () => {
     const columns: TableColumns<any> = [

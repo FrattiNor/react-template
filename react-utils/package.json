@@ -2,9 +2,8 @@
     "private": true,
     "name": "@react/utils",
     "version": "0.0.1",
-    "publishConfig": {
-        "directory": "src"
-    },
+    "main": "./src/index.ts",
+    "module": "./src/index.ts",
     "scripts": {
         "preinstall": "npx only-allow pnpm",
         "tslint": "npx tsc --noEmit",

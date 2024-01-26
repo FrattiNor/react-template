@@ -1,6 +1,5 @@
-import { isDayjs, isNumber, isString } from '../valueType';
+import { isDate, isDayjs, isNumber, isString } from '../valueType';
 import dayjs, { Dayjs } from 'dayjs';
-import { isDate } from 'util/types';
 
 const defaultFormat = 'YYYY-MM-DD HH:mm:ss';
 

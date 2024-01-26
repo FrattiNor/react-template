@@ -83,10 +83,10 @@ importers:
         version: link:../../react-components
       '@react/hooks':
         specifier: workspace:*
-        version: link:../../react-hooks/src
+        version: link:../../react-hooks
       '@react/utils':
         specifier: workspace:*
-        version: link:../../react-utils/src
+        version: link:../../react-utils
       antd:
         specifier: ^5.11.5
         version: 5.12.1(react-dom@18.2.0)(react@18.2.0)
@@ -162,7 +162,7 @@ importers:
         version: link:../theme
       '@react/hooks':
         specifier: workspace:*
-        version: link:../../../react-hooks/src
+        version: link:../../../react-hooks
 
   react-components/packages-ui/dropdown:
     dependencies:
@@ -171,7 +171,7 @@ importers:
         version: link:../theme
       '@react/hooks':
         specifier: workspace:*
-        version: link:../../../react-hooks/src
+        version: link:../../../react-hooks
 
   react-components/packages-ui/empty:
     dependencies:
@@ -206,7 +206,7 @@ importers:
         version: link:../widgets
       '@react/hooks':
         specifier: workspace:*
-        version: link:../../../react-hooks/src
+        version: link:../../../react-hooks
     devDependencies:
       nanoid:
         specifier: ^5.0.4
@@ -222,7 +222,7 @@ importers:
         version: link:../widgets
       '@react/hooks':
         specifier: workspace:*
-        version: link:../../../react-hooks/src
+        version: link:../../../react-hooks
     devDependencies:
       nanoid:
         specifier: ^5.0.4
@@ -253,10 +253,10 @@ importers:
         version: link:../theme
       '@react/hooks':
         specifier: workspace:*
-        version: link:../../../react-hooks/src
+        version: link:../../../react-hooks
       '@react/utils':
         specifier: workspace:*
-        version: link:../../../react-utils/src
+        version: link:../../../react-utils
     devDependencies:
       '@tanstack/react-virtual':
         specifier: 3.0.0-beta.68
@@ -305,7 +305,7 @@ importers:
         version: link:../theme
       '@react/hooks':
         specifier: workspace:*
-        version: link:../../../react-hooks/src
+        version: link:../../../react-hooks
     devDependencies:
       '@tanstack/react-virtual':
         specifier: 3.0.0-beta.68
@@ -327,7 +327,7 @@ importers:
         version: link:../theme
       '@react/hooks':
         specifier: workspace:*
-        version: link:../../../react-hooks/src
+        version: link:../../../react-hooks
     devDependencies:
       '@tanstack/react-virtual':
         specifier: 3.0.0-beta.68
@@ -339,10 +339,10 @@ importers:
     dependencies:
       '@react/hooks':
         specifier: workspace:*
-        version: link:../../../react-hooks/src
+        version: link:../../../react-hooks
       '@react/utils':
         specifier: workspace:*
-        version: link:../../../react-utils/src
+        version: link:../../../react-utils
       axios:
         specifier: ^1.6.7
         version: 1.6.7
@@ -351,7 +351,7 @@ importers:
     dependencies:
       '@react/utils':
         specifier: workspace:*
-        version: link:../react-utils/src
+        version: link:../react-utils
     devDependencies:
       '@types/stats.js':
         specifier: ^0.17.3
@@ -359,7 +359,6 @@ importers:
       stats.js:
         specifier: ^0.17.0
         version: 0.17.0
-    publishDirectory: src
 
   react-utils:
     dependencies:
@@ -369,7 +368,6 @@ importers:
       nanoid:
         specifier: ^5.0.4
         version: 5.0.4
-    publishDirectory: src
 
 packages:
 
