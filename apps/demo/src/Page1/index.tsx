@@ -70,8 +70,10 @@ const DemoTable = () => {
     const { theme, themeClassName, applyClassName, setTheme } = useTheme();
 
     const query = useQuery({
+        delay: 400,
         queryKey: ['DemoTable', count],
         queryFn: () => {
+            console.log(1);
             return new Promise<Item[]>((res) => {
                 setTimeout(() => {
                     res(
@@ -88,10 +90,38 @@ const DemoTable = () => {
                                 ],
                             })),
                     );
-                }, 400);
+                }, 2000);
             });
         },
     });
+
+    const query2 = useQuery({
+        delay: 400,
+        queryKey: ['DemoTable', count],
+        queryFn: () => {
+            console.log(2);
+            return new Promise<Item[]>((res) => {
+                setTimeout(() => {
+                    res(
+                        Array(count)
+                            .fill('')
+                            .map((_, i) => ({
+                                id: `${i}`,
+                                age: Math.floor(Math.random() * 100),
+                                name: `AAA_${i}`,
+                                children: [
+                                    {
+                                        id: `children_${i}`,
+                                    },
+                                ],
+                            })),
+                    );
+                }, 2000);
+            });
+        },
+    });
+
+    console.log(query, query2);
 
     const scroll = () => {
         tableRef.current?.scrollTo({ top: 100, left: 100, behavior: 'smooth' });

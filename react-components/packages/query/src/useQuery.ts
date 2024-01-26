@@ -11,7 +11,7 @@ type Props<T> = {
 };
 
 const useQuery = <T>(props: Props<T>) => {
-    const { queryKey, queryFn, delay, enabled } = props;
+    const { queryKey, queryFn, delay, enabled = true } = props;
 
     const key = JSON.stringify(queryKey);
     const request = useMemo(() => new RequestClient(), []);

@@ -259,8 +259,8 @@ importers:
         version: link:../../../react-utils
     devDependencies:
       '@tanstack/react-virtual':
-        specifier: 3.0.0-beta.68
-        version: 3.0.0-beta.68(react-dom@18.2.0)(react@18.2.0)
+        specifier: ^3.0.2
+        version: 3.0.2(react-dom@18.2.0)(react@18.2.0)
 
   react-components/packages-ui/tableColumnsConf:
     dependencies:
@@ -308,8 +308,8 @@ importers:
         version: link:../../../react-hooks
     devDependencies:
       '@tanstack/react-virtual':
-        specifier: 3.0.0-beta.68
-        version: 3.0.0-beta.68(react-dom@18.2.0)(react@18.2.0)
+        specifier: ^3.0.2
+        version: 3.0.2(react-dom@18.2.0)(react@18.2.0)
 
   react-components/packages-ui/virtualTree:
     dependencies:
@@ -330,8 +330,8 @@ importers:
         version: link:../../../react-hooks
     devDependencies:
       '@tanstack/react-virtual':
-        specifier: 3.0.0-beta.68
-        version: 3.0.0-beta.68(react-dom@18.2.0)(react@18.2.0)
+        specifier: ^3.0.2
+        version: 3.0.2(react-dom@18.2.0)(react@18.2.0)
 
   react-components/packages-ui/widgets: {}
 
@@ -1205,19 +1205,19 @@ packages:
     resolution: {integrity: sha512-myfUej5naTBWnqOCc/MdVOLVjXUXtIA+NpDrDBKJtLLg2shUjBu3cZmB/85RyitKc55+lUUyl7oRfLOvkr2hsw==}
     dev: true
 
-  /@tanstack/react-virtual@3.0.0-beta.68(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-YEFNCf+N3ZlNou2r4qnh+GscMe24foYEjTL05RS0ZHvah2RoUDPGuhnuedTv0z66dO2vIq6+Bl4TXatht5T7GQ==}
+  /@tanstack/react-virtual@3.0.2(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-9XbRLPKgnhMwwmuQMnJMv+5a9sitGNCSEtf/AZXzmJdesYk7XsjYHaEDny+IrJzvPNwZliIIDwCRiaUqR3zzCA==}
     peerDependencies:
       react: ^16.8.0 || ^17.0.0 || ^18.0.0
       react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0
     dependencies:
-      '@tanstack/virtual-core': 3.0.0-beta.68
+      '@tanstack/virtual-core': 3.0.0
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
     dev: true
 
-  /@tanstack/virtual-core@3.0.0-beta.68:
-    resolution: {integrity: sha512-CnvsEJWK7cugigckt13AeY80FMzH+OMdEP0j0bS3/zjs44NiRe49x8FZC6R9suRXGMVMXtUHet0zbTp/Ec9Wfg==}
+  /@tanstack/virtual-core@3.0.0:
+    resolution: {integrity: sha512-SYXOBTjJb05rXa2vl55TTwO40A6wKu0R5i1qQwhJYNDIqaIGF7D0HsLw+pJAyi2OvntlEIVusx3xtbbgSUi6zg==}
     dev: true
 
   /@types/json-schema@7.0.15:

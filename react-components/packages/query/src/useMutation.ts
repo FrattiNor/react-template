@@ -9,7 +9,7 @@ type Props<T, Opt = void> = {
 };
 
 const useMutation = <T, Opt = void>(props: Props<T, Opt>) => {
-    const { mutationFn, delay, enabled } = props;
+    const { mutationFn, delay, enabled = true } = props;
     const request = useMemo(() => new RequestClient(), []);
     const [delayMutationFn, loading] = useDelayWithLoading({ delayFn: mutationFn, delay });
 
