@@ -2,9 +2,13 @@ import { ConfigProvider, theme as antdTheme } from 'antd';
 import { FC, PropsWithChildren } from 'react';
 import useTheme from './useTheme';
 
+type Props = PropsWithChildren<{
+    fontFamily?: string;
+}>;
+
 // 因为还有大部分组件使用的是Antd的，所以需要保持主题一致
-const AntdThemeProvider: FC<PropsWithChildren> = ({ children }) => {
-    const { theme, fontFamily } = useTheme();
+const AntdThemeProvider: FC<Props> = ({ children, fontFamily }) => {
+    const { theme } = useTheme();
 
     return (
         <ConfigProvider

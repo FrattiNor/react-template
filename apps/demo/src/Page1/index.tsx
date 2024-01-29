@@ -313,9 +313,8 @@ export default () => {
         <ThemeProvider>
             <AntdThemeProvider>
                 <QueryProvider>
-                    <AutoModalProvider modals={modals}>
+                    <AutoModalProvider modals={modals} autoRender>
                         <DemoTable />
-                        <AutoModalRender />
                     </AutoModalProvider>
                 </QueryProvider>
             </AntdThemeProvider>
