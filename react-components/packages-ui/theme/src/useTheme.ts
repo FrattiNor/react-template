@@ -4,9 +4,10 @@ import Context from './Context';
 
 const useTheme = () => {
     const contextValue = useContext(Context);
-    const { theme, setTheme, themeClassName, applyClassName, applyClassNameWithBg } = contextValue;
+    const { theme, setTheme, fontFamily, themeClassName, applyClassName, applyClassNameWithBg } = contextValue;
 
     return {
+        fontFamily,
         theme: theme ?? 'light',
         setTheme: setTheme ?? ((v) => v),
         themeClassName: themeClassName ?? styles['light'],
