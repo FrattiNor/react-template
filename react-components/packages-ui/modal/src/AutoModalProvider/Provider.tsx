@@ -4,7 +4,7 @@ import { AutoModals } from '../type';
 import Context from './Context';
 
 type Props = PropsWithChildren<{
-    modals: AutoModals;
+    modals?: AutoModals;
 }>;
 
 const Provider: FC<Props> = ({ children, modals }) => {

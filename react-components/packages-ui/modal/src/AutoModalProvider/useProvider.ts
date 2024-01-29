@@ -4,7 +4,7 @@ import { nanoid } from 'nanoid';
 
 type ModalData<T> = T extends LazyExoticComponent<ComponentType<infer R>> ? R : never;
 
-const useProvider = <M extends AutoModals>({ modals }: { modals: M }) => {
+const useProvider = <M extends AutoModals>({ modals }: { modals?: M }) => {
     const midStr = '#_#_#';
     const dataRef = useRef<Record<string, any>>({});
     const [modalDisplay, setModalDisplay] = useState<Record<string, boolean>>({});
