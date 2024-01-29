@@ -18,6 +18,8 @@ export type NoIndexRouteItem = {
 
 export type RouteItem = IndexRouteItem | NoIndexRouteItem;
 
+export type RouteItems = Array<RouteItem>;
+
 export type RoutesProps = {
-    routes: RouteItem[];
+    routes: RouteItems;
 };
