@@ -1,3 +1,15 @@
+export * from '@pkg/i18n';
+
+export * from '@pkg/keep-alive';
+
+export * from '@pkg/query';
+
+export { default as Routes } from '@pkg/routes';
+export * from '@pkg/routes';
+
+export { default as Sortable } from '@pkg/sortable';
+export * from '@pkg/sortable';
+
 export { default as Button } from '@pkg/button';
 export * from '@pkg/button';
 
@@ -10,18 +22,14 @@ export * from '@pkg/dropdown';
 export { default as Empty } from '@pkg/empty';
 export * from '@pkg/empty';
 
-export * from '@pkg/i18n';
-
 export { default as Loading } from '@pkg/loading';
 
 export * from '@pkg/modal';
 
 export { default as NotificationClient } from '@pkg/notification';
 
-export * from '@pkg/query';
-
-export { default as Routes } from '@pkg/routes';
-export * from '@pkg/routes';
+export { default as Segmented } from '@pkg/segmented';
+export * from '@pkg/segmented';
 
 export { default as Table } from '@pkg/table';
 export * from '@pkg/table';

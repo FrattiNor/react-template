@@ -1,0 +1,50 @@
+.wrapper {
+    gap: 1px;
+    height: 32px;
+    padding: 2px;
+    position: relative;
+    display: inline-flex;
+    box-sizing: border-box;
+    background-color: var(--theme-bg);
+    border-radius: var(--theme-border-radius);
+
+    &.bordered {
+        border: 1px solid var(--theme-border);
+    }
+
+    .item {
+        z-index: 2;
+        padding: 0 8px;
+        cursor: pointer;
+        user-select: none;
+        position: relative;
+        align-items: center;
+        display: inline-flex;
+        border-radius: var(--theme-border-radius);
+
+        &.selected {
+            transition: color 0.2s;
+            color: var(--theme-primary-foreground);
+        }
+
+        &.not-selected {
+            transition:
+                background-color 0.2s,
+                color 0.2s;
+        }
+
+        &.not-selected:hover {
+            background-color: var(--theme-active-bg);
+        }
+    }
+
+    .mask {
+        top: 0;
+        width: 0;
+        z-index: 1;
+        position: absolute;
+        transition: all 0.2s;
+        background-color: var(--theme-primary);
+        border-radius: var(--theme-border-radius);
+    }
+}

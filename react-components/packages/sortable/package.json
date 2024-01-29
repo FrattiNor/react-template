@@ -1,6 +1,6 @@
 {
     "private": true,
-    "name": "@pkg/table-columns-conf",
+    "name": "@pkg/sortable",
     "version": "0.0.1",
     "main": "./src/index.tsx",
     "module": "./src/index.tsx",
@@ -11,11 +11,9 @@
         "lint": "npm run eslint && npm run tslint",
         "rm-dep": "npx rimraf ./node_modules"
     },
-    "peerDependencies": {
-        "@pkg/i18n": "workspace:*",
-        "@pkg/checkbox": "workspace:*",
-        "@pkg/table": "workspace:*",
-        "@pkg/theme": "workspace:*",
-        "@pkg/sortable": "workspace:*"
+    "devDependencies": {
+        "@dnd-kit/core": "^6.0.8",
+        "@dnd-kit/sortable": "^7.0.2",
+        "@dnd-kit/utilities": "^3.2.1"
     }
 }

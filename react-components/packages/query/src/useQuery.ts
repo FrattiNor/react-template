@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-shadow */
+ 
 import { useContext, useEffect, useLayoutEffect, useMemo, useRef } from 'react';
 import RequestClient from './RequestClient';
 import QueryContext from './QueryContext';

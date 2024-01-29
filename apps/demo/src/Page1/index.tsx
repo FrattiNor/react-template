@@ -19,6 +19,7 @@ import {
     VirtualList,
     QueryProvider,
     useQuery,
+    Segmented,
 } from '@react/components';
 import { lazy, useRef, useState } from 'react';
 import { ConfigProvider, Select, theme as antdTheme, Button as AntdButton, Skeleton } from 'antd';
@@ -132,7 +133,13 @@ const DemoTable = () => {
                         fontFamily: `-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji'`,
                     }}
                 >
-                    <div style={{ padding: 64 }}>
+                    <div style={{ padding: 64, display: 'flex', flexDirection: 'column', gap: 24 }}>
+                        <Segmented
+                            options={[
+                                { label: '实时', value: 'realtime' },
+                                { label: '搁置配置xxxxxxxxxxx', value: 'shelve' },
+                            ]}
+                        />
                         <VirtualTree
                             multipleSelect
                             data={treeData}

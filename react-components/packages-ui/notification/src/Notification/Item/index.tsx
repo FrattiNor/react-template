@@ -67,8 +67,8 @@ const Item: FC<Props> = ({ item, first }) => {
                 [styles['right']]: placement.includes('Right'),
                 [styles['bottom']]: placement.includes('bottom'),
                 [styles['before-enter']]: status.beforeEnter, // 初始状态
-                [styles['enter']]: status.isEnter, // 执行动画
-                [styles['leave']]: status.isLeave, // 执行动画
+                [styles['entering']]: status.isEntering, // 执行动画
+                [styles['leaving']]: status.isLeaving, // 执行动画
             })}
         >
             <div ref={itemRef} className={styles['item']} onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)}>

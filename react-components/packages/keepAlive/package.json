@@ -1,6 +1,6 @@
 {
     "private": true,
-    "name": "@pkg/table-columns-conf",
+    "name": "@pkg/keep-alive",
     "version": "0.0.1",
     "main": "./src/index.tsx",
     "module": "./src/index.tsx",
@@ -10,12 +10,5 @@
         "eslint": "npx eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0 --fix",
         "lint": "npm run eslint && npm run tslint",
         "rm-dep": "npx rimraf ./node_modules"
-    },
-    "peerDependencies": {
-        "@pkg/i18n": "workspace:*",
-        "@pkg/checkbox": "workspace:*",
-        "@pkg/table": "workspace:*",
-        "@pkg/theme": "workspace:*",
-        "@pkg/sortable": "workspace:*"
     }
 }

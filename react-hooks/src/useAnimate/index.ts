@@ -1,6 +1,6 @@
-import { useEffect, useRef, useReducer } from 'react';
+import { useRef, useReducer, useLayoutEffect } from 'react';
 
-type Status = 'BeforeEnter' | 'Enter' | 'AfterEnter' | 'Leave' | 'AfterLeave';
+type Status = 'BeforeEnter' | 'Entering' | 'AfterEnter' | 'Leaving' | 'AfterLeave';
 
 type Props = {
     autoEnter?: boolean;
@@ -18,12 +18,12 @@ const useAnimate = (props: Props) => {
     const { autoEnter, beforeEnter, onEnter, afterEnter, beforeLeave, onLeave, afterLeave } = props;
 
     const onAnimationEnd = () => {
-        if (statusRef.current === 'Enter') {
+        if (statusRef.current === 'Entering') {
             if (afterEnter) afterEnter();
             statusRef.current = 'AfterEnter';
             rerender();
         }
-        if (statusRef.current === 'Leave') {
+        if (statusRef.current === 'Leaving') {
             if (afterLeave) afterLeave();
             statusRef.current = 'AfterLeave';
             rerender();
@@ -31,10 +31,10 @@ const useAnimate = (props: Props) => {
     };
 
     const onAnimationStart = () => {
-        if (statusRef.current === 'Enter') {
+        if (statusRef.current === 'Entering') {
             if (onEnter) onEnter();
         }
-        if (statusRef.current === 'Leave') {
+        if (statusRef.current === 'Leaving') {
             if (onLeave) onLeave();
         }
     };
@@ -42,7 +42,7 @@ const useAnimate = (props: Props) => {
     const enter = () => {
         if (statusRef.current === 'BeforeEnter') {
             if (beforeEnter) beforeEnter();
-            statusRef.current = 'Enter';
+            statusRef.current = 'Entering';
             rerender();
         }
     };
@@ -50,12 +50,17 @@ const useAnimate = (props: Props) => {
     const leave = () => {
         if (statusRef.current === 'AfterEnter') {
             if (beforeLeave) beforeLeave();
-            statusRef.current = 'Leave';
+            statusRef.current = 'Leaving';
             rerender();
         }
     };
 
-    useEffect(() => {
+    const resetStatus = () => {
+        statusRef.current === 'BeforeEnter';
+        rerender();
+    };
+
+    useLayoutEffect(() => {
         if (autoEnter === true) {
             enter();
         }
@@ -64,13 +69,14 @@ const useAnimate = (props: Props) => {
     return {
         enter,
         leave,
+        resetStatus,
         listeners: { onAnimationEnd, onAnimationStart },
         statusStr: statusRef.current,
         status: {
             beforeEnter: statusRef.current === 'BeforeEnter',
-            isEnter: statusRef.current === 'Enter',
+            isEntering: statusRef.current === 'Entering',
             afterEnter: statusRef.current === 'AfterEnter',
-            isLeave: statusRef.current === 'Leave',
+            isLeaving: statusRef.current === 'Leaving',
             afterLeave: statusRef.current === 'AfterLeave',
         },
     };

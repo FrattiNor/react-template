@@ -58,8 +58,8 @@ const Overlay: FC<OverlayProps> = (props) => {
             style={{ top: y, left: x }}
             className={classNames(styles[theme], themeClassName, applyClassName, styles['overlay'], styles[topBottom], {
                 [styles['before-enter']]: status.beforeEnter,
-                [styles['enter']]: status.isEnter, // 执行动画
-                [styles['leave']]: status.isLeave, // 执行动画
+                [styles['entering']]: status.isEntering, // 执行动画
+                [styles['leaving']]: status.isLeaving, // 执行动画
             })}
         >
             <div ref={overlayRef} className={styles['content-wrapper']}>

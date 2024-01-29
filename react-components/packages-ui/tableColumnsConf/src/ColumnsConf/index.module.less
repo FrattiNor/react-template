@@ -1,19 +1,23 @@
 .wrapper {
+    overflow: hidden;
     position: relative;
+    border: 1px solid var(--theme-border);
+    border-radius: var(--theme-border-radius);
 
     .item {
         display: flex;
         padding: 4px 0;
         align-items: center;
         background-color: var(--theme-bg);
-        border-radius: var(--theme-border-radius);
-        border-left: 1px solid var(--theme-border);
-        border-right: 1px solid var(--theme-border);
-        border-bottom: 1px solid var(--theme-border);
+        border-top: 1px solid var(--theme-border);
 
-        &.overlay,
         &.first-child {
-            border-top: 1px solid var(--theme-border);
+            border: none;
+        }
+
+        &.overlay {
+            border: 1px solid var(--theme-border);
+            border-radius: var(--theme-border-radius);
         }
 
         .checkbox {

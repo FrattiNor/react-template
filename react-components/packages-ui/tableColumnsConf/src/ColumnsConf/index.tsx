@@ -5,8 +5,8 @@ import styles from './index.module.less';
 import { useSubmitData } from './hooks';
 import { useTheme } from '@pkg/theme';
 import Checkbox from '@pkg/checkbox';
+import Sortable from '@pkg/sortable';
 import classNames from 'classnames';
-import Sortable from '../Sortable';
 import { Select } from 'antd';
 
 type ComponentType = (props: TableColumnConfProps & React.RefAttributes<TableColumnConfRef>) => ReactNode | null;

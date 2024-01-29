@@ -44,8 +44,8 @@ const Overlay: FC<OverlayProps> = (props) => {
         <div
             className={classNames(styles['mask'], themeClassName, applyClassName, styles[theme], {
                 [styles['before-enter']]: status.beforeEnter,
-                [styles['enter']]: status.isEnter, // 执行动画
-                [styles['leave']]: status.isLeave, // 执行动画
+                [styles['entering']]: status.isEntering, // 执行动画
+                [styles['leaving']]: status.isLeaving, // 执行动画
             })}
         >
             <div ref={moveRef} className={styles['modal-position']} style={position}>
@@ -54,8 +54,8 @@ const Overlay: FC<OverlayProps> = (props) => {
                     style={{ width, ...style }}
                     className={classNames(styles['modal'], className, {
                         [styles['before-enter']]: status.beforeEnter,
-                        [styles['enter']]: status.isEnter, // 执行动画
-                        [styles['leave']]: status.isLeave, // 执行动画
+                        [styles['entering']]: status.isEntering, // 执行动画
+                        [styles['leaving']]: status.isLeaving, // 执行动画
                         [styles['fill-up']]: fillUpWindow,
                     })}
                 >
