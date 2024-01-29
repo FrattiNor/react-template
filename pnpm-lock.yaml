@@ -105,6 +105,9 @@ importers:
       '@pkg/empty':
         specifier: workspace:*
         version: link:packages-ui/empty
+      '@pkg/fps-stats':
+        specifier: workspace:*
+        version: link:packages/fps-stats
       '@pkg/i18n':
         specifier: workspace:*
         version: link:packages/i18n
@@ -338,6 +341,15 @@ importers:
 
   react-components/packages-ui/widgets: {}
 
+  react-components/packages/fps-stats:
+    devDependencies:
+      '@types/stats.js':
+        specifier: ^0.17.3
+        version: 0.17.3
+      stats.js:
+        specifier: ^0.17.0
+        version: 0.17.0
+
   react-components/packages/i18n: {}
 
   react-components/packages/keepAlive: {}
@@ -377,13 +389,6 @@ importers:
       '@react/utils':
         specifier: workspace:*
         version: link:../react-utils
-    devDependencies:
-      '@types/stats.js':
-        specifier: ^0.17.3
-        version: 0.17.3
-      stats.js:
-        specifier: ^0.17.0
-        version: 0.17.0
 
   react-utils:
     dependencies:

@@ -1,3 +1,5 @@
+export { default as initFps } from '@pkg/fps-stats';
+
 export * from '@pkg/i18n';
 
 export * from '@pkg/keep-alive';

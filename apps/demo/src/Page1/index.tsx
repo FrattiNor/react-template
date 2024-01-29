@@ -13,7 +13,6 @@ import {
     Dropdown,
     Checkbox,
     AutoModalProvider,
-    AutoModalRender,
     useAutoModal,
     VirtualList,
     QueryProvider,
@@ -21,16 +20,17 @@ import {
     Segmented,
     ThemeProvider,
     AntdThemeProvider,
+    initFps,
 } from '@react/components';
 import { Fragment, lazy, useRef, useState } from 'react';
 import { Select, Button as AntdButton, Skeleton } from 'antd';
 import { DownloadOutlined } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
-// import { tableData } from './tableData';
-import { useFps } from '@react/hooks';
 import { treeData } from './treeData';
 import useColumns from './useColumns';
 import classNames from 'classnames';
+
+initFps();
 
 const notification = new NotificationClient();
 
@@ -48,7 +48,6 @@ const modals = {
 type Modals = typeof modals;
 
 const DemoTable = () => {
-    useFps();
     const n = useNavigate();
     const btnRef = useRef(null);
     const columns = useColumns();

@@ -1,6 +1,6 @@
 {
     "private": true,
-    "name": "@react/hooks",
+    "name": "@pkg/fps-stats",
     "version": "0.0.1",
     "main": "./src/index.ts",
     "module": "./src/index.ts",
@@ -11,7 +11,8 @@
         "lint": "npm run eslint && npm run tslint",
         "rm-dep": "npx rimraf ./node_modules"
     },
-    "peerDependencies": {
-        "@react/utils": "workspace:*"
+    "devDependencies": {
+        "@types/stats.js": "^0.17.3",
+        "stats.js": "^0.17.0"
     }
 }

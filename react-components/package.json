@@ -12,6 +12,7 @@
         "rm-dep": "npx rimraf ./node_modules"
     },
     "peerDependencies": {
+        "@pkg/fps-stats": "workspace:*",
         "@pkg/i18n": "workspace:*",
         "@pkg/keep-alive": "workspace:*",
         "@pkg/query": "workspace:*",

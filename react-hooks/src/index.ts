@@ -3,7 +3,6 @@ export { default as useResizeObserver } from './useResizeObserver';
 export { default as useReactDomRoot } from './useReactDomRoot';
 export { default as useMousedownBlank } from './useMousedownBlank';
 export { default as useMergeState } from './useMergeState';
-export { default as useFps } from './useFps';
 export { default as useDisplayVisible } from './useDisplayVisible';
 export { default as useDelayWithLoading } from './useDelayWithLoading';
 export { default as useDelay } from './useDelay';
