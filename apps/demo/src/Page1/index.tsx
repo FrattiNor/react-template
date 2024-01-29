@@ -1,7 +1,6 @@
 /* eslint-disable react-refresh/only-export-components */
 import {
     Button,
-    ThemeHoc,
     useTheme,
     TableColumnsConf,
     TableColumnConfRef,
@@ -20,9 +19,11 @@ import {
     QueryProvider,
     useQuery,
     Segmented,
+    ThemeProvider,
+    AntdThemeProvider,
 } from '@react/components';
-import { lazy, useRef, useState } from 'react';
-import { ConfigProvider, Select, theme as antdTheme, Button as AntdButton, Skeleton } from 'antd';
+import { Fragment, lazy, useRef, useState } from 'react';
+import { Select, Button as AntdButton, Skeleton } from 'antd';
 import { DownloadOutlined } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
 // import { tableData } from './tableData';
@@ -62,7 +63,7 @@ const DemoTable = () => {
     const [renderConf, setRenderConf] = useState(false);
     const tableConfRef = useRef<TableColumnConfRef>(null);
     const [rowSelection, setRowSelection] = useState(true);
-    const { theme, themeClassName, applyClassName, setTheme } = useTheme();
+    const { themeClassName, applyClassNameWithBg, setTheme } = useTheme();
 
     const query = useQuery({
         delay: 400,
@@ -121,12 +122,12 @@ const DemoTable = () => {
     };
 
     return (
-        <ConfigProvider theme={{ token: { borderRadius: 2 }, algorithm: theme === 'light' ? antdTheme.defaultAlgorithm : antdTheme.darkAlgorithm }}>
+        <Fragment>
             {query.firstLoading ? (
                 <Skeleton />
             ) : (
                 <div
-                    className={classNames(themeClassName, applyClassName)}
+                    className={classNames(themeClassName, applyClassNameWithBg)}
                     style={{
                         width: '100%',
                         height: '100%',
@@ -303,17 +304,21 @@ const DemoTable = () => {
                     </div>
                 </div>
             )}
-        </ConfigProvider>
+        </Fragment>
     );
 };
 
-export default ThemeHoc(() => {
+export default () => {
     return (
-        <AutoModalProvider modals={modals}>
-            <QueryProvider>
-                <DemoTable />
-                <AutoModalRender />
-            </QueryProvider>
-        </AutoModalProvider>
+        <ThemeProvider>
+            <AntdThemeProvider>
+                <QueryProvider>
+                    <AutoModalProvider modals={modals}>
+                        <DemoTable />
+                        <AutoModalRender />
+                    </AutoModalProvider>
+                </QueryProvider>
+            </AntdThemeProvider>
+        </ThemeProvider>
     );
-});
+};
