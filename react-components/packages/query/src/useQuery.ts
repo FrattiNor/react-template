@@ -12,11 +12,12 @@ type Props<T> = {
 };
 
 const useQuery = <T>(props: Props<T>) => {
-    // client
-    const request = useMemo(() => new RequestClient(), []);
-
     // context
-    const { queryDataRef, queryLoadingRef, rerender } = useContext(QueryContext);
+    const { queryDataRef, queryLoadingRef, rerender, afterRequest, beforeRequest } = useContext(QueryContext);
+
+    // client
+    const request = useMemo(() => new RequestClient({ afterRequest, beforeRequest }), []);
+
     // context fun
     const setLoading = (obj: Record<string, boolean>) => {
         queryLoadingRef.current = {
@@ -82,30 +83,38 @@ const useQuery = <T>(props: Props<T>) => {
 
     // fetch
     const fetch = () => {
-        const currentKey = keyQueenRef.current[keyQueenRef.current.length - 1];
-        const currentLoading = queryLoadingRef.current[currentKey];
-        if (enabled && currentLoading !== true) {
-            setLoading({ [currentKey]: true });
-            rerender();
+        setLoading({ [currentKey]: true });
+        rerender();
 
-            delayQueryFn(request).then(
-                (value) => {
-                    setData({ [currentKey]: value });
-                    setLoading({ [currentKey]: false });
-                    rerender();
-                    return value;
-                },
-                () => {
-                    setLoading({ [currentKey]: false });
-                    rerender();
-                },
-            );
-        }
+        return delayQueryFn(request).then(
+            (value) => {
+                setData({ [currentKey]: value });
+                setLoading({ [currentKey]: false });
+                rerender();
+                return value;
+            },
+            (err) => {
+                setLoading({ [currentKey]: false });
+                rerender();
+                throw new Error(err);
+            },
+        );
     };
 
-    // auto fetch
+    // refetch 【refetch为主动调用，不受限loading】
+    const refetch = () => {
+        if (enabled) {
+            return fetch();
+        }
+        return Promise.reject();
+    };
+
+    // auto fetch 【auto fetch为被动调用，受限于loading，避免多个相同query一起发请求】
     useLayoutEffect(() => {
-        fetch();
+        const currentLoading = queryLoadingRef.current[currentKey];
+        if (enabled && currentLoading !== true) {
+            fetch();
+        }
     }, [currentKey, enabled]);
 
     // auto cancel
@@ -115,7 +124,7 @@ const useQuery = <T>(props: Props<T>) => {
         };
     }, []);
 
-    return { data, loading, firstLoading, refetch: fetch };
+    return { data, loading, firstLoading, refetch };
 };
 
 export default useQuery;

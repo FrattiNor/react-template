@@ -1,8 +1,19 @@
-import axios, { AxiosInstance, AxiosRequestConfig, CancelTokenSource } from 'axios';
+import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse, CancelTokenSource } from 'axios';
 import { isFormData, isObject, cleanRecord } from '@react/utils';
 
+type BeforeRequest = (config: AxiosRequestConfig) => AxiosRequestConfig;
+
+type AfterRequest = (response: Promise<AxiosResponse<any>>) => Promise<AxiosResponse<any>>;
+
+type Props = {
+    beforeRequest?: BeforeRequest;
+    afterRequest?: AfterRequest;
+};
+
 class RequestClient {
-    constructor() {
+    constructor(props?: Props) {
+        this.beforeRequest = props?.beforeRequest;
+        this.afterRequest = props?.afterRequest;
         this.cancelSource = axios.CancelToken.source();
         this.axiosClient = axios.create({
             cancelToken: this.cancelSource.token,
@@ -11,11 +22,15 @@ class RequestClient {
 
     private axiosClient: AxiosInstance;
     private cancelSource: CancelTokenSource;
+    private beforeRequest?: BeforeRequest;
+    private afterRequest?: AfterRequest;
 
     private request<T>(config: AxiosRequestConfig) {
         if (isObject(config.params)) config.params = cleanRecord(config.params);
         if (isObject(config.data) || isFormData(config.data)) config.data = cleanRecord(config.data);
-        return this.axiosClient<T>(config);
+        const response = this.axiosClient<T>(this.beforeRequest ? this.beforeRequest(config) : config);
+        if (this.afterRequest) return this.afterRequest(response);
+        return response;
     }
 
     cancel() {
