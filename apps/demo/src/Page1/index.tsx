@@ -146,7 +146,7 @@ const DemoTable = () => {
                             loading={loading}
                             wrapperStyle={{ width: 300, height: 200 }}
                             fieldKeys={{ key: 'id', label: 'nodeName', children: 'childList' }}
-                            style={{ border: '1px solid var(--theme-border)', borderRadius: 2 }}
+                            style={{ border: '1px solid var(--theme-border)', borderRadius: 'var(--theme-border-radius)' }}
                             shouldSelectedKeysChange={(v) => {
                                 const canDo = v.length > 0;
                                 if (!canDo) notification.error({ message: '至少保留一位' });
@@ -161,7 +161,7 @@ const DemoTable = () => {
                             data={treeData[0].childList[5].childList as any}
                             wrapperStyle={{ width: 300, height: 200, marginTop: 8 }}
                             fieldKeys={{ key: 'id', label: 'nodeName' }}
-                            style={{ border: '1px solid var(--theme-border)', borderRadius: 2 }}
+                            style={{ border: '1px solid var(--theme-border)', borderRadius: 'var(--theme-border-radius)' }}
                             shouldSelectedKeysChange={(v) => {
                                 const canDo = v.length > 0;
                                 if (!canDo) notification.error({ message: '至少保留一位' });

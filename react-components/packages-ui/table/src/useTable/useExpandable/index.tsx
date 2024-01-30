@@ -37,10 +37,11 @@ const useExpandable = <T,>(opt: Opt<T>) => {
         const dataSourceLevelMap: Record<string, number> = {};
 
         if (expandable) {
+            // parentOpened 需要自己的是打开状态并且自己的祖先也是打开状态
             const handleDataSource = (value: T[], opt?: { level: number; parentOpened: boolean }) => {
                 value.forEach((item) => {
                     const key = (typeof rowKey === 'function' ? rowKey(item) : item[rowKey]) as string;
-                    const opened = expandedKeysObj[key] ?? false;
+                    const currentOpened = expandedKeysObj[key] ?? false;
                     const children = (item as any)[childrenColumnName];
                     const { level = 0, parentOpened = true } = opt || {};
                     const haveChild = Array.isArray(children) && children.length > 0;
@@ -49,7 +50,7 @@ const useExpandable = <T,>(opt: Opt<T>) => {
                     if (haveChild) totalRowKeys.push(key);
                     if (parentOpened) showDataSource.push(item);
                     if (parentOpened && level !== 0) dataSourceLevelMap[key] = level;
-                    if (haveChild) handleDataSource(children, { level: level + 1, parentOpened: opened });
+                    if (haveChild) handleDataSource(children, { level: level + 1, parentOpened: parentOpened && currentOpened });
                 });
             };
 

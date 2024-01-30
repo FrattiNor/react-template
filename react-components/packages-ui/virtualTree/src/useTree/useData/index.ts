@@ -9,7 +9,8 @@ const useData = <T extends AnyObj>(props: VirtualTreeProps<T>) => {
         const showHandledData: HandledDataItem<T>[] = [];
         const totalHandledData: HandledDataItem<T>[] = [];
 
-        const recursionData = (v: T[], { level, parentOpen }: { level: number; parentOpen: boolean }) => {
+        // parentOpened 需要自己的是打开状态并且自己的祖先也是打开状态
+        const recursionData = (v: T[], { level, parentOpened }: { level: number; parentOpened: boolean }) => {
             v.forEach((item) => {
                 const { key: FKey = 'key', label: FLabel = 'label', children: FChildren = 'children', disabled: FDisabled } = fieldKeys || {};
                 const key = item?.[FKey];
@@ -30,12 +31,12 @@ const useData = <T extends AnyObj>(props: VirtualTreeProps<T>) => {
                 };
 
                 totalHandledData.push(handledItem);
-                if (parentOpen) showHandledData.push(handledItem);
-                if (haveChildren) recursionData(children, { level: level + 1, parentOpen: visible });
+                if (parentOpened) showHandledData.push(handledItem);
+                if (haveChildren) recursionData(children, { level: level + 1, parentOpened: parentOpened && visible });
             });
         };
 
-        recursionData(data, { level: 0, parentOpen: true });
+        recursionData(data, { level: 0, parentOpened: true });
 
         return { showData: showHandledData, totalData: totalHandledData };
     }, [data, visibles, JSON.stringify(fieldKeys)]);
