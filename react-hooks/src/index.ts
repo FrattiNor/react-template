@@ -10,3 +10,5 @@ export { default as useContainer } from './useContainer';
 export { default as useAnimate } from './useAnimate';
 export { default as useMounted } from './useMounted';
 export { default as useTransition } from './useTransition';
+export { default as useResize } from './useResize';
+export { default as useLatest } from './useLatest';

@@ -68,7 +68,6 @@ const DemoTable = () => {
         delay: 400,
         queryKey: ['DemoTable', count],
         queryFn: () => {
-            console.log('count', count);
             return Promise.resolve(
                 Array(count)
                     .fill('')

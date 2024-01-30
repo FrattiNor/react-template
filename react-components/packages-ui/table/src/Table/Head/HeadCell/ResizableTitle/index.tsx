@@ -32,9 +32,9 @@ const ResizableTitle: FC<Props> = (props) => {
     }
 
     return (
-        <div title={title} style={style} className={classNames(currentClassName)}>
+        <div data-key={cellKey} title={title} style={style} className={classNames(currentClassName)}>
             {children}
-            <span onMouseDown={onResizeStart(cellKey)} className={styles['resizable-handle']} />
+            <span onMouseDown={onResizeStart} className={styles['resizable-handle']} />
         </div>
     );
 };
