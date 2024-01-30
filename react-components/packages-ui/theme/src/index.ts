@@ -1,5 +1,5 @@
-import { default as ThemeProvider } from './Provider';
 import { default as ThemeHoc } from './Hoc';
+import { default as ThemeProvider } from './Provider';
 import useTheme from './useTheme';
 
 export { default as AntdThemeProvider } from './AntdThemeProvider';

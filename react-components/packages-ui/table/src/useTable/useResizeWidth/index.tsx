@@ -1,11 +1,11 @@
-/* eslint-disable @typescript-eslint/no-shadow */
-import { tableRowSelectionKey } from '../useRowSelection';
+import { useResize } from '@react/hooks';
+
+import { TableColumns } from '../../type';
+import { defaultWidth } from '../index';
 import { tableExpandableKey } from '../useExpandable';
 import { HandledProps } from '../useHandleProps';
+import { tableRowSelectionKey } from '../useRowSelection';
 import { VirtualCore } from '../useVirtual';
-import { TableColumns } from '../../type';
-import { useResize } from '@react/hooks';
-import { defaultWidth } from '../index';
 
 type Opt<T> = {
     virtual: VirtualCore;

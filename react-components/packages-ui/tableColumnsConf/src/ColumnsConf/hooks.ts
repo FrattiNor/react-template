@@ -1,5 +1,6 @@
-import { TableColumnConfProps, TableConfColumn } from '../type';
 import { TableColumnsConfItem } from '@pkg/table';
+
+import { TableColumnConfProps, TableConfColumn } from '../type';
 
 export const useResetData = ({ columns }: TableColumnConfProps) => {
     const getResetData = (): TableConfColumn[] => {

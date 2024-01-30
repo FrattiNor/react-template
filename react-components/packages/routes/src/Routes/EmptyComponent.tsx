@@ -1,5 +1,5 @@
-import { Outlet } from 'react-router-dom';
 import { FC } from 'react';
+import { Outlet } from 'react-router-dom';
 
 const EmptyComponent: FC = () => {
     return <Outlet />;

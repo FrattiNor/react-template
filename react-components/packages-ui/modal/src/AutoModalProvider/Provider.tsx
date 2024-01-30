@@ -1,8 +1,9 @@
-import { AutoModalRender } from '../AutoModalRender';
 import { FC, PropsWithChildren } from 'react';
-import useProvider from './useProvider';
-import { AutoModals } from '../type';
+
 import Context from './Context';
+import useProvider from './useProvider';
+import { AutoModalRender } from '../AutoModalRender';
+import { AutoModals } from '../type';
 
 type Props = PropsWithChildren<{
     modals?: AutoModals;

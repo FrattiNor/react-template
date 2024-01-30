@@ -1,7 +1,9 @@
-import { useTableContext } from '../../../TableContext';
-import styles from './index.module.less';
 import { Fragment } from 'react';
+
 import Empty from '@pkg/empty';
+
+import styles from './index.module.less';
+import { useTableContext } from '../../../TableContext';
 
 const BodyEmpty = () => {
     const { horizontalTotalSize } = useTableContext();

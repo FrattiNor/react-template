@@ -1,5 +1,6 @@
-import { HandledProps } from '../useHandleProps';
 import { RefObject, useEffect } from 'react';
+
+import { HandledProps } from '../useHandleProps';
 
 type Opt<T> = {
     paginationDatasource: T[];

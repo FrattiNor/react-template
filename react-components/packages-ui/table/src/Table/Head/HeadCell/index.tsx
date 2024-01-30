@@ -1,9 +1,10 @@
-import getCellTitle from '../../../utils/getCellTitle';
-import { HandledColumn } from '../../../type';
-import ResizableTitle from './ResizableTitle';
-import styles from '../index.module.less';
 import { notEmpty } from '@react/utils';
+
+import ResizableTitle from './ResizableTitle';
+import { HandledColumn } from '../../../type';
 import { AnyObj } from '../../../type';
+import getCellTitle from '../../../utils/getCellTitle';
+import styles from '../index.module.less';
 
 type Props<T> = {
     column: HandledColumn<T>;

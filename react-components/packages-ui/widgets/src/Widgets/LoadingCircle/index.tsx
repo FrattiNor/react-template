@@ -1,7 +1,9 @@
 import { CSSProperties, FC } from 'react';
-import LoadingSvg from '../LoadingSvg';
-import styles from './index.module.less';
+
 import classNames from 'classnames';
+
+import styles from './index.module.less';
+import LoadingSvg from '../LoadingSvg';
 
 type Props = {
     className?: string;

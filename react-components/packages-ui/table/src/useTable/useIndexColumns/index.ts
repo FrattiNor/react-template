@@ -1,7 +1,8 @@
+import { useTranslation } from '@pkg/i18n';
+
+import { TableColumns } from '../../type';
 import { HandledProps } from '../useHandleProps';
 import { Pagination } from '../usePagination';
-import { useTranslation } from '@pkg/i18n';
-import { TableColumns } from '../../type';
 
 type Opt<T> = {
     pagination: Pagination;

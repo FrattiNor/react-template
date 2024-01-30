@@ -1,7 +1,9 @@
-import { useMergeState } from '@react/hooks';
-import styles from './index.module.less';
-import classNames from 'classnames';
 import { FC } from 'react';
+
+import { useMergeState } from '@react/hooks';
+import classNames from 'classnames';
+
+import styles from './index.module.less';
 
 type Props = {
     expanded?: boolean;

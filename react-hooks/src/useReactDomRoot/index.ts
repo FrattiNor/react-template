@@ -1,6 +1,8 @@
-import useContainer from '../useContainer';
-import ReactDOM from 'react-dom/client';
 import { useRef } from 'react';
+
+import ReactDOM from 'react-dom/client';
+
+import useContainer from '../useContainer';
 
 type Props = {
     getContainer?: () => HTMLElement | undefined;

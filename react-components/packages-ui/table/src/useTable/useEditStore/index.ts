@@ -1,5 +1,6 @@
-import { BodyScrollObserver } from '../useBodyScrollObserver';
 import { useEffect, useState } from 'react';
+
+import { BodyScrollObserver } from '../useBodyScrollObserver';
 
 type Opt<T> = {
     paginationDatasource: T[];

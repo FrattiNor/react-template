@@ -1,5 +1,6 @@
-import { useSortable } from '@dnd-kit/sortable';
 import { CSSProperties, Fragment } from 'react';
+
+import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 
 type Props = {

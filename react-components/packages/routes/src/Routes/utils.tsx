@@ -1,8 +1,9 @@
+import { Suspense } from 'react';
 import { IndexRouteObject, NonIndexRouteObject, RouteObject } from 'react-router-dom';
-import { IndexRouteItem, NoIndexRouteItem, RouteItem } from '../type';
+
 import EmptyComponent from './EmptyComponent';
 import ErrorBoundary from './ErrorComponent';
-import { Suspense } from 'react';
+import { IndexRouteItem, NoIndexRouteItem, RouteItem } from '../type';
 
 export const getRouteObjectArray = (rs: Array<RouteItem>) => {
     const routeObjArr: Array<RouteObject> = [];

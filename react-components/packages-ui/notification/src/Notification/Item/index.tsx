@@ -1,9 +1,11 @@
-import { InfoSvg, ErrorSvg, WarningSvg, SuccessSvg, CloseX } from '@pkg/widgets';
-import { NotificationRenderQueenItem, NotificationType } from '../../type';
 import { FC, useEffect, useRef, useState } from 'react';
+
+import { InfoSvg, ErrorSvg, WarningSvg, SuccessSvg, CloseX } from '@pkg/widgets';
 import { useAnimate } from '@react/hooks';
-import styles from './index.module.less';
 import classNames from 'classnames';
+
+import styles from './index.module.less';
+import { NotificationRenderQueenItem, NotificationType } from '../../type';
 
 type Props = {
     first: boolean; // 第一条

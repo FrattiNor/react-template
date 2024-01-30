@@ -1,6 +1,7 @@
 import { Pagination as AntdPagination, PaginationProps } from 'antd';
-import { useTableContext } from '../../TableContext';
+
 import styles from './index.module.less';
+import { useTableContext } from '../../TableContext';
 
 const Pagination = () => {
     const { pagination, isEmpty } = useTableContext();

@@ -1,8 +1,10 @@
 import { FC, Fragment, cloneElement, isValidElement, useRef } from 'react';
-import { useDisplayVisible, useContainer } from '@react/hooks';
 import { createPortal } from 'react-dom';
-import { DropdownProps } from '../type';
+
+import { useDisplayVisible, useContainer } from '@react/hooks';
+
 import Overlay from './Overlay';
+import { DropdownProps } from '../type';
 
 const Dropdown: FC<DropdownProps> = (props) => {
     const ref = useRef<HTMLElement | null>(null);

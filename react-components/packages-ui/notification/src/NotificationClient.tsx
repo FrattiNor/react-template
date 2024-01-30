@@ -1,8 +1,9 @@
-import { NotificationConfProps, NotificationProps, NotificationRenderQueenItem } from './type';
-import NotificationConf from './NotificationConf';
-import Notification from './Notification';
-import ReactDOM from 'react-dom/client';
 import { nanoid } from 'nanoid';
+import ReactDOM from 'react-dom/client';
+
+import Notification from './Notification';
+import NotificationConf from './NotificationConf';
+import { NotificationConfProps, NotificationProps, NotificationRenderQueenItem } from './type';
 
 class NotificationClient {
     constructor(props?: NotificationConfProps) {

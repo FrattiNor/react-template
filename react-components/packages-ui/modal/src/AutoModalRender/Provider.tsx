@@ -1,6 +1,7 @@
 import { FC, PropsWithChildren } from 'react';
-import useProvider from './useProvider';
+
 import Context from './Context';
+import useProvider from './useProvider';
 
 const Provider: FC<PropsWithChildren<{ keyId: string }>> = ({ keyId, children }) => {
     const value = useProvider(keyId);

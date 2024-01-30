@@ -1,5 +1,6 @@
-import { useDocumentTitle, useRoutesByType } from '@react/components';
 import { Outlet } from 'react-router-dom';
+
+import { useDocumentTitle, useRoutesByType } from '@react/components';
 
 const Layout1 = () => {
     useDocumentTitle();

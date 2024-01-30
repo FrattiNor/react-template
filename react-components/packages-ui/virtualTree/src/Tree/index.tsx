@@ -1,13 +1,15 @@
 /* eslint-disable react-refresh/only-export-components */
-import { VirtualTreeContextHoc, useVirtualTreeContext } from '../TreeContext';
-import styles from './index.module.less';
-import { useTheme } from '@pkg/theme';
-import Checkbox from '@pkg/checkbox';
-import classNames from 'classnames';
-import Loading from '@pkg/loading';
-import ArrowSvg from './ArrowSvg';
-import Empty from '@pkg/empty';
 import { FC } from 'react';
+
+import Checkbox from '@pkg/checkbox';
+import Empty from '@pkg/empty';
+import Loading from '@pkg/loading';
+import { useTheme } from '@pkg/theme';
+import classNames from 'classnames';
+
+import ArrowSvg from './ArrowSvg';
+import styles from './index.module.less';
+import { VirtualTreeContextHoc, useVirtualTreeContext } from '../TreeContext';
 
 const Tree: FC = () => {
     const contextData = useVirtualTreeContext();

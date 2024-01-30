@@ -1,7 +1,9 @@
 import { CSSProperties, FC, PropsWithChildren } from 'react';
-import { useTableContext } from '../../../../TableContext';
-import styles from './index.module.less';
+
 import classNames from 'classnames';
+
+import styles from './index.module.less';
+import { useTableContext } from '../../../../TableContext';
 
 type Props = PropsWithChildren<{
     title?: string;

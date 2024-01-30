@@ -1,8 +1,9 @@
-/* eslint-disable @typescript-eslint/no-shadow */
 import { useEffect, useMemo, useState } from 'react';
-import { HandledProps } from '../useHandleProps';
-import { TableColumns } from '../../type';
+
 import Checkbox from '@pkg/checkbox';
+
+import { TableColumns } from '../../type';
+import { HandledProps } from '../useHandleProps';
 
 type Opt<T> = {
     totalDataSource?: T[];

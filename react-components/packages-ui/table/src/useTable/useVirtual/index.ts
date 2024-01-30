@@ -1,11 +1,12 @@
-import { observeElementRect, observeElementOffset, measureElement } from './utils';
-import { BodyResizeObserver } from '../useBodyResizeObserver';
-import { BodyScrollObserver } from '../useBodyScrollObserver';
+import { RefObject } from 'react';
+
 import { useVirtualizer } from './useVirtualizer';
-import { HandledProps } from '../useHandleProps';
+import { observeElementRect, observeElementOffset, measureElement } from './utils';
 import { TableColumns } from '../../type';
 import { defaultWidth } from '../index';
-import { RefObject } from 'react';
+import { BodyResizeObserver } from '../useBodyResizeObserver';
+import { BodyScrollObserver } from '../useBodyScrollObserver';
+import { HandledProps } from '../useHandleProps';
 
 type Opt<T> = {
     showDataSource: T[];

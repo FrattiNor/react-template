@@ -1,6 +1,7 @@
-import { useTableContext } from '../../../TableContext';
-import styles from './index.module.less';
 import { FC } from 'react';
+
+import styles from './index.module.less';
+import { useTableContext } from '../../../TableContext';
 
 const Measure: FC = () => {
     const tableContext = useTableContext();

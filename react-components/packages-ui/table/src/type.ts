@@ -1,4 +1,5 @@
 import { CSSProperties, Dispatch, ReactNode, RefObject, SetStateAction } from 'react';
+
 import useTable from './useTable';
 
 export type AnyObj = Record<string, any>;

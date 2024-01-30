@@ -1,8 +1,8 @@
-/* eslint-disable @typescript-eslint/no-shadow */
-import { HandledProps } from '../useHandleProps';
 import { useMemo, useState } from 'react';
-import { TableColumns } from '../../type';
+
 import ExpandableFC from './Expandable';
+import { TableColumns } from '../../type';
+import { HandledProps } from '../useHandleProps';
 
 type Opt<T> = {
     paginationDatasource: T[];

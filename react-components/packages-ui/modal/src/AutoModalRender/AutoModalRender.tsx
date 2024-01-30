@@ -1,6 +1,7 @@
-import { useAutoModal } from '../AutoModalProvider';
 import { FC, Fragment, Suspense } from 'react';
+
 import Provider from './Provider';
+import { useAutoModal } from '../AutoModalProvider';
 
 const AutoModalRender: FC = () => {
     const { modalDisplay, modalData, parseKeyId, modals = {} } = useAutoModal();

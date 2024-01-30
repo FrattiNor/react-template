@@ -1,5 +1,6 @@
-import { AutoModal } from '@react/components';
 import { Component } from 'react';
+
+import { AutoModal } from '@react/components';
 
 console.log('modal2');
 

@@ -1,8 +1,9 @@
- 
 import { useContext, useEffect, useLayoutEffect, useMemo, useRef } from 'react';
-import RequestClient from './RequestClient';
-import QueryContext from './QueryContext';
+
 import { useDelay } from '@react/hooks';
+
+import QueryContext from './QueryContext';
+import RequestClient from './RequestClient';
 
 type Props<T> = {
     delay?: number;

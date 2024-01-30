@@ -1,6 +1,7 @@
-import { ThemeProps, Theme } from './type';
-import styles from './theme.module.less';
 import { useState } from 'react';
+
+import styles from './theme.module.less';
+import { ThemeProps, Theme } from './type';
 
 const useProvider = ({ theme: _theme = 'light' }: ThemeProps) => {
     const [theme, setTheme] = useState<Theme>(_theme);

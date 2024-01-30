@@ -1,5 +1,6 @@
-import { HandledProps } from '../useHandleProps';
 import { useEffect, useState } from 'react';
+
+import { HandledProps } from '../useHandleProps';
 
 type Opt<T> = {
     handledProps: HandledProps<T>;

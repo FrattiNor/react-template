@@ -1,7 +1,9 @@
-import styles from './index.module.less';
+import { FC } from 'react';
+
 import { useTheme } from '@pkg/theme';
 import classNames from 'classnames';
-import { FC } from 'react';
+
+import styles from './index.module.less';
 
 type Props = {
     loading?: boolean;

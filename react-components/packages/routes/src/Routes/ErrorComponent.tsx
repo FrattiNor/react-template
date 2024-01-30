@@ -1,5 +1,5 @@
-import { useAsyncError, useRouteError } from 'react-router-dom';
 import { FC, useEffect } from 'react';
+import { useAsyncError, useRouteError } from 'react-router-dom';
 
 const ErrorBoundary: FC = () => {
     const error = useRouteError();

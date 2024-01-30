@@ -1,13 +1,15 @@
 /* eslint-disable react-refresh/only-export-components */
-import { TableContextHoc, useTableContext } from '../TableContext';
-import styles from './index.module.less';
-import Pagination from './Pagination';
+import { FC } from 'react';
+
+import Loading from '@pkg/loading';
 import { useTheme } from '@pkg/theme';
 import classNames from 'classnames';
-import Loading from '@pkg/loading';
-import { FC } from 'react';
-import Head from './Head';
+
 import Body from './Body';
+import Head from './Head';
+import styles from './index.module.less';
+import Pagination from './Pagination';
+import { TableContextHoc, useTableContext } from '../TableContext';
 
 const Table: FC = () => {
     const tableContext = useTableContext();

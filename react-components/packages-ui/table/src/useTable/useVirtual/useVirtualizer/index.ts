@@ -1,3 +1,6 @@
+import * as React from 'react';
+import { flushSync } from 'react-dom';
+
 import {
     VirtualizerOptions,
     Virtualizer,
@@ -9,8 +12,7 @@ import {
     observeWindowOffset,
     windowScroll,
 } from '@tanstack/react-virtual';
-import * as React from 'react';
-import { flushSync } from 'react-dom';
+
 import useTimeDebug from '../useTimeDebug';
 
 //

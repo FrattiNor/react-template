@@ -1,9 +1,11 @@
-import { useTranslation } from '@pkg/i18n';
-import styles from './index.module.less';
-import { useTheme } from '@pkg/theme';
-import { EmptyProps } from '../type';
-import classNames from 'classnames';
 import { FC } from 'react';
+
+import { useTranslation } from '@pkg/i18n';
+import { useTheme } from '@pkg/theme';
+import classNames from 'classnames';
+
+import styles from './index.module.less';
+import { EmptyProps } from '../type';
 
 const Empty: FC<EmptyProps> = ({ description }) => {
     const { theme } = useTheme();

@@ -1,5 +1,5 @@
-import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse, CancelTokenSource } from 'axios';
 import { isFormData, isObject, cleanRecord } from '@react/utils';
+import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse, CancelTokenSource } from 'axios';
 
 type BeforeRequest = (config: AxiosRequestConfig) => AxiosRequestConfig;
 

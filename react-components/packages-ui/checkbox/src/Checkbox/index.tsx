@@ -1,9 +1,11 @@
-import { useMergeState } from '@react/hooks';
 import { FC, MouseEventHandler } from 'react';
+
+import { useTheme } from '@pkg/theme';
+import { useMergeState } from '@react/hooks';
+import classNames from 'classnames';
+
 import styles from './index.module.less';
 import { CheckboxProps } from '../type';
-import { useTheme } from '@pkg/theme';
-import classNames from 'classnames';
 
 const Checkbox: FC<CheckboxProps> = (props) => {
     const { themeClassName } = useTheme();

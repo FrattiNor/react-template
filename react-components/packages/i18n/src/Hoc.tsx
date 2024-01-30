@@ -1,6 +1,7 @@
-import { TranslationProps } from './type';
 import { forwardRef } from 'react';
+
 import Provider from './Provider';
+import { TranslationProps } from './type';
 
 // Hoc
 const Hoc = <T,>(Component: T, props?: TranslationProps) => {

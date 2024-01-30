@@ -1,6 +1,7 @@
-import { IndexRouteItem, NoIndexRouteItem, RouteItem } from '../type';
 import { useContext, useMemo } from 'react';
+
 import Context from '../Routes/Context';
+import { IndexRouteItem, NoIndexRouteItem, RouteItem } from '../type';
 
 type RouteTypeItem = {
     path: string;

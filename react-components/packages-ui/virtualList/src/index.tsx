@@ -1,6 +1,6 @@
 /* eslint-disable react-refresh/only-export-components */
-import { useVirtualListContext } from './ListContext';
 import VirtualList from './List';
+import { useVirtualListContext } from './ListContext';
 
 export default VirtualList;
 

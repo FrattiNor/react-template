@@ -1,7 +1,7 @@
-import { AnyObj, VirtualTreeProps } from '../type';
-import useVirtual from './useVirtual';
-import useSelect from './useSelect';
 import useData from './useData';
+import useSelect from './useSelect';
+import useVirtual from './useVirtual';
+import { AnyObj, VirtualTreeProps } from '../type';
 
 const useTree = <T extends AnyObj>(props: VirtualTreeProps<T>) => {
     const select = useSelect(props);

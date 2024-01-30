@@ -1,8 +1,10 @@
-import { useTableContext } from '../../TableContext';
-import styles from './index.module.less';
-import classNames from 'classnames';
-import HeadCell from './HeadCell';
 import { FC } from 'react';
+
+import classNames from 'classnames';
+
+import HeadCell from './HeadCell';
+import styles from './index.module.less';
+import { useTableContext } from '../../TableContext';
 
 const Head: FC = () => {
     const tableContext = useTableContext();

@@ -1,7 +1,8 @@
 import { FC, PropsWithChildren } from 'react';
-import useProvider from './useProvider';
-import { ThemeProps } from './type';
+
 import Context from './Context';
+import { ThemeProps } from './type';
+import useProvider from './useProvider';
 
 const Provider: FC<PropsWithChildren<ThemeProps>> = ({ children, ...props }) => {
     const value = useProvider(props);

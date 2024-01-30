@@ -1,8 +1,9 @@
+import { FC } from 'react';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
+
+import Context from './Context';
 import { getRouteObjectArray } from './utils';
 import { RoutesProps } from '../type';
-import Context from './Context';
-import { FC } from 'react';
 
 const Routes: FC<RoutesProps> = ({ routes }) => {
     return (

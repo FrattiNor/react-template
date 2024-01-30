@@ -1,10 +1,12 @@
-import { useTableContext } from '../../TableContext';
-import styles from './index.module.less';
-import VirtualBody from './VirtualBody';
-import classNames from 'classnames';
-import Measure from './Measure';
-import Empty from './Empty';
 import { FC } from 'react';
+
+import classNames from 'classnames';
+
+import Empty from './Empty';
+import styles from './index.module.less';
+import Measure from './Measure';
+import VirtualBody from './VirtualBody';
+import { useTableContext } from '../../TableContext';
 
 const Body: FC = () => {
     const tableContext = useTableContext();

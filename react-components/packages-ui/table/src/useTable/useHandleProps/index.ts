@@ -1,5 +1,5 @@
-import { defaultAutoScrollTop, defaultLineHeight } from '../index';
 import { TableProps } from '../../type';
+import { defaultAutoScrollTop, defaultLineHeight } from '../index';
 
 const useHandleProps = <T>(props: TableProps<T>) => {
     const handledProps = {

@@ -1,6 +1,8 @@
+import { Fragment, useState } from 'react';
+
 import { DndContext, MouseSensor, TouchSensor, useSensor, useSensors, DragEndEvent, DragOverlay, DragStartEvent } from '@dnd-kit/core';
 import { arrayMove, SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable';
-import { Fragment, useState } from 'react';
+
 import SortableItem from './Item';
 
 type Props<T> = {

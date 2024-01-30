@@ -1,5 +1,6 @@
-import { useQueryProvider } from './QueryProvider';
 import { createContext } from 'react';
+
+import { useQueryProvider } from './QueryProvider';
 
 type ContextProps = ReturnType<typeof useQueryProvider>;
 

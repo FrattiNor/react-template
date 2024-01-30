@@ -1,5 +1,6 @@
-import getDelayFun from './getDelayFun';
 import { useState } from 'react';
+
+import getDelayFun from './getDelayFun';
 
 type PromiseFn = (...args: any[]) => Promise<any>;
 

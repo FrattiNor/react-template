@@ -1,5 +1,6 @@
-import { AutoModal } from '@react/components';
 import { FC, useEffect } from 'react';
+
+import { AutoModal } from '@react/components';
 
 console.log('modal3');
 

@@ -1,6 +1,8 @@
-import { useVirtualizer } from '@tanstack/react-virtual';
-import { AnyObj, HandledDataItem } from '../../type';
 import { useRef } from 'react';
+
+import { useVirtualizer } from '@tanstack/react-virtual';
+
+import { AnyObj, HandledDataItem } from '../../type';
 
 const useVirtual = <T extends AnyObj>(showData: HandledDataItem<T>[]) => {
     const lineHeight = 26;

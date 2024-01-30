@@ -1,13 +1,15 @@
 import { ReactNode, forwardRef, useImperativeHandle, useState } from 'react';
-import { TableColumnConfProps, TableColumnConfRef } from '../type';
-import { useTranslation } from '@pkg/i18n';
-import styles from './index.module.less';
-import { useSubmitData } from './hooks';
-import { useTheme } from '@pkg/theme';
+
 import Checkbox from '@pkg/checkbox';
+import { useTranslation } from '@pkg/i18n';
 import Sortable from '@pkg/sortable';
-import classNames from 'classnames';
+import { useTheme } from '@pkg/theme';
 import { Select } from 'antd';
+import classNames from 'classnames';
+
+import { useSubmitData } from './hooks';
+import styles from './index.module.less';
+import { TableColumnConfProps, TableColumnConfRef } from '../type';
 
 type ComponentType = (props: TableColumnConfProps & React.RefAttributes<TableColumnConfRef>) => ReactNode | null;
 

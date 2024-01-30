@@ -1,8 +1,10 @@
-import { useCurrentAutoModal } from '../AutoModalRender';
-import { useMergeState } from '@react/hooks';
-import { ModalProps } from '../type';
-import Modal from '../Modal';
 import { FC } from 'react';
+
+import { useMergeState } from '@react/hooks';
+
+import { useCurrentAutoModal } from '../AutoModalRender';
+import Modal from '../Modal';
+import { ModalProps } from '../type';
 
 const AutoModal: FC<ModalProps> = (props) => {
     const { closeModal } = useCurrentAutoModal();

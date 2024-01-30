@@ -1,13 +1,15 @@
 import { FC, Fragment, useEffect } from 'react';
-import { useTranslation } from '@pkg/i18n';
-import { useAnimate } from '@react/hooks';
-import { OverlayProps } from '../../type';
-import useMoveModal from './useMoveModal';
-import styles from './index.module.less';
-import { CloseX } from '@pkg/widgets';
-import { useTheme } from '@pkg/theme';
-import classNames from 'classnames';
+
 import Button from '@pkg/button';
+import { useTranslation } from '@pkg/i18n';
+import { useTheme } from '@pkg/theme';
+import { CloseX } from '@pkg/widgets';
+import { useAnimate } from '@react/hooks';
+import classNames from 'classnames';
+
+import styles from './index.module.less';
+import useMoveModal from './useMoveModal';
+import { OverlayProps } from '../../type';
 
 const bodyOverflowHiddenStyle = (
     <style>

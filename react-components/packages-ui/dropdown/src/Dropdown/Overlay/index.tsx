@@ -1,11 +1,13 @@
-import { useMousedownBlank, useAnimate } from '@react/hooks';
 import { useReducer, useRef, FC, useEffect } from 'react';
-import usePosition, { Position } from './usePosition';
-import { OverlayProps } from '../../type';
+
+import { useTheme } from '@pkg/theme';
+import { useMousedownBlank, useAnimate } from '@react/hooks';
+import classNames from 'classnames';
+
 import styles from './index.module.less';
 import useObserver from './useObserver';
-import { useTheme } from '@pkg/theme';
-import classNames from 'classnames';
+import usePosition, { Position } from './usePosition';
+import { OverlayProps } from '../../type';
 
 const Overlay: FC<OverlayProps> = (props) => {
     const getPosition = usePosition();

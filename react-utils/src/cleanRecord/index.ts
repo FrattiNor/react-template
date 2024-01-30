@@ -1,5 +1,5 @@
-import { isFormData } from '../valueType';
 import { isEmpty } from '../empty';
+import { isFormData } from '../valueType';
 
 // 清除空数组，undefined，null，空字符串，空对象
 const cleanRecord = <T extends Record<string, any> | FormData>(params: T): T => {

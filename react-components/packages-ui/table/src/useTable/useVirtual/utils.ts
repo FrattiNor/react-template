@@ -1,6 +1,7 @@
+import { Virtualizer } from '@tanstack/react-virtual';
+
 import { BodyResizeObserver } from '../useBodyResizeObserver';
 import { BodyScrollObserver } from '../useBodyScrollObserver';
-import { Virtualizer } from '@tanstack/react-virtual';
 
 interface Rect {
     width: number;

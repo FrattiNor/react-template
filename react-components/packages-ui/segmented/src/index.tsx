@@ -1,8 +1,10 @@
 import { CSSProperties, FC, useLayoutEffect, useRef } from 'react';
+
 import { useMergeState, useTransition } from '@react/hooks';
+import classNames from 'classnames';
+
 import styles from './index.module.less';
 import { SegmentedProps } from './type';
-import classNames from 'classnames';
 
 const Segmented: FC<SegmentedProps> = (props) => {
     const { options = [], bordered } = props;

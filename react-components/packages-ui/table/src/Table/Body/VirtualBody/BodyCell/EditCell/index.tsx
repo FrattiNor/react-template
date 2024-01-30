@@ -1,8 +1,10 @@
-import { useTableContext } from '../../../../../TableContext';
 import { CSSProperties, FC, useRef, useState } from 'react';
+
+import classNames from 'classnames';
+
 import styles from './index.module.less';
 import { getShowValue } from './utils';
-import classNames from 'classnames';
+import { useTableContext } from '../../../../../TableContext';
 
 type Props = {
     rowKey: string;

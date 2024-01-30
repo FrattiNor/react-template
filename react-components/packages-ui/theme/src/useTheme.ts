@@ -1,6 +1,7 @@
-import styles from './theme.module.less';
 import { useContext } from 'react';
+
 import Context from './Context';
+import styles from './theme.module.less';
 
 const useTheme = () => {
     const contextValue = useContext(Context);

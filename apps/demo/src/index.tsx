@@ -1,8 +1,11 @@
+import { lazy } from 'react';
+
 import { Routes } from '@react/components';
 import ReactDOM from 'react-dom/client';
+
 import Layout1 from './Layout1';
+
 import './index.module.less';
-import { lazy } from 'react';
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
     <Routes

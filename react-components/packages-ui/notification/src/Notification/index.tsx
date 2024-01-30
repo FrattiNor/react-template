@@ -1,9 +1,11 @@
-import { NotificationRenderQueenItem } from '../type';
-import styles from './index.module.less';
+import { FC } from 'react';
+
 import { useTheme } from '@pkg/theme';
 import classNames from 'classnames';
-import { FC } from 'react';
+
+import styles from './index.module.less';
 import Item from './Item';
+import { NotificationRenderQueenItem } from '../type';
 
 type Props = {
     zIndex: number;

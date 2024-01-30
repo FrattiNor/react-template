@@ -1,6 +1,8 @@
-import { AnyObj, VirtualListProps } from '../../type';
-import { useMergeState } from '@react/hooks';
 import { useMemo } from 'react';
+
+import { useMergeState } from '@react/hooks';
+
+import { AnyObj, VirtualListProps } from '../../type';
 
 const useSelect = <T extends AnyObj>(props: VirtualListProps<T>) => {
     const { shouldSelectedKeysChange, multipleSelect } = props;

@@ -1,5 +1,7 @@
-import { ConfigProvider, theme as antdTheme } from 'antd';
 import { FC, PropsWithChildren } from 'react';
+
+import { ConfigProvider, theme as antdTheme } from 'antd';
+
 import useTheme from './useTheme';
 
 type Props = PropsWithChildren<{

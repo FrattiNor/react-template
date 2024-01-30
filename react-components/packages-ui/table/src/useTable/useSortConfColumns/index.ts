@@ -1,6 +1,6 @@
-import { TableColumnsConfItem, TableColumn, TableColumns } from '../../type';
-
 import { useState } from 'react';
+
+import { TableColumnsConfItem, TableColumn, TableColumns } from '../../type';
 
 const fixedNumMap = {
     left: -1,

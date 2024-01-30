@@ -1,6 +1,8 @@
 import { ComponentType, LazyExoticComponent, useRef, useState } from 'react';
-import { AutoModals } from '../type';
+
 import { nanoid } from 'nanoid';
+
+import { AutoModals } from '../type';
 
 type ModalData<T> = T extends LazyExoticComponent<ComponentType<infer R>> ? R : never;
 

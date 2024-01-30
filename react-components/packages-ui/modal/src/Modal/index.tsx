@@ -1,8 +1,10 @@
-import { useDisplayVisible, useContainer } from '@react/hooks';
-import { createPortal } from 'react-dom';
-import { ModalProps } from '../type';
 import { FC, Fragment } from 'react';
+import { createPortal } from 'react-dom';
+
+import { useDisplayVisible, useContainer } from '@react/hooks';
+
 import Overlay from './Overlay';
+import { ModalProps } from '../type';
 
 const Modal: FC<ModalProps> = (props) => {
     const { getContainer, clearContainer } = useContainer({ getContainer: props.getContainer });

@@ -1,5 +1,6 @@
-import { AnyObj, HandledDataItem, VirtualTreeProps } from '../../type';
 import { useState, useMemo } from 'react';
+
+import { AnyObj, HandledDataItem, VirtualTreeProps } from '../../type';
 
 const useData = <T extends AnyObj>(props: VirtualTreeProps<T>) => {
     const { data, fieldKeys } = props;

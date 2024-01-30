@@ -1,8 +1,9 @@
+import classNames from 'classnames';
+
 import { useTableContext } from '../../../../TableContext';
 import { AnyObj } from '../../../../type';
-import styles from '../index.module.less';
-import classNames from 'classnames';
 import BodyCell from '../BodyCell';
+import styles from '../index.module.less';
 
 type Props<T> = {
     measure?: boolean;

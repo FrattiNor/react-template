@@ -1,5 +1,6 @@
-import { TranslationProps, Local } from './type';
 import { useState } from 'react';
+
+import { TranslationProps, Local } from './type';
 
 const useProvider = ({ local: _local = 'zh_ch', t1Maps, t2Maps }: TranslationProps) => {
     const [local, setLocal] = useState<Local>(_local);

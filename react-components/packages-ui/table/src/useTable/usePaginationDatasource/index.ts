@@ -1,6 +1,7 @@
+import { useMemo } from 'react';
+
 import { HandledProps } from '../useHandleProps';
 import { Pagination } from '../usePagination';
-import { useMemo } from 'react';
 
 type Opt<T> = {
     pagination: Pagination;
