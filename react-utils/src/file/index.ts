@@ -1,5 +1,3 @@
-import { nanoid } from 'nanoid';
-
 type fileUploadProps = {
     accept?: string;
     multiple?: boolean;
@@ -10,30 +8,37 @@ type fileUploadProps = {
  * @param accept 接收类型
  * @param multiple 多选
  */
-const uploadId = nanoid();
+
 export const uploadFile = (props?: fileUploadProps): Promise<File[]> => {
     return new Promise((res) => {
+        // 创建input元素
         const { accept, multiple } = props || {};
-        const oldInput = document.getElementById(uploadId);
-        if (oldInput) document.body.removeChild(oldInput);
         const input = document.createElement('input');
-        input.setAttribute('id', `${uploadId}`);
         input.setAttribute('style', 'display:none');
         input.setAttribute('name', 'files');
         input.setAttribute('type', 'file');
         if (typeof accept === 'string') input.setAttribute('accept', accept);
         if (typeof multiple === 'boolean') input.setAttribute('multiple', `${multiple}`);
-
-        // 触发上传事件
-        input.onchange = (e) => {
+        // 绑定上传事件
+        input.addEventListener('change', (e) => {
             const files = (e?.target as any)?.files as FileList;
             const fileArray: File[] = [];
             for (let i = 0; i < files.length; i++) {
                 fileArray.push(files[i]);
             }
             res(fileArray);
-        };
-
+        });
+        // 无论是否触发了上传，都清除掉插入的input元素【延迟清除，避免影响input change事件】
+        window.addEventListener(
+            'focus',
+            () => {
+                setTimeout(() => {
+                    document.body.removeChild(input);
+                }, 1000);
+            },
+            { once: true },
+        );
+        // 插入input元素，并触发点击事件
         document.body.appendChild(input);
         input.click();
     });

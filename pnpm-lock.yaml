@@ -395,9 +395,6 @@ importers:
       dayjs:
         specifier: ^1.11.10
         version: 1.11.10
-      nanoid:
-        specifier: ^5.0.4
-        version: 5.0.4
 
 packages:
 
@@ -2346,6 +2343,7 @@ packages:
     resolution: {integrity: sha512-vAjmBf13gsmhXSgBrtIclinISzFFy22WwCYoyilZlsrRXNIHSwgFQ1bEdjRwMT3aoadeIF6HMuDRlOxzfXV8ig==}
     engines: {node: ^18 || >=20}
     hasBin: true
+    dev: true
 
   /natural-compare-lite@1.4.0:
     resolution: {integrity: sha512-Tj+HTDSJJKaZnfiuw+iaF9skdPpTo2GtEly5JHnWV/hfv2Qj/9RKsGISQtLh2ox3l5EAGw487hnBee0sIJ6v2g==}

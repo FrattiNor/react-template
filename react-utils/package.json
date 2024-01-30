@@ -12,7 +12,6 @@
         "rm-dep": "npx rimraf ./node_modules"
     },
     "dependencies": {
-        "dayjs": "^1.11.10",
-        "nanoid": "^5.0.4"
+        "dayjs": "^1.11.10"
     }
 }
