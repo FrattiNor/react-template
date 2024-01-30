@@ -8,7 +8,8 @@
         "build:demo": "npx pnpm -r --filter demo run build",
         "lint": "npx pnpm -r --filter=\"*\" run lint",
         "rm-dep": "npx rimraf ./node_modules && npx pnpm -r --filter=\"*\" run rm-dep",
-        "prettier": "npx prettier **/* --write --ignore-unknown"
+        "prettier": "npx prettier **/* --write --ignore-unknown",
+        "check-updates": "npx npm-check-updates -ws"
     },
     "devDependencies": {
         "@esbuild-plugins/node-globals-polyfill": "^0.2.3",
