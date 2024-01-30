@@ -17,25 +17,29 @@ const useAnimate = (props: Props) => {
     const statusRef = useRef<Status | null>('BeforeEnter');
     const { autoEnter, beforeEnter, onEnter, afterEnter, beforeLeave, onLeave, afterLeave } = props;
 
-    const onAnimationEnd = () => {
-        if (statusRef.current === 'Entering') {
-            if (afterEnter) afterEnter();
-            statusRef.current = 'AfterEnter';
-            rerender();
-        }
-        if (statusRef.current === 'Leaving') {
-            if (afterLeave) afterLeave();
-            statusRef.current = 'AfterLeave';
-            rerender();
+    const onAnimationEnd: React.AnimationEventHandler<HTMLElement> = (e) => {
+        if (e.currentTarget === e.target) {
+            if (statusRef.current === 'Entering') {
+                statusRef.current = 'AfterEnter';
+                if (afterEnter) afterEnter();
+                rerender();
+            }
+            if (statusRef.current === 'Leaving') {
+                statusRef.current = 'AfterLeave';
+                if (afterLeave) afterLeave();
+                rerender();
+            }
         }
     };
 
-    const onAnimationStart = () => {
-        if (statusRef.current === 'Entering') {
-            if (onEnter) onEnter();
-        }
-        if (statusRef.current === 'Leaving') {
-            if (onLeave) onLeave();
+    const onAnimationStart: React.AnimationEventHandler<HTMLElement> = (e) => {
+        if (e.currentTarget === e.target) {
+            if (statusRef.current === 'Entering') {
+                if (onEnter) onEnter();
+            }
+            if (statusRef.current === 'Leaving') {
+                if (onLeave) onLeave();
+            }
         }
     };
 

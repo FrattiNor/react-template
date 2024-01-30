@@ -18,7 +18,7 @@ const useResizeWidth = <T,>(opt: Opt<T>) => {
 
     const { onMouseDown, mark, active, resized } = useResize({
         beforeResize(e) {
-            const parent = (e.target as HTMLDivElement)?.parentElement as HTMLDivElement;
+            const parent = (e.currentTarget as HTMLDivElement)?.parentElement as HTMLDivElement;
             const cellKey = parent?.dataset.key;
             return {
                 key: cellKey ?? undefined,

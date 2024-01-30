@@ -119,6 +119,10 @@ const DemoTable = () => {
         setTheme((t) => (t === 'light' ? 'dark' : 'light'));
     };
 
+    function onClick(e: React.MouseEvent<HTMLDivElement>) {
+        console.log(e.nativeEvent, e.currentTarget);
+    }
+
     return (
         <Fragment>
             {query.firstLoading ? (
@@ -180,7 +184,7 @@ const DemoTable = () => {
                             )}
                         </div>
 
-                        <div style={{ padding: '24px 24px 0 24px', width: 900, display: 'flex', flexWrap: 'wrap', gap: 16 }}>
+                        <div style={{ padding: '24px 24px 0 24px', width: 900, display: 'flex', flexWrap: 'wrap', gap: 16 }} onClick={onClick}>
                             <Checkbox disabled checked></Checkbox>
                             <Checkbox disabled checked>
                                 ABC

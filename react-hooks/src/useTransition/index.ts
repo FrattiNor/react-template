@@ -1,4 +1,6 @@
-import { useReducer, useLayoutEffect } from 'react';
+import { useReducer, useLayoutEffect, useRef } from 'react';
+
+type Status = 'BeforeTransition' | 'Transitioning' | 'AfterTransition';
 
 type Props = {
     autoStart?: boolean;
@@ -6,18 +8,24 @@ type Props = {
     afterTransition?: () => void;
 };
 
-const useAnimate = (props: Props) => {
+const useTransition = (props: Props) => {
     const rerender = useReducer(() => ({}), {})[1];
-
+    const statusRef = useRef<Status | null>('BeforeTransition');
     const { beforeTransition, afterTransition, autoStart } = props;
 
-    const onTransitionEnd = () => {
-        if (afterTransition) afterTransition();
-        rerender();
+    const onTransitionEnd: React.TransitionEventHandler<HTMLElement> = (e) => {
+        if (e.currentTarget === e.target) {
+            if (statusRef.current === 'Transitioning') {
+                statusRef.current = 'AfterTransition';
+                if (afterTransition) afterTransition();
+                rerender();
+            }
+        }
     };
 
     const start = () => {
         if (beforeTransition) beforeTransition();
+        statusRef.current = 'Transitioning';
         rerender();
     };
 
@@ -33,4 +41,4 @@ const useAnimate = (props: Props) => {
     };
 };
 
-export default useAnimate;
+export default useTransition;
