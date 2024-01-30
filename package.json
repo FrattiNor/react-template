@@ -1,6 +1,6 @@
 {
     "private": true,
-    "name": "react-component",
+    "name": "monorepo",
     "version": "0.0.1",
     "scripts": {
         "preinstall": "npx only-allow pnpm",
