@@ -37,5 +37,6 @@ module.exports = {
         'no-undef': 'off',
         '@typescript-eslint/no-explicit-any': 'off',
         'react-hooks/exhaustive-deps': 'off',
+        // 'import/no-extraneous-dependencies': 'error', // 幻影依赖
     },
 };
