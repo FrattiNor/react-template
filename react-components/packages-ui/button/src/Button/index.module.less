@@ -1,6 +1,5 @@
 .button {
     gap: 8px;
-    height: 32px;
     outline: none;
     cursor: pointer;
     padding: 0 14px;
@@ -11,17 +10,18 @@
     transition: all 0.2s;
     box-sizing: border-box;
     border: 1px solid transparent;
+    height: var(--theme-default-height);
     border-radius: var(--theme-border-radius);
     box-shadow: 0 2px 0 rgba(0, 0, 0, 0.02);
 
     &.no-children {
         padding: 0;
-        width: 32px;
         justify-content: center;
+        width: var(--theme-default-height);
     }
 
     &.shape-circle {
-        border-radius: 16px;
+        border-radius: calc(var(--theme-default-height) / 2);
     }
 
     &.type-default {
