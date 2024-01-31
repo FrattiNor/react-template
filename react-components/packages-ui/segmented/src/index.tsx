@@ -28,7 +28,8 @@ const Segmented: FC<SegmentedProps> = (props) => {
                         const left = (node as HTMLDivElement).offsetLeft;
                         const width = (node as HTMLDivElement).clientWidth;
                         const height = (node as HTMLDivElement).clientHeight;
-                        maskStyle.current = { top, left, width, height };
+                        const transition = maskStyle.current === undefined ? 'none' : 'all 0.2s'; // 第一次不设置transition
+                        maskStyle.current = { top, left, width, height, transition };
                     }
                 }
             }
