@@ -11,33 +11,33 @@ function pauseEvent(e: Event) {
     return false;
 }
 
-type ResizeOther = Record<string, any> | void;
+type ResizeMark = { pageX: number; pageY: number };
 
-type ResizeMark<M> = M extends void ? { pageX: number; pageY: number } : { pageX: number; pageY: number } & M;
+type ResizeActive = { moveX: number; moveY: number };
 
-type ResizeActive<A> = A extends void ? { moveX: number; moveY: number } : { moveX: number; moveY: number } & A;
-
-type Props<M, A> = {
-    beforeResize?: (event: React.MouseEvent<HTMLElement, MouseEvent>) => M;
-    onResizing?: (v: { event: MouseEvent; active: ResizeActive<void>; mark: ResizeMark<M> }) => A;
-    afterResize?: (event: MouseEvent) => void;
+type Props<MarkData, ActiveData, ResultData> = {
+    beforeResize?: (v: { event: React.MouseEvent<HTMLElement, MouseEvent>; mark: ResizeMark }) => MarkData;
+    onResizing?: (v: { event: MouseEvent; mark: ResizeMark; active: ResizeActive; markData: MarkData }) => ActiveData;
+    afterResize?: (v: { event: MouseEvent; mark: ResizeMark; active: ResizeActive | null; markData: MarkData; activeData: ActiveData }) => ResultData;
 };
 
-const useResize = <M extends ResizeOther, A extends ResizeOther>(props: Props<M, A>) => {
+const useResize = <MarkData, ActiveData, ResultData>(props: Props<MarkData, ActiveData, ResultData>) => {
     const resizedRef = useRef(false);
     const latestProps = useLatest(props);
     const rerender = useReducer(() => ({}), {})[1];
-    const markRef = useRef<null | ResizeMark<M>>(null);
-    const activeRef = useRef<null | ResizeActive<A>>(null);
+    const markRef = useRef<null | ResizeMark>(null);
+    const activeRef = useRef<null | ResizeActive>(null);
+    const markDataRef = useRef<undefined | MarkData>(undefined);
+    const activeDataRef = useRef<undefined | ActiveData>(undefined);
+    const resultDataRef = useRef<undefined | ResultData>(undefined);
 
     const onMouseDown: MouseEventHandler<HTMLElement> = (e) => {
         pauseEvent(e as any);
         const pageX = e.pageX;
         const pageY = e.pageY;
-        const mark = { pageX, pageY };
+        markRef.current = { pageX, pageY };
         const { beforeResize } = latestProps.latest();
-        const otherMark = beforeResize ? beforeResize(e) : {};
-        markRef.current = { ...mark, ...otherMark } as ResizeMark<M>;
+        markDataRef.current = beforeResize ? beforeResize({ event: e, mark: markRef.current }) : undefined;
         rerender();
     };
 
@@ -49,21 +49,40 @@ const useResize = <M extends ResizeOther, A extends ResizeOther>(props: Props<M,
                     resizedRef.current = true;
                     const moveX = e.pageX - markRef.current.pageX;
                     const moveY = e.pageY - markRef.current.pageY;
-                    const active = { moveX, moveY };
+                    activeRef.current = { moveX, moveY };
                     const { onResizing } = latestProps.latest();
-                    const otherActive = onResizing ? onResizing({ event: e, active, mark: markRef.current }) : {};
-                    activeRef.current = { ...active, ...otherActive } as ResizeActive<A>;
+                    activeDataRef.current = onResizing
+                        ? onResizing({
+                              event: e,
+                              mark: markRef.current,
+                              active: activeRef.current,
+                              markData: markDataRef.current as MarkData,
+                          })
+                        : undefined;
                     rerender();
                 }
             };
 
             const mouseUp = (e: MouseEvent) => {
-                pauseEvent(e);
-                markRef.current = null;
-                activeRef.current = null;
-                const { afterResize } = latestProps.latest();
-                if (afterResize) afterResize(e);
-                rerender();
+                if (markRef.current) {
+                    pauseEvent(e);
+                    const { afterResize } = latestProps.latest();
+                    resultDataRef.current = afterResize
+                        ? afterResize({
+                              event: e,
+                              mark: markRef.current,
+                              active: activeRef.current,
+                              markData: markDataRef.current as MarkData,
+                              activeData: activeDataRef.current as ActiveData,
+                          })
+                        : undefined;
+
+                    markRef.current = null;
+                    activeRef.current = null;
+                    markDataRef.current = undefined;
+                    activeDataRef.current = undefined;
+                    rerender();
+                }
             };
 
             document.body.addEventListener('mouseup', mouseUp);
@@ -81,6 +100,9 @@ const useResize = <M extends ResizeOther, A extends ResizeOther>(props: Props<M,
         mark: markRef.current,
         active: activeRef.current,
         resized: resizedRef.current,
+        markData: markDataRef.current,
+        activeData: activeDataRef.current,
+        resultData: resultDataRef.current,
     };
 };
 

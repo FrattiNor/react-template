@@ -16,18 +16,18 @@ type Opt<T> = {
 const useResizeWidth = <T,>(opt: Opt<T>) => {
     const { handledProps, virtual, sortedColumns } = opt;
 
-    const { onMouseDown, mark, active, resized } = useResize({
-        beforeResize(e) {
-            const parent = (e.currentTarget as HTMLDivElement)?.parentElement as HTMLDivElement;
+    const { onMouseDown, markData, activeData, resized } = useResize({
+        beforeResize({ event }) {
+            const parent = (event.currentTarget as HTMLDivElement)?.parentElement as HTMLDivElement;
             const cellKey = parent?.dataset.key;
             return {
                 key: cellKey ?? undefined,
                 clientWidth: cellKey ? parent.clientWidth : undefined,
             };
         },
-        onResizing({ active, mark }) {
+        onResizing({ active, markData }) {
             const { moveX } = active;
-            const { key, clientWidth } = mark;
+            const { key, clientWidth } = markData;
             return {
                 key,
                 width: clientWidth ? Math.min(Math.max(clientWidth + moveX, 50), 1000) : undefined,
@@ -47,9 +47,9 @@ const useResizeWidth = <T,>(opt: Opt<T>) => {
         },
     });
 
-    const resizeReadyKey = mark?.key;
-    const resizeActiveKey = active?.key;
-    const resizeActiveWidth = active?.width;
+    const resizeReadyKey = markData?.key;
+    const resizeActiveKey = activeData?.key;
+    const resizeActiveWidth = activeData?.width;
 
     return { resizeReadyKey, resizeActiveKey, resizeActiveWidth, resized, onResizeStart: onMouseDown };
 };
