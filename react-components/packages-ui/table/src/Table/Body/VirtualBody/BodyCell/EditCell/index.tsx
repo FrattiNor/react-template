@@ -25,10 +25,17 @@ const EditCell: FC<Props> = ({ rowKey, cellKey, text, style, className, saveEdit
     const [isEdit, _setEdit] = useState(false);
     const textareaRef = useRef<HTMLTextAreaElement>(null);
     const { editCellValues, setEditCellValues } = tableContext;
-    const [tempValue, setTempValue] = useState<string | null>(null);
 
     // 当前值，未编辑使用原始值，编辑过使用编辑缓存内的值
-    const value = tempValue ?? editCellValues[key] ?? text;
+    const value = editCellValues[key] ?? text;
+
+    //  设置值，存进编辑缓存内
+    const setValue = (v: string) => {
+        setEditCellValues((old) => ({
+            ...old,
+            [key]: v,
+        }));
+    };
 
     // 设置是否编辑
     const setEdit = (v: boolean) => {
@@ -36,11 +43,6 @@ const EditCell: FC<Props> = ({ rowKey, cellKey, text, style, className, saveEdit
 
         if (v === false) {
             saveEdit(value);
-
-            setEditCellValues((old) => ({
-                ...old,
-                [key]: value,
-            }));
         }
 
         if (v === true) {
@@ -73,7 +75,7 @@ const EditCell: FC<Props> = ({ rowKey, cellKey, text, style, className, saveEdit
                     onBlur={() => setEdit(false)}
                     className={styles['textarea']}
                     onClick={(e) => e.stopPropagation()}
-                    onChange={(e) => setTempValue(e.target.value)}
+                    onChange={(e) => setValue(e.target.value)}
                 />
             )}
         </div>

@@ -13,14 +13,14 @@ const useColumns = () => {
             title: '报警等级',
             key: 'alarmLevel',
             width: 100,
-            render: ({ alarmLevel }) => (
+            render: () => (
                 <Dropdown
                     items={[
                         { label: '123', key: '1' },
                         { label: '1234', key: '2' },
                     ]}
                 >
-                    <span>{alarmLevel}</span>
+                    <span>{notEmpty('xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx')}</span>
                 </Dropdown>
             ),
         },
