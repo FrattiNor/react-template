@@ -1,7 +1,7 @@
 import { isArr, isNull, isNumber, isObject, isString, isUndefined } from '../valueType';
 
 // 判断是否为空
-export const isEmpty = (v: any) => {
+export const isEmpty = <T>(v: T) => {
     if (
         isNull(v) ||
         isUndefined(v) ||
@@ -15,12 +15,14 @@ export const isEmpty = (v: any) => {
     return false;
 };
 
-export const notEmpty = <T>(t: T, res?: () => any): any => {
+export function notEmpty<T>(t: T): NonNullable<T> | string;
+export function notEmpty<T, D>(t: T, res: (t: NonNullable<T>) => D): NonNullable<D> | string;
+export function notEmpty<T, D>(t: T, res?: (t: NonNullable<T>) => D) {
     if (isEmpty(t)) {
         return '-';
     } else if (typeof res === 'function') {
-        return notEmpty(res());
+        return notEmpty(res(t as NonNullable<T>));
     } else {
         return t;
     }
-};
+}
