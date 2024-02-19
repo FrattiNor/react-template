@@ -14,7 +14,7 @@ const Overlay: FC<OverlayProps> = (props) => {
     const rerender = useReducer(() => ({}), {})[1];
     const overlayRef = useRef<HTMLDivElement>(null);
     const positionRef = useRef<Position | null>(null);
-    const { themeClassName, applyClassName, theme } = useTheme();
+    const { themeClassName, applyTheme, theme } = useTheme();
     const { x, y, topBottom = 'top' } = positionRef.current || {};
     const { target, container, items, placement, afterClose, visible, setVisible, overlaySameWidth, overlayFollow } = props;
     const targetWidth = target.offsetWidth;
@@ -58,7 +58,7 @@ const Overlay: FC<OverlayProps> = (props) => {
         <div
             {...listeners}
             style={{ top: y, left: x }}
-            className={classNames(styles[theme], themeClassName, applyClassName, styles['overlay'], styles[topBottom], {
+            className={classNames(styles[theme], themeClassName, applyTheme, styles['overlay'], styles[topBottom], {
                 [styles['before-enter']]: status.beforeEnter,
                 [styles['entering']]: status.isEntering, // 执行动画
                 [styles['leaving']]: status.isLeaving, // 执行动画

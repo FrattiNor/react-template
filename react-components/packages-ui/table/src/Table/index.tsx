@@ -14,10 +14,10 @@ import { TableContextHoc, useTableContext } from '../TableContext';
 const Table: FC = () => {
     const tableContext = useTableContext();
     const { loading, className, style } = tableContext.props;
-    const { theme, themeClassName, applyClassName } = useTheme();
+    const { theme, themeClassName, applyTheme } = useTheme();
 
     return (
-        <div className={classNames(styles['table'], styles[theme], themeClassName, applyClassName, className)} style={style}>
+        <div className={classNames(styles['table'], styles[theme], themeClassName, applyTheme, className)} style={style}>
             <Head />
             <Body />
             <Pagination />

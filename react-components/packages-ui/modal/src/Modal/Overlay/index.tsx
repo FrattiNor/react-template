@@ -23,7 +23,7 @@ const Overlay: FC<OverlayProps> = (props) => {
     const { t1 } = useTranslation();
     const { closeableByConfirmLoading = true } = props;
     const { moveRef, onMouseDown, position } = useMoveModal();
-    const { theme, themeClassName, applyClassName } = useTheme();
+    const { theme, themeClassName, applyTheme } = useTheme();
     const { title, visible, setVisible, afterClose, footer, cancelText, confirmText, confirmLoading } = props;
     const { children, width, className, style, fillUpWindow, headStyle, bodyStyle, footStyle, headBorder, footBorder } = props;
     const closeable = typeof props.closeable === 'boolean' ? props.closeable : closeableByConfirmLoading ? !confirmLoading : true;
@@ -44,7 +44,7 @@ const Overlay: FC<OverlayProps> = (props) => {
 
     return (
         <div
-            className={classNames(styles['mask'], themeClassName, applyClassName, styles[theme], {
+            className={classNames(styles['mask'], themeClassName, applyTheme, styles[theme], {
                 [styles['before-enter']]: status.beforeEnter,
                 [styles['entering']]: status.isEntering, // 执行动画
                 [styles['leaving']]: status.isLeaving, // 执行动画

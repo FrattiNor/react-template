@@ -14,13 +14,13 @@ import { HandledDataItem } from '../type';
 const Tree: FC = () => {
     const contextData = useVirtualListContext();
     const { virtual, props, wrapperRef } = contextData;
-    const { themeClassName, applyClassName } = useTheme();
+    const { themeClassName, applyTheme } = useTheme();
     const { virtualItems, totalSize, measureElement, distance } = virtual;
     const { renderItem, loading, style, className, wrapperClassName, wrapperStyle, select, data } = props;
     const { lineHeight, isEmpty, selectedKeysObj, setSelectedKeysObj, getKeyLabelDisabled } = contextData;
 
     return (
-        <div className={classNames(styles['wrapper'], themeClassName, applyClassName, wrapperClassName)} style={wrapperStyle}>
+        <div className={classNames(styles['wrapper'], themeClassName, applyTheme, wrapperClassName)} style={wrapperStyle}>
             <Loading loading={loading} />
 
             <div ref={wrapperRef} className={classNames(styles['list'], className)} style={style}>

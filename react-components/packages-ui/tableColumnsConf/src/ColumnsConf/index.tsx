@@ -20,7 +20,7 @@ const TableColumnsConf: ComponentType = forwardRef((props, ref) => {
 
     const [data, setData] = useState(props.columns);
 
-    const { themeClassName, applyClassName } = useTheme();
+    const { themeClassName, applyTheme } = useTheme();
 
     // 暴露提交和重置
     useImperativeHandle(
@@ -82,7 +82,7 @@ const TableColumnsConf: ComponentType = forwardRef((props, ref) => {
     };
 
     return (
-        <div className={classNames(styles['wrapper'], themeClassName, applyClassName)}>
+        <div className={classNames(styles['wrapper'], themeClassName, applyTheme)}>
             <Sortable
                 items={data}
                 setItems={setData}

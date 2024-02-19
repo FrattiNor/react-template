@@ -14,13 +14,13 @@ import { VirtualTreeContextHoc, useVirtualTreeContext } from '../TreeContext';
 const Tree: FC = () => {
     const contextData = useVirtualTreeContext();
     const { virtual, props, wrapperRef } = contextData;
-    const { themeClassName, applyClassName } = useTheme();
+    const { themeClassName, applyTheme } = useTheme();
     const { virtualItems, totalSize, measureElement, distance } = virtual;
     const { renderItem, loading, style, className, wrapperClassName, wrapperStyle, select } = props;
     const { lineHeight, showData, setVisibles, isEmpty, selectedKeysObj, setSelectedKeysObj } = contextData;
 
     return (
-        <div className={classNames(styles['wrapper'], themeClassName, applyClassName, wrapperClassName)} style={wrapperStyle}>
+        <div className={classNames(styles['wrapper'], themeClassName, applyTheme, wrapperClassName)} style={wrapperStyle}>
             <Loading loading={loading} />
 
             <div ref={wrapperRef} className={classNames(styles['tree'], className)} style={style}>

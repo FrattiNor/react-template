@@ -5,14 +5,14 @@ import styles from './theme.module.less';
 
 const useTheme = () => {
     const contextValue = useContext(Context);
-    const { theme, setTheme, themeClassName, applyClassName, applyClassNameWithBg } = contextValue;
+    const { theme, setTheme, themeClassName, applyTheme, applyThemeWithBg } = contextValue;
 
     return {
         theme: theme ?? 'light',
         setTheme: setTheme ?? ((v) => v),
         themeClassName: themeClassName ?? styles['light'],
-        applyClassName: applyClassName ?? styles['apply-theme'],
-        applyClassNameWithBg: applyClassNameWithBg ?? styles['apply-theme-bg'],
+        applyTheme: applyTheme ?? styles['apply-theme'],
+        applyThemeWithBg: applyThemeWithBg ?? styles['apply-theme-bg'],
     };
 };
 

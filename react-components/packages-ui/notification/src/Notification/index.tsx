@@ -14,7 +14,7 @@ type Props = {
 };
 
 const Notification: FC<Props> = ({ queen, zIndex }) => {
-    const { theme, themeClassName, applyClassName } = useTheme();
+    const { theme, themeClassName, applyTheme } = useTheme();
 
     const topLeft: NotificationRenderQueenItem[] = [];
     const topRight: NotificationRenderQueenItem[] = [];
@@ -41,7 +41,7 @@ const Notification: FC<Props> = ({ queen, zIndex }) => {
     });
 
     return (
-        <div className={classNames(styles['notification'], styles[theme], themeClassName, applyClassName)} style={{ zIndex }}>
+        <div className={classNames(styles['notification'], styles[theme], themeClassName, applyTheme)} style={{ zIndex }}>
             {topLeft.length > 0 && (
                 <div className={styles['top-left']}>
                     {[...topLeft].reverse().map((item, index) => (
