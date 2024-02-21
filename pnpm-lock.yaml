@@ -69,9 +69,6 @@ importers:
       prettier:
         specifier: ^3.2.4
         version: 3.2.4
-      rimraf:
-        specifier: ^5.0.5
-        version: 5.0.5
       rollup-plugin-node-polyfills:
         specifier: ^0.2.1
         version: 0.2.1
