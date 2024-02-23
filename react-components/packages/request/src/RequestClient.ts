@@ -3,17 +3,19 @@ import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse, CancelTokenSou
 
 type BeforeRequest = (config: AxiosRequestConfig) => AxiosRequestConfig;
 
-type AfterRequest = (response: Promise<AxiosResponse<any>>) => Promise<AxiosResponse<any>>;
+type HandleResponse = (response: AxiosResponse<any>) => any;
 
 type Props = {
     beforeRequest?: BeforeRequest;
-    afterRequest?: AfterRequest;
+    handleSuccess?: HandleResponse;
+    handleError?: HandleResponse;
 };
 
 class RequestClient {
     constructor(props?: Props) {
         this.beforeRequest = props?.beforeRequest;
-        this.afterRequest = props?.afterRequest;
+        this.handleSuccess = props?.handleSuccess;
+        this.handleError = props?.handleError;
         this.cancelSource = axios.CancelToken.source();
         this.axiosClient = axios.create({
             cancelToken: this.cancelSource.token,
@@ -23,14 +25,13 @@ class RequestClient {
     private axiosClient: AxiosInstance;
     private cancelSource: CancelTokenSource;
     private beforeRequest?: BeforeRequest;
-    private afterRequest?: AfterRequest;
+    private handleSuccess?: HandleResponse;
+    private handleError?: HandleResponse;
 
     private request<T>(config: AxiosRequestConfig) {
         if (isObject(config.params)) config.params = cleanRecord(config.params);
         if (isObject(config.data) || isFormData(config.data)) config.data = cleanRecord(config.data);
-        const response = this.axiosClient<T>(this.beforeRequest ? this.beforeRequest(config) : config);
-        if (this.afterRequest) return this.afterRequest(response);
-        return response;
+        return this.axiosClient<T>(this.beforeRequest ? this.beforeRequest(config) : config).then(this.handleSuccess, this.handleError);
     }
 
     cancel() {

@@ -7,7 +7,8 @@ import RequestContext from './RequestContext';
 
 type Props = {
     beforeRequest?: (config: AxiosRequestConfig) => AxiosRequestConfig;
-    afterRequest?: (response: Promise<AxiosResponse<any>>) => Promise<AxiosResponse<any>>;
+    handleSuccess?: (response: AxiosResponse<any>) => any;
+    handleError?: (response: AxiosResponse<any>) => any;
 };
 
 export const useRequestProvider = (props: Props) => {

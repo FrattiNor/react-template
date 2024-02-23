@@ -13,8 +13,8 @@ type Props<T, Opt = void> = {
 
 const useMutation = <T, Opt = void>(props: Props<T, Opt>) => {
     const { mutationFn, delay, enabled = true } = props;
-    const { afterRequest, beforeRequest } = useContext(RequestContext);
-    const request = useMemo(() => new RequestClient({ afterRequest, beforeRequest }), []);
+    const { handleError, handleSuccess, beforeRequest } = useContext(RequestContext);
+    const request = useMemo(() => new RequestClient({ handleError, handleSuccess, beforeRequest }), []);
     const [delayMutationFn, loading] = useDelayWithLoading({ delayFn: mutationFn, delay });
 
     useEffect(() => {

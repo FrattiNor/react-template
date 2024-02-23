@@ -16,8 +16,8 @@ const useQuery = <T>(props: Props<T>) => {
     const firstLoadingFlag = useRef(false);
     const [data, setData] = useState<T | undefined>(undefined);
     const { queryFn, queryKey, delay, enabled = true } = props;
-    const { afterRequest, beforeRequest } = useContext(RequestContext);
-    const request = useMemo(() => new RequestClient({ afterRequest, beforeRequest }), []);
+    const { handleError, handleSuccess, beforeRequest } = useContext(RequestContext);
+    const request = useMemo(() => new RequestClient({ handleError, handleSuccess, beforeRequest }), []);
     const [delayQueryFn, loading] = useDelayWithLoading({ delayFn: queryFn, delay });
 
     const firstLoading = useMemo(() => {
