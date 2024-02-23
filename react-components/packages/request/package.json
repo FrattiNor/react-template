@@ -1,6 +1,6 @@
 {
     "private": true,
-    "name": "@pkg/query",
+    "name": "@pkg/request",
     "version": "0.0.1",
     "main": "./src/index.ts",
     "module": "./src/index.ts",

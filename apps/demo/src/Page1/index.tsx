@@ -19,7 +19,6 @@ import {
     AutoModalProvider,
     useAutoModal,
     VirtualList,
-    QueryProvider,
     useQuery,
     Segmented,
     initFps,
@@ -64,7 +63,7 @@ const DemoTable = () => {
     const [rowSelection, setRowSelection] = useState(true);
 
     const query = useQuery({
-        delay: 400,
+        delay: 4000,
         queryKey: ['DemoTable', count],
         queryFn: () => {
             return Promise.resolve(
@@ -117,6 +116,8 @@ const DemoTable = () => {
     const changeTheme = () => {
         setTheme((t) => (t === 'light' ? 'dark' : 'light'));
     };
+
+    console.log(query);
 
     return (
         <Fragment>
@@ -312,10 +313,8 @@ const DemoTable = () => {
 
 export default () => {
     return (
-        <QueryProvider>
-            <AutoModalProvider modals={modals} autoRender>
-                <DemoTable />
-            </AutoModalProvider>
-        </QueryProvider>
+        <AutoModalProvider modals={modals} autoRender>
+            <DemoTable />
+        </AutoModalProvider>
     );
 };

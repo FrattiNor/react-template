@@ -4,7 +4,7 @@ export * from '@pkg/i18n';
 
 export * from '@pkg/keep-alive';
 
-export * from '@pkg/query';
+export * from '@pkg/request';
 
 export { default as Routes } from '@pkg/routes';
 export * from '@pkg/routes';

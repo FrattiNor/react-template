@@ -2,19 +2,18 @@ import { useContext, useEffect, useMemo } from 'react';
 
 import { useDelayWithLoading } from '@react/hooks';
 
-import QueryContext from './QueryContext';
 import RequestClient from './RequestClient';
+import RequestContext from './RequestContext';
 
 type Props<T, Opt = void> = {
     delay?: number;
     enabled?: boolean;
-    mutationKey: any[];
     mutationFn: (request: RequestClient, opt: Opt) => Promise<T>;
 };
 
 const useMutation = <T, Opt = void>(props: Props<T, Opt>) => {
     const { mutationFn, delay, enabled = true } = props;
-    const { afterRequest, beforeRequest } = useContext(QueryContext);
+    const { afterRequest, beforeRequest } = useContext(RequestContext);
     const request = useMemo(() => new RequestClient({ afterRequest, beforeRequest }), []);
     const [delayMutationFn, loading] = useDelayWithLoading({ delayFn: mutationFn, delay });
 

@@ -129,9 +129,9 @@ importers:
       '@pkg/notification':
         specifier: workspace:*
         version: link:packages-ui/notification
-      '@pkg/query':
+      '@pkg/request':
         specifier: workspace:*
-        version: link:packages/query
+        version: link:packages/request
       '@pkg/routes':
         specifier: workspace:*
         version: link:packages/routes
@@ -352,7 +352,7 @@ importers:
 
   react-components/packages/keepAlive: {}
 
-  react-components/packages/query:
+  react-components/packages/request:
     dependencies:
       '@react/hooks':
         specifier: workspace:*

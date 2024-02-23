@@ -1,6 +1,6 @@
 import { lazy } from 'react';
 
-import { AntdThemeProvider, Routes, ThemeProvider } from '@react/components';
+import { AntdThemeProvider, RequestProvider, Routes, ThemeProvider } from '@react/components';
 import ReactDOM from 'react-dom/client';
 
 import Layout1 from './Layout1';
@@ -60,6 +60,8 @@ const route = (
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
     <ThemeProvider container withBg>
-        <AntdThemeProvider>{route}</AntdThemeProvider>
+        <AntdThemeProvider>
+            <RequestProvider>{route}</RequestProvider>
+        </AntdThemeProvider>
     </ThemeProvider>,
 );

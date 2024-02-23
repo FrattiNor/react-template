@@ -15,7 +15,7 @@
         "@pkg/fps-stats": "workspace:*",
         "@pkg/i18n": "workspace:*",
         "@pkg/keep-alive": "workspace:*",
-        "@pkg/query": "workspace:*",
+        "@pkg/request": "workspace:*",
         "@pkg/routes": "workspace:*",
         "@pkg/sortable": "workspace:*",
         "@pkg/button": "workspace:*",
