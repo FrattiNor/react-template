@@ -6,34 +6,6 @@
         padding: 0;
         width: 100%;
         height: 100%;
-    }
-
-    html {
-        // scrollbar
-        --theme-scrollbar-width: 10px;
-        --theme-scrollbar-border-radius: 10px;
-        --theme-scrollbar-bg: rgba(0, 0, 0, 0.05); /* 滚动条背景 */
-        --theme-scrollbar-thumb: rgba(0, 0, 0, 0.25); /* 滚动条 */
-        --theme-scrollbar-thumb-hover: rgba(0, 0, 0, 0.5); /* 滚动条hover */
-
-        ::-webkit-scrollbar {
-            width: var(--theme-scrollbar-width);
-            height: var(--theme-scrollbar-width);
-            background-color: var(--theme-scrollbar-bg);
-        }
-
-        ::-webkit-scrollbar-corner {
-            background-color: var(--theme-scrollbar-bg);
-        }
-
-        ::-webkit-scrollbar-thumb {
-            background-color: var(--theme-scrollbar-thumb);
-            border-radius: var(--theme-scrollbar-border-radius);
-        }
-
-        ::-webkit-scrollbar-thumb:hover,
-        ::-webkit-scrollbar-thumb:active {
-            background-color: var(--theme-scrollbar-thumb-hover);
-        }
+        overflow: hidden;
     }
 }

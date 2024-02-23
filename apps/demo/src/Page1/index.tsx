@@ -22,12 +22,9 @@ import {
     QueryProvider,
     useQuery,
     Segmented,
-    ThemeProvider,
-    AntdThemeProvider,
     initFps,
 } from '@react/components';
 import { Select, Button as AntdButton, Skeleton } from 'antd';
-import classNames from 'classnames';
 
 import { treeData } from './treeData';
 import useColumns from './useColumns';
@@ -53,6 +50,7 @@ const DemoTable = () => {
     const n = useNavigate();
     const btnRef = useRef(null);
     const columns = useColumns();
+    const { setTheme } = useTheme();
     const [count, setCount] = useState(100);
     const tableRef = useRef<TableRef>(null);
     const [empty, setEmpty] = useState(false);
@@ -64,7 +62,6 @@ const DemoTable = () => {
     const [renderConf, setRenderConf] = useState(false);
     const tableConfRef = useRef<TableColumnConfRef>(null);
     const [rowSelection, setRowSelection] = useState(true);
-    const { themeClassName, applyThemeWithBg, setTheme } = useTheme();
 
     const query = useQuery({
         delay: 400,
@@ -127,7 +124,6 @@ const DemoTable = () => {
                 <Skeleton />
             ) : (
                 <div
-                    className={classNames(themeClassName, applyThemeWithBg)}
                     style={{
                         width: '100%',
                         height: '100%',
@@ -316,14 +312,10 @@ const DemoTable = () => {
 
 export default () => {
     return (
-        <ThemeProvider>
-            <AntdThemeProvider>
-                <QueryProvider>
-                    <AutoModalProvider modals={modals} autoRender>
-                        <DemoTable />
-                    </AutoModalProvider>
-                </QueryProvider>
-            </AntdThemeProvider>
-        </ThemeProvider>
+        <QueryProvider>
+            <AutoModalProvider modals={modals} autoRender>
+                <DemoTable />
+            </AutoModalProvider>
+        </QueryProvider>
     );
 };

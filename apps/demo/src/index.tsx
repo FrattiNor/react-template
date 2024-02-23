@@ -1,13 +1,13 @@
 import { lazy } from 'react';
 
-import { Routes } from '@react/components';
+import { AntdThemeProvider, Routes, ThemeProvider } from '@react/components';
 import ReactDOM from 'react-dom/client';
 
 import Layout1 from './Layout1';
 
 import './index.module.less';
 
-ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
+const route = (
     <Routes
         routes={[
             {
@@ -55,5 +55,11 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
                 Component: () => '404',
             },
         ]}
-    />,
+    />
+);
+
+ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
+    <ThemeProvider container withBg>
+        <AntdThemeProvider>{route}</AntdThemeProvider>
+    </ThemeProvider>,
 );

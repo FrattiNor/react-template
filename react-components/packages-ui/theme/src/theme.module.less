@@ -1,9 +1,42 @@
 @import url('./theme-light.module.less');
 @import url('./theme-dark.module.less');
 
+.theme-container {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+}
+
 .apply-theme {
     color: var(--theme-foreground);
     font-size: var(--theme-font-size);
+
+    ::-webkit-scrollbar,
+    &::-webkit-scrollbar {
+        width: var(--theme-scrollbar-width);
+        height: var(--theme-scrollbar-width);
+        background-color: var(--theme-scrollbar-bg);
+    }
+
+    ::-webkit-scrollbar-corner,
+    &::-webkit-scrollbar-corner {
+        background-color: var(--theme-scrollbar-bg);
+    }
+
+    ::-webkit-scrollbar-thumb,
+    &::-webkit-scrollbar-thumb {
+        background-color: var(--theme-scrollbar-thumb);
+        border-radius: var(--theme-scrollbar-border-radius);
+    }
+
+    ::-webkit-scrollbar-thumb:hover,
+    ::-webkit-scrollbar-thumb:active,
+    &::-webkit-scrollbar-thumb:hover,
+    &::-webkit-scrollbar-thumb:active {
+        background-color: var(--theme-scrollbar-thumb-hover);
+    }
 }
 
 .apply-theme-bg {
