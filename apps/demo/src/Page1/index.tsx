@@ -139,6 +139,12 @@ const DemoTable = () => {
                             options={[
                                 { label: '实时', value: 'realtime' },
                                 { label: '搁置配置xxxxxxxxxxx', value: 'shelve' },
+                                ...Array(10)
+                                    .fill('')
+                                    .map((_, i) => ({
+                                        label: `搁置配置xxxxxxxxxxx${i}`,
+                                        value: `shelve${i}`,
+                                    })),
                             ]}
                         />
                         <VirtualTree
