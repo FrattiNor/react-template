@@ -91,20 +91,36 @@ class NotificationClient {
         this.render();
     }
 
-    success(props: Omit<NotificationProps, 'type'>) {
-        this.open({ ...props, type: 'success' });
+    success(props: Omit<NotificationProps, 'type'> | string) {
+        if (typeof props === 'string') {
+            this.open({ message: props, type: 'success' });
+        } else {
+            this.open({ ...props, type: 'success' });
+        }
     }
 
-    error(props: Omit<NotificationProps, 'type'>) {
-        this.open({ ...props, type: 'error' });
+    error(props: Omit<NotificationProps, 'type'> | string) {
+        if (typeof props === 'string') {
+            this.open({ message: props, type: 'error' });
+        } else {
+            this.open({ ...props, type: 'error' });
+        }
     }
 
-    warning(props: Omit<NotificationProps, 'type'>) {
-        this.open({ ...props, type: 'warning' });
+    warning(props: Omit<NotificationProps, 'type'> | string) {
+        if (typeof props === 'string') {
+            this.open({ message: props, type: 'warning' });
+        } else {
+            this.open({ ...props, type: 'warning' });
+        }
     }
 
-    info(props: Omit<NotificationProps, 'type'>) {
-        this.open({ ...props, type: 'info' });
+    info(props: Omit<NotificationProps, 'type'> | string) {
+        if (typeof props === 'string') {
+            this.open({ message: props, type: 'info' });
+        } else {
+            this.open({ ...props, type: 'info' });
+        }
     }
 }
 
