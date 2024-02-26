@@ -1,6 +1,6 @@
-import { useContext, useMemo } from 'react';
+import { useMemo } from 'react';
 
-import Context from '../Routes/Context';
+import useRoutes from './useRoutes';
 import { IndexRouteItem, NoIndexRouteItem, RouteItem } from '../type';
 
 type RouteTypeItem = {
@@ -16,7 +16,7 @@ const joinPaths = (paths: string[]) => {
 };
 
 const useRoutesByType = () => {
-    const { routes } = useContext(Context);
+    const { routes } = useRoutes();
 
     return useMemo(() => {
         const routeTypes: Record<string, RouteTypeItem[]> = {};
