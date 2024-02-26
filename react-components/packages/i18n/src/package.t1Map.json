@@ -1,0 +1,34 @@
+{
+    "package.empty.nodata": {
+        "zh_cn": "暂无数据",
+        "en_us": "NoData"
+    },
+    "package.modal.cancel": {
+        "zh_cn": "取消",
+        "en_us": "Cancel"
+    },
+    "package.modal.confirm": {
+        "zh_cn": "确认",
+        "en_us": "Confirm"
+    },
+    "package.table.index": {
+        "zh_cn": "序号",
+        "en_us": "Index"
+    },
+    "package.table.fixed.left": {
+        "zh_cn": "左固定",
+        "en_us": "Left Fixed"
+    },
+    "package.table.fixed.right": {
+        "zh_cn": "右固定",
+        "en_us": "Right Fixed"
+    },
+    "package.table.fixed.default": {
+        "zh_cn": "默认",
+        "en_us": "Default"
+    },
+    "package.table.fixed": {
+        "zh_cn": "固定",
+        "en_us": "Fixed"
+    }
+}

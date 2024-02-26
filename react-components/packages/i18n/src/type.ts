@@ -1,7 +1,9 @@
-export type Local = 'zh_ch' | 'en_us';
+export type Local = 'zh_cn' | 'en_us';
+
+export type TranslationMap = Record<string, Partial<Record<Local, string>>>;
 
 export type TranslationProps = {
     local?: Local;
-    t1Map?: Record<string, Partial<Record<Local, string>>>;
-    t2Map?: Record<string, Partial<Record<Local, string>>>;
+    t1Map?: TranslationMap;
+    t2Map?: TranslationMap;
 };

@@ -27,7 +27,7 @@ const Empty: FC<EmptyProps> = ({ description }) => {
                     </g>
                 </svg>
             </div>
-            <div className={styles['empty-description']}>{description ?? t1('暂无数据')}</div>
+            <div className={styles['empty-description']}>{description ?? t1('package.empty.nodata')}</div>
         </div>
     );
 };

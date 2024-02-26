@@ -24,7 +24,7 @@ const useIndexColumns = <T>(opt: Opt<T>) => {
     if (showIndex) {
         indexColumns.push({
             flexGrow: 0,
-            title: t1('序号'),
+            title: t1('package.table.index'),
             key: tableIndexKey,
             render: (_, index) => (current - 1) * pageSize + index + 1,
             width: typeof showIndex !== 'boolean' ? showIndex?.width ?? 60 : 60,

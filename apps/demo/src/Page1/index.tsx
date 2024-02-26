@@ -21,6 +21,8 @@ import {
     VirtualList,
     useQuery,
     Segmented,
+    useTranslation,
+    TranslationProvider,
 } from '@react/components';
 import { Select, Button as AntdButton, Skeleton } from 'antd';
 
@@ -60,9 +62,10 @@ const DemoTable = () => {
     const [renderConf, setRenderConf] = useState(false);
     const tableConfRef = useRef<TableColumnConfRef>(null);
     const [rowSelection, setRowSelection] = useState(true);
+    const { setLocal } = useTranslation();
 
     const query = useQuery({
-        delay: 4000,
+        delay: 1000,
         queryKey: ['DemoTable', count],
         queryFn: () => {
             return Promise.resolve(
@@ -285,6 +288,13 @@ const DemoTable = () => {
                             >
                                 Modal
                             </Button>
+                            <Button
+                                onClick={() => {
+                                    setLocal((l) => (l === 'en_us' ? 'zh_cn' : 'en_us'));
+                                }}
+                            >
+                                I18n
+                            </Button>
                         </div>
 
                         <div style={{ height: 600, width: 900, padding: 24 }}>
@@ -312,8 +322,10 @@ const DemoTable = () => {
 
 export default () => {
     return (
-        <AutoModalProvider modals={modals} autoRender>
-            <DemoTable />
-        </AutoModalProvider>
+        <TranslationProvider>
+            <AutoModalProvider modals={modals} autoRender>
+                <DemoTable />
+            </AutoModalProvider>
+        </TranslationProvider>
     );
 };
