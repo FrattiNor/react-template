@@ -1,10 +1,10 @@
 import { Outlet } from 'react-router-dom';
 
-import { useDocumentTitle, useRoutesByType } from '@react/components';
+// import { useDocumentTitle, useRoutesByType } from '@react/components';
 
 const Layout1 = () => {
-    useDocumentTitle();
-    useRoutesByType();
+    // useDocumentTitle();
+    // useRoutesByType();
 
     return (
         <div>

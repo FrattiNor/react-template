@@ -21,14 +21,13 @@ import {
     VirtualList,
     useQuery,
     Segmented,
-    initFps,
 } from '@react/components';
 import { Select, Button as AntdButton, Skeleton } from 'antd';
 
 import { treeData } from './treeData';
 import useColumns from './useColumns';
 
-initFps();
+// initFps();
 
 const notification = new NotificationClient();
 
