@@ -18,7 +18,7 @@ const route = (
                 children: [
                     {
                         type: 'Page1',
-                        path: 'Page1?',
+                        path: 'Page1',
                         title: 'Page1',
                         children: [
                             {

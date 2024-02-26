@@ -4,8 +4,8 @@ import packageT1Map from './package.t1Map.json';
 import packageT2Map from './package.t2Map.json';
 import { TranslationProps, Local, TranslationMap } from './type';
 
-const useProvider = ({ local: _local = 'zh_cn', t1Map, t2Map }: TranslationProps) => {
-    const [local, setLocal] = useState<Local>(_local);
+const useProvider = ({ defaultLocal = 'zh_cn', t1Map, t2Map }: TranslationProps) => {
+    const [local, setLocal] = useState<Local>(defaultLocal);
 
     const t1 = (v: string) => {
         return (packageT1Map as TranslationMap)?.[v]?.[local] ?? t1Map?.[v]?.[local] ?? v;
