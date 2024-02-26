@@ -364,7 +364,11 @@ importers:
         specifier: ^1.6.7
         version: 1.6.7
 
-  react-components/packages/routes: {}
+  react-components/packages/routes:
+    dependencies:
+      '@pkg/i18n':
+        specifier: workspace:*
+        version: link:../i18n
 
   react-components/packages/sortable:
     devDependencies:

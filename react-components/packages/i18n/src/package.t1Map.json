@@ -1,34 +1,38 @@
 {
-    "package.empty.nodata": {
+    "package_ui@empty.nodata": {
         "zh_cn": "暂无数据",
         "en_us": "NoData"
     },
-    "package.modal.cancel": {
+    "package_ui@modal.cancel": {
         "zh_cn": "取消",
         "en_us": "Cancel"
     },
-    "package.modal.confirm": {
+    "package_ui@modal.confirm": {
         "zh_cn": "确认",
         "en_us": "Confirm"
     },
-    "package.table.index": {
+    "package_ui@table.index": {
         "zh_cn": "序号",
         "en_us": "Index"
     },
-    "package.table.fixed.left": {
+    "package_ui@table.fixed.left": {
         "zh_cn": "左固定",
         "en_us": "Left Fixed"
     },
-    "package.table.fixed.right": {
+    "package_ui@table.fixed.right": {
         "zh_cn": "右固定",
         "en_us": "Right Fixed"
     },
-    "package.table.fixed.default": {
+    "package_ui@table.fixed.default": {
         "zh_cn": "默认",
         "en_us": "Default"
     },
-    "package.table.fixed": {
+    "package_ui@table.fixed": {
         "zh_cn": "固定",
         "en_us": "Fixed"
+    },
+    "package@route.error": {
+        "zh_cn": "对不起，发生异常，请刷新页面重试",
+        "en_us": "Sorry, An Exception Occurred. Please Refresh The Page And Try Again"
     }
 }

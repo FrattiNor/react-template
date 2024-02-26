@@ -75,10 +75,10 @@ const Overlay: FC<OverlayProps> = (props) => {
                         {footer ?? (
                             <Fragment>
                                 <Button onClick={() => setVisible(false)} disabled={!closeable}>
-                                    {cancelText ?? t1('package.modal.cancel')}
+                                    {cancelText ?? t1('package_ui@modal.cancel')}
                                 </Button>
                                 <Button type="primary" loading={confirmLoading}>
-                                    {confirmText ?? t1('package.modal.confirm')}
+                                    {confirmText ?? t1('package_ui@modal.confirm')}
                                 </Button>
                             </Fragment>
                         )}

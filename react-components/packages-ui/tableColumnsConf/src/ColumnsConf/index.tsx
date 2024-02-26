@@ -38,15 +38,15 @@ const TableColumnsConf: ComponentType = forwardRef((props, ref) => {
 
     const fixedOption = [
         {
-            label: t1('package.table.fixed.left'),
+            label: t1('package_ui@table.fixed.left'),
             value: 'left',
         },
         {
-            label: t1('package.table.fixed.right'),
+            label: t1('package_ui@table.fixed.right'),
             value: 'right',
         },
         {
-            label: t1('package.table.fixed.default'),
+            label: t1('package_ui@table.fixed.default'),
             value: 'default',
         },
     ];
@@ -103,7 +103,7 @@ const TableColumnsConf: ComponentType = forwardRef((props, ref) => {
                             <div className={styles['text']}>{item.title}</div>
 
                             <div className={styles['fixed']}>
-                                <span className={styles['label']}>{t1('package.table.fixed')}</span>
+                                <span className={styles['label']}>{t1('package_ui@table.fixed')}</span>
                                 <Select
                                     size="small"
                                     value={item.fixed}
