@@ -24,10 +24,10 @@ const useRoutesByType = () => {
         const handleRouteArr = (rs: RouteItem[], beforePath = '/') => {
             rs.forEach((item) => {
                 if ((item as IndexRouteItem).index !== true) {
-                    const { type = 'null', path, children, title, hiddenInMenu } = item as NoIndexRouteItem;
+                    const { type = 'null', path, children, title, hidden } = item as NoIndexRouteItem;
                     if (!routeTypes[type]) routeTypes[type] = [];
                     const currentPath = joinPaths([beforePath, path]);
-                    if (hiddenInMenu !== true) {
+                    if (hidden !== true) {
                         routeTypes[type].push({
                             title,
                             path: currentPath,

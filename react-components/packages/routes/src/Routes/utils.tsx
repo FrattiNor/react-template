@@ -24,16 +24,15 @@ export const getRouteObjectArray = (rs: Array<RouteItem>) => {
                 element,
                 index: true,
                 ErrorBoundary,
-                handle: { index: true },
             };
             routeObjArr.push(itemRes);
-        } else if ((item as NoIndexRouteItem).hidden !== true) {
-            const { type, children, path, title, hiddenInMenu } = item as NoIndexRouteItem;
+        } else {
+            const { children, path, title } = item as NoIndexRouteItem;
             const itemRes: NonIndexRouteObject = {
                 path,
                 element,
                 ErrorBoundary,
-                handle: { title, type, hiddenInMenu },
+                handle: { title },
                 children: children ? getRouteObjectArray(children) : undefined,
             };
             routeObjArr.push(itemRes);
