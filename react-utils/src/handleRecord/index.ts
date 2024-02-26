@@ -15,7 +15,7 @@ const arrayToStr = (record: Record<string, any>, keys: string[]): Record<string,
 };
 
 type FormatTime = {
-    [key: string]: true | 'timestamp' | 'YYYY-MM-DD HH:mm:ss' | 'YYYY-MM-DD';
+    [key: string]: 'string' | 'timestamp' | 'YYYY-MM-DD HH:mm:ss' | 'YYYY-MM-DD';
 };
 
 const handleFormatTime = (record: Record<string, any>, formatTime: FormatTime): Record<string, any> => {
@@ -25,7 +25,7 @@ const handleFormatTime = (record: Record<string, any>, formatTime: FormatTime): 
         const value = nextRecord[key];
         if (timeTool.isDayjs(value)) {
             switch (format) {
-                case true:
+                case 'string':
                 case 'YYYY-MM-DD HH:mm:ss':
                     nextRecord[key] = timeTool.toStr(value, 'YYYY-MM-DD HH:mm:ss');
                     break;
