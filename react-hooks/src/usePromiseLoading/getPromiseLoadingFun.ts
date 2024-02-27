@@ -14,7 +14,7 @@ const getPromiseLoadingFun = <F extends PromiseFn>({ promiseFn, setLoading }: Pr
             return res;
         } catch (e) {
             setLoading(false);
-            console.error(e);
+            throw new Error(e as any);
         }
     };
 

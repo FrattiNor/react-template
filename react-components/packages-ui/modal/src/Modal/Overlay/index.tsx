@@ -31,6 +31,7 @@ const Overlay: FC<OverlayProps> = (props) => {
     const closeable = typeof props.closeable === 'boolean' ? props.closeable : closeableByConfirmLoading ? !confirmLoading : true;
     const haveTitle = title !== false && title !== undefined;
     const haveFooter = footer !== false;
+
     const _onCancel = () => {
         setVisible(false);
         if (onCancel) onCancel();

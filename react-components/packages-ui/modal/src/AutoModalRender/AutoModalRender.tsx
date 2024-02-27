@@ -4,13 +4,13 @@ import Provider from './Provider';
 import { useAutoModal } from '../AutoModalProvider';
 
 const AutoModalRender: FC = () => {
-    const { modalDisplay, modalData, parseKeyId, modals = {} } = useAutoModal();
+    const { modalVisible, modalData, parseKeyId, modals = {} } = useAutoModal();
 
     return (
         <Fragment>
-            {Object.entries(modalDisplay).map(([keyId, visible]) => {
+            {Object.entries(modalVisible).map(([keyId]) => {
                 const { key, id } = parseKeyId(keyId);
-                if (visible && modals[key]) {
+                if (modals[key]) {
                     const Component = modals[key];
                     const data = modalData[id] ?? {};
                     return (

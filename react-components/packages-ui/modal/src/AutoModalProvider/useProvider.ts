@@ -4,12 +4,12 @@ import { nanoid } from 'nanoid';
 
 import { AutoModals } from '../type';
 
-type ModalData<T> = T extends LazyExoticComponent<ComponentType<infer R>> ? R : never;
+export type ModalData<T> = T extends LazyExoticComponent<ComponentType<infer R>> ? R : never;
 
 const useProvider = <M extends AutoModals>({ modals }: { modals?: M }) => {
     const midStr = '#_#_#';
     const dataRef = useRef<Record<string, any>>({});
-    const [modalDisplay, setModalDisplay] = useState<Record<string, boolean>>({});
+    const [modalVisible, setModalVisible] = useState<Record<string, boolean>>({});
 
     const parseKeyId = (keyId: string) => {
         const keyIdList = keyId.split(midStr);
@@ -29,75 +29,48 @@ const useProvider = <M extends AutoModals>({ modals }: { modals?: M }) => {
             [id]: data,
         };
 
-        setModalDisplay((oldDisplay) => {
+        setModalVisible((oldDisplay) => {
             const nextDisplay = { ...oldDisplay };
             nextDisplay[stringifyKeyId(key, id)] = true;
             return nextDisplay;
         });
+
+        return { key, id };
     };
 
     // 关闭对应key的Modal
     const closeModal = <K extends keyof M>(key: K, id: string) => {
+        setModalVisible((oldDisplay) => {
+            const nextDisplay = { ...oldDisplay };
+            nextDisplay[stringifyKeyId(key, id)] = false;
+            return nextDisplay;
+        });
+
+        return { key, id };
+    };
+
+    // 销毁对应key的Modal
+    const destroyModal = <K extends keyof M>(key: K, id: string) => {
         delete dataRef.current[id];
 
-        setModalDisplay((oldDisplay) => {
+        setModalVisible((oldDisplay) => {
             const nextDisplay = { ...oldDisplay };
             delete nextDisplay[stringifyKeyId(key, id)];
             return nextDisplay;
         });
-    };
 
-    // 关闭相同key的Modal
-    const closeSomeKModal = <K extends keyof M>(key: K) => {
-        setModalDisplay((oldDisplay) => {
-            const nextDisplay = { ...oldDisplay };
-
-            Object.keys(nextDisplay).forEach((displayKId) => {
-                const parse = parseKeyId(displayKId);
-                if (parse.key === key) {
-                    delete dataRef.current[parse.id];
-                    delete nextDisplay[displayKId];
-                }
-            });
-
-            return nextDisplay;
-        });
-    };
-
-    // 销毁所有Modal
-    const destroyAllModal = () => {
-        dataRef.current = {};
-        setModalDisplay({});
-    };
-
-    // 前置Modal
-    const preModal = <K extends keyof M>(key: K, id: string) => {
-        setModalDisplay((oldDisplay) => {
-            const keyId = stringifyKeyId(key, id);
-            let nextDisplay = { ...oldDisplay };
-            const current = nextDisplay[keyId];
-            if (current) {
-                const nextDisplayCopy = { ...nextDisplay };
-                delete nextDisplayCopy[keyId];
-                nextDisplay = {
-                    [keyId]: current,
-                    ...nextDisplayCopy,
-                };
-            }
-            return nextDisplay;
-        });
+        return { key, id };
     };
 
     return {
         modals,
-        preModal,
         openModal,
         closeModal,
         parseKeyId,
-        modalDisplay,
+        destroyModal,
+        modalVisible,
         stringifyKeyId,
-        destroyAllModal,
-        closeSomeKModal,
+        setModalVisible,
         modalData: dataRef.current,
     };
 };

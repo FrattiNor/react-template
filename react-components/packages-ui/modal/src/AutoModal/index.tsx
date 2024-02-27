@@ -1,26 +1,22 @@
 import { FC } from 'react';
 
-import { useMergeState } from '@react/hooks';
-
 import { useCurrentAutoModal } from '../AutoModalRender';
 import Modal from '../Modal';
 import { ModalProps } from '../type';
 
 const AutoModal: FC<ModalProps> = (props) => {
-    const { closeModal } = useCurrentAutoModal();
+    const { destroyModal, visible, setVisible } = useCurrentAutoModal();
 
-    const [visible, onVisibleChange] = useMergeState({
-        defaultValue: true,
-        state: props.visible,
-        setState: props.onVisibleChange,
-    });
+    const _visible = props.visible ?? visible;
+
+    const _setVisible = props.onVisibleChange ?? setVisible;
 
     const afterClose = () => {
         if (typeof props.afterClose === 'function') props.afterClose();
-        closeModal();
+        destroyModal();
     };
 
-    return <Modal {...props} visible={visible} onVisibleChange={onVisibleChange} afterClose={afterClose} />;
+    return <Modal {...props} visible={_visible} onVisibleChange={_setVisible} afterClose={afterClose} />;
 };
 
 export default AutoModal;

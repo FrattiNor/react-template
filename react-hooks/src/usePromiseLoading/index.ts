@@ -9,4 +9,5 @@ const usePromiseLoading = <F extends PromiseFn>({ promiseFn }: Props<F>) => {
     return [fn, loading] as [F, boolean];
 };
 
+export { getPromiseLoadingFun };
 export default usePromiseLoading;
