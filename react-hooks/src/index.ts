@@ -12,3 +12,4 @@ export { default as useMounted } from './useMounted';
 export { default as useTransition } from './useTransition';
 export { default as useResize } from './useResize';
 export { default as useLatest } from './useLatest';
+export { default as usePromiseLoading } from './usePromiseLoading';

@@ -1,18 +1,11 @@
-import { useState } from 'react';
-
-import getDelayFun from './getDelayFun';
-
-type PromiseFn = (...args: any[]) => Promise<any>;
-
-type Props<F extends PromiseFn> = {
-    delayFn: F;
-    delay?: number;
-};
+import useDelay from '../useDelay';
+import { PromiseFn, Props } from '../useDelay/type';
+import usePromiseLoading from '../usePromiseLoading';
 
 const useDelayWithLoading = <F extends PromiseFn>({ delayFn, delay }: Props<F>) => {
-    const [loading, setLoading] = useState(false);
-    const fn = getDelayFun({ delayFn, delay, setLoading });
-    return [fn, loading] as [F, boolean];
+    const fn = useDelay({ delayFn, delay });
+    const [fn2, loading] = usePromiseLoading({ promiseFn: fn });
+    return [fn2, loading] as [F, boolean];
 };
 
 export default useDelayWithLoading;
