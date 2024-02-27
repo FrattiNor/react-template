@@ -10,7 +10,7 @@ const Modal1: FC<{ a: number }> = ({ a }) => {
     }, []);
 
     return (
-        <AutoModal width={800}>
+        <AutoModal width={800} submitButtonProps={{ style: { height: 24 } }} cancelButtonProps={{ style: { height: 24 } }}>
             <div style={{ height: 300, wordBreak: 'break-all' }}>
                 {a}
                 asdasasdasasdasasdasasdasasdasasdasasdasasdasasdasasdasasdasasdasasdasasdasasdasasdasasdasasdasasdasasdasasdasasdasasdasasdasasdasasdasasdasasdasasdasasdasasdasasdasasdasasdasasdasasdasasdasasdasasdasasdasasdasasdasasdasasdasasdasasdasasdasasdasasdasasdasasdasasdasasdasasdasasdasasdasasdas

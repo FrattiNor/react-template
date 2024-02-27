@@ -8,32 +8,11 @@ import { ModalProps } from '../type';
 
 const Modal: FC<ModalProps> = (props) => {
     const { getContainer, clearContainer } = useContainer({ getContainer: props.getContainer });
+
     const { display, visible, setVisible, setDisplay } = useDisplayVisible({
         visible: props.visible,
         setVisible: props.onVisibleChange,
     });
-
-    const {
-        width,
-        style,
-        title,
-        footer,
-        children,
-        className,
-        headStyle,
-        bodyStyle,
-        footStyle,
-        closeable,
-        headBorder,
-        footBorder,
-        cancelText,
-        afterClose,
-        confirmText,
-        fillUpWindow,
-        hiddenCloseX,
-        confirmLoading,
-        closeableByConfirmLoading,
-    } = props;
 
     return (
         <Fragment>
@@ -43,28 +22,11 @@ const Modal: FC<ModalProps> = (props) => {
 
                     return createPortal(
                         <Overlay
-                            title={title}
-                            width={width}
-                            style={style}
-                            footer={footer}
+                            {...props}
                             visible={visible}
-                            children={children}
-                            closeable={closeable}
-                            headStyle={headStyle}
-                            bodyStyle={bodyStyle}
-                            footStyle={footStyle}
-                            className={className}
                             setVisible={setVisible}
-                            cancelText={cancelText}
-                            headBorder={headBorder}
-                            footBorder={footBorder}
-                            confirmText={confirmText}
-                            fillUpWindow={fillUpWindow}
-                            hiddenCloseX={hiddenCloseX}
-                            confirmLoading={confirmLoading}
-                            closeableByConfirmLoading={closeableByConfirmLoading}
                             afterClose={() => {
-                                if (typeof afterClose === 'function') afterClose();
+                                if (typeof props.afterClose === 'function') props.afterClose();
                                 clearContainer();
                                 setDisplay(false);
                             }}
