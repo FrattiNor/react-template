@@ -21,6 +21,7 @@ export type ModalProps = PropsWithChildren<{
     title?: ReactNode | boolean;
     footer?: ReactNode | boolean;
     closeable?: boolean;
+    hiddenCloseX?: boolean;
     cancelText?: string;
     confirmText?: string;
     confirmLoading?: boolean;
@@ -44,6 +45,7 @@ export type OverlayProps = PropsWithChildren<{
     title?: ReactNode | boolean;
     footer?: ReactNode | boolean;
     closeable?: boolean;
+    hiddenCloseX?: boolean;
     cancelText?: string;
     confirmText?: string;
     confirmLoading?: boolean;
@@ -52,10 +54,6 @@ export type OverlayProps = PropsWithChildren<{
     visible: boolean;
     setVisible: Dispatch<boolean>;
 }>;
-
-export type ConfirmModalProps = Omit<ModalProps, 'children' | 'title'> & {
-    message: string;
-};
 
 export type AutoModals = {
     readonly [key: string]: LazyExoticComponent<FC<any> | ComponentClass<any>>;

@@ -10,8 +10,11 @@ const Modal1: FC<{ a: number }> = ({ a }) => {
     }, []);
 
     return (
-        <AutoModal title="新增" width={800}>
-            <div style={{ height: 3000, background: 'rgba(0,0,0,0.1)' }}>{a}</div>
+        <AutoModal width={800}>
+            <div style={{ height: 300, wordBreak: 'break-all' }}>
+                {a}
+                asdasasdasasdasasdasasdasasdasasdasasdasasdasasdasasdasasdasasdasasdasasdasasdasasdasasdasasdasasdasasdasasdasasdasasdasasdasasdasasdasasdasasdasasdasasdasasdasasdasasdasasdasasdasasdasasdasasdasasdasasdasasdasasdasasdasasdasasdasasdasasdasasdasasdasasdasasdasasdasasdasasdasasdasasdasasdas
+            </div>
         </AutoModal>
     );
 };

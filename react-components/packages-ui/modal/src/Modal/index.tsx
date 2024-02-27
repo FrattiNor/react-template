@@ -30,6 +30,7 @@ const Modal: FC<ModalProps> = (props) => {
         afterClose,
         confirmText,
         fillUpWindow,
+        hiddenCloseX,
         confirmLoading,
         closeableByConfirmLoading,
     } = props;
@@ -59,6 +60,7 @@ const Modal: FC<ModalProps> = (props) => {
                             footBorder={footBorder}
                             confirmText={confirmText}
                             fillUpWindow={fillUpWindow}
+                            hiddenCloseX={hiddenCloseX}
                             confirmLoading={confirmLoading}
                             closeableByConfirmLoading={closeableByConfirmLoading}
                             afterClose={() => {

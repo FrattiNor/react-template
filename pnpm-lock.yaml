@@ -291,7 +291,11 @@ importers:
         specifier: workspace:*
         version: link:../theme
 
-  react-components/packages-ui/theme: {}
+  react-components/packages-ui/theme:
+    dependencies:
+      '@pkg/i18n':
+        specifier: workspace:*
+        version: link:../../packages/i18n
 
   react-components/packages-ui/virtualList:
     dependencies:

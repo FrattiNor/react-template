@@ -25,8 +25,10 @@ const Overlay: FC<OverlayProps> = (props) => {
     const { moveRef, onMouseDown, position } = useMoveModal();
     const { theme, themeClassName, applyTheme } = useTheme();
     const { title, visible, setVisible, afterClose, footer, cancelText, confirmText, confirmLoading } = props;
-    const { children, width, className, style, fillUpWindow, headStyle, bodyStyle, footStyle, headBorder, footBorder } = props;
+    const { children, width, className, style, fillUpWindow, headStyle, bodyStyle, footStyle, headBorder, footBorder, hiddenCloseX } = props;
     const closeable = typeof props.closeable === 'boolean' ? props.closeable : closeableByConfirmLoading ? !confirmLoading : true;
+    const haveTitle = title !== false && title !== undefined;
+    const haveFooter = footer !== false;
 
     const { status, listeners, enter, leave } = useAnimate({
         afterLeave: () => {
@@ -61,28 +63,39 @@ const Overlay: FC<OverlayProps> = (props) => {
                         [styles['fill-up']]: fillUpWindow,
                     })}
                 >
-                    <div style={headStyle} className={classNames(styles['head'], { [styles['bordered']]: headBorder })} onMouseDown={onMouseDown}>
-                        <div className={styles['title']}>{title}</div>
-                        <CloseX onClick={() => setVisible(false)} disabled={!closeable} />
-                    </div>
+                    {haveTitle && (
+                        <div style={headStyle} className={classNames(styles['head'], { [styles['bordered']]: headBorder })} onMouseDown={onMouseDown}>
+                            <div className={styles['title']}>{title}</div>
+                            {!hiddenCloseX && <CloseX onClick={() => setVisible(false)} disabled={!closeable} />}
+                        </div>
+                    )}
+
                     <div
                         style={bodyStyle}
-                        className={classNames(styles['body'], { [styles['head-bordered']]: headBorder, [styles['foot-bordered']]: footBorder })}
+                        className={classNames(styles['body'], {
+                            [styles['head-bordered']]: headBorder,
+                            [styles['foot-bordered']]: footBorder,
+                            [styles['not-have-title']]: !haveTitle,
+                            [styles['not-have-footer']]: !haveFooter,
+                        })}
                     >
                         {children}
                     </div>
-                    <div style={footStyle} className={classNames(styles['foot'], { [styles['bordered']]: footBorder })}>
-                        {footer ?? (
-                            <Fragment>
-                                <Button onClick={() => setVisible(false)} disabled={!closeable}>
-                                    {cancelText ?? t1('package_ui@modal.cancel')}
-                                </Button>
-                                <Button type="primary" loading={confirmLoading}>
-                                    {confirmText ?? t1('package_ui@modal.confirm')}
-                                </Button>
-                            </Fragment>
-                        )}
-                    </div>
+
+                    {haveFooter && (
+                        <div style={footStyle} className={classNames(styles['foot'], { [styles['bordered']]: footBorder })}>
+                            {footer ?? (
+                                <Fragment>
+                                    <Button onClick={() => setVisible(false)} disabled={!closeable}>
+                                        {cancelText ?? t1('package_ui@modal.cancel')}
+                                    </Button>
+                                    <Button type="primary" loading={confirmLoading}>
+                                        {confirmText ?? t1('package_ui@modal.confirm')}
+                                    </Button>
+                                </Fragment>
+                            )}
+                        </div>
+                    )}
                 </div>
             </div>
 

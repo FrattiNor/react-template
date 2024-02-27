@@ -283,7 +283,7 @@ const DemoTable = () => {
                             />
                             <Button
                                 onClick={() => {
-                                    openModal('modal3', { c: 13 });
+                                    openModal('modal1', { a: 13 });
                                 }}
                             >
                                 Modal
