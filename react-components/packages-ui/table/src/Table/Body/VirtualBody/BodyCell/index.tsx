@@ -23,7 +23,7 @@ const BodyCell = <T extends AnyObj>(props: Props<T>) => {
     const lastColumn = handledColumns[column.index - 1];
     const isAfterExpandable = lastColumn?.key === tableExpandableKey;
     const innerStyle = isAfterExpandable ? { paddingLeft: 8 + (dataSourceLevelMap[currentRowKey] ?? 0) * 16 } : undefined;
-    const { key, render, width, align, edit, saveEdit, renderAs, renderDomTitle } = column;
+    const { key, render, width, align, edit, saveEdit, renderAs, cellProps, renderDomTitle } = column;
     const resizeActive = resizeReadyKey === key || resizeActiveKey === key;
     const cellValue = notEmpty(render ? render(currentRowData, currentRowIndex) : currentRowData[key]);
     const isStr = typeof cellValue === 'string' || typeof cellValue === 'number';
@@ -50,14 +50,23 @@ const BodyCell = <T extends AnyObj>(props: Props<T>) => {
     }
 
     const renderAsStr = renderAs ? renderAs === 'str' : isStr;
+    const cellDivProps = typeof cellProps === 'function' ? cellProps(currentRowData, currentRowIndex) : cellProps;
     return (
         <div title={cellTitle} style={cellStyle} className={cellClassName}>
             {renderAsStr ? (
-                <div className={styles['body-cell-str']} style={innerStyle}>
+                <div
+                    {...cellDivProps}
+                    style={{ ...innerStyle, ...cellDivProps?.style }}
+                    className={classNames(styles['body-cell-str'], cellDivProps?.className)}
+                >
                     {cellValue}
                 </div>
             ) : (
-                <div className={styles['body-cell-block']} style={innerStyle}>
+                <div
+                    {...cellDivProps}
+                    style={{ ...innerStyle, ...cellDivProps?.style }}
+                    className={classNames(styles['body-cell-block'], cellDivProps?.className)}
+                >
                     {cellValue}
                 </div>
             )}

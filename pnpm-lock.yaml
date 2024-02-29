@@ -129,7 +129,7 @@ importers:
       '@pkg/notification':
         specifier: workspace:*
         version: link:packages-ui/notification
-      '@pkg/request':
+      '@app/request':
         specifier: workspace:*
         version: link:packages/request
       '@pkg/routes':

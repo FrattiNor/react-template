@@ -10,11 +10,13 @@ import useProvider from './useProvider';
 const Provider: FC<PropsWithChildren<ThemeProps>> = ({ children, ...props }) => {
     const value = useProvider(props);
     const { withBg, container } = props;
-    const { themeClassName, applyTheme, applyThemeWithBg } = value;
+    const { containerRef, themeClassName, applyTheme, applyThemeWithBg } = value;
     return (
         <Context.Provider value={value}>
             {container ? (
-                <div className={classNames(themeClassName, styles['theme-container'], withBg ? applyThemeWithBg : applyTheme)}>{children}</div>
+                <div ref={containerRef} className={classNames(themeClassName, styles['theme-container'], withBg ? applyThemeWithBg : applyTheme)}>
+                    {children}
+                </div>
             ) : (
                 children
             )}

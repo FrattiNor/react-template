@@ -17,6 +17,8 @@ export type TablePagination = {
     onChange?: (current: number, pageSize: number) => void;
 };
 
+type DivProps = React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement>;
+
 export type TableColumn<T> = {
     key: string;
     width?: number;
@@ -31,6 +33,7 @@ export type TableColumn<T> = {
     renderDomTitle?: (item: T, index: number) => string;
     edit?: boolean | ((item: T, index: number) => boolean);
     saveEdit?: (value: string, item: T, index: number) => void;
+    cellProps?: DivProps | ((item: T, index: number) => DivProps);
 };
 
 export type TableColumns<T> = TableColumn<T>[];
