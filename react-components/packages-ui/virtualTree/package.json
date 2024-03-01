@@ -19,6 +19,6 @@
         "@react/hooks": "workspace:*"
     },
     "devDependencies": {
-        "@tanstack/react-virtual": "^3.0.2"
+        "@tanstack/react-virtual": "^3.1.3"
     }
 }

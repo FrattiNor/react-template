@@ -21,43 +21,45 @@ type ItemSizeCache = Map<number | string, number>;
 
 const useVirtual = <T>(opt: Opt<T>) => {
     const { bodyRef, sortedColumns, showDataSource, handledProps, bodyResizeObserver, bodyScrollObserver } = opt;
-    const { rowKey, rowHeight, calcRowHeight } = handledProps;
+    const { rowHeight, calcRowHeight } = handledProps;
 
     // 竖向虚拟
     const verticalVirtualizer = useVirtualizer({
-        overscan: 0,
-        count: showDataSource?.length || 0,
-        getScrollElement: () => bodyRef.current,
-        estimateSize: () => calcRowHeight ?? rowHeight,
-        observeElementRect: observeElementRect('vRect', bodyResizeObserver),
-        observeElementOffset: observeElementOffset('vOffset', bodyScrollObserver),
-        getItemKey: (index) => {
-            const item = showDataSource?.[index];
-            if (item) return ((typeof rowKey === 'function' ? rowKey(item) : item[rowKey]) as string) ?? index;
-            return index;
-        },
-        scrollToFn: () => {
-            // 屏蔽掉组件的scrollTo函数
-            // 作用为resize时保持item位置不变
-            return;
+        options: {
+            overscan: 0,
+            measureElement: measureElement,
+            count: showDataSource?.length || 0,
+            getScrollElement: () => bodyRef.current,
+            estimateSize: () => calcRowHeight ?? rowHeight,
+            observeElementRect: observeElementRect('vRect', bodyResizeObserver),
+            observeElementOffset: observeElementOffset('vOffset', bodyScrollObserver),
+            getItemKey: (index) => index,
+            scrollToFn: () => {
+                // 屏蔽掉组件的scrollTo函数
+                // 作用为resize时保持item位置不变
+                return;
+            },
         },
     });
 
     // 横向虚拟
     const horizontalVirtualizer = useVirtualizer({
-        overscan: 0,
-        horizontal: true,
-        count: sortedColumns.length,
-        measureElement: measureElement,
-        getScrollElement: () => bodyRef.current,
-        getItemKey: (index) => sortedColumns[index].key,
-        estimateSize: (index) => Math.round(sortedColumns[index].width ?? defaultWidth),
-        observeElementRect: observeElementRect('hRect', bodyResizeObserver),
-        observeElementOffset: observeElementOffset('hOffset', bodyScrollObserver),
-        scrollToFn: () => {
-            // 屏蔽掉组件的scrollTo函数
-            // 作用为resize时保持item位置不变
-            return;
+        maxCounter: 1,
+        options: {
+            overscan: 1,
+            horizontal: true,
+            count: sortedColumns.length,
+            measureElement: measureElement,
+            getScrollElement: () => bodyRef.current,
+            getItemKey: (index) => sortedColumns[index].key,
+            estimateSize: (index) => Math.round(sortedColumns[index].width ?? defaultWidth),
+            observeElementRect: observeElementRect('hRect', bodyResizeObserver),
+            observeElementOffset: observeElementOffset('hOffset', bodyScrollObserver),
+            scrollToFn: () => {
+                // 屏蔽掉组件的scrollTo函数
+                // 作用为resize时保持item位置不变
+                return;
+            },
         },
     });
 

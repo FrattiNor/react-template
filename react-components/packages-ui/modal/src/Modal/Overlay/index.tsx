@@ -4,7 +4,7 @@ import Button from '@pkg/button';
 import { useTranslation } from '@pkg/i18n';
 import { useTheme } from '@pkg/theme';
 import { CloseX } from '@pkg/widgets';
-import { useAnimate } from '@react/hooks';
+import { useAnimate, useKeyDown } from '@react/hooks';
 import classNames from 'classnames';
 
 import styles from './index.module.less';
@@ -50,6 +50,13 @@ const Overlay: FC<OverlayProps> = (props) => {
             leave();
         }
     }, [visible]);
+
+    // esc关闭modal
+    useKeyDown({
+        type: 'esc',
+        enabled: closeable,
+        callback: () => setVisible(false),
+    });
 
     return (
         <div

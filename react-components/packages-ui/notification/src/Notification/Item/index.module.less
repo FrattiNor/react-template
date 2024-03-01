@@ -2,7 +2,7 @@
     position: relative;
     box-sizing: content-box;
 
-    @keyframes right-first-fate-in {
+    @keyframes right-last-fate-in {
         0% {
             transform: translate3d(100%, 0, 0);
             opacity: 0;
@@ -13,7 +13,7 @@
         }
     }
 
-    @keyframes left-first-fate-in {
+    @keyframes left-last-fate-in {
         0% {
             transform: translate3d(-100%, 0, 0);
             opacity: 0;
@@ -50,7 +50,7 @@
         }
     }
 
-    @keyframes right-first-fate-out {
+    @keyframes right-last-fate-out {
         0% {
             transform: translate3d(0, 0, 0);
             opacity: 1;
@@ -61,7 +61,7 @@
         }
     }
 
-    @keyframes left-first-fate-out {
+    @keyframes left-last-fate-out {
         0% {
             transform: translate3d(0, 0, 0);
             opacity: 1;
@@ -107,16 +107,16 @@
             animation-name: left-fate-in;
         }
 
-        &.first.left {
-            animation-name: left-first-fate-in;
+        &.last.left {
+            animation-name: left-last-fate-in;
         }
 
         &.right {
             animation-name: right-fate-in;
         }
 
-        &.first.right {
-            animation-name: right-first-fate-in;
+        &.last.right {
+            animation-name: right-last-fate-in;
         }
     }
 
@@ -129,16 +129,16 @@
             animation-name: left-fate-out;
         }
 
-        &.first.left {
-            animation-name: left-first-fate-out;
+        &.last.left {
+            animation-name: left-last-fate-out;
         }
 
         &.right {
             animation-name: right-fate-out;
         }
 
-        &.first.right {
-            animation-name: right-first-fate-out;
+        &.last.right {
+            animation-name: right-last-fate-out;
         }
     }
 

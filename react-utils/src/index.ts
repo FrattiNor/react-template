@@ -7,4 +7,5 @@ export * from './colors';
 export { default as cleanRecord } from './cleanRecord';
 export { default as handleRecord } from './handleRecord';
 export { default as calcTextWidth } from './calcTextWidth';
+export { default as transferOption } from './transferOption';
 export * from './base64';

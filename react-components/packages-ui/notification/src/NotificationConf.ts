@@ -4,8 +4,8 @@ class NotificationConf {
     constructor(props?: NotificationConfProps) {
         const { zIndex, maxCount, duration, placement, getContainer } = props || {};
         this.zIndex = zIndex ?? 99999;
-        this.duration = duration ?? 5000;
-        this.maxCount = maxCount ?? Infinity;
+        this.duration = duration ?? 3000;
+        this.maxCount = maxCount ?? 5;
         this.placement = placement ?? 'topRight';
         this.getContainer = getContainer ?? (() => document.body);
     }

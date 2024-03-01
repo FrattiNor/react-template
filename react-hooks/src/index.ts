@@ -13,4 +13,5 @@ export { default as useTransition } from './useTransition';
 export { default as useResize } from './useResize';
 export { default as useLatest } from './useLatest';
 export { default as usePromiseLoading } from './usePromiseLoading';
-export { getPromiseLoadingFun } from './usePromiseLoading';
+export { default as useFollowState } from './useFollowState';
+export { default as useKeyDown } from './useKeyDown';

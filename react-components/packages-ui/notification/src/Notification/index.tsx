@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, useEffect, useState } from 'react';
 
 import { useTheme } from '@pkg/theme';
 import classNames from 'classnames';
@@ -14,6 +14,7 @@ type Props = {
 };
 
 const Notification: FC<Props> = ({ queen, zIndex }) => {
+    const [windowFocus, setWindowFocus] = useState(true);
     const { theme, themeClassName, applyTheme } = useTheme();
 
     const topLeft: NotificationRenderQueenItem[] = [];
@@ -40,33 +41,45 @@ const Notification: FC<Props> = ({ queen, zIndex }) => {
         }
     });
 
+    useEffect(() => {
+        const visibilitychange = () => {
+            setWindowFocus(!document.hidden);
+        };
+
+        document.addEventListener('visibilitychange', visibilitychange);
+
+        return () => {
+            document.removeEventListener('visibilitychange', visibilitychange);
+        };
+    }, []);
+
     return (
         <div className={classNames(styles['notification'], styles[theme], themeClassName, applyTheme)} style={{ zIndex }}>
             {topLeft.length > 0 && (
                 <div className={styles['top-left']}>
-                    {[...topLeft].reverse().map((item, index) => (
-                        <Item key={item.key} item={item} first={index === topLeft.length - 1} />
+                    {topLeft.map((item, index) => (
+                        <Item key={item.key} item={item} windowFocus={windowFocus} last={index === topLeft.length - 1} />
                     ))}
                 </div>
             )}
             {topRight.length > 0 && (
                 <div className={styles['top-right']}>
-                    {[...topRight].reverse().map((item, index) => (
-                        <Item key={item.key} item={item} first={index === topRight.length - 1} />
+                    {topRight.map((item, index) => (
+                        <Item key={item.key} item={item} windowFocus={windowFocus} last={index === topRight.length - 1} />
                     ))}
                 </div>
             )}
             {bottomLeft.length > 0 && (
                 <div className={styles['bottom-left']}>
-                    {bottomLeft.map((item, index) => (
-                        <Item key={item.key} item={item} first={index === 0} />
+                    {[...bottomLeft].reverse().map((item, index) => (
+                        <Item key={item.key} item={item} windowFocus={windowFocus} last={index === 0} />
                     ))}
                 </div>
             )}
             {bottomRight.length > 0 && (
                 <div className={styles['bottom-right']}>
-                    {bottomRight.map((item, index) => (
-                        <Item key={item.key} item={item} first={index === 0} />
+                    {[...bottomRight].reverse().map((item, index) => (
+                        <Item key={item.key} item={item} windowFocus={windowFocus} last={index === 0} />
                     ))}
                 </div>
             )}

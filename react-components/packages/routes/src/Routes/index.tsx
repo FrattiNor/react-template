@@ -14,6 +14,7 @@ const Routes: FC<RoutesProps> = ({ routes }) => {
                     getRouteObjectArray([
                         {
                             path: '/',
+                            type: 'layout',
                             Component: DocumentTitleComponent,
                             children: routes,
                         },

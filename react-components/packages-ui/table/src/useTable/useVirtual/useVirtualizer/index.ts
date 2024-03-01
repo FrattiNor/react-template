@@ -1,41 +1,36 @@
 import * as React from 'react';
 import { flushSync } from 'react-dom';
 
-import {
-    VirtualizerOptions,
-    Virtualizer,
-    PartialKeys,
-    observeElementRect,
-    observeElementOffset,
-    elementScroll,
-    observeWindowRect,
-    observeWindowOffset,
-    windowScroll,
-} from '@tanstack/react-virtual';
-
-// import useTimeDebug from '../useTimeDebug';
-
-//
+import { VirtualizerOptions, Virtualizer, PartialKeys, observeElementRect, observeElementOffset, elementScroll } from '@tanstack/react-virtual';
 
 const useIsomorphicLayoutEffect = typeof document !== 'undefined' ? React.useLayoutEffect : React.useEffect;
 
-function useVirtualizerBase<TScrollElement extends Element | Window, TItemElement extends Element>(
-    options: VirtualizerOptions<TScrollElement, TItemElement>,
-): Virtualizer<TScrollElement, TItemElement> {
-    const timeout = React.useRef(0);
-    // const timeDebug = useTimeDebug();
+type VirtualizerBaseProps<TScrollElement extends Element | Window, TItemElement extends Element> = {
+    options: VirtualizerOptions<TScrollElement, TItemElement>;
+    maxCounter: number;
+};
+
+function useVirtualizerBase<TScrollElement extends Element | Window, TItemElement extends Element>({
+    options,
+    maxCounter,
+}: VirtualizerBaseProps<TScrollElement, TItemElement>): Virtualizer<TScrollElement, TItemElement> {
+    // 强制渲染计数器
+    const syncCounter = React.useRef(0);
     const rerender = React.useReducer(() => ({}), {})[1];
 
     const resolvedOptions: VirtualizerOptions<TScrollElement, TItemElement> = {
         ...options,
         onChange: (instance, sync) => {
+            console.log(instance);
             if (sync) {
-                cancelAnimationFrame(timeout.current);
-                timeout.current = requestAnimationFrame(() => {
-                    // timeDebug.start('flushSync');
+                // 计数器到达阈值触发强制渲染
+                if (typeof maxCounter === 'number' && syncCounter.current >= maxCounter) {
+                    syncCounter.current = 0; // 重置计数器
                     flushSync(rerender);
-                    // timeDebug.end('flushSync');
-                });
+                } else {
+                    syncCounter.current++; // 增加计数器
+                    rerender();
+                }
             } else {
                 rerender();
             }
@@ -59,26 +54,22 @@ function useVirtualizerBase<TScrollElement extends Element | Window, TItemElemen
     return instance;
 }
 
-export function useVirtualizer<TScrollElement extends Element, TItemElement extends Element>(
-    options: PartialKeys<VirtualizerOptions<TScrollElement, TItemElement>, 'observeElementRect' | 'observeElementOffset' | 'scrollToFn'>,
-): Virtualizer<TScrollElement, TItemElement> {
-    return useVirtualizerBase<TScrollElement, TItemElement>({
-        observeElementRect: observeElementRect,
-        observeElementOffset: observeElementOffset,
-        scrollToFn: elementScroll,
-        ...options,
-    });
-}
+type VirtualizerProps<TScrollElement extends Element, TItemElement extends Element> = {
+    options: PartialKeys<VirtualizerOptions<TScrollElement, TItemElement>, 'observeElementRect' | 'observeElementOffset' | 'scrollToFn'>;
+    maxCounter?: number;
+};
 
-export function useWindowVirtualizer<TItemElement extends Element>(
-    options: PartialKeys<VirtualizerOptions<Window, TItemElement>, 'getScrollElement' | 'observeElementRect' | 'observeElementOffset' | 'scrollToFn'>,
-): Virtualizer<Window, TItemElement> {
-    return useVirtualizerBase<Window, TItemElement>({
-        getScrollElement: () => (typeof document !== 'undefined' ? window : null),
-        observeElementRect: observeWindowRect,
-        observeElementOffset: observeWindowOffset,
-        scrollToFn: windowScroll,
-        initialOffset: typeof document !== 'undefined' ? window.scrollY : undefined,
-        ...options,
+export function useVirtualizer<TScrollElement extends Element, TItemElement extends Element>({
+    options,
+    maxCounter = 0,
+}: VirtualizerProps<TScrollElement, TItemElement>): Virtualizer<TScrollElement, TItemElement> {
+    return useVirtualizerBase<TScrollElement, TItemElement>({
+        maxCounter,
+        options: {
+            observeElementRect: observeElementRect,
+            observeElementOffset: observeElementOffset,
+            scrollToFn: elementScroll,
+            ...options,
+        },
     });
 }

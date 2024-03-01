@@ -17,7 +17,9 @@ export const observeElementRect = (key: string, bodyResizeObserver: BodyResizeOb
 
         const handler = (rect: Rect) => {
             const { width, height } = rect;
-            cb({ width: Math.round(width), height: Math.round(height) });
+            if (!(width === 0 && height === 0)) {
+                cb({ width: Math.round(width), height: Math.round(height) });
+            }
         };
 
         bodyResizeObserver.addHandle(key, handler);
@@ -57,25 +59,12 @@ export const measureElement = <TItemElement extends Element>(
 
         if (box) {
             const size = box[instance.options.horizontal ? 'inlineSize' : 'blockSize'];
-            return size;
+
+            return Math.max(1, size);
         }
     }
 
     const size = element.getBoundingClientRect()[instance.options.horizontal ? 'width' : 'height'];
-    return size;
-};
 
-export const measureElement2 = <TItemElement extends Element>(
-    element: TItemElement,
-    entry: ResizeObserverEntry | undefined,
-    instance: Virtualizer<any, TItemElement>,
-) => {
-    if (entry?.borderBoxSize) {
-        const box = entry.borderBoxSize[0];
-        if (box) {
-            const size = Math.round(box[instance.options.horizontal ? 'inlineSize' : 'blockSize']);
-            return size;
-        }
-    }
-    return Math.round(element.getBoundingClientRect()[instance.options.horizontal ? 'width' : 'height']);
+    return Math.max(1, size);
 };

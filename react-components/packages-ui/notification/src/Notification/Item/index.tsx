@@ -8,7 +8,8 @@ import styles from './index.module.less';
 import { NotificationRenderQueenItem, NotificationType } from '../../type';
 
 type Props = {
-    first: boolean; // 第一条
+    last: boolean; // 第一条
+    windowFocus: boolean;
     item: NotificationRenderQueenItem;
 };
 
@@ -19,7 +20,8 @@ const typeIcon: Record<NotificationType, FC> = {
     success: SuccessSvg,
 };
 
-const Item: FC<Props> = ({ item, first }) => {
+const Item: FC<Props> = ({ item, last, windowFocus }) => {
+    const leaveRef = useRef(false);
     const itemRef = useRef<HTMLDivElement>(null);
     const timeout = useRef<NodeJS.Timeout | null>(null);
     const heightRef = useRef<number | undefined>(undefined);
@@ -48,6 +50,7 @@ const Item: FC<Props> = ({ item, first }) => {
         if (!hover && typeof duration === 'number' && duration > 0) {
             timeout.current = setTimeout(() => {
                 leave();
+                leaveRef.current = true;
             }, duration);
 
             return () => {
@@ -58,12 +61,19 @@ const Item: FC<Props> = ({ item, first }) => {
         }
     }, [duration, hover]);
 
+    // 如果窗口激活状态，并且item应该已经离开却没有离开，直接触发销毁
+    useEffect(() => {
+        if (windowFocus && leaveRef.current === true) {
+            destroy();
+        }
+    }, [windowFocus]);
+
     return (
         <div
             {...listeners}
             style={{ height: heightRef.current }}
             className={classNames(styles['item-wrapper'], {
-                [styles['first']]: first,
+                [styles['last']]: last,
                 [styles['top']]: placement.includes('top'),
                 [styles['left']]: placement.includes('Left'),
                 [styles['right']]: placement.includes('Right'),

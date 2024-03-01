@@ -13,5 +13,8 @@
     },
     "peerDependencies": {
         "@pkg/i18n": "workspace:*"
+    },
+    "devDependencies": {
+        "nanoid": "^5.0.4"
     }
 }

@@ -11,7 +11,8 @@ type Size = { scrollLeft: number; scrollTop: number };
 type Handle = (size: Size) => void;
 
 const useBodyScrollObserver = (opt: Opt) => {
-    const handles = useRef<Record<string, Handle>>({});
+    const verticalHandles = useRef<Record<string, Handle>>({});
+    const horizontalHandles = useRef<Record<string, Handle>>({});
     const size = useRef<Size>({ scrollLeft: 0, scrollTop: 0 });
     const { calcPing, bodyRef, headRef } = opt;
 
@@ -22,15 +23,23 @@ const useBodyScrollObserver = (opt: Opt) => {
 
                 const nextSize = { scrollLeft: target.scrollLeft, scrollTop: target.scrollTop };
 
-                Object.values(handles.current).forEach((handle) => {
-                    handle(nextSize);
-                });
+                if (nextSize.scrollLeft !== size.current.scrollLeft) {
+                    calcPing();
+
+                    if (headRef.current) headRef.current.scrollTo({ left: target.scrollLeft });
+
+                    Object.values(horizontalHandles.current).forEach((handle) => {
+                        handle(nextSize);
+                    });
+                }
+
+                if (nextSize.scrollTop !== size.current.scrollTop) {
+                    Object.values(verticalHandles.current).forEach((handle) => {
+                        handle(nextSize);
+                    });
+                }
 
                 size.current = nextSize;
-
-                if (headRef.current) headRef.current.scrollTo({ left: target.scrollLeft });
-
-                calcPing();
             };
 
             bodyRef.current.addEventListener('scroll', onScroll, { passive: true });
@@ -41,19 +50,44 @@ const useBodyScrollObserver = (opt: Opt) => {
         }
     }, []);
 
-    const addHandle = (key: string, handle: Handle) => {
-        handles.current = {
-            ...handles.current,
-            [key]: handle,
-        };
+    const addHandle = (key: string, handle: Handle, type?: 'horizontal' | 'vertical') => {
+        switch (type) {
+            case 'horizontal':
+                horizontalHandles.current = {
+                    ...horizontalHandles.current,
+                    [key]: handle,
+                };
+                break;
+            case 'vertical':
+                verticalHandles.current = {
+                    ...verticalHandles.current,
+                    [key]: handle,
+                };
+                break;
+            default:
+                horizontalHandles.current = {
+                    ...horizontalHandles.current,
+                    [key]: handle,
+                };
+                verticalHandles.current = {
+                    ...verticalHandles.current,
+                    [key]: handle,
+                };
+                break;
+        }
+
         // 添加后立刻执行一次
         handle(size.current);
     };
 
     const removeHandle = (key: string) => {
-        const newHandles = { ...handles.current };
-        delete newHandles[key];
-        handles.current = { ...newHandles };
+        const newVerticalHandles = { ...verticalHandles.current };
+        delete newVerticalHandles[key];
+        verticalHandles.current = { ...newVerticalHandles };
+
+        const newHorizontalHandles = { ...horizontalHandles.current };
+        delete newHorizontalHandles[key];
+        horizontalHandles.current = { ...newHorizontalHandles };
     };
 
     return { addHandle, removeHandle };
