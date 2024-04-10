@@ -1,4 +1,4 @@
-import { PromiseFn, Props } from './type';
+import type { PromiseFn, Props } from './type';
 
 const getDelayFun = <F extends PromiseFn>({ delayFn, delay }: Props<F>): F => {
     if (typeof delay !== 'number' || delay <= 0) {

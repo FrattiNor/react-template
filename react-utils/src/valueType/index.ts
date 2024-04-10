@@ -1,4 +1,4 @@
-import { Dayjs } from 'dayjs';
+import type { Dayjs } from 'dayjs';
 
 export const isFormData = (value: unknown): value is FormData => value instanceof FormData;
 export const isObject = (value: unknown): value is object => Object.prototype.toString.call(value) === '[object Object]';

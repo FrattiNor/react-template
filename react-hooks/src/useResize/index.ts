@@ -1,4 +1,5 @@
-import { MouseEventHandler, useEffect, useReducer, useRef } from 'react';
+import type { MouseEventHandler } from 'react';
+import { useEffect, useReducer, useRef } from 'react';
 
 import useLatest from '../useLatest';
 

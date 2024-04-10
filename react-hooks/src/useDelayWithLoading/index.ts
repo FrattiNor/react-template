@@ -1,5 +1,5 @@
 import useDelay from '../useDelay';
-import { PromiseFn, Props } from '../useDelay/type';
+import type { PromiseFn, Props } from '../useDelay/type';
 import usePromiseLoading from '../usePromiseLoading';
 
 const useDelayWithLoading = <F extends PromiseFn>({ delayFn, delay }: Props<F>) => {

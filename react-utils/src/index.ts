@@ -8,4 +8,6 @@ export { default as cleanRecord } from './cleanRecord';
 export { default as handleRecord } from './handleRecord';
 export { default as calcTextWidth } from './calcTextWidth';
 export { default as transferOption } from './transferOption';
+export { regExpMatch, regExpSplit } from './regExpMatch';
+export { default as JsAnimate } from './jsAnimate';
 export * from './base64';

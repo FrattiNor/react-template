@@ -1,0 +1,36 @@
+div.body-scroll-wrapper div.body-scroll-content div.body-scroll {
+    margin: 0 2px;
+    padding: 0 22px;
+    overflow-y: overlay;
+    display: flex;
+    flex-direction: column;
+    max-height: calc(90vh - 64px - 56px);
+
+    &::-webkit-scrollbar {
+        background-color: transparent;
+    }
+
+    &::-webkit-scrollbar-corner {
+        background-color: transparent;
+    }
+
+    // chrome 114 版本移除了overflow: overlay 的支持【显示模式变为和auto一样】
+    // scrollbar-gutter: stable 的支持从 94 版本开始（360浏览器为86版本不支持）
+    // @supports 的支持从 83 版本开始（360也支持）
+    // 使用 @supports (scrollbar-gutter: stable) 判断scrollbar-gutter的支持，支持scrollbar-gutter使用scrollbar-gutter实现
+    // 默认还是使用 overflow: overlay 实现
+    @supports (scrollbar-gutter: stable) {
+        & {
+            overflow-y: auto;
+            scrollbar-gutter: stable;
+            padding-right: calc(22px - var(--theme-scrollbar-width));
+        }
+    }
+}
+
+div.body-scroll-wrapper div.body-scroll-content div.no-body-scroll {
+    display: flex;
+    padding: 0 24px;
+    flex-direction: column;
+    max-height: calc(90vh - 64px - 56px);
+}

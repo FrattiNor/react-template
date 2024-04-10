@@ -21,8 +21,5 @@
     "dependencies": {
         "@ant-design/icons": "^5.2.6",
         "antd": "^5.11.5"
-    },
-    "sideEffects": [
-        "./src/index.module.less"
-    ]
+    }
 }

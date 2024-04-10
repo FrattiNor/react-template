@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
 import getPromiseLoadingFun from './getPromiseLoadingFun';
-import { PromiseFn, Props } from './type';
+import type { PromiseFn, Props } from './type';
 
 const usePromiseLoading = <F extends PromiseFn>({ promiseFn }: Props<F>) => {
     const [loading, setLoading] = useState(false);
