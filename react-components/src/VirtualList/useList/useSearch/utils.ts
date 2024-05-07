@@ -1,7 +1,8 @@
 import { regExpMatch } from '@react/utils';
 
-import type { AnyObj, VirtualListFieldKeys } from '../../type';
 import { defaultFieldKeys } from '../index';
+
+import type { AnyObj, VirtualListFieldKeys } from '../../type';
 
 type FindFirstSearchedIndexProps<T> = {
     data: T[];

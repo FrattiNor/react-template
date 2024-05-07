@@ -3,6 +3,7 @@ import { useContext } from 'react';
 import Context from './Context';
 import packageT1Map from './Map/package.t1Map.json';
 import packageT2Map from './Map/package.t2Map.json';
+
 import type { TranslationMap } from './type';
 
 const defaultT1 = (v: string) => {

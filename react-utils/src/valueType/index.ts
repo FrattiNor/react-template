@@ -9,3 +9,4 @@ export const isNull = (value: unknown): value is null => value === null;
 export const isArr = (value: unknown): value is any[] => Array.isArray(value);
 export const isDayjs = (v: any): v is Dayjs => typeof v?.isValid === 'function' && v.isValid() === true;
 export const isDate = (v: unknown): v is Date => v instanceof Date;
+export const isFile = (v: unknown): v is File => v instanceof File;

@@ -1,7 +1,8 @@
 import { useMemo } from 'react';
 
-import type { AnyObj, HandledDataItem, VirtualTreeProps } from '../../type';
 import { defaultFieldKeys } from '../index';
+
+import type { AnyObj, HandledDataItem, VirtualTreeProps } from '../../type';
 
 type Props<T> = {
     props: VirtualTreeProps<T>;

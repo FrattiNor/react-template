@@ -1,5 +1,6 @@
-import type { FormatTime } from './type';
 import timeTool from '../timeTool';
+
+import type { FormatTime } from './type';
 
 export const handleFormatTime = (record: Record<string, any>, formatTime: FormatTime): Record<string, any> => {
     const nextRecord: Record<string, any> = { ...record };

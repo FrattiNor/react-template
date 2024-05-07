@@ -5,10 +5,11 @@ import { Input } from 'antd';
 import classNames from 'classnames';
 
 import styles from './index.module.less';
-import Loading from '../../Loading';
+import LoadingDiv from '../../LoadingDiv';
 import ListInner from '../ListInner';
-import type { VirtualSearchListComponent } from '../type';
 import useList from '../useList';
+
+import type { VirtualSearchListComponent } from '../type';
 
 const VirtualSearchList: VirtualSearchListComponent = forwardRef((props, ref) => {
     const list = useList(props);
@@ -17,9 +18,7 @@ const VirtualSearchList: VirtualSearchListComponent = forwardRef((props, ref) =>
     const { title, searchClassName, searchStyle, loading, wrapperClassName, wrapperStyle, listClassName } = props;
 
     return (
-        <div className={classNames(styles['wrapper'], wrapperClassName)} style={wrapperStyle}>
-            <Loading loading={loading} />
-
+        <LoadingDiv loading={loading} className={classNames(styles['wrapper'], wrapperClassName)} style={wrapperStyle}>
             {title && <div className={styles['title']}>{title}</div>}
 
             <div className={classNames(styles['search'], searchClassName)} style={searchStyle}>
@@ -32,7 +31,7 @@ const VirtualSearchList: VirtualSearchListComponent = forwardRef((props, ref) =>
             </div>
 
             <ListInner {...props} listClassName={classNames(styles['list'], listClassName)} instance={list} />
-        </div>
+        </LoadingDiv>
     );
 });
 

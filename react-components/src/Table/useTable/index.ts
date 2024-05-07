@@ -16,16 +16,17 @@ import useResizeWidth from './useResizeWidth';
 import useRowSelection from './useRowSelection';
 import useSortConfColumns from './useSortConfColumns';
 import useVirtual from './useVirtual';
+
 import type { AnyObj, TableProps } from '../type';
 
 export const defaultWidth = 150;
 export const defaultFlexGrow = 1;
 export const defaultLineHeight = 40;
-export const defaultAutoScrollTop = false;
 
 const useTable = <T extends AnyObj>(_props: TableProps<T>) => {
     const bodyRef = useRef<HTMLDivElement>(null);
     const headRef = useRef<HTMLDivElement>(null);
+    const summaryRef = useRef<HTMLDivElement>(null);
 
     // row 点击高亮
     const clickedRow = useClickedRow();
@@ -34,7 +35,7 @@ const useTable = <T extends AnyObj>(_props: TableProps<T>) => {
     const bodyResizeObserver = useBodyResizeObserver(bodyRef);
 
     // body scroll 监听
-    const bodyScrollObserver = useBodyScrollObserver({ bodyRef, headRef });
+    const bodyScrollObserver = useBodyScrollObserver({ bodyRef, headRef, summaryRef });
 
     // 处理 props
     const handledProps = useHandleProps(_props);
@@ -49,7 +50,7 @@ const useTable = <T extends AnyObj>(_props: TableProps<T>) => {
     const expandable = useExpandable(handledProps);
 
     // 数据源
-    const dataSource = useDataSource({ handledProps, pagination, expandable, bodyRef });
+    const dataSource = useDataSource({ handledProps, pagination, expandable });
 
     // 多选
     const rowSelection = useRowSelection({ handledProps, dataSource });
@@ -58,7 +59,7 @@ const useTable = <T extends AnyObj>(_props: TableProps<T>) => {
     useClearRowSelectionAndExpandable({ rowSelection, expandable, dataSource, handledProps });
 
     //  整合后排序的 columns
-    const sortedColumns = useSortConfColumns<T>({ columns: handledProps.columns, rowSelection, expandable });
+    const sortedColumns = useSortConfColumns<T>({ columns: handledProps.columns, rowSelection, expandable, dataSource });
 
     // ping
     const ping = useCalcPing({ bodyRef, bodyResizeObserver, bodyScrollObserver });
@@ -96,6 +97,7 @@ const useTable = <T extends AnyObj>(_props: TableProps<T>) => {
         ping,
         bodyRef,
         headRef,
+        summaryRef,
         isEmpty,
         editStore,
         pagination,

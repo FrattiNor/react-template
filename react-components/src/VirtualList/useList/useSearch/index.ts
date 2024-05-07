@@ -1,6 +1,7 @@
 import { useState } from 'react';
 
 import { findFirstSearchedIndex } from './utils';
+
 import type { AnyObj, VirtualListProps } from '../../type';
 import type { Virtualizer } from '@react/hooks/src/useVirtualizer';
 

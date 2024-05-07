@@ -1,12 +1,12 @@
 import classNames from 'classnames';
 
 import { useTableContext } from '../../../../TableContext';
-import type { AnyObj } from '../../../../type';
 import BodyCell from '../BodyCell';
 import styles from '../index.module.less';
 
+import type { AnyObj } from '../../../../type';
+
 type Props<T> = {
-    measure?: boolean;
     currentRowData: T;
     currentRowKey: string;
     currentRowIndex: number;
@@ -15,13 +15,12 @@ type Props<T> = {
 const BodyRow = <T extends AnyObj>(props: Props<T>) => {
     const tableContext = useTableContext<T>();
     const { rowHeight } = tableContext.handledProps;
-    const { currentRowData, currentRowIndex, currentRowKey, measure } = props;
+    const { currentRowData, currentRowIndex, currentRowKey } = props;
     const { handledFixedLeftColumns, handledFixedRightColumns, handledMidColumns } = tableContext;
     const { ping, selectedRowKeysObj, verticalMeasureElement, midLeftPadding, midRightPadding, setClickedRow } = tableContext;
-    //
-    const isFirst = currentRowIndex === 0;
+
     const rowClick = () => setClickedRow((v) => (v !== currentRowKey ? currentRowKey : null));
-    const measureProps = measure ? { ['data-index']: currentRowIndex, ref: verticalMeasureElement } : {};
+    const measureProps = { ['data-index']: currentRowIndex, ref: verticalMeasureElement };
     const midColumns = handledMidColumns;
     const midStyle = { paddingLeft: midLeftPadding, paddingRight: midRightPadding };
 
@@ -29,10 +28,8 @@ const BodyRow = <T extends AnyObj>(props: Props<T>) => {
         <div
             {...measureProps}
             onClick={rowClick}
-            key={currentRowKey}
-            style={{ minHeight: isFirst ? rowHeight - 1 : rowHeight }}
+            style={{ minHeight: rowHeight }}
             className={classNames(styles['body-row'], {
-                [styles['first']]: isFirst,
                 [styles['selected']]: selectedRowKeysObj[currentRowKey],
             })}
         >

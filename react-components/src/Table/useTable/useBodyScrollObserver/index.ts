@@ -4,13 +4,14 @@ import { useEffect, useRef } from 'react';
 type Opt = {
     headRef: RefObject<HTMLDivElement | null>;
     bodyRef: RefObject<HTMLDivElement | null>;
+    summaryRef: RefObject<HTMLDivElement | null>;
 };
 
 type ScrollSize = { scrollLeft: number; scrollTop: number };
 
 type Listener = (scrollSize: ScrollSize) => void;
 
-const useBodyScrollObserver = ({ bodyRef, headRef }: Opt) => {
+const useBodyScrollObserver = ({ bodyRef, headRef, summaryRef }: Opt) => {
     const scrollSize = useRef<ScrollSize>({ scrollLeft: 0, scrollTop: 0 });
     const verticalListeners = useRef<Record<string, Listener>>({});
     const horizontalListeners = useRef<Record<string, Listener>>({});
@@ -23,8 +24,9 @@ const useBodyScrollObserver = ({ bodyRef, headRef }: Opt) => {
                 const nextScrollSize = { scrollLeft: target.scrollLeft, scrollTop: target.scrollTop };
 
                 if (nextScrollSize.scrollLeft !== scrollSize.current.scrollLeft) {
-                    // head 和 body 横向滚动保持统一
+                    // head,summary 和 body 横向滚动保持统一
                     if (headRef.current) headRef.current.scrollTo({ left: target.scrollLeft });
+                    if (summaryRef.current) summaryRef.current.scrollTo({ left: target.scrollLeft });
 
                     Object.values(horizontalListeners.current).forEach((handle) => {
                         handle(nextScrollSize);

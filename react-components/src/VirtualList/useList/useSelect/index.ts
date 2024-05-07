@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 
 import { findSearchKeyIndex } from './utils';
+
 import type { AnyObj, VirtualListProps } from '../../type';
 import type { Virtualizer } from '@react/hooks/src/useVirtualizer';
 

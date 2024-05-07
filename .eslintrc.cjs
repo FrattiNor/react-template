@@ -6,14 +6,21 @@ module.exports = {
     extends: ['eslint:recommended', 'plugin:react-hooks/recommended', 'plugin:@typescript-eslint/recommended'],
     plugins: ['import', 'react-refresh', '@typescript-eslint'],
     rules: {
-        // react-refresh
-        'react-refresh/only-export-components': 'warn',
         // import
         'import/order': [
             'error',
             {
                 // 按照分组顺序进行排序
-                groups: ['builtin', 'external', ['internal', 'parent', 'sibling', 'index', 'object', 'type'], 'unknown'],
+                // builtin 内置模块【path，fs】
+                // external 外部模块【react】
+                // internal 内部模块【相对路径的模块】
+                // parent 父级目录模块
+                // sibling 同级目录模块
+                // index 当前目录的模块
+                // object 使用ES6导入的模块
+                // type 导入的Type类型
+                // unknown 未知
+                groups: ['builtin', 'external', ['internal', 'parent', 'sibling', 'index', 'object'], 'type', 'unknown'],
                 // 通过路径自定义分组
                 pathGroups: [
                     {
@@ -33,10 +40,14 @@ module.exports = {
                 },
             },
         ],
+        // react-refresh
+        'react-refresh/only-export-components': 'warn',
         // custom
-        'no-undef': 'off',
-        '@typescript-eslint/no-explicit-any': 'off',
-        'react-hooks/exhaustive-deps': 'off',
-        // 'import/no-extraneous-dependencies': 'error', // 幻影依赖
+        'no-undef': 'off', // 未使用的变量
+        '@typescript-eslint/no-explicit-any': 'off', // 不限制使用any
+        'react-hooks/exhaustive-deps': 'off', // 不强制 react hook 使用相关依赖
+        '@typescript-eslint/ban-ts-comment': 'off', // 不禁用 @ts-ignore
+        '@typescript-eslint/consistent-type-imports': 'error', // 必须使用 import type
+        'import/no-extraneous-dependencies': 'error', // 幻影依赖
     },
 };

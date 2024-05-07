@@ -8,6 +8,7 @@ import zh_CN from 'antd/locale/zh_CN';
 import useMergeTheme from './useMergeTheme';
 import { useTranslation } from '../Local';
 import { useTheme } from '../Theme';
+
 import type { ThemeConfig } from 'antd';
 
 const darkTheme: ThemeConfig = {

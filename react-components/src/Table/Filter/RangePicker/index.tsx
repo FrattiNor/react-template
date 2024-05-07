@@ -6,19 +6,23 @@ import { DatePicker } from 'antd';
 import styles from './index.module.less';
 import { useTranslation } from '../../../Local';
 import Template from '../_Template';
+
 import type { Dayjs } from 'dayjs';
 
 type FilterRangerPickerProps = {
     showTime?: boolean;
-    afterSubmit?: () => void;
+    closeDropdown: () => void;
     startValue: Dayjs | undefined;
-    setStartValue: (nextValue: Dayjs | undefined) => void;
+    submitStart: (nextValue: Dayjs | undefined) => void;
     endValue: Dayjs | undefined;
-    setEndValue: (nextValue: Dayjs | undefined) => void;
+    submitEnd: (nextValue: Dayjs | undefined) => void;
+    reset: () => void;
     disabledType?: 'year' | 'month';
 };
 
-const RangePicker: FC<FilterRangerPickerProps> = ({ showTime, startValue, setStartValue, endValue, setEndValue, afterSubmit, disabledType }) => {
+const RangePicker: FC<FilterRangerPickerProps> = (props) => {
+    const { showTime, startValue, submitStart, endValue, submitEnd, reset: _reset, closeDropdown, disabledType } = props;
+
     const { t1 } = useTranslation();
 
     const [endVisible, setEndVisible] = useState(false);
@@ -27,18 +31,17 @@ const RangePicker: FC<FilterRangerPickerProps> = ({ showTime, startValue, setSta
     const [innerEndValue, setInnerEndValue] = useState(() => endValue);
     const [innerStartValue, setInnerStartValue] = useState(() => startValue);
 
-    const haveValue = !!(innerStartValue || innerEndValue);
     const couldSubmit = !!((innerStartValue && innerEndValue) || (!innerStartValue && !innerEndValue));
 
     const submit = () => {
-        setEndValue(showTime ? innerEndValue : innerEndValue?.endOf('days'));
-        setStartValue(showTime ? innerStartValue : innerStartValue?.startOf('days'));
-        if (afterSubmit) afterSubmit();
+        submitEnd(showTime ? innerEndValue : innerEndValue?.endOf('days'));
+        submitStart(showTime ? innerStartValue : innerStartValue?.startOf('days'));
+        if (closeDropdown) closeDropdown();
     };
 
     const reset = () => {
-        setInnerStartValue(undefined);
-        setInnerEndValue(undefined);
+        _reset();
+        closeDropdown();
     };
 
     const startDisabledDate = (current: Dayjs) => {
@@ -142,7 +145,7 @@ const RangePicker: FC<FilterRangerPickerProps> = ({ showTime, startValue, setSta
     };
 
     return (
-        <Template width={250} submit={submit} reset={reset} resetDisabled={!haveValue} submitDisabled={!couldSubmit}>
+        <Template width={250} submit={submit} reset={reset} submitDisabled={!couldSubmit}>
             <div className={styles['range-picker']}>
                 <div>
                     <span>{t1('package_ui@table.start_time')}</span>

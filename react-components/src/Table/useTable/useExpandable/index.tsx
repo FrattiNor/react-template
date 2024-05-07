@@ -3,6 +3,7 @@ import { Fragment, useMemo } from 'react';
 import { useMergeState } from '@react/hooks';
 
 import ExpandableFC from './Expandable';
+
 import type { TableColumn } from '../../type';
 import type { HandledProps } from '../useHandleProps';
 

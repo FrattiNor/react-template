@@ -7,26 +7,27 @@ import styles from './index.module.less';
 import Template from '../_Template';
 
 type FilterInputProps = {
-    afterSubmit?: () => void;
+    closeDropdown: () => void;
     value: string | undefined;
-    setValue: (nextValue: string | undefined) => void;
+    submit: (nextValue: string | undefined) => void;
+    reset: () => void;
 };
 
-const InputFC: FC<FilterInputProps> = ({ value, setValue, afterSubmit }) => {
+const InputFC: FC<FilterInputProps> = ({ value, submit: _submit, reset: _reset, closeDropdown }) => {
     const [innerValue, setInnerValue] = useState(() => value);
-    const haveValue = typeof innerValue === 'string' && innerValue !== '';
 
     const submit = () => {
-        setValue(innerValue);
-        if (afterSubmit) afterSubmit();
+        _submit(innerValue);
+        if (closeDropdown) closeDropdown();
     };
 
     const reset = () => {
-        setInnerValue(undefined);
+        _reset();
+        closeDropdown();
     };
 
     return (
-        <Template submit={submit} reset={reset} resetDisabled={!haveValue}>
+        <Template submit={submit} reset={reset}>
             <div className={styles['input']}>
                 <Input
                     allowClear

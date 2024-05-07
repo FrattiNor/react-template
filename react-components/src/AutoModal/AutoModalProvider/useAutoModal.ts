@@ -1,6 +1,7 @@
 import { useContext, useEffect, useRef } from 'react';
 
 import Context from './Context';
+
 import type { ContextProps } from './Context';
 import type { AutoModals, ModalData } from './type';
 
@@ -11,9 +12,11 @@ const useAutoModal = <M extends AutoModals>() => {
         Context as any,
     );
 
-    const _openModal = <K extends keyof M>(key: K, data: ModalData<M[K]>) => {
+    const _openModal = <K extends keyof M>(key: K, data: ModalData<M[K]>, hiddenOpt?: { destroyOnLeave: boolean }) => {
         const openRes = openModal(key, data);
-        currentOpened.current = { ...currentOpened.current, [stringifyKeyId(openRes.key, openRes.id)]: true };
+        // 离开时销毁【默认销毁】
+        const { destroyOnLeave = true } = hiddenOpt ?? {};
+        if (destroyOnLeave) currentOpened.current = { ...currentOpened.current, [stringifyKeyId(openRes.key, openRes.id)]: true };
     };
 
     const _destroyModal = <K extends keyof M>(key: K, id: string) => {

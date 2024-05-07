@@ -4,8 +4,9 @@ import classNames from 'classnames';
 
 import Context from './Context';
 import styles from './styles/theme.module.less';
-import type { ThemeProps } from './type';
 import useProvider from './useProvider';
+
+import type { ThemeProps } from './type';
 
 const Provider: FC<PropsWithChildren<ThemeProps>> = ({ children, ...props }) => {
     const value = useProvider(props);

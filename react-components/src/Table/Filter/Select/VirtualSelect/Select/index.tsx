@@ -5,8 +5,9 @@ import { Checkbox, Radio } from 'antd';
 import styles from './index.module.less';
 import Empty from '../../../../../Empty';
 import Highlight from '../../../../../Highlight';
-import type { VirtualSelectProps } from '../type';
 import useSelect from '../useSelect';
+
+import type { VirtualSelectProps } from '../type';
 
 const SelectInner: FC<VirtualSelectProps<any>> = (props) => {
     const list = useSelect(props);
@@ -25,48 +26,50 @@ const SelectInner: FC<VirtualSelectProps<any>> = (props) => {
             {!isEmpty && (
                 <div className={styles['virtual-list']} style={{ height: totalSize, paddingTop: distance }}>
                     {virtualItems.map((verticalItem) => {
-                        const currentRowIndex = verticalItem.index;
-                        const currentRowData = showData?.[currentRowIndex];
+                        const currentRowIndex = verticalItem?.index;
+                        if (typeof currentRowIndex === 'number') {
+                            const currentRowData = showData?.[currentRowIndex];
 
-                        if (currentRowData) {
-                            const { key, label, disabled } = currentRowData;
-                            const selected = selectedKeys.includes(key);
+                            if (currentRowData) {
+                                const { key, label, disabled } = currentRowData;
+                                const selected = selectedKeys.includes(key);
 
-                            const onClick = () => {
-                                if (!selected) {
-                                    if (multiple === true) {
-                                        setSelectedKeys((old) => [...old, key]);
+                                const onClick = () => {
+                                    if (!selected) {
+                                        if (multiple === true) {
+                                            setSelectedKeys((old) => [...old, key]);
+                                        } else {
+                                            setSelectedKeys([key]);
+                                        }
                                     } else {
-                                        setSelectedKeys([key]);
+                                        if (multiple === true) {
+                                            setSelectedKeys((old) => [...old.filter((item) => item !== key)]);
+                                        } else {
+                                            setSelectedKeys([]);
+                                        }
                                     }
-                                } else {
-                                    if (multiple === true) {
-                                        setSelectedKeys((old) => [...old.filter((item) => item !== key)]);
-                                    } else {
-                                        setSelectedKeys([]);
-                                    }
-                                }
-                            };
+                                };
 
-                            return (
-                                <div
-                                    ref={measureElement}
-                                    key={key}
-                                    data-index={currentRowIndex}
-                                    className={styles['list-row']}
-                                    style={{ minHeight: lineHeight }}
-                                >
-                                    {multiple === true ? (
-                                        <Checkbox checked={selected} onClick={onClick} style={{ width: '100%' }} disabled={disabled}>
-                                            <Highlight keyword={keyword}>{label}</Highlight>
-                                        </Checkbox>
-                                    ) : (
-                                        <Radio checked={selected} onClick={onClick} style={{ width: '100%' }} disabled={disabled}>
-                                            <Highlight keyword={keyword}>{label}</Highlight>
-                                        </Radio>
-                                    )}
-                                </div>
-                            );
+                                return (
+                                    <div
+                                        ref={measureElement}
+                                        key={key}
+                                        data-index={currentRowIndex}
+                                        className={styles['list-row']}
+                                        style={{ minHeight: lineHeight }}
+                                    >
+                                        {multiple === true ? (
+                                            <Checkbox checked={selected} onClick={onClick} style={{ width: '100%' }} disabled={disabled}>
+                                                <Highlight keyword={keyword}>{label}</Highlight>
+                                            </Checkbox>
+                                        ) : (
+                                            <Radio checked={selected} onClick={onClick} style={{ width: '100%' }} disabled={disabled}>
+                                                <Highlight keyword={keyword}>{label}</Highlight>
+                                            </Radio>
+                                        )}
+                                    </div>
+                                );
+                            }
                         }
                     })}
                 </div>

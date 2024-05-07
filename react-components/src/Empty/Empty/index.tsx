@@ -2,6 +2,7 @@ import type { FC } from 'react';
 
 import styles from './index.module.less';
 import { useTranslation } from '../../Local';
+
 import type { EmptyProps } from '../type';
 
 const Empty: FC<EmptyProps> = ({ description }) => {

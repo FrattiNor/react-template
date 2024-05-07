@@ -5,7 +5,7 @@ export type { EmptyProps } from './Empty/type';
 
 export { default as Highlight } from './Highlight';
 
-export { default as Loading } from './Loading';
+export { default as LoadingDiv } from './LoadingDiv';
 
 export { useTranslation, TranslationProvider } from './Local';
 
@@ -15,6 +15,7 @@ export { default as Pagination } from './Pagination';
 export type { PaginationProps } from './Pagination';
 
 export { default as AutoModal, AutoModalProvider, useAutoModal, AutoModalRender, useCurrentModal } from './AutoModal';
+export type { AutoModalProps } from './AutoModal';
 
 export { default as Routes } from './Routes';
 export type { RoutesProps, RouteItem, RouteItems } from './Routes/type';
@@ -25,16 +26,21 @@ export { default as Segmented } from './Segmented';
 export { default as Table } from './Table';
 export { SelectFilter, InputFilter, AutoCompleteFilter, TreeSelectFilter, RangePickerFilter } from './Table/Filter';
 export type {
+    TableRef,
     TableFixed,
     TableAlign,
     TableProps,
     TableColumn,
     TableColumns,
+    TableColumnsKeyof,
     TablePagination,
     TableExpandable,
     TableRowSelection,
     TableColumnFilter,
 } from './Table/type';
+
+export { default as TableBlock } from './TableBlock';
+export type { TableBlockRef, TableBlockProps, TableBlocPagination } from './TableBlock/type';
 
 export { ThemeProvider, useTheme } from './Theme';
 export type { Theme } from './Theme/type';

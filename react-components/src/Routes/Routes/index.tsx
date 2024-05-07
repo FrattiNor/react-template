@@ -4,6 +4,7 @@ import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import Context from './Context';
 import DocumentTitleComponent from './DocumentTitleComponent';
 import { getRouteObjectArray } from './utils';
+
 import type { RoutesProps } from '../type';
 
 const Routes: FC<RoutesProps> = ({ routes, basename }) => {

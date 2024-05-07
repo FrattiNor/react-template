@@ -7,7 +7,8 @@ import Body from './Body';
 import Head from './Head';
 import styles from './index.module.less';
 import Pagination from './Pagination';
-import Loading from '../../Loading';
+import Summary from './Summary';
+import LoadingDiv from '../../LoadingDiv';
 import { TableContextHoc, useTableContext } from '../TableContext';
 
 const Table: FC = () => {
@@ -15,12 +16,12 @@ const Table: FC = () => {
     const { loading, className, style } = tableContext.handledProps;
 
     return (
-        <div className={classNames(styles['table'], className)} style={style}>
+        <LoadingDiv loading={loading} className={classNames(styles['table'], className)} style={style}>
             <Head />
             <Body />
+            <Summary />
             <Pagination />
-            <Loading loading={loading} />
-        </div>
+        </LoadingDiv>
     );
 };
 

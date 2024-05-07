@@ -1,7 +1,4 @@
-import type { RefObject } from 'react';
 import { useMemo } from 'react';
-
-import { useEffectNotFirst } from '@react/hooks';
 
 import type { Expandable } from '../useExpandable';
 import type { HandledProps } from '../useHandleProps';
@@ -11,11 +8,10 @@ type Opt<T> = {
     handledProps: HandledProps<T>;
     pagination: Pagination;
     expandable: Expandable<T>;
-    bodyRef: RefObject<HTMLDivElement | null>;
 };
 
 const useDataSource = <T>(opt: Opt<T>) => {
-    const { handledProps, pagination, expandable: tableInnerExpandable, bodyRef } = opt;
+    const { handledProps, pagination, expandable: tableInnerExpandable } = opt;
     const { dataSource, rowKey, expandable: propsExpandable } = handledProps;
     const { expandedRowKeysObj } = tableInnerExpandable;
 
@@ -27,23 +23,17 @@ const useDataSource = <T>(opt: Opt<T>) => {
     // 分页数据源
     const paginationDatasource = useMemo(() => {
         if (havePagination && localPagination) {
-            return (dataSource ?? []).slice(pageSize * (current - 1), pageSize * current);
+            return dataSource?.slice(pageSize * (current - 1), pageSize * current);
         }
 
-        return dataSource ?? [];
+        return dataSource;
     }, [dataSource, current, pageSize, localPagination, havePagination]);
 
-    // 分页数据变更 时触发滚动回顶部
-    useEffectNotFirst(() => {
-        if (handledProps.autoScrollTop === true) {
-            bodyRef.current?.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-    }, [paginationDatasource]);
-
     // 展开数据源
-    const { totalDataSource, showDataSource, dataSourceLevelMap } = useMemo(() => {
+    const { totalDataSource, showDataSource, dataSourceLevelMap, atLeastOneChildren } = useMemo(() => {
         let showDataSource: T[] = [];
         let totalDataSource: T[] = [];
+        let atLeastOneChildren = false;
         const dataSourceLevelMap: Record<string, number> = {};
 
         if (propsExpandable) {
@@ -61,20 +51,23 @@ const useDataSource = <T>(opt: Opt<T>) => {
                     totalDataSource.push(item);
                     if (parentOpened) showDataSource.push(item);
                     if (parentOpened && level !== 0) dataSourceLevelMap[key] = level;
-                    if (haveChild) handleDataSource(children, { level: level + 1, parentOpened: parentOpened && currentOpened });
+                    if (haveChild) {
+                        atLeastOneChildren = true;
+                        handleDataSource(children, { level: level + 1, parentOpened: parentOpened && currentOpened });
+                    }
                 });
             };
 
-            handleDataSource(paginationDatasource || []);
+            handleDataSource(paginationDatasource ?? []);
         } else {
-            showDataSource = paginationDatasource || [];
-            totalDataSource = paginationDatasource || [];
+            showDataSource = paginationDatasource ?? [];
+            totalDataSource = paginationDatasource ?? [];
         }
 
-        return { totalDataSource, showDataSource, dataSourceLevelMap };
+        return { totalDataSource, showDataSource, dataSourceLevelMap, atLeastOneChildren };
     }, [paginationDatasource, expandedRowKeysObj]);
 
-    return { paginationDatasource, totalDataSource, showDataSource, dataSourceLevelMap };
+    return { paginationDatasource, totalDataSource, showDataSource, dataSourceLevelMap, atLeastOneChildren };
 };
 
 export type DataSource<T> = ReturnType<typeof useDataSource<T>>;

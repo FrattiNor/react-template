@@ -1,5 +1,6 @@
-import type { AnyObj, VirtualTreeFieldKeys } from '../../type';
 import { defaultFieldKeys } from '../index';
+
+import type { AnyObj, VirtualTreeFieldKeys } from '../../type';
 
 type FindSearchKeyParentKeys<T> = {
     data: T[];

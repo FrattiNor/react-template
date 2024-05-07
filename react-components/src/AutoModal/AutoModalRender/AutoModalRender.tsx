@@ -3,6 +3,7 @@ import { Fragment, Suspense } from 'react';
 
 import Provider from './Provider';
 import { useAutoModal } from '../AutoModalProvider';
+
 import type { AutoModals } from '../AutoModalProvider/type';
 
 type Props = {

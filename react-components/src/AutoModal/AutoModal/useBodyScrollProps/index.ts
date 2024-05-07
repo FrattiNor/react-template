@@ -1,26 +1,31 @@
 import classNames from 'classnames';
 
 import styles from './index.module.less';
+
 import type { ModalProps } from 'antd';
 
-const useBodyScrollProps = (props: ModalProps, noBodyScroll?: boolean) => {
+const useBodyScrollProps = (props: ModalProps, bodyScroll: 'none' | 'normal' | 'stable' = 'stable') => {
+    const bodyClassName = (() => {
+        switch (bodyScroll) {
+            case 'none':
+                return classNames(styles['no-body-scroll'], props.classNames?.body);
+            case 'normal':
+                return classNames(styles['normal-body-scroll'], props.classNames?.body);
+            case 'stable':
+                return classNames(styles['stable-body-scroll'], props.classNames?.body);
+            default:
+                return classNames(styles['no-body-scroll'], props.classNames?.body);
+        }
+    })();
+
     const modalProps: ModalProps = {
         ...props,
         className: classNames(styles['body-scroll-wrapper'], props.className),
-        styles: {
-            content: { padding: 0, ...props.styles?.content },
-            header: { padding: '20px 24px 0 24px', ...props.styles?.header },
-            footer: { padding: '0 24px 20px 24px', ...props.styles?.footer },
-            body: props.styles?.body,
-        },
         classNames: {
+            body: bodyClassName,
             header: props.classNames?.header,
             footer: props.classNames?.footer,
             content: classNames(styles['body-scroll-content'], props.classNames?.content),
-            body:
-                noBodyScroll !== true
-                    ? classNames(styles['body-scroll'], props.classNames?.body)
-                    : classNames(styles['no-body-scroll'], props.classNames?.body),
         },
     };
 

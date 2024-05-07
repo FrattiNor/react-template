@@ -2,6 +2,7 @@ import { useState } from 'react';
 
 import packageT1Map from './Map/package.t1Map.json';
 import packageT2Map from './Map/package.t2Map.json';
+
 import type { TranslationProps, Local, TranslationMap } from './type';
 
 const useProvider = ({ defaultLocal = 'zh_cn', t1Map, t2Map }: TranslationProps) => {

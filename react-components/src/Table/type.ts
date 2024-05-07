@@ -41,6 +41,7 @@ export type TableColumn<T> = {
     saveEdit?: (value: string, item: T, index: number) => void;
     render?: (item: T, index: number, pagination?: ColumnPagination) => ReactNode;
     filter?: TableColumnFilter;
+    summary?: (() => ReactNode) | (() => ReactNode)[];
 };
 
 export type HandledColumn<T> = Omit<TableColumn<T>, 'width' | 'flexGrow'> & {
@@ -50,6 +51,13 @@ export type HandledColumn<T> = Omit<TableColumn<T>, 'width' | 'flexGrow'> & {
 };
 
 export type TableColumns<T> = TableColumn<T>[];
+
+// key限制为T的字段，避免没写render时无法校验字段是否存在
+// 如果确实存在，不是列表字段的key，使用any断言处理一下
+// 预留一个handle给操作
+export type TableColumnsKeyof<T> = (Omit<TableColumn<T>, 'key'> & {
+    key: keyof T | 'handle';
+})[];
 
 export type TableRowSelection<T> = {
     width?: number;
@@ -69,14 +77,17 @@ export type TableProps<T> = {
     dataSource?: T[];
     loading?: boolean;
     rowHeight?: number;
-    className?: string;
-    style?: CSSProperties;
-    calcRowHeight?: number;
-    autoScrollTop?: boolean;
     columns: TableColumns<T>;
     expandable?: TableExpandable | true;
     pagination?: TablePagination | true;
     rowSelection?: TableRowSelection<T> | true;
     rowKey: keyof T | ((v: T) => string);
     onResizeEnd?: (widths: Record<string, number>) => void;
+
+    className?: string;
+    style?: CSSProperties;
+};
+
+export type TableRef = {
+    scrollTo: (options: { left?: number; top?: number; behavior?: 'auto' | 'instant' | 'smooth' }) => void;
 };

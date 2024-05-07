@@ -1,13 +1,13 @@
-import type { PromiseFn, Props } from './type';
+type PromiseFn = (...args: any[]) => Promise<any>;
 
-const getDelayFun = <F extends PromiseFn>({ delayFn, delay }: Props<F>): F => {
+const delayFunc = <F extends PromiseFn>(func: F, delay?: number): F => {
     if (typeof delay !== 'number' || delay <= 0) {
-        return delayFn;
+        return func;
     }
 
     const newFn = async (...args: Parameters<F>) => {
         const startTime = new Date().getTime();
-        const res = await delayFn(...args);
+        const res = await func(...args);
         const endTime = new Date().getTime();
         // 剩余时间
         const remainder = delay - (endTime - startTime);
@@ -22,4 +22,4 @@ const getDelayFun = <F extends PromiseFn>({ delayFn, delay }: Props<F>): F => {
     return newFn as F;
 };
 
-export default getDelayFun;
+export default delayFunc;

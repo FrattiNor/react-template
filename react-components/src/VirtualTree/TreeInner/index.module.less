@@ -6,11 +6,11 @@
     position: relative;
     box-sizing: border-box;
 
-    &::-webkit-scrollbar {
+    div&::-webkit-scrollbar {
         background-color: transparent;
     }
 
-    &::-webkit-scrollbar-corner {
+    div&::-webkit-scrollbar-corner {
         background-color: transparent;
     }
 
@@ -66,7 +66,15 @@
                         color 0.2s;
                 }
 
-                &:hover .label {
+                &.disabled {
+                    cursor: not-allowed;
+
+                    .label {
+                        color: var(--theme-disabled-foreground);
+                    }
+                }
+
+                &.not-selected.not-disabled:hover .label {
                     background-color: var(--theme-hover-bg);
                 }
 

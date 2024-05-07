@@ -3,6 +3,7 @@ import type { IndexRouteObject, NonIndexRouteObject, RouteObject } from 'react-r
 
 import EmptyComponent from './EmptyComponent';
 import ErrorBoundary from './ErrorComponent';
+
 import type { RouteItem } from '../type';
 
 const getElement = (Component: React.ComponentType | undefined) => {

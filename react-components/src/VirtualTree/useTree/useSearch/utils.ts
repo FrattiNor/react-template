@@ -1,7 +1,8 @@
 import { regExpMatch } from '@react/utils';
 
-import type { AnyObj, VirtualTreeFieldKeys } from '../../type';
 import { defaultFieldKeys } from '../index';
+
+import type { AnyObj, VirtualTreeFieldKeys } from '../../type';
 
 type FindSearchedParentKeysProps<T> = {
     data: T[];

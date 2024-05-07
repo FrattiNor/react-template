@@ -2,8 +2,9 @@ import { useMemo } from 'react';
 
 import { regExpMatch } from '@react/utils';
 
-import type { AnyObj, HandledDataItem, VirtualSelectFieldKeys, VirtualSelectProps } from '../../type';
 import { defaultFieldKeys } from '../index';
+
+import type { AnyObj, HandledDataItem, VirtualSelectFieldKeys, VirtualSelectProps } from '../../type';
 
 type Props<T> = {
     props: VirtualSelectProps<T>;

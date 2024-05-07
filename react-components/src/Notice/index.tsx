@@ -5,6 +5,7 @@ import { Fragment, useLayoutEffect } from 'react';
 import { App, notification } from 'antd';
 
 import styles from './index.module.less';
+
 import type { ArgsProps, NotificationInstance } from 'antd/es/notification/interface';
 
 class Notice {

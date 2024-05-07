@@ -3,6 +3,7 @@ import { useMemo } from 'react';
 import { nanoid } from 'nanoid';
 
 import useRoutes from './useRoutes';
+
 import type { RouteItem, NonIndexRouteItem } from '../type';
 
 const joinPaths = (paths: string[]) => {

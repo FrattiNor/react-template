@@ -1,4 +1,4 @@
-div.body-scroll-wrapper div.body-scroll-content div.body-scroll {
+div.body-scroll-wrapper div.body-scroll-content div.stable-body-scroll {
     margin: 0 2px;
     padding: 0 22px;
     overflow-y: overlay;
@@ -28,7 +28,24 @@ div.body-scroll-wrapper div.body-scroll-content div.body-scroll {
     }
 }
 
-div.body-scroll-wrapper div.body-scroll-content div.no-body-scroll {
+div.body-scroll-wrapper div.body-scroll-content .normal-body-scroll {
+    margin: 0;
+    padding: 0 24px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    max-height: calc(90vh - 64px - 56px);
+
+    &::-webkit-scrollbar {
+        background-color: transparent;
+    }
+
+    &::-webkit-scrollbar-corner {
+        background-color: transparent;
+    }
+}
+
+div.body-scroll-wrapper div.body-scroll-content .no-body-scroll {
     display: flex;
     padding: 0 24px;
     flex-direction: column;

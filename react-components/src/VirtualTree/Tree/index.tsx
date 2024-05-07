@@ -3,10 +3,11 @@ import { forwardRef, useImperativeHandle } from 'react';
 import classNames from 'classnames';
 
 import styles from './index.module.less';
-import Loading from '../../Loading';
+import LoadingDiv from '../../LoadingDiv';
 import TreeInner from '../TreeInner';
-import type { VirtualTreeComponent } from '../type';
 import useTree from '../useTree';
+
+import type { VirtualTreeComponent } from '../type';
 
 const TreeWrapper: VirtualTreeComponent = forwardRef((props, ref) => {
     const tree = useTree(props);
@@ -14,10 +15,9 @@ const TreeWrapper: VirtualTreeComponent = forwardRef((props, ref) => {
     const { loading, wrapperClassName, wrapperStyle } = props;
 
     return (
-        <div className={classNames(styles['wrapper'], wrapperClassName)} style={wrapperStyle}>
-            <Loading loading={loading} />
+        <LoadingDiv loading={loading} className={classNames(styles['wrapper'], wrapperClassName)} style={wrapperStyle}>
             <TreeInner {...props} instance={tree} />
-        </div>
+        </LoadingDiv>
     );
 });
 

@@ -11,3 +11,5 @@ export { default as transferOption } from './transferOption';
 export { regExpMatch, regExpSplit } from './regExpMatch';
 export { default as JsAnimate } from './jsAnimate';
 export * from './base64';
+export { default as getContentDispositionFileName } from './getContentDispositionFileName';
+export { default as delayFunc } from './delayFunc';

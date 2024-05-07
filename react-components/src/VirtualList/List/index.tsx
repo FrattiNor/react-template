@@ -3,10 +3,11 @@ import { forwardRef, useImperativeHandle } from 'react';
 import classNames from 'classnames';
 
 import styles from './index.module.less';
-import Loading from '../../Loading';
+import LoadingDiv from '../../LoadingDiv';
 import ListInner from '../ListInner';
-import type { VirtualListComponent } from '../type';
 import useList from '../useList';
+
+import type { VirtualListComponent } from '../type';
 
 const List: VirtualListComponent = forwardRef((props, ref) => {
     const list = useList(props);
@@ -14,10 +15,9 @@ const List: VirtualListComponent = forwardRef((props, ref) => {
     const { loading, wrapperClassName, wrapperStyle } = props;
 
     return (
-        <div className={classNames(styles['wrapper'], wrapperClassName)} style={wrapperStyle}>
-            <Loading loading={loading} />
+        <LoadingDiv loading={loading} className={classNames(styles['wrapper'], wrapperClassName)} style={wrapperStyle}>
             <ListInner {...props} instance={list} />
-        </div>
+        </LoadingDiv>
     );
 });
 

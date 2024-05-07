@@ -3,6 +3,7 @@ import type { FC } from 'react';
 import BodyRow from './BodyRow';
 import styles from './index.module.less';
 import { useTableContext } from '../../../TableContext';
+
 import type { AnyObj } from '../../../type';
 
 const VirtualBody: FC = <T extends AnyObj>() => {
@@ -15,21 +16,21 @@ const VirtualBody: FC = <T extends AnyObj>() => {
     return (
         <div className={styles['virtual-body']} style={{ width: horizontalTotalSize, ...virtualBodyStyle }}>
             {verticalVirtualItems.map((verticalItem) => {
-                const currentRowIndex = verticalItem.index;
-                const currentRowData = showDataSource?.[currentRowIndex];
-                if (currentRowData) {
-                    const currentRowKey = typeof rowKey === 'function' ? rowKey(currentRowData) : currentRowData[rowKey];
-                    return (
-                        <BodyRow
-                            measure
-                            key={currentRowKey}
-                            currentRowKey={currentRowKey}
-                            currentRowData={currentRowData}
-                            currentRowIndex={currentRowIndex}
-                        />
-                    );
+                const currentRowIndex = verticalItem?.index;
+                if (typeof currentRowIndex === 'number') {
+                    const currentRowData = showDataSource?.[currentRowIndex];
+                    if (currentRowData) {
+                        const currentRowKey = typeof rowKey === 'function' ? rowKey(currentRowData) : currentRowData[rowKey];
+                        return (
+                            <BodyRow
+                                key={currentRowKey}
+                                currentRowKey={currentRowKey}
+                                currentRowData={currentRowData}
+                                currentRowIndex={currentRowIndex}
+                            />
+                        );
+                    }
                 }
-                return null;
             })}
         </div>
     );

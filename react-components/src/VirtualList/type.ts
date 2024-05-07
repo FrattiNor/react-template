@@ -32,6 +32,8 @@ export type VirtualListProps<T> = {
     listStyle?: CSSProperties;
     wrapperClassName?: string;
     wrapperStyle?: CSSProperties;
+
+    renderPrefix?: (item: T) => ReactNode;
 };
 
 export type VirtualSearchListProps<T> = VirtualListProps<T> & {

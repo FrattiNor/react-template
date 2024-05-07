@@ -7,10 +7,11 @@ import classNames from 'classnames';
 import styles from './index.module.less';
 import SvgExpand from './SvgExpand';
 import SvgRetract from './SvgRetract';
-import Loading from '../../Loading';
+import LoadingDiv from '../../LoadingDiv';
 import TreeInner from '../TreeInner';
-import type { VirtualSearchTreeComponent } from '../type';
 import useTree from '../useTree';
+
+import type { VirtualSearchTreeComponent } from '../type';
 
 const VirtualSearchTree: VirtualSearchTreeComponent = forwardRef((props, ref) => {
     const tree = useTree(props);
@@ -20,9 +21,7 @@ const VirtualSearchTree: VirtualSearchTreeComponent = forwardRef((props, ref) =>
     const { title, searchClassName, searchStyle, loading, wrapperClassName, wrapperStyle, treeClassName } = props;
 
     return (
-        <div className={classNames(styles['wrapper'], wrapperClassName)} style={wrapperStyle}>
-            <Loading loading={loading} />
-
+        <LoadingDiv loading={loading} className={classNames(styles['wrapper'], wrapperClassName)} style={wrapperStyle}>
             {title && <div className={styles['title']}>{title}</div>}
 
             <div className={classNames(styles['search'], searchClassName)} style={searchStyle}>
@@ -40,7 +39,7 @@ const VirtualSearchTree: VirtualSearchTreeComponent = forwardRef((props, ref) =>
             </div>
 
             <TreeInner {...props} instance={tree} treeClassName={classNames(styles['tree'], treeClassName)} />
-        </div>
+        </LoadingDiv>
     );
 });
 

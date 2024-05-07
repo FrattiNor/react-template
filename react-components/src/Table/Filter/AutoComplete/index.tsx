@@ -8,26 +8,28 @@ import Template from '../_Template';
 
 type FilterAutoCompleteProps<T> = {
     width?: number;
-    afterSubmit?: () => void;
+    closeDropdown: () => void;
     value: string | undefined;
-    setValue: (nextValue: string | undefined) => void;
+    submit: (nextValue: string | undefined) => void;
+    reset: () => void;
     option?: T[];
     fieldKeys: { value: keyof T; label: keyof T };
     onSearch: (keyword: string) => void;
 };
 
-const AutoCompleteFC = <T,>({ width, value, setValue, afterSubmit, option, fieldKeys, onSearch }: FilterAutoCompleteProps<T>) => {
+const AutoCompleteFC = <T,>(props: FilterAutoCompleteProps<T>) => {
+    const { width, value, submit: _submit, reset: _reset, closeDropdown, option, fieldKeys, onSearch } = props;
     const [visible, setVisible] = useState(false);
     const [innerValue, setInnerValue] = useState(() => value);
-    const haveValue = typeof innerValue === 'string' && innerValue !== '';
 
     const submit = () => {
-        setValue(innerValue);
-        if (afterSubmit) afterSubmit();
+        _submit(innerValue);
+        closeDropdown();
     };
 
     const reset = () => {
-        setInnerValue(undefined);
+        _reset();
+        closeDropdown();
     };
 
     // 如果是打开状态，再次点击触发关闭
@@ -60,7 +62,7 @@ const AutoCompleteFC = <T,>({ width, value, setValue, afterSubmit, option, field
     })();
 
     return (
-        <Template width={width} submit={submit} reset={reset} resetDisabled={!haveValue}>
+        <Template width={width} submit={submit} reset={reset}>
             <div className={styles['auto-complete']}>
                 <AutoComplete
                     open={visible}

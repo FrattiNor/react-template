@@ -3,8 +3,9 @@ import type { RefObject } from 'react';
 import { useVirtualizer } from '@react/hooks';
 
 import { observeElementRect, observeElementOffset, measureElement } from './utils';
-import type { TableColumns } from '../../type';
 import { defaultWidth } from '../index';
+
+import type { TableColumns } from '../../type';
 import type { BodyResizeObserver } from '../useBodyResizeObserver';
 import type { BodyScrollObserver } from '../useBodyScrollObserver';
 import type { DataSource } from '../useDataSource';
@@ -26,18 +27,17 @@ const useVirtual = <T>(opt: Opt<T>) => {
 
     const { showDataSource } = dataSource;
 
-    const { rowHeight, calcRowHeight } = handledProps;
+    const { rowHeight } = handledProps;
 
     // 竖向虚拟
     const verticalVirtualizer = useVirtualizer({
         overscan: 0,
+        estimateSize: () => rowHeight,
         measureElement: measureElement,
         count: showDataSource?.length || 0,
         getScrollElement: () => bodyRef.current,
-        estimateSize: () => (calcRowHeight ?? rowHeight) as number,
         observeElementRect: observeElementRect('vRect', bodyResizeObserver),
         observeElementOffset: observeElementOffset('vOffset', bodyScrollObserver, 'vertical'),
-        getItemKey: (index) => index,
     });
 
     // 横向虚拟

@@ -1,7 +1,5 @@
 import type { FC } from 'react';
 
-import classNames from 'classnames';
-
 import Empty from './Empty';
 import styles from './index.module.less';
 import Measure from './Measure';
@@ -13,7 +11,7 @@ const Body: FC = () => {
     const { bodyRef, isEmpty, bodyOverflowX } = tableContext;
 
     return (
-        <div ref={bodyRef} className={classNames(styles['body'], { [styles['empty']]: isEmpty })} style={{ overflowX: bodyOverflowX }}>
+        <div ref={bodyRef} style={{ overflowX: bodyOverflowX }} className={styles['body']}>
             <Measure />
             {isEmpty && <Empty />}
             {!isEmpty && <VirtualBody />}

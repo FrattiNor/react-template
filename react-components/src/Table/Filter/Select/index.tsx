@@ -12,29 +12,31 @@ type FilterSelectProps<T> = {
     width?: number;
     search?: boolean;
     multiple?: boolean;
-    afterSubmit?: () => void;
+    closeDropdown: () => void;
     value: string | string[];
-    setValue: (nextValue: string | string[]) => void;
+    reset: () => void;
+    submit: (nextValue: string | string[]) => void;
     option?: T[];
     fieldKeys: { value: keyof T; label: keyof T };
 };
 
-const Select = <T,>({ width = 150, value, setValue, multiple, search, afterSubmit, option, fieldKeys }: FilterSelectProps<T>) => {
+const Select = <T,>(props: FilterSelectProps<T>) => {
+    const { width = 150, value, submit: _submit, reset: _reset, multiple, search, closeDropdown, option, fieldKeys } = props;
     const [keyword, setKeyword] = useState<string | undefined>();
     const [innerValue, setInnerValue] = useState(() => (Array.isArray(value) ? value : isEmpty(value) ? [] : [value]));
-    const haveValue = Array.isArray(innerValue) && innerValue.length > 0;
 
     const submit = () => {
-        setValue(multiple ? innerValue : innerValue[0]);
-        if (afterSubmit) afterSubmit();
+        _submit(multiple ? innerValue : innerValue[0]);
+        if (closeDropdown) closeDropdown();
     };
 
     const reset = () => {
-        setInnerValue([]);
+        _reset();
+        closeDropdown();
     };
 
     return (
-        <Template width={width} submit={submit} reset={reset} resetDisabled={!haveValue}>
+        <Template width={width} submit={submit} reset={reset}>
             {search && (
                 <div className={styles['search']}>
                     <Input

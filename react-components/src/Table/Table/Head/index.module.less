@@ -18,12 +18,14 @@
 
             .head-fixed-left {
                 .fixed-left();
+                flex-shrink: 0;
                 display: flex;
                 z-index: 2;
             }
 
             .head-fixed-right {
                 .fixed-right();
+                flex-shrink: 0;
                 display: flex;
                 z-index: 3;
 
@@ -36,6 +38,7 @@
 
             .head-mid {
                 position: relative;
+                flex-shrink: 0;
                 display: flex;
                 z-index: 1;
             }
@@ -44,52 +47,43 @@
                 width: 0;
                 flex-grow: 1;
                 position: relative;
-                transition: background-color 0.2s;
                 background-color: var(--theme-table-head-bg);
             }
 
-            .head-cell-wrapper {
+            .head-cell {
                 display: flex;
                 flex-shrink: 0;
                 overflow: hidden;
                 position: relative;
                 align-items: center;
-                transition: background-color 0.2s;
                 background-color: var(--theme-table-head-bg);
 
-                .head-cell {
+                .head-cell-str {
                     width: 0;
                     flex-grow: 1;
+                    padding: 0 8px;
+                    flex-shrink: 0;
+                    font-weight: 600;
+                    overflow: hidden;
+                    position: relative;
+                    white-space: nowrap;
+                    text-overflow: ellipsis;
+                }
 
-                    .head-cell-str {
-                        width: 100%;
-                        padding: 0 8px;
-                        flex-shrink: 0;
-                        min-width: 100%;
-                        max-width: 100%;
-                        overflow: hidden;
-                        font-weight: 600;
-                        position: relative;
-                        white-space: nowrap;
-                        text-overflow: ellipsis;
-                    }
+                .head-cell-block {
+                    width: 0;
+                    flex-grow: 1;
+                    font-size: 0;
+                    padding: 0 8px;
+                    flex-shrink: 0;
+                    font-weight: 600;
+                    overflow: hidden;
+                    position: relative;
+                    white-space: nowrap;
+                    text-overflow: ellipsis;
 
-                    .head-cell-block {
-                        width: 100%;
-                        font-size: 0;
-                        padding: 0 8px;
-                        flex-shrink: 0;
-                        min-width: 100%;
-                        max-width: 100%;
-                        overflow: hidden;
-                        font-weight: 600;
-                        position: relative;
-                        white-space: nowrap;
-                        text-overflow: ellipsis;
-
-                        & > * {
-                            font-size: var(--theme-font-size);
-                        }
+                    & > * {
+                        font-size: var(--theme-font-size);
                     }
                 }
 

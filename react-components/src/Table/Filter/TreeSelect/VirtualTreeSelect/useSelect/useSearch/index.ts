@@ -3,6 +3,7 @@ import { useLayoutEffect, useMemo, useState } from 'react';
 import { useEffectOnce, useMergeState } from '@react/hooks';
 
 import { getDefaultVisibles, getKeywordChange, getShowData } from './utils';
+
 import type { AnyObj, VirtualTreeSelectProps } from '../../type';
 
 type Props<T> = {

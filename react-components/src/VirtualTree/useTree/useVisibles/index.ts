@@ -1,6 +1,7 @@
 import { useEffectOnce, useMergeState } from '@react/hooks';
 
 import { findLevelParentKeys, getAllParentKeys } from './utils';
+
 import type { AnyObj, VirtualTreeProps } from '../../type';
 
 const useVisibles = <T extends AnyObj>(props: VirtualTreeProps<T>) => {

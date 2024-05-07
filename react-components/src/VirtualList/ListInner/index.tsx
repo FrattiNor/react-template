@@ -5,6 +5,7 @@ import classNames from 'classnames';
 import styles from './index.module.less';
 import Empty from '../../Empty';
 import Highlight from '../../Highlight';
+
 import type { HandledDataItem, VirtualListInstance, VirtualListProps } from '../type';
 
 type Props = VirtualListProps<any> & {
@@ -12,7 +13,7 @@ type Props = VirtualListProps<any> & {
 };
 
 const ListInner: FC<Props> = (props) => {
-    const { renderItem, data, listClassName, listStyle, instance } = props;
+    const { renderItem, renderPrefix, data, listClassName, listStyle, instance } = props;
     const { virtual, virtualWrapperRef, lineHeight, isEmpty, selectedKey, setSelectedKey, getKeyLabelDisabled, keyword } = instance;
     const { virtualItems, totalSize, measureElement, distance } = virtual;
 
@@ -27,37 +28,52 @@ const ListInner: FC<Props> = (props) => {
             {!isEmpty && (
                 <div className={styles['virtual-list']} style={{ height: totalSize, paddingTop: distance }}>
                     {virtualItems.map((verticalItem) => {
-                        const currentRowIndex = verticalItem.index;
-                        const currentRowData = data?.[currentRowIndex];
+                        const currentRowIndex = verticalItem?.index;
 
-                        if (currentRowData) {
-                            const { key, label, disabled } = getKeyLabelDisabled(currentRowData);
-                            const handleData: HandledDataItem<any> = { data: currentRowData, key, label, disabled };
-                            const selected = selectedKey === key;
+                        if (typeof currentRowIndex === 'number') {
+                            const currentRowData = data?.[currentRowIndex];
 
-                            return (
-                                <div
-                                    key={key}
-                                    ref={measureElement}
-                                    data-index={currentRowIndex}
-                                    className={styles['list-row']}
-                                    style={{ minHeight: lineHeight }}
-                                >
+                            if (currentRowData) {
+                                const { key, label, disabled } = getKeyLabelDisabled(currentRowData);
+                                const handleData: HandledDataItem<any> = { data: currentRowData, key, label, disabled };
+                                const selected = selectedKey === key;
+
+                                const onLabelClick = () => {
+                                    if (!disabled) {
+                                        setSelectedKey(selected ? undefined : key, currentRowData);
+                                    }
+                                };
+
+                                return (
                                     <div
+                                        key={key}
+                                        ref={measureElement}
+                                        data-index={currentRowIndex}
+                                        className={styles['list-row']}
                                         style={{ minHeight: lineHeight }}
-                                        onClick={() => setSelectedKey(selected ? undefined : key, currentRowData)}
-                                        className={classNames(styles['label-select-content'], { [styles['selected']]: selected })}
                                     >
-                                        <div className={styles['label']}>
-                                            {renderItem ? (
-                                                renderItem(currentRowData, handleData, keyword)
-                                            ) : (
-                                                <Highlight keyword={keyword}>{label}</Highlight>
-                                            )}
+                                        <div
+                                            onClick={onLabelClick}
+                                            style={{ minHeight: lineHeight }}
+                                            className={classNames(styles['label-select-content'], {
+                                                [styles['selected']]: selected,
+                                                [styles['not-selected']]: !selected,
+                                                [styles['disabled']]: disabled,
+                                                [styles['not-disabled']]: !disabled,
+                                            })}
+                                        >
+                                            {renderPrefix && <div className={styles['prefix']}>{renderPrefix(currentRowData)}</div>}
+                                            <div className={styles['label']}>
+                                                {renderItem ? (
+                                                    renderItem(currentRowData, handleData, keyword)
+                                                ) : (
+                                                    <Highlight keyword={keyword}>{label}</Highlight>
+                                                )}
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            );
+                                );
+                            }
                         }
                     })}
                 </div>

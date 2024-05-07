@@ -2,6 +2,7 @@ import { useMergeState } from '@react/hooks';
 
 import useSearch from './useSearch';
 import useVirtual from './useVirtual';
+
 import type { AnyObj, VirtualSelectFieldKeys, VirtualSelectProps } from '../type';
 
 export const defaultFieldKeys: VirtualSelectFieldKeys<any> = {

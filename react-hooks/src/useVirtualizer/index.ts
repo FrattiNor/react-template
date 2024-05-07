@@ -60,6 +60,7 @@ export function useVirtualizer<TScrollElement extends Element, TItemElement exte
         },
     });
 
+    // 添加 scrollToOffset
     const scrollToOffset = (offset: number, option?: { behavior: ScrollBehavior | undefined }) => {
         if (_virtualizer.scrollElement) {
             const { behavior } = option || {};
@@ -67,6 +68,7 @@ export function useVirtualizer<TScrollElement extends Element, TItemElement exte
         }
     };
 
+    // 添加 scrollToIndex
     const scrollToIndex = (index: number, option?: ScrollToOptions) => {
         if (_virtualizer.scrollElement) {
             const { align = 'auto', behavior } = option || {};
@@ -75,10 +77,31 @@ export function useVirtualizer<TScrollElement extends Element, TItemElement exte
         }
     };
 
+    // 组件库getVirtualItems有Bug，range和calculateRange计算的结果不一致，导致getVirtualItems的值不正确
+    // 最终以range为准
+    // 原因为resizeItem未使用maybeNotify，导致maybeNotify的依赖range未改变，导致一直使用的是缓存数据
+    const getVirtualItems = () => {
+        const range = _virtualizer.range;
+        const rangeCount = range ? range.endIndex - range.startIndex + 1 : 0;
+        let virtualItems = _virtualizer.getVirtualItems();
+        // 如果range和virtualItems一致，直接返回即可，否则使用range重新计算
+        if (virtualItems.length >= rangeCount) return virtualItems;
+        // @ts-ignore
+        const measurements = _virtualizer.getMeasurements();
+        virtualItems = [];
+        if (range === null) return virtualItems;
+        for (let i = range.startIndex; i <= range.endIndex; i++) {
+            const measurement = measurements[i]!;
+            virtualItems.push(measurement);
+        }
+        return virtualItems;
+    };
+
     const virtualizer = {
         ..._virtualizer,
         scrollToIndex,
         scrollToOffset,
+        getVirtualItems,
     };
 
     return virtualizer as Virtualizer<TScrollElement, TItemElement>;

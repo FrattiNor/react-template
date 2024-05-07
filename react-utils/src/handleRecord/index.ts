@@ -1,7 +1,8 @@
 import { arrayToStr, arrayToStrOnly } from './formatArray';
 import { handleFormatTime, handleFormatTimeOnly } from './formatTime';
-import type { Opt } from './type';
 import cleanRecord from '../cleanRecord';
+
+import type { Opt } from './type';
 
 // 总的处理参数的方法
 export const handleRecord = (record: Record<string, any>, option?: Opt) => {

@@ -1,6 +1,7 @@
 import { useResize } from '@react/hooks';
 
 import { defaultWidth } from '../index';
+
 import type { HandledProps } from '../useHandleProps';
 import type { VirtualCore } from '../useVirtual';
 

@@ -1,5 +1,6 @@
-import type { AnyObj, VirtualListFieldKeys } from '../../type';
 import { defaultFieldKeys } from '../index';
+
+import type { AnyObj, VirtualListFieldKeys } from '../../type';
 
 type FindSearchKeyIndex<T> = {
     data: T[];

@@ -3,6 +3,7 @@ import type { CSSProperties, FC, ReactNode } from 'react';
 import { Pagination as AntdPagination } from 'antd';
 
 import styles from './index.module.less';
+
 import type { PaginationProps as AntdPaginationProps } from 'antd';
 
 export type PaginationProps = Omit<AntdPaginationProps, 'showTotal'> & {

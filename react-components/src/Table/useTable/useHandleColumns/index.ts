@@ -1,7 +1,8 @@
 import type { CSSProperties } from 'react';
 
-import type { HandledColumn, TableColumn, TableColumns } from '../../type';
 import { defaultFlexGrow, defaultWidth } from '../index';
+
+import type { HandledColumn, TableColumn, TableColumns } from '../../type';
 import type { ResizeWidth } from '../useResizeWidth';
 import type { VirtualCore } from '../useVirtual';
 
@@ -17,6 +18,7 @@ const useHandleColumns = <T>(opt: Opt<T>) => {
     const { resizeActiveKey, resizeActiveWidth, resized } = resizeWidth;
     const { horizontalRange, horizontalItemSizeCache } = virtual;
 
+    let summaryCount = 0;
     let midLeftPadding = 0;
     let midRightPadding = 0;
     let horizontalTotalSize = 0;
@@ -42,6 +44,15 @@ const useHandleColumns = <T>(opt: Opt<T>) => {
 
     for (let i = 0; i <= sortedColumns.length - 1; i++) {
         const column = sortedColumns[i];
+
+        // 计算统计有几行
+        if (column.summary) {
+            if (Array.isArray(column.summary)) {
+                summaryCount = Math.max(summaryCount, column.summary.length);
+            } else {
+                summaryCount = Math.max(summaryCount, 1);
+            }
+        }
 
         if (column.fixed === 'left') {
             const { width, originWidth, measureStyle } = getSomeProps(column);
@@ -114,6 +125,7 @@ const useHandleColumns = <T>(opt: Opt<T>) => {
     const bodyOverflowX: CSSProperties['overflowX'] = resized ? 'auto' : horizontalTotalSize > originHorizontalTotalSize ? 'hidden' : 'auto';
 
     return {
+        summaryCount,
         bodyOverflowX,
         midLeftPadding,
         midRightPadding,
