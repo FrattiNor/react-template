@@ -31,7 +31,7 @@ const useClearRowSelectionAndExpandable = <T>(opt: Opt<T>) => {
                     // next
                     let haveNotSame = false; // 是否有不同
                     const nextKeys: string[] = [];
-                    (totalDataSource || []).forEach((item) => {
+                    totalDataSource.forEach((item) => {
                         const key = (typeof rowKey === 'function' ? rowKey(item) : item[rowKey]) as string;
                         if (prevRowKeysObj[key]) {
                             nextKeys.push(key);
@@ -39,7 +39,12 @@ const useClearRowSelectionAndExpandable = <T>(opt: Opt<T>) => {
                             haveNotSame = true;
                         }
                     });
-                    return haveNotSame ? nextKeys : prevKeys;
+
+                    if (nextKeys.length === prevKeys.length) {
+                        return haveNotSame ? nextKeys : prevKeys;
+                    }
+
+                    return nextKeys;
                 } else {
                     return prevKeys.length === 0 ? prevKeys : [];
                 }

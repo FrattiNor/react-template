@@ -21,13 +21,14 @@ type ColumnPagination = {
     pageSize: number;
 };
 
+// Table 筛选参数
 export type TableColumnFilter = {
     filtered: boolean;
     dropdown: (opt: { setVisible: (v: boolean) => void }) => ReactNode;
 };
 
-export type TableColumn<T> = {
-    key: string;
+// Table Column 和对外的Same部分
+export type TableColumnSame<T> = {
     width?: number;
     title: ReactNode;
     resize?: boolean;
@@ -39,26 +40,27 @@ export type TableColumn<T> = {
     renderCellTitle?: (item: T, index: number) => string;
     edit?: boolean | ((item: T, index: number) => boolean);
     saveEdit?: (value: string, item: T, index: number) => void;
-    render?: (item: T, index: number, pagination?: ColumnPagination) => ReactNode;
     filter?: TableColumnFilter;
     summary?: (() => ReactNode) | (() => ReactNode)[];
 };
 
+// Table Column
+export type TableColumn<T> = TableColumnSame<T> & {
+    key: string;
+    render?: (item: T, index: number, pagination?: ColumnPagination) => ReactNode;
+};
+
+// Table Columns
+export type TableColumns<T> = TableColumn<T>[];
+
+// 处理后的 Column
 export type HandledColumn<T> = Omit<TableColumn<T>, 'width' | 'flexGrow'> & {
     width: number;
     index: number;
     measureStyle: CSSProperties;
 };
 
-export type TableColumns<T> = TableColumn<T>[];
-
-// key限制为T的字段，避免没写render时无法校验字段是否存在
-// 如果确实存在，不是列表字段的key，使用any断言处理一下
-// 预留一个handle给操作
-export type TableColumnsKeyof<T> = (Omit<TableColumn<T>, 'key'> & {
-    key: keyof T | 'handle';
-})[];
-
+// Table 行选择参数
 export type TableRowSelection<T> = {
     width?: number;
     selectedRowKeys?: string[];
@@ -66,6 +68,7 @@ export type TableRowSelection<T> = {
     getCheckboxProps?: (item: T) => { disabled: boolean };
 };
 
+// Table 展开参数
 export type TableExpandable = {
     width?: number;
     expandedRowKeys?: string[];
@@ -73,11 +76,30 @@ export type TableExpandable = {
     onExpandedRowKeysChange?: Dispatch<SetStateAction<string[]>>;
 };
 
+// Table Ref
+export type TableRef = {
+    scrollTo: (options: { left?: number; top?: number; behavior?: 'auto' | 'instant' | 'smooth' }) => void;
+};
+
+// 对外的TableColumn
+export type TableColumnOut<T> =
+    | (TableColumnSame<T> & {
+          key: string;
+          render: (item: T, index: number, pagination?: ColumnPagination) => ReactNode;
+      })
+    | (TableColumnSame<T> & {
+          key: keyof T; // key限制为T的字段，避免没写render时无法校验字段是否存在
+      });
+
+//  对外的TableColumns
+export type TableColumnsOut<T> = TableColumnOut<T>[];
+
+// Table Props
 export type TableProps<T> = {
     dataSource?: T[];
     loading?: boolean;
     rowHeight?: number;
-    columns: TableColumns<T>;
+    columns: TableColumnsOut<T>;
     expandable?: TableExpandable | true;
     pagination?: TablePagination | true;
     rowSelection?: TableRowSelection<T> | true;
@@ -86,8 +108,4 @@ export type TableProps<T> = {
 
     className?: string;
     style?: CSSProperties;
-};
-
-export type TableRef = {
-    scrollTo: (options: { left?: number; top?: number; behavior?: 'auto' | 'instant' | 'smooth' }) => void;
 };

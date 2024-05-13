@@ -14,7 +14,7 @@ const TablePagination: FC<Props> = ({ isEmpty, pagination }) => {
         return null;
     }
 
-    return <Pagination {...pagination} wrapperStyle={{ paddingTop: 8 }} />;
+    return <Pagination {...pagination} wrapperStyle={{ paddingTop: 12 }} />;
 };
 
 export default TablePagination;

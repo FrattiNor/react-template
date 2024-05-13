@@ -3,15 +3,6 @@ import { useRef, useState, useEffect, useReducer } from 'react';
 
 type Style = { top: number; left: number };
 
-// 避免触发一些事件导致mouse无法触发
-function pauseEvent(e: Event) {
-    if (e.stopPropagation) e.stopPropagation();
-    if (e.preventDefault) e.preventDefault();
-    e.cancelBubble = true;
-    e.returnValue = false;
-    return false;
-}
-
 const useMoveModal = () => {
     const timeout = useRef(0);
     const moveRef = useRef<HTMLDivElement>(null);
@@ -20,7 +11,6 @@ const useMoveModal = () => {
     const [down, setDown] = useState<null | Style>(null);
 
     const onMouseDown: MouseEventHandler<HTMLDivElement> = (e) => {
-        pauseEvent(e as any);
         setDown({ top: e.pageY, left: e.pageX });
     };
 

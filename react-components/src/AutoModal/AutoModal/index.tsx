@@ -2,13 +2,14 @@ import type { CSSProperties, FC } from 'react';
 
 import { Modal } from 'antd';
 
+import useAfterClose from './_hooks/useAfterClose';
+import useBodyScrollProps from './_hooks/useBodyScrollProps';
+import useBodyStyleProps from './_hooks/useBodyStyleProps';
+import useHeaderBordered from './_hooks/useHeaderBordered';
+import useLoadingCantCloseProps from './_hooks/useLoadingCantCloseProps';
+import useModalStyle from './_hooks/useModalStyle';
 import FullWindowModal from './FullWindowModal';
 import MoveableModal from './MoveableModal';
-import useBodyScrollProps from './useBodyScrollProps';
-import useBodyStyleProps from './useBodyStyleProps';
-import useHeaderBordered from './useHeaderBordered';
-import useLoadingCantCloseProps from './useLoadingCantCloseProps';
-import useModalStyle from './useModalStyle';
 import { useCurrentModal } from '../AutoModalRender';
 
 import type { ModalProps } from 'antd';
@@ -41,21 +42,23 @@ const AutoModal: FC<AutoModalProps> = (props) => {
     // 增加 header 和 body 之间隔断线条
     const modalProps5 = useHeaderBordered(modalProps4, headerBordered);
 
-    const modalProps6: ModalProps = {
+    // afterClose 增加 destroyModal
+    const modalProps6 = useAfterClose(modalProps5, destroyModal);
+
+    const modalProps7: ModalProps = {
         destroyOnClose: true,
         open: visible,
         centered: true,
         onCancel: closeModal,
-        afterClose: destroyModal,
-        ...modalProps5,
+        ...modalProps6,
         maskClosable: false,
     };
 
-    if (fullWindow === true) return <FullWindowModal {...modalProps6} />;
+    if (fullWindow === true) return <FullWindowModal {...modalProps7} />;
 
-    if (draggable === true) return <MoveableModal {...modalProps6} />;
+    if (draggable === true) return <MoveableModal {...modalProps7} />;
 
-    return <Modal {...modalProps6} />;
+    return <Modal {...modalProps7} />;
 };
 
 export default AutoModal;

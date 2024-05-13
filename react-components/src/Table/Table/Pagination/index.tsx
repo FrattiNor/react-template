@@ -8,7 +8,7 @@ const TablePagination = () => {
         return null;
     }
 
-    return <Pagination {...pagination} wrapperStyle={{ paddingTop: 8 }} />;
+    return <Pagination {...pagination} wrapperStyle={{ paddingTop: 12 }} />;
 };
 
 export default TablePagination;
