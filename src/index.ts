@@ -7,11 +7,12 @@ import login from './req/login.js';
 import uninstallApp from './req/uninstallApp.js';
 import uploadApp from './req/uploadApp.js';
 import installApp from './req/installApp.js';
+import clearAppZip from './clearAppZip.js';
 
 (async () => {
     try {
         // 读取当前文件夹的安装包
-        const { file, uploadInfo } = getAppZip();
+        const { file, uploadInfo, AppZipName } = getAppZip();
         // 配置
         const { suposHost, username, password, appName, isdmBackEndIp } = getConfig();
         // 登录
@@ -22,6 +23,8 @@ import installApp from './req/installApp.js';
         await uploadApp({ suposHost, supOsTicket, uploadInfo, file });
         // 安装
         await installApp({ suposHost, supOsTicket, appName, isdmBackEndIp });
+        // 清除
+        clearAppZip({ AppZipName });
     } catch (e) {
         console.log(chalk.red(String(e)));
     }

@@ -36,7 +36,7 @@ const getAppZip = () => {
         indexUrl: appYamlJSON.indexUrl,
     };
 
-    return { file: fs.createReadStream(`./${AppZipName}`), uploadInfo };
+    return { file: fs.createReadStream(`./${AppZipName}`), uploadInfo, AppZipName };
 };
 
 export default getAppZip;
