@@ -46,11 +46,11 @@ export const getRecord = (handle: string) => {
 
     const start = () => {
         timestamp = dayjs().valueOf();
-        console.log(chalk.blue(`${dayjs().format('HH:mm:ss')} ${handle}中...`));
+        console.log(chalk.rgb(78, 142, 211)(`${dayjs().format('HH:mm:ss')} ${handle}中...`));
     };
     const end = () => {
-        console.log(chalk.green(`${dayjs().format('HH:mm:ss')} ${handle}完成`));
-        console.log(chalk.yellow(`耗时：${(dayjs().valueOf() - timestamp) / 1000}s`));
+        console.log(chalk.rgb(13, 188, 121)(`${dayjs().format('HH:mm:ss')} ${handle}完成`));
+        console.log(chalk.rgb(229, 229, 16)(`耗时：${(dayjs().valueOf() - timestamp) / 1000}s`));
     };
 
     return { start, end };

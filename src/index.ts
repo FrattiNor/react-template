@@ -26,7 +26,7 @@ import clearAppZip from './clearAppZip.js';
         // 清除
         clearAppZip({ AppZipName });
     } catch (e) {
-        console.log(chalk.red(String(e)));
+        console.log(chalk.rgb(219, 106, 106)(String(e)));
     }
 })().then(() => {
     // 按任意键退出
