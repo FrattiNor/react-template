@@ -1,6 +1,8 @@
 import { HttpsProxyAgent, HttpProxyAgent } from 'hpagent';
 import FormData from 'form-data';
 import process from 'process';
+import chalk from 'chalk';
+import dayjs from 'dayjs';
 import got from 'got';
 
 const isDev = process.env.NODE_ENV === 'development';
@@ -26,20 +28,6 @@ export const gotInstance = got.extend({
     followRedirect: false,
 });
 
-export const getCookie = (key: string, cookieArr?: Array<string>) => {
-    let res = undefined;
-    if (Array.isArray(cookieArr) && cookieArr.length > 0) {
-        cookieArr.forEach((item) => {
-            const reg = new RegExp(`${key}=(.*?);`);
-            const nextRes = reg.exec(item)?.[1];
-            if (typeof nextRes === 'string' && nextRes !== '') {
-                res = nextRes;
-            }
-        });
-    }
-    return res as string | undefined;
-};
-
 // 将 obj 转为 formData
 export const transformObjToFormData = (obj: Record<string, any>) => {
     const newFormData = new FormData();
@@ -51,4 +39,19 @@ export const transformObjToFormData = (obj: Record<string, any>) => {
         }
     });
     return newFormData;
+};
+
+export const getRecord = (handle: string) => {
+    let timestamp = 0;
+
+    const start = () => {
+        timestamp = dayjs().valueOf();
+        console.log(chalk.blue(`${dayjs().format('HH:mm:ss')} ${handle}中...`));
+    };
+    const end = () => {
+        console.log(chalk.green(`${dayjs().format('HH:mm:ss')} ${handle}完成`));
+        console.log(chalk.yellow(`耗时：${(dayjs().valueOf() - timestamp) / 1000}s`));
+    };
+
+    return { start, end };
 };
