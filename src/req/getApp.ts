@@ -28,17 +28,30 @@ const loopApp = async ({
     appName: string;
     condition: (app: any) => boolean;
 }) => {
+    const startTime = new Date().valueOf();
     let complete = false;
     while (complete === false) {
         const { app } = await getApp({ suposHost, supOsTicket, appName });
         if (!app) throw new Error('App不存在');
-        if (condition(app)) complete = true;
+
+        if (condition(app)) {
+            complete = true;
+            break;
+        }
+
         // 延迟500ms
         await new Promise((res) => {
             setTimeout(() => {
                 res(0);
             }, 500);
         });
+
+        // 超过5分钟
+        const newTime = new Date().valueOf();
+        if (newTime > startTime + 5 * 60 * 1000) {
+            console.log(app);
+            throw new Error('循环超时');
+        }
     }
 };
 
