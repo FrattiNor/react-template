@@ -14,7 +14,7 @@ import clearAppZip from './clearAppZip.js';
         // 读取当前文件夹的安装包
         const { file, uploadInfo, AppZipName } = getAppZip();
         // 配置
-        const { suposHost, username, password, appName, isdmBackEndIp } = getConfig();
+        const { suposHost, username, password, appName, appConfig } = getConfig();
         // 登录
         const { supOsTicket } = await login({ suposHost, username, password });
         // 卸载
@@ -22,7 +22,7 @@ import clearAppZip from './clearAppZip.js';
         // 上传
         await uploadApp({ suposHost, supOsTicket, uploadInfo, file });
         // 安装
-        await installApp({ suposHost, supOsTicket, appName, isdmBackEndIp });
+        await installApp({ suposHost, supOsTicket, appName, appConfig });
         // 清除
         clearAppZip({ AppZipName });
     } catch (e) {

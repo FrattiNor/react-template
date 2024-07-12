@@ -7,12 +7,12 @@ const installApp = async ({
     suposHost,
     supOsTicket,
     appName,
-    isdmBackEndIp,
+    appConfig,
 }: {
     suposHost: string;
     supOsTicket: string;
     appName: string;
-    isdmBackEndIp: string;
+    appConfig: string;
 }) => {
     const installRecord = getRecord('安装');
     const startRecord = getRecord('启动');
@@ -42,7 +42,7 @@ const installApp = async ({
             'Content-Type': 'application/json; charset=utf-8',
             Authorization: `Bearer ${supOsTicket}`,
         },
-        body: JSON.stringify({ packageId: app.packageId, config: `[ISDM]\nHOST=${isdmBackEndIp}`, configId: '' }),
+        body: JSON.stringify({ packageId: app.packageId, config: appConfig, configId: '' }),
     });
 
     // install【异步任务】

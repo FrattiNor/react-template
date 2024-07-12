@@ -17,14 +17,14 @@ const getConfig = () => {
         if (typeof configJSON.username !== 'string') throw new Error('config.json username 字段不存在或者格式错误');
         if (typeof configJSON.password !== 'string') throw new Error('config.json password 字段不存在或者格式错误');
         if (typeof configJSON.appName !== 'string') throw new Error('config.json appName 字段不存在或者格式错误');
-        if (typeof configJSON.isdmBackEndIp !== 'string') throw new Error('config.json isdmBackEndIp 字段不存在或者格式错误');
+        if (typeof configJSON.appConfig !== 'string') throw new Error('config.json appConfig 字段不存在或者格式错误');
 
         return {
             suposHost: configJSON.suposHost as string,
             username: configJSON.username as string,
             password: configJSON.password as string,
             appName: configJSON.appName as string,
-            isdmBackEndIp: configJSON.isdmBackEndIp as string,
+            appConfig: configJSON.appConfig as string,
         };
     })();
 };
