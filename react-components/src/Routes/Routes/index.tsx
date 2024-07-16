@@ -1,23 +1,18 @@
-import type { FC } from 'react';
+import { type FC } from 'react';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 
-import Context from './Context';
-import DocumentTitleComponent from './DocumentTitleComponent';
-import { getRouteObjectArray } from './utils';
+import Context, { useProvider } from './Context';
 
 import type { RoutesProps } from '../type';
 
-const Routes: FC<RoutesProps> = ({ routes, basename }) => {
+const RoutesFC: FC<RoutesProps> = ({ routes, basename }) => {
+    const value = useProvider(routes);
+
     return (
-        <Context.Provider value={{ routes }}>
-            <RouterProvider
-                router={createBrowserRouter(
-                    getRouteObjectArray([{ path: '/', menuType: 'layout' as const, Component: DocumentTitleComponent, children: routes }]),
-                    { basename },
-                )}
-            />
+        <Context.Provider value={value}>
+            <RouterProvider router={createBrowserRouter(value.routeObjects, { basename })} />
         </Context.Provider>
     );
 };
 
-export default Routes;
+export default RoutesFC;

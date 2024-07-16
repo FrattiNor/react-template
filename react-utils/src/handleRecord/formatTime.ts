@@ -6,16 +6,16 @@ export const handleFormatTime = (record: Record<string, any>, formatTime: Format
     const nextRecord: Record<string, any> = { ...record };
 
     Object.entries(record).forEach(([key, value]) => {
-        if (timeTool.isDayjs(value)) {
+        if (timeTool.isDayjs(value) || timeTool.isDate(value)) {
             switch (formatTime) {
                 case 'YYYY-MM-DD HH:mm:ss':
-                    nextRecord[key] = timeTool.toStr(value, 'YYYY-MM-DD HH:mm:ss');
+                    nextRecord[key] = timeTool.toStr(value as Date, 'YYYY-MM-DD HH:mm:ss');
                     break;
                 case 'YYYY-MM-DD':
-                    nextRecord[key] = timeTool.toStr(value, 'YYYY-MM-DD');
+                    nextRecord[key] = timeTool.toStr(value as Date, 'YYYY-MM-DD');
                     break;
                 case 'timestamp':
-                    nextRecord[key] = timeTool.toTimestamp(value);
+                    nextRecord[key] = timeTool.toTimestamp(value as Date);
                     break;
             }
         }
@@ -29,16 +29,16 @@ export const handleFormatTimeOnly = (record: Record<string, any>, formatObj: Rec
 
     Object.entries(formatObj).forEach(([key, formatTime]) => {
         const value = nextRecord[key];
-        if (timeTool.isDayjs(value)) {
+        if (timeTool.isDayjs(value) || timeTool.isDate(value)) {
             switch (formatTime) {
                 case 'YYYY-MM-DD HH:mm:ss':
-                    nextRecord[key] = timeTool.toStr(value, 'YYYY-MM-DD HH:mm:ss');
+                    nextRecord[key] = timeTool.toStr(value as Date, 'YYYY-MM-DD HH:mm:ss');
                     break;
                 case 'YYYY-MM-DD':
-                    nextRecord[key] = timeTool.toStr(value, 'YYYY-MM-DD');
+                    nextRecord[key] = timeTool.toStr(value as Date, 'YYYY-MM-DD');
                     break;
                 case 'timestamp':
-                    nextRecord[key] = timeTool.toTimestamp(value);
+                    nextRecord[key] = timeTool.toTimestamp(value as Date);
                     break;
             }
         }

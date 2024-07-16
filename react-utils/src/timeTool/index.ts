@@ -66,6 +66,7 @@ function toDate(arg1: string | number | Dayjs, arg2?: string): Date {
 // .valueOf() 毫秒数
 // 这里使用的全是毫秒数
 const timeTool = {
+    isDate,
     isDayjs,
     toStr,
     toDate,

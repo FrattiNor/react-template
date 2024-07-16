@@ -6,6 +6,7 @@ export type ThemeProps = {
         | {
               withBg?: boolean;
               className?: string;
+              withScrollBar?: boolean;
               minWidth?: number | string;
               minHeight?: number | string;
           }

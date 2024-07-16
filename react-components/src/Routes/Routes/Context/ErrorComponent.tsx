@@ -2,7 +2,7 @@ import type { FC } from 'react';
 import { useEffect } from 'react';
 import { useAsyncError, useRouteError } from 'react-router-dom';
 
-import { useTranslation } from '../../Local';
+import { useTranslation } from '../../../Local';
 
 const ErrorBoundary: FC = () => {
     const error = useRouteError();
@@ -14,7 +14,11 @@ const ErrorBoundary: FC = () => {
         if (error2) console.error(error2);
     }, []);
 
-    return <div style={{ maxWidth: '100vw', maxHeight: '100vh', padding: '24px', textAlign: 'center' }}>{t1('package@route.error')}</div>;
+    return (
+        <div style={{ maxWidth: '100vw', maxHeight: '100vh', padding: '24px', textAlign: 'center', fontSize: '16px' }}>
+            {t1('package@route.error')}
+        </div>
+    );
 };
 
 export default ErrorBoundary;

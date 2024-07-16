@@ -21,8 +21,8 @@ const useFilter = (filter?: TableColumnFilter) => {
                 onOpenChange={setVisible}
                 dropdownRender={() => filter.dropdown({ setVisible })}
             >
-                <div className={classNames(styles['filter'], { [styles['active']]: filter.filtered })}>
-                    <FilterFilled />
+                <div className={classNames(styles['filter'], { [styles['active']]: filter.filtered, [styles['visible']]: visible })}>
+                    {filter.icon ?? <FilterFilled />}
                 </div>
             </Dropdown>
         );

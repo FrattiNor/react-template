@@ -19,4 +19,5 @@ const useEditStore = <T>({ dataSource }: Opt<T>) => {
     return { editCellValues, setEditCellValues };
 };
 
+export type EditStore<T> = ReturnType<typeof useEditStore<T>>;
 export default useEditStore;

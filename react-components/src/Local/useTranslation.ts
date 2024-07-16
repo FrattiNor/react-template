@@ -13,7 +13,7 @@ const defaultT1 = (v: string) => {
 const defaultT2 = (v: string, opt: Record<string, string>) => {
     let res = (packageT2Map as TranslationMap)?.[v]?.['zh_cn'] ?? v;
     Object.entries(opt).forEach(([key, value]) => {
-        res = res.replaceAll(`{{${key}}}`, defaultT1(value));
+        res = res.replace(new RegExp(`{{${key}}}`, 'g'), defaultT1(value));
     });
     return res;
 };

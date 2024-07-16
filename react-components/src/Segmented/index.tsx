@@ -1,5 +1,5 @@
-import type { CSSProperties, FC } from 'react';
-import { useLayoutEffect, useRef } from 'react';
+import type { CSSProperties } from 'react';
+import { Fragment, useEffect, useRef } from 'react';
 
 import { useMergeState, useTransition } from '@react/hooks';
 import classNames from 'classnames';
@@ -8,13 +8,13 @@ import styles from './index.module.less';
 
 import type { SegmentedProps } from './type';
 
-const Segmented: FC<SegmentedProps> = (props) => {
-    const { options = [], bordered } = props;
+const Segmented = <T extends string>(props: SegmentedProps<T>) => {
+    const { options = [], bordered, className, style, onMouseDown } = props;
+
     const maskStyle = useRef<CSSProperties>();
     const wrapperRef = useRef<HTMLDivElement>(null);
-
-    const [value, onChange] = useMergeState({
-        defaultValue: () => options?.[0]?.value,
+    const [value, onChange] = useMergeState<T>({
+        defaultValue: () => options?.[0]?.value as T,
         state: props.value,
         setState: props.onChange,
     });
@@ -38,7 +38,7 @@ const Segmented: FC<SegmentedProps> = (props) => {
         },
     });
 
-    const itemClick = (itemValue: string) => {
+    const itemClick = (itemValue: T) => {
         if (itemValue !== value) {
             if (typeof onChange === 'function') {
                 onChange(itemValue);
@@ -46,26 +46,37 @@ const Segmented: FC<SegmentedProps> = (props) => {
         }
     };
 
-    useLayoutEffect(() => {
-        start();
+    useEffect(() => {
+        requestIdleCallback(() => {
+            start();
+        });
     }, [value, JSON.stringify(options)]);
 
     return (
-        <div className={classNames(styles['wrapper'], { [styles['bordered']]: bordered === true })} ref={wrapperRef}>
-            {options.map((item) => (
+        <Fragment>
+            {options.length > 0 && (
                 <div
-                    key={item.value}
-                    onClick={() => itemClick(item.value)}
-                    className={classNames(styles['item'], {
-                        [styles['selected']]: value === item.value,
-                        [styles['not-selected']]: value !== item.value,
-                    })}
+                    style={style}
+                    ref={wrapperRef}
+                    onMouseDown={onMouseDown}
+                    className={classNames(styles['wrapper'], className, { [styles['bordered']]: bordered === true })}
                 >
-                    {item.label}
+                    {options.map((item) => (
+                        <div
+                            key={item.value}
+                            onClick={() => itemClick(item.value as T)}
+                            className={classNames(styles['item'], {
+                                [styles['selected']]: value === item.value,
+                                [styles['not-selected']]: value !== item.value,
+                            })}
+                        >
+                            {item.label}
+                        </div>
+                    ))}
+                    <div {...listeners} style={maskStyle.current} className={styles['mask']} />
                 </div>
-            ))}
-            <div {...listeners} style={maskStyle.current} className={styles['mask']} />
-        </div>
+            )}
+        </Fragment>
     );
 };
 

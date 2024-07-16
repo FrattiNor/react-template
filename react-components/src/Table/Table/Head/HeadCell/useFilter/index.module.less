@@ -2,14 +2,14 @@
     font-size: 12px;
     cursor: pointer;
     padding: 5px 3px;
-    margin-right: 6px;
     color: var(--theme-placeholder-foreground);
     border-radius: var(--theme-border-radius);
     transition:
         color 0.2s,
         background-color 0.2s;
 
-    &:hover {
+    &:hover,
+    &.visible {
         color: var(--theme-foreground);
         background-color: var(--theme-hover-bg);
     }

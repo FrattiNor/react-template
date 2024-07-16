@@ -1,87 +1,47 @@
 import classNames from 'classnames';
 
 import { useTableContext } from '../../../../TableContext';
+import styles from '../../index.module.less';
 import BodyCell from '../BodyCell';
-import styles from '../index.module.less';
 
 import type { AnyObj } from '../../../../type';
 
 type Props<T> = {
-    currentRowData: T;
-    currentRowKey: string;
-    currentRowIndex: number;
+    rowData: T;
+    rowKey: string;
+    rowIndex: number;
 };
 
 const BodyRow = <T extends AnyObj>(props: Props<T>) => {
     const tableContext = useTableContext<T>();
-    const { rowHeight } = tableContext.handledProps;
-    const { currentRowData, currentRowIndex, currentRowKey } = props;
-    const { handledFixedLeftColumns, handledFixedRightColumns, handledMidColumns } = tableContext;
-    const { ping, selectedRowKeysObj, verticalMeasureElement, midLeftPadding, midRightPadding, setClickedRow } = tableContext;
+    const { rowData, rowIndex, rowKey } = props;
 
-    const rowClick = () => setClickedRow((v) => (v !== currentRowKey ? currentRowKey : null));
-    const measureProps = { ['data-index']: currentRowIndex, ref: verticalMeasureElement };
-    const midColumns = handledMidColumns;
-    const midStyle = { paddingLeft: midLeftPadding, paddingRight: midRightPadding };
+    const { clickedRow } = tableContext.rowClickStore;
+    const { setClickedRow } = tableContext.rowClickStore;
+    const { selectedRowKeysObj } = tableContext.rowSelection;
+    const { handledColumns } = tableContext.handledColumnsObj;
+    const { verticalMeasureElement, getNeedRenderByColumn } = tableContext.virtual;
 
     return (
         <div
-            {...measureProps}
-            onClick={rowClick}
-            style={{ minHeight: rowHeight }}
+            onClick={() => setClickedRow((old) => (old === rowKey ? null : rowKey))}
             className={classNames(styles['body-row'], {
-                [styles['selected']]: selectedRowKeysObj[currentRowKey],
+                [styles['clicked-row']]: clickedRow === rowKey,
+                [styles['selected-row']]: selectedRowKeysObj[rowKey],
             })}
         >
-            {handledFixedLeftColumns.length > 0 && (
-                <div className={classNames(styles['body-fixed-left'], { [styles['pinged']]: ping['left'] })} key="left">
-                    {handledFixedLeftColumns.map((column) => {
-                        return (
-                            <BodyCell
-                                column={column}
-                                key={column.key}
-                                currentRowKey={currentRowKey}
-                                currentRowData={currentRowData}
-                                currentRowIndex={currentRowIndex}
-                            />
-                        );
-                    })}
-                </div>
-            )}
-
-            {midColumns.length > 0 && (
-                <div className={styles['body-mid']} style={midStyle} key="mid">
-                    {midColumns.map((column) => {
-                        return (
-                            <BodyCell
-                                column={column}
-                                key={column.key}
-                                currentRowKey={currentRowKey}
-                                currentRowData={currentRowData}
-                                currentRowIndex={currentRowIndex}
-                            />
-                        );
-                    })}
-                </div>
-            )}
-
-            {handledFixedRightColumns.length > 0 && (
-                <div className={classNames(styles['body-fixed-right'], { [styles['pinged']]: ping['right'] })} key="right">
-                    {handledFixedRightColumns.map((column) => {
-                        return (
-                            <BodyCell
-                                column={column}
-                                key={column.key}
-                                currentRowKey={currentRowKey}
-                                currentRowData={currentRowData}
-                                currentRowIndex={currentRowIndex}
-                            />
-                        );
-                    })}
-                </div>
-            )}
-
-            <div className={styles['body-seize-a-seat']} key="seize" />
+            <div
+                data-index={rowIndex}
+                ref={verticalMeasureElement}
+                className={styles['body-row-measure']}
+                style={{ gridRow: rowIndex + 1, gridColumn: `1/${handledColumns.length + 1}` }}
+            />
+            {handledColumns.map((column) => {
+                if (getNeedRenderByColumn(column)) {
+                    return <BodyCell column={column} key={column.key} rowKey={rowKey} rowData={rowData} rowIndex={rowIndex} />;
+                }
+            })}
+            <div className={styles['body-cell-placeholder']} style={{ gridRow: rowIndex + 1, gridColumn: handledColumns.length + 1 }} />
         </div>
     );
 };

@@ -1,5 +1,6 @@
 import { useEffect, useRef } from 'react';
 
+type Timer = ReturnType<typeof setTimeout>;
 type Fn<A extends Array<any>, R> = (...args: A) => R;
 type ResFn<A extends Array<any>, R> = (...args: A) => R | null;
 
@@ -10,7 +11,7 @@ type Opt = {
 // 防抖
 const useDebounce = <A extends Array<any>, R, F extends Fn<A, R>>(fn: F, opt?: Opt): ResFn<A, R> => {
     const { delay = 200 } = opt || {};
-    const timeout = useRef<NodeJS.Timeout | null>(null);
+    const timeout = useRef<Timer | null>(null);
 
     const fn2 = (...args: any) => {
         let res = null;

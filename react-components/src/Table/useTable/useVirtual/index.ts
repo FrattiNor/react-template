@@ -2,55 +2,56 @@ import type { RefObject } from 'react';
 
 import { useVirtualizer } from '@react/hooks';
 
-import { observeElementRect, observeElementOffset, measureElement } from './utils';
-import { defaultWidth } from '../index';
-
-import type { TableColumns } from '../../type';
-import type { BodyResizeObserver } from '../useBodyResizeObserver';
-import type { BodyScrollObserver } from '../useBodyScrollObserver';
+import type { HandledColumn } from '../../type';
+import type { BodyObserver } from '../useBodyObserver';
 import type { DataSource } from '../useDataSource';
+import type { HandledColumnsObj } from '../useHandleColumnsObj';
 import type { HandledProps } from '../useHandleProps';
 
 type Opt<T> = {
-    handledProps: HandledProps<T>;
     dataSource: DataSource<T>;
-    sortedColumns: TableColumns<T>;
-    bodyResizeObserver: BodyResizeObserver;
-    bodyScrollObserver: BodyScrollObserver;
+    bodyObserver: BodyObserver;
+    handledProps: HandledProps<T>;
+    handledColumnsObj: HandledColumnsObj<T>;
     bodyRef: RefObject<HTMLDivElement | null>;
 };
 
 type ItemSizeCache = Map<number | string, number>;
 
 const useVirtual = <T>(opt: Opt<T>) => {
-    const { bodyRef, sortedColumns, dataSource, handledProps, bodyResizeObserver, bodyScrollObserver } = opt;
+    const { bodyRef, handledColumnsObj, dataSource, handledProps } = opt;
+
+    const { handledColumns } = handledColumnsObj;
 
     const { showDataSource } = dataSource;
 
-    const { rowHeight } = handledProps;
+    const { rowHeight, rowKey } = handledProps;
+
+    const getRowKey = (item: T, index: number) => {
+        const key = typeof rowKey === 'function' ? rowKey(item) : item[rowKey];
+        if (typeof key === 'string' || typeof key === 'number') {
+            return key;
+        }
+        return index;
+    };
 
     // 竖向虚拟
     const verticalVirtualizer = useVirtualizer({
         overscan: 0,
         estimateSize: () => rowHeight,
-        measureElement: measureElement,
         count: showDataSource?.length || 0,
         getScrollElement: () => bodyRef.current,
-        observeElementRect: observeElementRect('vRect', bodyResizeObserver),
-        observeElementOffset: observeElementOffset('vOffset', bodyScrollObserver, 'vertical'),
+        getItemKey: (index) => getRowKey(showDataSource?.[index], index),
     });
 
     // 横向虚拟
     const horizontalVirtualizer = useVirtualizer({
         overscan: 0,
         horizontal: true,
-        count: sortedColumns.length,
-        measureElement: measureElement,
+        count: handledColumns.length,
         getScrollElement: () => bodyRef.current,
-        getItemKey: (index) => sortedColumns[index].key,
-        estimateSize: (index) => Math.round(sortedColumns[index].width ?? defaultWidth),
-        observeElementRect: observeElementRect('hRect', bodyResizeObserver),
-        observeElementOffset: observeElementOffset('hOffset', bodyScrollObserver, 'horizontal'),
+        getItemKey: (index) => handledColumns[index].key,
+        estimateSize: (index) => Math.round(handledColumns[index].width),
     });
 
     const verticalVirtualItems = verticalVirtualizer.getVirtualItems(); // 纵向虚拟显示item
@@ -59,10 +60,30 @@ const useVirtual = <T>(opt: Opt<T>) => {
     const verticalMeasureElement = verticalVirtualizer.measureElement; // 纵向监测元素高度
 
     const horizontalVirtualItems = horizontalVirtualizer.getVirtualItems(); // 横向虚拟显示item
-    const horizontalDistance = horizontalVirtualItems[0]?.start ?? 0; // 横向offset距离
     const horizontalMeasureElement = horizontalVirtualizer.measureElement; // 横向监测元素宽度
-    const horizontalRange = horizontalVirtualizer.range; // 横向显示的start和end
-    const horizontalItemSizeCache = (horizontalVirtualizer as any).itemSizeCache as ItemSizeCache; // 横向测量缓存
+    const horizontalItemSizeCache = (horizontalVirtualizer as any).itemSizeCache as ItemSizeCache; // 横向size缓存
+
+    // 横向虚拟显示index对象【因为有forceRender存在需要全columns都遍历一遍】
+    const horizontalVirtualItemsIndexObj = (() => {
+        const indexObj: Record<string, true> = {};
+        horizontalVirtualItems.forEach(({ index }) => {
+            indexObj[index] = true;
+        });
+        return indexObj;
+    })();
+
+    // 获取是否需要render
+    const getNeedRenderByColumn = (column: HandledColumn<T>) => {
+        const virtualRender = horizontalVirtualItemsIndexObj[column.colIndex] === true;
+        if (virtualRender === true) return true;
+        const forceRender = column.forceRender === true;
+        if (forceRender === true) return true;
+        const editRender = !!column.edit;
+        if (editRender === true) return true;
+        const fixedRender = column.fixed === 'left' || column.fixed === 'right';
+        if (fixedRender === true) return true;
+        return false;
+    };
 
     return {
         verticalDistance,
@@ -70,13 +91,11 @@ const useVirtual = <T>(opt: Opt<T>) => {
         verticalVirtualItems,
         verticalMeasureElement,
 
-        horizontalRange,
-        horizontalDistance,
-        horizontalVirtualItems,
         horizontalMeasureElement,
         horizontalItemSizeCache,
+        getNeedRenderByColumn,
     };
 };
 
-export type VirtualCore = ReturnType<typeof useVirtual>;
+export type VirtualCore<T> = ReturnType<typeof useVirtual<T>>;
 export default useVirtual;

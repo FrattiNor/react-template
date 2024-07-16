@@ -29,13 +29,13 @@ const Select: FC<VirtualTreeSelectProps<any>> = (props) => {
             {!isEmpty && (
                 <div className={styles['virtual-tree']} style={{ height: totalSize, paddingTop: distance }}>
                     {virtualItems.map((verticalItem) => {
-                        const currentRowIndex = verticalItem?.index;
+                        const rowIndex = verticalItem?.index;
 
-                        if (typeof currentRowIndex === 'number') {
-                            const currentRowData = showData?.[currentRowIndex];
+                        if (typeof rowIndex === 'number') {
+                            const rowData = showData?.[rowIndex];
 
-                            if (currentRowData) {
-                                const { key, label, isLeaf, level, disabled, visible } = currentRowData;
+                            if (rowData) {
+                                const { key, label, isLeaf, level, disabled, visible } = rowData;
                                 const selected = selectedKeys.includes(key);
 
                                 const onVisibleClick = () => {
@@ -73,7 +73,7 @@ const Select: FC<VirtualTreeSelectProps<any>> = (props) => {
                                     <div
                                         key={key}
                                         ref={measureElement}
-                                        data-index={currentRowIndex}
+                                        data-index={rowIndex}
                                         className={styles['tree-row']}
                                         style={{ minHeight: lineHeight, paddingLeft: 6 + level * 20 }}
                                     >

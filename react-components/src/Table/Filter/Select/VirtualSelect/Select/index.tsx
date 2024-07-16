@@ -26,12 +26,12 @@ const SelectInner: FC<VirtualSelectProps<any>> = (props) => {
             {!isEmpty && (
                 <div className={styles['virtual-list']} style={{ height: totalSize, paddingTop: distance }}>
                     {virtualItems.map((verticalItem) => {
-                        const currentRowIndex = verticalItem?.index;
-                        if (typeof currentRowIndex === 'number') {
-                            const currentRowData = showData?.[currentRowIndex];
+                        const rowIndex = verticalItem?.index;
+                        if (typeof rowIndex === 'number') {
+                            const rowData = showData?.[rowIndex];
 
-                            if (currentRowData) {
-                                const { key, label, disabled } = currentRowData;
+                            if (rowData) {
+                                const { key, label, disabled } = rowData;
                                 const selected = selectedKeys.includes(key);
 
                                 const onClick = () => {
@@ -54,7 +54,7 @@ const SelectInner: FC<VirtualSelectProps<any>> = (props) => {
                                     <div
                                         ref={measureElement}
                                         key={key}
-                                        data-index={currentRowIndex}
+                                        data-index={rowIndex}
                                         className={styles['list-row']}
                                         style={{ minHeight: lineHeight }}
                                     >

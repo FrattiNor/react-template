@@ -16,7 +16,7 @@ const Table: FC = () => {
     const { loading, className, style } = tableContext.handledProps;
 
     return (
-        <LoadingDiv loading={loading} className={classNames(styles['table'], className)} style={style}>
+        <LoadingDiv loadingMaxHeight={400} loading={loading} className={classNames(styles['table'], className)} style={style}>
             <Head />
             <Body />
             <Summary />

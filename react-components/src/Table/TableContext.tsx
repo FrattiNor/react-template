@@ -1,6 +1,6 @@
 /* eslint-disable react-refresh/only-export-components */
 import type { FC, ReactNode } from 'react';
-import { createContext, forwardRef, useContext, useImperativeHandle } from 'react';
+import { createContext, forwardRef, useContext, useImperativeHandle, memo } from 'react';
 
 import useTable from './useTable';
 
@@ -17,20 +17,18 @@ export const TableContextHoc = (Component: FC) => {
     const NextComponent: NextComponentType = forwardRef((props, ref) => {
         const value = useTable(props);
 
-        useImperativeHandle(
-            ref,
-            () => ({
-                scrollTo: (options: { left?: number; top?: number; behavior?: 'auto' | 'instant' | 'smooth' }) => {
-                    if (value.bodyRef.current) value.bodyRef.current.scrollTo(options);
-                },
-            }),
-            [],
-        );
+        useImperativeHandle(ref, () => ({
+            getOriginColumnsConf: value.handledColumnsObj.getOriginColumnsConf,
+            getSortedColumnsConf: value.handledColumnsObj.getSortedColumnsConf,
+            scrollTo: (options: { left?: number; top?: number; behavior?: 'auto' | 'instant' | 'smooth' }) => {
+                if (value.bodyRef.current) value.bodyRef.current.scrollTo(options);
+            },
+        }));
 
         return <TableContext.Provider value={value}>{<Component />}</TableContext.Provider>;
     });
 
-    return NextComponent;
+    return memo(NextComponent) as NextComponentType;
 };
 
 // Hook

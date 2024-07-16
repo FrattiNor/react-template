@@ -1,95 +1,94 @@
-@import url('../../styles/fixed.module.less');
-
-.head {
+.head-wrapper {
     width: 100%;
     flex-shrink: 0;
     overflow: hidden;
     position: relative;
 
-    .virtual-head {
-        min-width: 100%;
+    .head {
+        width: 100%;
+        overflow: hidden;
         position: relative;
-        transform: translate3d(0, 0, 0);
 
-        .head-row {
-            display: flex;
+        // 对Safari单独处理
+        &.safari {
+            overflow: auto !important;
+            &::-webkit-scrollbar {
+                display: none !important;
+            }
+        }
+
+        .virtual-head {
+            display: grid;
+            min-width: 100%;
             position: relative;
-            border-bottom: 1px solid var(--theme-second-border);
+            align-content: start;
+            transform: translate3d(0, 0, 0);
+            grid-auto-flow: dense;
 
-            .head-fixed-left {
-                .fixed-left();
-                flex-shrink: 0;
-                display: flex;
-                z-index: 2;
+            .head-group-row .head-cell {
+                border-bottom: none !important;
             }
 
-            .head-fixed-right {
-                .fixed-right();
-                flex-shrink: 0;
-                display: flex;
-                z-index: 3;
+            .head-row,
+            .head-group-row {
+                display: contents;
 
-                .head-v-scroll-bar {
-                    flex-shrink: 0;
+                .head-row-measure {
+                    z-index: -1;
+                    position: relative;
+                    pointer-events: none;
+                }
+
+                .head-cell-placeholder {
+                    right: 0;
+                    z-index: 1;
+                    position: sticky;
+                    background-color: var(--theme-table-head-bg);
+                    border-bottom: 1px solid var(--theme-second-border);
+                }
+
+                .head-cell {
+                    z-index: 1;
                     position: relative;
                     background-color: var(--theme-table-head-bg);
-                }
-            }
+                    border-bottom: 1px solid var(--theme-second-border);
 
-            .head-mid {
-                position: relative;
-                flex-shrink: 0;
-                display: flex;
-                z-index: 1;
-            }
+                    .head-cell-inner {
+                        height: 100%;
+                        padding: 0 8px;
+                        display: flex;
+                        align-items: center;
 
-            .head-seize-a-seat {
-                width: 0;
-                flex-grow: 1;
-                position: relative;
-                background-color: var(--theme-table-head-bg);
-            }
+                        .head-cell-str {
+                            width: 0;
+                            flex-grow: 1;
+                            font-weight: 600;
+                            overflow: hidden;
+                            position: relative;
+                            white-space: nowrap;
+                            text-overflow: ellipsis;
+                        }
 
-            .head-cell {
-                display: flex;
-                flex-shrink: 0;
-                overflow: hidden;
-                position: relative;
-                align-items: center;
-                background-color: var(--theme-table-head-bg);
+                        .head-cell-block {
+                            width: 0;
+                            flex-grow: 1;
+                            font-size: 0;
+                            font-weight: 600;
+                            overflow: hidden;
+                            position: relative;
+                            white-space: nowrap;
+                            text-overflow: ellipsis;
 
-                .head-cell-str {
-                    width: 0;
-                    flex-grow: 1;
-                    padding: 0 8px;
-                    flex-shrink: 0;
-                    font-weight: 600;
-                    overflow: hidden;
-                    position: relative;
-                    white-space: nowrap;
-                    text-overflow: ellipsis;
-                }
+                            & > * {
+                                font-size: var(--theme-font-size);
+                            }
+                        }
 
-                .head-cell-block {
-                    width: 0;
-                    flex-grow: 1;
-                    font-size: 0;
-                    padding: 0 8px;
-                    flex-shrink: 0;
-                    font-weight: 600;
-                    overflow: hidden;
-                    position: relative;
-                    white-space: nowrap;
-                    text-overflow: ellipsis;
-
-                    & > * {
-                        font-size: var(--theme-font-size);
+                        .head-cell-filter {
+                            flex-shrink: 0;
+                            position: relative;
+                        }
                     }
-                }
-
-                .head-cell-filter {
-                    flex-shrink: 0;
-                    position: relative;
                 }
             }
         }

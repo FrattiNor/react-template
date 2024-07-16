@@ -3,6 +3,7 @@ import type { CSSProperties, FC, ReactNode } from 'react';
 import { Pagination as AntdPagination } from 'antd';
 
 import styles from './index.module.less';
+import { useTranslation } from '../Local';
 
 import type { PaginationProps as AntdPaginationProps } from 'antd';
 
@@ -12,6 +13,8 @@ export type PaginationProps = Omit<AntdPaginationProps, 'showTotal'> & {
 };
 
 const Pagination: FC<PaginationProps> = ({ wrapperStyle, showTotal: _showTotal, ...props }) => {
+    const { t2 } = useTranslation();
+
     const defaultProps: AntdPaginationProps = {
         showLessItems: true,
         showSizeChanger: true,
@@ -20,7 +23,8 @@ const Pagination: FC<PaginationProps> = ({ wrapperStyle, showTotal: _showTotal, 
         pageSizeOptions: [10, 20, 50, 100, 500, 1000],
     };
 
-    const showTotal = _showTotal ?? ((total: number) => <span className={styles['total']}>{`共 ${total} 条`}</span>);
+    const showTotal =
+        _showTotal ?? ((total: number) => <span className={styles['total']}>{t2('package@pagination.total {{x}}', { x: `${total}` })}</span>);
 
     return (
         <div className={styles['pagination']} style={wrapperStyle}>

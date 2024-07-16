@@ -8,12 +8,12 @@
     margin-right: calc(0px - var(--right-distance));
     padding-bottom: 1px; // 避免横向滚动条引发的纵向滚动条
 
-    div&::-webkit-scrollbar {
-        background-color: transparent;
+    &::-webkit-scrollbar {
+        background-color: transparent !important;
     }
 
-    div&::-webkit-scrollbar-corner {
-        background-color: transparent;
+    &::-webkit-scrollbar-corner {
+        background-color: transparent !important;
     }
 
     // chrome 114 版本移除了overflow: overlay 的支持【显示模式变为和auto一样】

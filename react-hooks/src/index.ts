@@ -17,3 +17,4 @@ export { default as useEffectNotFirst } from './useEffectNotFirst';
 export { default as useEffectOnce } from './useEffectOnce';
 export { default as useFirstLoading } from './useFirstLoading';
 export { useVirtualizer } from './useVirtualizer';
+export { default as useVirtualCore } from './useVirtualCore';

@@ -13,3 +13,4 @@ export { default as JsAnimate } from './jsAnimate';
 export * from './base64';
 export { default as getContentDispositionFileName } from './getContentDispositionFileName';
 export { default as delayFunc } from './delayFunc';
+export { base64ToFile, fileToBase64 } from './base64File';

@@ -5,6 +5,8 @@ export type { EmptyProps } from './Empty/type';
 
 export { default as Highlight } from './Highlight';
 
+export { KeepAliveProvider, keepAliveHoc, useKeepAlive, useKeepScroll } from './KeepAlive';
+
 export { default as LoadingDiv } from './LoadingDiv';
 
 export { useTranslation, TranslationProvider } from './Local';
@@ -19,12 +21,20 @@ export type { AutoModalProps } from './AutoModal';
 
 export { default as Routes } from './Routes';
 export type { RoutesProps, RouteItem, RouteItems } from './Routes/type';
-export { useCurrentTitles, useDocumentTitle, useRouteMenu, useRoutes } from './Routes';
+export { useCurrentTitles, useDocumentTitle, useRouteMenu, useRoutes, useRouteCheckMenu } from './Routes';
 
 export { default as Segmented } from './Segmented';
 
 export { default as Table } from './Table';
-export { SelectFilter, InputFilter, AutoCompleteFilter, TreeSelectFilter, RangePickerFilter } from './Table/Filter';
+export {
+    SelectFilter,
+    InputFilter,
+    AutoCompleteFilter,
+    TreeSelectFilter,
+    RangePickerFilter,
+    RangeInputNumberFilter,
+    DatePickerFilter,
+} from './Table/Filter';
 export type {
     TableRef,
     TableFixed,

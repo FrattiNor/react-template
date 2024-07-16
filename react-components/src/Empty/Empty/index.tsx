@@ -5,11 +5,11 @@ import { useTranslation } from '../../Local';
 
 import type { EmptyProps } from '../type';
 
-const Empty: FC<EmptyProps> = ({ description }) => {
+const Empty: FC<EmptyProps> = ({ description, style }) => {
     const { t1 } = useTranslation();
 
     return (
-        <div className={styles['empty']}>
+        <div className={styles['empty']} style={style}>
             <div className={styles['empty-image']}>
                 <svg width="64" height="41" viewBox="0 0 64 41" xmlns="http://www.w3.org/2000/svg">
                     <g transform="translate(0 1)" fill="none" fillRule="evenodd">
@@ -24,7 +24,7 @@ const Empty: FC<EmptyProps> = ({ description }) => {
                     </g>
                 </svg>
             </div>
-            <div className={styles['empty-description']}>{description ?? t1('package_ui@empty.nodata')}</div>
+            <div className={styles['empty-description']}>{description ?? t1('package@empty.nodata')}</div>
         </div>
     );
 };

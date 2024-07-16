@@ -15,7 +15,7 @@ const useProvider = ({ defaultLocal = 'zh_cn', t1Map, t2Map }: TranslationProps)
     const t2 = (v: string, opt: Record<string, string>) => {
         let res = (packageT2Map as TranslationMap)?.[v]?.[local] ?? t2Map?.[v]?.[local] ?? v;
         Object.entries(opt).forEach(([key, value]) => {
-            res = res.replaceAll(`{{${key}}}`, t1(value));
+            res = res.replace(new RegExp(`{{${key}}}`, 'g'), t1(value));
         });
         return res;
     };

@@ -1,77 +1,49 @@
 import { useMemo } from 'react';
-
-import { nanoid } from 'nanoid';
+import type { RouteObject, UIMatch } from 'react-router-dom';
 
 import useRoutes from './useRoutes';
 
-import type { RouteItem, NonIndexRouteItem } from '../type';
-
-const joinPaths = (paths: string[]) => {
-    return paths
-        .map((path) => path.replace(/\?$/, ''))
-        .join('/')
-        .replace(/\/\/+/g, '/');
-};
+import type { RouteHandle } from '../type';
 
 type MenuItem = {
     key: string;
     path: string;
     label: string;
+    customData?: any;
     children?: MenuItem[];
 };
 
-type ObjMenuItem = {
-    key: string;
-    path: string;
-    label: string;
-    parentKeys: string[];
-};
+type MenuObj = Record<string, MenuItem>;
 
-type HandleRouteOpt = {
-    parentKeys?: string[];
-    beforePath?: string;
-};
+const handleRoute = (routes: RouteObject[], needCustomData?: boolean) => {
+    const menuObj: MenuObj = {};
 
-const handleRoute = (routes: RouteItem[]) => {
-    const menuKeyObj: Record<string, ObjMenuItem> = {};
-    const menuPathObj: Record<string, ObjMenuItem> = {};
-
-    const recursion = (rs: RouteItem[], opt?: HandleRouteOpt) => {
+    const recursion = (rs: RouteObject[]) => {
         let menu: MenuItem[] = [];
 
-        const { beforePath = '/', parentKeys = [] } = opt || {};
-
         rs.forEach((item) => {
-            if (item.menuType !== 'hidden') {
-                const key = nanoid();
-                const { path, children, title } = item as NonIndexRouteItem;
+            const { menuType, title, indexs, pathname, indexRoute, customData } = item.handle as RouteHandle;
 
-                // 当前路径
-                const currentPaths = [beforePath, path ?? '/'];
-                const currentPath = joinPaths(currentPaths);
+            if (menuType !== 'hidden' && indexRoute !== true) {
+                const key = indexs.join('-');
+                const { children } = item;
 
                 // 待插入数据
                 const menuItem: MenuItem = {
                     key,
-                    path: currentPath,
+                    path: pathname,
                     label: title ?? '-',
                 };
 
-                const objMenuItem: ObjMenuItem = {
-                    key,
-                    parentKeys,
-                    path: currentPath,
-                    label: title ?? '-',
-                };
-
-                // 带?的路径
-                if (/\?$/.test(path ?? '/')) menuPathObj[beforePath] = objMenuItem;
+                if (needCustomData === true) {
+                    menuItem.customData = customData;
+                }
 
                 // 遍历children
                 if (Array.isArray(children) && children.length > 0) {
-                    const childMenu = recursion(children, { parentKeys: [...parentKeys, key], beforePath: currentPath });
+                    const childMenu = recursion(children);
                     // Layout将children平铺
-                    if (item.menuType === 'layout') {
+                    if (menuType === 'layout') {
                         menu = [...menu, ...childMenu];
                     } else if (childMenu.length > 0) {
                         menuItem.children = childMenu;
@@ -79,15 +51,12 @@ const handleRoute = (routes: RouteItem[]) => {
                 }
 
                 // 如果非Layout插入item
-                if (item.menuType !== 'layout') {
+                if (menuType !== 'layout') {
                     menu.push(menuItem);
                 }
 
-                // 非Layout和非Group，插入Obj
-                if (item.menuType !== 'layout' && item.menuType !== 'group') {
-                    menuKeyObj[key] = objMenuItem;
-                    menuPathObj[currentPath] = objMenuItem;
-                }
+                // 插入menuObj，方便使用key反查pathname
+                menuObj[key] = menuItem;
             }
         });
 
@@ -96,16 +65,30 @@ const handleRoute = (routes: RouteItem[]) => {
 
     const menu = recursion(routes);
 
-    return {
-        menu,
-        menuKeyObj,
-        menuPathObj,
-    };
+    return { menu, menuObj };
 };
 
-const useRouteMenu = () => {
-    const { routes } = useRoutes();
-    return useMemo(() => handleRoute(routes), [routes]);
+const useRouteMenu = (props?: { needCustomData?: boolean }) => {
+    const { routeObjects } = useRoutes();
+
+    const getKeyAndParentKeysByMatches = (matches: UIMatch<unknown, unknown>[]) => {
+        let key: null | string = null;
+        const parentKeys: string[] = [];
+        [...matches].reverse().forEach((item) => {
+            const { indexRoute } = item.handle as RouteHandle;
+            if (key === null && indexRoute !== true) {
+                key = item.id;
+            }
+            if (key !== null) {
+                parentKeys.push(item.id);
+            }
+        });
+        return { key, parentKeys };
+    };
+
+    const { menu, menuObj } = useMemo(() => handleRoute(routeObjects, props?.needCustomData), [routeObjects]);
+
+    return { menu, menuObj, getKeyAndParentKeysByMatches };
 };
 
 export default useRouteMenu;

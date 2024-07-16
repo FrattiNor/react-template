@@ -16,17 +16,15 @@ type Props = {
     text: string | number;
     textStyle?: CSSProperties;
     saveEdit: (v: string) => void;
-    onMouseEnter?: () => void;
-    onMouseLeave?: () => void;
 };
 
-const EditCell: FC<Props> = ({ rowKey, cellKey, text, style, className, saveEdit, onMouseEnter, onMouseLeave }) => {
+const EditCell: FC<Props> = ({ rowKey, cellKey, text, style, className, saveEdit }) => {
     const key = `${cellKey}-${rowKey}`;
     const tableContext = useTableContext();
     const [isEdit, setEdit] = useState(false);
     const textareaRef = useRef<HTMLTextAreaElement>(null);
     const [cacheValue, setCacheValue] = useState<string | undefined>(undefined);
-    const { editCellValues, setEditCellValues } = tableContext;
+    const { editCellValues, setEditCellValues } = tableContext.editStore;
 
     // 编辑时，只使用 cacheValue
     // 非编辑时，使用 context 内的值 或者 当前值
@@ -60,14 +58,7 @@ const EditCell: FC<Props> = ({ rowKey, cellKey, text, style, className, saveEdit
     };
 
     return (
-        <div
-            style={style}
-            className={className}
-            title={getShowValue(value)}
-            onMouseEnter={onMouseEnter}
-            onMouseLeave={onMouseLeave}
-            onDoubleClick={enterEditingStatus}
-        >
+        <div style={style} className={className} title={getShowValue(value)} onDoubleClick={enterEditingStatus}>
             <div className={classNames(styles['body-cell-edit-str'], { [styles['edit']]: isEdit })}>{getShowValue(value)}</div>
 
             {isEdit && <div className={styles['border']} />}

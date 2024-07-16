@@ -2,4 +2,89 @@
     overflow: auto;
     position: relative;
     padding-bottom: 1px; // 避免横向滚动条引发的纵向滚动条
+
+    .virtual-body {
+        display: grid;
+        min-width: 100%;
+        position: relative;
+        align-content: start;
+        transform: translate3d(0, 0, 0);
+
+        .body-row {
+            display: contents;
+
+            .body-row-measure {
+                z-index: -1;
+                position: relative;
+                pointer-events: none;
+            }
+
+            .body-cell-placeholder {
+                right: 0;
+                z-index: 1;
+                position: sticky;
+                background-color: var(--theme-bg);
+                transition: background-color 0.2s;
+                border-bottom: 1px solid var(--theme-second-border);
+            }
+
+            .body-cell {
+                z-index: 1;
+                position: relative;
+                background-color: var(--theme-bg);
+                transition: background-color 0.2s;
+                border-bottom: 1px solid var(--theme-second-border);
+
+                .body-cell-inner {
+                    padding: 8px;
+                    height: 100%;
+                    display: flex;
+                    align-items: center;
+
+                    .body-cell-str {
+                        width: 100%;
+                        overflow: hidden;
+                        position: relative;
+                        white-space: nowrap;
+                        text-overflow: ellipsis;
+                    }
+
+                    .body-cell-block {
+                        width: 100%;
+                        font-size: 0;
+                        overflow: hidden;
+                        position: relative;
+                        white-space: nowrap;
+                        text-overflow: ellipsis;
+
+                        & > * {
+                            font-size: var(--theme-font-size);
+                        }
+                    }
+                }
+            }
+        }
+
+        .body-cell.resize-active,
+        .body-row:hover .body-cell,
+        .body-row.clicked-row .body-cell,
+        .body-row.selected-row .body-cell,
+        .body-row:hover .body-cell-placeholder,
+        .body-row.clicked-row .body-cell-placeholder,
+        .body-row.selected-row .body-cell-placeholder {
+            background-color: var(--theme-table-row-hover-bg);
+        }
+
+        .body-row.clicked-row:hover .body-cell,
+        .body-row.selected-row:hover .body-cell,
+        .body-row.clicked-row.selected-row .body-cell,
+        .body-row:hover .body-cell.resize-active,
+        .body-row.clicked-row .body-cell.resize-active,
+        .body-row.selected-row .body-cell.resize-active,
+        .body-row.clicked-row:hover .body-cell-placeholder,
+        .body-row.selected-row:hover .body-cell-placeholder,
+        .body-row.clicked-row.selected-row .body-cell-placeholder {
+            background-color: var(--theme-table-row-selected-hover-bg);
+        }
+    }
 }

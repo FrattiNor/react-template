@@ -8,7 +8,8 @@ import { useTableContext } from '../../TableContext';
 
 const Body: FC = () => {
     const tableContext = useTableContext();
-    const { bodyRef, isEmpty, bodyOverflowX } = tableContext;
+    const { bodyRef, isEmpty } = tableContext;
+    const { bodyOverflowX } = tableContext.columnsGridSizeAndSticky;
 
     return (
         <div ref={bodyRef} style={{ overflowX: bodyOverflowX }} className={styles['body']}>

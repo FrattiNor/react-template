@@ -40,6 +40,8 @@ export type VirtualTreeProps<T> = {
     treeStyle?: CSSProperties;
     wrapperClassName?: string;
     wrapperStyle?: CSSProperties;
+
+    renderPrefix?: (item: T) => ReactNode;
 };
 
 export type VirtualSearchTreeProps<T> = VirtualTreeProps<T> & {

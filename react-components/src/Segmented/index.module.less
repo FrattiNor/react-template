@@ -1,6 +1,7 @@
 .wrapper {
     gap: 1px;
     padding: 2px;
+    overflow: hidden;
     position: relative;
     display: inline-flex;
     box-sizing: border-box;
@@ -21,6 +22,7 @@
         align-items: center;
         display: inline-flex;
         white-space: nowrap;
+        transform: translate3d(0, 0, 0);
         border-radius: var(--theme-border-radius);
 
         &.selected {

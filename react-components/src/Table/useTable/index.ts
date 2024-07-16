@@ -1,27 +1,25 @@
 import { useRef } from 'react';
 
-import useBodyResizeObserver from './useBodyResizeObserver';
-import useBodyScrollObserver from './useBodyScrollObserver';
-import useCalcPing from './useCalcPing';
-import useCalcScrollBarWidth from './useCalcScrollBarWidth';
+import useBodyObserver from './useBodyObserver';
 import useClearRowSelectionAndExpandable from './useClearRowSelectionAndExpandable';
-import useClickedRow from './useClickedRow';
+import useColumnsGridSizeAndSticky from './useColumnsGridSizeAndSticky';
+import useConformity from './useConformity';
 import useDataSource from './useDataSource';
 import useEditStore from './useEditStore';
 import useExpandable from './useExpandable';
-import useHandleColumns from './useHandleColumns';
+import useHandleColumnsObj from './useHandleColumnsObj';
 import useHandleProps from './useHandleProps';
 import usePagination from './usePagination';
 import useResizeWidth from './useResizeWidth';
+import useRowClickStore from './useRowClickStore';
 import useRowSelection from './useRowSelection';
-import useSortConfColumns from './useSortConfColumns';
 import useVirtual from './useVirtual';
 
 import type { AnyObj, TableProps } from '../type';
 
 export const defaultWidth = 150;
 export const defaultFlexGrow = 1;
-export const defaultLineHeight = 40;
+export const defaultLineHeight = 39;
 
 const useTable = <T extends AnyObj>(_props: TableProps<T>) => {
     const bodyRef = useRef<HTMLDivElement>(null);
@@ -29,90 +27,80 @@ const useTable = <T extends AnyObj>(_props: TableProps<T>) => {
     const summaryRef = useRef<HTMLDivElement>(null);
 
     // row 点击高亮
-    const clickedRow = useClickedRow();
+    const rowClickStore = useRowClickStore();
 
-    //  body resize 监听
-    const bodyResizeObserver = useBodyResizeObserver(bodyRef);
+    // 内部使用 处理过的props
+    const handledProps = useHandleProps<T>(_props);
 
-    // body scroll 监听
-    const bodyScrollObserver = useBodyScrollObserver({ bodyRef, headRef, summaryRef });
-
-    // 处理 props
-    const handledProps = useHandleProps(_props);
-
-    // 判断 dataSource 为空
-    const isEmpty = !(Array.isArray(handledProps.dataSource) && handledProps.dataSource.length > 0);
+    //  body resize onscroll 监听
+    const bodyObserver = useBodyObserver({ bodyRef, headRef, summaryRef });
 
     // 分页
-    const pagination = usePagination(handledProps);
+    const pagination = usePagination<T>(handledProps);
 
     // 展开
-    const expandable = useExpandable(handledProps);
+    const expandable = useExpandable<T>(handledProps);
 
     // 数据源
-    const dataSource = useDataSource({ handledProps, pagination, expandable });
+    const dataSource = useDataSource<T>({ handledProps, pagination, expandable });
 
     // 多选
-    const rowSelection = useRowSelection({ handledProps, dataSource });
+    const rowSelection = useRowSelection<T>({ handledProps, dataSource });
 
     // 根据 dataSource 清除多选和展开
-    useClearRowSelectionAndExpandable({ rowSelection, expandable, dataSource, handledProps });
-
-    //  整合后排序的 columns
-    const sortedColumns = useSortConfColumns<T>({ columns: handledProps.columns, rowSelection, expandable, dataSource });
-
-    // ping
-    const ping = useCalcPing({ bodyRef, bodyResizeObserver, bodyScrollObserver });
-
-    // v scrollbar
-    const vScrollBarWidth = useCalcScrollBarWidth({ bodyRef, bodyResizeObserver });
+    useClearRowSelectionAndExpandable<T>({ rowSelection, expandable, dataSource, handledProps });
 
     // 编辑格缓存
-    const editStore = useEditStore({ dataSource });
+    const editStore = useEditStore<T>({ dataSource });
+
+    // handle columns
+    const handledColumnsObj = useHandleColumnsObj<T>({
+        dataSource,
+        expandable,
+        handledProps,
+        rowSelection,
+    });
 
     // virtual table core
     const virtual = useVirtual<T>({
         bodyRef,
         dataSource,
         handledProps,
-        sortedColumns,
-        bodyScrollObserver,
-        bodyResizeObserver,
+        bodyObserver,
+        handledColumnsObj,
     });
 
     //  title resize
-    const resizeWidth = useResizeWidth({
+    const resizeWidth = useResizeWidth<T>({
         virtual,
         handledProps,
+        handledColumnsObj,
     });
 
-    // handle columns
-    const handledColumns = useHandleColumns({
+    const columnsGridSizeAndSticky = useColumnsGridSizeAndSticky({
         virtual,
         resizeWidth,
-        sortedColumns,
+        bodyObserver,
+        handledColumnsObj,
     });
 
-    return {
-        ping,
+    return useConformity<T>({
         bodyRef,
         headRef,
         summaryRef,
-        isEmpty,
-        editStore,
-        pagination,
         handledProps,
-        sortedColumns,
-        vScrollBarWidth,
-        ...virtual,
-        ...editStore,
-        ...expandable,
-        ...dataSource,
-        ...clickedRow,
-        ...resizeWidth,
-        ...rowSelection,
-        ...handledColumns,
-    };
+        bodyObserver,
+        pagination,
+        expandable,
+        dataSource,
+        rowSelection,
+        editStore,
+        resizeWidth,
+        rowClickStore,
+        virtual,
+        handledColumnsObj,
+        columnsGridSizeAndSticky,
+    });
 };
 
 export default useTable;

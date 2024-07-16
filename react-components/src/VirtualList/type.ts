@@ -14,6 +14,7 @@ export type VirtualListFieldKeys<T> = {
 export type HandledDataItem<T> = {
     data: T;
     key: string;
+    index: number;
     label: string;
     disabled: boolean;
 };

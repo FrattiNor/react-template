@@ -1,8 +1,10 @@
 import { useState } from 'react';
 
-const useClickedRow = () => {
+const useRowClickStore = () => {
     const [clickedRow, setClickedRow] = useState<string | null>(null);
+
     return { clickedRow, setClickedRow };
 };
 
-export default useClickedRow;
+export type RowClickStore = ReturnType<typeof useRowClickStore>;
+export default useRowClickStore;

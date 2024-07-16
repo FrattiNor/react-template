@@ -34,7 +34,7 @@ const TableBlock: ComponentType = forwardRef((props, ref) => {
     );
 
     return (
-        <LoadingDiv loading={props.loading} className={classNames(styles['table-block'], className)} style={style}>
+        <LoadingDiv loadingMaxHeight={400} loading={props.loading} className={classNames(styles['table-block'], className)} style={style}>
             <Body bodyRef={bodyRef} virtual={virtual} dataSource={dataSource} props={props} isEmpty={isEmpty} />
             <Pagination pagination={pagination} isEmpty={isEmpty} />
         </LoadingDiv>

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import { findSearchKeyIndex } from './utils';
 
@@ -11,6 +11,9 @@ type Props<T> = {
 };
 
 const useSelect = <T extends AnyObj>({ props, virtualizer }: Props<T>) => {
+    // 记录内部key改动，监测selectedKey变更是否是外部触发
+    const selectedKeyCopyRef = useRef<string | undefined>(undefined);
+
     const { shouldSelectedKeyChange, data, fieldKeys } = props;
 
     const [innerSelectedKey, setInnerSelectedKey] = useState<string | undefined>(undefined);
@@ -19,14 +22,18 @@ const useSelect = <T extends AnyObj>({ props, virtualizer }: Props<T>) => {
 
     const setSelectedKey = (key: string | undefined, item: T) => {
         if (!(typeof shouldSelectedKeyChange === 'function' && !shouldSelectedKeyChange(key))) {
-            if (props.setSelectedKey) props.setSelectedKey(key, item);
-            setInnerSelectedKey(key);
+            selectedKeyCopyRef.current = key;
+            if (props.setSelectedKey) {
+                props.setSelectedKey(key, item);
+            } else {
+                setInnerSelectedKey(key);
+            }
         }
     };
 
     // 如果选中变更，并且不是内部触发的，执行滚动
     useEffect(() => {
-        if (data && selectedKey && selectedKey !== innerSelectedKey) {
+        if (data && selectedKey && selectedKey !== selectedKeyCopyRef.current) {
             const searchKeyIndex = findSearchKeyIndex({ data, fieldKeys, searchKey: selectedKey });
             if (typeof searchKeyIndex === 'number') virtualizer.scrollToIndex(searchKeyIndex, { align: 'center' });
         }

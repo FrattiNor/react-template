@@ -14,7 +14,7 @@ type Props = VirtualTreeProps<any> & {
 };
 
 const TreeInner: FC<Props> = (props) => {
-    const { renderItem, treeClassName, treeStyle, instance } = props;
+    const { renderItem, renderPrefix, treeClassName, treeStyle, instance } = props;
     const { virtual, virtualWrapperRef, lineHeight, showData, setVisibles, isEmpty, selectedKey, setSelectedKey, keyword } = instance;
     const { virtualItems, totalSize, measureElement, distance } = virtual;
 
@@ -74,6 +74,8 @@ const TreeInner: FC<Props> = (props) => {
                                         ) : (
                                             <div className={styles['empty-arrow']} />
                                         )}
+
+                                        {renderPrefix && <div className={styles['prefix']}>{renderPrefix(currentRowData)}</div>}
 
                                         <div
                                             onClick={onLabelClick}

@@ -1,35 +1,29 @@
 import type { FC } from 'react';
 
 import BodyRow from './BodyRow';
-import styles from './index.module.less';
 import { useTableContext } from '../../../TableContext';
+import styles from '../index.module.less';
 
 import type { AnyObj } from '../../../type';
 
 const VirtualBody: FC = <T extends AnyObj>() => {
     const tableContext = useTableContext<T>();
-    const { rowKey } = tableContext.handledProps;
-
-    const { verticalVirtualItems, verticalTotalSize, verticalDistance, horizontalTotalSize, showDataSource } = tableContext;
-    const virtualBodyStyle = { paddingTop: verticalDistance, height: verticalTotalSize };
+    const { dataSource } = tableContext;
+    const { rowKey: propsRowKey } = tableContext.handledProps;
+    const { verticalTotalSize, verticalDistance, verticalVirtualItems } = tableContext.virtual;
+    const { gridTemplateColumns, horizontalTotalSize } = tableContext.columnsGridSizeAndSticky;
 
     return (
-        <div className={styles['virtual-body']} style={{ width: horizontalTotalSize, ...virtualBodyStyle }}>
+        <div
+            className={styles['virtual-body']}
+            style={{ width: horizontalTotalSize, height: verticalTotalSize, paddingTop: verticalDistance, gridTemplateColumns }}
+        >
             {verticalVirtualItems.map((verticalItem) => {
-                const currentRowIndex = verticalItem?.index;
-                if (typeof currentRowIndex === 'number') {
-                    const currentRowData = showDataSource?.[currentRowIndex];
-                    if (currentRowData) {
-                        const currentRowKey = typeof rowKey === 'function' ? rowKey(currentRowData) : currentRowData[rowKey];
-                        return (
-                            <BodyRow
-                                key={currentRowKey}
-                                currentRowKey={currentRowKey}
-                                currentRowData={currentRowData}
-                                currentRowIndex={currentRowIndex}
-                            />
-                        );
-                    }
+                const rowIndex = verticalItem?.index;
+                const rowData = dataSource.showDataSource?.[rowIndex];
+                if (rowData) {
+                    const rowKey = typeof propsRowKey === 'function' ? propsRowKey(rowData) : rowData[propsRowKey];
+                    return <BodyRow key={rowKey} rowKey={rowKey} rowData={rowData} rowIndex={rowIndex} />;
                 }
             })}
         </div>

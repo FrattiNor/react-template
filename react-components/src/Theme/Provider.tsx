@@ -13,18 +13,16 @@ const Provider: FC<PropsWithChildren<ThemeProps>> = ({ children, ...props }) => 
     const { container } = props;
     const { containerRef, theme } = value;
     const containerProps = container === true ? {} : container;
-    const { withBg, className, minHeight, minWidth } = containerProps;
+    const { withBg, className, minHeight, minWidth, withScrollBar } = containerProps;
 
     return (
         <Context.Provider value={value}>
             <div
                 ref={containerRef}
-                className={classNames(
-                    styles[theme],
-                    styles['theme-container'],
-                    withBg === true ? styles['apply-theme-bg'] : styles['apply-theme'],
-                    className,
-                )}
+                className={classNames(className, styles[theme], styles['apply-theme'], styles['theme-container'], {
+                    [styles['with-bg']]: withBg,
+                    [styles['with-scroll-bar']]: withScrollBar,
+                })}
             >
                 <div className={styles['theme-container-inner']} style={{ minHeight, minWidth }}>
                     {children}

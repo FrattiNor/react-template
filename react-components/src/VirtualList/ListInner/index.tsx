@@ -35,7 +35,7 @@ const ListInner: FC<Props> = (props) => {
 
                             if (currentRowData) {
                                 const { key, label, disabled } = getKeyLabelDisabled(currentRowData);
-                                const handleData: HandledDataItem<any> = { data: currentRowData, key, label, disabled };
+                                const handleData: HandledDataItem<any> = { data: currentRowData, key, label, disabled, index: currentRowIndex };
                                 const selected = selectedKey === key;
 
                                 const onLabelClick = () => {

@@ -3,7 +3,8 @@ import Empty from '../../../../Empty';
 import { useTableContext } from '../../../TableContext';
 
 const BodyEmpty = () => {
-    const { horizontalTotalSize } = useTableContext();
+    const tableContext = useTableContext();
+    const { horizontalTotalSize } = tableContext.columnsGridSizeAndSticky;
 
     return (
         <div className={styles['empty-wrapper']}>
