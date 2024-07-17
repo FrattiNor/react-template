@@ -1,3 +1,4 @@
+import chalk from 'chalk';
 import { gotInstance } from '../utils.js';
 import qs from 'qs';
 
@@ -14,6 +15,13 @@ const getApp = async ({ suposHost, supOsTicket, appName }: { suposHost: string; 
 
     const appList = JSON.parse(appListReq.body)['list'] as any[];
     const app = appList.find((item) => item.name === appName);
+
+    if (!app) {
+        console.log(chalk.rgb(146, 84, 222)(`App不存在`));
+    } else {
+        console.log(chalk.rgb(146, 84, 222)(`App状态: ${app.runStatus}`));
+    }
+
     return { app };
 };
 
@@ -32,6 +40,7 @@ const loopApp = async ({
     let complete = false;
     while (complete === false) {
         const { app } = await getApp({ suposHost, supOsTicket, appName });
+
         if (!app) throw new Error('App不存在');
 
         if (condition(app)) {
@@ -43,7 +52,7 @@ const loopApp = async ({
         await new Promise((res) => {
             setTimeout(() => {
                 res(0);
-            }, 500);
+            }, 2000);
         });
 
         // 超过5分钟

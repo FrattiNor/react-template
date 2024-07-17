@@ -1,9 +1,14 @@
 import AdmZip from 'adm-zip';
 import YAML from 'yaml';
 import fs from 'fs';
+import { getRecord } from './utils.js';
 
 // 读取当前文件夹的安装包
 const getAppZip = () => {
+    const record = getRecord('获取安装包');
+
+    record.start();
+
     let AppZipName: string | undefined = undefined;
     fs.readdirSync('./').forEach((fileName) => {
         if (fs.statSync(`./${fileName}`).isFile()) {
@@ -35,6 +40,8 @@ const getAppZip = () => {
         apiVersion: appYamlJSON.apiVersion,
         indexUrl: appYamlJSON.indexUrl,
     };
+
+    record.end();
 
     return { file: fs.createReadStream(`./${AppZipName}`), uploadInfo, AppZipName };
 };

@@ -14,9 +14,9 @@ const login = async ({ suposHost, username, password }: { suposHost: string; use
         },
     });
 
-    record.end();
-
     const supOsTicket = JSON.parse(loginReq.body)['ticket'];
+
+    record.end();
 
     return { supOsTicket };
 };

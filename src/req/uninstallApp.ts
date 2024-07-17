@@ -79,7 +79,7 @@ const uninstallApp = async ({ suposHost, supOsTicket, appName }: { suposHost: st
         await uninstall({ appId: app.appId });
         return;
     }
-    throw new Error('未知的App状态', app.runStatus);
+    throw new Error(`未知的App状态: ${app.runStatus}`);
 };
 
 export default uninstallApp;

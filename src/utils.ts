@@ -55,3 +55,16 @@ export const getRecord = (handle: string) => {
 
     return { start, end };
 };
+
+export const getTotalRecord = () => {
+    let timestamp = 0;
+
+    const start = () => {
+        timestamp = dayjs().valueOf();
+    };
+    const end = () => {
+        console.log(chalk.rgb(229, 229, 16)(`总耗时：${(dayjs().valueOf() - timestamp) / 1000}s`));
+    };
+
+    return { start, end };
+};

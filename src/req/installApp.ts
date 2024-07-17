@@ -14,14 +14,16 @@ const installApp = async ({
     appName: string;
     appConfig: string;
 }) => {
+    const installCheckRecord = getRecord('安装检查');
+    const configRecord = getRecord('配置');
     const installRecord = getRecord('安装');
     const startRecord = getRecord('启动');
-
-    installRecord.start();
 
     const { app } = await getApp({ suposHost, supOsTicket, appName });
 
     if (!app) throw new Error('App不存在');
+
+    installCheckRecord.start();
 
     // check
     await gotInstance(`${suposHost}/inter-api/installer/v3/packages/quota/check`, {
@@ -35,6 +37,10 @@ const installApp = async ({
         },
     });
 
+    installCheckRecord.end();
+
+    configRecord.start();
+
     // config
     await gotInstance(`${suposHost}/inter-api/installer/v3/apps/install/config`, {
         method: 'POST',
@@ -44,6 +50,10 @@ const installApp = async ({
         },
         body: JSON.stringify({ packageId: app.packageId, config: appConfig, configId: '' }),
     });
+
+    configRecord.end();
+
+    installRecord.start();
 
     // install【异步任务】
     await gotInstance(`${suposHost}/inter-api/installer/v3/apps/install?packageId=4485444391722816&configId=`, {

@@ -1,13 +1,18 @@
 import fs from 'fs';
+import { getRecord } from './utils.js';
 
 // 获取本地配置文件
 const getConfig = () => {
-    const config = fs.readFileSync('./config.json', 'utf-8');
+    const record = getRecord('获取配置');
 
-    return (() => {
+    record.start();
+
+    const configText = fs.readFileSync('./config.json', 'utf-8');
+
+    const config = (() => {
         const configJSON = (() => {
             try {
-                return JSON.parse(config);
+                return JSON.parse(configText);
             } catch (e) {
                 throw new Error('config.json 解析错误');
             }
@@ -27,6 +32,10 @@ const getConfig = () => {
             appConfig: configJSON.appConfig as string,
         };
     })();
+
+    record.end();
+
+    return config;
 };
 
 export default getConfig;
