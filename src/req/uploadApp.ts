@@ -1,43 +1,52 @@
 import { getRecord, gotInstance, transformObjToFormData } from '../utils.js';
 import qs from 'qs';
 
-// 上传本地App
-const uploadApp = async ({
-    suposHost,
-    supOsTicket,
-    uploadInfo,
-    file,
-}: {
+type UploadAppProps = {
     suposHost: string;
     supOsTicket: string;
     uploadInfo: Record<string, any>;
     file: any;
-}) => {
-    const record = getRecord('上传');
+};
 
-    record.start();
+// 上传本地App
+const uploadApp = async ({ suposHost, supOsTicket, uploadInfo, file }: UploadAppProps) => {
+    // 执行上传前置接口【获取packageId，上传接口需要使用】
+    const packageId = await (async () => {
+        const record = getRecord('上传前置请求');
 
-    const uploadInfoReq = await gotInstance(`${suposHost}/inter-api/installer/v3/packages/info`, {
-        method: 'POST',
-        body: JSON.stringify(uploadInfo),
-        headers: {
-            'Content-Type': 'application/json; charset=utf-8',
-            Authorization: `Bearer ${supOsTicket}`,
-        },
-    });
+        record.start();
 
-    const packageId = JSON.parse(uploadInfoReq.body)['data'];
+        const uploadInfoReq = await gotInstance(`${suposHost}/inter-api/installer/v3/packages/info`, {
+            method: 'POST',
+            body: JSON.stringify(uploadInfo),
+            headers: {
+                'Content-Type': 'application/json; charset=utf-8',
+                Authorization: `Bearer ${supOsTicket}`,
+            },
+        });
 
-    await gotInstance(`${suposHost}/inter-api/installer/v3/packages/upload`, {
-        method: 'POST',
-        searchParams: qs.stringify({ packageId }),
-        headers: {
-            Authorization: `Bearer ${supOsTicket}`,
-        },
-        body: transformObjToFormData({ file }),
-    });
+        const _packageId = JSON.parse(uploadInfoReq.body)['data'];
 
-    record.end();
+        record.end();
+
+        return _packageId;
+    })();
+
+    // 执行上传App接口
+    await (async () => {
+        const record = getRecord('上传App');
+
+        record.start();
+
+        await gotInstance(`${suposHost}/inter-api/installer/v3/packages/upload`, {
+            method: 'POST',
+            searchParams: qs.stringify({ packageId }),
+            headers: { Authorization: `Bearer ${supOsTicket}` },
+            body: transformObjToFormData({ file }),
+        });
+
+        record.end();
+    })();
 };
 
 export default uploadApp;

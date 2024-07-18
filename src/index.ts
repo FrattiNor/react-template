@@ -1,4 +1,3 @@
-import chalk from 'chalk';
 import getAppZip from './getAppZip.js';
 import getConfig from './getConfig.js';
 import login from './req/login.js';
@@ -6,7 +5,7 @@ import uninstallApp from './req/uninstallApp.js';
 import uploadApp from './req/uploadApp.js';
 import installApp from './req/installApp.js';
 import clearAppZip from './clearAppZip.js';
-import { getTotalRecord } from './utils.js';
+import { colorMap, getTotalRecord } from './utils.js';
 
 (async () => {
     try {
@@ -31,6 +30,6 @@ import { getTotalRecord } from './utils.js';
 
         totalRecord.end();
     } catch (e) {
-        console.log(chalk.rgb(219, 106, 106)(String(e)));
+        console.log(colorMap.red(String(e)));
     }
 })();

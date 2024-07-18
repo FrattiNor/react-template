@@ -41,16 +41,25 @@ export const transformObjToFormData = (obj: Record<string, any>) => {
     return newFormData;
 };
 
+export const colorMap = {
+    red: chalk.rgb(219, 106, 106),
+    blue: chalk.rgb(22, 119, 255),
+    green: chalk.rgb(82, 196, 26),
+    yellow: chalk.rgb(229, 229, 16),
+    purple: chalk.rgb(146, 84, 222),
+    magenta: chalk.rgb(235, 47, 150),
+} as const;
+
 export const getRecord = (handle: string) => {
     let timestamp = 0;
 
     const start = () => {
         timestamp = dayjs().valueOf();
-        console.log(chalk.rgb(78, 142, 211)(`${dayjs().format('HH:mm:ss')} ${handle}中...`));
+        console.log(colorMap.blue(`${handle}中...`));
     };
     const end = () => {
-        console.log(chalk.rgb(13, 188, 121)(`${dayjs().format('HH:mm:ss')} ${handle}完成`));
-        console.log(chalk.rgb(229, 229, 16)(`耗时：${(dayjs().valueOf() - timestamp) / 1000}s`));
+        console.log(colorMap.green(`${handle}完成`));
+        console.log(colorMap.yellow(`耗时：${(dayjs().valueOf() - timestamp) / 1000}s\n`));
     };
 
     return { start, end };
@@ -63,7 +72,7 @@ export const getTotalRecord = () => {
         timestamp = dayjs().valueOf();
     };
     const end = () => {
-        console.log(chalk.rgb(229, 229, 16)(`总耗时：${(dayjs().valueOf() - timestamp) / 1000}s`));
+        console.log(colorMap.yellow(`总耗时：${(dayjs().valueOf() - timestamp) / 1000}s`));
     };
 
     return { start, end };

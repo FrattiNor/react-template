@@ -18,7 +18,7 @@ const getAppZip = () => {
         }
     });
 
-    if (!AppZipName) throw new Error('App安装包不存在');
+    if (!AppZipName) throw new Error('安装包不存在');
 
     const AppZip = new AdmZip(`./${AppZipName}`);
     const appYamlJSON = YAML.parse(AppZip.readAsText(`app.yaml`));
