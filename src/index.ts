@@ -7,8 +7,13 @@ import installApp from './req/installApp.js';
 import clearAppZip from './clearAppZip.js';
 import { colorMap, getTotalRecord } from './utils.js';
 
+// 当前Supos版本
+// V5.00.02.00-24062008-M
 (async () => {
     try {
+        console.log(colorMap.purple('SuposApp安装助手'));
+        console.log(colorMap.purple(`当前适配版本: V5.00.02.00-24062008-M`));
+
         const totalRecord = getTotalRecord();
 
         totalRecord.start();

@@ -59,7 +59,7 @@ export const getRecord = (handle: string) => {
     };
     const end = () => {
         console.log(colorMap.green(`${handle}完成`));
-        console.log(colorMap.yellow(`耗时：${(dayjs().valueOf() - timestamp) / 1000}s\n`));
+        console.log(colorMap.yellow(`耗时: ${(dayjs().valueOf() - timestamp) / 1000}s\n`));
     };
 
     return { start, end };
@@ -72,7 +72,7 @@ export const getTotalRecord = () => {
         timestamp = dayjs().valueOf();
     };
     const end = () => {
-        console.log(colorMap.yellow(`总耗时：${(dayjs().valueOf() - timestamp) / 1000}s`));
+        console.log(colorMap.yellow(`总耗时: ${(dayjs().valueOf() - timestamp) / 1000}s`));
     };
 
     return { start, end };
