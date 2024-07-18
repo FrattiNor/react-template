@@ -9,10 +9,15 @@ type App = {
     packageId: string;
 };
 
-type GetAppProps = { suposHost: string; supOsTicket: string; appName: string };
+type GetAppProps = {
+    suposHost: string;
+    supOsTicket: string;
+    appName: string;
+    loopCount?: number; // 循环获取App时，用于区分是第几次打印
+};
 
 // 通过接口 获取当前App的状态
-const getApp = async ({ suposHost, supOsTicket, appName }: GetAppProps) => {
+const getApp = async ({ suposHost, supOsTicket, appName, loopCount }: GetAppProps) => {
     // 接口获取App列表【前100条】【暂时不考虑有超过100个App的情况】
     const appListReq = await gotInstance(`${suposHost}/inter-api/installer/v3/apps`, {
         method: 'GET',
@@ -28,11 +33,14 @@ const getApp = async ({ suposHost, supOsTicket, appName }: GetAppProps) => {
     // 遍历对比AppName获取当前App
     const app = appList.find((item) => item.name === appName);
 
+    // 循环获取App时的打印Text，不存在时为空字符串
+    const loopCountText = typeof loopCount === 'number' && loopCount > 1 ? `(${loopCount})` : '';
+
     // 打印App状态
     if (!app) {
-        console.log(colorMap.magenta(`App不存在`));
+        console.log(colorMap.magenta(`App不存在` + loopCountText));
     } else {
-        console.log(colorMap.magenta(`当前App状态: ${app.runStatus}`));
+        console.log(colorMap.magenta(`当前App状态: ${app.runStatus}` + loopCountText));
     }
 
     return { app };
@@ -49,6 +57,10 @@ type LoopAppProps = {
 
 // 循环获取App直到condition条件满足为止
 const loopApp = async ({ suposHost, supOsTicket, appName, condition, delayTime = 2000, maxLoopTime = 10 * 60 * 1000 }: LoopAppProps) => {
+    console.log(colorMap.purple(`开启循环获取App状态，循环间隔${delayTime / 1000}s`));
+
+    let loopCount = 1;
+
     // 开始循环时间【设置一个最大循环时间，避免无限循环】
     const startTime = new Date().valueOf();
 
@@ -56,7 +68,7 @@ const loopApp = async ({ suposHost, supOsTicket, appName, condition, delayTime =
     // eslint-disable-next-line no-constant-condition
     while (true) {
         // 接口获取App
-        const { app } = await getApp({ suposHost, supOsTicket, appName });
+        const { app } = await getApp({ suposHost, supOsTicket, appName, loopCount });
 
         // 如果App不存在，抛出错误
         if (!app) throw new Error('App不存在');
@@ -77,6 +89,9 @@ const loopApp = async ({ suposHost, supOsTicket, appName, condition, delayTime =
             console.log(app);
             throw new Error('循环超时');
         }
+
+        // 增加循环计数器
+        loopCount++;
     }
 };
 

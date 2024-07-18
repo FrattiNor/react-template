@@ -1,4 +1,4 @@
-import { getRecord, gotInstance } from '../utils.js';
+import { colorMap, getRecord, gotInstance } from '../utils.js';
 import qs from 'qs';
 import { getApp, loopApp } from './getApp.js';
 
@@ -12,7 +12,9 @@ type InstallAppProps = {
 // 安装App
 const installApp = async ({ suposHost, supOsTicket, appName, appConfig }: InstallAppProps) => {
     // 获取一次App
+    console.log(colorMap.purple(`获取App状态`));
     const { app } = await getApp({ suposHost, supOsTicket, appName });
+    console.log('');
 
     // 如果App不存在，抛出错误
     if (!app) throw new Error('App不存在');
