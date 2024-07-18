@@ -57,7 +57,7 @@ type LoopAppProps = {
 
 // 循环获取App直到condition条件满足为止
 const loopApp = async ({ suposHost, supOsTicket, appName, condition, delayTime = 2000, maxLoopTime = 10 * 60 * 1000 }: LoopAppProps) => {
-    console.log(colorMap.purple(`开启循环获取App状态，循环间隔${delayTime / 1000}s`));
+    console.log(colorMap.cyan(`开启循环获取App状态，循环间隔${delayTime / 1000}s`));
 
     let loopCount = 1;
 

@@ -12,7 +12,7 @@ type InstallAppProps = {
 // 安装App
 const installApp = async ({ suposHost, supOsTicket, appName, appConfig }: InstallAppProps) => {
     // 获取一次App
-    console.log(colorMap.purple(`获取App状态`));
+    console.log(colorMap.cyan(`获取App状态`));
     const { app } = await getApp({ suposHost, supOsTicket, appName });
     console.log('');
 

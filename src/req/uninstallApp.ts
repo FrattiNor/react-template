@@ -80,7 +80,7 @@ type UninstallAppProps = { suposHost: string; supOsTicket: string; appName: stri
 // 笼统的卸载App【包含删除、卸载、停止并卸载】
 // 根据App状态卸载App，直到App列表不存在App
 const uninstallApp = async ({ suposHost, supOsTicket, appName }: UninstallAppProps) => {
-    console.log(colorMap.purple(`获取App状态`));
+    console.log(colorMap.cyan(`获取App状态`));
     const { app } = await getApp({ suposHost, supOsTicket, appName });
     console.log('');
 

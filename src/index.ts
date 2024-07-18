@@ -11,8 +11,8 @@ import { colorMap, getTotalRecord } from './utils.js';
 // V5.00.02.00-24062008-M
 (async () => {
     try {
-        console.log(colorMap.purple('SuposApp安装助手'));
-        console.log(colorMap.purple(`当前适配版本: V5.00.02.00-24062008-M\n`));
+        console.log(colorMap.cyan('SuposApp安装助手'));
+        console.log(colorMap.cyan(`当前适配版本: V5.00.02.00-24062008-M\n`));
 
         const totalRecord = getTotalRecord();
 

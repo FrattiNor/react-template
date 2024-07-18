@@ -48,6 +48,7 @@ export const colorMap = {
     yellow: chalk.rgb(229, 229, 16),
     purple: chalk.rgb(146, 84, 222),
     magenta: chalk.rgb(235, 47, 150),
+    cyan: chalk.rgb(19, 194, 194),
 } as const;
 
 export const getRecord = (handle: string) => {
