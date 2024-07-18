@@ -1,6 +1,6 @@
 import { colorMap, getRecord, gotInstance } from '../utils.js';
 import qs from 'qs';
-import { getApp, loopApp } from './getApp.js';
+import { getApp, getAppStatusText, loopApp } from './getApp.js';
 
 type DelAppProps = { packageId: string; suposHost: string; supOsTicket: string };
 
@@ -109,7 +109,7 @@ const uninstallApp = async ({ suposHost, supOsTicket, appName }: UninstallAppPro
     }
 
     // 其余状态不执行，避免不可预判错误【像INSTALLING、STOPPING、STOP_WAITING等】，并抛出错误
-    throw new Error(`未知的App状态: ${app.runStatus}`);
+    throw new Error(`未知的App状态: ${getAppStatusText(app.runStatus)}`);
 };
 
 export default uninstallApp;

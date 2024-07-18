@@ -1,11 +1,25 @@
 import { colorMap, gotInstance } from '../utils.js';
 import qs from 'qs';
 
+const AppStatusMap = {
+    NOT_INSTALL: '待安装',
+    INSTALLING: '安装中',
+    STOPPED: '已停止',
+    RUNNING: '运行中',
+    STARTING: '正在启动',
+    STOPPING: '正在停止',
+    START_WAITING: '等待启动',
+    STOP_WAITING: '等待停止',
+    START_FAIL: '启动失败',
+};
+
+type AppStatus = keyof typeof AppStatusMap;
+
 type App = {
     name: string;
     appId: string;
     showName: string;
-    runStatus: string;
+    runStatus: AppStatus;
     packageId: string;
 };
 
@@ -15,6 +29,8 @@ type GetAppProps = {
     appName: string;
     loopCount?: number; // 循环获取App时，用于区分是第几次打印
 };
+
+export const getAppStatusText = (runStatus: string) => AppStatusMap[runStatus as AppStatus] ?? runStatus;
 
 // 通过接口 获取当前App的状态
 const getApp = async ({ suposHost, supOsTicket, appName, loopCount }: GetAppProps) => {
@@ -40,7 +56,7 @@ const getApp = async ({ suposHost, supOsTicket, appName, loopCount }: GetAppProp
     if (!app) {
         console.log(colorMap.magenta(`App不存在` + loopCountText));
     } else {
-        console.log(colorMap.magenta(`当前App状态: ${app.runStatus}` + loopCountText));
+        console.log(colorMap.magenta(`当前App状态: ${getAppStatusText(app.runStatus)}` + loopCountText));
     }
 
     return { app };
