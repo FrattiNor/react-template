@@ -1,22 +1,22 @@
-/* eslint-disable @typescript-eslint/no-shadow */
 /* eslint-disable no-debugger */
-import { btoa, atob } from './utils.js';
+import { btoa, atob, transformEquipmentId } from './utils.js';
+// import { AreaDeviceMap, getImageMap } from './map.js';
 import { fileURLToPath } from 'url';
 import { rimrafSync } from 'rimraf';
-import { nanoid } from 'nanoid';
 import path from 'path';
 import fs from 'fs';
+import { componentMap } from './map.js';
 
 const __filename = fileURLToPath(import.meta.url);
 
 const __dirname = path.dirname(__filename);
 
 const convert = async (_oldAppId: string, _newAppId: string) => {
-    const oldAppId = _oldAppId === '' ? '' : _oldAppId;
-    const newAppId = _newAppId === '' ? '' : _newAppId;
+    const oldAppId = _oldAppId === '' ? undefined : _oldAppId;
+    const newAppId = _newAppId === '' ? undefined : _newAppId;
 
     const replaceAppId = (text: string) => {
-        if (oldAppId && newAppId) {
+        if (typeof oldAppId === 'string' && typeof newAppId === 'string') {
             return text.replaceAll(oldAppId, newAppId);
         }
         return text;
@@ -67,52 +67,57 @@ const convert = async (_oldAppId: string, _newAppId: string) => {
                             if (Array.isArray(contextData)) {
                                 for (let i = 0; i < contextData.length; i++) {
                                     const contextItem = contextData[i];
+                                    const contextItemValue = contextItem?.a;
                                     const newContextItem = newContextData[i];
+                                    const newContextItemValue = newContextItem?.a;
 
-                                    if (Object.prototype.toString.call(contextItem?.a) === '[object Object]') {
-                                        const { widgetName } = contextItem?.a;
-                                        const bg = contextItem?.s['shape.background'];
+                                    if (Object.prototype.toString.call(contextItemValue) === '[object Object]') {
+                                        const { widgetName, componentName, data } = contextItemValue;
                                         // 存在 widget
-                                        if (widgetName === 'Rect' && (bg === 'rgba(29,141,4,1)' || bg === 'rgba(106,109,105,1)')) {
-                                            newContextItem.p = {
-                                                ...contextItem.p,
-                                                displayName: contextItem.p.displayName.replaceAll('Rect', 'CustomComp'),
-                                                tag: nanoid(),
-                                                image: 'htDiv',
-                                            };
-                                            newContextItem.a = {
-                                                appDetail: {
-                                                    appId: 'App_a870b0c69f5a9157a781409e15af6928',
-                                                    layoutId: 'Layout_5a428c5814e540fd9731b0aa8fbf44eb',
-                                                },
-                                                widgetName: 'CustomComp',
-                                                componentName: 'AreaComponent',
-                                                resource: {
-                                                    sourcePath: '/resource/App_a870b0c69f5a9157a781409e15af6928/extensions/AreaComponent/source/index.js',
-                                                    compiledPath: '/resource/App_a870b0c69f5a9157a781409e15af6928/extensions/AreaComponent/compiled/index.js',
-                                                    propsConfigPath: '/resource/App_a870b0c69f5a9157a781409e15af6928/extensions/AreaComponent/index.json',
-                                                    dependenciesPath: '/resource/App_a870b0c69f5a9157a781409e15af6928/extensions/AreaComponent/dependencies.json',
-                                                },
-                                                isPreviewInDesign: true,
-                                                dataReplace: null,
-                                            };
-                                            delete newContextItem.s;
-                                        }
+                                        if (typeof widgetName === 'string') {
+                                            //  widget是自定义组件 并且 存在组件名称
 
-                                        if (widgetName === 'Text') {
-                                            const text = contextItem?.a?.['tb.content'];
-                                            const size = contextItem?.a?.['tb.fontSize'];
-                                            if (i > 0) {
-                                                const beforeContextItem = contextData[i - 1];
-                                                const beforeNewContextItem = newContextData[i - 1];
-                                                const { widgetName } = beforeContextItem?.a;
-                                                const bg = beforeContextItem?.s['shape.background'];
-                                                if (widgetName === 'Rect' && (bg === 'rgba(29,141,4,1)' || bg === 'rgba(106,109,105,1)')) {
-                                                    beforeNewContextItem.a = {
-                                                        ...beforeNewContextItem.a,
-                                                        data: { 'area-name': text, 'area-fontSize': size },
-                                                    };
-                                                    newContextData[i] = null;
+                                            if (widgetName === 'CustomComp' && typeof componentName === 'string') {
+                                                const replaceComponent = componentMap[componentName];
+                                                if (replaceComponent) {
+                                                    newContextItemValue['resource']['compiledPath'] = contextItemValue['resource']['compiledPath'].replaceAll(componentName, replaceComponent);
+                                                    newContextItemValue['resource']['dependenciesPath'] = contextItemValue['resource']['dependenciesPath'].replaceAll(componentName, replaceComponent);
+                                                    newContextItemValue['resource']['propsConfigPath'] = contextItemValue['resource']['propsConfigPath'].replaceAll(componentName, replaceComponent);
+                                                    newContextItemValue['resource']['sourcePath'] = contextItemValue['resource']['sourcePath'].replaceAll(componentName, replaceComponent);
+                                                    newContextItemValue['componentName'] = replaceComponent;
+
+                                                    if (Object.prototype.toString.call(data) === '[object Object]') {
+                                                        // 替换name和size
+                                                        const { text, title, fontSize, factoryModelId, equipmentId } = data;
+                                                        const name = title || text;
+                                                        const size = fontSize;
+                                                        const nameKey = replaceComponent === 'AreaComponent' ? 'area-name' : 'device-v2-name';
+                                                        const sizeKey = replaceComponent === 'AreaComponent' ? 'area-fontSize' : 'device-v2-fontSize';
+                                                        if (name) newContextItemValue['data'] = { ...newContextItemValue['data'], [nameKey]: name };
+                                                        if (size) newContextItemValue['data'] = { ...newContextItemValue['data'], [sizeKey]: size };
+                                                        // 装置替换工厂Id
+                                                        if (factoryModelId && replaceComponent === 'AreaComponent') {
+                                                            const _factoryModelId = Array.isArray(factoryModelId) ? factoryModelId[factoryModelId.length - 1] : factoryModelId;
+                                                            const nextFactoryModelId = typeof _factoryModelId === 'string' ? _factoryModelId : undefined;
+                                                            if (nextFactoryModelId) {
+                                                                newContextItemValue['data'] = { ...newContextItemValue['data'], ['area-factoryModelIds']: { factoryModelId: nextFactoryModelId } };
+                                                            }
+                                                        }
+                                                        // 设备设置模板为无
+                                                        if (replaceComponent === 'DeviceComponentV2') {
+                                                            newContextItemValue['data'] = { ...newContextItemValue['data'], ['device-v2-template']: 'None' };
+                                                        }
+                                                        // 设备替换isdmTag
+                                                        if (replaceComponent === 'DeviceComponentV2' && equipmentId) {
+                                                            const currentIsdmTag = typeof equipmentId === 'string' ? equipmentId : undefined;
+                                                            if (currentIsdmTag) {
+                                                                const nextIsdmTag = (await transformEquipmentId(currentIsdmTag)).data;
+                                                                if (nextIsdmTag) {
+                                                                    newContextItemValue['data'] = { ...newContextItemValue['data'], ['device-v2-deviceInfo']: { isdmTag: nextIsdmTag } };
+                                                                }
+                                                            }
+                                                        }
+                                                    }
                                                 }
                                             }
                                         }
@@ -120,7 +125,6 @@ const convert = async (_oldAppId: string, _newAppId: string) => {
                                 }
                             }
 
-                            newContextJson.context.jsonData.d = newContextJson?.context?.jsonData?.d.filter((item: any) => !!item);
                             const newContextText = btoa(JSON.stringify(JSON.stringify(newContextJson)));
                             newItemJson.children[0].content.propertyValues.context = newContextText;
                         }

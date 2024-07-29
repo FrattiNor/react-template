@@ -16,18 +16,9 @@ const client = axios.create({
     },
 });
 
-export const transformFactoryModelId = (ids: Array<string>) => {
-    return client<{ id: string }>({
-        method: 'POST',
-        url: 'http://192.168.188.45:7777/factory-model/bluetron-tree',
-        data: { tree: `,${ids.join(',')},` },
-    });
-};
-
 export const transformEquipmentId = (id: string) => {
-    return client<{ isdmTag: string }>({
-        method: 'POST',
-        url: 'http://192.168.188.45:7777/device/isdm-tag',
-        data: { equipmentId: id },
+    return client<string>({
+        method: 'GET',
+        url: `http://192.168.22.131:30323/mapping?id=${id}`,
     });
 };
