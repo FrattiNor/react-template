@@ -1,35 +1,35 @@
 .body {
-    --right-distance: 0px;
+	--right-distance: 0px;
 
-    overflow: auto;
-    position: relative;
-    overflow-y: overlay;
-    padding-right: var(--right-distance);
-    margin-right: calc(0px - var(--right-distance));
-    padding-bottom: 1px; // 避免横向滚动条引发的纵向滚动条
+	overflow: auto;
+	position: relative;
+	overflow-y: overlay;
+	padding-right: var(--right-distance);
+	margin-right: calc(0px - var(--right-distance));
+	padding-bottom: 1px; // 避免横向滚动条引发的纵向滚动条
 
-    &::-webkit-scrollbar {
-        background-color: transparent !important;
-    }
+	&::-webkit-scrollbar {
+		background-color: transparent !important;
+	}
 
-    &::-webkit-scrollbar-corner {
-        background-color: transparent !important;
-    }
+	&::-webkit-scrollbar-corner {
+		background-color: transparent !important;
+	}
 
-    // chrome 114 版本移除了overflow: overlay 的支持【显示模式变为和auto一样】
-    // scrollbar-gutter: stable 的支持从 94 版本开始（360浏览器为86版本不支持）
-    // @supports 的支持从 83 版本开始（360也支持）
-    // 使用 @supports (scrollbar-gutter: stable) 判断scrollbar-gutter的支持，支持scrollbar-gutter使用scrollbar-gutter实现
-    // 默认还是使用 overflow: overlay 实现
-    @supports (scrollbar-gutter: stable) {
-        & {
-            overflow-y: auto;
-            scrollbar-gutter: stable;
-            padding-right: calc(var(--right-distance) - var(--theme-scrollbar-width));
-        }
-    }
+	// chrome 114 版本移除了overflow: overlay 的支持【显示模式变为和auto一样】
+	// scrollbar-gutter: stable 的支持从 94 版本开始（360浏览器为86版本不支持）
+	// @supports 的支持从 83 版本开始（360也支持）
+	// 使用 @supports (scrollbar-gutter: stable) 判断scrollbar-gutter的支持，支持scrollbar-gutter使用scrollbar-gutter实现
+	// 默认还是使用 overflow: overlay 实现
+	@supports (scrollbar-gutter: stable) {
+		& {
+			overflow-y: auto;
+			scrollbar-gutter: stable;
+			padding-right: calc(var(--right-distance) - var(--theme-scrollbar-width));
+		}
+	}
 
-    &.empty {
-        border-bottom: 0;
-    }
+	&.empty {
+		border-bottom: 0;
+	}
 }

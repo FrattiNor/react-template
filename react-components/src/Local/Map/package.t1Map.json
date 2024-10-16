@@ -1,34 +1,18 @@
 {
-    "package@empty.nodata": {
-        "zh_cn": "暂无数据",
-        "en_us": "NoData"
-    },
-    "package@route.error": {
-        "zh_cn": "对不起，发生异常，请刷新页面重试",
-        "en_us": "Sorry, An Exception Occurred. Please Refresh The Page And Try Again"
-    },
-    "package@table.reset": {
-        "zh_cn": "重置",
-        "en_us": "Reset"
-    },
-    "package@table.search": {
-        "zh_cn": "确定",
-        "en_us": "Search"
-    },
-    "package@table.start_time": {
-        "zh_cn": "开始时间",
-        "en_us": "Start Time"
-    },
-    "package@table.end_time": {
-        "zh_cn": "结束时间",
-        "en_us": "End Time"
-    },
-    "package@table.high_limit": {
-        "zh_cn": "上限",
-        "en_us": "High Limit"
-    },
-    "package@table.low_limit": {
-        "zh_cn": "下限",
-        "en_us": "Low Limit"
-    }
+	"package@empty.nodata": {
+		"zh_cn": "暂无数据",
+		"en_us": "NoData"
+	},
+	"package@route.error": {
+		"zh_cn": "对不起，发生异常，请刷新页面重试",
+		"en_us": "Sorry, An Exception Occurred. Please Refresh The Page And Try Again"
+	},
+	"package@tree.expand_all": {
+		"zh_cn": "展开全部",
+		"en_us": "Expand All"
+	},
+	"package@tree.collapse_all": {
+		"zh_cn": "收起全部",
+		"en_us": "Collapse All"
+	}
 }

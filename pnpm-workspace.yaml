@@ -1,7 +1,6 @@
 packages:
     - 'apps/*'
+    - 'type-tools'
     - 'react-hooks'
     - 'react-utils'
     - 'react-components'
-    - 'react-components/packages/*'
-    - 'react-components/packages-ui/*'

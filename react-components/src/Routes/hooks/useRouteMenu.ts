@@ -1,94 +1,97 @@
 import { useMemo } from 'react';
-import type { RouteObject, UIMatch } from 'react-router-dom';
+import { type RouteObject, type UIMatch } from 'react-router-dom';
 
 import useRoutes from './useRoutes';
-
-import type { RouteHandle } from '../type';
+import { type RouteHandle } from '../type';
 
 type MenuItem = {
-    key: string;
-    path: string;
-    label: string;
-    customData?: any;
-    children?: MenuItem[];
+	key: string;
+	path: string;
+	label: string;
+	customData?: any;
+	children?: MenuItem[];
 };
 
 type MenuObj = Record<string, MenuItem>;
 
-const handleRoute = (routes: RouteObject[], needCustomData?: boolean) => {
-    const menuObj: MenuObj = {};
+type Option = { needCustomData?: boolean; handleTitle?: (title: string) => string };
 
-    const recursion = (rs: RouteObject[]) => {
-        let menu: MenuItem[] = [];
+const handleRoute = (routes: RouteObject[], opt?: Option) => {
+	const menuObj: MenuObj = {};
 
-        rs.forEach((item) => {
-            const { menuType, title, indexs, pathname, indexRoute, customData } = item.handle as RouteHandle;
+	const { needCustomData, handleTitle } = opt ?? {};
 
-            if (menuType !== 'hidden' && indexRoute !== true) {
-                const key = indexs.join('-');
-                const { children } = item;
+	const recursion = (rs: RouteObject[]) => {
+		let menu: MenuItem[] = [];
 
-                // 待插入数据
-                const menuItem: MenuItem = {
-                    key,
-                    path: pathname,
-                    label: title ?? '-',
-                };
+		rs.forEach((item) => {
+			const { menuType, title, indexs, pathname, indexRoute, customData } = item.handle as RouteHandle;
 
-                if (needCustomData === true) {
-                    menuItem.customData = customData;
-                }
+			if (menuType !== 'hidden' && indexRoute !== true) {
+				const key = indexs.join('-');
+				const { children } = item;
 
-                // 遍历children
-                if (Array.isArray(children) && children.length > 0) {
-                    const childMenu = recursion(children);
-                    // Layout将children平铺
-                    if (menuType === 'layout') {
-                        menu = [...menu, ...childMenu];
-                    } else if (childMenu.length > 0) {
-                        menuItem.children = childMenu;
-                    }
-                }
+				// 待插入数据
+				const menuItem: MenuItem = {
+					key,
+					path: pathname,
+					label: handleTitle ? handleTitle(title ?? '-') : (title ?? '-'),
+				};
 
-                // 如果非Layout插入item
-                if (menuType !== 'layout') {
-                    menu.push(menuItem);
-                }
+				if (needCustomData === true) {
+					menuItem.customData = customData;
+				}
 
-                // 插入menuObj，方便使用key反查pathname
-                menuObj[key] = menuItem;
-            }
-        });
+				// 遍历children
+				if (Array.isArray(children) && children.length > 0) {
+					const childMenu = recursion(children);
+					// Layout将children平铺
+					if (menuType === 'layout') {
+						menu = [...menu, ...childMenu];
+					} else if (childMenu.length > 0) {
+						menuItem.children = childMenu;
+					}
+				}
 
-        return menu;
-    };
+				// 如果非Layout插入item
+				if (menuType !== 'layout') {
+					menu.push(menuItem);
+				}
 
-    const menu = recursion(routes);
+				// 插入menuObj，方便使用key反查pathname
+				menuObj[key] = menuItem;
+			}
+		});
 
-    return { menu, menuObj };
+		return menu;
+	};
+
+	const menu = recursion(routes);
+
+	return { menu, menuObj };
 };
 
-const useRouteMenu = (props?: { needCustomData?: boolean }) => {
-    const { routeObjects } = useRoutes();
+const useRouteMenu = (opt?: Option) => {
+	const { routeObjects } = useRoutes();
 
-    const getKeyAndParentKeysByMatches = (matches: UIMatch<unknown, unknown>[]) => {
-        let key: null | string = null;
-        const parentKeys: string[] = [];
-        [...matches].reverse().forEach((item) => {
-            const { indexRoute } = item.handle as RouteHandle;
-            if (key === null && indexRoute !== true) {
-                key = item.id;
-            }
-            if (key !== null) {
-                parentKeys.push(item.id);
-            }
-        });
-        return { key, parentKeys };
-    };
+	const getKeyAndParentKeysByMatches = (matches: UIMatch<unknown, unknown>[]) => {
+		let key: null | string = null;
+		const parentKeys: string[] = [];
+		[...matches].reverse().forEach((item) => {
+			const { indexRoute } = item.handle as RouteHandle;
+			if (key === null && indexRoute !== true) {
+				key = item.id;
+			}
+			if (key !== null) {
+				parentKeys.push(item.id);
+			}
+		});
+		return { key, parentKeys };
+	};
 
-    const { menu, menuObj } = useMemo(() => handleRoute(routeObjects, props?.needCustomData), [routeObjects]);
+	const { menu, menuObj } = useMemo(() => handleRoute(routeObjects, opt), [routeObjects]);
 
-    return { menu, menuObj, getKeyAndParentKeysByMatches };
+	return { menu, menuObj, getKeyAndParentKeysByMatches };
 };
 
 export default useRouteMenu;

@@ -1,6 +1,6 @@
 export * from './valueType';
 export { default as timeTool } from './timeTool';
-export { default as objToFormData } from './objToFormData';
+export { default as convertObjToFormData } from './convertObjToFormData';
 export * from './file';
 export * from './empty';
 export * from './colors';
@@ -10,7 +10,8 @@ export { default as calcTextWidth } from './calcTextWidth';
 export { default as transferOption } from './transferOption';
 export { regExpMatch, regExpSplit } from './regExpMatch';
 export { default as JsAnimate } from './jsAnimate';
-export * from './base64';
 export { default as getContentDispositionFileName } from './getContentDispositionFileName';
 export { default as delayFunc } from './delayFunc';
 export { base64ToFile, fileToBase64 } from './base64File';
+export { default as getPureImage } from './getPureImage';
+export { default as findTreeItem } from './findTreeItem';

@@ -1,8 +1,10 @@
 module.exports = {
-    tabWidth: 4,
-    endOfLine: 'lf',
-    printWidth: 150,
-    singleQuote: true,
-    proseWrap: 'never',
-    trailingComma: 'all',
+	semi: true,
+	useTabs: true,
+	tabWidth: 4,
+	printWidth: 150,
+	singleQuote: true,
+	proseWrap: 'never',
+	trailingComma: 'all',
+	endOfLine: 'crlf',
 };

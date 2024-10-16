@@ -1,57 +1,60 @@
 import { useMemo } from 'react';
-import type { RouteObject } from 'react-router-dom';
+import { type RouteObject } from 'react-router-dom';
 
 import useRoutes from './useRoutes';
-
-import type { RouteHandle } from '../type';
+import { type RouteHandle } from '../type';
 
 type MenuItem = {
-    path: string;
-    label: string;
+	path: string;
+	label: string;
 };
 
-const handleRoute = (routes: RouteObject[]) => {
-    const menu: MenuItem[] = [];
+type Option = { handleTitle?: (title: string) => string };
 
-    const recursion = (rs: RouteObject[]) => {
-        rs.forEach((item) => {
-            const { menuType, title, pathname, indexRoute } = item.handle as RouteHandle;
+const handleRoute = (routes: RouteObject[], opt?: Option) => {
+	const menu: MenuItem[] = [];
 
-            if (menuType !== 'hidden' && indexRoute !== true) {
-                const { children } = item;
+	const { handleTitle } = opt ?? {};
 
-                // 待插入数据
-                const menuItem: MenuItem = {
-                    path: pathname,
-                    label: title ?? '-',
-                };
+	const recursion = (rs: RouteObject[]) => {
+		rs.forEach((item) => {
+			const { menuType, title, pathname, indexRoute } = item.handle as RouteHandle;
 
-                // 如果非Layout插入item
-                if (menuType !== 'layout' && menuType !== 'group') {
-                    menu.push(menuItem);
-                }
+			if (menuType !== 'hidden' && indexRoute !== true) {
+				const { children } = item;
 
-                // 遍历children
-                if (Array.isArray(children) && children.length > 0) {
-                    recursion(children);
-                }
-            }
-        });
+				// 待插入数据
+				const menuItem: MenuItem = {
+					path: pathname,
+					label: handleTitle ? handleTitle(title ?? '-') : (title ?? '-'),
+				};
 
-        return menu;
-    };
+				// 如果非Layout插入item
+				if (menuType !== 'layout' && menuType !== 'group') {
+					menu.push(menuItem);
+				}
 
-    recursion(routes);
+				// 遍历children
+				if (Array.isArray(children) && children.length > 0) {
+					recursion(children);
+				}
+			}
+		});
 
-    return { menu };
+		return menu;
+	};
+
+	recursion(routes);
+
+	return { menu };
 };
 
-const useRouteCheckMenu = () => {
-    const { routeObjects } = useRoutes();
+const useRouteCheckMenu = (opt?: Option) => {
+	const { routeObjects } = useRoutes();
 
-    const { menu } = useMemo(() => handleRoute(routeObjects), [routeObjects]);
+	const { menu } = useMemo(() => handleRoute(routeObjects, opt), [routeObjects]);
 
-    return { menu };
+	return { menu };
 };
 
 export default useRouteCheckMenu;

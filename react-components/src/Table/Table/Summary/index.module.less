@@ -1,86 +1,86 @@
 .summary {
-    width: 100%;
-    flex-shrink: 0;
-    overflow: hidden;
-    position: relative;
+	width: 100%;
+	flex-shrink: 0;
+	overflow: hidden;
+	position: relative;
 
-    .virtual-summary {
-        display: grid;
-        min-width: 100%;
-        position: relative;
-        align-content: start;
-        transform: translate3d(0, 0, 0);
+	.virtual-summary {
+		display: grid;
+		min-width: 100%;
+		position: relative;
+		align-content: start;
+		transform: translate3d(0, 0, 0);
 
-        .summary-row {
-            display: contents;
+		.summary-row {
+			display: contents;
 
-            .summary-cell-placeholder {
-                right: 0;
-                z-index: 1;
-                position: sticky;
-                background-color: var(--theme-bg);
-                transition: background-color 0.2s;
-                border-bottom: 1px solid var(--theme-second-border);
-            }
+			.summary-cell-placeholder {
+				right: 0;
+				z-index: 1;
+				position: sticky;
+				background-color: var(--theme-bg);
+				transition: background-color 0.2s;
+				border-bottom: 1px solid var(--theme-second-border);
+			}
 
-            .summary-cell {
-                z-index: 1;
-                position: relative;
-                background-color: var(--theme-bg);
-                transition: background-color 0.2s;
-                border-bottom: 1px solid var(--theme-second-border);
+			.summary-cell {
+				z-index: 1;
+				position: relative;
+				background-color: var(--theme-bg);
+				transition: background-color 0.2s;
+				border-bottom: 1px solid var(--theme-second-border);
 
-                .summary-cell-inner {
-                    padding: 8px;
-                    height: 100%;
-                    display: flex;
-                    align-items: center;
+				.summary-cell-inner {
+					padding: 8px;
+					height: 100%;
+					display: flex;
+					align-items: center;
 
-                    .summary-cell-str {
-                        width: 100%;
-                        min-width: 100%;
-                        overflow: hidden;
-                        position: relative;
-                        white-space: nowrap;
-                        text-overflow: ellipsis;
-                    }
+					.summary-cell-str {
+						width: 100%;
+						min-width: 100%;
+						overflow: hidden;
+						position: relative;
+						white-space: nowrap;
+						text-overflow: ellipsis;
+					}
 
-                    .summary-cell-block {
-                        width: 100%;
-                        font-size: 0;
-                        overflow: hidden;
-                        position: relative;
-                        white-space: nowrap;
-                        text-overflow: ellipsis;
+					.summary-cell-block {
+						width: 100%;
+						font-size: 0;
+						overflow: hidden;
+						position: relative;
+						white-space: nowrap;
+						text-overflow: ellipsis;
 
-                        & > * {
-                            font-size: var(--theme-font-size);
-                        }
-                    }
-                }
-            }
-        }
+						& > * {
+							font-size: var(--theme-font-size);
+						}
+					}
+				}
+			}
+		}
 
-        .summary-cell.resize-active,
-        .summary-row:hover .summary-cell,
-        .summary-row.clicked-row .summary-cell,
-        .summary-row.selected-row .summary-cell,
-        .summary-row:hover .summary-cell-placeholder,
-        .summary-row.clicked-row .summary-cell-placeholder,
-        .summary-row.selected-row .summary-cell-placeholder {
-            background-color: var(--theme-table-row-hover-bg);
-        }
+		.summary-cell.resize-active,
+		.summary-row:hover .summary-cell,
+		.summary-row.clicked-row .summary-cell,
+		.summary-row.selected-row .summary-cell,
+		.summary-row:hover .summary-cell-placeholder,
+		.summary-row.clicked-row .summary-cell-placeholder,
+		.summary-row.selected-row .summary-cell-placeholder {
+			background-color: var(--theme-table-row-hover-bg);
+		}
 
-        .summary-row.clicked-row:hover .summary-cell,
-        .summary-row.selected-row:hover .summary-cell,
-        .summary-row.clicked-row.selected-row .summary-cell,
-        .summary-row:hover .summary-cell.resize-active,
-        .summary-row.clicked-row .summary-cell.resize-active,
-        .summary-row.selected-row .summary-cell.resize-active,
-        .summary-row.clicked-row:hover .summary-cell-placeholder,
-        .summary-row.selected-row:hover .summary-cell-placeholder,
-        .summary-row.clicked-row.selected-row .summary-cell-placeholder {
-            background-color: var(--theme-table-row-selected-hover-bg);
-        }
-    }
+		.summary-row.clicked-row:hover .summary-cell,
+		.summary-row.selected-row:hover .summary-cell,
+		.summary-row.clicked-row.selected-row .summary-cell,
+		.summary-row:hover .summary-cell.resize-active,
+		.summary-row.clicked-row .summary-cell.resize-active,
+		.summary-row.selected-row .summary-cell.resize-active,
+		.summary-row.clicked-row:hover .summary-cell-placeholder,
+		.summary-row.selected-row:hover .summary-cell-placeholder,
+		.summary-row.clicked-row.selected-row .summary-cell-placeholder {
+			background-color: var(--theme-table-row-selected-hover-bg);
+		}
+	}
 }

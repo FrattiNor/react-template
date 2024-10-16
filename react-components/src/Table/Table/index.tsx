@@ -1,6 +1,3 @@
-/* eslint-disable react-refresh/only-export-components */
-import type { FC } from 'react';
-
 import classNames from 'classnames';
 
 import Body from './Body';
@@ -9,20 +6,23 @@ import styles from './index.module.less';
 import Pagination from './Pagination';
 import Summary from './Summary';
 import LoadingDiv from '../../LoadingDiv';
-import { TableContextHoc, useTableContext } from '../TableContext';
+import { useTableContext } from '../TableContext';
+import TableContextHoc from '../TableContextHoc';
 
-const Table: FC = () => {
-    const tableContext = useTableContext();
-    const { loading, className, style } = tableContext.handledProps;
+const _Table = () => {
+	const tableContext = useTableContext();
+	const { loading, className, style } = tableContext.handledProps;
 
-    return (
-        <LoadingDiv loadingMaxHeight={400} loading={loading} className={classNames(styles['table'], className)} style={style}>
-            <Head />
-            <Body />
-            <Summary />
-            <Pagination />
-        </LoadingDiv>
-    );
+	return (
+		<LoadingDiv loadingMaxHeight={400} loading={loading} className={classNames(styles['table'], className)} style={style}>
+			<Head />
+			<Body />
+			<Summary />
+			<Pagination />
+		</LoadingDiv>
+	);
 };
 
-export default TableContextHoc(Table);
+const Table = TableContextHoc(_Table);
+
+export default Table;

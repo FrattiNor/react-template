@@ -1,25 +1,36 @@
 {
-    "private": true,
-    "name": "monorepo",
-    "version": "0.0.1",
-    "scripts": {
-        "preinstall": "npx only-allow pnpm",
-        "dev:demo": "npx pnpm -r --filter demo run dev",
-        "build:demo": "npx pnpm -r --filter demo run build",
-        "lint": "npx pnpm -r --filter=\"*\" run lint",
-        "rm-dep": "npx rimraf ./node_modules && npx pnpm -r --filter=\"*\" run rm-dep",
-        "prettier": "npx prettier **/* --write --ignore-unknown",
-        "check-updates": "npx npm-check-updates -ws"
-    },
-    "devDependencies": {
-        "@typescript-eslint/eslint-plugin": "^7.5.0",
-        "@typescript-eslint/parser": "^7.5.0",
-        "eslint": "^8.56.0",
-        "eslint-plugin-import": "^2.29.1",
-        "eslint-plugin-react-hooks": "^4.6.0",
-        "eslint-plugin-react-refresh": "^0.4.6",
-        "npm-check-updates": "^16.14.18",
-        "prettier": "^3.2.5",
-        "typescript": "^5.4.4"
-    }
+	"private": true,
+	"name": "monorepo",
+	"version": "0.0.1",
+	"scripts": {
+		"prepare": "husky",
+		"preinstall": "npx only-allow pnpm",
+		"prefix": "npx pnpm -r --filter @app/prefix-path run prefix",
+		"dev:web": "npx pnpm -r --filter @app/isdm-web run dev",
+		"build:web": "npx pnpm -r --filter @app/isdm-web run build",
+		"version:web": "npx pnpm -r --filter @app/isdm-web run version",
+		"preview:web": "npx pnpm -r --filter @app/isdm-web run preview",
+		"dev:mobile": "npx pnpm -r --filter @app/isdm-mobile run dev",
+		"build:mobile": "npx pnpm -r --filter @app/isdm-mobile run build",
+		"version:mobile": "npx pnpm -r --filter @app/isdm-mobile run version",
+		"preview:mobile": "npx pnpm -r --filter @app/isdm-mobile run preview",
+		"tsc:config": "npx pnpm -r --filter @app/prefix-path run tsc && npx pnpm -r --filter @app/proxy run tsc",
+		"lint": "npx pnpm -r --filter=\"*\" run lint && pnpm run prettier",
+		"rm-dep": "npx rimraf ./node_modules && npx pnpm -r --filter=\"*\" run rm-dep",
+		"prettier": "npx prettier **/* --write --ignore-unknown",
+		"check-updates": "npx npm-check-updates -ws"
+	},
+	"devDependencies": {
+		"@typescript-eslint/eslint-plugin": "^8.7.0",
+		"@typescript-eslint/parser": "^8.7.0",
+		"eslint": "^8.57.1",
+		"eslint-plugin-import": "^2.30.0",
+		"eslint-plugin-react-hooks": "^4.6.2",
+		"eslint-plugin-react-refresh": "^0.4.12",
+		"husky": "^9.1.6",
+		"lint-staged": "^15.2.10",
+		"npm-check-updates": "^17.1.3",
+		"prettier": "^3.3.3",
+		"typescript": "~5.5.4"
+	}
 }

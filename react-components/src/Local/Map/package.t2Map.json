@@ -1,6 +1,6 @@
 {
-    "package@pagination.total {{x}}": {
-        "zh_cn": "共 {{x}} 条",
-        "en_us": "Total {{x}}"
-    }
+	"package@pagination.total {{x}}": {
+		"zh_cn": "共 {{x}} 条",
+		"en_us": "Total {{x}}"
+	}
 }

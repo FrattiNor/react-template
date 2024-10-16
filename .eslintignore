@@ -1,5 +1,8 @@
 iconfont.js
+iMobile.js
 node_modules
-.history
 dist
 static
+cjs
+pdf-viewer
+x6-plugin-snapline-2.1.7

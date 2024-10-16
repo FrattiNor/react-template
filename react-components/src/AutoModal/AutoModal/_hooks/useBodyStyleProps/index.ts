@@ -1,20 +1,20 @@
-import type { CSSProperties } from 'react';
+import { type CSSProperties } from 'react';
 
-import type { ModalProps } from 'antd';
+import { type ModalProps } from 'antd';
 
 const useBodyStyleProps = (props: ModalProps, bodyStyle?: CSSProperties) => {
-    const modalProps: ModalProps = {
-        ...props,
+	const modalProps: ModalProps = {
+		...props,
 
-        styles: {
-            header: props.styles?.header,
-            footer: props.styles?.footer,
-            content: props.styles?.content,
-            body: { ...props.styles?.body, ...bodyStyle },
-        },
-    };
+		styles: {
+			header: props.styles?.header,
+			footer: props.styles?.footer,
+			content: props.styles?.content,
+			body: { ...props.styles?.body, ...bodyStyle },
+		},
+	};
 
-    return modalProps;
+	return modalProps;
 };
 
 export default useBodyStyleProps;

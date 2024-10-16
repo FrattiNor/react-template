@@ -1,23 +1,22 @@
 import { startTransition, useEffect, useState } from 'react';
 
-import type { DataSource } from '../useDataSource';
+import { type DataSource } from '../type';
 
 type Opt<T> = {
-    dataSource: DataSource<T>;
+	dataSource: DataSource<T>;
 };
 
 const useEditStore = <T>({ dataSource }: Opt<T>) => {
-    const [editCellValues, setEditCellValues] = useState<Record<string, string>>({});
+	const [editStoreCellValues, setEditStoreCellValues] = useState<Record<string, string>>({});
 
-    // 数据源变更后清空编辑缓存
-    useEffect(() => {
-        startTransition(() => {
-            setEditCellValues({});
-        });
-    }, [dataSource.totalDataSource]);
+	// 数据源变更后清空编辑缓存
+	useEffect(() => {
+		startTransition(() => {
+			setEditStoreCellValues({});
+		});
+	}, [dataSource.totalDataSource]);
 
-    return { editCellValues, setEditCellValues };
+	return { editStoreCellValues, setEditStoreCellValues };
 };
 
-export type EditStore<T> = ReturnType<typeof useEditStore<T>>;
 export default useEditStore;

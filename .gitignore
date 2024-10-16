@@ -1,4 +1,7 @@
 node_modules
-local.ts
-.history
 dist
+web
+mobile
+apps/app-proxy/cjs
+apps/app-prefixPath/cjs
+isdm-route.json

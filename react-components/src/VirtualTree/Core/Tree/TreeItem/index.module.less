@@ -1,0 +1,65 @@
+.item-row {
+	gap: 4px;
+	display: flex;
+	align-items: center;
+
+	.prefix {
+		flex-shrink: 0;
+		position: relative;
+	}
+
+	.suffix {
+		flex-shrink: 0;
+		position: relative;
+	}
+
+	.content {
+		align-items: center;
+		display: inline-flex;
+
+		// 禁用
+		&.disabled {
+			.label {
+				cursor: not-allowed;
+				color: var(--theme-disabled-foreground);
+			}
+		}
+
+		// 非checkbox选中
+		&.not-checkbox.selected {
+			.label {
+				color: var(--theme-primary-foreground);
+				background-color: var(--theme-primary);
+			}
+		}
+
+		// 非select，非disabled情况hover
+		&.not-selected.not-disabled:hover {
+			// 非checkbox
+			&.not-checkbox .label {
+				background-color: var(--theme-hover-bg);
+			}
+
+			// 是checkbox
+			&.checkbox {
+				:global {
+					.ant-radio-inner,
+					.ant-checkbox-inner {
+						border-color: var(--theme-primary);
+					}
+				}
+			}
+		}
+
+		.label {
+			padding: 0 6px;
+			flex-shrink: 0;
+			cursor: pointer;
+			align-items: center;
+			display: inline-flex;
+			white-space: nowrap;
+			transition: all 0.2s;
+			border-radius: var(--theme-border-radius);
+		}
+	}
+}
