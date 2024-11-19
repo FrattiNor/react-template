@@ -1,24 +1,7 @@
 {
-    "compilerOptions": {
-        "module": "ESNext", // 模块 影响导入模块时的解析 https://www.typescriptlang.org/zh/tsconfig#module
-        "moduleResolution": "Node",
-        "target": "ES5", // 编译目标 https://www.typescriptlang.org/zh/tsconfig#target
-        "lib": ["ESNext", "DOM"], // 库
-        "jsx": "react-jsx",
-        "allowSyntheticDefaultImports": true,
-        "forceConsistentCasingInFileNames": true,
-        "resolveJsonModule": true,
-        "noImplicitReturns": true,
-        "noUnusedLocals": true,
-        "allowJs": false,
-        "skipLibCheck": true,
-        "strict": true,
-        "isolatedModules": true,
-        "noEmit": true,
-        "baseUrl": "./",
-        "paths": {
-            "@/*": ["./src/*"]
-        }
-    },
-    "include": ["./src/**/*"]
+  "files": [],
+  "references": [
+    { "path": "./tsconfig.app.json" },
+    { "path": "./tsconfig.node.json" }
+  ]
 }
