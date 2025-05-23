@@ -17,7 +17,7 @@ type Props<T> = {
 	data: T[];
 	overscan?: [number, number];
 	getItemKey: (item: T) => string; // 不接受动态变更
-	getItemSize: (item: T) => number; // 不接受动态变更
+	getItemSize: (key: string) => number; // 不接受动态变更
 	gap?: number;
 };
 
