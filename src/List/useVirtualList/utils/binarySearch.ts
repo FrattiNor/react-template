@@ -15,7 +15,7 @@ type BinarySearchProps = {
 	endIndex: number;
 };
 
-export function binarySearch({ target, getSize, startIndex, endIndex }: BinarySearchProps): [number, number] {
+function binarySearch({ target, getSize, startIndex, endIndex }: BinarySearchProps): [number, number] {
 	let left = startIndex;
 	let right = endIndex;
 
@@ -33,3 +33,5 @@ export function binarySearch({ target, getSize, startIndex, endIndex }: BinarySe
 	// 没有找到
 	return left < right ? [left, right] : [right, left];
 }
+
+export default binarySearch;

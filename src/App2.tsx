@@ -50,6 +50,7 @@ const App = () => {
 			</div>
 			<List
 				gap={gap}
+				direction="v"
 				overscan={overscan}
 				getItemSize={() => 40}
 				data={(dataType === 1 ? data : data2) as Array<string | { x: string }>}
