@@ -1,0 +1,22 @@
+.virtual-holder {
+	width: 100%;
+	height: 100%;
+	overflow: auto;
+	// 隐藏滚动条
+	scrollbar-width: none !important;
+	-ms-overflow-style: none !important;
+	&::-webkit-scrollbar {
+		width: 0 !important;
+		height: 0 !important;
+		display: none !important;
+	}
+}
+
+.virtual-scroll-bar {
+	opacity: 0;
+	transition: opacity 0.1s;
+}
+
+.virtual-list:hover .virtual-scroll-bar {
+	opacity: 1;
+}

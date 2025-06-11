@@ -3,12 +3,12 @@ import List from './List';
 
 const App = () => {
 	const [gap, setGap] = useState(0);
-	const [size, setSize] = useState(30);
+	const [size, setSize] = useState(40);
 	const [overscan, setOverscan] = useState<[number, number]>([0, 0]);
 	const [dataType, setDataType] = useState(1);
 
 	const data: Array<string> = useMemo(() => {
-		return [...Array(10000)].map((_, i) => `${i}_1`);
+		return [...Array(100000)].map((_, i) => `${i}_1`);
 	}, []);
 
 	const data2: Array<{ x: string }> = useMemo(() => {
@@ -50,12 +50,12 @@ const App = () => {
 			</div>
 			<List
 				gap={gap}
-				direction="h"
+				direction="v"
 				overscan={overscan}
 				getItemSize={() => 40}
 				data={(dataType === 1 ? data : data2) as Array<string | { x: string }>}
 				getItemKey={(item) => (typeof item === 'string' ? item : item.x)}
-				style={{ width: '50vw', height: '70vh' }}
+				style={{ width: '30vw', height: '70vh', position: 'relative' }}
 				renderData={(item, { index, key, measureElement }) => {
 					return (
 						<div
@@ -63,9 +63,8 @@ const App = () => {
 							data-index={index}
 							ref={(e) => measureElement(e, item)}
 							style={{
-								height: '100%',
 								padding: '0 12px',
-								width: Math.max(20, size),
+								height: Math.max(20, size),
 								lineHeight: `${Math.max(20, size)}px`,
 								background: index % 2 === 0 ? '#dcdcdc' : '#fff',
 							}}

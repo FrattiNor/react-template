@@ -1,5 +1,8 @@
 import { Fragment, useRef, type CSSProperties, type ReactNode } from 'react';
 import useVirtualList from './useVirtualList';
+import styles from './index.module.less';
+import VirtualScrollBar from './VirtualScrollBar';
+import classNames from 'classnames';
 
 type RenderProps<T> = {
 	index: number;
@@ -30,24 +33,27 @@ const List = <T,>(props: Props<T>) => {
 	const { virtualItems, paddingStart, totalSize, measureElement } = virtual;
 
 	return (
-		<div ref={ref} className={className} style={{ overflow: 'auto', ...style }}>
-			<div
-				style={{
-					gap,
-					display: 'flex',
-					overflow: 'hidden',
-					flexDirection: direction === 'h' ? 'row' : 'column',
-					boxSizing: 'border-box',
-					height: direction === 'h' ? '100%' : totalSize,
-					width: direction === 'h' ? totalSize : '100%',
-					paddingTop: direction === 'h' ? 0 : paddingStart,
-					paddingLeft: direction === 'h' ? paddingStart : 0,
-				}}
-			>
-				{virtualItems.map((item) => (
-					<Fragment key={item.key}>{renderData(item.data, { ...item, measureElement })}</Fragment>
-				))}
+		<div style={style} className={classNames(styles['virtual-list'], className)}>
+			<div ref={ref} className={styles['virtual-holder']}>
+				<div
+					style={{
+						gap,
+						display: 'flex',
+						overflow: 'hidden',
+						flexDirection: direction === 'h' ? 'row' : 'column',
+						boxSizing: 'border-box',
+						height: direction === 'h' ? '100%' : totalSize,
+						width: direction === 'h' ? totalSize : '100%',
+						paddingTop: direction === 'h' ? 0 : paddingStart,
+						paddingLeft: direction === 'h' ? paddingStart : 0,
+					}}
+				>
+					{virtualItems.map((item) => (
+						<Fragment key={item.key}>{renderData(item.data, { ...item, measureElement })}</Fragment>
+					))}
+				</div>
 			</div>
+			<VirtualScrollBar className={styles['virtual-scroll-bar']} width={direction === 'h' ? totalSize : undefined} height={direction === 'h' ? undefined : totalSize} scrollContentRef={ref} />
 		</div>
 	);
 };
