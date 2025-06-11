@@ -36,10 +36,12 @@ const List = <T,>(props: Props<T>) => {
 					gap,
 					display: 'flex',
 					overflow: 'hidden',
-					flexDirection: 'column',
+					flexDirection: direction === 'h' ? 'row' : 'column',
 					boxSizing: 'border-box',
-					height: totalSize,
-					paddingTop: paddingStart,
+					height: direction === 'h' ? '100%' : totalSize,
+					width: direction === 'h' ? totalSize : '100%',
+					paddingTop: direction === 'h' ? 0 : paddingStart,
+					paddingLeft: direction === 'h' ? paddingStart : 0,
 				}}
 			>
 				{virtualItems.map((item) => (

@@ -8,7 +8,7 @@ const App = () => {
 	const [dataType, setDataType] = useState(1);
 
 	const data: Array<string> = useMemo(() => {
-		return [...Array(1000)].map((_, i) => `${i}_1`);
+		return [...Array(10000)].map((_, i) => `${i}_1`);
 	}, []);
 
 	const data2: Array<{ x: string }> = useMemo(() => {
@@ -50,12 +50,12 @@ const App = () => {
 			</div>
 			<List
 				gap={gap}
-				direction="v"
+				direction="h"
 				overscan={overscan}
 				getItemSize={() => 40}
 				data={(dataType === 1 ? data : data2) as Array<string | { x: string }>}
 				getItemKey={(item) => (typeof item === 'string' ? item : item.x)}
-				style={{ width: 400, height: '70vh' }}
+				style={{ width: '50vw', height: '70vh' }}
 				renderData={(item, { index, key, measureElement }) => {
 					return (
 						<div
@@ -63,8 +63,9 @@ const App = () => {
 							data-index={index}
 							ref={(e) => measureElement(e, item)}
 							style={{
+								height: '100%',
 								padding: '0 12px',
-								height: Math.max(20, size),
+								width: Math.max(20, size),
 								lineHeight: `${Math.max(20, size)}px`,
 								background: index % 2 === 0 ? '#dcdcdc' : '#fff',
 							}}
