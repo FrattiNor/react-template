@@ -1,15 +1,17 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import type { Columns } from './type_column';
+import type { TableDataItem, TableProps } from './TableTypes/type';
+import TableDom from './TableDom';
+import { TableContext } from './TableContext';
+import useTableInstance from './TableHooks/useTableInstance';
+import type { TableInstance } from './TableHooks/type';
 
-type Props<T extends Record<string, any>> = {
-	data: T;
-	rowKey: keyof T | ((item: T, index: number) => string);
-	columns: Columns<T>;
-};
+const SimpleTable = <T extends TableDataItem>(props: TableProps<T>) => {
+	const tableInstance = useTableInstance<T>(props);
 
-const SimpleTable = <T extends Record<string, any>>(props: Props<T>) => {
-	console.log(props);
-	return <div></div>;
+	return (
+		<TableContext value={tableInstance as TableInstance<TableDataItem>}>
+			<TableDom />
+		</TableContext>
+	);
 };
 
 export default SimpleTable;
