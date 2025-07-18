@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import type { TableDataItem } from '../TableTypes/type';
-import type { TableColumns } from '../TableTypes/type_column';
-import { getFlatColumns } from '../utils';
+import type { TableColumns } from '../TableTypes/typeColumn';
+import getFlatColumns from '../TableUtils/getFlatColumns';
 
 type Props<T extends TableDataItem> = {
 	columns: TableColumns<T>;

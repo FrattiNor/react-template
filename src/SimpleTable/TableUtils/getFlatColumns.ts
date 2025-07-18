@@ -1,7 +1,9 @@
-import type { TableDataItem } from './TableTypes/type';
-import type { TableColumn, TableColumns } from './TableTypes/type_column';
+import type { TableDataItem } from '../TableTypes/type';
+import type { TableColumns, TableColumn } from '../TableTypes/typeColumn';
 
-export const getFlatColumns = <T extends TableDataItem>(columns: TableColumns<T>) => {
+// 获取平铺的columns
+// 同时验证columnKey是否存在和重复
+const getFlatColumns = <T extends TableDataItem>(columns: TableColumns<T>) => {
 	const flatColumns: TableColumn<T>[] = [];
 	const columnsRecordKeys: Record<string, true> = {};
 	const loop = (columns: TableColumns<T>) => {
@@ -9,7 +11,7 @@ export const getFlatColumns = <T extends TableDataItem>(columns: TableColumns<T>
 			if (column.type === 'group' && Array.isArray(column.children) && column.children.length > 0) {
 				loop(column.children);
 			}
-			if (column.type === 'column') {
+			if (column.type === 'column' || column.type === undefined) {
 				flatColumns.push(column);
 			}
 			// 判断columnKey是否未填或重复
@@ -25,3 +27,5 @@ export const getFlatColumns = <T extends TableDataItem>(columns: TableColumns<T>
 	loop(columns);
 	return flatColumns;
 };
+
+export default getFlatColumns;

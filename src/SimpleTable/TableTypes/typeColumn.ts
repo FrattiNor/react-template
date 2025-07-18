@@ -3,15 +3,14 @@ import type { TableDataItem } from './type';
 
 export type TableColumn<T extends TableDataItem> = (
 	| {
-			key: keyof T;
-			render: undefined;
-	  }
-	| {
 			key: string;
 			render: (item: T) => ReactNode;
 	  }
+	| {
+			key: keyof T;
+	  }
 ) & {
-	type: 'column';
+	type?: 'column';
 	title: ReactNode;
 };
 

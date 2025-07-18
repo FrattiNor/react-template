@@ -1,7 +1,7 @@
-import { useMemo, useState } from 'react';
+import { useMemo, useState, type FC } from 'react';
 import List from './List';
 
-const App = () => {
+const AppList: FC = () => {
 	const [gap, setGap] = useState(0);
 	const [size, setSize] = useState(40);
 	const [overscan, setOverscan] = useState<[number, number]>([0, 0]);
@@ -78,4 +78,4 @@ const App = () => {
 	);
 };
 
-export default App;
+export default AppList;

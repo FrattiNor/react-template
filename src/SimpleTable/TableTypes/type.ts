@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import type { TableColumns } from './type_column';
+import type { TableColumns } from './typeColumn';
 
 export type TableDataItem = Record<string, any>;
 
