@@ -12,7 +12,7 @@ const App = () => {
 	}, []);
 
 	const data2: Array<{ x: string }> = useMemo(() => {
-		return [...Array(100)].map((_, i) => ({ x: `${i}_2` }));
+		return [...Array(2)].map((_, i) => ({ x: `${i}_2` }));
 	}, []);
 
 	return (
