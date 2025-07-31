@@ -9,6 +9,8 @@ type Props<T extends TableDataItem> = {
 
 const useTableColumns = <T extends TableDataItem>(props: Props<T>) => {
 	const flatColumns = useMemo(() => getFlatColumns(props.columns), [props.columns]);
+	console.log('columns', props.columns);
+	console.log('flatColumns', flatColumns);
 	return { flatColumns };
 };
 

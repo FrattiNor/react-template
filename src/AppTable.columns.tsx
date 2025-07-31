@@ -20,9 +20,9 @@ const columns: TableColumns<DataItem> = [
 				render: ({ firstName }) => firstName,
 			}),
 			columnsHelper.createColumn({
-				key: '123',
+				key: 'lastName',
 				title: 'lastName',
-				// render: ({ lastName }) => lastName,
+				render: ({ lastName }) => lastName,
 			}),
 		],
 	}),

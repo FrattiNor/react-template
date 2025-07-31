@@ -18,13 +18,13 @@ const createRandomUser = () => ({
 	// 注册时间
 	registeredAt: faker.date.past(),
 	// 年龄
-	age: faker.number.int(),
+	age: faker.number.int({ min: 0, max: 100 }),
 	// 性别
 	gender: faker.person.gender(),
 	// 身高
-	height: faker.number.float(),
+	height: faker.number.float({ fractionDigits: 1, min: 100, max: 200 }),
 	// 体重
-	weight: faker.number.float(),
+	weight: faker.number.float({ fractionDigits: 1, min: 100, max: 200 }),
 	// 电话号码
 	phoneNumber: faker.phone.number(),
 	// 工作地点

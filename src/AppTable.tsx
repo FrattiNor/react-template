@@ -1,11 +1,12 @@
 import type { FC } from 'react';
 import columns from './AppTable.columns';
+import SimpleTable from './SimpleTable';
+import data from './AppTable.data';
 
-console.log('columns');
-console.log(columns);
+console.log('data', data);
 
 const AppTable: FC = () => {
-	return <div />;
+	return <SimpleTable data={data} columns={columns} rowKey="userId" />;
 };
 
 export default AppTable;
