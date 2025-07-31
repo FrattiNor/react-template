@@ -1,0 +1,28 @@
+.body {
+	display: grid;
+	overflow: auto;
+	flex-shrink: 1;
+	border-top: unset;
+	border: var(--table-cell-border-width) solid var(--table-cell-border-color);
+	border-top: unset;
+
+	.body-row {
+		display: contents;
+
+		.body-cell-wrapper {
+			position: relative;
+			background-color: var(--table-body-cell-bg);
+			border-left: var(--table-cell-border-width) solid var(--table-cell-border-color);
+			border-top: var(--table-cell-border-width) solid var(--table-cell-border-color);
+
+			.body-cell {
+				min-height: var(--table-row-height);
+				line-height: var(--table-row-height);
+				padding: var(--table-cell-padding);
+				overflow: hidden;
+				white-space: nowrap;
+				text-overflow: ellipsis;
+			}
+		}
+	}
+}

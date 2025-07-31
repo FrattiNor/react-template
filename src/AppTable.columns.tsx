@@ -1,96 +1,103 @@
-import createTableColumnsHelper from './SimpleTable/TableUtils/createTableColumnsHelper';
 import type { DataItem } from './AppTable.data';
-import type { TableColumns } from './SimpleTable/TableTypes/typeColumn';
-
-const columnsHelper = createTableColumnsHelper<DataItem>();
+import type { TableColumns } from './Table/TableTypes/typeColumn';
 
 const columns: TableColumns<DataItem> = [
-	columnsHelper.createColumn({
+	{
 		key: 'userId',
 		title: '用户id',
 		render: ({ userId }) => userId,
-	}),
-	columnsHelper.createGroup({
-		key: 'name',
-		title: '姓名',
-		children: [
-			columnsHelper.createColumn({
-				key: 'firstName',
-				title: 'firstName',
-				render: ({ firstName }) => firstName,
-			}),
-			columnsHelper.createColumn({
-				key: 'lastName',
-				title: 'lastName',
-				render: ({ lastName }) => lastName,
-			}),
-		],
-	}),
-	columnsHelper.createColumn({
+		width: '50%',
+	},
+	{
+		key: 'firstName',
+		title: 'firstName',
+		render: ({ firstName }) => firstName,
+		width: 150,
+	},
+	{
+		key: 'lastName',
+		title: 'lastName',
+		render: ({ lastName }) => lastName,
+		width: 150,
+	},
+	{
 		key: 'email',
 		title: '邮箱',
 		render: ({ email }) => email,
-	}),
-	columnsHelper.createColumn({
+		width: 150,
+	},
+	{
 		key: 'avatar',
 		title: '头像',
 		render: ({ avatar }) => avatar,
-	}),
-	columnsHelper.createColumn({
+		width: 150,
+	},
+	{
 		key: 'password',
 		title: '密码',
 		render: ({ password }) => password,
-	}),
-	columnsHelper.createColumn({
+		width: 150,
+	},
+	{
 		key: 'birthdate',
 		title: '生日',
 		render: ({ birthdate }) => birthdate.toString(),
-	}),
-	columnsHelper.createColumn({
+		width: 150,
+	},
+	{
 		key: 'registeredAt',
 		title: '注册时间',
 		render: ({ registeredAt }) => registeredAt.toString(),
-	}),
-	columnsHelper.createColumn({
+		width: 150,
+	},
+	{
 		key: 'age',
 		title: '年龄',
 		render: ({ age }) => age,
-	}),
-	columnsHelper.createColumn({
+		width: 150,
+	},
+	{
 		key: 'gender',
 		title: '性别',
 		render: ({ gender }) => gender,
-	}),
-	columnsHelper.createColumn({
+		width: 150,
+	},
+	{
 		key: 'height',
 		title: '身高',
 		render: ({ height }) => height,
-	}),
-	columnsHelper.createColumn({
+		width: 150,
+	},
+	{
 		key: 'weight',
 		title: '体重',
 		render: ({ weight }) => weight,
-	}),
-	columnsHelper.createColumn({
+		width: 150,
+	},
+	{
 		key: 'phoneNumber',
 		title: '电话号码',
 		render: ({ phoneNumber }) => phoneNumber,
-	}),
-	columnsHelper.createColumn({
+		width: 150,
+	},
+	{
 		key: 'jobArea',
 		title: '工作地点',
 		render: ({ jobArea }) => jobArea,
-	}),
-	columnsHelper.createColumn({
+		width: 150,
+	},
+	{
 		key: 'jobTitle',
 		title: '工作头衔',
 		render: ({ jobTitle }) => jobTitle,
-	}),
-	columnsHelper.createColumn({
+		width: 150,
+	},
+	{
 		key: 'jobType',
 		title: '工作类型',
 		render: ({ jobType }) => jobType,
-	}),
+		width: 150,
+	},
 ];
 
 export default columns;
