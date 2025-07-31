@@ -1,5 +1,7 @@
 .head {
-	display: contents;
+	display: grid;
+	flex-shrink: 0;
+	overflow: hidden;
 
 	.head-row {
 		display: contents;
@@ -19,6 +21,11 @@
 				white-space: nowrap;
 				text-overflow: ellipsis;
 			}
+		}
+
+		.head-cell-placeholder {
+			background-color: var(--table-head-cell-bg);
+			border: var(--table-cell-border-width) solid var(--table-cell-border-color);
 		}
 	}
 }

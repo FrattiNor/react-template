@@ -3,12 +3,14 @@ import styles from './index.module.less';
 import { useTableContext } from '../../TableContext';
 
 const TableHead: FC = () => {
-	const { props } = useTableContext();
+	const { props, gridTemplateColumns, tableDomRef } = useTableContext();
+	const { rightScrollBarWidth } = tableDomRef;
+	const headGridTemplateColumns = rightScrollBarWidth > 0 ? gridTemplateColumns + ` ${rightScrollBarWidth}px` : gridTemplateColumns;
 	const { columns, bordered } = props;
 	const rowIndex = 0;
 
 	return (
-		<div className={styles['head']}>
+		<div className={styles['head']} style={{ gridTemplateColumns: headGridTemplateColumns }} ref={tableDomRef.headRef}>
 			<div className={styles['head-row']}>
 				{columns.map((item, colIndex) => (
 					<div
@@ -25,7 +27,7 @@ const TableHead: FC = () => {
 						<div className={styles['head-cell']}>{item.title}</div>
 					</div>
 				))}
-				<div />
+				<div className={styles['head-cell-placeholder']} style={{ borderLeft: 'unset', borderRight: bordered !== true ? 'unset' : undefined }} />
 			</div>
 		</div>
 	);

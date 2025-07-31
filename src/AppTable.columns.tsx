@@ -6,7 +6,7 @@ const columns: TableColumns<DataItem> = [
 		key: 'userId',
 		title: '用户id',
 		render: ({ userId }) => userId,
-		width: '50%',
+		width: 300,
 	},
 	{
 		key: 'firstName',

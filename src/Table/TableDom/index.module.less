@@ -1,19 +1,19 @@
 .table {
-	--table-head-cell-bg: #fafafa;
+	--table-head-cell-bg: rgb(245, 248, 255);
 	--table-body-cell-bg: #fff;
 	--table-font-color: rgba(0, 0, 0, 0.88);
 	--table-font-family: 'Segoe UI';
 	--table-row-height: 24px;
 	--table-cell-padding: 8px;
 	--table-cell-border-width: 1px;
-	--table-cell-border-color: #f0f0f0;
+	--table-cell-border-color: #e0e0e0;
 
 	width: 100%;
 	max-height: 100%;
-	display: grid;
+	display: flex;
+	flex-direction: column;
 	font-family: var(--table-font-family);
 	color: var(--table-font-color);
-	overflow: auto;
 	position: relative;
 
 	// &::before {
@@ -37,4 +37,24 @@
 	// 	width: 30px;
 	// 	box-shadow: rgba(5, 5, 5, 0.06) -10px 0px 8px -8px inset;
 	// }
+
+	::-webkit-scrollbar {
+		width: 8px;
+		height: 8px;
+		background-color: rgba(0, 0, 0, 0.03);
+	}
+
+	::-webkit-scrollbar-corner {
+		background-color: rgba(0, 0, 0, 0.03);
+	}
+
+	::-webkit-scrollbar-thumb {
+		background-color: rgba(0, 0, 0, 0.3);
+		border-radius: 4px;
+	}
+
+	::-webkit-scrollbar-thumb:hover,
+	::-webkit-scrollbar-thumb:active {
+		background-color: rgba(0, 0, 0, 0.35);
+	}
 }

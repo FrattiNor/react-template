@@ -3,11 +3,11 @@ import styles from './index.module.less';
 import { useTableContext } from '../../TableContext';
 
 const TableBody: FC = () => {
-	const { props, getRowKey } = useTableContext();
+	const { props, getRowKey, gridTemplateColumns, tableDomRef } = useTableContext();
 	const { columns, data, bordered } = props;
 
 	return (
-		<div className={styles['body']}>
+		<div className={styles['body']} style={{ gridTemplateColumns }} ref={tableDomRef.bodyRef}>
 			{data.map((dataItem, rowIndex) => {
 				const rowKey = getRowKey(dataItem, rowIndex);
 				return (
