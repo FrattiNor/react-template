@@ -1,17 +1,15 @@
 .head {
-	display: grid;
-	flex-shrink: 0;
-	overflow: hidden;
-	border: var(--table-cell-border-width) solid var(--table-cell-border-color);
+	display: contents;
 
 	.head-row {
 		display: contents;
 
 		.head-cell-wrapper {
-			position: relative;
+			top: 0;
+			position: sticky;
+			z-index: 2;
 			background-color: var(--table-head-cell-bg);
-			border-left: var(--table-cell-border-width) solid var(--table-cell-border-color);
-			border-top: var(--table-cell-border-width) solid var(--table-cell-border-color);
+			border: var(--table-cell-border-width) solid var(--table-cell-border-color);
 
 			.head-cell {
 				min-height: var(--table-row-height);

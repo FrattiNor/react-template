@@ -9,4 +9,5 @@ export type TableProps<T extends TableDataItem> = {
 	data: Array<T>;
 	columns: TableColumns<T>;
 	rowKey: ValueTypeKeys<T, string> | ((item: T, index: number) => string);
+	bordered?: boolean;
 };
