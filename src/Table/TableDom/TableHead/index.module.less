@@ -7,9 +7,8 @@
 		display: contents;
 
 		.head-cell-wrapper {
-			top: 0;
-			position: sticky;
 			z-index: 2;
+			box-sizing: border-box;
 			background-color: var(--table-head-cell-bg);
 			border: var(--table-cell-border-width) solid var(--table-cell-border-color);
 
@@ -26,6 +25,7 @@
 		.head-cell-placeholder {
 			background-color: var(--table-head-cell-bg);
 			border: var(--table-cell-border-width) solid var(--table-cell-border-color);
+			border-left: 0;
 		}
 	}
 }

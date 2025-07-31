@@ -6,13 +6,15 @@ const columns: TableColumns<DataItem> = [
 		key: 'userId',
 		title: '用户id',
 		render: ({ userId }) => userId,
-		width: 300,
+		width: '40%',
+		// flexGrow: 0,
 	},
 	{
 		key: 'firstName',
 		title: 'firstName',
 		render: ({ firstName }) => firstName,
 		width: 150,
+		// flexGrow: 0,
 	},
 	{
 		key: 'lastName',

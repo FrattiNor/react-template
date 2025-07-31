@@ -5,9 +5,10 @@ import { useTableContext } from '../../TableContext';
 const TableHead: FC = () => {
 	const { props, gridTemplateColumns, tableDomRef } = useTableContext();
 	const { rightScrollBarWidth } = tableDomRef;
-	const headGridTemplateColumns = rightScrollBarWidth > 0 ? gridTemplateColumns + ` ${rightScrollBarWidth}px` : gridTemplateColumns;
+	const headGridTemplateColumns = rightScrollBarWidth > 0 ? gridTemplateColumns + ` minmax(${rightScrollBarWidth}px, 1fr)` : gridTemplateColumns;
 	const { columns, bordered } = props;
 	const rowIndex = 0;
+	const colMaxIndex = columns.length - 1;
 
 	return (
 		<div className={styles['head']} style={{ gridTemplateColumns: headGridTemplateColumns }} ref={tableDomRef.headRef}>
@@ -19,15 +20,22 @@ const TableHead: FC = () => {
 						style={{
 							gridRow: `${rowIndex + 1}/${rowIndex + 2}`,
 							gridColumn: `${colIndex + 1}/${colIndex + 2}`,
-							borderLeft: bordered !== true || colIndex !== 0 ? 'unset' : undefined,
-							borderTop: rowIndex !== 0 ? 'unset' : undefined,
-							borderRight: bordered !== true ? 'unset' : undefined,
+							borderLeft: bordered !== true || colIndex !== 0 ? 0 : undefined,
+							borderTop: rowIndex !== 0 ? 0 : undefined,
+							borderRight: bordered !== true ? 0 : undefined,
 						}}
 					>
 						<div className={styles['head-cell']}>{item.title}</div>
 					</div>
 				))}
-				<div className={styles['head-cell-placeholder']} style={{ borderLeft: 'unset', borderRight: bordered !== true ? 'unset' : undefined }} />
+				<div
+					className={styles['head-cell-placeholder']}
+					style={{
+						gridRow: `${rowIndex + 1}/${rowIndex + 2}`,
+						gridColumn: `${colMaxIndex + 2}/${colMaxIndex + 3}`,
+						borderRight: bordered !== true ? 0 : undefined,
+					}}
+				/>
 			</div>
 		</div>
 	);

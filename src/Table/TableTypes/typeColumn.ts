@@ -6,6 +6,7 @@ export type TableColumn<T extends TableDataItem> = {
 	title: ReactNode;
 	render: (item: T) => ReactNode;
 	width: number | `${number}%`;
+	flexGrow?: number;
 };
 
 export type TableColumns<T extends TableDataItem> = Array<TableColumn<T>>;
