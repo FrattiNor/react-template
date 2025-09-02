@@ -7,7 +7,7 @@ const columns: TableColumns<DataItem> = [
 		title: '用户id',
 		render: ({ userId }) => userId,
 		width: '40%',
-		// flexGrow: 0,
+		flexGrow: 0,
 	},
 	{
 		key: 'firstName',

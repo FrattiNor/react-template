@@ -1,13 +1,13 @@
 import { useTableContext } from '../../../TableContext';
 import styles from './index.module.less';
 
-const Measure = () => {
-	const { props, setWidthSize } = useTableContext();
+const MeasureInner = () => {
+	const { props, tableState } = useTableContext();
 	const { columns } = props;
 
 	const initColWidth = (node: HTMLDivElement | null, key: string) => {
 		if (node !== null) {
-			setWidthSize((old) => {
+			tableState.setColumnSizes((old) => {
 				if (typeof old[key] !== 'number') {
 					return { ...old, [key]: node.clientWidth };
 				}
@@ -25,4 +25,10 @@ const Measure = () => {
 	);
 };
 
-export default Measure;
+const MeasureColumnSize = () => {
+	const { tableState } = useTableContext();
+	if (Object.keys(tableState.columnSizes).length === 0) return <MeasureInner />;
+	return null;
+};
+
+export default MeasureColumnSize;

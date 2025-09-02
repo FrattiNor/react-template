@@ -1,18 +1,18 @@
 import type { FC } from 'react';
 import styles from './index.module.less';
 import { useTableContext } from '../../TableContext';
-import Measure from './Measure';
+import MeasureColumnSize from './MeasureColumnSize';
 
 const TableBody: FC = () => {
-	const { props, getRowKey, gridTemplateColumns, tableDomRef } = useTableContext();
+	const { props, tableTools, tableSecondaryState, tableDomRef } = useTableContext();
 	const { columns, data, bordered } = props;
 	const colMaxIndex = columns.length - 1;
 
 	return (
-		<div className={styles['body']} style={{ gridTemplateColumns }} ref={tableDomRef.bodyRef}>
-			<Measure />
+		<div className={styles['body']} style={{ gridTemplateColumns: tableSecondaryState.gridTemplateColumns }} ref={tableDomRef.bodyRef}>
+			<MeasureColumnSize />
 			{data.map((dataItem, rowIndex) => {
-				const rowKey = getRowKey(dataItem, rowIndex);
+				const rowKey = tableTools.getRowKey(dataItem, rowIndex);
 				return (
 					<div key={rowKey} className={styles['body-row']}>
 						{columns.map((columnItem, colIndex) => (

@@ -1,14 +1,18 @@
 import type { FC } from 'react';
 import styles from './index.module.less';
 import { useTableContext } from '../../TableContext';
+import ResizeHandle from './ResizeHandle';
 
 const TableHead: FC = () => {
-	const { props, gridTemplateColumns, tableDomRef } = useTableContext();
-	const { rightScrollBarWidth } = tableDomRef;
-	const headGridTemplateColumns = rightScrollBarWidth > 0 ? gridTemplateColumns + ` minmax(${rightScrollBarWidth}px, 1fr)` : gridTemplateColumns;
-	const { columns, bordered } = props;
+	const { props, tableState, tableSecondaryState, tableDomRef } = useTableContext();
 	const rowIndex = 0;
+	const { columns, bordered } = props;
 	const colMaxIndex = columns.length - 1;
+	const headGridTemplateColumns = (() => {
+		const { rightScrollBarWidth } = tableState;
+		const { gridTemplateColumns } = tableSecondaryState;
+		return rightScrollBarWidth > 0 ? gridTemplateColumns + ` minmax(${rightScrollBarWidth}px, 1fr)` : gridTemplateColumns;
+	})();
 
 	return (
 		<div className={styles['head']} style={{ gridTemplateColumns: headGridTemplateColumns }} ref={tableDomRef.headRef}>
@@ -26,6 +30,7 @@ const TableHead: FC = () => {
 						}}
 					>
 						<div className={styles['head-cell']}>{item.title}</div>
+						<ResizeHandle columnKey={item.key} />
 					</div>
 				))}
 				<div

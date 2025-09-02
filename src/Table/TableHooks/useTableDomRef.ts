@@ -1,15 +1,27 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useLayoutEffect, useRef } from 'react';
+import type useTableState from './useTableState';
 
-const useTableDomRef = () => {
+type Props = {
+	tableState: ReturnType<typeof useTableState>;
+};
+
+// 表格dom的ref
+const useTableDomRef = ({ tableState }: Props) => {
 	const bodyRef = useRef<HTMLDivElement | null>(null);
 	const headRef = useRef<HTMLDivElement | null>(null);
-	const [rightScrollBarWidth, setRightScrollBarWidth] = useState(0);
 
 	useEffect(() => {
 		if (bodyRef.current && headRef.current) {
-			const bodyScroll = () => {
+			const handleBodyScroll = () => {
 				const bodyScrollLeft = bodyRef.current?.scrollLeft;
+				const bodyScrollWidth = bodyRef.current?.scrollWidth;
+				const bodyClientWidth = bodyRef.current?.clientWidth;
 				const headScrollLeft = headRef.current?.scrollLeft;
+				if (typeof bodyScrollLeft === 'number' && typeof bodyScrollWidth === 'number' && typeof bodyClientWidth === 'number') {
+					const pingedLeft = bodyScrollLeft;
+					const pingedRight = bodyScrollWidth - bodyClientWidth - bodyScrollLeft;
+					tableState.pinged.current = { left: pingedLeft, right: pingedRight };
+				}
 				if (typeof bodyScrollLeft === 'number' && typeof headScrollLeft === 'number' && bodyScrollLeft !== headScrollLeft) {
 					if (headRef.current) {
 						headRef.current.scrollLeft = bodyScrollLeft;
@@ -17,19 +29,26 @@ const useTableDomRef = () => {
 				}
 			};
 
-			bodyRef.current.addEventListener('scroll', bodyScroll, { passive: true });
+			bodyRef.current.addEventListener('scroll', handleBodyScroll, { passive: true });
 
 			return () => {
-				bodyRef.current?.removeEventListener('scroll', bodyScroll);
+				bodyRef.current?.removeEventListener('scroll', handleBodyScroll);
 			};
 		}
 	}, []);
 
-	useEffect(() => {
+	useLayoutEffect(() => {
 		if (bodyRef.current) {
-			const ob = new ResizeObserver((entries) => {
-				const scrollBarWidth = entries[0].borderBoxSize[0].inlineSize - entries[0].contentBoxSize[0].inlineSize;
-				setRightScrollBarWidth(scrollBarWidth);
+			const getRightScrollBarWidth = () => {
+				if (bodyRef.current) {
+					return bodyRef.current.offsetWidth - bodyRef.current.clientWidth;
+				}
+				return 0;
+			};
+			tableState.setRightScrollBarWidth(getRightScrollBarWidth());
+
+			const ob = new ResizeObserver(() => {
+				tableState.setRightScrollBarWidth(getRightScrollBarWidth());
 			});
 			ob.observe(bodyRef.current);
 
@@ -39,7 +58,7 @@ const useTableDomRef = () => {
 		}
 	}, []);
 
-	return { bodyRef, headRef, rightScrollBarWidth };
+	return { bodyRef, headRef };
 };
 
 export default useTableDomRef;
