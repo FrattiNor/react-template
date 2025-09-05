@@ -6,9 +6,10 @@ import BodyRow from './BodyRow';
 
 const TableBody: FC = () => {
 	const { tableProps, tableTools, tableSecondaryState, tableDomRef } = useTableContext();
+	const gridTemplateColumns = tableSecondaryState.gridTemplateColumnsArr.join(' ');
 
 	return (
-		<div className={styles['body']} style={{ gridTemplateColumns: tableSecondaryState.gridTemplateColumns }} ref={tableDomRef.bodyRef}>
+		<div className={styles['body']} style={{ gridTemplateColumns }} ref={tableDomRef.bodyRef}>
 			<MeasureColumnSize />
 			{tableProps.data?.map((dataItem, rowIndex) => {
 				const rowKey = tableTools.getRowKey(dataItem, rowIndex);

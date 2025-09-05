@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 
 type ResizeFlag = {
 	key: string;
@@ -9,7 +9,8 @@ type ResizeFlag = {
 // 表格状态
 const useTableState = () => {
 	// 左右固定移动距离
-	const pinged = useRef({ left: 0, right: 0 });
+	const [pingedLeft, setPingedLeft] = useState(0);
+	const [pingedRight, setPingedRight] = useState(0);
 	// 纵向滚动条宽度
 	const [rightScrollBarWidth, setRightScrollBarWidth] = useState(0);
 	// 横向column的size对象
@@ -22,7 +23,10 @@ const useTableState = () => {
 	const [resizeFlag, setResizeFlag] = useState<ResizeFlag | null>(null);
 
 	return {
-		pinged,
+		pingedLeft,
+		setPingedLeft,
+		pingedRight,
+		setPingedRight,
 		rightScrollBarWidth,
 		setRightScrollBarWidth,
 		columnSizes,

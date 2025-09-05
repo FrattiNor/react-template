@@ -7,8 +7,8 @@ const TableHead: FC = () => {
 	const { tableState, tableSecondaryState, tableDomRef } = useTableContext();
 	const headGridTemplateColumns = (() => {
 		const { rightScrollBarWidth } = tableState;
-		const { gridTemplateColumns } = tableSecondaryState;
-		return rightScrollBarWidth > 0 ? gridTemplateColumns + ` minmax(${rightScrollBarWidth}px, 1fr)` : gridTemplateColumns;
+		const { gridTemplateColumnsArr } = tableSecondaryState;
+		return rightScrollBarWidth > 0 ? [...gridTemplateColumnsArr, `minmax(${rightScrollBarWidth}px, 1fr)`].join(' ') : gridTemplateColumnsArr.join(' ');
 	})();
 
 	return (

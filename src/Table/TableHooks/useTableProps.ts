@@ -7,17 +7,20 @@ type Props<T extends TableDataItem> = {
 
 // table props处理
 const useTableProps = <T extends TableDataItem>({ props }: Props<T>) => {
-	const columnsKeys = useMemo(() => {
-		let keys = '';
+	const { columnsKeys, columnsFixedKeys } = useMemo(() => {
+		let columnsKeys = '';
+		let columnsFixedKeys = '';
 		props.columns.forEach((item) => {
-			keys += item.key;
+			columnsKeys += `_${item.key}`;
+			columnsFixedKeys += `_${item.key}&${item.fixed ?? 'default'}`;
 		});
-		return keys;
+		return { columnsKeys, columnsFixedKeys };
 	}, [props.columns]);
 
 	return {
 		...props,
 		columnsKeys,
+		columnsFixedKeys,
 	};
 };
 

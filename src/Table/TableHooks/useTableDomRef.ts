@@ -1,4 +1,4 @@
-import { useEffect, useLayoutEffect, useRef } from 'react';
+import { startTransition, useEffect, useLayoutEffect, useRef } from 'react';
 import type useTableState from './useTableState';
 
 type Props = {
@@ -20,7 +20,10 @@ const useTableDomRef = ({ tableState }: Props) => {
 				if (typeof bodyScrollLeft === 'number' && typeof bodyScrollWidth === 'number' && typeof bodyClientWidth === 'number') {
 					const pingedLeft = bodyScrollLeft;
 					const pingedRight = bodyScrollWidth - bodyClientWidth - bodyScrollLeft;
-					tableState.pinged.current = { left: pingedLeft, right: pingedRight };
+					startTransition(() => {
+						tableState.setPingedLeft(pingedLeft);
+						tableState.setPingedRight(pingedRight);
+					});
 				}
 				if (typeof bodyScrollLeft === 'number' && typeof headScrollLeft === 'number' && bodyScrollLeft !== headScrollLeft) {
 					if (headRef.current) {

@@ -19,8 +19,8 @@ const useTableInstance = <T extends TableDataItem>(props: TableProps<T>) => {
 	const tableResize = useTableResize({ tableState });
 	const tableCellBg = useTableCellBg({ tableState, tableResize });
 	const tableMeasureCol = useTableMeasureCol({ tableState, tableProps });
-	useTableSticky({ tableDomRef, tableState });
-	return { tableResize, tableProps, tableDomRef, tableState, tableSecondaryState, tableTools, tableCellBg, tableMeasureCol };
+	const tableSticky = useTableSticky({ tableDomRef, tableState, tableSecondaryState });
+	return { tableResize, tableProps, tableDomRef, tableState, tableSecondaryState, tableTools, tableCellBg, tableMeasureCol, tableSticky };
 };
 
 export default useTableInstance;

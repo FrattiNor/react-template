@@ -11,7 +11,7 @@ type Props = {
 };
 
 const HeadCell: FC<Props> = ({ rowIndex, colIndex }) => {
-	const { tableProps, tableCellBg } = useTableContext();
+	const { tableProps, tableCellBg, tableSticky } = useTableContext();
 	const { columns, bordered } = tableProps;
 	const column = columns[colIndex];
 	const headCellBg = tableCellBg.getHeadCellBg({ colKey: column.key });
@@ -24,6 +24,7 @@ const HeadCell: FC<Props> = ({ rowIndex, colIndex }) => {
 				backgroundColor: headCellBg,
 				gridRow: `${rowIndex + 1}/${rowIndex + 2}`,
 				gridColumn: `${colIndex + 1}/${colIndex + 2}`,
+				...tableSticky.getStickyStyle({ colKey: column.key }),
 			}}
 		>
 			<HeadCellRender colIndex={colIndex} />

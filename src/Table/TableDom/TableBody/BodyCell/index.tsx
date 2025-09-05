@@ -10,7 +10,7 @@ type Props = {
 };
 
 const BodyCell: FC<Props> = ({ rowIndex, colIndex }) => {
-	const { tableProps, tableTools, tableCellBg } = useTableContext();
+	const { tableProps, tableTools, tableCellBg, tableSticky } = useTableContext();
 	const { columns, data, bordered } = tableProps;
 	const rowData = data[rowIndex];
 	const column = columns[colIndex];
@@ -28,6 +28,7 @@ const BodyCell: FC<Props> = ({ rowIndex, colIndex }) => {
 				backgroundColor: bodyCellBg,
 				gridRow: `${rowIndex + 1}/${rowIndex + 2}`,
 				gridColumn: `${colIndex + 1}/${colIndex + 2}`,
+				...tableSticky.getStickyStyle({ colKey: column.key }),
 			}}
 		>
 			<BodyCellRender rowIndex={rowIndex} colIndex={colIndex} />
