@@ -2,8 +2,8 @@ import { useTableContext } from '../../../TableContext';
 import styles from './index.module.less';
 
 const MeasureInner = () => {
-	const { props, tableState } = useTableContext();
-	const { columns } = props;
+	const { tableProps, tableMeasureCol, tableState } = useTableContext();
+	const { columns } = tableProps;
 
 	const initColWidth = (node: HTMLDivElement | null, key: string) => {
 		if (node !== null) {
@@ -18,16 +18,16 @@ const MeasureInner = () => {
 
 	return (
 		<div className={styles['measure']}>
-			{columns.map(({ key, width, flexGrow = 1 }) => (
-				<div key={key} className={styles['measure-cell']} ref={(node) => initColWidth(node, key)} style={{ width, flexGrow }} />
+			{columns.map(({ key }, colIndex) => (
+				<div key={key} ref={(node) => initColWidth(node, key)} className={styles['measure-cell']} style={tableMeasureCol.getMeasureStyle({ colIndex })} />
 			))}
 		</div>
 	);
 };
 
 const MeasureColumnSize = () => {
-	const { tableState } = useTableContext();
-	if (Object.keys(tableState.columnSizes).length === 0) return <MeasureInner />;
+	const { tableMeasureCol } = useTableContext();
+	if (tableMeasureCol.needMeasure) return <MeasureInner />;
 	return null;
 };
 

@@ -1,20 +1,21 @@
 import { useCallback } from 'react';
-import type { TableDataItem, TableProps } from '../TableTypes/type';
+import type { TableDataItem } from '../TableTypes/type';
+import type useTableProps from './useTableProps';
 
 type Props<T extends TableDataItem> = {
-	props: TableProps<T>;
+	tableProps: ReturnType<typeof useTableProps<T>>;
 };
 
 // 表格工具
-const useTableTools = <T extends TableDataItem>({ props }: Props<T>) => {
+const useTableTools = <T extends TableDataItem>({ tableProps }: Props<T>) => {
 	const getRowKey = useCallback(
 		(item: T, index: number) => {
-			if (typeof props.rowKey === 'function') {
-				return props.rowKey(item, index);
+			if (typeof tableProps.rowKey === 'function') {
+				return tableProps.rowKey(item, index);
 			}
-			return item[props.rowKey] as string;
+			return item[tableProps.rowKey] as string;
 		},
-		[props.rowKey],
+		[tableProps.rowKey],
 	);
 
 	return { getRowKey };

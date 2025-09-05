@@ -1,8 +1,12 @@
-.table {
+.table-theme {
 	// 标题单元格背景
-	--table-head-cell-bg: rgb(245, 248, 255);
+	--table-head-cell-bg: #f5f8ff;
+	--table-head-cell-active-bg: #ebeef5;
 	// body单元格背景
 	--table-body-cell-bg: #fff;
+	// body单元格active背景
+	--table-body-cell-active-bg-L1: #e6f4ff;
+	--table-body-cell-active-bg-L2: #bae0ff;
 	// 文本颜色
 	--table-font-color: rgba(0, 0, 0, 0.88);
 	// 字体大小
@@ -21,7 +25,9 @@
 	--table-head-resize-handle-bg: #d9d9d9;
 	// 标题拖拽宽度手柄背景色
 	--table-head-resize-handle-active-bg: #bfbfbf;
+}
 
+.table {
 	width: 100%;
 	max-height: 100%;
 	display: flex;
@@ -30,6 +36,8 @@
 	color: var(--table-font-color);
 	font-size: var(--table-font-size);
 	position: relative;
+
+	.table-theme();
 
 	// &::before {
 	// 	content: '';

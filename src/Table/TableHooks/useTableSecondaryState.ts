@@ -1,24 +1,23 @@
 import { useMemo } from 'react';
-import type { TableDataItem, TableProps } from '../TableTypes/type';
+import type { TableDataItem } from '../TableTypes/type';
 import type useTableState from './useTableState';
+import type useTableProps from './useTableProps';
 
 type Props<T extends TableDataItem> = {
-	props: TableProps<T>;
+	tableProps: ReturnType<typeof useTableProps<T>>;
 	tableState: ReturnType<typeof useTableState>;
 };
 
 // 表格二级状态
-const useTableSecondaryState = <T extends TableDataItem>({ props, tableState }: Props<T>) => {
+const useTableSecondaryState = <T extends TableDataItem>({ tableProps, tableState }: Props<T>) => {
 	const gridTemplateColumns = useMemo(() => {
-		return props.columns
+		return tableProps.columns
 			.map(({ key, width }) => {
 				if (typeof tableState.columnSizes[key] === 'number') return `${tableState.columnSizes[key]}px`;
 				return typeof width === 'number' ? `${width}px` : width;
 			})
 			.join(' ');
-	}, [props.columns, tableState.columnSizes]);
-
-	useMemo(() => {}, [props.columns, tableState.columnSizes]);
+	}, [tableProps.columnsKeys, tableState.columnSizes]);
 
 	return { gridTemplateColumns };
 };

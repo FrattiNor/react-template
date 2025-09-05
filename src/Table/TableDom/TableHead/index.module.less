@@ -2,31 +2,4 @@
 	display: grid;
 	flex-shrink: 0;
 	overflow: hidden;
-
-	.head-row {
-		display: contents;
-
-		.head-cell-wrapper {
-			z-index: 2;
-			position: relative;
-			box-sizing: border-box;
-			background-color: var(--table-head-cell-bg);
-			border: var(--table-cell-border-width) solid var(--table-cell-border-color);
-
-			.head-cell {
-				min-height: var(--table-row-height);
-				line-height: var(--table-row-height);
-				padding: var(--table-cell-padding);
-				overflow: hidden;
-				white-space: nowrap;
-				text-overflow: ellipsis;
-			}
-		}
-
-		.head-cell-placeholder {
-			background-color: var(--table-head-cell-bg);
-			border: var(--table-cell-border-width) solid var(--table-cell-border-color);
-			border-left: 0;
-		}
-	}
 }
