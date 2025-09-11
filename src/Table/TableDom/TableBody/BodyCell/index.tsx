@@ -16,6 +16,7 @@ const BodyCell: FC<Props> = ({ rowIndex, colIndex }) => {
 	const column = columns[colIndex];
 	const rowKey = tableTools.getRowKey(rowData, rowIndex);
 	const bodyCellBg = tableCellBg.getBodyCellBg({ rowKey, colKey: column.key });
+	const { stickyStyle, stickyClassName } = tableSticky.getStickyStyleAndClassName({ colKey: column.key, type: 'body' });
 
 	return (
 		<div
@@ -23,12 +24,12 @@ const BodyCell: FC<Props> = ({ rowIndex, colIndex }) => {
 			onClick={() => tableCellBg.bodyRowClick({ rowKey })}
 			onMouseEnter={() => tableCellBg.bodyRowMouseEnter({ rowKey })}
 			onMouseLeave={() => tableCellBg.bodyRowMouseLeave({ rowKey })}
-			className={classNames(styles['body-cell'], { [styles['bordered']]: bordered })}
+			className={classNames(styles['body-cell'], stickyClassName, { [styles['bordered']]: bordered })}
 			style={{
 				backgroundColor: bodyCellBg,
 				gridRow: `${rowIndex + 1}/${rowIndex + 2}`,
 				gridColumn: `${colIndex + 1}/${colIndex + 2}`,
-				...tableSticky.getStickyStyle({ colKey: column.key }),
+				...stickyStyle,
 			}}
 		>
 			<BodyCellRender rowIndex={rowIndex} colIndex={colIndex} />

@@ -1,6 +1,6 @@
 import { startTransition } from 'react';
-import type useTableResize from './useTableResize';
-import type useTableState from './useTableState';
+import type useTableResize from '../useTableResize';
+import type useTableState from '../useTableState';
 
 type Props = {
 	tableResize: ReturnType<typeof useTableResize>;

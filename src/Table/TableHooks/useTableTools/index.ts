@@ -1,6 +1,6 @@
 import { useCallback } from 'react';
-import type { TableDataItem } from '../TableTypes/type';
-import type useTableProps from './useTableProps';
+import type { TableDataItem } from '../../TableTypes/type';
+import type useTableProps from '../useTableProps';
 
 type Props<T extends TableDataItem> = {
 	tableProps: ReturnType<typeof useTableProps<T>>;

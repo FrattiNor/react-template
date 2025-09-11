@@ -1,9 +1,11 @@
 .head-cell-placeholder {
+	right: 0;
+	z-index: 99;
+	position: sticky;
 	background-color: var(--table-head-cell-bg);
-	border-top: var(--table-cell-border-width) solid var(--table-cell-border-color);
 	border-bottom: var(--table-cell-border-width) solid var(--table-cell-border-color);
 
 	&.bordered {
-		border-right: var(--table-cell-border-width) solid var(--table-cell-border-color);
+		border-left: var(--table-cell-border-width) solid var(--table-cell-border-color);
 	}
 }

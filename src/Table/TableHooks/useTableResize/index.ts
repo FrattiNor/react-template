@@ -1,5 +1,5 @@
 import { startTransition, useEffect } from 'react';
-import type useTableState from './useTableState';
+import type useTableState from '../useTableState';
 
 // 避免触发一些事件导致mouse无法触发
 function pauseEvent(e: Event) {

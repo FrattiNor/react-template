@@ -1,5 +1,5 @@
 import { startTransition, useEffect, useLayoutEffect, useRef } from 'react';
-import type useTableState from './useTableState';
+import type useTableState from '../useTableState';
 
 type Props = {
 	tableState: ReturnType<typeof useTableState>;

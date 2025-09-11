@@ -39,6 +39,10 @@
 
 	.table-theme();
 
+	&.bordered {
+		border: var(--table-cell-border-width) solid var(--table-cell-border-color);
+	}
+
 	// &::before {
 	// 	content: '';
 	// 	z-index: 99;
@@ -64,13 +68,13 @@
 	::-webkit-scrollbar {
 		width: 6px;
 		height: 6px;
-		// background-color: rgba(0, 0, 0, 0.03);
-		background-color: transparent;
+		background-color: rgba(0, 0, 0, 0.03);
+		// background-color: transparent;
 	}
 
 	::-webkit-scrollbar-corner {
-		// background-color: rgba(0, 0, 0, 0.03);
-		background-color: transparent;
+		background-color: rgba(0, 0, 0, 0.03);
+		// background-color: transparent;
 	}
 
 	::-webkit-scrollbar-thumb {

@@ -15,16 +15,17 @@ const HeadCell: FC<Props> = ({ rowIndex, colIndex }) => {
 	const { columns, bordered } = tableProps;
 	const column = columns[colIndex];
 	const headCellBg = tableCellBg.getHeadCellBg({ colKey: column.key });
+	const { stickyStyle, stickyClassName } = tableSticky.getStickyStyleAndClassName({ colKey: column.key, type: 'head' });
 
 	return (
 		<div
 			key={column.key}
-			className={classNames(styles['head-cell'], { [styles['bordered']]: bordered, [styles['first-row']]: rowIndex === 0 })}
+			className={classNames(styles['head-cell'], stickyClassName, { [styles['bordered']]: bordered })}
 			style={{
 				backgroundColor: headCellBg,
 				gridRow: `${rowIndex + 1}/${rowIndex + 2}`,
 				gridColumn: `${colIndex + 1}/${colIndex + 2}`,
-				...tableSticky.getStickyStyle({ colKey: column.key }),
+				...stickyStyle,
 			}}
 		>
 			<HeadCellRender colIndex={colIndex} />

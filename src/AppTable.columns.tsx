@@ -6,14 +6,13 @@ const columns: TableColumns<DataItem> = [
 		key: 'userId',
 		title: '用户id',
 		render: ({ userId }) => userId,
-		width: '40%',
-		fixed: 'left',
+		width: '20%',
 	},
 	{
 		width: 150,
 		key: 'firstName',
 		title: 'firstName',
-		fixed: 'right',
+		fixed: 'left',
 		render: ({ firstName }) => (
 			<div
 				style={{
@@ -33,13 +32,13 @@ const columns: TableColumns<DataItem> = [
 		title: <span>{'lastName'}</span>,
 		render: ({ lastName }) => <span>{lastName}</span>,
 		width: 150,
-		fixed: 'left',
 	},
 	{
 		key: 'email',
 		title: '邮箱',
 		render: ({ email }) => email,
 		width: 150,
+		fixed: 'right',
 	},
 	{
 		key: 'avatar',
@@ -52,6 +51,7 @@ const columns: TableColumns<DataItem> = [
 		title: '密码',
 		render: ({ password }) => password,
 		width: 150,
+		fixed: 'left',
 	},
 	{
 		key: 'birthdate',
@@ -94,25 +94,27 @@ const columns: TableColumns<DataItem> = [
 		title: '电话号码',
 		render: ({ phoneNumber }) => phoneNumber,
 		width: 150,
+		fixed: 'right',
 	},
 	{
 		key: 'jobArea',
 		title: '工作地点',
 		render: ({ jobArea }) => jobArea,
 		width: 150,
+		fixed: 'left',
 	},
 	{
 		key: 'jobTitle',
 		title: '工作头衔',
 		render: ({ jobTitle }) => jobTitle,
 		width: 150,
+		fixed: 'right',
 	},
 	{
 		key: 'jobType',
 		title: '工作类型',
 		render: ({ jobType }) => jobType,
 		width: 150,
-		fixed: 'right',
 	},
 ];
 
