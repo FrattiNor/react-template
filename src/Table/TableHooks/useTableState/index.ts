@@ -9,8 +9,8 @@ type ResizeFlag = {
 // 表格状态
 const useTableState = () => {
 	// 左右固定移动距离
-	const [pingedLeft, setPingedLeft] = useState(0);
-	const [pingedRight, setPingedRight] = useState(0);
+	const [scrollLeft, setScrollLeft] = useState(0);
+	const [scrollRight, setScrollRight] = useState(0);
 	// 纵向滚动条宽度
 	const [rightScrollBarWidth, setRightScrollBarWidth] = useState(0);
 	// 横向column的size对象
@@ -23,10 +23,10 @@ const useTableState = () => {
 	const [resizeFlag, setResizeFlag] = useState<ResizeFlag | null>(null);
 
 	return {
-		pingedLeft,
-		setPingedLeft,
-		pingedRight,
-		setPingedRight,
+		scrollLeft,
+		setScrollLeft,
+		scrollRight,
+		setScrollRight,
 		rightScrollBarWidth,
 		setRightScrollBarWidth,
 		columnSizes,

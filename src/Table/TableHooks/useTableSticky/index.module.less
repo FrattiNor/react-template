@@ -2,8 +2,19 @@
 	position: sticky;
 	z-index: 5;
 
-	&.pinged {
+	&.last-pinged {
 		border-right-color: transparent;
+
+		&::after {
+			content: '';
+			z-index: 99;
+			position: absolute;
+			top: 0;
+			bottom: 0;
+			left: 100%;
+			width: 30px;
+			box-shadow: rgba(17, 17, 17, 0.13) 10px 0px 8px -8px inset;
+		}
 	}
 }
 
@@ -11,7 +22,18 @@
 	position: sticky;
 	z-index: 5;
 
-	&.pinged {
+	&.last-pinged {
 		border-left-color: transparent;
+
+		&::before {
+			content: '';
+			z-index: 99;
+			position: absolute;
+			top: 0;
+			bottom: 0;
+			right: 100%;
+			width: 30px;
+			box-shadow: rgba(17, 17, 17, 0.13) -10px 0px 8px -8px inset;
+		}
 	}
 }

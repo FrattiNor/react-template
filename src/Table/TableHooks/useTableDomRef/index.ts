@@ -18,11 +18,11 @@ const useTableDomRef = ({ tableState }: Props) => {
 				const bodyClientWidth = bodyRef.current?.clientWidth;
 				const headScrollLeft = headRef.current?.scrollLeft;
 				if (typeof bodyScrollLeft === 'number' && typeof bodyScrollWidth === 'number' && typeof bodyClientWidth === 'number') {
-					const pingedLeft = bodyScrollLeft;
-					const pingedRight = bodyScrollWidth - bodyClientWidth - bodyScrollLeft;
+					const pingLeft = bodyScrollLeft;
+					const pingRight = bodyScrollWidth - bodyClientWidth - bodyScrollLeft;
 					startTransition(() => {
-						tableState.setPingedLeft(pingedLeft);
-						tableState.setPingedRight(pingedRight);
+						tableState.setScrollLeft(pingLeft);
+						tableState.setScrollRight(pingRight);
 					});
 				}
 				if (typeof bodyScrollLeft === 'number' && typeof headScrollLeft === 'number' && bodyScrollLeft !== headScrollLeft) {

@@ -12,34 +12,34 @@ type Props<T extends TableDataItem> = {
 const useTableSecondaryState = <T extends TableDataItem>({ tableProps, tableState }: Props<T>) => {
 	const { gridTemplateColumnsArr, fixedRightObj, fixedLeftObj } = useMemo(() => {
 		const gridTemplateColumnsArr: string[] = [];
-		const fixedLeftObj: Record<string, { stickySize: number; leftSize: number }> = {};
-		const fixedRightObj: Record<string, { stickySize: number; rightSize: number }> = {};
-		const fixedLeftSizeArr: { key: string; size: number; leftTotalSize: number }[] = [];
-		const fixedRightSizeArr: { key: string; size: number; leftTotalSize: number }[] = [];
+		const fixedLeftObj: Record<string, { stickySize: number; pingedSize: number; index: number }> = {};
+		const fixedRightObj: Record<string, { stickySize: number; pingedSize: number; index: number }> = {};
+		const fixedLeftSizeArr: { key: string; size: number; leftTotalSize: number; index: number }[] = [];
+		const fixedRightSizeArr: { key: string; size: number; leftTotalSize: number; index: number }[] = [];
 
 		let totalSize = 0;
-		tableProps.columns.forEach(({ key, fixed }) => {
+		tableProps.columns.forEach(({ key, fixed }, index) => {
 			const size = tableState.columnSizes[key] ?? 0;
 			gridTemplateColumnsArr.push(`${size}px`);
 			totalSize += size;
 			if (fixed === 'left') {
-				fixedLeftSizeArr.push({ key, size, leftTotalSize: totalSize });
+				fixedLeftSizeArr.push({ key, size, leftTotalSize: totalSize, index });
 			}
 			if (fixed === 'right') {
-				fixedRightSizeArr.unshift({ key, size, leftTotalSize: totalSize });
+				fixedRightSizeArr.unshift({ key, size, leftTotalSize: totalSize, index });
 			}
 		});
 
-		let leftSize = 0;
-		fixedLeftSizeArr.forEach(({ key, size, leftTotalSize }) => {
-			fixedLeftObj[key] = { stickySize: leftSize, leftSize: leftTotalSize - size };
-			leftSize += size;
+		let calcSize = 0;
+		fixedLeftSizeArr.forEach(({ key, size, leftTotalSize, index }) => {
+			fixedLeftObj[key] = { stickySize: calcSize, pingedSize: leftTotalSize - size - calcSize, index };
+			calcSize += size;
 		});
 
-		let rightSize = 0;
-		fixedRightSizeArr.forEach(({ key, size, leftTotalSize }) => {
-			fixedRightObj[key] = { stickySize: rightSize, rightSize: totalSize - leftTotalSize };
-			rightSize += size;
+		calcSize = 0;
+		fixedRightSizeArr.forEach(({ key, size, leftTotalSize, index }) => {
+			fixedRightObj[key] = { stickySize: calcSize, pingedSize: totalSize - leftTotalSize - calcSize, index };
+			calcSize += size;
 		});
 
 		return { gridTemplateColumnsArr, fixedLeftObj, fixedRightObj };
