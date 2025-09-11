@@ -12,8 +12,8 @@ type Props<T extends TableDataItem> = {
 const useTableMeasureCol = <T extends TableDataItem>({ tableProps, tableState }: Props<T>) => {
 	const needMeasure = useMemo(() => {
 		let need = false;
-		for (let i = 0; i < tableProps.columns.length; i++) {
-			const column = tableProps.columns[i];
+		for (let i = 0; i < tableProps.columnsFlat.length; i++) {
+			const column = tableProps.columnsFlat[i];
 			if (typeof tableState.columnSizes[column.key] !== 'number') {
 				need = true;
 				break;
@@ -24,7 +24,7 @@ const useTableMeasureCol = <T extends TableDataItem>({ tableProps, tableState }:
 
 	const getMeasureStyle = ({ colIndex }: { colIndex: number }) => {
 		const style: CSSProperties = {};
-		const column = tableProps.columns[colIndex];
+		const column = tableProps.columnsFlat[colIndex];
 		const oldSize = tableState.columnSizes[column.key];
 		if (typeof oldSize === 'number') {
 			style.width = oldSize;

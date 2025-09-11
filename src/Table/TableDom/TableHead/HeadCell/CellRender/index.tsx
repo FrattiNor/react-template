@@ -8,8 +8,8 @@ type Props = {
 
 const HeadCellRender: FC<Props> = ({ colIndex }) => {
 	const { tableProps } = useTableContext();
-	const { columns } = tableProps;
-	const column = columns[colIndex];
+	const { columnsFlat } = tableProps;
+	const column = columnsFlat[colIndex];
 	const cellRenderValue = column.title;
 
 	if (typeof cellRenderValue === 'string' || typeof cellRenderValue === 'number') {

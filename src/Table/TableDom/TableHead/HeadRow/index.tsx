@@ -13,7 +13,7 @@ const HeadRow: FC<Props> = ({ rowIndex }) => {
 
 	return (
 		<div className={styles['head-row']}>
-			{tableProps.columns.map((column, colIndex) => (
+			{tableProps.columnsFlat.map((column, colIndex) => (
 				<HeadCell key={column.key} rowIndex={rowIndex} colIndex={colIndex} />
 			))}
 			<HeadCellPlaceholder rowIndex={rowIndex} />

@@ -12,8 +12,8 @@ type Props = {
 
 const HeadCell: FC<Props> = ({ rowIndex, colIndex }) => {
 	const { tableProps, tableCellBg, tableSticky } = useTableContext();
-	const { columns, bordered } = tableProps;
-	const column = columns[colIndex];
+	const { columnsFlat, bordered } = tableProps;
+	const column = columnsFlat[colIndex];
 	const headCellBg = tableCellBg.getHeadCellBg({ colKey: column.key });
 	const { stickyStyle, stickyClassName } = tableSticky.getStickyStyleAndClassName({ colKey: column.key, type: 'head' });
 

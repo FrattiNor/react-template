@@ -18,7 +18,7 @@ const useTableSecondaryState = <T extends TableDataItem>({ tableProps, tableStat
 		const fixedRightSizeArr: { key: string; size: number; leftTotalSize: number; index: number }[] = [];
 
 		let totalSize = 0;
-		tableProps.columns.forEach(({ key, fixed }, index) => {
+		tableProps.columnsFlat.forEach(({ key, fixed }, index) => {
 			const size = tableState.columnSizes[key] ?? 0;
 			gridTemplateColumnsArr.push(`${size}px`);
 			totalSize += size;

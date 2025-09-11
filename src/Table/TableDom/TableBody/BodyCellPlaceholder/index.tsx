@@ -8,9 +8,9 @@ type Props = {
 
 const BodyCellPlaceholder: FC<Props> = ({ rowIndex }) => {
 	const { tableProps, tableCellBg, tableTools } = useTableContext();
-	const { columns, data } = tableProps;
+	const { columnsFlat, data } = tableProps;
 	const rowData = data[rowIndex];
-	const colMaxIndex = columns.length - 1;
+	const colMaxIndex = columnsFlat.length - 1;
 	const rowKey = tableTools.getRowKey(rowData, rowIndex);
 	const bodyCellBg = tableCellBg.getBodyCellBg({ rowKeys: [rowKey], colKey: 'body-cell-placeholder' });
 

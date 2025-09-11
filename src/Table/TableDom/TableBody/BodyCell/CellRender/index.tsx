@@ -9,9 +9,9 @@ type Props = {
 
 const BodyCellRender: FC<Props> = ({ rowIndex, colIndex }) => {
 	const { tableProps } = useTableContext();
-	const { columns, data } = tableProps;
+	const { columnsFlat, data } = tableProps;
 	const rowData = data[rowIndex];
-	const column = columns[colIndex];
+	const column = columnsFlat[colIndex];
 	const cellRenderValue = column.render(rowData, rowIndex);
 
 	if (typeof cellRenderValue === 'string' || typeof cellRenderValue === 'number') {

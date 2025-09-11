@@ -9,8 +9,8 @@ type Props = {
 
 const HeadCellPlaceholder: FC<Props> = ({ rowIndex }) => {
 	const { tableProps } = useTableContext();
-	const { columns, bordered } = tableProps;
-	const colMaxIndex = columns.length - 1;
+	const { columnsFlat, bordered } = tableProps;
+	const colMaxIndex = columnsFlat.length - 1;
 
 	return (
 		<div

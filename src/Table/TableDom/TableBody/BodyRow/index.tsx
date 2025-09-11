@@ -10,13 +10,13 @@ type Props = {
 
 const BodyRow: FC<Props> = ({ rowIndex }) => {
 	const { tableProps, tableTools } = useTableContext();
-	const { columns, data } = tableProps;
+	const { columnsFlat, data } = tableProps;
 	const rowData = data[rowIndex];
 	const rowKey = tableTools.getRowKey(rowData, rowIndex);
 
 	return (
 		<div key={rowKey} className={styles['body-row']}>
-			{columns.map((column, colIndex) => {
+			{columnsFlat.map((column, colIndex) => {
 				return <BodyCell key={column.key} rowIndex={rowIndex} colIndex={colIndex} />;
 			})}
 			<BodyCellPlaceholder rowIndex={rowIndex} />

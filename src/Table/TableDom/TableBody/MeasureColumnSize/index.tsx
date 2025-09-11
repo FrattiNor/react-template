@@ -3,7 +3,7 @@ import styles from './index.module.less';
 
 const MeasureInner = () => {
 	const { tableProps, tableMeasureCol, tableState } = useTableContext();
-	const { columns } = tableProps;
+	const { columnsFlat } = tableProps;
 
 	const initColWidth = (node: HTMLDivElement | null, key: string) => {
 		if (node !== null) {
@@ -18,7 +18,7 @@ const MeasureInner = () => {
 
 	return (
 		<div className={styles['measure']}>
-			{columns.map(({ key }, colIndex) => (
+			{columnsFlat.map(({ key }, colIndex) => (
 				<div key={key} ref={(node) => initColWidth(node, key)} className={styles['measure-cell']} style={tableMeasureCol.getMeasureStyle({ colIndex })} />
 			))}
 		</div>
