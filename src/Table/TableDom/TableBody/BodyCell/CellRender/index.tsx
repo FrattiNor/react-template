@@ -12,7 +12,7 @@ const BodyCellRender: FC<Props> = ({ rowIndex, colIndex }) => {
 	const { columns, data } = tableProps;
 	const rowData = data[rowIndex];
 	const column = columns[colIndex];
-	const cellRenderValue = column.render(rowData);
+	const cellRenderValue = column.render(rowData, rowIndex);
 
 	if (typeof cellRenderValue === 'string' || typeof cellRenderValue === 'number') {
 		return (

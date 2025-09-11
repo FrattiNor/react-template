@@ -38,20 +38,27 @@ const columns: TableColumns<DataItem> = [
 		title: '邮箱_3',
 		render: ({ email }) => email,
 		width: 150,
-		fixed: 'right',
+		fixed: 'left',
+		onCell: (_, index) => ({
+			rowSpan: index % 2 === 0 ? 2 : 0,
+			colSpan: index <= 5 ? 2 : 1,
+		}),
 	},
 	{
 		key: 'avatar',
 		title: '头像_4',
 		render: ({ avatar }) => avatar,
 		width: 150,
+		onCell: (_, index) => ({
+			colSpan: index <= 5 ? 0 : 1,
+		}),
+		fixed: 'left',
 	},
 	{
 		key: 'password',
 		title: '密码_5',
 		render: ({ password }) => password,
 		width: 150,
-		fixed: 'left',
 	},
 	{
 		key: 'birthdate',
@@ -101,14 +108,19 @@ const columns: TableColumns<DataItem> = [
 		title: '工作地点_13',
 		render: ({ jobArea }) => jobArea,
 		width: 150,
-		fixed: 'left',
+		fixed: 'right',
+		onCell: (_, index) => ({
+			colSpan: index <= 5 ? 2 : 1,
+		}),
 	},
 	{
 		key: 'jobTitle',
 		title: '工作头衔_14',
 		render: ({ jobTitle }) => jobTitle,
 		width: 150,
-		fixed: 'right',
+		onCell: (_, index) => ({
+			colSpan: index <= 5 ? 0 : 1,
+		}),
 	},
 	{
 		key: 'jobType',

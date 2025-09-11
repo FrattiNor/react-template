@@ -14,7 +14,6 @@ const TableHead: FC = () => {
 	return (
 		<div className={styles['head']} style={{ gridTemplateColumns: headGridTemplateColumns }} ref={tableDomRef.headRef}>
 			<HeadRow rowIndex={0} />
-			<HeadRow rowIndex={1} />
 		</div>
 	);
 };

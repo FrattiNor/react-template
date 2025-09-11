@@ -1,4 +1,4 @@
-import { useMemo, type CSSProperties } from 'react';
+import { type CSSProperties } from 'react';
 import type useTableDomRef from '../useTableDomRef';
 import type useTableSecondaryState from '../useTableSecondaryState';
 import type useTableState from '../useTableState';
@@ -14,21 +14,7 @@ type Props = {
 // 表格左右固定
 const useTableSticky = ({ tableSecondaryState, tableState }: Props) => {
 	const { fixedLeftObj, fixedRightObj } = tableSecondaryState;
-	const { rightScrollBarWidth, scrollLeft, scrollRight } = tableState;
-
-	const { leftPingedIndex, rightPingedIndex } = useMemo(() => {
-		let leftPingedIndex: undefined | number = undefined;
-		let rightPingedIndex: undefined | number = undefined;
-		Object.values(fixedLeftObj).forEach(({ pingedSize, index }) => {
-			const pinged = scrollLeft > pingedSize;
-			if (pinged && index > (leftPingedIndex ?? -1)) leftPingedIndex = index;
-		});
-		Object.values(fixedRightObj).forEach(({ pingedSize, index }) => {
-			const pinged = scrollRight > pingedSize;
-			if (pinged && index < (rightPingedIndex ?? Infinity)) rightPingedIndex = index;
-		});
-		return { leftPingedIndex, rightPingedIndex };
-	}, [fixedLeftObj, fixedRightObj, scrollLeft, scrollRight]);
+	const { rightScrollBarWidth, leftPingedIndex, rightPingedIndex } = tableState;
 
 	const getStickyStyleAndClassName = ({ colKey, type }: { colKey: string; type: 'head' | 'body' }) => {
 		if (fixedLeftObj[colKey]) {
@@ -37,7 +23,10 @@ const useTableSticky = ({ tableSecondaryState, tableState }: Props) => {
 			const style: CSSProperties = { left: stickySize };
 			const pinged = index <= (leftPingedIndex ?? -1);
 			const lastPinged = index === leftPingedIndex;
-			if (pinged) style.zIndex = 10;
+			if (pinged) {
+				const leftIndex = index;
+				style.zIndex = 10 + leftIndex;
+			}
 			if (lastPinged) className = classNames(className, styles['last-pinged']);
 			return { stickyStyle: style, stickyClassName: className };
 		}

@@ -18,7 +18,21 @@ const useTableTools = <T extends TableDataItem>({ tableProps }: Props<T>) => {
 		[tableProps.rowKey],
 	);
 
-	return { getRowKey };
+	const getRowKeys = useCallback(
+		({ currentIndex, rowSpan, datasource }: { currentIndex: number; rowSpan: number; datasource: T[] }) => {
+			const keys = [];
+			for (let i = 0; i < rowSpan; i++) {
+				const index = currentIndex + i;
+				const rowData = datasource[index];
+				const rowKey = getRowKey(rowData, index);
+				keys.push(rowKey);
+			}
+			return keys;
+		},
+		[getRowKey],
+	);
+
+	return { getRowKey, getRowKeys };
 };
 
 export default useTableTools;

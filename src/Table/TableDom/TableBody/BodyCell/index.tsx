@@ -14,21 +14,26 @@ const BodyCell: FC<Props> = ({ rowIndex, colIndex }) => {
 	const { columns, data, bordered } = tableProps;
 	const rowData = data[rowIndex];
 	const column = columns[colIndex];
-	const rowKey = tableTools.getRowKey(rowData, rowIndex);
-	const bodyCellBg = tableCellBg.getBodyCellBg({ rowKey, colKey: column.key });
+	const { rowSpan = 1, colSpan = 1 } = column.onCell ? column.onCell(rowData, rowIndex) : {};
+
+	if (rowSpan <= 0) return null;
+	if (colSpan <= 0) return null;
+
+	const rowKeys = tableTools.getRowKeys({ currentIndex: rowIndex, rowSpan, datasource: data });
+	const bodyCellBg = tableCellBg.getBodyCellBg({ rowKeys, colKey: column.key });
 	const { stickyStyle, stickyClassName } = tableSticky.getStickyStyleAndClassName({ colKey: column.key, type: 'body' });
 
 	return (
 		<div
 			key={column.key}
-			onClick={() => tableCellBg.bodyRowClick({ rowKey })}
-			onMouseEnter={() => tableCellBg.bodyRowMouseEnter({ rowKey })}
-			onMouseLeave={() => tableCellBg.bodyRowMouseLeave({ rowKey })}
+			onClick={() => tableCellBg.bodyRowClick({ rowKeys })}
+			onMouseEnter={() => tableCellBg.bodyRowMouseEnter({ rowKeys })}
+			onMouseLeave={() => tableCellBg.bodyRowMouseLeave({ rowKeys })}
 			className={classNames(styles['body-cell'], stickyClassName, { [styles['bordered']]: bordered })}
 			style={{
 				backgroundColor: bodyCellBg,
-				gridRow: `${rowIndex + 1}/${rowIndex + 2}`,
-				gridColumn: `${colIndex + 1}/${colIndex + 2}`,
+				gridRow: `${rowIndex + 1}/${rowIndex + 1 + rowSpan}`,
+				gridColumn: `${colIndex + 1}/${colIndex + 1 + colSpan}`,
 				...stickyStyle,
 			}}
 		>

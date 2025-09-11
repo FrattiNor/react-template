@@ -12,7 +12,7 @@ const BodyCellPlaceholder: FC<Props> = ({ rowIndex }) => {
 	const rowData = data[rowIndex];
 	const colMaxIndex = columns.length - 1;
 	const rowKey = tableTools.getRowKey(rowData, rowIndex);
-	const bodyCellBg = tableCellBg.getBodyCellBg({ rowKey, colKey: 'body-cell-placeholder' });
+	const bodyCellBg = tableCellBg.getBodyCellBg({ rowKeys: [rowKey], colKey: 'body-cell-placeholder' });
 
 	return (
 		<div
