@@ -22,6 +22,11 @@ const useTableState = () => {
 	// 拖拽修改列宽
 	const [resizeFlag, setResizeFlag] = useState<ResizeFlag | null>(null);
 
+	//
+	const getColumnSize = (key: string) => {
+		return columnSizes[key] ?? 0;
+	};
+
 	return {
 		leftPingedIndex,
 		setLeftPingedIndex,
@@ -30,6 +35,7 @@ const useTableState = () => {
 		rightScrollBarWidth,
 		setRightScrollBarWidth,
 		columnSizes,
+		getColumnSize,
 		setColumnSizes,
 		rowClickObj,
 		setRowClickObj,

@@ -3,6 +3,7 @@ import styles from './index.module.less';
 import { useTableContext } from '../../../TableContext';
 import BodyCell from '../BodyCell';
 import BodyCellPlaceholder from '../BodyCellPlaceholder';
+import BodyRowMeasure from '../BodyRowMeasure';
 
 type Props = {
 	rowIndex: number;
@@ -15,11 +16,12 @@ const BodyRow: FC<Props> = ({ rowIndex }) => {
 	const rowKey = tableTools.getRowKey(rowData, rowIndex);
 
 	return (
-		<div key={rowKey} className={styles['body-row']}>
+		<div key={rowKey} className={styles['body-row']} data-row-index={rowIndex}>
 			{columnsFlat.map((column, colIndex) => {
 				return <BodyCell key={column.key} rowIndex={rowIndex} colIndex={colIndex} />;
 			})}
 			<BodyCellPlaceholder rowIndex={rowIndex} />
+			<BodyRowMeasure rowIndex={rowIndex} />
 		</div>
 	);
 };

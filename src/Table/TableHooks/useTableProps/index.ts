@@ -2,6 +2,7 @@
 import { useMemo } from 'react';
 import type { TableDataItem, TableProps } from '../../TableTypes/type';
 import type { TableColumn, TableColumnGroup } from '../../TableTypes/typeColumn';
+import { FixedTwo } from '../../TableUtils';
 
 type HeaderColumnGroup<T extends TableDataItem> = Omit<TableColumnGroup<T> & { level: number; startIndex: number; endIndex: number }, 'children'>;
 type HeaderColumn<T extends TableDataItem> = Omit<TableColumn<T> & { level: number }, 'children'>;
@@ -72,6 +73,7 @@ const useTableProps = <T extends TableDataItem>({ props }: Props<T>) => {
 		columnsFlat,
 		columnsKeys,
 		columnsFixedKeys,
+		rowHeight: restProps.rowHeight ? FixedTwo(restProps.rowHeight) : 46,
 	};
 };
 

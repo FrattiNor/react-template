@@ -1,7 +1,7 @@
 import { useCallback } from 'react';
 import type { TableDataItem } from '../../TableTypes/type';
 import type useTableProps from '../useTableProps';
-import { getCellTitle } from './utils';
+import { getCellTitle } from '../../TableUtils';
 
 type Props<T extends TableDataItem> = {
 	tableProps: ReturnType<typeof useTableProps<T>>;
@@ -14,6 +14,7 @@ const useTableTools = <T extends TableDataItem>({ tableProps }: Props<T>) => {
 			if (typeof tableProps.rowKey === 'function') {
 				return tableProps.rowKey(item, index);
 			}
+			if (!item) return undefined as unknown as string;
 			return item[tableProps.rowKey] as string;
 		},
 		[tableProps.rowKey],

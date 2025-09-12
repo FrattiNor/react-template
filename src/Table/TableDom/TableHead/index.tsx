@@ -13,11 +13,13 @@ const TableHead: FC = () => {
 	})();
 
 	return (
-		<div className={styles['head']} style={{ gridTemplateColumns: headGridTemplateColumns }} ref={tableDomRef.headRef}>
-			{tableProps.columnGroups.map((_, rowIndex) => (
-				<HeadGroupRow key={rowIndex} rowIndex={rowIndex} />
-			))}
-			<HeadRow rowIndex={tableProps.columnGroups.length} />
+		<div className={styles['head']} ref={tableDomRef.headRef}>
+			<div className={styles['head-inner']} style={{ gridTemplateColumns: headGridTemplateColumns }} ref={tableDomRef.headRef}>
+				{tableProps.columnGroups.map((_, rowIndex) => (
+					<HeadGroupRow key={rowIndex} rowIndex={rowIndex} />
+				))}
+				<HeadRow rowIndex={tableProps.columnGroups.length} />
+			</div>
 		</div>
 	);
 };

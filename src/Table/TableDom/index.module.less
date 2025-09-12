@@ -14,8 +14,6 @@
 	--table-font-size: 14px;
 	// 字体
 	--table-font-family: 'Segoe UI';
-	// 单元格最小高度
-	--table-row-height: 45px;
 	// 单元格padding
 	--table-cell-padding: 8px;
 	// 单元格border宽度
@@ -50,7 +48,9 @@
 	.table-theme();
 
 	&.bordered {
-		border: var(--table-cell-border-width) solid var(--table-cell-border-color);
+		border-top: var(--table-cell-border-width) solid var(--table-cell-border-color);
+		border-left: var(--table-cell-border-width) solid var(--table-cell-border-color);
+		border-right: var(--table-cell-border-width) solid var(--table-cell-border-color);
 	}
 
 	::-webkit-scrollbar {

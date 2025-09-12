@@ -13,3 +13,7 @@ export const getCellTitle = (element: any) => {
 	}
 	return null;
 };
+
+export const FixedTwo = (v: number) => {
+	return Number(v.toFixed(2));
+};

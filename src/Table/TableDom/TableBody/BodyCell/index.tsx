@@ -19,6 +19,7 @@ const BodyCell: FC<Props> = ({ rowIndex, colIndex }) => {
 	if (rowSpan <= 0) return null;
 	if (colSpan <= 0) return null;
 
+	const colMaxIndex = columnsFlat.length - 1;
 	const rowKeys = tableTools.getRowKeys({ currentIndex: rowIndex, rowSpan, datasource: data });
 	const bodyCellBg = tableCellBg.getBodyCellBg({ rowKeys, colKey: column.key });
 	const { stickyStyle, stickyClassName } = tableSticky.getStickyStyleAndClassName({ colIndexs: [colIndex], type: 'body' });
@@ -26,12 +27,14 @@ const BodyCell: FC<Props> = ({ rowIndex, colIndex }) => {
 	return (
 		<div
 			key={column.key}
+			data-col-index={colIndex}
 			onClick={() => tableCellBg.bodyRowClick({ rowKeys })}
 			onMouseEnter={() => tableCellBg.bodyRowMouseEnter({ rowKeys })}
 			onMouseLeave={() => tableCellBg.bodyRowMouseLeave({ rowKeys })}
-			className={classNames(styles['body-cell'], stickyClassName, { [styles['bordered']]: bordered, [styles['first-col']]: colIndex === 0 })}
+			className={classNames(styles['body-cell'], stickyClassName, { [styles['bordered']]: bordered, [styles['first-col']]: colIndex === 0, [styles['last-col']]: colIndex === colMaxIndex })}
 			style={{
 				backgroundColor: bodyCellBg,
+				minHeight: tableProps.rowHeight,
 				gridRow: `${rowIndex + 1}/${rowIndex + 1 + rowSpan}`,
 				gridColumn: `${colIndex + 1}/${colIndex + 1 + colSpan}`,
 				...stickyStyle,

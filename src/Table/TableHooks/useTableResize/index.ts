@@ -49,7 +49,7 @@ const useTableResize = ({ tableState }: Props) => {
 
 	const startResize = (e: React.MouseEvent<HTMLDivElement, MouseEvent>, key: string) => {
 		pauseEvent(e as unknown as Event);
-		const oldSize = tableState.columnSizes[key] ?? 0;
+		const oldSize = tableState.getColumnSize(key);
 		const pageX = e.pageX;
 		setResizeFlag({ key, pageX, clientWidth: oldSize });
 	};

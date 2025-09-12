@@ -9,7 +9,7 @@ export type TableColumn<T extends TableDataItem> = {
 	width: number | `${number}%`;
 	flexGrow?: number;
 	fixed?: 'left' | 'right';
-	// forceRender?: boolean;
+	forceRender?: boolean;
 	onCell?: (item: T, index: number) => { rowSpan?: number; colSpan?: number };
 	// 融合group的字段
 	children?: undefined;
@@ -26,6 +26,7 @@ export type TableColumnGroup<T extends TableDataItem> = {
 	width?: undefined;
 	flexGrow?: undefined;
 	onCell?: undefined;
+	forceRender?: undefined;
 };
 
 export type TableColumns<T extends TableDataItem> = Array<TableColumnGroup<T> | TableColumn<T>>;

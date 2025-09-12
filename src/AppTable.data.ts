@@ -36,7 +36,7 @@ const createRandomUser = () => ({
 });
 
 const data = faker.helpers.multiple(createRandomUser, {
-	count: 20,
+	count: 15,
 });
 
 export type DataItem = ReturnType<typeof createRandomUser>;

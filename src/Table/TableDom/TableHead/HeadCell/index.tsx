@@ -14,15 +14,18 @@ const HeadCell: FC<Props> = ({ rowIndex, colIndex }) => {
 	const { tableProps, tableCellBg, tableSticky } = useTableContext();
 	const { columnsFlat, bordered } = tableProps;
 	const column = columnsFlat[colIndex];
+	const colMaxIndex = columnsFlat.length - 1;
 	const headCellBg = tableCellBg.getHeadCellBg({ colKey: column.key });
 	const { stickyStyle, stickyClassName } = tableSticky.getStickyStyleAndClassName({ colIndexs: [colIndex], type: 'head' });
 
 	return (
 		<div
 			key={column.key}
-			className={classNames(styles['head-cell'], stickyClassName, { [styles['bordered']]: bordered, [styles['first-col']]: colIndex === 0 })}
+			data-col-index={colIndex}
+			className={classNames(styles['head-cell'], stickyClassName, { [styles['bordered']]: bordered, [styles['first-col']]: colIndex === 0, [styles['last-col']]: colIndex === colMaxIndex })}
 			style={{
 				backgroundColor: headCellBg,
+				minHeight: tableProps.rowHeight,
 				gridRow: `${column.level + 1}/${rowIndex + 2}`,
 				gridColumn: `${colIndex + 1}/${colIndex + 2}`,
 				...stickyStyle,

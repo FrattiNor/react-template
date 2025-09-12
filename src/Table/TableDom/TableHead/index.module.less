@@ -1,6 +1,14 @@
 .head {
-	display: grid;
 	flex-shrink: 0;
 	overflow: hidden;
+	position: relative;
 	color: var(--table-head-font-color);
+
+	.head-inner {
+		display: grid;
+		min-width: 100%;
+		position: relative;
+		align-content: start;
+		width: max-content;
+	}
 }

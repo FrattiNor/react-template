@@ -1,4 +1,6 @@
 import { useTableContext } from '../../../TableContext';
+import { FixedTwo } from '../../../TableUtils';
+
 import styles from './index.module.less';
 
 const MeasureInner = () => {
@@ -9,7 +11,7 @@ const MeasureInner = () => {
 		if (node !== null) {
 			tableState.setColumnSizes((old) => {
 				if (typeof old[key] !== 'number') {
-					return { ...old, [key]: node.clientWidth };
+					return { ...old, [key]: FixedTwo(node.getBoundingClientRect().width) };
 				}
 				return old;
 			});

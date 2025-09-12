@@ -1,7 +1,14 @@
 .body {
-	display: grid;
 	flex-shrink: 1;
 	overflow: auto;
 	position: relative;
 	color: var(--table-body-font-color);
+
+	.body-inner {
+		display: grid;
+		min-width: 100%;
+		position: relative;
+		align-content: start;
+		width: max-content;
+	}
 }

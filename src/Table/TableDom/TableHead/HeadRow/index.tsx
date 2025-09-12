@@ -12,7 +12,7 @@ const HeadRow: FC<Props> = ({ rowIndex }) => {
 	const { tableProps } = useTableContext();
 
 	return (
-		<div className={styles['head-row']}>
+		<div className={styles['head-row']} data-row-index={rowIndex}>
 			{tableProps.columnsFlat.map((column, colIndex) => (
 				<HeadCell key={column.key} rowIndex={rowIndex} colIndex={colIndex} />
 			))}

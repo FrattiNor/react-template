@@ -9,6 +9,7 @@ import useTableCellBg from '../useTableCellBg';
 import useTableProps from '../useTableProps';
 import useTableMeasureCol from '../useTableMeasureCol';
 import useTableLogic from '../useTableLogic';
+import useTableVirtual from '../useTableVirtual';
 
 // 表格实例
 const useTableInstance = <T extends TableDataItem>(props: TableProps<T>) => {
@@ -21,8 +22,9 @@ const useTableInstance = <T extends TableDataItem>(props: TableProps<T>) => {
 	const tableCellBg = useTableCellBg({ tableState, tableResize });
 	const tableMeasureCol = useTableMeasureCol({ tableState, tableProps });
 	const tableSticky = useTableSticky({ tableDomRef, tableState, tableSecondaryState });
+	const tableVirtual = useTableVirtual({ tableDomRef, tableProps, tableState, tableTools });
 	useTableLogic({ tableDomRef, tableState, tableMeasureCol, tableSecondaryState });
-	return { tableResize, tableProps, tableDomRef, tableState, tableSecondaryState, tableTools, tableCellBg, tableMeasureCol, tableSticky };
+	return { tableResize, tableProps, tableDomRef, tableState, tableSecondaryState, tableTools, tableCellBg, tableMeasureCol, tableSticky, tableVirtual };
 };
 
 export default useTableInstance;
