@@ -28,7 +28,7 @@ const HeadCell: FC<Props> = ({ rowIndex, colIndex }) => {
 				...stickyStyle,
 			}}
 		>
-			<HeadCellRender title={column.title} />
+			<HeadCellRender content={column.title} />
 			<ResizeHandle colKey={column.key} />
 		</div>
 	);

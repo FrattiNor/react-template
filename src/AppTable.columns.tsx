@@ -15,8 +15,8 @@ const columns: TableColumns<DataItem> = [
 				render: ({ firstName }) => (
 					<div
 						style={{
-							padding: 4,
 							color: '#fff',
+							padding: '2px 6px',
 							borderRadius: '4px',
 							display: 'inline-block',
 							backgroundColor: 'rgba(0,0,0,0.25)',

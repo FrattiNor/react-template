@@ -28,7 +28,7 @@ const HeadGroupCell: FC<Props> = ({ rowIndex, colIndex }) => {
 				...stickyStyle,
 			}}
 		>
-			<HeadCellRender title={column.title} align="center" />
+			<HeadCellRender content={column.title} align="center" />
 		</div>
 	);
 };
