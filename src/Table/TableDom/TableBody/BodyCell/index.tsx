@@ -2,7 +2,7 @@ import type { FC } from 'react';
 import { useTableContext } from '../../../TableContext';
 import styles from './index.module.less';
 import classNames from 'classnames';
-import BodyCellRender from './CellRender';
+import BodyCellRender from '../BodyCellRender';
 
 type Props = {
 	rowIndex: number;
@@ -21,7 +21,7 @@ const BodyCell: FC<Props> = ({ rowIndex, colIndex }) => {
 
 	const rowKeys = tableTools.getRowKeys({ currentIndex: rowIndex, rowSpan, datasource: data });
 	const bodyCellBg = tableCellBg.getBodyCellBg({ rowKeys, colKey: column.key });
-	const { stickyStyle, stickyClassName } = tableSticky.getStickyStyleAndClassName({ colKey: column.key, type: 'body' });
+	const { stickyStyle, stickyClassName } = tableSticky.getStickyStyleAndClassName({ colIndexs: [colIndex], type: 'body' });
 
 	return (
 		<div
@@ -29,7 +29,7 @@ const BodyCell: FC<Props> = ({ rowIndex, colIndex }) => {
 			onClick={() => tableCellBg.bodyRowClick({ rowKeys })}
 			onMouseEnter={() => tableCellBg.bodyRowMouseEnter({ rowKeys })}
 			onMouseLeave={() => tableCellBg.bodyRowMouseLeave({ rowKeys })}
-			className={classNames(styles['body-cell'], stickyClassName, { [styles['bordered']]: bordered })}
+			className={classNames(styles['body-cell'], stickyClassName, { [styles['bordered']]: bordered, [styles['first-col']]: colIndex === 0 })}
 			style={{
 				backgroundColor: bodyCellBg,
 				gridRow: `${rowIndex + 1}/${rowIndex + 1 + rowSpan}`,

@@ -59,14 +59,12 @@ const useTableCellBg = ({ tableResize, tableState }: Props) => {
 	const bodyRowClick = ({ rowKeys }: { rowKeys: string[] }) => {
 		startTransition(() => {
 			setRowClickObj((old) => {
-				const next = { ...old };
-				rowKeys.forEach((key) => {
-					if (next[key] === true) {
-						delete next[key];
-					} else {
-						next[key] = true;
-					}
-				});
+				const next: Record<string, boolean> = {};
+				for (let i = 0; i < rowKeys.length; i++) {
+					const key = rowKeys[i];
+					if (old[key] === true) return {};
+					next[key] = true;
+				}
 				return next;
 			});
 		});

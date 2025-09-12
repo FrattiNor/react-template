@@ -2,9 +2,10 @@ import type { FC } from 'react';
 import styles from './index.module.less';
 import { useTableContext } from '../../TableContext';
 import HeadRow from './HeadRow';
+import HeadGroupRow from './HeadGroupRow';
 
 const TableHead: FC = () => {
-	const { tableState, tableSecondaryState, tableDomRef } = useTableContext();
+	const { tableState, tableSecondaryState, tableDomRef, tableProps } = useTableContext();
 	const headGridTemplateColumns = (() => {
 		const { rightScrollBarWidth } = tableState;
 		const { gridTemplateColumnsArr } = tableSecondaryState;
@@ -13,7 +14,10 @@ const TableHead: FC = () => {
 
 	return (
 		<div className={styles['head']} style={{ gridTemplateColumns: headGridTemplateColumns }} ref={tableDomRef.headRef}>
-			<HeadRow rowIndex={0} />
+			{tableProps.columnGroups.map((_, rowIndex) => (
+				<HeadGroupRow key={rowIndex} rowIndex={rowIndex} />
+			))}
+			<HeadRow rowIndex={tableProps.columnGroups.length} />
 		</div>
 	);
 };

@@ -3,7 +3,7 @@ import styles from './index.module.less';
 import { useTableContext } from '../../../TableContext';
 import ResizeHandle from '../ResizeHandle';
 import classNames from 'classnames';
-import HeadCellRender from './CellRender';
+import HeadCellRender from '../HeadCellRender';
 
 type Props = {
 	rowIndex: number;
@@ -15,20 +15,20 @@ const HeadCell: FC<Props> = ({ rowIndex, colIndex }) => {
 	const { columnsFlat, bordered } = tableProps;
 	const column = columnsFlat[colIndex];
 	const headCellBg = tableCellBg.getHeadCellBg({ colKey: column.key });
-	const { stickyStyle, stickyClassName } = tableSticky.getStickyStyleAndClassName({ colKey: column.key, type: 'head' });
+	const { stickyStyle, stickyClassName } = tableSticky.getStickyStyleAndClassName({ colIndexs: [colIndex], type: 'head' });
 
 	return (
 		<div
 			key={column.key}
-			className={classNames(styles['head-cell'], stickyClassName, { [styles['bordered']]: bordered })}
+			className={classNames(styles['head-cell'], stickyClassName, { [styles['bordered']]: bordered, [styles['first-col']]: colIndex === 0 })}
 			style={{
 				backgroundColor: headCellBg,
-				gridRow: `${rowIndex + 1}/${rowIndex + 2}`,
+				gridRow: `${column.level + 1}/${rowIndex + 2}`,
 				gridColumn: `${colIndex + 1}/${colIndex + 2}`,
 				...stickyStyle,
 			}}
 		>
-			<HeadCellRender colIndex={colIndex} />
+			<HeadCellRender title={column.title} />
 			<ResizeHandle colKey={column.key} />
 		</div>
 	);

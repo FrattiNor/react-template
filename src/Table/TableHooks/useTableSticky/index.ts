@@ -16,28 +16,28 @@ const useTableSticky = ({ tableSecondaryState, tableState }: Props) => {
 	const { fixedLeftObj, fixedRightObj } = tableSecondaryState;
 	const { rightScrollBarWidth, leftPingedIndex, rightPingedIndex } = tableState;
 
-	const getStickyStyleAndClassName = ({ colKey, type }: { colKey: string; type: 'head' | 'body' }) => {
-		if (fixedLeftObj[colKey]) {
+	const getStickyStyleAndClassName = ({ colIndexs, type }: { colIndexs: [number, number] | [number]; type: 'head' | 'body' }) => {
+		const colStartIndex = colIndexs[0];
+		const colEndIndex = colIndexs[colIndexs.length - 1];
+
+		if (fixedLeftObj[colStartIndex]) {
 			let className = styles['sticky-left'];
-			const { stickySize, index } = fixedLeftObj[colKey];
+			const { stickySize } = fixedLeftObj[colStartIndex];
 			const style: CSSProperties = { left: stickySize };
-			const pinged = index <= (leftPingedIndex ?? -1);
-			const lastPinged = index === leftPingedIndex;
-			if (pinged) {
-				const leftIndex = index;
-				style.zIndex = 10 + leftIndex;
-			}
+			const pinged = colStartIndex <= (leftPingedIndex ?? -1);
+			const lastPinged = colEndIndex === leftPingedIndex;
+			if (pinged) style.zIndex = 10;
 			if (lastPinged) className = classNames(className, styles['last-pinged']);
 			return { stickyStyle: style, stickyClassName: className };
 		}
 
-		if (fixedRightObj[colKey]) {
+		if (fixedRightObj[colEndIndex]) {
 			let className = styles['sticky-right'];
-			const { stickySize, index } = fixedRightObj[colKey];
+			const { stickySize } = fixedRightObj[colEndIndex];
 			const right = type === 'head' ? stickySize + rightScrollBarWidth : stickySize;
 			const style: CSSProperties = { right };
-			const pinged = index >= (rightPingedIndex ?? Infinity);
-			const lastPinged = index === rightPingedIndex;
+			const pinged = colEndIndex >= (rightPingedIndex ?? Infinity);
+			const lastPinged = colStartIndex === rightPingedIndex;
 			if (pinged) style.zIndex = 10;
 			if (lastPinged) className = classNames(className, styles['last-pinged']);
 			return { stickyStyle: style, stickyClassName: className };

@@ -16,7 +16,7 @@ const HeadCellPlaceholder: FC<Props> = ({ rowIndex }) => {
 		<div
 			className={classNames(styles['head-cell-placeholder'], { [styles['bordered']]: bordered })}
 			style={{
-				gridRow: `${rowIndex + 1}/${rowIndex + 2}`,
+				gridRow: `${1}/${rowIndex + 2}`,
 				gridColumn: `${colMaxIndex + 2}/${colMaxIndex + 3}`,
 			}}
 		/>
