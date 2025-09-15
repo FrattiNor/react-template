@@ -10,7 +10,8 @@ type Props<T extends TableDataItem> = {
 
 // 表格二级状态
 const useTableSecondaryState = <T extends TableDataItem>({ tableProps, tableState }: Props<T>) => {
-	const { gridTemplateColumnsArr, fixedRightObj, fixedLeftObj } = useMemo(() => {
+	const { gridTemplateColumnsArr, HTotalSize, fixedRightObj, fixedLeftObj } = useMemo(() => {
+		let HTotalSize: number = 0;
 		const gridTemplateColumnsArr: string[] = [];
 		const fixedLeftObj: Record<string, { stickySize: number; pingedSize: number; index: number }> = {};
 		const fixedRightObj: Record<string, { stickySize: number; pingedSize: number; index: number }> = {};
@@ -21,6 +22,7 @@ const useTableSecondaryState = <T extends TableDataItem>({ tableProps, tableStat
 		tableProps.columnsFlat.forEach(({ key, fixed }, index) => {
 			const size = tableState.getColumnSize(key);
 			gridTemplateColumnsArr.push(`${size}px`);
+			HTotalSize += size;
 			totalSize += size;
 			if (fixed === 'left') {
 				fixedLeftSizeArr.push({ size, leftTotalSize: totalSize, index });
@@ -42,10 +44,10 @@ const useTableSecondaryState = <T extends TableDataItem>({ tableProps, tableStat
 			calcSize += size;
 		});
 
-		return { gridTemplateColumnsArr, fixedLeftObj, fixedRightObj };
+		return { gridTemplateColumnsArr, HTotalSize, fixedLeftObj, fixedRightObj };
 	}, [tableProps.columnsFixedKeys, tableState.columnSizes]);
 
-	return { gridTemplateColumnsArr, fixedRightObj, fixedLeftObj };
+	return { gridTemplateColumnsArr, HTotalSize, fixedRightObj, fixedLeftObj };
 };
 
 export default useTableSecondaryState;

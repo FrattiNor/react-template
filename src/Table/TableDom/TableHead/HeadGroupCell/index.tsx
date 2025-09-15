@@ -4,6 +4,7 @@ import { useTableContext } from '../../../TableContext';
 
 import classNames from 'classnames';
 import HeadCellRender from '../HeadCellRender';
+import ResizeHandle from '../ResizeHandle';
 
 type Props = {
 	rowIndex: number;
@@ -15,8 +16,9 @@ const HeadGroupCell: FC<Props> = ({ rowIndex, colIndex }) => {
 	const { columnsFlat, columnGroups, bordered } = tableProps;
 	const column = columnGroups[rowIndex][colIndex];
 
-	const { stickyStyle, stickyClassName, sticky } = tableSticky.getStickyStyleAndClassName({ colIndexs: [column.startIndex, column.endIndex], type: 'head' });
-	const colShow = tableVirtual.getColShow([column.startIndex, column.endIndex]);
+	const colIndexs = [column.startIndex, column.endIndex] as [number, number];
+	const { stickyStyle, stickyClassName, sticky } = tableSticky.getStickyStyleAndClassName({ colIndexs, type: 'head' });
+	const colShow = tableVirtual.getColShow(colIndexs);
 	if (!(colShow === true || sticky === true)) return null;
 
 	const colMaxIndex = columnsFlat.length - 1;
@@ -40,6 +42,7 @@ const HeadGroupCell: FC<Props> = ({ rowIndex, colIndex }) => {
 			}}
 		>
 			<HeadCellRender content={column.title} align="center" />
+			<ResizeHandle colKey={column.key} colIndexs={colIndexs} />
 		</div>
 	);
 };

@@ -13,17 +13,29 @@ import useTableVirtual from '../useTableVirtual';
 
 // 表格实例
 const useTableInstance = <T extends TableDataItem>(props: TableProps<T>) => {
+	// state
 	const tableState = useTableState();
+	// dom
 	const tableDomRef = useTableDomRef();
+	// props
 	const tableProps = useTableProps({ props });
+	// 工具
 	const tableTools = useTableTools({ tableProps });
-	const tableResize = useTableResize({ tableState });
-	const tableCellBg = useTableCellBg({ tableState, tableResize });
+	// cell bg
+	const tableCellBg = useTableCellBg({ tableState });
+	// cell resize
+	const tableResize = useTableResize({ tableState, tableProps });
+	// measure
 	const tableMeasureCol = useTableMeasureCol({ tableState, tableProps });
+	// second state
 	const tableSecondaryState = useTableSecondaryState({ tableState, tableProps });
+	// cell sticky
 	const tableSticky = useTableSticky({ tableDomRef, tableState, tableSecondaryState });
+	// virtual
 	const tableVirtual = useTableVirtual({ tableDomRef, tableProps, tableState, tableTools });
+	// logic
 	useTableLogic({ tableDomRef, tableState, tableMeasureCol, tableSecondaryState });
+	// res
 	return { tableResize, tableProps, tableDomRef, tableState, tableSecondaryState, tableTools, tableCellBg, tableMeasureCol, tableSticky, tableVirtual };
 };
 

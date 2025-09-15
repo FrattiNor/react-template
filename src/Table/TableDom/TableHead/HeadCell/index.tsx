@@ -37,7 +37,7 @@ const HeadCell: FC<Props> = ({ rowIndex, colIndex }) => {
 			}}
 		>
 			<HeadCellRender content={column.title} />
-			<ResizeHandle colKey={column.key} />
+			<ResizeHandle colKey={column.key} colIndexs={[colIndex]} />
 		</div>
 	);
 };

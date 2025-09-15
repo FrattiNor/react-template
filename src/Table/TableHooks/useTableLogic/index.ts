@@ -88,13 +88,23 @@ const useTableLogic = ({ tableDomRef, tableState, tableMeasureCol, tableSecondar
 				}
 				return 0;
 			};
+			// 计算水平滚动条宽度
+			const getBottomScrollBarWidth = () => {
+				if (bodyRef.current) {
+					return bodyRef.current.offsetHeight - bodyRef.current.clientHeight;
+				}
+				return 0;
+			};
 			// 直接执行一次
 			tableState.setRightScrollBarWidth(getRightScrollBarWidth());
+			tableState.setBottomScrollBarWidth(getBottomScrollBarWidth());
 
 			const ob = new ResizeObserver(() => {
 				tableState.setRightScrollBarWidth(getRightScrollBarWidth());
+				tableState.setBottomScrollBarWidth(getBottomScrollBarWidth());
 			});
-			ob.observe(bodyRef.current);
+
+			ob.observe(bodyRef.current, { box: 'border-box' });
 
 			return () => {
 				ob.disconnect();

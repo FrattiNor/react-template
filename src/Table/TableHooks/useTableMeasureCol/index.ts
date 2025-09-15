@@ -10,6 +10,9 @@ type Props<T extends TableDataItem> = {
 
 // 测量列宽
 const useTableMeasureCol = <T extends TableDataItem>({ tableProps, tableState }: Props<T>) => {
+	const { minColWidth, maxColWidth } = tableState;
+
+	// 是否需要测量
 	const needMeasure = useMemo(() => {
 		let need = false;
 		for (let i = 0; i < tableProps.columnsFlat.length; i++) {
@@ -22,6 +25,7 @@ const useTableMeasureCol = <T extends TableDataItem>({ tableProps, tableState }:
 		return need;
 	}, [tableProps.columnsKeys, tableState.columnSizes]);
 
+	// 测量样式
 	const getMeasureStyle = ({ colIndex }: { colIndex: number }) => {
 		const style: CSSProperties = {};
 		const column = tableProps.columnsFlat[colIndex];
@@ -29,7 +33,12 @@ const useTableMeasureCol = <T extends TableDataItem>({ tableProps, tableState }:
 		if (typeof oldSize === 'number') {
 			style.width = oldSize;
 		} else {
-			style.width = column.width;
+			const size = () => {
+				const _size = column.width;
+				if (typeof _size !== 'number') return _size;
+				return Math.min(maxColWidth, Math.max(minColWidth, _size));
+			};
+			style.width = size();
 			style.flexGrow = column.flexGrow ?? 1;
 		}
 		return style;

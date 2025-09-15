@@ -1,5 +1,8 @@
 import { startTransition, useEffect } from 'react';
 import type useTableState from '../useTableState';
+import type { ResizeFlag2 } from '../type';
+import type { TableDataItem } from '../../TableTypes/type';
+import type useTableProps from '../useTableProps';
 
 // 避免触发一些事件导致mouse无法触发
 function pauseEvent(e: Event) {
@@ -10,24 +13,53 @@ function pauseEvent(e: Event) {
 	return false;
 }
 
-type Props = {
+type Props<T extends TableDataItem> = {
+	tableProps: ReturnType<typeof useTableProps<T>>;
 	tableState: ReturnType<typeof useTableState>;
 };
 
 // 表头resize
-const useTableResize = ({ tableState }: Props) => {
-	const { resizeFlag, setResizeFlag, setColumnSizes } = tableState;
+const useTableResize = <T extends TableDataItem>({ tableProps, tableState }: Props<T>) => {
+	const { resizeFlag, setResizeFlag, setColumnSizes, maxColWidth, minColWidth } = tableState;
 
 	useEffect(() => {
 		if (resizeFlag) {
 			const mouseMove = (e: MouseEvent) => {
 				pauseEvent(e);
-				const moveX = e.pageX - resizeFlag.pageX;
-				const nextWidth = Math.min(1500, Math.max(50, moveX + resizeFlag.clientWidth));
+				const nextSize: Record<string, number> = {};
+
+				const loop = (_totalSize: number, resizes: ResizeFlag2['children']) => {
+					let totalSize = _totalSize;
+					const count = resizes.length;
+					const eachSize = totalSize / count;
+					const nextResizes: ResizeFlag2['children'] = [];
+					resizes.forEach((item) => {
+						const { key, clientWidth } = item;
+						const oldSize = nextSize[key] ?? clientWidth;
+						const nextWidth = oldSize + eachSize;
+						if (nextWidth <= minColWidth) {
+							nextSize[key] = minColWidth;
+							totalSize -= minColWidth - oldSize;
+						} else if (nextWidth >= maxColWidth) {
+							nextSize[key] = maxColWidth;
+							totalSize -= maxColWidth - oldSize;
+						} else {
+							nextSize[key] = nextWidth;
+							totalSize -= nextWidth - oldSize;
+							nextResizes.push(item);
+						}
+					});
+					if (totalSize !== 0 && nextResizes.length > 0) {
+						loop(totalSize, nextResizes);
+					}
+				};
+
+				loop(e.pageX - resizeFlag.pageX, resizeFlag.children);
+
 				startTransition(() => {
 					setColumnSizes((old) => ({
 						...old,
-						[resizeFlag.key]: nextWidth,
+						...nextSize,
 					}));
 				});
 			};
@@ -47,16 +79,27 @@ const useTableResize = ({ tableState }: Props) => {
 		}
 	}, [resizeFlag]);
 
-	const startResize = (e: React.MouseEvent<HTMLDivElement, MouseEvent>, key: string) => {
+	const startResize = (e: React.MouseEvent<HTMLDivElement, MouseEvent>, colKey: string, colIndexs: [number] | [number, number]) => {
 		pauseEvent(e as unknown as Event);
-		const oldSize = tableState.getColumnSize(key);
-		const pageX = e.pageX;
-		setResizeFlag({ key, pageX, clientWidth: oldSize });
+
+		const nextChildren: ResizeFlag2['children'] = [];
+		const start = colIndexs[0];
+		const end = colIndexs[colIndexs.length - 1];
+
+		for (let i = start; i <= end; i++) {
+			const key = tableProps.columnsFlat[i].key;
+			const clientWidth = tableState.getColumnSize(key);
+			nextChildren.push({ key, clientWidth });
+		}
+
+		setResizeFlag({
+			activeKey: colKey,
+			pageX: e.pageX,
+			children: nextChildren,
+		});
 	};
 
-	const resizeKey = resizeFlag?.key;
-
-	return { startResize, resizeKey };
+	return { startResize };
 };
 
 export default useTableResize;

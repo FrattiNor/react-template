@@ -51,41 +51,51 @@
 		border-top: var(--table-cell-border-width) solid var(--table-cell-border-color);
 		border-left: var(--table-cell-border-width) solid var(--table-cell-border-color);
 
-		// borderRight
-		&::after {
-			content: '';
-			z-index: 2;
-			position: absolute;
-			top: 0;
-			bottom: 0;
-			right: 0;
-			width: var(--table-cell-border-width);
-			background-color: var(--table-cell-border-color);
+		&.have-scroll-v {
+			border-right: var(--table-cell-border-width) solid var(--table-cell-border-color);
 		}
 
-		// borderBottom
-		&::before {
-			content: '';
-			z-index: 2;
-			position: absolute;
-			left: 0;
-			right: 0;
-			bottom: 0;
-			height: var(--table-cell-border-width);
-			background-color: var(--table-cell-border-color);
+		&.not-have-scroll-v {
+			// borderRight
+			&::after {
+				content: '';
+				z-index: 2;
+				position: absolute;
+				top: 0;
+				bottom: 0;
+				right: 0;
+				width: var(--table-cell-border-width);
+				background-color: var(--table-cell-border-color);
+			}
+		}
+
+		&.have-scroll-h {
+			border-bottom: var(--table-cell-border-width) solid var(--table-cell-border-color);
+		}
+
+		&.not-have-scroll-h {
+			// borderBottom
+			&::before {
+				content: '';
+				z-index: 2;
+				position: absolute;
+				left: 0;
+				right: 0;
+				bottom: 0;
+				height: var(--table-cell-border-width);
+				background-color: var(--table-cell-border-color);
+			}
 		}
 	}
 
 	::-webkit-scrollbar {
-		width: 6px;
-		height: 6px;
+		width: 8px;
+		height: 8px;
 		background-color: rgba(0, 0, 0, 0.03);
-		// background-color: transparent;
 	}
 
 	::-webkit-scrollbar-corner {
 		background-color: rgba(0, 0, 0, 0.03);
-		// background-color: transparent;
 	}
 
 	::-webkit-scrollbar-thumb {

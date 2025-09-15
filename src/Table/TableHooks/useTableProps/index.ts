@@ -19,12 +19,12 @@ const useTableProps = <T extends TableDataItem>({ props }: Props<T>) => {
 		let colIndex = -1;
 		const columnsFlat: Array<HeaderColumn<T>> = [];
 		const columnGroups: Array<Array<HeaderColumnGroup<T>>> = [];
-		const keys: Record<string, boolean> = {};
+		const colKeysObj: Record<string, number> = {};
 
-		// 校验重复的columnKey
+		// 检测重复的columnKey
 		const judgeSameKey = (key: string) => {
-			if (keys[key] === true) console.error(`same key: ${key}`);
-			keys[key] = true;
+			if (colKeysObj[key] === 1) console.error(`same column key: ${key}`);
+			colKeysObj[key] = (colKeysObj[key] ?? 0) + 1;
 		};
 
 		// 根据level添加HeadGroup
