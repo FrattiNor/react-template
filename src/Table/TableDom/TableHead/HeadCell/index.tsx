@@ -11,12 +11,17 @@ type Props = {
 };
 
 const HeadCell: FC<Props> = ({ rowIndex, colIndex }) => {
-	const { tableProps, tableCellBg, tableSticky } = useTableContext();
+	const { tableProps, tableCellBg, tableSticky, tableVirtual } = useTableContext();
 	const { columnsFlat, bordered } = tableProps;
 	const column = columnsFlat[colIndex];
+
+	const forceRender = column.forceRender;
+	const { stickyStyle, stickyClassName, sticky } = tableSticky.getStickyStyleAndClassName({ colIndexs: [colIndex], type: 'head' });
+	const colShow = tableVirtual.getColShow([colIndex]);
+	if (!(colShow === true || forceRender === true || sticky === true)) return null;
+
 	const colMaxIndex = columnsFlat.length - 1;
 	const headCellBg = tableCellBg.getHeadCellBg({ colKey: column.key });
-	const { stickyStyle, stickyClassName } = tableSticky.getStickyStyleAndClassName({ colIndexs: [colIndex], type: 'head' });
 
 	return (
 		<div

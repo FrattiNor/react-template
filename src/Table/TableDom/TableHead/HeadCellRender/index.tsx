@@ -16,17 +16,15 @@ const HeadCellRender: FC<Props> = ({ content, align }) => {
 	const cellIsStr = typeof cellRenderValue === 'string' || typeof cellRenderValue === 'number';
 	const alignStyle: CSSProperties = { justifyContent: align === 'center' ? 'center' : align === 'right' ? 'flex-end' : 'flex-start' };
 
-	if (typeof cellRenderValue === 'string' || typeof cellRenderValue === 'number') {
-		return (
-			<div className={styles['head-cell-render-wrapper']} title={title}>
-				<div className={styles['head-cell-render']} style={alignStyle}>
-					<div className={cellIsStr ? styles['head-cell-render-str'] : styles['head-cell-render-block']}>{cellRenderValue}</div>
-				</div>
-				<Filter />
-				<Sort />
+	return (
+		<div className={styles['head-cell-render-wrapper']} title={title}>
+			<div className={styles['head-cell-render']} style={alignStyle}>
+				<div className={cellIsStr ? styles['head-cell-render-str'] : styles['head-cell-render-block']}>{cellRenderValue}</div>
 			</div>
-		);
-	}
+			<Filter />
+			<Sort />
+		</div>
+	);
 };
 
 export default HeadCellRender;

@@ -9,15 +9,17 @@ type Props<T extends TableDataItem> = {
 
 // 表格工具
 const useTableTools = <T extends TableDataItem>({ tableProps }: Props<T>) => {
+	const { rowKey, columnsFlat, data } = tableProps;
+
 	const getRowKey = useCallback(
 		(item: T, index: number) => {
-			if (typeof tableProps.rowKey === 'function') {
-				return tableProps.rowKey(item, index);
+			if (typeof rowKey === 'function') {
+				return rowKey(item, index);
 			}
 			if (!item) return undefined as unknown as string;
-			return item[tableProps.rowKey] as string;
+			return item[rowKey] as string;
 		},
-		[tableProps.rowKey],
+		[rowKey],
 	);
 
 	const getRowKeys = useCallback(
@@ -34,7 +36,21 @@ const useTableTools = <T extends TableDataItem>({ tableProps }: Props<T>) => {
 		[getRowKey],
 	);
 
-	return { getRowKey, getRowKeys, getCellTitle };
+	const getRowIndexs = (rowIndex: number) => {
+		const start = rowIndex;
+		let end = rowIndex;
+		const rowData = data[rowIndex];
+
+		columnsFlat.forEach((column) => {
+			const { rowSpan = 1 } = column.onCell ? column.onCell(rowData, rowIndex) : {};
+			const nextEnd = rowIndex + rowSpan;
+			if (nextEnd > end) end = nextEnd;
+		});
+
+		return [start, end] as [number, number];
+	};
+
+	return { getRowKey, getRowKeys, getCellTitle, getRowIndexs };
 };
 
 export default useTableTools;

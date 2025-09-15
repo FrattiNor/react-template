@@ -16,11 +16,11 @@ const useTableInstance = <T extends TableDataItem>(props: TableProps<T>) => {
 	const tableState = useTableState();
 	const tableDomRef = useTableDomRef();
 	const tableProps = useTableProps({ props });
-	const tableSecondaryState = useTableSecondaryState({ tableState, tableProps });
 	const tableTools = useTableTools({ tableProps });
 	const tableResize = useTableResize({ tableState });
 	const tableCellBg = useTableCellBg({ tableState, tableResize });
 	const tableMeasureCol = useTableMeasureCol({ tableState, tableProps });
+	const tableSecondaryState = useTableSecondaryState({ tableState, tableProps });
 	const tableSticky = useTableSticky({ tableDomRef, tableState, tableSecondaryState });
 	const tableVirtual = useTableVirtual({ tableDomRef, tableProps, tableState, tableTools });
 	useTableLogic({ tableDomRef, tableState, tableMeasureCol, tableSecondaryState });

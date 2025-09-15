@@ -28,7 +28,7 @@ const useTableSticky = ({ tableSecondaryState, tableState }: Props) => {
 			const lastPinged = colEndIndex === leftPingedIndex;
 			if (pinged) style.zIndex = 10;
 			if (lastPinged) className = classNames(className, styles['last-pinged']);
-			return { stickyStyle: style, stickyClassName: className };
+			return { stickyStyle: style, stickyClassName: className, sticky: true };
 		}
 
 		if (fixedRightObj[colEndIndex]) {
@@ -40,10 +40,11 @@ const useTableSticky = ({ tableSecondaryState, tableState }: Props) => {
 			const lastPinged = colStartIndex === rightPingedIndex;
 			if (pinged) style.zIndex = 10;
 			if (lastPinged) className = classNames(className, styles['last-pinged']);
-			return { stickyStyle: style, stickyClassName: className };
+			return { stickyStyle: style, stickyClassName: className, sticky: true };
 		}
 
 		return {
+			sticky: false,
 			stickyStyle: undefined,
 			stickyClassName: undefined,
 		};

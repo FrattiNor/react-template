@@ -11,12 +11,16 @@ type Props = {
 };
 
 const HeadGroupCell: FC<Props> = ({ rowIndex, colIndex }) => {
-	const { tableProps, tableCellBg, tableSticky } = useTableContext();
+	const { tableProps, tableCellBg, tableSticky, tableVirtual } = useTableContext();
 	const { columnsFlat, columnGroups, bordered } = tableProps;
 	const column = columnGroups[rowIndex][colIndex];
+
+	const { stickyStyle, stickyClassName, sticky } = tableSticky.getStickyStyleAndClassName({ colIndexs: [column.startIndex, column.endIndex], type: 'head' });
+	const colShow = tableVirtual.getColShow([column.startIndex, column.endIndex]);
+	if (!(colShow === true || sticky === true)) return null;
+
 	const colMaxIndex = columnsFlat.length - 1;
 	const headCellBg = tableCellBg.getHeadCellBg({ colKey: column.key });
-	const { stickyStyle, stickyClassName } = tableSticky.getStickyStyleAndClassName({ colIndexs: [column.startIndex, column.endIndex], type: 'head' });
 
 	return (
 		<div

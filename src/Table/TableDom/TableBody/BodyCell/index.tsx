@@ -10,7 +10,7 @@ type Props = {
 };
 
 const BodyCell: FC<Props> = ({ rowIndex, colIndex }) => {
-	const { tableProps, tableTools, tableCellBg, tableSticky } = useTableContext();
+	const { tableProps, tableTools, tableCellBg, tableSticky, tableVirtual } = useTableContext();
 	const { columnsFlat, data, bordered } = tableProps;
 	const rowData = data[rowIndex];
 	const column = columnsFlat[colIndex];
@@ -19,10 +19,14 @@ const BodyCell: FC<Props> = ({ rowIndex, colIndex }) => {
 	if (rowSpan <= 0) return null;
 	if (colSpan <= 0) return null;
 
+	const forceRender = column.forceRender;
+	const { stickyStyle, stickyClassName, sticky } = tableSticky.getStickyStyleAndClassName({ colIndexs: [colIndex, colIndex + colSpan - 1], type: 'body' });
+	const colShow = tableVirtual.getColShow([colIndex, colIndex + colSpan - 1]);
+	if (!(colShow === true || forceRender === true || sticky === true)) return null;
+
 	const colMaxIndex = columnsFlat.length - 1;
 	const rowKeys = tableTools.getRowKeys({ currentIndex: rowIndex, rowSpan, datasource: data });
 	const bodyCellBg = tableCellBg.getBodyCellBg({ rowKeys, colKey: column.key });
-	const { stickyStyle, stickyClassName } = tableSticky.getStickyStyleAndClassName({ colIndexs: [colIndex], type: 'body' });
 
 	return (
 		<div

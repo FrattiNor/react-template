@@ -3,6 +3,7 @@ import styles from './index.module.less';
 import { useTableContext } from '../../TableContext';
 import HeadRow from './HeadRow';
 import HeadGroupRow from './HeadGroupRow';
+import HeaderHeightRetainer from './HeaderHeightRetainer';
 
 const TableHead: FC = () => {
 	const { tableState, tableSecondaryState, tableDomRef, tableProps } = useTableContext();
@@ -19,6 +20,7 @@ const TableHead: FC = () => {
 					<HeadGroupRow key={rowIndex} rowIndex={rowIndex} />
 				))}
 				<HeadRow rowIndex={tableProps.columnGroups.length} />
+				<HeaderHeightRetainer />
 			</div>
 		</div>
 	);
