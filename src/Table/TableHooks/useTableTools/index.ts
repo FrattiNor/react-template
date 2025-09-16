@@ -35,19 +35,22 @@ const useTableTools = <T extends TableDataItem>({ tableProps }: Props<T>) => {
 		[getRowKey],
 	);
 
-	const getRowIndexs = (rowIndex: number) => {
-		const start = rowIndex;
-		let end = rowIndex;
-		const rowData = data[rowIndex];
+	const getRowIndexs = useCallback(
+		(rowIndex: number) => {
+			const start = rowIndex;
+			let end = rowIndex;
+			const rowData = data[rowIndex];
 
-		columnsFlat.forEach((column) => {
-			const { rowSpan = 1 } = column.onCell ? column.onCell(rowData, rowIndex) : {};
-			const nextEnd = rowIndex + rowSpan;
-			if (nextEnd > end) end = nextEnd;
-		});
+			columnsFlat.forEach((column) => {
+				const { rowSpan = 1 } = column.onCell ? column.onCell(rowData, rowIndex) : {};
+				const nextEnd = rowIndex + rowSpan;
+				if (nextEnd > end) end = nextEnd;
+			});
 
-		return [start, end] as [number, number];
-	};
+			return [start, end] as [number, number];
+		},
+		[columnsFlat, data],
+	);
 
 	return { getRowKey, getRowKeys, getRowIndexs };
 };

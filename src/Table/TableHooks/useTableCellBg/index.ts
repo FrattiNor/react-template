@@ -1,4 +1,4 @@
-import { startTransition } from 'react';
+import { startTransition, useCallback } from 'react';
 import type useTableState from '../useTableState';
 
 type Props = {
@@ -9,42 +9,54 @@ type Props = {
 const useTableCellBg = ({ tableState }: Props) => {
 	const { rowClickObj, rowHoverObj, setRowHoverObj, setRowClickObj, getColResized, resizeFlag } = tableState;
 
-	const getClicked = ({ rowKeys }: { rowKeys: string[] }) => {
-		return rowKeys.some((key) => rowClickObj[key] === true);
-	};
+	const getClicked = useCallback(
+		({ rowKeys }: { rowKeys: string[] }) => {
+			return rowKeys.some((key) => rowClickObj[key] === true);
+		},
+		[rowClickObj],
+	);
 
-	const getHovered = ({ rowKeys }: { rowKeys: string[] }) => {
-		return rowKeys.some((key) => rowHoverObj[key] === true);
-	};
+	const getHovered = useCallback(
+		({ rowKeys }: { rowKeys: string[] }) => {
+			return rowKeys.some((key) => rowHoverObj[key] === true);
+		},
+		[rowHoverObj],
+	);
 
-	const getBodyCellBg = ({ rowKeys, colKey }: { rowKeys: string[]; colKey: string }) => {
-		let bgColorLevel = 0;
-		if (getColResized(colKey)) bgColorLevel++;
-		if (getClicked({ rowKeys }) === true) bgColorLevel++;
-		if (getHovered({ rowKeys }) === true) bgColorLevel++;
-		if (bgColorLevel === 0) return 'var(--table-body-cell-bg)';
-		if (bgColorLevel === 1) return 'var(--table-body-cell-active-bg-L1)';
-		if (bgColorLevel >= 2) return 'var(--table-body-cell-active-bg-L2)';
-		return 'var(--table-body-cell-bg)';
-	};
+	const getBodyCellBg = useCallback(
+		({ rowKeys, colKey }: { rowKeys: string[]; colKey: string }) => {
+			let bgColorLevel = 0;
+			if (getColResized(colKey)) bgColorLevel++;
+			if (getClicked({ rowKeys }) === true) bgColorLevel++;
+			if (getHovered({ rowKeys }) === true) bgColorLevel++;
+			if (bgColorLevel === 0) return 'var(--table-body-cell-bg)';
+			if (bgColorLevel === 1) return 'var(--table-body-cell-active-bg-L1)';
+			if (bgColorLevel >= 2) return 'var(--table-body-cell-active-bg-L2)';
+			return 'var(--table-body-cell-bg)';
+		},
+		[getColResized, getClicked, getHovered],
+	);
 
-	const getHeadCellBg = ({ colKey }: { colKey: string }) => {
-		let bgColorLevel = 0;
-		if (resizeFlag?.activeKey === colKey || getColResized(colKey)) bgColorLevel++;
-		if (bgColorLevel === 0) return 'var(--table-head-cell-bg)';
-		if (bgColorLevel >= 1) return 'var(--table-head-cell-active-bg)';
-		return 'var(--table-head-cell-bg)';
-	};
+	const getHeadCellBg = useCallback(
+		({ colKey }: { colKey: string }) => {
+			let bgColorLevel = 0;
+			if (resizeFlag?.activeKey === colKey || getColResized(colKey)) bgColorLevel++;
+			if (bgColorLevel === 0) return 'var(--table-head-cell-bg)';
+			if (bgColorLevel >= 1) return 'var(--table-head-cell-active-bg)';
+			return 'var(--table-head-cell-bg)';
+		},
+		[getColResized],
+	);
 
-	const bodyRowMouseEnter = ({ rowKeys }: { rowKeys: string[] }) => {
+	const bodyRowMouseEnter = useCallback(({ rowKeys }: { rowKeys: string[] }) => {
 		startTransition(() => {
 			const next: Record<string, boolean> = {};
 			rowKeys.forEach((key) => (next[key] = true));
 			setRowHoverObj(next);
 		});
-	};
+	}, []);
 
-	const bodyRowMouseLeave = ({ rowKeys }: { rowKeys: string[] }) => {
+	const bodyRowMouseLeave = useCallback(({ rowKeys }: { rowKeys: string[] }) => {
 		startTransition(() => {
 			setRowHoverObj((old) => {
 				const next = { ...old };
@@ -52,9 +64,9 @@ const useTableCellBg = ({ tableState }: Props) => {
 				return next;
 			});
 		});
-	};
+	}, []);
 
-	const bodyRowClick = ({ rowKeys }: { rowKeys: string[] }) => {
+	const bodyRowClick = useCallback(({ rowKeys }: { rowKeys: string[] }) => {
 		startTransition(() => {
 			setRowClickObj((old) => {
 				const next: Record<string, boolean> = {};
@@ -66,7 +78,7 @@ const useTableCellBg = ({ tableState }: Props) => {
 				return next;
 			});
 		});
-	};
+	}, []);
 
 	return { getBodyCellBg, getHeadCellBg, bodyRowMouseEnter, bodyRowMouseLeave, bodyRowClick };
 };

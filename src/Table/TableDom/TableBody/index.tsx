@@ -5,8 +5,9 @@ import BodyEmpty from './BodyEmpty';
 import type { TableInstance } from '../../TableHooks/type';
 import type { TableDataItem } from '../../TableTypes/type';
 import { memo } from 'react';
+import propsAreEqual from './propsAreEqual';
 
-type Props<T extends TableDataItem> = {
+export type Props<T extends TableDataItem> = {
 	instance: TableInstance<T>;
 };
 
@@ -47,4 +48,4 @@ const TableBody = <T extends TableDataItem>({ instance }: Props<T>) => {
 	);
 };
 
-export default memo(TableBody) as typeof TableBody;
+export default memo(TableBody, propsAreEqual) as typeof TableBody;

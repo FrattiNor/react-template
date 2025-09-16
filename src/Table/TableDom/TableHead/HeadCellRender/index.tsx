@@ -3,8 +3,9 @@ import styles from './index.module.less';
 import Sort from './Sort';
 import Filter from './Filter';
 import { getCellTitle } from '../../../TableUtils';
+import propsAreEqual from './propsAreEqual';
 
-type Props = {
+export type Props = {
 	content: ReactNode;
 	align?: 'left' | 'right' | 'center';
 };
@@ -26,4 +27,4 @@ const HeadCellRender = ({ content, align }: Props) => {
 	);
 };
 
-export default memo(HeadCellRender) as typeof HeadCellRender;
+export default memo(HeadCellRender, propsAreEqual) as typeof HeadCellRender;

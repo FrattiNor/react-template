@@ -3,8 +3,9 @@ import classNames from 'classnames';
 import type { TableInstance } from '../../../TableHooks/type';
 import type { TableDataItem } from '../../../TableTypes/type';
 import { memo } from 'react';
+import propsAreEqual from './propsAreEqual';
 
-type Props<T extends TableDataItem> = {
+export type Props<T extends TableDataItem> = {
 	instance: TableInstance<T>;
 	colKey: string;
 	colIndexs: [number] | [number, number];
@@ -18,4 +19,4 @@ const ResizeHandle = <T extends TableDataItem>({ instance, colKey, colIndexs }: 
 	return <div className={classNames(styles['resize-handle'], { [styles['active']]: active })} onMouseDown={(e) => startResize(e, colKey, colIndexs)} />;
 };
 
-export default memo(ResizeHandle) as typeof ResizeHandle;
+export default memo(ResizeHandle, propsAreEqual) as typeof ResizeHandle;

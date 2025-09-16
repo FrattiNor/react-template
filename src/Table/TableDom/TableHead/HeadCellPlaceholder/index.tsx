@@ -2,8 +2,9 @@ import styles from './index.module.less';
 import type { TableInstance } from '../../../TableHooks/type';
 import type { TableDataItem } from '../../../TableTypes/type';
 import { memo } from 'react';
+import propsAreEqual from './propsAreEqual';
 
-type Props<T extends TableDataItem> = {
+export type Props<T extends TableDataItem> = {
 	instance: TableInstance<T>;
 	rowIndex: number;
 };
@@ -23,4 +24,4 @@ const HeadCellPlaceholder = <T extends TableDataItem>({ instance, rowIndex }: Pr
 	);
 };
 
-export default memo(HeadCellPlaceholder) as typeof HeadCellPlaceholder;
+export default memo(HeadCellPlaceholder, propsAreEqual) as typeof HeadCellPlaceholder;

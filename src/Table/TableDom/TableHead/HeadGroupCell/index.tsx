@@ -5,9 +5,10 @@ import HeadCellRender from '../HeadCellRender';
 import ResizeHandle from '../ResizeHandle';
 import type { TableInstance } from '../../../TableHooks/type';
 import type { TableDataItem } from '../../../TableTypes/type';
-import { memo } from 'react';
+import { memo, useMemo } from 'react';
+import propsAreEqual from './propsAreEqual';
 
-type Props<T extends TableDataItem> = {
+export type Props<T extends TableDataItem> = {
 	instance: TableInstance<T>;
 	rowIndex: number;
 	colIndex: number;
@@ -20,7 +21,7 @@ const HeadGroupCell = <T extends TableDataItem>({ instance, rowIndex, colIndex }
 	const { columnsFlat, columnGroups, bordered, rowHeight } = instance.tableProps;
 
 	const column = columnGroups[rowIndex][colIndex];
-	const colIndexs = [column.startIndex, column.endIndex] as [number, number];
+	const colIndexs = useMemo(() => [column.startIndex, column.endIndex] as [number, number], [column.startIndex, column.endIndex]);
 	const { stickyStyle, stickyClassName, sticky } = getStickyStyleAndClassName({ colIndexs, type: 'head' });
 	const colShow = getColShow(colIndexs);
 	if (!(colShow === true || sticky === true)) return null;
@@ -51,4 +52,4 @@ const HeadGroupCell = <T extends TableDataItem>({ instance, rowIndex, colIndex }
 	);
 };
 
-export default memo(HeadGroupCell) as typeof HeadGroupCell;
+export default memo(HeadGroupCell, propsAreEqual) as typeof HeadGroupCell;

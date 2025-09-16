@@ -4,9 +4,10 @@ import classNames from 'classnames';
 import HeadCellRender from '../HeadCellRender';
 import type { TableInstance } from '../../../TableHooks/type';
 import type { TableDataItem } from '../../../TableTypes/type';
-import { memo } from 'react';
+import { memo, useMemo } from 'react';
+import propsAreEqual from './propsAreEqual';
 
-type Props<T extends TableDataItem> = {
+export type Props<T extends TableDataItem> = {
 	instance: TableInstance<T>;
 	rowIndex: number;
 	colIndex: number;
@@ -21,6 +22,7 @@ const HeadCell = <T extends TableDataItem>({ instance, rowIndex, colIndex }: Pro
 	const column = columnsFlat[colIndex];
 	const colShow = getColShow([colIndex]);
 	const forceRender = column.forceRender;
+	const colIndexs = useMemo(() => [colIndex] as [number], [colIndex]);
 	const { stickyStyle, stickyClassName, sticky } = getStickyStyleAndClassName({ colIndexs: [colIndex], type: 'head' });
 	if (!(colShow === true || forceRender === true || sticky === true)) return null;
 
@@ -41,9 +43,9 @@ const HeadCell = <T extends TableDataItem>({ instance, rowIndex, colIndex }: Pro
 			}}
 		>
 			<HeadCellRender content={column.title} />
-			<ResizeHandle colKey={column.key} colIndexs={[colIndex]} instance={instance} />
+			<ResizeHandle colKey={column.key} colIndexs={colIndexs} instance={instance} />
 		</div>
 	);
 };
 
-export default memo(HeadCell) as typeof HeadCell;
+export default memo(HeadCell, propsAreEqual) as typeof HeadCell;

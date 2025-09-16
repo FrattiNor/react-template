@@ -1,0 +1,31 @@
+import type { Props } from './index';
+import type { TableDataItem } from '../../../TableTypes/type';
+
+const judgeEach = [
+	(props: Readonly<Props<TableDataItem>>) => props.rowIndex,
+	(props: Readonly<Props<TableDataItem>>) => props.colIndex,
+	(props: Readonly<Props<TableDataItem>>) => props.instance.tableTools.getRowKeys,
+	(props: Readonly<Props<TableDataItem>>) => props.instance.tableVirtual.getColShow,
+	(props: Readonly<Props<TableDataItem>>) => props.instance.tableSticky.getStickyStyleAndClassName,
+	(props: Readonly<Props<TableDataItem>>) => props.instance.tableProps.columnsFlat,
+	(props: Readonly<Props<TableDataItem>>) => props.instance.tableProps.data,
+	(props: Readonly<Props<TableDataItem>>) => props.instance.tableProps.bordered,
+	(props: Readonly<Props<TableDataItem>>) => props.instance.tableProps.rowHeight,
+	(props: Readonly<Props<TableDataItem>>) => props.instance.tableCellBg.getBodyCellBg,
+	(props: Readonly<Props<TableDataItem>>) => props.instance.tableCellBg.bodyRowClick,
+	(props: Readonly<Props<TableDataItem>>) => props.instance.tableCellBg.bodyRowMouseEnter,
+	(props: Readonly<Props<TableDataItem>>) => props.instance.tableCellBg.bodyRowMouseLeave,
+];
+
+const propsAreEqual = (prevProps: Readonly<Props<TableDataItem>>, nextProps: Readonly<Props<TableDataItem>>): boolean => {
+	for (let i = 0; i < judgeEach.length; i++) {
+		const fun = judgeEach[i];
+		if (fun(prevProps) !== fun(nextProps)) {
+			return false;
+		}
+	}
+
+	return true;
+};
+
+export default propsAreEqual;

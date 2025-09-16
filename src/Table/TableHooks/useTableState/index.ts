@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import type { ResizeFlag2 } from '../type';
 
 const minColWidth = 50;
@@ -40,9 +40,12 @@ const useTableState = () => {
 	};
 
 	// 获取column是否在resized
-	const getColResized = (colKey: string) => {
-		return resizeKeysObj[colKey] === true;
-	};
+	const getColResized = useCallback(
+		(colKey: string) => {
+			return resizeKeysObj[colKey] === true;
+		},
+		[resizeKeysObj],
+	);
 
 	return {
 		minColWidth,

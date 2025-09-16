@@ -1,4 +1,4 @@
-import { useLayoutEffect, type CSSProperties } from 'react';
+import { useCallback, useLayoutEffect, type CSSProperties } from 'react';
 import type { TableDataItem } from '../../TableTypes/type';
 import type useTableProps from '../useTableProps';
 import type useTableState from '../useTableState';
@@ -29,23 +29,26 @@ const useTableMeasureCol = <T extends TableDataItem>({ tableProps, tableState }:
 	}, [columnsWidthKeys]);
 
 	// 测量样式
-	const getMeasureStyle = ({ colIndex }: { colIndex: number }) => {
-		const style: CSSProperties = {};
-		const column = columnsFlat[colIndex];
-		const oldSize = columnSizes[column.key];
-		if (typeof oldSize === 'number') {
-			style.width = oldSize;
-		} else {
-			const size = () => {
-				const _size = column.width;
-				if (typeof _size !== 'number') return _size;
-				return Math.min(maxColWidth, Math.max(minColWidth, _size));
-			};
-			style.width = size();
-			style.flexGrow = column.flexGrow ?? 1;
-		}
-		return style;
-	};
+	const getMeasureStyle = useCallback(
+		({ colIndex }: { colIndex: number }) => {
+			const style: CSSProperties = {};
+			const column = columnsFlat[colIndex];
+			const oldSize = columnSizes[column.key];
+			if (typeof oldSize === 'number') {
+				style.width = oldSize;
+			} else {
+				const size = () => {
+					const _size = column.width;
+					if (typeof _size !== 'number') return _size;
+					return Math.min(maxColWidth, Math.max(minColWidth, _size));
+				};
+				style.width = size();
+				style.flexGrow = column.flexGrow ?? 1;
+			}
+			return style;
+		},
+		[columnsFlat, columnSizes],
+	);
 
 	return { needMeasure, setNeedMeasure, getMeasureStyle };
 };

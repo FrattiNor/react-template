@@ -3,8 +3,9 @@ import HeadGroupCell from '../HeadGroupCell';
 import type { TableInstance } from '../../../TableHooks/type';
 import type { TableDataItem } from '../../../TableTypes/type';
 import { memo } from 'react';
+import propsAreEqual from './propsAreEqual';
 
-type Props<T extends TableDataItem> = {
+export type Props<T extends TableDataItem> = {
 	instance: TableInstance<T>;
 	rowIndex: number;
 };
@@ -21,4 +22,4 @@ const HeadGroupRow = <T extends TableDataItem>({ instance, rowIndex }: Props<T>)
 	);
 };
 
-export default memo(HeadGroupRow) as typeof HeadGroupRow;
+export default memo(HeadGroupRow, propsAreEqual) as typeof HeadGroupRow;

@@ -1,4 +1,4 @@
-import { startTransition, useEffect } from 'react';
+import { startTransition, useCallback, useEffect } from 'react';
 import type useTableState from '../useTableState';
 import type { ResizeFlag2 } from '../type';
 import type { TableDataItem } from '../../TableTypes/type';
@@ -81,25 +81,28 @@ const useTableResize = <T extends TableDataItem>({ tableProps, tableState }: Pro
 		}
 	}, [resizeFlag]);
 
-	const startResize = (e: React.MouseEvent<HTMLDivElement, MouseEvent>, colKey: string, colIndexs: [number] | [number, number]) => {
-		pauseEvent(e as unknown as Event);
+	const startResize = useCallback(
+		(e: React.MouseEvent<HTMLDivElement, MouseEvent>, colKey: string, colIndexs: [number] | [number, number]) => {
+			pauseEvent(e as unknown as Event);
 
-		const nextChildren: ResizeFlag2['children'] = [];
-		const start = colIndexs[0];
-		const end = colIndexs[colIndexs.length - 1];
+			const nextChildren: ResizeFlag2['children'] = [];
+			const start = colIndexs[0];
+			const end = colIndexs[colIndexs.length - 1];
 
-		for (let i = start; i <= end; i++) {
-			const key = columnsFlat[i].key;
-			const clientWidth = tableState.getColumnSize(key);
-			nextChildren.push({ key, clientWidth });
-		}
+			for (let i = start; i <= end; i++) {
+				const key = columnsFlat[i].key;
+				const clientWidth = tableState.getColumnSize(key);
+				nextChildren.push({ key, clientWidth });
+			}
 
-		setResizeFlag({
-			activeKey: colKey,
-			pageX: e.pageX,
-			children: nextChildren,
-		});
-	};
+			setResizeFlag({
+				activeKey: colKey,
+				pageX: e.pageX,
+				children: nextChildren,
+			});
+		},
+		[columnsFlat],
+	);
 
 	return { startResize };
 };

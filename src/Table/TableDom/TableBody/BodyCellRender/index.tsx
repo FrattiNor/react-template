@@ -3,8 +3,9 @@ import styles from './index.module.less';
 import type { TableInstance } from '../../../TableHooks/type';
 import type { TableDataItem } from '../../../TableTypes/type';
 import { getCellTitle } from '../../../TableUtils';
+import propsAreEqual from './propsAreEqual';
 
-type Props<T extends TableDataItem> = {
+export type Props<T extends TableDataItem> = {
 	instance: TableInstance<T>;
 	rowIndex: number;
 	colIndex: number;
@@ -28,4 +29,4 @@ const BodyCellRender = <T extends TableDataItem>({ instance, colIndex, rowIndex,
 	);
 };
 
-export default memo(BodyCellRender) as typeof BodyCellRender;
+export default memo(BodyCellRender, propsAreEqual) as typeof BodyCellRender;

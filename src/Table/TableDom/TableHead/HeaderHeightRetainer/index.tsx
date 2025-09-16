@@ -1,8 +1,9 @@
 import { Fragment, memo } from 'react';
 import type { TableInstance } from '../../../TableHooks/type';
 import type { TableDataItem } from '../../../TableTypes/type';
+import propsAreEqual from './propsAreEqual';
 
-type Props<T extends TableDataItem> = {
+export type Props<T extends TableDataItem> = {
 	instance: TableInstance<T>;
 };
 
@@ -22,4 +23,4 @@ const HeaderHeightRetainer = <T extends TableDataItem>({ instance }: Props<T>) =
 	);
 };
 
-export default memo(HeaderHeightRetainer) as typeof HeaderHeightRetainer;
+export default memo(HeaderHeightRetainer, propsAreEqual) as typeof HeaderHeightRetainer;

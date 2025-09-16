@@ -5,8 +5,9 @@ import HeaderHeightRetainer from './HeaderHeightRetainer';
 import type { TableInstance } from '../../TableHooks/type';
 import type { TableDataItem } from '../../TableTypes/type';
 import { memo } from 'react';
+import propsAreEqual from './propsAreEqual';
 
-type Props<T extends TableDataItem> = {
+export type Props<T extends TableDataItem> = {
 	instance: TableInstance<T>;
 };
 
@@ -30,4 +31,4 @@ const TableHead = <T extends TableDataItem>({ instance }: Props<T>) => {
 	);
 };
 
-export default memo(TableHead) as typeof TableHead;
+export default memo(TableHead, propsAreEqual) as typeof TableHead;

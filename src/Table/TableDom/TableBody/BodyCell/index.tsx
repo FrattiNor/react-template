@@ -4,8 +4,9 @@ import BodyCellRender from '../BodyCellRender';
 import type { TableInstance } from '../../../TableHooks/type';
 import type { TableDataItem } from '../../../TableTypes/type';
 import { memo } from 'react';
+import propsAreEqual from './propsAreEqual';
 
-type Props<T extends TableDataItem> = {
+export type Props<T extends TableDataItem> = {
 	instance: TableInstance<T>;
 	rowIndex: number;
 	colIndex: number;
@@ -55,4 +56,4 @@ const BodyCell = <T extends TableDataItem>({ instance, colIndex, rowIndex }: Pro
 	);
 };
 
-export default memo(BodyCell) as typeof BodyCell;
+export default memo(BodyCell, propsAreEqual) as typeof BodyCell;
