@@ -11,7 +11,8 @@ export type Props<T extends TableDataItem> = {
 };
 
 const HeadGroupRow = <T extends TableDataItem>({ instance, rowIndex }: Props<T>) => {
-	const headerColumnGroup = instance.tableProps.columnGroups[rowIndex];
+	const { columnGroups } = instance.tableProps;
+	const headerColumnGroup = columnGroups[rowIndex];
 
 	return (
 		<div className={styles['head-row']}>

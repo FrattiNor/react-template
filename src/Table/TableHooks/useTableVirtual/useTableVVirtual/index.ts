@@ -12,15 +12,17 @@ type Props<T extends TableDataItem> = {
 };
 
 const useTableVVirtual = <T extends TableDataItem>({ tableProps, tableDomRef, tableTools }: Props<T>) => {
-	const { data } = tableProps;
+	const { bodyRef } = tableDomRef;
+	const { getRowKey } = tableTools;
+	const { data, rowHeight } = tableProps;
 
 	// 竖向虚拟
 	const VV = useV({
 		overscan: 0,
 		count: data?.length ?? 0,
-		estimateSize: () => tableProps.rowHeight,
-		getScrollElement: () => tableDomRef.bodyRef.current,
-		getItemKey: (index) => tableTools.getRowKey(data?.[index], index),
+		estimateSize: () => rowHeight,
+		getScrollElement: () => bodyRef.current,
+		getItemKey: (index) => getRowKey(data?.[index], index),
 	});
 
 	const VV_measureElement = VV.measureElement;

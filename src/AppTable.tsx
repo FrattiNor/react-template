@@ -1,17 +1,17 @@
 import { useState, type FC } from 'react';
-import { columns1, columns2 } from './AppTable.columns';
 import Table from './Table';
-import { data1, data2 } from './AppTable.data';
+import { data_empty, data1, data2, data3, data4 } from './AppTable.data';
 import styles from './AppTable.module.less';
+import useAppTableColumns from './useAppTable.columns';
 
 const AppTable: FC = () => {
-	const [data, setData] = useState<typeof data1>(() => data1);
-	const [columns, setColumns] = useState<typeof columns1>(() => columns1);
+	const { columns, setLongColumns } = useAppTableColumns();
+	const [data, setData] = useState<typeof data1>(() => data4);
 
 	return (
 		<div
 			style={{
-				gap: 12,
+				gap: 16,
 				width: '100vw',
 				height: '100vh',
 				display: 'flex',
@@ -23,12 +23,16 @@ const AppTable: FC = () => {
 			<div style={{ width: '80vw', height: 500, flexShrink: 0, padding: 8 }}>
 				<Table data={data} columns={columns} rowKey="userId" bordered />
 			</div>
-			<div style={{ display: 'flex', gap: 12 }}>
-				<button className={styles['btn']} onClick={() => setData([])}>{`data(empty)`}</button>
-				<button className={styles['btn']} onClick={() => setData(data2)}>{`data(less)`}</button>
-				<button className={styles['btn']} onClick={() => setData(data1)}>{`data(lot)`}</button>
-				<button className={styles['btn']} onClick={() => setColumns(columns2)}>{`columns(less)`}</button>
-				<button className={styles['btn']} onClick={() => setColumns(columns1)}>{`columns(lot)`}</button>
+			<div style={{ display: 'flex', gap: 16 }}>
+				<button className={styles['btn']} onClick={() => setLongColumns(false)}>{`columns(less)`}</button>
+				<button className={styles['btn']} onClick={() => setLongColumns(true)}>{`columns(lot)`}</button>
+			</div>
+			<div style={{ display: 'flex', gap: 16 }}>
+				<button className={styles['btn']} onClick={() => setData(data_empty)}>{`data(empty)`}</button>
+				<button className={styles['btn']} onClick={() => setData(data1)}>{`data(level1)`}</button>
+				<button className={styles['btn']} onClick={() => setData(data2)}>{`data(level2)`}</button>
+				<button className={styles['btn']} onClick={() => setData(data3)}>{`data(level3)`}</button>
+				<button className={styles['btn']} onClick={() => setData(data4)}>{`data(level4)`}</button>
 			</div>
 		</div>
 	);

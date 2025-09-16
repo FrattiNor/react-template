@@ -12,16 +12,18 @@ type Props<T extends TableDataItem> = {
 };
 
 const useTableHVirtual = <T extends TableDataItem>({ tableProps, tableDomRef, tableState }: Props<T>) => {
+	const { bodyRef } = tableDomRef;
 	const { columnsFlat } = tableProps;
+	const { getColumnSize } = tableState;
 
 	// 横向虚拟
 	const HV = useV({
 		overscan: 0,
 		horizontal: true,
 		count: columnsFlat.length,
+		getScrollElement: () => bodyRef.current,
 		getItemKey: (index) => columnsFlat[index].key,
-		getScrollElement: () => tableDomRef.bodyRef.current,
-		estimateSize: (index) => tableState.getColumnSize(columnsFlat[index].key),
+		estimateSize: (index) => getColumnSize(columnsFlat[index].key),
 	});
 
 	const HV_Range = HV.calculateRange();

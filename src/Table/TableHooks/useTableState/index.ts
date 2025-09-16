@@ -35,9 +35,12 @@ const useTableState = () => {
 	}, [resizeFlag]);
 
 	// 获取col的宽度
-	const getColumnSize = (key: string) => {
-		return columnSizes[key] ?? 0;
-	};
+	const getColumnSize = useCallback(
+		(key: string) => {
+			return columnSizes[key] ?? 0;
+		},
+		[columnSizes],
+	);
 
 	// 获取column是否在resized
 	const getColResized = useCallback(

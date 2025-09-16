@@ -17,7 +17,7 @@ export const columns1: TableColumns<DataItem> = [
 		title: 'NameGroup',
 		children: [
 			{
-				width: 25,
+				width: 300,
 				key: 'firstName',
 				title: 'firstName_0',
 				render: ({ firstName }) => (
