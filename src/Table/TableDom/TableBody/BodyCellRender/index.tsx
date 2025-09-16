@@ -1,20 +1,23 @@
-import type { CSSProperties, FC } from 'react';
-import { useTableContext } from '../../../TableContext';
+import type { CSSProperties } from 'react';
 import styles from './index.module.less';
+import type { TableInstance } from '../../../TableHooks/type';
+import type { TableDataItem } from '../../../TableTypes/type';
+import { getCellTitle } from '../../../TableUtils';
 
-type Props = {
+type Props<T extends TableDataItem> = {
+	instance: TableInstance<T>;
 	rowIndex: number;
 	colIndex: number;
 	align?: 'left' | 'right' | 'center';
 };
 
-const BodyCellRender: FC<Props> = ({ rowIndex, colIndex, align }) => {
-	const { tableProps, tableTools } = useTableContext();
-	const { columnsFlat, data } = tableProps;
+const BodyCellRender = <T extends TableDataItem>({ instance, colIndex, rowIndex, align }: Props<T>) => {
+	const { columnsFlat, data } = instance.tableProps;
+
 	const rowData = data[rowIndex];
 	const column = columnsFlat[colIndex];
 	const cellRenderValue = column.render(rowData, rowIndex);
-	const title = tableTools.getCellTitle(cellRenderValue);
+	const title = getCellTitle(cellRenderValue);
 	const cellIsStr = typeof cellRenderValue === 'string' || typeof cellRenderValue === 'number';
 	const alignStyle: CSSProperties = { justifyContent: align === 'center' ? 'center' : align === 'right' ? 'flex-end' : 'flex-start' };
 

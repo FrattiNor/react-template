@@ -1,19 +1,20 @@
-import type { FC } from 'react';
 import styles from './index.module.less';
-import { useTableContext } from '../../../TableContext';
 import classNames from 'classnames';
+import type { TableInstance } from '../../../TableHooks/type';
+import type { TableDataItem } from '../../../TableTypes/type';
 
-type Props = {
+type Props<T extends TableDataItem> = {
+	instance: TableInstance<T>;
 	colKey: string;
 	colIndexs: [number] | [number, number];
 };
 
-const ResizeHandle: FC<Props> = ({ colKey, colIndexs }) => {
-	const { tableResize, tableState } = useTableContext();
+const ResizeHandle = <T extends TableDataItem>({ instance, colKey, colIndexs }: Props<T>) => {
+	const { resizeFlag } = instance.tableState;
+	const { startResize } = instance.tableResize;
+	const active = colKey === resizeFlag?.activeKey;
 
-	const active = colKey === tableState.resizeFlag?.activeKey;
-
-	return <div className={classNames(styles['resize-handle'], { [styles['active']]: active })} onMouseDown={(e) => tableResize.startResize(e, colKey, colIndexs)} />;
+	return <div className={classNames(styles['resize-handle'], { [styles['active']]: active })} onMouseDown={(e) => startResize(e, colKey, colIndexs)} />;
 };
 
 export default ResizeHandle;

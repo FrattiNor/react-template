@@ -1,22 +1,23 @@
-import type { FC } from 'react';
 import styles from './index.module.less';
-import { useTableContext } from '../../../TableContext';
 import HeadCellPlaceholder from '../HeadCellPlaceholder';
 import HeadCell from '../HeadCell';
+import type { TableInstance } from '../../../TableHooks/type';
+import type { TableDataItem } from '../../../TableTypes/type';
 
-type Props = {
+type Props<T extends TableDataItem> = {
+	instance: TableInstance<T>;
 	rowIndex: number;
 };
 
-const HeadRow: FC<Props> = ({ rowIndex }) => {
-	const { tableProps } = useTableContext();
+const HeadRow = <T extends TableDataItem>({ instance, rowIndex }: Props<T>) => {
+	const { columnsFlat } = instance.tableProps;
 
 	return (
 		<div className={styles['head-row']} data-row-index={rowIndex}>
-			{tableProps.columnsFlat.map((column, colIndex) => (
-				<HeadCell key={column.key} rowIndex={rowIndex} colIndex={colIndex} />
+			{columnsFlat.map((column, colIndex) => (
+				<HeadCell key={column.key} rowIndex={rowIndex} colIndex={colIndex} instance={instance} />
 			))}
-			<HeadCellPlaceholder rowIndex={rowIndex} />
+			<HeadCellPlaceholder rowIndex={rowIndex} instance={instance} />
 		</div>
 	);
 };

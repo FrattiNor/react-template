@@ -1,18 +1,22 @@
 import { Fragment } from 'react';
-import { useTableContext } from '../../../TableContext';
+import type { TableInstance } from '../../../TableHooks/type';
+import type { TableDataItem } from '../../../TableTypes/type';
 
-const HeaderHeightRetainer = () => {
-	const { tableProps } = useTableContext();
-	const { columnGroups, columnsFlat } = tableProps;
-	const colCount = columnsFlat.length;
+type Props<T extends TableDataItem> = {
+	instance: TableInstance<T>;
+};
+
+const HeaderHeightRetainer = <T extends TableDataItem>({ instance }: Props<T>) => {
+	const { columnGroups, columnsFlat, rowHeight } = instance.tableProps;
 	const rowCount = columnGroups.length + 1;
-	const minHeight = tableProps.rowHeight;
+	const colCount = columnsFlat.length;
+
 	return (
 		<Fragment>
 			{Array(rowCount)
 				.fill('')
 				.map((_, index) => (
-					<div key={index} style={{ gridRow: `${index + 1}/${index + 2}`, gridColumn: `1/${colCount + 1}`, minHeight }} />
+					<div key={index} style={{ gridRow: `${index + 1}/${index + 2}`, gridColumn: `1/${colCount + 1}`, minHeight: rowHeight }} />
 				))}
 		</Fragment>
 	);

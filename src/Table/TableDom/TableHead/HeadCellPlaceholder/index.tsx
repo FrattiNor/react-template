@@ -1,14 +1,14 @@
-import type { FC } from 'react';
 import styles from './index.module.less';
-import { useTableContext } from '../../../TableContext';
+import type { TableInstance } from '../../../TableHooks/type';
+import type { TableDataItem } from '../../../TableTypes/type';
 
-type Props = {
+type Props<T extends TableDataItem> = {
+	instance: TableInstance<T>;
 	rowIndex: number;
 };
 
-const HeadCellPlaceholder: FC<Props> = ({ rowIndex }) => {
-	const { tableProps } = useTableContext();
-	const { columnsFlat } = tableProps;
+const HeadCellPlaceholder = <T extends TableDataItem>({ instance, rowIndex }: Props<T>) => {
+	const { columnsFlat } = instance.tableProps;
 	const colMaxIndex = columnsFlat.length - 1;
 
 	return (

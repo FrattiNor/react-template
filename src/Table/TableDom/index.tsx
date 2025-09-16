@@ -1,26 +1,30 @@
-import type { FC } from 'react';
 import styles from './index.module.less';
 import TableHead from './TableHead';
 import TableBody from './TableBody';
-import { useTableContext } from '../TableContext';
 import classNames from 'classnames';
+import type { TableInstance } from '../TableHooks/type';
+import type { TableDataItem } from '../TableTypes/type';
 
-const TableDom: FC = () => {
-	const { tableProps, tableState } = useTableContext();
-	const { bordered } = tableProps;
+type Props<T extends TableDataItem> = {
+	instance: TableInstance<T>;
+};
+
+const TableDom = <T extends TableDataItem>({ instance }: Props<T>) => {
+	const { bordered } = instance.tableProps;
+	const { V_ScrollbarWidth, H_ScrollbarWidth } = instance.tableState;
 
 	return (
 		<div
 			className={classNames(styles['table'], {
 				[styles['bordered']]: bordered,
-				[styles['have-scroll-v']]: tableState.V_ScrollbarWidth > 0,
-				[styles['not-have-scroll-v']]: tableState.V_ScrollbarWidth <= 0,
-				[styles['have-scroll-h']]: tableState.H_ScrollbarWidth > 0,
-				[styles['not-have-scroll-h']]: tableState.H_ScrollbarWidth <= 0,
+				[styles['have-scroll-v']]: V_ScrollbarWidth > 0,
+				[styles['not-have-scroll-v']]: V_ScrollbarWidth <= 0,
+				[styles['have-scroll-h']]: H_ScrollbarWidth > 0,
+				[styles['not-have-scroll-h']]: H_ScrollbarWidth <= 0,
 			})}
 		>
-			<TableHead />
-			<TableBody />
+			<TableHead instance={instance} />
+			<TableBody instance={instance} />
 		</div>
 	);
 };

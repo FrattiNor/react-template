@@ -1,27 +1,28 @@
-import type { FC } from 'react';
 import styles from './index.module.less';
-import { useTableContext } from '../../../TableContext';
 import BodyCell from '../BodyCell';
 import BodyCellPlaceholder from '../BodyCellPlaceholder';
 import BodyRowMeasure from '../BodyRowMeasure';
+import type { TableInstance } from '../../../TableHooks/type';
+import type { TableDataItem } from '../../../TableTypes/type';
 
-type Props = {
+type Props<T extends TableDataItem> = {
+	instance: TableInstance<T>;
 	rowIndex: number;
 };
 
-const BodyRow: FC<Props> = ({ rowIndex }) => {
-	const { tableProps, tableTools } = useTableContext();
-	const { columnsFlat, data } = tableProps;
+const BodyRow = <T extends TableDataItem>({ instance, rowIndex }: Props<T>) => {
+	const { getRowKey } = instance.tableTools;
+	const { columnsFlat, data } = instance.tableProps;
 	const rowData = data[rowIndex];
-	const rowKey = tableTools.getRowKey(rowData, rowIndex);
+	const rowKey = getRowKey(rowData, rowIndex);
 
 	return (
 		<div key={rowKey} className={styles['body-row']} data-row-index={rowIndex}>
 			{columnsFlat.map((column, colIndex) => {
-				return <BodyCell key={column.key} rowIndex={rowIndex} colIndex={colIndex} />;
+				return <BodyCell key={column.key} rowIndex={rowIndex} colIndex={colIndex} instance={instance} />;
 			})}
-			<BodyCellPlaceholder rowIndex={rowIndex} />
-			<BodyRowMeasure rowIndex={rowIndex} />
+			<BodyCellPlaceholder rowIndex={rowIndex} instance={instance} />
+			<BodyRowMeasure rowIndex={rowIndex} instance={instance} />
 		</div>
 	);
 };

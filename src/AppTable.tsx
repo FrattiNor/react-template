@@ -6,7 +6,7 @@ import styles from './AppTable.module.less';
 
 const AppTable: FC = () => {
 	const [data, setData] = useState<typeof data1>(() => data1);
-	const [columns, setColumns] = useState(() => columns2);
+	const [columns, setColumns] = useState<typeof columns1>(() => columns1);
 
 	return (
 		<div

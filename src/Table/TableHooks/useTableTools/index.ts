@@ -1,7 +1,6 @@
 import { useCallback } from 'react';
 import type { TableDataItem } from '../../TableTypes/type';
 import type useTableProps from '../useTableProps';
-import { getCellTitle } from '../../TableUtils';
 
 type Props<T extends TableDataItem> = {
 	tableProps: ReturnType<typeof useTableProps<T>>;
@@ -50,7 +49,7 @@ const useTableTools = <T extends TableDataItem>({ tableProps }: Props<T>) => {
 		return [start, end] as [number, number];
 	};
 
-	return { getRowKey, getRowKeys, getCellTitle, getRowIndexs };
+	return { getRowKey, getRowKeys, getRowIndexs };
 };
 
 export default useTableTools;

@@ -1,8 +1,13 @@
-import { useTableContext } from '../../../TableContext';
+import type { TableInstance } from '../../../TableHooks/type';
+import type { TableDataItem } from '../../../TableTypes/type';
 
-const BodyEmpty = () => {
-	const { tableSecondaryState } = useTableContext();
-	return <div style={{ width: tableSecondaryState.HTotalSize, minWidth: '100%', backgroundColor: 'rgba(0,0,0,0.05)', height: '200px' }} />;
+type Props<T extends TableDataItem> = {
+	instance: TableInstance<T>;
+};
+
+const BodyEmpty = <T extends TableDataItem>({ instance }: Props<T>) => {
+	const { HTotalSize } = instance.tableSecondaryState;
+	return <div style={{ width: HTotalSize, minWidth: '100%', backgroundColor: 'rgba(0,0,0,0.05)', height: '200px' }} />;
 };
 
 export default BodyEmpty;

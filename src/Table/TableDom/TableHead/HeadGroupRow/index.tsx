@@ -1,20 +1,20 @@
-import type { FC } from 'react';
 import styles from './index.module.less';
-import { useTableContext } from '../../../TableContext';
 import HeadGroupCell from '../HeadGroupCell';
+import type { TableInstance } from '../../../TableHooks/type';
+import type { TableDataItem } from '../../../TableTypes/type';
 
-type Props = {
+type Props<T extends TableDataItem> = {
+	instance: TableInstance<T>;
 	rowIndex: number;
 };
 
-const HeadGroupRow: FC<Props> = ({ rowIndex }) => {
-	const { tableProps } = useTableContext();
-	const headerColumnGroup = tableProps.columnGroups[rowIndex];
+const HeadGroupRow = <T extends TableDataItem>({ instance, rowIndex }: Props<T>) => {
+	const headerColumnGroup = instance.tableProps.columnGroups[rowIndex];
 
 	return (
 		<div className={styles['head-row']}>
 			{headerColumnGroup.map((column, colIndex) => (
-				<HeadGroupCell key={column.key} rowIndex={rowIndex} colIndex={colIndex} />
+				<HeadGroupCell key={column.key} rowIndex={rowIndex} colIndex={colIndex} instance={instance} />
 			))}
 		</div>
 	);

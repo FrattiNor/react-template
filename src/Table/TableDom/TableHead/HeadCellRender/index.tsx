@@ -1,18 +1,17 @@
-import type { CSSProperties, FC, ReactNode } from 'react';
+import type { CSSProperties, ReactNode } from 'react';
 import styles from './index.module.less';
 import Sort from './Sort';
 import Filter from './Filter';
-import { useTableContext } from '../../../TableContext';
+import { getCellTitle } from '../../../TableUtils';
 
 type Props = {
 	content: ReactNode;
 	align?: 'left' | 'right' | 'center';
 };
 
-const HeadCellRender: FC<Props> = ({ content, align }) => {
+const HeadCellRender = ({ content, align }: Props) => {
 	const cellRenderValue = content;
-	const { tableTools } = useTableContext();
-	const title = tableTools.getCellTitle(cellRenderValue);
+	const title = getCellTitle(cellRenderValue);
 	const cellIsStr = typeof cellRenderValue === 'string' || typeof cellRenderValue === 'number';
 	const alignStyle: CSSProperties = { justifyContent: align === 'center' ? 'center' : align === 'right' ? 'flex-end' : 'flex-start' };
 

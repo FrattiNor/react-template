@@ -1,28 +1,31 @@
-import type { FC } from 'react';
 import styles from './index.module.less';
-import { useTableContext } from '../../../TableContext';
 
 import classNames from 'classnames';
 import HeadCellRender from '../HeadCellRender';
 import ResizeHandle from '../ResizeHandle';
+import type { TableInstance } from '../../../TableHooks/type';
+import type { TableDataItem } from '../../../TableTypes/type';
 
-type Props = {
+type Props<T extends TableDataItem> = {
+	instance: TableInstance<T>;
 	rowIndex: number;
 	colIndex: number;
 };
 
-const HeadGroupCell: FC<Props> = ({ rowIndex, colIndex }) => {
-	const { tableProps, tableCellBg, tableSticky, tableVirtual } = useTableContext();
-	const { columnsFlat, columnGroups, bordered } = tableProps;
-	const column = columnGroups[rowIndex][colIndex];
+const HeadGroupCell = <T extends TableDataItem>({ instance, rowIndex, colIndex }: Props<T>) => {
+	const { getColShow } = instance.tableVirtual;
+	const { getHeadCellBg } = instance.tableCellBg;
+	const { getStickyStyleAndClassName } = instance.tableSticky;
+	const { columnsFlat, columnGroups, bordered, rowHeight } = instance.tableProps;
 
+	const column = columnGroups[rowIndex][colIndex];
 	const colIndexs = [column.startIndex, column.endIndex] as [number, number];
-	const { stickyStyle, stickyClassName, sticky } = tableSticky.getStickyStyleAndClassName({ colIndexs, type: 'head' });
-	const colShow = tableVirtual.getColShow(colIndexs);
+	const { stickyStyle, stickyClassName, sticky } = getStickyStyleAndClassName({ colIndexs, type: 'head' });
+	const colShow = getColShow(colIndexs);
 	if (!(colShow === true || sticky === true)) return null;
 
 	const colMaxIndex = columnsFlat.length - 1;
-	const headCellBg = tableCellBg.getHeadCellBg({ colKey: column.key });
+	const headCellBg = getHeadCellBg({ colKey: column.key });
 
 	return (
 		<div
@@ -34,15 +37,15 @@ const HeadGroupCell: FC<Props> = ({ rowIndex, colIndex }) => {
 				[styles['last-col']]: column.endIndex === colMaxIndex,
 			})}
 			style={{
+				minHeight: rowHeight,
 				backgroundColor: headCellBg,
-				minHeight: tableProps.rowHeight,
 				gridRow: `${rowIndex + 1}/${rowIndex + 2}`,
 				gridColumn: `${column.startIndex + 1}/${column.endIndex + 2}`,
 				...stickyStyle,
 			}}
 		>
 			<HeadCellRender content={column.title} align="center" />
-			<ResizeHandle colKey={column.key} colIndexs={colIndexs} />
+			<ResizeHandle colKey={column.key} colIndexs={colIndexs} instance={instance} />
 		</div>
 	);
 };
