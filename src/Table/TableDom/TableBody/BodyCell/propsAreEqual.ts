@@ -1,7 +1,8 @@
 import type { Props } from './index';
 import type { TableDataItem } from '../../../TableTypes/type';
 import type { TableInstance } from '../../../TableHooks/type';
-import { judgeEach_Instance as BodyCellRender_judgeEach_Instance } from '../BodyCellRender/propsAreEqual';
+import { judgeEach_Instance_obj as BodyCellRender_judgeEach_Instance_obj } from '../BodyCellRender/propsAreEqual';
+import { getJudgeEachInstanceObj } from '../../../TableUtils';
 
 const judgeEach = [
 	//
@@ -9,20 +10,24 @@ const judgeEach = [
 	(props: Readonly<Props<TableDataItem>>) => props.colIndex,
 ];
 
-export const judgeEach_Instance = [
-	(instance: Readonly<TableInstance<TableDataItem>>) => instance.tableTools.getRowKeys,
-	(instance: Readonly<TableInstance<TableDataItem>>) => instance.tableVirtual.getColShow,
-	(instance: Readonly<TableInstance<TableDataItem>>) => instance.tableSticky.getStickyStyleAndClassName,
-	(instance: Readonly<TableInstance<TableDataItem>>) => instance.tableProps.columnsFlat,
-	(instance: Readonly<TableInstance<TableDataItem>>) => instance.tableProps.data,
-	(instance: Readonly<TableInstance<TableDataItem>>) => instance.tableProps.bordered,
-	(instance: Readonly<TableInstance<TableDataItem>>) => instance.tableProps.rowHeight,
-	(instance: Readonly<TableInstance<TableDataItem>>) => instance.tableCellBg.getBodyCellBg,
-	(instance: Readonly<TableInstance<TableDataItem>>) => instance.tableCellBg.bodyRowClick,
-	(instance: Readonly<TableInstance<TableDataItem>>) => instance.tableCellBg.bodyRowMouseEnter,
-	(instance: Readonly<TableInstance<TableDataItem>>) => instance.tableCellBg.bodyRowMouseLeave,
-	...BodyCellRender_judgeEach_Instance,
-];
+export const judgeEach_Instance_obj = {
+	...getJudgeEachInstanceObj([
+		(instance: Readonly<TableInstance<TableDataItem>>) => instance.tableTools.getRowKeys,
+		(instance: Readonly<TableInstance<TableDataItem>>) => instance.tableVirtual.getColShow,
+		(instance: Readonly<TableInstance<TableDataItem>>) => instance.tableSticky.getStickyStyleAndClassName,
+		(instance: Readonly<TableInstance<TableDataItem>>) => instance.tableProps.columnsFlat,
+		(instance: Readonly<TableInstance<TableDataItem>>) => instance.tableProps.data,
+		(instance: Readonly<TableInstance<TableDataItem>>) => instance.tableProps.bordered,
+		(instance: Readonly<TableInstance<TableDataItem>>) => instance.tableProps.rowHeight,
+		(instance: Readonly<TableInstance<TableDataItem>>) => instance.tableCellBg.getBodyCellBg,
+		(instance: Readonly<TableInstance<TableDataItem>>) => instance.tableCellBg.bodyRowClick,
+		(instance: Readonly<TableInstance<TableDataItem>>) => instance.tableCellBg.bodyRowMouseEnter,
+		(instance: Readonly<TableInstance<TableDataItem>>) => instance.tableCellBg.bodyRowMouseLeave,
+	]),
+	...BodyCellRender_judgeEach_Instance_obj,
+};
+
+const judgeEach_Instance = Object.values(judgeEach_Instance_obj);
 
 const propsAreEqual = (prevProps: Readonly<Props<TableDataItem>>, nextProps: Readonly<Props<TableDataItem>>): boolean => {
 	for (let i = 0; i < judgeEach.length; i++) {

@@ -1,6 +1,10 @@
 import type { Props } from './index';
 
-const judgeEach = [(props: Readonly<Props>) => props.content, (props: Readonly<Props>) => props.align];
+const judgeEach = [
+	//
+	(props: Readonly<Props>) => props.content,
+	(props: Readonly<Props>) => props.align,
+];
 
 const propsAreEqual = (prevProps: Readonly<Props>, nextProps: Readonly<Props>): boolean => {
 	for (let i = 0; i < judgeEach.length; i++) {

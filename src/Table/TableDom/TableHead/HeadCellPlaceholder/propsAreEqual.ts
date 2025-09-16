@@ -1,13 +1,19 @@
 import type { Props } from './index';
 import type { TableDataItem } from '../../../TableTypes/type';
 import type { TableInstance } from '../../../TableHooks/type';
+import { getJudgeEachInstanceObj } from '../../../TableUtils';
 
 const judgeEach = [
 	//
 	(props: Readonly<Props<TableDataItem>>) => props.rowIndex,
 ];
 
-export const judgeEach_Instance = [(instance: Readonly<TableInstance<TableDataItem>>) => instance.tableProps.columnsFlat];
+export const judgeEach_Instance_obj = getJudgeEachInstanceObj([
+	//
+	(instance: Readonly<TableInstance<TableDataItem>>) => instance.tableProps.columnsFlat,
+]);
+
+const judgeEach_Instance = Object.values(judgeEach_Instance_obj);
 
 const propsAreEqual = (prevProps: Readonly<Props<TableDataItem>>, nextProps: Readonly<Props<TableDataItem>>): boolean => {
 	for (let i = 0; i < judgeEach.length; i++) {
