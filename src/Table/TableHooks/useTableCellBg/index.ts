@@ -7,7 +7,7 @@ type Props = {
 
 // 表格 单元格 背景色
 const useTableCellBg = ({ tableState }: Props) => {
-	const { rowClickObj, rowHoverObj, setRowHoverObj, setRowClickObj } = tableState;
+	const { rowClickObj, rowHoverObj, setRowHoverObj, setRowClickObj, getColResized, resizeFlag } = tableState;
 
 	const getClicked = ({ rowKeys }: { rowKeys: string[] }) => {
 		return rowKeys.some((key) => rowClickObj[key] === true);
@@ -19,7 +19,7 @@ const useTableCellBg = ({ tableState }: Props) => {
 
 	const getBodyCellBg = ({ rowKeys, colKey }: { rowKeys: string[]; colKey: string }) => {
 		let bgColorLevel = 0;
-		if (tableState.getColResized(colKey)) bgColorLevel++;
+		if (getColResized(colKey)) bgColorLevel++;
 		if (getClicked({ rowKeys }) === true) bgColorLevel++;
 		if (getHovered({ rowKeys }) === true) bgColorLevel++;
 		if (bgColorLevel === 0) return 'var(--table-body-cell-bg)';
@@ -30,7 +30,7 @@ const useTableCellBg = ({ tableState }: Props) => {
 
 	const getHeadCellBg = ({ colKey }: { colKey: string }) => {
 		let bgColorLevel = 0;
-		if (tableState.resizeFlag?.activeKey === colKey || tableState.getColResized(colKey)) bgColorLevel++;
+		if (resizeFlag?.activeKey === colKey || getColResized(colKey)) bgColorLevel++;
 		if (bgColorLevel === 0) return 'var(--table-head-cell-bg)';
 		if (bgColorLevel >= 1) return 'var(--table-head-cell-active-bg)';
 		return 'var(--table-head-cell-bg)';

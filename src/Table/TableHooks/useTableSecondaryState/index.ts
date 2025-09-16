@@ -10,6 +10,9 @@ type Props<T extends TableDataItem> = {
 
 // 表格二级状态
 const useTableSecondaryState = <T extends TableDataItem>({ tableProps, tableState }: Props<T>) => {
+	const { columnSizes, getColumnSize } = tableState;
+	const { columnsFlat, columnsFixedKeys } = tableProps;
+
 	const { gridTemplateColumnsArr, HTotalSize, fixedRightObj, fixedLeftObj } = useMemo(() => {
 		let HTotalSize: number = 0;
 		const gridTemplateColumnsArr: string[] = [];
@@ -19,8 +22,8 @@ const useTableSecondaryState = <T extends TableDataItem>({ tableProps, tableStat
 		const fixedRightSizeArr: { size: number; leftTotalSize: number; index: number }[] = [];
 
 		let totalSize = 0;
-		tableProps.columnsFlat.forEach(({ key, fixed }, index) => {
-			const size = tableState.getColumnSize(key);
+		columnsFlat.forEach(({ key, fixed }, index) => {
+			const size = getColumnSize(key);
 			gridTemplateColumnsArr.push(`${size}px`);
 			HTotalSize += size;
 			totalSize += size;
@@ -45,7 +48,7 @@ const useTableSecondaryState = <T extends TableDataItem>({ tableProps, tableStat
 		});
 
 		return { gridTemplateColumnsArr, HTotalSize, fixedLeftObj, fixedRightObj };
-	}, [tableProps.columnsFixedKeys, tableState.columnSizes]);
+	}, [columnsFixedKeys, columnSizes]);
 
 	return { gridTemplateColumnsArr, HTotalSize, fixedRightObj, fixedLeftObj };
 };

@@ -1,4 +1,4 @@
-import type { CSSProperties } from 'react';
+import { useCallback, useMemo, type CSSProperties } from 'react';
 import type { TableDataItem } from '../../../TableTypes/type';
 import type useTableDomRef from '../../useTableDomRef';
 import type useTableProps from '../../useTableProps';
@@ -23,27 +23,38 @@ const useTableVVirtual = <T extends TableDataItem>({ tableProps, tableDomRef, ta
 		getItemKey: (index) => tableTools.getRowKey(data?.[index], index),
 	});
 
-	const VV_Range = VV.calculateRange();
+	const VV_measureElement = VV.measureElement;
+	const VV_totalSize = VV.getTotalSize();
+	const VV_paddingTop = VV.getVirtualItems()?.[0]?.start ?? 0;
 
 	// 虚拟容器style
-	const VVWrapperStyle: CSSProperties = {
-		boxSizing: 'border-box',
-		minHeight: VV.getTotalSize(),
-		paddingTop: VV.getVirtualItems()?.[0]?.start ?? 0,
-	};
+	const VV_WrapperStyle: CSSProperties = useMemo(
+		() => ({
+			boxSizing: 'border-box',
+			minHeight: VV_totalSize,
+			paddingTop: VV_paddingTop,
+		}),
+		[VV_totalSize, VV_paddingTop],
+	);
+
+	const VV_Range = VV.calculateRange();
+	const endIndex = VV_Range?.endIndex;
+	const startIndex = VV_Range?.startIndex;
 
 	// row是否显示
-	const getRowShow = (indexs: [number] | [number, number]) => {
-		if (VV_Range) {
-			const start = indexs[0];
-			const end = indexs[indexs.length - 1];
-			const { startIndex, endIndex } = VV_Range;
-			return (start <= endIndex && start >= startIndex) || (end <= endIndex && end >= startIndex);
-		}
-		return false;
-	};
+	const getRowShow = useCallback(
+		(indexs: [number] | [number, number]) => {
+			if (typeof endIndex === 'number' && typeof startIndex === 'number') {
+				const start = indexs[0];
+				const end = indexs[indexs.length - 1];
+				return (start <= endIndex && start >= startIndex) || (end <= endIndex && end >= startIndex);
+			}
+			return false;
+		},
+		[startIndex, endIndex],
+	);
 
-	return { VV, VVWrapperStyle, getRowShow };
+	return { VV_measureElement, VV_WrapperStyle, getRowShow };
 };
 
 export default useTableVVirtual;

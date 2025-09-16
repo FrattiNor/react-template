@@ -1,3 +1,4 @@
+import { useCallback } from 'react';
 import type { TableDataItem } from '../../../TableTypes/type';
 import type useTableDomRef from '../../useTableDomRef';
 import type useTableProps from '../../useTableProps';
@@ -24,19 +25,23 @@ const useTableHVirtual = <T extends TableDataItem>({ tableProps, tableDomRef, ta
 	});
 
 	const HV_Range = HV.calculateRange();
+	const endIndex = HV_Range?.endIndex;
+	const startIndex = HV_Range?.startIndex;
 
 	// col是否显示
-	const getColShow = (indexs: [number] | [number, number]) => {
-		if (HV_Range) {
-			const start = indexs[0];
-			const end = indexs[indexs.length - 1];
-			const { startIndex, endIndex } = HV_Range;
-			return (start <= endIndex && start >= startIndex) || (end <= endIndex && end >= startIndex);
-		}
-		return false;
-	};
+	const getColShow = useCallback(
+		(indexs: [number] | [number, number]) => {
+			if (typeof endIndex === 'number' && typeof startIndex === 'number') {
+				const start = indexs[0];
+				const end = indexs[indexs.length - 1];
+				return (start <= endIndex && start >= startIndex) || (end <= endIndex && end >= startIndex);
+			}
+			return false;
+		},
+		[endIndex, startIndex],
+	);
 
-	return { HV, getColShow };
+	return { getColShow };
 };
 
 export default useTableHVirtual;

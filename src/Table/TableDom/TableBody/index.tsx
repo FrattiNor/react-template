@@ -15,7 +15,7 @@ const TableBody = <T extends TableDataItem>({ instance }: Props<T>) => {
 	const { bodyRef } = instance.tableDomRef;
 	const { needMeasure } = instance.tableMeasureCol;
 	const { getRowIndexs, getRowKey } = instance.tableTools;
-	const { VVWrapperStyle, getRowShow } = instance.tableVirtual;
+	const { VV_WrapperStyle, getRowShow } = instance.tableVirtual;
 	const { gridTemplateColumnsArr } = instance.tableSecondaryState;
 
 	const gridTemplateColumns = gridTemplateColumnsArr.join(' ');
@@ -29,7 +29,7 @@ const TableBody = <T extends TableDataItem>({ instance }: Props<T>) => {
 			{needMeasure && <MeasureColumnSize instance={instance} />}
 			{!notEmpty && <BodyEmpty instance={instance} />}
 			{notEmpty && (
-				<div className={styles['body-inner']} style={{ gridTemplateColumns, ...VVWrapperStyle }}>
+				<div className={styles['body-inner']} style={{ gridTemplateColumns, ...VV_WrapperStyle }}>
 					{data?.map((dataItem, rowIndex) => {
 						const rowIndexs = getRowIndexs(rowIndex);
 						const rowKey = getRowKey(dataItem, rowIndex);
