@@ -35,7 +35,7 @@ const useTableVirtual = <T extends TableDataItem>({ tableProps, tableDomRef, tab
 		getItemKey: (index) => columnsFlat[index].key,
 		getScrollElement: () => tableDomRef.bodyRef.current,
 		// TODO estimateSize不接受小数
-		estimateSize: (index) => Math.round(tableState.getColumnSize(columnsFlat[index].key)),
+		estimateSize: (index) => tableState.getColumnSize(columnsFlat[index].key),
 	});
 
 	const HV_Range = HV.calculateRange();

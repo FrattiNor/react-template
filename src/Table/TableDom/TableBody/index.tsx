@@ -6,7 +6,7 @@ import BodyRow from './BodyRow';
 import BodyEmpty from './BodyEmpty';
 
 const TableBody: FC = () => {
-	const { tableProps, tableTools, tableSecondaryState, tableDomRef, tableVirtual } = useTableContext();
+	const { tableProps, tableTools, tableSecondaryState, tableDomRef, tableVirtual, tableMeasureCol } = useTableContext();
 	const gridTemplateColumns = tableSecondaryState.gridTemplateColumnsArr.join(' ');
 	const notEmpty = Array.isArray(tableProps.data) && tableProps.data.length > 0;
 
@@ -15,7 +15,7 @@ const TableBody: FC = () => {
 
 	return (
 		<div className={styles['body']} ref={tableDomRef.bodyRef}>
-			<MeasureColumnSize />
+			{tableMeasureCol.needMeasure && <MeasureColumnSize />}
 			{!notEmpty && <BodyEmpty />}
 			{notEmpty && (
 				<div className={styles['body-inner']} style={{ gridTemplateColumns, ...tableVirtual.VWrapperStyle }}>

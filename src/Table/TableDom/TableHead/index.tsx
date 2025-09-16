@@ -8,9 +8,9 @@ import HeaderHeightRetainer from './HeaderHeightRetainer';
 const TableHead: FC = () => {
 	const { tableState, tableSecondaryState, tableDomRef, tableProps } = useTableContext();
 	const headGridTemplateColumns = (() => {
-		const { rightScrollBarWidth } = tableState;
+		const { V_ScrollbarWidth } = tableState;
 		const { gridTemplateColumnsArr } = tableSecondaryState;
-		return rightScrollBarWidth > 0 ? [...gridTemplateColumnsArr, `minmax(${rightScrollBarWidth}px, 1fr)`].join(' ') : gridTemplateColumnsArr.join(' ');
+		return V_ScrollbarWidth > 0 ? [...gridTemplateColumnsArr, `minmax(${V_ScrollbarWidth}px, 1fr)`].join(' ') : gridTemplateColumnsArr.join(' ');
 	})();
 
 	return (

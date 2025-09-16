@@ -14,7 +14,7 @@ type Props = {
 // 表格左右固定
 const useTableSticky = ({ tableSecondaryState, tableState }: Props) => {
 	const { fixedLeftObj, fixedRightObj } = tableSecondaryState;
-	const { rightScrollBarWidth, leftPingedIndex, rightPingedIndex } = tableState;
+	const { V_ScrollbarWidth, leftPingedIndex, rightPingedIndex } = tableState;
 
 	const getStickyStyleAndClassName = ({ colIndexs, type }: { colIndexs: [number, number] | [number]; type: 'head' | 'body' }) => {
 		const colStartIndex = colIndexs[0];
@@ -34,7 +34,7 @@ const useTableSticky = ({ tableSecondaryState, tableState }: Props) => {
 		if (fixedRightObj[colEndIndex]) {
 			let className = styles['sticky-right'];
 			const { stickySize } = fixedRightObj[colEndIndex];
-			const right = type === 'head' ? stickySize + rightScrollBarWidth : stickySize;
+			const right = type === 'head' ? stickySize + V_ScrollbarWidth : stickySize;
 			const style: CSSProperties = { right };
 			const pinged = colEndIndex >= (rightPingedIndex ?? Infinity);
 			const lastPinged = colStartIndex === rightPingedIndex;

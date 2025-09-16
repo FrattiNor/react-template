@@ -82,26 +82,35 @@ const useTableLogic = ({ tableDomRef, tableState, tableMeasureCol, tableSecondar
 	useLayoutEffect(() => {
 		if (bodyRef.current) {
 			// 计算垂直滚动条宽度
-			const getRightScrollBarWidth = () => {
+			const getV_ScrollbarWidth = () => {
 				if (bodyRef.current) {
 					return bodyRef.current.offsetWidth - bodyRef.current.clientWidth;
 				}
 				return 0;
 			};
 			// 计算水平滚动条宽度
-			const getBottomScrollBarWidth = () => {
+			const getH_ScrollbarWidth = () => {
 				if (bodyRef.current) {
 					return bodyRef.current.offsetHeight - bodyRef.current.clientHeight;
 				}
 				return 0;
 			};
+			// 计算body宽度
+			const getBodyClientWidth = () => {
+				if (bodyRef.current) {
+					return bodyRef.current.clientWidth;
+				}
+				return 0;
+			};
 			// 直接执行一次
-			tableState.setRightScrollBarWidth(getRightScrollBarWidth());
-			tableState.setBottomScrollBarWidth(getBottomScrollBarWidth());
+			tableState.setV_ScrollbarWidth(getV_ScrollbarWidth());
+			tableState.setH_ScrollbarWidth(getH_ScrollbarWidth());
+			tableState.setBodyClientWidth(getBodyClientWidth());
 
 			const ob = new ResizeObserver(() => {
-				tableState.setRightScrollBarWidth(getRightScrollBarWidth());
-				tableState.setBottomScrollBarWidth(getBottomScrollBarWidth());
+				tableState.setV_ScrollbarWidth(getV_ScrollbarWidth());
+				tableState.setH_ScrollbarWidth(getH_ScrollbarWidth());
+				tableState.setBodyClientWidth(getBodyClientWidth());
 			});
 
 			ob.observe(bodyRef.current, { box: 'border-box' });

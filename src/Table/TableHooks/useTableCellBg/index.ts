@@ -19,7 +19,7 @@ const useTableCellBg = ({ tableState }: Props) => {
 
 	const getBodyCellBg = ({ rowKeys, colKey }: { rowKeys: string[]; colKey: string }) => {
 		let bgColorLevel = 0;
-		if (tableState.getIsResized(colKey)) bgColorLevel++;
+		if (tableState.getColResized(colKey)) bgColorLevel++;
 		if (getClicked({ rowKeys }) === true) bgColorLevel++;
 		if (getHovered({ rowKeys }) === true) bgColorLevel++;
 		if (bgColorLevel === 0) return 'var(--table-body-cell-bg)';
@@ -30,7 +30,7 @@ const useTableCellBg = ({ tableState }: Props) => {
 
 	const getHeadCellBg = ({ colKey }: { colKey: string }) => {
 		let bgColorLevel = 0;
-		if (tableState.resizeFlag?.activeKey === colKey || tableState.getIsResized(colKey)) bgColorLevel++;
+		if (tableState.resizeFlag?.activeKey === colKey || tableState.getColResized(colKey)) bgColorLevel++;
 		if (bgColorLevel === 0) return 'var(--table-head-cell-bg)';
 		if (bgColorLevel >= 1) return 'var(--table-head-cell-active-bg)';
 		return 'var(--table-head-cell-bg)';

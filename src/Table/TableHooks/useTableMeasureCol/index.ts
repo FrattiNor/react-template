@@ -1,4 +1,4 @@
-import { useMemo, type CSSProperties } from 'react';
+import { useLayoutEffect, type CSSProperties } from 'react';
 import type { TableDataItem } from '../../TableTypes/type';
 import type useTableProps from '../useTableProps';
 import type useTableState from '../useTableState';
@@ -10,26 +10,29 @@ type Props<T extends TableDataItem> = {
 
 // 测量列宽
 const useTableMeasureCol = <T extends TableDataItem>({ tableProps, tableState }: Props<T>) => {
-	const { minColWidth, maxColWidth } = tableState;
+	const { columnsWidthKeys, columnsFlat } = tableProps;
+	const { minColWidth, maxColWidth, columnSizes, resized, bodyClientWidth, setColumnSizes, needMeasure, setNeedMeasure } = tableState;
 
-	// 是否需要测量
-	const needMeasure = useMemo(() => {
-		let need = false;
-		for (let i = 0; i < tableProps.columnsFlat.length; i++) {
-			const column = tableProps.columnsFlat[i];
-			if (typeof tableState.columnSizes[column.key] !== 'number') {
-				need = true;
-				break;
-			}
+	// 垂直滚动条是否存在、并且没有resize过
+	useLayoutEffect(() => {
+		if (bodyClientWidth > 0 && resized === false) {
+			setColumnSizes({});
+			setNeedMeasure(true);
 		}
-		return need;
-	}, [tableProps.columnsKeys, tableState.columnSizes]);
+	}, [bodyClientWidth]);
+
+	// column数量或者width变化
+	useLayoutEffect(() => {
+		// 未修改过宽度时，需要清空原来的宽度
+		if (resized === false) setColumnSizes({});
+		setNeedMeasure(true);
+	}, [columnsWidthKeys]);
 
 	// 测量样式
 	const getMeasureStyle = ({ colIndex }: { colIndex: number }) => {
 		const style: CSSProperties = {};
-		const column = tableProps.columnsFlat[colIndex];
-		const oldSize = tableState.columnSizes[column.key];
+		const column = columnsFlat[colIndex];
+		const oldSize = columnSizes[column.key];
 		if (typeof oldSize === 'number') {
 			style.width = oldSize;
 		} else {
@@ -44,7 +47,7 @@ const useTableMeasureCol = <T extends TableDataItem>({ tableProps, tableState }:
 		return style;
 	};
 
-	return { needMeasure, getMeasureStyle };
+	return { needMeasure, setNeedMeasure, getMeasureStyle };
 };
 
 export default useTableMeasureCol;

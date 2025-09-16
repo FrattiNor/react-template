@@ -13,10 +13,10 @@ const TableDom: FC = () => {
 		<div
 			className={classNames(styles['table'], {
 				[styles['bordered']]: bordered,
-				[styles['have-scroll-v']]: tableState.rightScrollBarWidth > 0,
-				[styles['not-have-scroll-v']]: tableState.rightScrollBarWidth <= 0,
-				[styles['have-scroll-h']]: tableState.bottomScrollBarWidth > 0,
-				[styles['not-have-scroll-h']]: tableState.bottomScrollBarWidth <= 0,
+				[styles['have-scroll-v']]: tableState.V_ScrollbarWidth > 0,
+				[styles['not-have-scroll-v']]: tableState.V_ScrollbarWidth <= 0,
+				[styles['have-scroll-h']]: tableState.H_ScrollbarWidth > 0,
+				[styles['not-have-scroll-h']]: tableState.H_ScrollbarWidth <= 0,
 			})}
 		>
 			<TableHead />

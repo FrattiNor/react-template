@@ -15,8 +15,11 @@ type Props<T extends TableDataItem> = {
 const useTableProps = <T extends TableDataItem>({ props }: Props<T>) => {
 	const { columns, ...restProps } = props;
 
-	const { columnsFlat, columnGroups } = useMemo(() => {
+	// 遍历columns
+	const { columnsFlat, columnGroups, columnsWidthKeys, columnsFixedKeys } = useMemo(() => {
 		let colIndex = -1;
+		let columnsWidthKeys = '';
+		let columnsFixedKeys = '';
 		const columnsFlat: Array<HeaderColumn<T>> = [];
 		const columnGroups: Array<Array<HeaderColumnGroup<T>>> = [];
 		const colKeysObj: Record<string, number> = {};
@@ -34,6 +37,13 @@ const useTableProps = <T extends TableDataItem>({ props }: Props<T>) => {
 			columnGroups[column.level].push(column);
 		};
 
+		// 添加column
+		const addColumnFlat = (column: HeaderColumn<T>) => {
+			columnsFlat.push(column);
+			columnsWidthKeys += `_${column.key}&${column.width ?? 'default'}_`;
+			columnsFixedKeys += `_${column.key}&${column.fixed ?? 'default'}_`;
+		};
+
 		// 递归遍历columns
 		const loopColumns = (columns: Array<TableColumnGroup<T> | TableColumn<T>>, cover: { fixed?: TableColumn<T>['fixed'] }, level: number) => {
 			columns.forEach((_column) => {
@@ -47,31 +57,21 @@ const useTableProps = <T extends TableDataItem>({ props }: Props<T>) => {
 					addColumnGroup({ ...(column as TableColumnGroup<T>), level, startIndex, endIndex });
 				} else {
 					colIndex++;
-					columnsFlat.push({ ...(column as TableColumn<T>), level });
+					addColumnFlat({ ...(column as TableColumn<T>), level });
 				}
 			});
 		};
 
 		loopColumns(columns, {}, 0);
 
-		return { columnGroups, columnsFlat };
+		return { columnGroups, columnsFlat, columnsWidthKeys, columnsFixedKeys };
 	}, [columns]);
-
-	const { columnsKeys, columnsFixedKeys } = useMemo(() => {
-		let columnsKeys = '';
-		let columnsFixedKeys = '';
-		columnsFlat.forEach((item) => {
-			columnsKeys += `_${item.key}`;
-			columnsFixedKeys += `_${item.key}&${item.fixed ?? 'default'}`;
-		});
-		return { columnsKeys, columnsFixedKeys };
-	}, [columnsFlat]);
 
 	return {
 		...restProps,
 		columnGroups,
 		columnsFlat,
-		columnsKeys,
+		columnsWidthKeys,
 		columnsFixedKeys,
 		rowHeight: restProps.rowHeight ? FixedTwo(restProps.rowHeight) : 46,
 	};

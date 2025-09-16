@@ -20,7 +20,7 @@ type Props<T extends TableDataItem> = {
 
 // 表头resize
 const useTableResize = <T extends TableDataItem>({ tableProps, tableState }: Props<T>) => {
-	const { resizeFlag, setResizeFlag, setColumnSizes, maxColWidth, minColWidth } = tableState;
+	const { setResized, resizeFlag, setResizeFlag, setColumnSizes, maxColWidth, minColWidth } = tableState;
 
 	useEffect(() => {
 		if (resizeFlag) {
@@ -57,6 +57,7 @@ const useTableResize = <T extends TableDataItem>({ tableProps, tableState }: Pro
 				loop(e.pageX - resizeFlag.pageX, resizeFlag.children);
 
 				startTransition(() => {
+					setResized(true);
 					setColumnSizes((old) => ({
 						...old,
 						...nextSize,
