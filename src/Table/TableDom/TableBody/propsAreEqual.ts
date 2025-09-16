@@ -1,21 +1,28 @@
 import type { Props } from './index';
 import type { TableDataItem } from '../../TableTypes/type';
+import type { TableInstance } from '../../TableHooks/type';
+import { judgeEach_Instance as BodyEmpty_judgeEach_Instance } from './BodyEmpty/propsAreEqual';
+import { judgeEach_Instance as BodyRow_judgeEach_Instance } from './BodyRow/propsAreEqual';
+import { judgeEach_Instance as MeasureColumnSize_judgeEach_Instance } from './MeasureColumnSize/propsAreEqual';
 
-const judgeEach = [
-	(props: Readonly<Props<TableDataItem>>) => props.instance.tableProps.data,
-	(props: Readonly<Props<TableDataItem>>) => props.instance.tableDomRef.bodyRef,
-	(props: Readonly<Props<TableDataItem>>) => props.instance.tableMeasureCol.needMeasure,
-	(props: Readonly<Props<TableDataItem>>) => props.instance.tableTools.getRowIndexs,
-	(props: Readonly<Props<TableDataItem>>) => props.instance.tableTools.getRowKey,
-	(props: Readonly<Props<TableDataItem>>) => props.instance.tableVirtual.VV_WrapperStyle,
-	(props: Readonly<Props<TableDataItem>>) => props.instance.tableVirtual.getRowShow,
-	(props: Readonly<Props<TableDataItem>>) => props.instance.tableSecondaryState.gridTemplateColumnsArr,
+export const judgeEach_Instance = [
+	(instance: Readonly<TableInstance<TableDataItem>>) => instance.tableProps.data,
+	(instance: Readonly<TableInstance<TableDataItem>>) => instance.tableDomRef.bodyRef,
+	(instance: Readonly<TableInstance<TableDataItem>>) => instance.tableMeasureCol.needMeasure,
+	(instance: Readonly<TableInstance<TableDataItem>>) => instance.tableTools.getRowIndexs,
+	(instance: Readonly<TableInstance<TableDataItem>>) => instance.tableTools.getRowKey,
+	(instance: Readonly<TableInstance<TableDataItem>>) => instance.tableVirtual.VV_WrapperStyle,
+	(instance: Readonly<TableInstance<TableDataItem>>) => instance.tableVirtual.getRowShow,
+	(instance: Readonly<TableInstance<TableDataItem>>) => instance.tableSecondaryState.gridTemplateColumnsArr,
+	...BodyEmpty_judgeEach_Instance,
+	...BodyRow_judgeEach_Instance,
+	...MeasureColumnSize_judgeEach_Instance,
 ];
 
 const propsAreEqual = (prevProps: Readonly<Props<TableDataItem>>, nextProps: Readonly<Props<TableDataItem>>): boolean => {
-	for (let i = 0; i < judgeEach.length; i++) {
-		const fun = judgeEach[i];
-		if (fun(prevProps) !== fun(nextProps)) {
+	for (let i = 0; i < judgeEach_Instance.length; i++) {
+		const fun = judgeEach_Instance[i];
+		if (fun(prevProps.instance) !== fun(nextProps.instance)) {
 			return false;
 		}
 	}
