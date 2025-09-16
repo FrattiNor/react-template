@@ -3,6 +3,7 @@ import classNames from 'classnames';
 import BodyCellRender from '../BodyCellRender';
 import type { TableInstance } from '../../../TableHooks/type';
 import type { TableDataItem } from '../../../TableTypes/type';
+import { memo } from 'react';
 
 type Props<T extends TableDataItem> = {
 	instance: TableInstance<T>;
@@ -54,4 +55,4 @@ const BodyCell = <T extends TableDataItem>({ instance, colIndex, rowIndex }: Pro
 	);
 };
 
-export default BodyCell;
+export default memo(BodyCell) as typeof BodyCell;

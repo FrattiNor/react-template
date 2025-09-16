@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import type { TableInstance } from '../../../TableHooks/type';
 import type { TableDataItem } from '../../../TableTypes/type';
 
@@ -10,4 +11,4 @@ const BodyEmpty = <T extends TableDataItem>({ instance }: Props<T>) => {
 	return <div style={{ width: HTotalSize, minWidth: '100%', backgroundColor: 'rgba(0,0,0,0.05)', height: '200px' }} />;
 };
 
-export default BodyEmpty;
+export default memo(BodyEmpty) as typeof BodyEmpty;

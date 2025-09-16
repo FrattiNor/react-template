@@ -1,4 +1,4 @@
-import type { CSSProperties } from 'react';
+import { memo, type CSSProperties } from 'react';
 import styles from './index.module.less';
 import type { TableInstance } from '../../../TableHooks/type';
 import type { TableDataItem } from '../../../TableTypes/type';
@@ -28,4 +28,4 @@ const BodyCellRender = <T extends TableDataItem>({ instance, colIndex, rowIndex,
 	);
 };
 
-export default BodyCellRender;
+export default memo(BodyCellRender) as typeof BodyCellRender;

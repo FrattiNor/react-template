@@ -4,6 +4,7 @@ import HeadGroupRow from './HeadGroupRow';
 import HeaderHeightRetainer from './HeaderHeightRetainer';
 import type { TableInstance } from '../../TableHooks/type';
 import type { TableDataItem } from '../../TableTypes/type';
+import { memo } from 'react';
 
 type Props<T extends TableDataItem> = {
 	instance: TableInstance<T>;
@@ -29,4 +30,4 @@ const TableHead = <T extends TableDataItem>({ instance }: Props<T>) => {
 	);
 };
 
-export default TableHead;
+export default memo(TableHead) as typeof TableHead;

@@ -4,6 +4,7 @@ import TableBody from './TableBody';
 import classNames from 'classnames';
 import type { TableInstance } from '../TableHooks/type';
 import type { TableDataItem } from '../TableTypes/type';
+import { memo } from 'react';
 
 type Props<T extends TableDataItem> = {
 	instance: TableInstance<T>;
@@ -29,4 +30,4 @@ const TableDom = <T extends TableDataItem>({ instance }: Props<T>) => {
 	);
 };
 
-export default TableDom;
+export default memo(TableDom) as typeof TableDom;

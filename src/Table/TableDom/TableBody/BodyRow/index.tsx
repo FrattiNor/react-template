@@ -4,6 +4,7 @@ import BodyCellPlaceholder from '../BodyCellPlaceholder';
 import BodyRowMeasure from '../BodyRowMeasure';
 import type { TableInstance } from '../../../TableHooks/type';
 import type { TableDataItem } from '../../../TableTypes/type';
+import { memo } from 'react';
 
 type Props<T extends TableDataItem> = {
 	instance: TableInstance<T>;
@@ -27,4 +28,4 @@ const BodyRow = <T extends TableDataItem>({ instance, rowIndex }: Props<T>) => {
 	);
 };
 
-export default BodyRow;
+export default memo(BodyRow) as typeof BodyRow;

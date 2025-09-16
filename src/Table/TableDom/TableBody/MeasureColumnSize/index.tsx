@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import type { TableInstance } from '../../../TableHooks/type';
 import type { TableDataItem } from '../../../TableTypes/type';
 import { FixedTwo } from '../../../TableUtils';
@@ -37,4 +38,4 @@ const MeasureColumnSize = <T extends TableDataItem>({ instance }: Props<T>) => {
 	);
 };
 
-export default MeasureColumnSize;
+export default memo(MeasureColumnSize) as typeof MeasureColumnSize;

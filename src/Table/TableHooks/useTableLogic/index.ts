@@ -15,6 +15,7 @@ const useTableLogic = ({ tableDomRef, tableState, tableMeasureCol, tableSecondar
 	const { needMeasure } = tableMeasureCol;
 	const { bodyRef, headRef } = tableDomRef;
 	const { fixedLeftObj, fixedRightObj } = tableSecondaryState;
+	const { setLeftPingedIndex, setRightPingedIndex, setV_ScrollbarWidth, setH_ScrollbarWidth, setBodyClientWidth } = tableState;
 
 	// 计算固定的index
 	const calcPingedIndex = useCallback(() => {
@@ -35,8 +36,8 @@ const useTableLogic = ({ tableDomRef, tableState, tableMeasureCol, tableSecondar
 				if (pinged && index < (rightPingedIndex ?? Infinity)) rightPingedIndex = index;
 			});
 			startTransition(() => {
-				tableState.setLeftPingedIndex(leftPingedIndex);
-				tableState.setRightPingedIndex(rightPingedIndex);
+				setLeftPingedIndex(leftPingedIndex);
+				setRightPingedIndex(rightPingedIndex);
 			});
 		}
 	}, [fixedLeftObj, fixedRightObj]);
@@ -103,14 +104,14 @@ const useTableLogic = ({ tableDomRef, tableState, tableMeasureCol, tableSecondar
 				return 0;
 			};
 			// 直接执行一次
-			tableState.setV_ScrollbarWidth(getV_ScrollbarWidth());
-			tableState.setH_ScrollbarWidth(getH_ScrollbarWidth());
-			tableState.setBodyClientWidth(getBodyClientWidth());
+			setV_ScrollbarWidth(getV_ScrollbarWidth());
+			setH_ScrollbarWidth(getH_ScrollbarWidth());
+			setBodyClientWidth(getBodyClientWidth());
 
 			const ob = new ResizeObserver(() => {
-				tableState.setV_ScrollbarWidth(getV_ScrollbarWidth());
-				tableState.setH_ScrollbarWidth(getH_ScrollbarWidth());
-				tableState.setBodyClientWidth(getBodyClientWidth());
+				setV_ScrollbarWidth(getV_ScrollbarWidth());
+				setH_ScrollbarWidth(getH_ScrollbarWidth());
+				setBodyClientWidth(getBodyClientWidth());
 			});
 
 			ob.observe(bodyRef.current, { box: 'border-box' });

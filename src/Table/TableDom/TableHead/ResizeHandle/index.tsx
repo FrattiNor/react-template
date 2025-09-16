@@ -2,6 +2,7 @@ import styles from './index.module.less';
 import classNames from 'classnames';
 import type { TableInstance } from '../../../TableHooks/type';
 import type { TableDataItem } from '../../../TableTypes/type';
+import { memo } from 'react';
 
 type Props<T extends TableDataItem> = {
 	instance: TableInstance<T>;
@@ -17,4 +18,4 @@ const ResizeHandle = <T extends TableDataItem>({ instance, colKey, colIndexs }: 
 	return <div className={classNames(styles['resize-handle'], { [styles['active']]: active })} onMouseDown={(e) => startResize(e, colKey, colIndexs)} />;
 };
 
-export default ResizeHandle;
+export default memo(ResizeHandle) as typeof ResizeHandle;

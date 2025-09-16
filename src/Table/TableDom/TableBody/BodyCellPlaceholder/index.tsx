@@ -1,6 +1,7 @@
 import styles from './index.module.less';
 import type { TableInstance } from '../../../TableHooks/type';
 import type { TableDataItem } from '../../../TableTypes/type';
+import { memo } from 'react';
 
 type Props<T extends TableDataItem> = {
 	instance: TableInstance<T>;
@@ -32,4 +33,4 @@ const BodyCellPlaceholder = <T extends TableDataItem>({ instance, rowIndex }: Pr
 	);
 };
 
-export default BodyCellPlaceholder;
+export default memo(BodyCellPlaceholder) as typeof BodyCellPlaceholder;

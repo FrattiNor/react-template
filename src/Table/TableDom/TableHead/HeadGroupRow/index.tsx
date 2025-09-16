@@ -2,6 +2,7 @@ import styles from './index.module.less';
 import HeadGroupCell from '../HeadGroupCell';
 import type { TableInstance } from '../../../TableHooks/type';
 import type { TableDataItem } from '../../../TableTypes/type';
+import { memo } from 'react';
 
 type Props<T extends TableDataItem> = {
 	instance: TableInstance<T>;
@@ -20,4 +21,4 @@ const HeadGroupRow = <T extends TableDataItem>({ instance, rowIndex }: Props<T>)
 	);
 };
 
-export default HeadGroupRow;
+export default memo(HeadGroupRow) as typeof HeadGroupRow;

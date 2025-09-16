@@ -5,6 +5,7 @@ import HeadCellRender from '../HeadCellRender';
 import ResizeHandle from '../ResizeHandle';
 import type { TableInstance } from '../../../TableHooks/type';
 import type { TableDataItem } from '../../../TableTypes/type';
+import { memo } from 'react';
 
 type Props<T extends TableDataItem> = {
 	instance: TableInstance<T>;
@@ -50,4 +51,4 @@ const HeadGroupCell = <T extends TableDataItem>({ instance, rowIndex, colIndex }
 	);
 };
 
-export default HeadGroupCell;
+export default memo(HeadGroupCell) as typeof HeadGroupCell;

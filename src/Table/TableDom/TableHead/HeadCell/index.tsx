@@ -4,6 +4,7 @@ import classNames from 'classnames';
 import HeadCellRender from '../HeadCellRender';
 import type { TableInstance } from '../../../TableHooks/type';
 import type { TableDataItem } from '../../../TableTypes/type';
+import { memo } from 'react';
 
 type Props<T extends TableDataItem> = {
 	instance: TableInstance<T>;
@@ -45,4 +46,4 @@ const HeadCell = <T extends TableDataItem>({ instance, rowIndex, colIndex }: Pro
 	);
 };
 
-export default HeadCell;
+export default memo(HeadCell) as typeof HeadCell;

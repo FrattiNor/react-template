@@ -1,4 +1,4 @@
-import type { CSSProperties, ReactNode } from 'react';
+import { memo, type CSSProperties, type ReactNode } from 'react';
 import styles from './index.module.less';
 import Sort from './Sort';
 import Filter from './Filter';
@@ -26,4 +26,4 @@ const HeadCellRender = ({ content, align }: Props) => {
 	);
 };
 
-export default HeadCellRender;
+export default memo(HeadCellRender) as typeof HeadCellRender;

@@ -3,6 +3,7 @@ import HeadCellPlaceholder from '../HeadCellPlaceholder';
 import HeadCell from '../HeadCell';
 import type { TableInstance } from '../../../TableHooks/type';
 import type { TableDataItem } from '../../../TableTypes/type';
+import { memo } from 'react';
 
 type Props<T extends TableDataItem> = {
 	instance: TableInstance<T>;
@@ -22,4 +23,4 @@ const HeadRow = <T extends TableDataItem>({ instance, rowIndex }: Props<T>) => {
 	);
 };
 
-export default HeadRow;
+export default memo(HeadRow) as typeof HeadRow;
