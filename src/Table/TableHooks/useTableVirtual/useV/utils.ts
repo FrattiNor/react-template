@@ -3,7 +3,11 @@ import { type Virtualizer } from '@tanstack/react-virtual';
 import { FixedTwo } from '../../../TableUtils';
 
 // 保持最小size为1，避免display:none后itemSize为0永远无法显示
-export const measureElement = <TItemElement extends Element>(element: TItemElement, entry: ResizeObserverEntry | undefined, instance: Virtualizer<any, TItemElement>) => {
+export const measureElement = <TItemElement extends Element>(
+	element: TItemElement,
+	entry: ResizeObserverEntry | undefined,
+	instance: Virtualizer<any, TItemElement>,
+) => {
 	const getOldSize = () => {
 		const index = element.getAttribute('data-index');
 		if (typeof index === 'string' && !isNaN(Number(index))) {

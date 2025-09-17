@@ -53,7 +53,12 @@ const List = <T,>(props: Props<T>) => {
 					))}
 				</div>
 			</div>
-			<VirtualScrollBar className={styles['virtual-scroll-bar']} width={direction === 'h' ? totalSize : undefined} height={direction === 'h' ? undefined : totalSize} scrollContentRef={ref} />
+			<VirtualScrollBar
+				scrollContentRef={ref}
+				className={styles['virtual-scroll-bar']}
+				width={direction === 'h' ? totalSize : undefined}
+				height={direction === 'h' ? undefined : totalSize}
+			/>
 		</div>
 	);
 };

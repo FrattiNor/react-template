@@ -72,12 +72,36 @@ const VirtualScrollBar: FC<Props> = ({ width, height, className, scrollContentRe
 	return (
 		<div className={classNames(className, styles['virtual-scroll-bar'])}>
 			{typeof height === 'number' && (
-				<div ref={vRef} style={{ width: scrollBarWidth, overflowX: 'hidden', overflowY: 'auto', height: '100%', pointerEvents: 'auto', position: 'absolute', top: 0, right: 0 }}>
+				<div
+					ref={vRef}
+					style={{
+						width: scrollBarWidth,
+						overflowX: 'hidden',
+						overflowY: 'auto',
+						height: '100%',
+						pointerEvents: 'auto',
+						position: 'absolute',
+						top: 0,
+						right: 0,
+					}}
+				>
 					<div style={{ width: scrollBarWidth, height }} />
 				</div>
 			)}
 			{typeof width === 'number' && (
-				<div ref={hRef} style={{ height: scrollBarHeight, overflowX: 'auto', overflowY: 'hidden', width: '100%', pointerEvents: 'auto', position: 'absolute', bottom: 0, left: 0 }}>
+				<div
+					ref={hRef}
+					style={{
+						height: scrollBarHeight,
+						overflowX: 'auto',
+						overflowY: 'hidden',
+						width: '100%',
+						pointerEvents: 'auto',
+						position: 'absolute',
+						bottom: 0,
+						left: 0,
+					}}
+				>
 					<div style={{ width, height: scrollBarHeight }} />
 				</div>
 			)}

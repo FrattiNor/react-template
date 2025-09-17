@@ -26,7 +26,13 @@ const Filter: FC<Props> = ({ tableRef }) => {
 	};
 
 	return (
-		<Dropdown placement="bottomRight" trigger={['click']} popupRender={popupRender} getPopupContainer={() => tableRef.current ?? document.body} destroyOnHidden>
+		<Dropdown
+			destroyOnHidden
+			trigger={['click']}
+			placement="bottomRight"
+			popupRender={popupRender}
+			getPopupContainer={() => tableRef.current ?? document.body}
+		>
 			<div className={styles['filter']}>{filterIcon}</div>
 		</Dropdown>
 	);
