@@ -1,34 +1,29 @@
-import type { Props } from './index';
 import type { TableDataItem } from '../../TableTypes/type';
 import type { TableInstance } from '../../TableHooks/type';
-import { judgeEach_Instance_obj as BodyEmpty_judgeEach_Instance_obj } from './BodyEmpty/propsAreEqual';
-import { judgeEach_Instance_obj as BodyRow_judgeEach_Instance_obj } from './BodyRow/propsAreEqual';
-import { judgeEach_Instance_obj as MeasureColumnSize_judgeEach_Instance_obj } from './MeasureColumnSize/propsAreEqual';
+import { getPropsAreEqual } from '../../TableUtils';
+import { getInstanceProps as BodyEmpty_getInstanceProps } from './BodyEmpty/propsAreEqual';
+import { getInstanceProps as BodyRow_getInstanceProps } from './BodyRow/propsAreEqual';
+import { getInstanceProps as MeasureColumnSize_getInstanceProps } from './MeasureColumnSize/propsAreEqual';
 
-export const judgeEach_Instance_obj = {
-	...BodyEmpty_judgeEach_Instance_obj,
-	...BodyRow_judgeEach_Instance_obj,
-	...MeasureColumnSize_judgeEach_Instance_obj,
-	'tableProps.data': (instance: Readonly<TableInstance<TableDataItem>>) => instance.tableProps.data,
-	'tableState.colMeasure': (instance: Readonly<TableInstance<TableDataItem>>) => instance.tableState.colMeasure,
-	'tableTools.getRowIndexs': (instance: Readonly<TableInstance<TableDataItem>>) => instance.tableTools.getRowIndexs,
-	'tableTools.getRowKey': (instance: Readonly<TableInstance<TableDataItem>>) => instance.tableTools.getRowKey,
-	'tableVirtual.VV_WrapperStyle': (instance: Readonly<TableInstance<TableDataItem>>) => instance.tableVirtual.VV_WrapperStyle,
-	'tableVirtual.getRowShow': (instance: Readonly<TableInstance<TableDataItem>>) => instance.tableVirtual.getRowShow,
-	'tableSecondaryState.gridTemplateColumnsArr': (instance: Readonly<TableInstance<TableDataItem>>) => instance.tableSecondaryState.gridTemplateColumnsArr,
+export const getInstanceProps = <T extends TableDataItem>({ instance }: Readonly<{ instance: Readonly<TableInstance<T>> }>) => {
+	const { data } = instance.tableProps;
+	const { bodyRef } = instance.tableDomRef;
+	const { colMeasure } = instance.tableState;
+	const { getRowIndexs, getRowKey } = instance.tableTools;
+	const { VV_WrapperStyle, getRowShow } = instance.tableVirtual;
+	const { gridTemplateColumnsArr } = instance.tableSecondaryState;
+	return { data, bodyRef, colMeasure, getRowIndexs, getRowKey, VV_WrapperStyle, getRowShow, gridTemplateColumnsArr };
 };
 
-const judgeEach_Instance = Object.values(judgeEach_Instance_obj);
-
-const propsAreEqual = (prevProps: Readonly<Props<TableDataItem>>, nextProps: Readonly<Props<TableDataItem>>): boolean => {
-	for (let i = 0; i < judgeEach_Instance.length; i++) {
-		const fun = judgeEach_Instance[i];
-		if (fun(prevProps.instance) !== fun(nextProps.instance)) {
-			return false;
-		}
-	}
-
-	return true;
-};
+const propsAreEqual = getPropsAreEqual({
+	getInstanceProps: <T extends TableDataItem>({ instance }: Readonly<{ instance: Readonly<TableInstance<T>> }>) => {
+		return {
+			...getInstanceProps({ instance }),
+			...BodyEmpty_getInstanceProps({ instance }),
+			...BodyRow_getInstanceProps({ instance }),
+			...MeasureColumnSize_getInstanceProps({ instance }),
+		};
+	},
+});
 
 export default propsAreEqual;

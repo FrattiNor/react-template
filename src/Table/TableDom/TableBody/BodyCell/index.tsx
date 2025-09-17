@@ -4,7 +4,7 @@ import BodyCellRender from '../BodyCellRender';
 import type { TableInstance } from '../../../TableHooks/type';
 import type { TableDataItem } from '../../../TableTypes/type';
 import { memo } from 'react';
-import propsAreEqual from './propsAreEqual';
+import propsAreEqual, { getInstanceProps, getProps } from './propsAreEqual';
 
 export type Props<T extends TableDataItem> = {
 	instance: TableInstance<T>;
@@ -12,12 +12,22 @@ export type Props<T extends TableDataItem> = {
 	colIndex: number;
 };
 
-const BodyCell = <T extends TableDataItem>({ instance, colIndex, rowIndex }: Props<T>) => {
-	const { getRowKeys } = instance.tableTools;
-	const { getColShow } = instance.tableVirtual;
-	const { getStickyStyleAndClassName } = instance.tableSticky;
-	const { columnsFlat, data, bordered, rowHeight } = instance.tableProps;
-	const { getBodyCellBg, bodyRowClick, bodyRowMouseEnter, bodyRowMouseLeave } = instance.tableCellBg;
+const BodyCell = <T extends TableDataItem>(props: Props<T>) => {
+	const { colIndex, rowIndex } = getProps(props);
+
+	const {
+		data,
+		bordered,
+		rowHeight,
+		columnsFlat,
+		getRowKeys,
+		getColShow,
+		getBodyCellBg,
+		bodyRowClick,
+		bodyRowMouseEnter,
+		bodyRowMouseLeave,
+		getStickyStyleAndClassName,
+	} = getInstanceProps(props);
 
 	const rowData = data[rowIndex];
 	const column = columnsFlat[colIndex];
@@ -27,7 +37,10 @@ const BodyCell = <T extends TableDataItem>({ instance, colIndex, rowIndex }: Pro
 	if (colSpan <= 0) return null;
 
 	const forceRender = column.forceRender;
-	const { stickyStyle, stickyClassName, sticky } = getStickyStyleAndClassName({ colIndexs: [colIndex, colIndex + colSpan - 1], type: 'body' });
+	const { stickyStyle, stickyClassName, sticky } = getStickyStyleAndClassName({
+		colIndexs: [colIndex, colIndex + colSpan - 1],
+		type: 'body',
+	});
 	const colShow = getColShow([colIndex, colIndex + colSpan - 1]);
 	if (!(colShow === true || forceRender === true || sticky === true)) return null;
 
@@ -42,7 +55,11 @@ const BodyCell = <T extends TableDataItem>({ instance, colIndex, rowIndex }: Pro
 			onClick={() => bodyRowClick({ rowKeys })}
 			onMouseEnter={() => bodyRowMouseEnter({ rowKeys })}
 			onMouseLeave={() => bodyRowMouseLeave({ rowKeys })}
-			className={classNames(styles['body-cell'], stickyClassName, { [styles['bordered']]: bordered, [styles['first-col']]: colIndex === 0, [styles['last-col']]: colIndex === colMaxIndex })}
+			className={classNames(styles['body-cell'], stickyClassName, {
+				[styles['bordered']]: bordered,
+				[styles['first-col']]: colIndex === 0,
+				[styles['last-col']]: colIndex === colMaxIndex,
+			})}
 			style={{
 				minHeight: rowHeight,
 				backgroundColor: bodyCellBg,
@@ -51,7 +68,7 @@ const BodyCell = <T extends TableDataItem>({ instance, colIndex, rowIndex }: Pro
 				...stickyStyle,
 			}}
 		>
-			<BodyCellRender rowIndex={rowIndex} colIndex={colIndex} instance={instance} />
+			<BodyCellRender rowIndex={rowIndex} colIndex={colIndex} instance={props.instance} />
 		</div>
 	);
 };

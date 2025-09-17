@@ -1,34 +1,17 @@
 import type { Props } from './index';
 import type { TableDataItem } from '../../../TableTypes/type';
 import type { TableInstance } from '../../../TableHooks/type';
+import { getPropsAreEqual } from '../../../TableUtils';
 
-const judgeEach = [
-	//
-	(props: Readonly<Props<TableDataItem>>) => props.rowIndex,
-];
-
-export const judgeEach_Instance_obj = {
-	'tableProps.columnsFlat': (instance: Readonly<TableInstance<TableDataItem>>) => instance.tableProps.columnsFlat,
+export const getProps = <T extends TableDataItem>({ rowIndex }: Readonly<Props<T>>) => {
+	return { rowIndex };
 };
 
-const judgeEach_Instance = Object.values(judgeEach_Instance_obj);
-
-const propsAreEqual = (prevProps: Readonly<Props<TableDataItem>>, nextProps: Readonly<Props<TableDataItem>>): boolean => {
-	for (let i = 0; i < judgeEach.length; i++) {
-		const fun = judgeEach[i];
-		if (fun(prevProps) !== fun(nextProps)) {
-			return false;
-		}
-	}
-
-	for (let i = 0; i < judgeEach_Instance.length; i++) {
-		const fun = judgeEach_Instance[i];
-		if (fun(prevProps.instance) !== fun(nextProps.instance)) {
-			return false;
-		}
-	}
-
-	return true;
+export const getInstanceProps = <T extends TableDataItem>({ instance }: Readonly<{ instance: Readonly<TableInstance<T>> }>) => {
+	const { columnsFlat } = instance.tableProps;
+	return { columnsFlat };
 };
+
+const propsAreEqual = getPropsAreEqual({ getProps, getInstanceProps });
 
 export default propsAreEqual;

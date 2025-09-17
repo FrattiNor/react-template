@@ -1,42 +1,36 @@
 import type { Props } from './index';
 import type { TableDataItem } from '../../../TableTypes/type';
 import type { TableInstance } from '../../../TableHooks/type';
-import { judgeEach_Instance_obj as ResizeHandle_judgeEach_Instance_obj } from '../ResizeHandle/propsAreEqual';
+import { getPropsAreEqual } from '../../../TableUtils';
+import { getInstanceProps as ResizeHandle_getInstanceProps } from '../ResizeHandle/propsAreEqual';
 
-const judgeEach = [
-	//
-	(props: Readonly<Props<TableDataItem>>) => props.rowIndex,
-	(props: Readonly<Props<TableDataItem>>) => props.colIndex,
-];
-
-export const judgeEach_Instance_obj = {
-	'tableVirtual.getColShow': (instance: Readonly<TableInstance<TableDataItem>>) => instance.tableVirtual.getColShow,
-	'tableCellBg.getHeadCellBg': (instance: Readonly<TableInstance<TableDataItem>>) => instance.tableCellBg.getHeadCellBg,
-	'tableSticky.getStickyStyleAndClassName': (instance: Readonly<TableInstance<TableDataItem>>) => instance.tableSticky.getStickyStyleAndClassName,
-	'tableProps.columnsFlat': (instance: Readonly<TableInstance<TableDataItem>>) => instance.tableProps.columnsFlat,
-	'tableProps.bordered': (instance: Readonly<TableInstance<TableDataItem>>) => instance.tableProps.bordered,
-	'tableProps.rowHeight': (instance: Readonly<TableInstance<TableDataItem>>) => instance.tableProps.rowHeight,
-	...ResizeHandle_judgeEach_Instance_obj,
+export const getProps = <T extends TableDataItem>({ rowIndex, colIndex }: Readonly<Props<T>>) => {
+	return { colIndex, rowIndex };
 };
 
-const judgeEach_Instance = Object.values(judgeEach_Instance_obj);
-
-const propsAreEqual = (prevProps: Readonly<Props<TableDataItem>>, nextProps: Readonly<Props<TableDataItem>>): boolean => {
-	for (let i = 0; i < judgeEach.length; i++) {
-		const fun = judgeEach[i];
-		if (fun(prevProps) !== fun(nextProps)) {
-			return false;
-		}
-	}
-
-	for (let i = 0; i < judgeEach_Instance.length; i++) {
-		const fun = judgeEach_Instance[i];
-		if (fun(prevProps.instance) !== fun(nextProps.instance)) {
-			return false;
-		}
-	}
-
-	return true;
+export const getInstanceProps = <T extends TableDataItem>({ instance }: Readonly<{ instance: Readonly<TableInstance<T>> }>) => {
+	const { getColShow } = instance.tableVirtual;
+	const { getHeadCellBg } = instance.tableCellBg;
+	const { getStickyStyleAndClassName } = instance.tableSticky;
+	const { columnsFlat, bordered, rowHeight } = instance.tableProps;
+	return {
+		getHeadCellBg,
+		getColShow,
+		getStickyStyleAndClassName,
+		columnsFlat,
+		bordered,
+		rowHeight,
+	};
 };
+
+const propsAreEqual = getPropsAreEqual({
+	getProps,
+	getInstanceProps: <T extends TableDataItem>({ instance }: Readonly<{ instance: Readonly<TableInstance<T>> }>) => {
+		return {
+			...getInstanceProps({ instance }),
+			...ResizeHandle_getInstanceProps({ instance }),
+		};
+	},
+});
 
 export default propsAreEqual;

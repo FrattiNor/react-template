@@ -3,7 +3,7 @@ import styles from './index.module.less';
 import type { TableInstance } from '../../../TableHooks/type';
 import type { TableDataItem } from '../../../TableTypes/type';
 import { getCellTitle } from '../../../TableUtils';
-import propsAreEqual from './propsAreEqual';
+import propsAreEqual, { getInstanceProps, getProps } from './propsAreEqual';
 
 export type Props<T extends TableDataItem> = {
 	instance: TableInstance<T>;
@@ -12,8 +12,9 @@ export type Props<T extends TableDataItem> = {
 	align?: 'left' | 'right' | 'center';
 };
 
-const BodyCellRender = <T extends TableDataItem>({ instance, colIndex, rowIndex, align }: Props<T>) => {
-	const { columnsFlat, data } = instance.tableProps;
+const BodyCellRender = <T extends TableDataItem>(props: Props<T>) => {
+	const { colIndex, rowIndex, align } = getProps(props);
+	const { data, columnsFlat } = getInstanceProps(props);
 
 	const rowData = data[rowIndex];
 	const column = columnsFlat[colIndex];

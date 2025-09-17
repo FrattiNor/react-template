@@ -25,3 +25,33 @@ export const debounce = (fn: () => void, ms: number) => {
 		timeoutId = window.setTimeout(() => fn(), ms);
 	};
 };
+
+export const getPropsAreEqual =
+	<T>({ getProps, getInstanceProps }: { getProps?: (p: T) => Record<string, any>; getInstanceProps?: (p: T) => Record<string, any> }) =>
+	(prevProps: T, nextProps: T): boolean => {
+		if (getProps) {
+			const prevPropsProps = getProps(prevProps);
+			const nextPropsProps = getProps(nextProps);
+			const propsKeys = Object.keys(prevPropsProps) as Array<keyof ReturnType<typeof getProps>>;
+			for (let i = 0; i < propsKeys.length; i++) {
+				const key = propsKeys[i];
+				if (prevPropsProps[key] !== nextPropsProps[key]) {
+					return false;
+				}
+			}
+		}
+
+		if (getInstanceProps) {
+			const prevInstanceProps = getInstanceProps(prevProps);
+			const nextInstanceProps = getInstanceProps(nextProps);
+			const instancePropsKeys = Object.keys(prevInstanceProps) as Array<keyof ReturnType<typeof getInstanceProps>>;
+			for (let i = 0; i < instancePropsKeys.length; i++) {
+				const key = instancePropsKeys[i];
+				if (prevInstanceProps[key] !== nextInstanceProps[key]) {
+					return false;
+				}
+			}
+		}
+
+		return true;
+	};

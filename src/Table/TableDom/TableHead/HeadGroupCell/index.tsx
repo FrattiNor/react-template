@@ -6,7 +6,7 @@ import ResizeHandle from '../ResizeHandle';
 import type { TableInstance } from '../../../TableHooks/type';
 import type { TableDataItem } from '../../../TableTypes/type';
 import { memo, useMemo } from 'react';
-import propsAreEqual from './propsAreEqual';
+import propsAreEqual, { getInstanceProps, getProps } from './propsAreEqual';
 
 export type Props<T extends TableDataItem> = {
 	instance: TableInstance<T>;
@@ -14,11 +14,9 @@ export type Props<T extends TableDataItem> = {
 	colIndex: number;
 };
 
-const HeadGroupCell = <T extends TableDataItem>({ instance, rowIndex, colIndex }: Props<T>) => {
-	const { getColShow } = instance.tableVirtual;
-	const { getHeadCellBg } = instance.tableCellBg;
-	const { getStickyStyleAndClassName } = instance.tableSticky;
-	const { columnsFlat, columnGroups, bordered, rowHeight } = instance.tableProps;
+const HeadGroupCell = <T extends TableDataItem>(props: Props<T>) => {
+	const { colIndex, rowIndex } = getProps(props);
+	const { getHeadCellBg, getColShow, getStickyStyleAndClassName, columnsFlat, bordered, rowHeight, columnGroups } = getInstanceProps(props);
 
 	const column = columnGroups[rowIndex][colIndex];
 	const colIndexs = useMemo(() => [column.startIndex, column.endIndex] as [number, number], [column.startIndex, column.endIndex]);
@@ -46,8 +44,8 @@ const HeadGroupCell = <T extends TableDataItem>({ instance, rowIndex, colIndex }
 				...stickyStyle,
 			}}
 		>
-			<HeadCellRender column={column} align="center" tableRef={instance.tableDomRef.tableRef} />
-			<ResizeHandle colKey={column.key} colIndexs={colIndexs} instance={instance} />
+			<HeadCellRender column={column} align="center" tableRef={props.instance.tableDomRef.tableRef} />
+			<ResizeHandle colKey={column.key} colIndexs={colIndexs} instance={props.instance} />
 		</div>
 	);
 };

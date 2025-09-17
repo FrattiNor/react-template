@@ -1,14 +1,14 @@
 import { Fragment, memo } from 'react';
 import type { TableInstance } from '../../../TableHooks/type';
 import type { TableDataItem } from '../../../TableTypes/type';
-import propsAreEqual from './propsAreEqual';
+import propsAreEqual, { getInstanceProps } from './propsAreEqual';
 
 export type Props<T extends TableDataItem> = {
 	instance: TableInstance<T>;
 };
 
-const HeaderHeightRetainer = <T extends TableDataItem>({ instance }: Props<T>) => {
-	const { columnGroups, columnsFlat, rowHeight } = instance.tableProps;
+const HeaderHeightRetainer = <T extends TableDataItem>(props: Props<T>) => {
+	const { columnGroups, columnsFlat, rowHeight } = getInstanceProps(props);
 	const rowCount = columnGroups.length + 1;
 	const colCount = columnsFlat.length;
 

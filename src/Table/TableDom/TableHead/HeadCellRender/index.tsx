@@ -4,7 +4,7 @@ import styles from './index.module.less';
 import Sort from './Sort';
 import Filter from './Filter';
 import { getCellTitle } from '../../../TableUtils';
-import propsAreEqual from './propsAreEqual';
+import propsAreEqual, { getProps } from './propsAreEqual';
 import type { InnerColumn, InnerColumnGroup } from '../../../TableTypes/typeColumn';
 
 export type Props = {
@@ -13,7 +13,9 @@ export type Props = {
 	tableRef: React.RefObject<HTMLDivElement | null>;
 };
 
-const HeadCellRender = ({ column, align, tableRef }: Props) => {
+const HeadCellRender = (props: Props) => {
+	const { column, align, tableRef } = getProps(props);
+
 	const haveSort = !!column.sort;
 	const haveFilter = !!column.filter;
 	const cellRenderValue = column.title;

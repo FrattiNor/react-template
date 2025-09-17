@@ -3,21 +3,22 @@ import HeadGroupCell from '../HeadGroupCell';
 import type { TableInstance } from '../../../TableHooks/type';
 import type { TableDataItem } from '../../../TableTypes/type';
 import { memo } from 'react';
-import propsAreEqual from './propsAreEqual';
+import propsAreEqual, { getInstanceProps, getProps } from './propsAreEqual';
 
 export type Props<T extends TableDataItem> = {
 	instance: TableInstance<T>;
 	rowIndex: number;
 };
 
-const HeadGroupRow = <T extends TableDataItem>({ instance, rowIndex }: Props<T>) => {
-	const { columnGroups } = instance.tableProps;
+const HeadGroupRow = <T extends TableDataItem>(props: Props<T>) => {
+	const { rowIndex } = getProps(props);
+	const { columnGroups } = getInstanceProps(props);
 	const headerColumnGroup = columnGroups[rowIndex];
 
 	return (
 		<div className={styles['head-row']}>
 			{headerColumnGroup.map((column, colIndex) => (
-				<HeadGroupCell key={column.key} rowIndex={rowIndex} colIndex={colIndex} instance={instance} />
+				<HeadGroupCell key={column.key} rowIndex={rowIndex} colIndex={colIndex} instance={props.instance} />
 			))}
 		</div>
 	);

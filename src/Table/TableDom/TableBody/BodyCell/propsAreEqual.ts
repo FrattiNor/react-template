@@ -1,47 +1,42 @@
 import type { Props } from './index';
 import type { TableDataItem } from '../../../TableTypes/type';
 import type { TableInstance } from '../../../TableHooks/type';
-import { judgeEach_Instance_obj as BodyCellRender_judgeEach_Instance_obj } from '../BodyCellRender/propsAreEqual';
+import { getPropsAreEqual } from '../../../TableUtils';
+import { getInstanceProps as BodyCellRender_getInstanceProps } from '../BodyCellRender/propsAreEqual';
 
-const judgeEach = [
-	//
-	(props: Readonly<Props<TableDataItem>>) => props.rowIndex,
-	(props: Readonly<Props<TableDataItem>>) => props.colIndex,
-];
-
-export const judgeEach_Instance_obj = {
-	...BodyCellRender_judgeEach_Instance_obj,
-	'tableTools.getRowKeys': (instance: Readonly<TableInstance<TableDataItem>>) => instance.tableTools.getRowKeys,
-	'tableVirtual.getColShow': (instance: Readonly<TableInstance<TableDataItem>>) => instance.tableVirtual.getColShow,
-	'tableSticky.getStickyStyleAndClassName': (instance: Readonly<TableInstance<TableDataItem>>) => instance.tableSticky.getStickyStyleAndClassName,
-	'tableProps.columnsFlat': (instance: Readonly<TableInstance<TableDataItem>>) => instance.tableProps.columnsFlat,
-	'tableProps.data': (instance: Readonly<TableInstance<TableDataItem>>) => instance.tableProps.data,
-	'tableProps.bordered': (instance: Readonly<TableInstance<TableDataItem>>) => instance.tableProps.bordered,
-	'tableProps.rowHeight': (instance: Readonly<TableInstance<TableDataItem>>) => instance.tableProps.rowHeight,
-	'tableC ellBg.getBodyCellBg': (instance: Readonly<TableInstance<TableDataItem>>) => instance.tableCellBg.getBodyCellBg,
-	'tableCellBg.bodyRowClick': (instance: Readonly<TableInstance<TableDataItem>>) => instance.tableCellBg.bodyRowClick,
-	'tableCellBg.bodyRowMouseEnter': (instance: Readonly<TableInstance<TableDataItem>>) => instance.tableCellBg.bodyRowMouseEnter,
-	'tableCellBg.bodyRowMouseLeave': (instance: Readonly<TableInstance<TableDataItem>>) => instance.tableCellBg.bodyRowMouseLeave,
+export const getProps = <T extends TableDataItem>({ rowIndex, colIndex }: Readonly<Props<T>>) => {
+	return { colIndex, rowIndex };
 };
 
-const judgeEach_Instance = Object.values(judgeEach_Instance_obj);
-
-const propsAreEqual = (prevProps: Readonly<Props<TableDataItem>>, nextProps: Readonly<Props<TableDataItem>>): boolean => {
-	for (let i = 0; i < judgeEach.length; i++) {
-		const fun = judgeEach[i];
-		if (fun(prevProps) !== fun(nextProps)) {
-			return false;
-		}
-	}
-
-	for (let i = 0; i < judgeEach_Instance.length; i++) {
-		const fun = judgeEach_Instance[i];
-		if (fun(prevProps.instance) !== fun(nextProps.instance)) {
-			return false;
-		}
-	}
-
-	return true;
+export const getInstanceProps = <T extends TableDataItem>({ instance }: Readonly<{ instance: Readonly<TableInstance<T>> }>) => {
+	const { getRowKeys } = instance.tableTools;
+	const { getColShow } = instance.tableVirtual;
+	const { getStickyStyleAndClassName } = instance.tableSticky;
+	const { columnsFlat, data, bordered, rowHeight } = instance.tableProps;
+	const { getBodyCellBg, bodyRowClick, bodyRowMouseEnter, bodyRowMouseLeave } = instance.tableCellBg;
+	return {
+		getRowKeys,
+		getColShow,
+		getStickyStyleAndClassName,
+		columnsFlat,
+		data,
+		bordered,
+		rowHeight,
+		getBodyCellBg,
+		bodyRowClick,
+		bodyRowMouseEnter,
+		bodyRowMouseLeave,
+	};
 };
+
+const propsAreEqual = getPropsAreEqual({
+	getProps,
+	getInstanceProps: <T extends TableDataItem>({ instance }: Readonly<{ instance: Readonly<TableInstance<T>> }>) => {
+		return {
+			...getInstanceProps({ instance }),
+			...BodyCellRender_getInstanceProps({ instance }),
+		};
+	},
+});
 
 export default propsAreEqual;

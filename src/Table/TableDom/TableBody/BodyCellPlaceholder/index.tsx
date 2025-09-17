@@ -2,17 +2,16 @@ import styles from './index.module.less';
 import type { TableInstance } from '../../../TableHooks/type';
 import type { TableDataItem } from '../../../TableTypes/type';
 import { memo } from 'react';
-import propsAreEqual from './propsAreEqual';
+import propsAreEqual, { getInstanceProps, getProps } from './propsAreEqual';
 
 export type Props<T extends TableDataItem> = {
 	instance: TableInstance<T>;
 	rowIndex: number;
 };
 
-const BodyCellPlaceholder = <T extends TableDataItem>({ instance, rowIndex }: Props<T>) => {
-	const { getRowKey } = instance.tableTools;
-	const { columnsFlat, data } = instance.tableProps;
-	const { getBodyCellBg, bodyRowClick, bodyRowMouseEnter, bodyRowMouseLeave } = instance.tableCellBg;
+const BodyCellPlaceholder = <T extends TableDataItem>(props: Props<T>) => {
+	const { rowIndex } = getProps(props);
+	const { data, columnsFlat, getRowKey, getBodyCellBg, bodyRowClick, bodyRowMouseEnter, bodyRowMouseLeave } = getInstanceProps(props);
 
 	const rowData = data[rowIndex];
 	const colMaxIndex = columnsFlat.length - 1;
