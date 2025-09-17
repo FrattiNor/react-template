@@ -3,7 +3,6 @@ import type { TableDataItem } from '../../../TableTypes/type';
 import type { TableInstance } from '../../../TableHooks/type';
 import { judgeEach_Instance_obj as HeadCell_judgeEach_Instance_obj } from '../HeadCell/propsAreEqual';
 import { judgeEach_Instance_obj as HeadCellPlaceholder_judgeEach_Instance_obj } from '../HeadCellPlaceholder/propsAreEqual';
-import { getJudgeEachInstanceObj } from '../../../TableUtils';
 
 const judgeEach = [
 	//
@@ -11,12 +10,9 @@ const judgeEach = [
 ];
 
 export const judgeEach_Instance_obj = {
-	...getJudgeEachInstanceObj([
-		//
-		(instance: Readonly<TableInstance<TableDataItem>>) => instance.tableProps.columnsFlat,
-	]),
 	...HeadCell_judgeEach_Instance_obj,
 	...HeadCellPlaceholder_judgeEach_Instance_obj,
+	'tableProps.columnsFlat': (instance: Readonly<TableInstance<TableDataItem>>) => instance.tableProps.columnsFlat,
 };
 
 const judgeEach_Instance = Object.values(judgeEach_Instance_obj);

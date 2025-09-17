@@ -12,19 +12,16 @@ export type Props<T extends TableDataItem> = {
 
 const MeasureColumnSize = <T extends TableDataItem>({ instance }: Props<T>) => {
 	const { columnsFlat } = instance.tableProps;
-	const { setColumnSizes } = instance.tableState;
-	const { setNeedMeasure, getMeasureStyle } = instance.tableMeasureCol;
+	const { getMeasureStyle } = instance.tableMeasureCol;
+	const { setColumnSizes, setColMeasure } = instance.tableState;
 
 	const initColWidth = (node: HTMLDivElement | null, key: string, isLast: boolean) => {
 		if (node !== null) {
 			setColumnSizes((old) => {
-				if (typeof old[key] !== 'number') {
-					return { ...old, [key]: FixedTwo(node.getBoundingClientRect().width) };
-				}
-				return old;
+				return { ...old, [key]: FixedTwo(node.getBoundingClientRect().width) };
 			});
 			if (isLast === true) {
-				setNeedMeasure(false);
+				setColMeasure({ measure: false, clear: false });
 			}
 		}
 	};
@@ -33,6 +30,7 @@ const MeasureColumnSize = <T extends TableDataItem>({ instance }: Props<T>) => {
 		<div className={styles['measure']}>
 			{columnsFlat.map(({ key }, colIndex) => {
 				const isLast = colIndex === columnsFlat.length - 1;
+				console.log(getMeasureStyle({ colIndex }));
 				return <div key={key} ref={(node) => initColWidth(node, key, isLast)} className={styles['measure-cell']} style={getMeasureStyle({ colIndex })} />;
 			})}
 		</div>

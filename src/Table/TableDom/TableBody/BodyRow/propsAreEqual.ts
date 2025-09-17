@@ -4,7 +4,6 @@ import type { TableInstance } from '../../../TableHooks/type';
 import { judgeEach_Instance_obj as BodyCell_judgeEach_Instance_obj } from '../BodyCell/propsAreEqual';
 import { judgeEach_Instance_obj as BodyCellPlaceholder_judgeEach_Instance_obj } from '../BodyCellPlaceholder/propsAreEqual';
 import { judgeEach_Instance_obj as BodyRowMeasure_judgeEach_Instance_obj } from '../BodyRowMeasure/propsAreEqual';
-import { getJudgeEachInstanceObj } from '../../../TableUtils';
 
 const judgeEach = [
 	//
@@ -12,14 +11,12 @@ const judgeEach = [
 ];
 
 export const judgeEach_Instance_obj = {
-	...getJudgeEachInstanceObj([
-		(instance: Readonly<TableInstance<TableDataItem>>) => instance.tableTools.getRowKey,
-		(instance: Readonly<TableInstance<TableDataItem>>) => instance.tableProps.columnsFlat,
-		(instance: Readonly<TableInstance<TableDataItem>>) => instance.tableProps.data,
-	]),
 	...BodyCell_judgeEach_Instance_obj,
 	...BodyCellPlaceholder_judgeEach_Instance_obj,
 	...BodyRowMeasure_judgeEach_Instance_obj,
+	'tableTools.getRowKey': (instance: Readonly<TableInstance<TableDataItem>>) => instance.tableTools.getRowKey,
+	'tableProps.columnsFlat': (instance: Readonly<TableInstance<TableDataItem>>) => instance.tableProps.columnsFlat,
+	'tableProps.data': (instance: Readonly<TableInstance<TableDataItem>>) => instance.tableProps.data,
 };
 
 const judgeEach_Instance = Object.values(judgeEach_Instance_obj);

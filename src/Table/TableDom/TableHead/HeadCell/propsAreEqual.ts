@@ -2,7 +2,6 @@ import type { Props } from './index';
 import type { TableDataItem } from '../../../TableTypes/type';
 import type { TableInstance } from '../../../TableHooks/type';
 import { judgeEach_Instance_obj as ResizeHandle_judgeEach_Instance_obj } from '../ResizeHandle/propsAreEqual';
-import { getJudgeEachInstanceObj } from '../../../TableUtils';
 
 const judgeEach = [
 	//
@@ -11,14 +10,12 @@ const judgeEach = [
 ];
 
 export const judgeEach_Instance_obj = {
-	...getJudgeEachInstanceObj([
-		(instance: Readonly<TableInstance<TableDataItem>>) => instance.tableVirtual.getColShow,
-		(instance: Readonly<TableInstance<TableDataItem>>) => instance.tableCellBg.getHeadCellBg,
-		(instance: Readonly<TableInstance<TableDataItem>>) => instance.tableSticky.getStickyStyleAndClassName,
-		(instance: Readonly<TableInstance<TableDataItem>>) => instance.tableProps.columnsFlat,
-		(instance: Readonly<TableInstance<TableDataItem>>) => instance.tableProps.bordered,
-		(instance: Readonly<TableInstance<TableDataItem>>) => instance.tableProps.rowHeight,
-	]),
+	'tableVirtual.getColShow': (instance: Readonly<TableInstance<TableDataItem>>) => instance.tableVirtual.getColShow,
+	'tableCellBg.getHeadCellBg': (instance: Readonly<TableInstance<TableDataItem>>) => instance.tableCellBg.getHeadCellBg,
+	'tableSticky.getStickyStyleAndClassName': (instance: Readonly<TableInstance<TableDataItem>>) => instance.tableSticky.getStickyStyleAndClassName,
+	'tableProps.columnsFlat': (instance: Readonly<TableInstance<TableDataItem>>) => instance.tableProps.columnsFlat,
+	'tableProps.bordered': (instance: Readonly<TableInstance<TableDataItem>>) => instance.tableProps.bordered,
+	'tableProps.rowHeight': (instance: Readonly<TableInstance<TableDataItem>>) => instance.tableProps.rowHeight,
 	...ResizeHandle_judgeEach_Instance_obj,
 };
 

@@ -14,7 +14,7 @@ export type Props<T extends TableDataItem> = {
 const TableBody = <T extends TableDataItem>({ instance }: Props<T>) => {
 	const { data } = instance.tableProps;
 	const { bodyRef } = instance.tableDomRef;
-	const { needMeasure } = instance.tableMeasureCol;
+	const { colMeasure } = instance.tableState;
 	const { getRowIndexs, getRowKey } = instance.tableTools;
 	const { VV_WrapperStyle, getRowShow } = instance.tableVirtual;
 	const { gridTemplateColumnsArr } = instance.tableSecondaryState;
@@ -27,7 +27,7 @@ const TableBody = <T extends TableDataItem>({ instance }: Props<T>) => {
 
 	return (
 		<div className={styles['body']} ref={bodyRef}>
-			{needMeasure && <MeasureColumnSize instance={instance} />}
+			{colMeasure.measure && <MeasureColumnSize instance={instance} />}
 			{!notEmpty && <BodyEmpty instance={instance} />}
 			{notEmpty && (
 				<div className={styles['body-inner']} style={{ gridTemplateColumns, ...VV_WrapperStyle }}>

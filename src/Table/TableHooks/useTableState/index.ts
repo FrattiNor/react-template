@@ -24,8 +24,8 @@ const useTableState = () => {
 	const [resizeFlag, setResizeFlag] = useState<ResizeFlag2 | null>(null);
 	// 列宽修改过
 	const [resized, setResized] = useState<boolean>(false);
-	// 是否需要测量
-	const [needMeasure, setNeedMeasure] = useState(false);
+	// 是否需要测量宽度
+	const [colMeasure, setColMeasure] = useState<{ measure: boolean; clear: boolean }>({ measure: true, clear: true });
 
 	// 拖拽时的keys
 	const resizeKeysObj = useMemo(() => {
@@ -35,20 +35,10 @@ const useTableState = () => {
 	}, [resizeFlag]);
 
 	// 获取col的宽度
-	const getColumnSize = useCallback(
-		(key: string) => {
-			return columnSizes[key] ?? 0;
-		},
-		[columnSizes],
-	);
+	const getColumnSize = useCallback((key: string) => columnSizes[key] ?? 0, [columnSizes]);
 
 	// 获取column是否在resized
-	const getColResized = useCallback(
-		(colKey: string) => {
-			return resizeKeysObj[colKey] === true;
-		},
-		[resizeKeysObj],
-	);
+	const getColResized = useCallback((colKey: string) => resizeKeysObj[colKey] === true, [resizeKeysObj]);
 
 	return {
 		minColWidth,
@@ -73,8 +63,8 @@ const useTableState = () => {
 		resizeFlag,
 		setResizeFlag,
 		getColResized,
-		needMeasure,
-		setNeedMeasure,
+		colMeasure,
+		setColMeasure,
 		bodyClientWidth,
 		setBodyClientWidth,
 	};

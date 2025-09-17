@@ -4,8 +4,8 @@ import { useRef } from 'react';
 const useTableDomRef = () => {
 	const bodyRef = useRef<HTMLDivElement | null>(null);
 	const headRef = useRef<HTMLDivElement | null>(null);
-
-	return { bodyRef, headRef };
+	const tableRef = useRef<HTMLDivElement | null>(null);
+	return { tableRef, bodyRef, headRef };
 };
 
 export default useTableDomRef;

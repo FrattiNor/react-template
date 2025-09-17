@@ -3,17 +3,13 @@ import type { TableDataItem } from '../../TableTypes/type';
 import type { TableInstance } from '../../TableHooks/type';
 import { judgeEach_Instance_obj as HeaderHeightRetainer_judgeEach_Instance_obj } from './HeaderHeightRetainer/propsAreEqual';
 import { judgeEach_Instance_obj as HeadRow_judgeEach_Instance_obj } from './HeadRow/propsAreEqual';
-import { getJudgeEachInstanceObj } from '../../TableUtils';
 
 export const judgeEach_Instance_obj = {
-	...getJudgeEachInstanceObj([
-		(instance: Readonly<TableInstance<TableDataItem>>) => instance.tableDomRef.headRef,
-		(instance: Readonly<TableInstance<TableDataItem>>) => instance.tableProps.columnGroups,
-		(instance: Readonly<TableInstance<TableDataItem>>) => instance.tableState.V_ScrollbarWidth,
-		(instance: Readonly<TableInstance<TableDataItem>>) => instance.tableSecondaryState.gridTemplateColumnsArr,
-	]),
 	...HeaderHeightRetainer_judgeEach_Instance_obj,
 	...HeadRow_judgeEach_Instance_obj,
+	'tableProps.columnGroups': (instance: Readonly<TableInstance<TableDataItem>>) => instance.tableProps.columnGroups,
+	'tableState.V_ScrollbarWidth': (instance: Readonly<TableInstance<TableDataItem>>) => instance.tableState.V_ScrollbarWidth,
+	'tableSecondaryState.gridTemplateColumnsArr': (instance: Readonly<TableInstance<TableDataItem>>) => instance.tableSecondaryState.gridTemplateColumnsArr,
 };
 
 const judgeEach_Instance = Object.values(judgeEach_Instance_obj);

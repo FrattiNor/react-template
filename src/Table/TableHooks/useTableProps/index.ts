@@ -1,11 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useMemo } from 'react';
 import type { TableDataItem, TableProps } from '../../TableTypes/type';
-import type { TableColumn, TableColumnGroup } from '../../TableTypes/typeColumn';
+import type { InnerColumn, InnerColumnGroup, TableColumn, TableColumnGroup } from '../../TableTypes/typeColumn';
 import { FixedTwo } from '../../TableUtils';
-
-type HeaderColumnGroup<T extends TableDataItem> = Omit<TableColumnGroup<T> & { level: number; startIndex: number; endIndex: number }, 'children'>;
-type HeaderColumn<T extends TableDataItem> = Omit<TableColumn<T> & { level: number }, 'children'>;
 
 type Props<T extends TableDataItem> = {
 	props: TableProps<T>;
@@ -20,8 +17,8 @@ const useTableProps = <T extends TableDataItem>({ props }: Props<T>) => {
 		let colIndex = -1;
 		let columnsWidthKeys = '';
 		let columnsFixedKeys = '';
-		const columnsFlat: Array<HeaderColumn<T>> = [];
-		const columnGroups: Array<Array<HeaderColumnGroup<T>>> = [];
+		const columnsFlat: Array<InnerColumn<T>> = [];
+		const columnGroups: Array<Array<InnerColumnGroup<T>>> = [];
 		const colKeysObj: Record<string, number> = {};
 
 		// 检测重复的columnKey
@@ -31,14 +28,14 @@ const useTableProps = <T extends TableDataItem>({ props }: Props<T>) => {
 		};
 
 		// 根据level添加HeadGroup
-		const addColumnGroup = (column: HeaderColumnGroup<T>) => {
+		const addColumnGroup = (column: InnerColumnGroup<T>) => {
 			if (columnGroups[column.level] === undefined) columnGroups[column.level] = [];
 			delete (column as any)['children'];
 			columnGroups[column.level].push(column);
 		};
 
 		// 添加column
-		const addColumnFlat = (column: HeaderColumn<T>) => {
+		const addColumnFlat = (column: InnerColumn<T>) => {
 			columnsFlat.push(column);
 			columnsWidthKeys += `_${column.key}&${column.width ?? 'default'}_`;
 			columnsFixedKeys += `_${column.key}&${column.fixed ?? 'default'}_`;

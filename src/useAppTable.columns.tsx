@@ -17,6 +17,7 @@ const useAppTableColumns = () => {
 					onCell: (_, index) => ({
 						rowSpan: index % 2 === 0 ? 2 : 0,
 					}),
+					filter: { filtered: true },
 				},
 				{
 					key: 'nameGroup',
@@ -39,12 +40,14 @@ const useAppTableColumns = () => {
 									{firstName}
 								</div>
 							),
+							filter: { filtered: false },
 						},
 						{
 							key: 'lastName',
 							title: <span>{'lastName_1'}</span>,
 							render: ({ lastName }) => <span>{lastName}</span>,
 							width: 300,
+							filter: { filtered: false },
 						},
 					],
 				},
@@ -56,6 +59,7 @@ const useAppTableColumns = () => {
 					onCell: () => ({
 						colSpan: 2,
 					}),
+					filter: { filtered: false },
 				},
 				{
 					key: 'avatar',
@@ -65,6 +69,7 @@ const useAppTableColumns = () => {
 					onCell: () => ({
 						colSpan: 0,
 					}),
+					filter: { filtered: false },
 				},
 				{
 					key: '123',
@@ -79,12 +84,14 @@ const useAppTableColumns = () => {
 									title: '密码_5',
 									render: ({ password }) => password,
 									width: 300,
+									filter: { filtered: false },
 								},
 								{
 									key: 'birthdate',
 									title: '生日_6',
 									render: ({ birthdate }) => birthdate.toString(),
 									width: 300,
+									filter: { filtered: false },
 								},
 							],
 						},
@@ -93,6 +100,7 @@ const useAppTableColumns = () => {
 							title: '注册时间_7',
 							render: ({ registeredAt }) => registeredAt.toString(),
 							width: 300,
+							filter: { filtered: false },
 						},
 					],
 				},
@@ -101,42 +109,52 @@ const useAppTableColumns = () => {
 					title: '年龄_8',
 					render: ({ age }) => age,
 					width: 300,
+					filter: { filtered: false },
 				},
 				{
 					key: 'gender',
 					title: '性别_9',
 					render: ({ gender }) => gender,
 					width: 300,
+					filter: { filtered: false },
 				},
 				{
 					key: 'height',
 					title: '身高_10',
 					render: ({ height }) => height,
 					width: 300,
+					filter: { filtered: false },
 				},
 				{
 					key: 'weight',
 					title: '体重_11',
 					render: ({ weight }) => weight,
 					width: 300,
+					filter: { filtered: false },
 				},
 				{
 					key: 'phoneNumber',
 					title: '电话号码_12',
 					render: ({ phoneNumber }) => phoneNumber,
 					width: 300,
+					filter: { filtered: false },
 				},
 				{
 					key: 'jobArea',
 					title: '工作地点_13',
 					render: ({ jobArea }) => jobArea,
 					width: 300,
+					sort: {
+						sorted: 'ascend',
+						sortDirections: ['ascend', 'descend'],
+					},
 				},
 				{
 					key: 'jobTitle',
 					title: '工作头衔_14',
 					render: ({ jobTitle }) => jobTitle,
 					width: 300,
+					filter: { filtered: false },
 				},
 				{
 					key: 'nameGroup22',
@@ -159,12 +177,22 @@ const useAppTableColumns = () => {
 									{firstName}
 								</div>
 							),
+							sort: {
+								sorted: 'ascend',
+								sortDirections: ['ascend', 'descend'],
+							},
+							filter: { filtered: false },
 						},
 						{
 							key: 'lastName22',
 							title: <span>{'lastName_1'}</span>,
 							render: ({ lastName }) => <span>{lastName}</span>,
 							width: 300,
+							sort: {
+								sorted: 'ascend',
+								sortDirections: ['ascend', 'descend'],
+							},
+							filter: { filtered: false },
 						},
 					],
 				},
@@ -174,6 +202,11 @@ const useAppTableColumns = () => {
 					render: ({ jobType }) => jobType,
 					width: 300,
 					fixed: 'right',
+					sort: {
+						sorted: 'ascend',
+						sortDirections: ['ascend', 'descend'],
+					},
+					filter: { filtered: false },
 				},
 			];
 

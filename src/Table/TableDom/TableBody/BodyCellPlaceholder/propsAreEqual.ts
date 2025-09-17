@@ -1,22 +1,21 @@
 import type { Props } from './index';
 import type { TableDataItem } from '../../../TableTypes/type';
 import type { TableInstance } from '../../../TableHooks/type';
-import { getJudgeEachInstanceObj } from '../../../TableUtils';
 
 const judgeEach = [
 	//
 	(props: Readonly<Props<TableDataItem>>) => props.rowIndex,
 ];
 
-export const judgeEach_Instance_obj = getJudgeEachInstanceObj([
-	(instance: Readonly<TableInstance<TableDataItem>>) => instance.tableTools.getRowKey,
-	(instance: Readonly<TableInstance<TableDataItem>>) => instance.tableProps.data,
-	(instance: Readonly<TableInstance<TableDataItem>>) => instance.tableProps.columnsFlat,
-	(instance: Readonly<TableInstance<TableDataItem>>) => instance.tableCellBg.getBodyCellBg,
-	(instance: Readonly<TableInstance<TableDataItem>>) => instance.tableCellBg.bodyRowClick,
-	(instance: Readonly<TableInstance<TableDataItem>>) => instance.tableCellBg.bodyRowMouseEnter,
-	(instance: Readonly<TableInstance<TableDataItem>>) => instance.tableCellBg.bodyRowMouseLeave,
-]);
+export const judgeEach_Instance_obj = {
+	'tableTools.getRowKey': (instance: Readonly<TableInstance<TableDataItem>>) => instance.tableTools.getRowKey,
+	'tableProps.data': (instance: Readonly<TableInstance<TableDataItem>>) => instance.tableProps.data,
+	'tableProps.columnsFlat': (instance: Readonly<TableInstance<TableDataItem>>) => instance.tableProps.columnsFlat,
+	'tableCellBg.getBodyCellBg': (instance: Readonly<TableInstance<TableDataItem>>) => instance.tableCellBg.getBodyCellBg,
+	'tableCellBg.bodyRowClick': (instance: Readonly<TableInstance<TableDataItem>>) => instance.tableCellBg.bodyRowClick,
+	'tableCellBg.bodyRowMouseEnter': (instance: Readonly<TableInstance<TableDataItem>>) => instance.tableCellBg.bodyRowMouseEnter,
+	'tableCellBg.bodyRowMouseLeave': (instance: Readonly<TableInstance<TableDataItem>>) => instance.tableCellBg.bodyRowMouseLeave,
+};
 
 const judgeEach_Instance = Object.values(judgeEach_Instance_obj);
 

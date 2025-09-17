@@ -11,8 +11,8 @@ type Props = {
 	tableSecondaryState: ReturnType<typeof useTableSecondaryState>;
 };
 
-const useTableLogic = ({ tableDomRef, tableState, tableMeasureCol, tableSecondaryState }: Props) => {
-	const { needMeasure } = tableMeasureCol;
+const useTableLogic = ({ tableDomRef, tableState, tableSecondaryState }: Props) => {
+	const { colMeasure } = tableState;
 	const { bodyRef, headRef } = tableDomRef;
 	const { fixedLeftObj, fixedRightObj } = tableSecondaryState;
 	const { setLeftPingedIndex, setRightPingedIndex, setV_ScrollbarWidth, setH_ScrollbarWidth, setBodyClientWidth } = tableState;
@@ -44,10 +44,10 @@ const useTableLogic = ({ tableDomRef, tableState, tableMeasureCol, tableSecondar
 
 	//监测结束后执行一次计算offset
 	useEffect(() => {
-		if (needMeasure === false) {
+		if (colMeasure.measure === false) {
 			calcPingedIndex();
 		}
-	}, [needMeasure]);
+	}, [colMeasure.measure]);
 
 	// 提供ref版func，避免闭包问题
 	const calcPingedIndexRef = useRef(calcPingedIndex);

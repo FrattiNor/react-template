@@ -4,22 +4,18 @@ import type { TableInstance } from '../../TableHooks/type';
 import { judgeEach_Instance_obj as BodyEmpty_judgeEach_Instance_obj } from './BodyEmpty/propsAreEqual';
 import { judgeEach_Instance_obj as BodyRow_judgeEach_Instance_obj } from './BodyRow/propsAreEqual';
 import { judgeEach_Instance_obj as MeasureColumnSize_judgeEach_Instance_obj } from './MeasureColumnSize/propsAreEqual';
-import { getJudgeEachInstanceObj } from '../../TableUtils';
 
 export const judgeEach_Instance_obj = {
-	...getJudgeEachInstanceObj([
-		(instance: Readonly<TableInstance<TableDataItem>>) => instance.tableProps.data,
-		(instance: Readonly<TableInstance<TableDataItem>>) => instance.tableDomRef.bodyRef,
-		(instance: Readonly<TableInstance<TableDataItem>>) => instance.tableMeasureCol.needMeasure,
-		(instance: Readonly<TableInstance<TableDataItem>>) => instance.tableTools.getRowIndexs,
-		(instance: Readonly<TableInstance<TableDataItem>>) => instance.tableTools.getRowKey,
-		(instance: Readonly<TableInstance<TableDataItem>>) => instance.tableVirtual.VV_WrapperStyle,
-		(instance: Readonly<TableInstance<TableDataItem>>) => instance.tableVirtual.getRowShow,
-		(instance: Readonly<TableInstance<TableDataItem>>) => instance.tableSecondaryState.gridTemplateColumnsArr,
-	]),
 	...BodyEmpty_judgeEach_Instance_obj,
 	...BodyRow_judgeEach_Instance_obj,
 	...MeasureColumnSize_judgeEach_Instance_obj,
+	'tableProps.data': (instance: Readonly<TableInstance<TableDataItem>>) => instance.tableProps.data,
+	'tableState.colMeasure': (instance: Readonly<TableInstance<TableDataItem>>) => instance.tableState.colMeasure,
+	'tableTools.getRowIndexs': (instance: Readonly<TableInstance<TableDataItem>>) => instance.tableTools.getRowIndexs,
+	'tableTools.getRowKey': (instance: Readonly<TableInstance<TableDataItem>>) => instance.tableTools.getRowKey,
+	'tableVirtual.VV_WrapperStyle': (instance: Readonly<TableInstance<TableDataItem>>) => instance.tableVirtual.VV_WrapperStyle,
+	'tableVirtual.getRowShow': (instance: Readonly<TableInstance<TableDataItem>>) => instance.tableVirtual.getRowShow,
+	'tableSecondaryState.gridTemplateColumnsArr': (instance: Readonly<TableInstance<TableDataItem>>) => instance.tableSecondaryState.gridTemplateColumnsArr,
 };
 
 const judgeEach_Instance = Object.values(judgeEach_Instance_obj);

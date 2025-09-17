@@ -11,10 +11,12 @@ type Props<T extends TableDataItem> = {
 
 const TableDom = <T extends TableDataItem>({ instance }: Props<T>) => {
 	const { bordered } = instance.tableProps;
+	const { tableRef } = instance.tableDomRef;
 	const { V_ScrollbarWidth, H_ScrollbarWidth } = instance.tableState;
 
 	return (
 		<div
+			ref={tableRef}
 			className={classNames(styles['table'], {
 				[styles['bordered']]: bordered,
 				[styles['have-scroll-v']]: V_ScrollbarWidth > 0,

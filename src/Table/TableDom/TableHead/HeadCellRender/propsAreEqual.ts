@@ -2,7 +2,7 @@ import type { Props } from './index';
 
 const judgeEach = [
 	//
-	(props: Readonly<Props>) => props.content,
+	(props: Readonly<Props>) => props.column,
 	(props: Readonly<Props>) => props.align,
 ];
 

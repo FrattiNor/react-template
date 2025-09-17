@@ -11,6 +11,8 @@ export type TableColumn<T extends TableDataItem> = {
 	fixed?: 'left' | 'right';
 	forceRender?: boolean;
 	onCell?: (item: T, index: number) => { rowSpan?: number; colSpan?: number };
+	filter?: { filtered: boolean };
+	sort?: { sorted: 'ascend' | 'descend'; sortDirections: ['ascend', 'descend'] };
 	// 融合group的字段
 	children?: undefined;
 };
@@ -27,6 +29,12 @@ export type TableColumnGroup<T extends TableDataItem> = {
 	flexGrow?: undefined;
 	onCell?: undefined;
 	forceRender?: undefined;
+	filter?: undefined;
+	sort?: undefined;
 };
 
 export type TableColumns<T extends TableDataItem> = Array<TableColumnGroup<T> | TableColumn<T>>;
+
+export type InnerColumnGroup<T extends TableDataItem> = Omit<TableColumnGroup<T> & { level: number; startIndex: number; endIndex: number }, 'children'>;
+
+export type InnerColumn<T extends TableDataItem> = Omit<TableColumn<T> & { level: number }, 'children'>;

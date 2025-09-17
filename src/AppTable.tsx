@@ -20,9 +20,6 @@ const AppTable: FC = () => {
 				justifyContent: 'center',
 			}}
 		>
-			<div style={{ width: '80vw', height: 500, flexShrink: 0, padding: 8 }}>
-				<Table data={data} columns={columns} rowKey="userId" bordered />
-			</div>
 			<div style={{ display: 'flex', gap: 16 }}>
 				<button className={styles['btn']} onClick={() => setLongColumns(false)}>{`columns(less)`}</button>
 				<button className={styles['btn']} onClick={() => setLongColumns(true)}>{`columns(lot)`}</button>
@@ -33,6 +30,9 @@ const AppTable: FC = () => {
 				<button className={styles['btn']} onClick={() => setData(data2)}>{`data(level2)`}</button>
 				<button className={styles['btn']} onClick={() => setData(data3)}>{`data(level3)`}</button>
 				<button className={styles['btn']} onClick={() => setData(data4)}>{`data(level4)`}</button>
+			</div>
+			<div style={{ width: '80vw', maxHeight: 500, flexShrink: 0, padding: 8 }}>
+				<Table data={data} columns={columns} rowKey="userId" bordered />
 			</div>
 		</div>
 	);

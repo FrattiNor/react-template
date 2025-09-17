@@ -1,7 +1,6 @@
 import type { Props } from './index';
 import type { TableDataItem } from '../../../TableTypes/type';
 import type { TableInstance } from '../../../TableHooks/type';
-import { getJudgeEachInstanceObj } from '../../../TableUtils';
 
 const judgeEach = [
 	//
@@ -10,10 +9,10 @@ const judgeEach = [
 	(props: Readonly<Props<TableDataItem>>) => props.align,
 ];
 
-export const judgeEach_Instance_obj = getJudgeEachInstanceObj([
-	(instance: Readonly<TableInstance<TableDataItem>>) => instance.tableProps.columnsFlat,
-	(instance: Readonly<TableInstance<TableDataItem>>) => instance.tableProps.data,
-]);
+export const judgeEach_Instance_obj = {
+	'tableProps.columnsFlat': (instance: Readonly<TableInstance<TableDataItem>>) => instance.tableProps.columnsFlat,
+	'tableProps.data': (instance: Readonly<TableInstance<TableDataItem>>) => instance.tableProps.data,
+};
 
 const judgeEach_Instance = Object.values(judgeEach_Instance_obj);
 
