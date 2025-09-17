@@ -1,8 +1,8 @@
 import type { TableDataItem } from '../../TableTypes/type';
 import type { TableInstance } from '../../TableHooks/type';
 import { getPropsAreEqual } from '../../TableUtils';
-import { getInstanceProps as HeaderHeightRetainer_getInstanceProps } from './HeaderHeightRetainer/propsAreEqual';
-import { getInstanceProps as HeadRow_getInstanceProps } from './HeadRow/propsAreEqual';
+import { getTotalInstanceProps as HeaderHeightRetainer_getInstanceProps } from './HeaderHeightRetainer/propsAreEqual';
+import { getTotalInstanceProps as HeadRow_getInstanceProps } from './HeadRow/propsAreEqual';
 
 export const getInstanceProps = <T extends TableDataItem>({ instance }: Readonly<{ instance: Readonly<TableInstance<T>> }>) => {
 	const { headRef } = instance.tableDomRef;
@@ -17,14 +17,16 @@ export const getInstanceProps = <T extends TableDataItem>({ instance }: Readonly
 	};
 };
 
+export const getTotalInstanceProps = <T extends TableDataItem>({ instance }: Readonly<{ instance: Readonly<TableInstance<T>> }>) => {
+	return {
+		...getInstanceProps({ instance }),
+		...HeaderHeightRetainer_getInstanceProps({ instance }),
+		...HeadRow_getInstanceProps({ instance }),
+	};
+};
+
 const propsAreEqual = getPropsAreEqual({
-	getInstanceProps: <T extends TableDataItem>({ instance }: Readonly<{ instance: Readonly<TableInstance<T>> }>) => {
-		return {
-			...getInstanceProps({ instance }),
-			...HeaderHeightRetainer_getInstanceProps({ instance }),
-			...HeadRow_getInstanceProps({ instance }),
-		};
-	},
+	getTotalInstanceProps,
 });
 
 export default propsAreEqual;

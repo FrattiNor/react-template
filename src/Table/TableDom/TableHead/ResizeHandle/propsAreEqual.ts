@@ -16,6 +16,8 @@ export const getInstanceProps = <T extends TableDataItem>({ instance }: Readonly
 	};
 };
 
-const propsAreEqual = getPropsAreEqual({ getProps, getInstanceProps });
+export const getTotalInstanceProps = getInstanceProps;
+
+const propsAreEqual = getPropsAreEqual({ getProps, getTotalInstanceProps });
 
 export default propsAreEqual;

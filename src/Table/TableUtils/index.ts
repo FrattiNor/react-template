@@ -27,7 +27,7 @@ export const debounce = (fn: () => void, ms: number) => {
 };
 
 export const getPropsAreEqual =
-	<T>({ getProps, getInstanceProps }: { getProps?: (p: T) => Record<string, any>; getInstanceProps?: (p: T) => Record<string, any> }) =>
+	<T>({ getProps, getTotalInstanceProps }: { getProps?: (p: T) => Record<string, any>; getTotalInstanceProps?: (p: T) => Record<string, any> }) =>
 	(prevProps: T, nextProps: T): boolean => {
 		if (getProps) {
 			const prevPropsProps = getProps(prevProps);
@@ -41,10 +41,10 @@ export const getPropsAreEqual =
 			}
 		}
 
-		if (getInstanceProps) {
-			const prevInstanceProps = getInstanceProps(prevProps);
-			const nextInstanceProps = getInstanceProps(nextProps);
-			const instancePropsKeys = Object.keys(prevInstanceProps) as Array<keyof ReturnType<typeof getInstanceProps>>;
+		if (getTotalInstanceProps) {
+			const prevInstanceProps = getTotalInstanceProps(prevProps);
+			const nextInstanceProps = getTotalInstanceProps(nextProps);
+			const instancePropsKeys = Object.keys(prevInstanceProps) as Array<keyof ReturnType<typeof getTotalInstanceProps>>;
 			for (let i = 0; i < instancePropsKeys.length; i++) {
 				const key = instancePropsKeys[i];
 				if (prevInstanceProps[key] !== nextInstanceProps[key]) {

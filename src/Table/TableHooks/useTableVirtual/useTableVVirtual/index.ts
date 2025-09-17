@@ -25,8 +25,8 @@ const useTableVVirtual = <T extends TableDataItem>({ tableProps, tableDomRef, ta
 		getItemKey: (index) => getRowKey(data?.[index], index),
 	});
 
-	const VV_measureElement = VV.measureElement;
 	const VV_totalSize = VV.getTotalSize();
+	const VV_measureElement = VV.measureElement;
 	const VV_paddingTop = VV.getVirtualItems()?.[0]?.start ?? 0;
 
 	// 虚拟容器style

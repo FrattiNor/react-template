@@ -28,7 +28,6 @@ const MeasureColumnSize = <T extends TableDataItem>(props: Props<T>) => {
 		<div className={styles['measure']}>
 			{columnsFlat.map(({ key }, colIndex) => {
 				const isLast = colIndex === columnsFlat.length - 1;
-				console.log(getMeasureStyle({ colIndex }));
 				return (
 					<div
 						key={key}

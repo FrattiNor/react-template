@@ -9,6 +9,8 @@ export const getInstanceProps = <T extends TableDataItem>({ instance }: Readonly
 	return { setColumnSizes, setColMeasure, getMeasureStyle, columnsFlat };
 };
 
-const propsAreEqual = getPropsAreEqual({ getInstanceProps });
+export const getTotalInstanceProps = getInstanceProps;
+
+const propsAreEqual = getPropsAreEqual({ getTotalInstanceProps });
 
 export default propsAreEqual;
