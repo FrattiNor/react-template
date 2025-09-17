@@ -12,10 +12,10 @@ type Props = {
 };
 
 const useTableLogic = ({ tableDomRef, tableState, tableSecondaryState }: Props) => {
-	const { colMeasure } = tableState;
 	const { bodyRef, headRef } = tableDomRef;
 	const { fixedLeftObj, fixedRightObj } = tableSecondaryState;
-	const { setLeftPingedIndex, setRightPingedIndex, setV_ScrollbarWidth, setH_ScrollbarWidth, setBodyClientWidth } = tableState;
+	const { colMeasure, resizeFlag, setLeftPingedIndex, setRightPingedIndex, setV_ScrollbarWidth, setH_ScrollbarWidth, setBodyClientWidth } =
+		tableState;
 
 	// 计算固定的index
 	const calcPingedIndex = useCallback(() => {
@@ -42,12 +42,13 @@ const useTableLogic = ({ tableDomRef, tableState, tableSecondaryState }: Props) 
 		}
 	}, [fixedLeftObj, fixedRightObj]);
 
-	//监测结束后执行一次计算offset
+	// 监测结束后执行一次计算offset
+	// 拖拽结束后执行一次计算offset
 	useEffect(() => {
-		if (colMeasure.measure === false) {
+		if (colMeasure.measure === false || resizeFlag === null) {
 			calcPingedIndex();
 		}
-	}, [colMeasure.measure]);
+	}, [colMeasure.measure, resizeFlag]);
 
 	// 提供ref版func，避免闭包问题
 	const calcPingedIndexRef = useRef(calcPingedIndex);
@@ -121,6 +122,8 @@ const useTableLogic = ({ tableDomRef, tableState, tableSecondaryState }: Props) 
 			};
 		}
 	}, []);
+
+	return { calcPingedIndex };
 };
 
 export default useTableLogic;

@@ -18,7 +18,7 @@ const BodyCellRender = <T extends TableDataItem>(props: Props<T>) => {
 
 	const rowData = data[rowIndex];
 	const column = columnsFlat[colIndex];
-	const cellRenderValue = column.render(rowData, rowIndex);
+	const cellRenderValue = column.render(rowData, { index: rowIndex });
 	const title = getCellTitle(cellRenderValue);
 	const cellIsStr = typeof cellRenderValue === 'string' || typeof cellRenderValue === 'number';
 	const alignStyle: CSSProperties = { justifyContent: align === 'center' ? 'center' : align === 'right' ? 'flex-end' : 'flex-start' };

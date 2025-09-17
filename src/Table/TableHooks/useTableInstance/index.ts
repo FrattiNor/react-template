@@ -23,8 +23,6 @@ const useTableInstance = <T extends TableDataItem>(props: TableProps<T>) => {
 	const tableTools = useTableTools({ tableProps });
 	// cell bg
 	const tableCellBg = useTableCellBg({ tableState });
-	// cell resize
-	const tableResize = useTableResize({ tableState, tableProps });
 	// measure
 	const tableMeasureCol = useTableMeasureCol({ tableState, tableProps });
 	// second state
@@ -33,10 +31,24 @@ const useTableInstance = <T extends TableDataItem>(props: TableProps<T>) => {
 	const tableSticky = useTableSticky({ tableDomRef, tableState, tableSecondaryState });
 	// virtual
 	const tableVirtual = useTableVirtual({ tableDomRef, tableProps, tableState, tableTools });
+	// cell resize
+	const tableResize = useTableResize({ tableState, tableProps });
 	// logic
 	useTableLogic({ tableDomRef, tableState, tableMeasureCol, tableSecondaryState });
+
 	// res
-	return { tableResize, tableProps, tableDomRef, tableState, tableSecondaryState, tableTools, tableCellBg, tableMeasureCol, tableSticky, tableVirtual };
+	return {
+		tableResize,
+		tableProps,
+		tableDomRef,
+		tableState,
+		tableSecondaryState,
+		tableTools,
+		tableCellBg,
+		tableMeasureCol,
+		tableSticky,
+		tableVirtual,
+	};
 };
 
 export default useTableInstance;
