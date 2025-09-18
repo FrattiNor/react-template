@@ -1,5 +1,5 @@
 import { memo } from 'react';
-import type { TableInstance } from '../../../TableHooks/type';
+import type { TableInstance } from '../../../TableTypes/typeHooks';
 import type { TableDataItem } from '../../../TableTypes/type';
 import propsAreEqual, { getInstanceProps, getProps } from './propsAreEqual';
 

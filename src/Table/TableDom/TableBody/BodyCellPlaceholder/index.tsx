@@ -1,5 +1,5 @@
 import styles from './index.module.less';
-import type { TableInstance } from '../../../TableHooks/type';
+import type { TableInstance } from '../../../TableTypes/typeHooks';
 import type { TableDataItem } from '../../../TableTypes/type';
 import { memo } from 'react';
 import propsAreEqual, { getInstanceProps, getProps } from './propsAreEqual';
@@ -16,7 +16,7 @@ const BodyCellPlaceholder = <T extends TableDataItem>(props: Props<T>) => {
 	const rowData = data[rowIndex];
 	const colMaxIndex = columnsFlat.length - 1;
 	const rowKey = getRowKey(rowData, rowIndex);
-	const bodyCellBg = getBodyCellBg({ rowKeys: [rowKey], colKey: 'body-cell-placeholder' });
+	const bodyCellBg = getBodyCellBg({ rowKeys: [rowKey], colIndexs: [-1] });
 
 	return (
 		<div

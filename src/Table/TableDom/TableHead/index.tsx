@@ -2,7 +2,7 @@ import styles from './index.module.less';
 import HeadRow from './HeadRow';
 import HeadGroupRow from './HeadGroupRow';
 import HeaderHeightRetainer from './HeaderHeightRetainer';
-import type { TableInstance } from '../../TableHooks/type';
+import type { TableInstance } from '../../TableTypes/typeHooks';
 import type { TableDataItem } from '../../TableTypes/type';
 import { memo } from 'react';
 import propsAreEqual, { getInstanceProps } from './propsAreEqual';

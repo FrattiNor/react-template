@@ -1,9 +1,9 @@
 import styles from './index.module.less';
 import classNames from 'classnames';
 import BodyCellRender from '../BodyCellRender';
-import type { TableInstance } from '../../../TableHooks/type';
+import type { TableInstance } from '../../../TableTypes/typeHooks';
 import type { TableDataItem } from '../../../TableTypes/type';
-import { memo } from 'react';
+import { memo, useMemo } from 'react';
 import propsAreEqual, { getInstanceProps, getProps } from './propsAreEqual';
 
 export type Props<T extends TableDataItem> = {
@@ -32,21 +32,19 @@ const BodyCell = <T extends TableDataItem>(props: Props<T>) => {
 	const rowData = data[rowIndex];
 	const column = columnsFlat[colIndex];
 	const { rowSpan = 1, colSpan = 1 } = column.onCell ? column.onCell(rowData, rowIndex) : {};
+	const colIndexs = useMemo(() => [colIndex, colIndex + colSpan - 1] as [number, number], [colIndex, colSpan]);
 
 	if (rowSpan <= 0) return null;
 	if (colSpan <= 0) return null;
 
+	const colShow = getColShow(colIndexs);
 	const forceRender = column.forceRender;
-	const { stickyStyle, stickyClassName, sticky } = getStickyStyleAndClassName({
-		colIndexs: [colIndex, colIndex + colSpan - 1],
-		type: 'body',
-	});
-	const colShow = getColShow([colIndex, colIndex + colSpan - 1]);
+	const { stickyStyle, stickyClassName, sticky } = getStickyStyleAndClassName({ colIndexs, type: 'body' });
 	if (!(colShow === true || forceRender === true || sticky === true)) return null;
 
 	const colMaxIndex = columnsFlat.length - 1;
 	const rowKeys = getRowKeys({ currentIndex: rowIndex, rowSpan, datasource: data });
-	const bodyCellBg = getBodyCellBg({ rowKeys, colKey: column.key });
+	const bodyCellBg = getBodyCellBg({ rowKeys, colIndexs });
 
 	return (
 		<div

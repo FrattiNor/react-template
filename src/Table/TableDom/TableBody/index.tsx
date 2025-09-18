@@ -2,7 +2,7 @@ import styles from './index.module.less';
 import MeasureColumnSize from './MeasureColumnSize';
 import BodyRow from './BodyRow';
 import BodyEmpty from './BodyEmpty';
-import type { TableInstance } from '../../TableHooks/type';
+import type { TableInstance } from '../../TableTypes/typeHooks';
 import type { TableDataItem } from '../../TableTypes/type';
 import { memo } from 'react';
 import propsAreEqual, { getInstanceProps } from './propsAreEqual';

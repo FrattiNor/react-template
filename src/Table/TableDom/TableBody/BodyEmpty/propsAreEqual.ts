@@ -1,5 +1,5 @@
 import type { TableDataItem } from '../../../TableTypes/type';
-import type { TableInstance } from '../../../TableHooks/type';
+import type { TableInstance } from '../../../TableTypes/typeHooks';
 import { getPropsAreEqual } from '../../../TableUtils';
 
 export const getInstanceProps = <T extends TableDataItem>({ instance }: Readonly<{ instance: Readonly<TableInstance<T>> }>) => {

@@ -2,7 +2,7 @@ import styles from './index.module.less';
 import BodyCell from '../BodyCell';
 import BodyCellPlaceholder from '../BodyCellPlaceholder';
 import BodyRowMeasure from '../BodyRowMeasure';
-import type { TableInstance } from '../../../TableHooks/type';
+import type { TableInstance } from '../../../TableTypes/typeHooks';
 import type { TableDataItem } from '../../../TableTypes/type';
 import { memo } from 'react';
 import propsAreEqual, { getInstanceProps, getProps } from './propsAreEqual';

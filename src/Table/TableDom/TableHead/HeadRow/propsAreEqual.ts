@@ -1,6 +1,6 @@
 import type { Props } from './index';
 import type { TableDataItem } from '../../../TableTypes/type';
-import type { TableInstance } from '../../../TableHooks/type';
+import type { TableInstance } from '../../../TableTypes/typeHooks';
 import { getPropsAreEqual } from '../../../TableUtils';
 import { getTotalInstanceProps as HeadCell_getInstanceProps } from '../HeadCell/propsAreEqual';
 import { getTotalInstanceProps as HeadCellPlaceholder_getInstanceProps } from '../HeadCellPlaceholder/propsAreEqual';

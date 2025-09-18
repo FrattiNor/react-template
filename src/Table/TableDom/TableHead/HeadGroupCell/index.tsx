@@ -3,7 +3,7 @@ import styles from './index.module.less';
 import classNames from 'classnames';
 import HeadCellRender from '../HeadCellRender';
 import ResizeHandle from '../ResizeHandle';
-import type { TableInstance } from '../../../TableHooks/type';
+import type { TableInstance } from '../../../TableTypes/typeHooks';
 import type { TableDataItem } from '../../../TableTypes/type';
 import { memo, useMemo } from 'react';
 import propsAreEqual, { getInstanceProps, getProps } from './propsAreEqual';
@@ -25,7 +25,7 @@ const HeadGroupCell = <T extends TableDataItem>(props: Props<T>) => {
 	if (!(colShow === true || sticky === true)) return null;
 
 	const colMaxIndex = columnsFlat.length - 1;
-	const headCellBg = getHeadCellBg({ colKey: column.key });
+	const headCellBg = getHeadCellBg({ colIndexs });
 
 	return (
 		<div

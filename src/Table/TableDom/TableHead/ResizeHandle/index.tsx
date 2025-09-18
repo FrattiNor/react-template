@@ -1,6 +1,6 @@
 import styles from './index.module.less';
 import classNames from 'classnames';
-import type { TableInstance } from '../../../TableHooks/type';
+import type { TableInstance } from '../../../TableTypes/typeHooks';
 import type { TableDataItem } from '../../../TableTypes/type';
 import { memo } from 'react';
 import propsAreEqual, { getInstanceProps, getProps } from './propsAreEqual';

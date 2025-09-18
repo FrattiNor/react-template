@@ -1,5 +1,5 @@
 import { useCallback, useMemo, useState } from 'react';
-import type { ResizeFlag2 } from '../type';
+import type { ResizeFlag } from '../../TableTypes/typeHooks';
 
 const minColWidth = 50;
 const maxColWidth = 1500;
@@ -21,7 +21,7 @@ const useTableState = () => {
 	// 行hover
 	const [rowHoverObj, setRowHoverObj] = useState<Record<string, boolean>>({});
 	// 拖拽修改列宽
-	const [resizeFlag, setResizeFlag] = useState<ResizeFlag2 | null>(null);
+	const [resizeFlag, setResizeFlag] = useState<ResizeFlag | null>(null);
 	// 列宽修改过
 	const [resized, setResized] = useState<boolean>(false);
 	// 是否需要测量宽度
@@ -30,7 +30,7 @@ const useTableState = () => {
 	// 拖拽时的keys
 	const resizeKeysObj = useMemo(() => {
 		const obj: Record<string, true> = {};
-		resizeFlag?.children.forEach(({ key }) => (obj[key] = true));
+		resizeFlag?.children.forEach(({ index }) => (obj[index] = true));
 		return obj;
 	}, [resizeFlag]);
 
@@ -38,7 +38,7 @@ const useTableState = () => {
 	const getColumnSize = useCallback((key: string) => columnSizes[key] ?? 0, [columnSizes]);
 
 	// 获取column是否在resized
-	const getColResized = useCallback((colKey: string) => resizeKeysObj[colKey] === true, [resizeKeysObj]);
+	const getColResized = useCallback((colIndex: number) => resizeKeysObj[colIndex] === true, [resizeKeysObj]);
 
 	return {
 		minColWidth,

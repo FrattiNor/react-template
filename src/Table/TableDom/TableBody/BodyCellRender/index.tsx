@@ -1,6 +1,6 @@
 import { memo, type CSSProperties } from 'react';
 import styles from './index.module.less';
-import type { TableInstance } from '../../../TableHooks/type';
+import type { TableInstance } from '../../../TableTypes/typeHooks';
 import type { TableDataItem } from '../../../TableTypes/type';
 import { getCellTitle } from '../../../TableUtils';
 import propsAreEqual, { getInstanceProps, getProps } from './propsAreEqual';

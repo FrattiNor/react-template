@@ -1,8 +1,8 @@
 import { startTransition, useCallback, useEffect } from 'react';
 import type useTableState from '../useTableState';
-import type { ResizeFlag2 } from '../type';
 import type { TableDataItem } from '../../TableTypes/type';
 import type useTableProps from '../useTableProps';
+import type { ResizeFlag } from '../../TableTypes/typeHooks';
 
 // 避免触发一些事件导致mouse无法触发
 function pauseEvent(e: Event) {
@@ -29,11 +29,11 @@ const useTableResize = <T extends TableDataItem>({ tableProps, tableState }: Pro
 				pauseEvent(e);
 				const nextSize: Record<string, number> = {};
 
-				const loop = (_totalSize: number, resizes: ResizeFlag2['children']) => {
+				const loop = (_totalSize: number, resizes: ResizeFlag['children']) => {
 					let totalSize = _totalSize;
 					const count = resizes.length;
 					const eachSize = totalSize / count;
-					const nextResizes: ResizeFlag2['children'] = [];
+					const nextResizes: ResizeFlag['children'] = [];
 					resizes.forEach((item) => {
 						const { key, clientWidth } = item;
 						const oldSize = nextSize[key] ?? clientWidth;
@@ -85,14 +85,14 @@ const useTableResize = <T extends TableDataItem>({ tableProps, tableState }: Pro
 		(e: React.MouseEvent<HTMLDivElement, MouseEvent>, colKey: string, colIndexs: [number] | [number, number]) => {
 			pauseEvent(e as unknown as Event);
 
-			const nextChildren: ResizeFlag2['children'] = [];
+			const nextChildren: ResizeFlag['children'] = [];
 			const start = colIndexs[0];
 			const end = colIndexs[colIndexs.length - 1];
 
 			for (let i = start; i <= end; i++) {
 				const key = columnsFlat[i].key;
 				const clientWidth = getColumnSize(key);
-				nextChildren.push({ key, clientWidth });
+				nextChildren.push({ key, clientWidth, index: i });
 			}
 
 			setResizeFlag({

@@ -2,7 +2,7 @@ import styles from './index.module.less';
 import ResizeHandle from '../ResizeHandle';
 import classNames from 'classnames';
 import HeadCellRender from '../HeadCellRender';
-import type { TableInstance } from '../../../TableHooks/type';
+import type { TableInstance } from '../../../TableTypes/typeHooks';
 import type { TableDataItem } from '../../../TableTypes/type';
 import { memo, useMemo } from 'react';
 import propsAreEqual, { getInstanceProps, getProps } from './propsAreEqual';
@@ -25,7 +25,7 @@ const HeadCell = <T extends TableDataItem>(props: Props<T>) => {
 	if (!(colShow === true || forceRender === true || sticky === true)) return null;
 
 	const colMaxIndex = columnsFlat.length - 1;
-	const headCellBg = getHeadCellBg({ colKey: column.key });
+	const headCellBg = getHeadCellBg({ colIndexs: [colIndex] });
 
 	return (
 		<div
