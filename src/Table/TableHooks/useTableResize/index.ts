@@ -1,4 +1,6 @@
-import { startTransition, useCallback, useEffect } from 'react';
+import { startTransition, useCallback, useEffect, useRef } from 'react';
+
+import { FixedTwo } from '../../TableUtils';
 
 import type { TableDataItem } from '../../TableTypes/type';
 import type { ResizeFlag } from '../../TableTypes/typeHooks';
@@ -21,8 +23,20 @@ type Props<T extends TableDataItem> = {
 
 // 表头resize
 const useTableResize = <T extends TableDataItem>({ tableProps, tableState }: Props<T>) => {
-	const { columnsFlat } = tableProps;
+	const { columnsFlat, onResizeEnd } = tableProps;
 	const { setResized, resizeFlag, setResizeFlag, setColumnSizes, maxColWidth, minColWidth, getColumnSize } = tableState;
+
+	// resize结束回调
+	const resizeEndCallback = useCallback(() => {
+		if (typeof onResizeEnd === 'function') {
+			const sizeObj: Record<string, number> = {};
+			columnsFlat.forEach(({ key }) => (sizeObj[key] = getColumnSize(key)));
+			onResizeEnd(sizeObj);
+		}
+	}, [columnsFlat, getColumnSize]);
+	// 提供ref版func，避免闭包问题
+	const resizeEndCallbackRef = useRef(resizeEndCallback);
+	resizeEndCallbackRef.current = resizeEndCallback;
 
 	useEffect(() => {
 		if (resizeFlag) {
@@ -46,7 +60,7 @@ const useTableResize = <T extends TableDataItem>({ tableProps, tableState }: Pro
 							nextSize[key] = maxColWidth;
 							totalSize -= maxColWidth - oldSize;
 						} else {
-							nextSize[key] = nextWidth;
+							nextSize[key] = FixedTwo(nextWidth);
 							totalSize -= nextWidth - oldSize;
 							nextResizes.push(item);
 						}
@@ -70,6 +84,7 @@ const useTableResize = <T extends TableDataItem>({ tableProps, tableState }: Pro
 			const mouseUp = (e: MouseEvent) => {
 				pauseEvent(e);
 				setResizeFlag(null);
+				resizeEndCallbackRef.current();
 			};
 
 			document.addEventListener('mouseup', mouseUp);
