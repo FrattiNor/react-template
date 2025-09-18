@@ -1,3 +1,4 @@
+/* eslint-disable react-compiler/react-compiler */
 import { useCallback } from 'react';
 
 import useV from '../useV/useV';
@@ -14,6 +15,7 @@ type Props<T extends TableDataItem> = {
 };
 
 const useTableHVirtual = <T extends TableDataItem>({ tableProps, tableDomRef, tableState }: Props<T>) => {
+	'use no memo';
 	const { bodyRef } = tableDomRef;
 	const { columnsFlat } = tableProps;
 	const { getColumnSize } = tableState;
