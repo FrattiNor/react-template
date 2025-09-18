@@ -29,7 +29,10 @@ const useTableVVirtual = <T extends TableDataItem>({ tableProps, tableDomRef, ta
 
 	const VV_totalSize = VV.getTotalSize();
 	const VV_measureElement = VV.measureElement;
-	const VV_paddingTop = VV.getVirtualItems()?.[0]?.start ?? 0;
+	const VV_items = VV.getVirtualItems();
+	const VV_paddingTop = VV_items?.[0]?.start ?? 0;
+	const startIndex = VV_items?.[0]?.index;
+	const endIndex = VV_items?.[VV_items.length - 1]?.index;
 
 	// 虚拟容器style
 	const VV_WrapperStyle: CSSProperties = useMemo(
@@ -40,10 +43,6 @@ const useTableVVirtual = <T extends TableDataItem>({ tableProps, tableDomRef, ta
 		}),
 		[VV_totalSize, VV_paddingTop],
 	);
-
-	const VV_Range = VV.calculateRange();
-	const endIndex = VV_Range?.endIndex;
-	const startIndex = VV_Range?.startIndex;
 
 	// row是否显示
 	const getRowShow = useCallback(

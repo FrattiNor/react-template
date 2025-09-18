@@ -28,9 +28,9 @@ const useTableHVirtual = <T extends TableDataItem>({ tableProps, tableDomRef, ta
 		estimateSize: (index) => getColumnSize(columnsFlat[index].key),
 	});
 
-	const HV_Range = HV.calculateRange();
-	const endIndex = HV_Range?.endIndex;
-	const startIndex = HV_Range?.startIndex;
+	const HV_items = HV.getVirtualItems();
+	const startIndex = HV_items?.[0]?.index;
+	const endIndex = HV_items?.[HV_items.length - 1]?.index;
 
 	// col是否显示
 	const getColShow = useCallback(
