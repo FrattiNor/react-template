@@ -1,8 +1,5 @@
-import { memo } from 'react';
-
-
 import styles from './index.module.less';
-import propsAreEqual, { getInstanceProps } from './propsAreEqual';
+import { getInstanceProps } from './propsAreEqual';
 import { FixedTwo } from '../../../TableUtils';
 
 import type { TableDataItem } from '../../../TableTypes/type';
@@ -43,4 +40,5 @@ const MeasureColumnSize = <T extends TableDataItem>(props: Props<T>) => {
 	);
 };
 
-export default memo(MeasureColumnSize, propsAreEqual) as typeof MeasureColumnSize;
+export default MeasureColumnSize;
+// export default memo(MeasureColumnSize, propsAreEqual) as typeof MeasureColumnSize;

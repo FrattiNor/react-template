@@ -1,7 +1,5 @@
-import { memo } from 'react';
-
 import styles from './index.module.less';
-import propsAreEqual, { getInstanceProps, getProps } from './propsAreEqual';
+import { getInstanceProps, getProps } from './propsAreEqual';
 
 import type { TableDataItem } from '../../../TableTypes/type';
 import type { TableInstance } from '../../../TableTypes/typeHooks';
@@ -27,4 +25,5 @@ const HeadCellPlaceholder = <T extends TableDataItem>(props: Props<T>) => {
 	);
 };
 
-export default memo(HeadCellPlaceholder, propsAreEqual) as typeof HeadCellPlaceholder;
+export default HeadCellPlaceholder;
+// export default memo(HeadCellPlaceholder, propsAreEqual) as typeof HeadCellPlaceholder;

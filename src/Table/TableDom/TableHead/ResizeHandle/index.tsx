@@ -1,14 +1,10 @@
-import { memo } from 'react';
-
 import classNames from 'classnames';
 
 import styles from './index.module.less';
-import propsAreEqual, { getInstanceProps, getProps } from './propsAreEqual';
+import { getInstanceProps, getProps } from './propsAreEqual';
 
 import type { TableDataItem } from '../../../TableTypes/type';
 import type { TableInstance } from '../../../TableTypes/typeHooks';
-
-
 
 export type Props<T extends TableDataItem> = {
 	instance: TableInstance<T>;
@@ -26,4 +22,5 @@ const ResizeHandle = <T extends TableDataItem>(props: Props<T>) => {
 	);
 };
 
-export default memo(ResizeHandle, propsAreEqual) as typeof ResizeHandle;
+export default ResizeHandle;
+// export default memo(ResizeHandle, propsAreEqual) as typeof ResizeHandle;

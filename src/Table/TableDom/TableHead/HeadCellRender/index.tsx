@@ -1,8 +1,8 @@
-import { memo, type CSSProperties } from 'react';
+import { type CSSProperties } from 'react';
 
 import Filter from './Filter';
 import styles from './index.module.less';
-import propsAreEqual, { getProps } from './propsAreEqual';
+import { getProps } from './propsAreEqual';
 import Sort from './Sort';
 import { getCellTitle } from '../../../TableUtils';
 
@@ -35,4 +35,5 @@ const HeadCellRender = (props: Props) => {
 	);
 };
 
-export default memo(HeadCellRender, propsAreEqual) as typeof HeadCellRender;
+export default HeadCellRender;
+// export default memo(HeadCellRender, propsAreEqual) as typeof HeadCellRender;

@@ -1,15 +1,11 @@
-import { memo } from 'react';
-
 import HeaderHeightRetainer from './HeaderHeightRetainer';
 import HeadGroupRow from './HeadGroupRow';
 import HeadRow from './HeadRow';
 import styles from './index.module.less';
-import propsAreEqual, { getInstanceProps } from './propsAreEqual';
+import { getInstanceProps } from './propsAreEqual';
 
 import type { TableDataItem } from '../../TableTypes/type';
 import type { TableInstance } from '../../TableTypes/typeHooks';
-
-
 
 export type Props<T extends TableDataItem> = {
 	instance: TableInstance<T>;
@@ -33,4 +29,5 @@ const TableHead = <T extends TableDataItem>(props: Props<T>) => {
 	);
 };
 
-export default memo(TableHead, propsAreEqual) as typeof TableHead;
+export default TableHead;
+// export default memo(TableHead, propsAreEqual) as typeof TableHead;

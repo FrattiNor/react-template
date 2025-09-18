@@ -1,6 +1,4 @@
-import { memo } from 'react';
-
-import propsAreEqual, { getInstanceProps, getProps } from './propsAreEqual';
+import { getInstanceProps, getProps } from './propsAreEqual';
 
 import type { TableDataItem } from '../../../TableTypes/type';
 import type { TableInstance } from '../../../TableTypes/typeHooks';
@@ -31,4 +29,5 @@ const BodyRowMeasure = <T extends TableDataItem>(props: Props<T>) => {
 	);
 };
 
-export default memo(BodyRowMeasure, propsAreEqual) as typeof BodyRowMeasure;
+export default BodyRowMeasure;
+// export default memo(BodyRowMeasure, propsAreEqual) as typeof BodyRowMeasure;

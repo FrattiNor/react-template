@@ -1,6 +1,4 @@
-import { memo } from 'react';
-
-import propsAreEqual, { getInstanceProps } from './propsAreEqual';
+import { getInstanceProps } from './propsAreEqual';
 
 import type { TableDataItem } from '../../../TableTypes/type';
 import type { TableInstance } from '../../../TableTypes/typeHooks';
@@ -15,4 +13,5 @@ const BodyEmpty = <T extends TableDataItem>(props: Props<T>) => {
 	return <div style={{ width: HTotalSize, minWidth: '100%', backgroundColor: 'rgba(0,0,0,0.05)', height: '200px' }} />;
 };
 
-export default memo(BodyEmpty, propsAreEqual) as typeof BodyEmpty;
+export default BodyEmpty;
+// export default memo(BodyEmpty, propsAreEqual) as typeof BodyEmpty;

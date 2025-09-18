@@ -40,7 +40,6 @@ const useTableMeasureCol = <T extends TableDataItem>({ tableProps, tableState }:
 	// column数量或者width变化
 	useLayoutEffect(() => {
 		// 未修改过宽度时，需要清空原来的宽度
-		console.log({ measure: true, clear: resized === false });
 		setColMeasure({ measure: true, clear: resized === false });
 	}, [columnsWidthKeys]);
 
