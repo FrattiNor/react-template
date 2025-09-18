@@ -1,5 +1,5 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { type Virtualizer } from '@tanstack/react-virtual';
+
 import { FixedTwo } from '../../../TableUtils';
 
 // 保持最小size为1，避免display:none后itemSize为0永远无法显示

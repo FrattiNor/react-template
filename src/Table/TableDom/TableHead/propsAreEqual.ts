@@ -1,8 +1,9 @@
-import type { TableDataItem } from '../../TableTypes/type';
-import type { TableInstance } from '../../TableTypes/typeHooks';
 import { getPropsAreEqual } from '../../TableUtils';
 import { getTotalInstanceProps as HeaderHeightRetainer_getInstanceProps } from './HeaderHeightRetainer/propsAreEqual';
 import { getTotalInstanceProps as HeadRow_getInstanceProps } from './HeadRow/propsAreEqual';
+
+import type { TableDataItem } from '../../TableTypes/type';
+import type { TableInstance } from '../../TableTypes/typeHooks';
 
 export const getInstanceProps = <T extends TableDataItem>({ instance }: Readonly<{ instance: Readonly<TableInstance<T>> }>) => {
 	const { headRef } = instance.tableDomRef;

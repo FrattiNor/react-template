@@ -1,10 +1,11 @@
+import useTableHVirtual from './useTableHVirtual';
+import useTableVVirtual from './useTableVVirtual';
+
 import type { TableDataItem } from '../../TableTypes/type';
 import type useTableDomRef from '../useTableDomRef';
 import type useTableProps from '../useTableProps';
 import type useTableState from '../useTableState';
 import type useTableTools from '../useTableTools';
-import useTableVVirtual from './useTableVVirtual';
-import useTableHVirtual from './useTableHVirtual';
 
 type Props<T extends TableDataItem> = {
 	tableProps: ReturnType<typeof useTableProps<T>>;

@@ -1,9 +1,11 @@
-import styles from './index.module.less';
-import TableHead from './TableHead';
-import TableBody from './TableBody';
 import classNames from 'classnames';
-import type { TableInstance } from '../TableTypes/typeHooks';
+
+import styles from './index.module.less';
+import TableBody from './TableBody';
+import TableHead from './TableHead';
+
 import type { TableDataItem } from '../TableTypes/type';
+import type { TableInstance } from '../TableTypes/typeHooks';
 
 type Props<T extends TableDataItem> = {
 	instance: TableInstance<T>;

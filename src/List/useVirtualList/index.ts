@@ -1,8 +1,9 @@
 import { useEffect } from 'react';
+
+import useContainerObserver from './hooks/useContainerObserver';
+import useItemObserver from './hooks/useItemObserver';
 import useVirtualProps from './hooks/useVirtualProps';
 import useVirtualState from './hooks/useVirtualState';
-import useItemObserver from './hooks/useItemObserver';
-import useContainerObserver from './hooks/useContainerObserver';
 import getItemSizeListChange from './utils/getItemSizeListChange';
 import getMaybeChangeItemSize from './utils/getMaybeChangeItemSize';
 import getMaybeRangeChange from './utils/getMaybeRangeChange';

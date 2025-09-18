@@ -1,4 +1,5 @@
 import { useRef } from 'react';
+
 import type { VirtualListProps } from '../index';
 
 const useVirtualProps = <T>(props: VirtualListProps<T>) => {

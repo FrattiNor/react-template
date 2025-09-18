@@ -1,12 +1,15 @@
-import styles from './index.module.less';
+import { memo, useMemo } from 'react';
 
 import classNames from 'classnames';
+
+import styles from './index.module.less';
 import HeadCellRender from '../HeadCellRender';
 import ResizeHandle from '../ResizeHandle';
-import type { TableInstance } from '../../../TableTypes/typeHooks';
-import type { TableDataItem } from '../../../TableTypes/type';
-import { memo, useMemo } from 'react';
 import propsAreEqual, { getInstanceProps, getProps } from './propsAreEqual';
+
+import type { TableDataItem } from '../../../TableTypes/type';
+import type { TableInstance } from '../../../TableTypes/typeHooks';
+
 
 export type Props<T extends TableDataItem> = {
 	instance: TableInstance<T>;

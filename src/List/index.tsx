@@ -1,8 +1,11 @@
 import { Fragment, useRef, type CSSProperties, type ReactNode } from 'react';
-import useVirtualList from './useVirtualList';
-import styles from './index.module.less';
-import VirtualScrollBar from './VirtualScrollBar';
+
 import classNames from 'classnames';
+
+import styles from './index.module.less';
+import useVirtualList from './useVirtualList';
+import VirtualScrollBar from './VirtualScrollBar';
+
 
 type RenderProps<T> = {
 	index: number;

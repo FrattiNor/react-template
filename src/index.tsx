@@ -1,6 +1,7 @@
 import { createRoot } from 'react-dom/client';
-import initFps from './initFps';
+
 import App from './AppTable';
+import initFps from './initFps';
 import './index.css';
 // import { StrictMode } from 'react';
 

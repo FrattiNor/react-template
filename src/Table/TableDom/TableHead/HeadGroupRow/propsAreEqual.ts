@@ -1,8 +1,9 @@
+import { getPropsAreEqual } from '../../../TableUtils';
+import { getTotalInstanceProps as HeadGroupCell_getInstanceProps } from '../HeadGroupCell/propsAreEqual';
+
 import type { Props } from './index';
 import type { TableDataItem } from '../../../TableTypes/type';
 import type { TableInstance } from '../../../TableTypes/typeHooks';
-import { getPropsAreEqual } from '../../../TableUtils';
-import { getTotalInstanceProps as HeadGroupCell_getInstanceProps } from '../HeadGroupCell/propsAreEqual';
 
 export const getProps = <T extends TableDataItem>({ rowIndex }: Readonly<Props<T>>) => {
 	return { rowIndex };

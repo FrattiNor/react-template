@@ -1,8 +1,10 @@
 import { useCallback, useLayoutEffect, type CSSProperties } from 'react';
+
+import { debounce } from '../../TableUtils';
+
 import type { TableDataItem } from '../../TableTypes/type';
 import type useTableProps from '../useTableProps';
 import type useTableState from '../useTableState';
-import { debounce } from '../../TableUtils';
 
 type Props<T extends TableDataItem> = {
 	tableProps: ReturnType<typeof useTableProps<T>>;

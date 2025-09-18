@@ -1,11 +1,14 @@
+import { memo } from 'react';
+
+import BodyEmpty from './BodyEmpty';
+import BodyRow from './BodyRow';
 import styles from './index.module.less';
 import MeasureColumnSize from './MeasureColumnSize';
-import BodyRow from './BodyRow';
-import BodyEmpty from './BodyEmpty';
-import type { TableInstance } from '../../TableTypes/typeHooks';
-import type { TableDataItem } from '../../TableTypes/type';
-import { memo } from 'react';
 import propsAreEqual, { getInstanceProps } from './propsAreEqual';
+
+import type { TableDataItem } from '../../TableTypes/type';
+import type { TableInstance } from '../../TableTypes/typeHooks';
+
 
 export type Props<T extends TableDataItem> = {
 	instance: TableInstance<T>;

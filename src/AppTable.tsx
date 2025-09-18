@@ -1,7 +1,8 @@
 import { useState, type FC } from 'react';
-import Table from './Table';
+
 import { data_empty, data1, data2, data3, data4 } from './AppTable.data';
 import styles from './AppTable.module.less';
+import Table from './Table';
 import useAppTableColumns from './useAppTable.columns';
 
 const AppTable: FC = () => {

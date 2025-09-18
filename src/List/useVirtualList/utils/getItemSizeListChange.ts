@@ -1,7 +1,7 @@
-import type useVirtualProps from '../hooks/useVirtualProps';
-import type useVirtualState from '../hooks/useVirtualState';
-import type { SizeItem } from '../hooks/useVirtualState';
+import { type default as useVirtualState, type SizeItem } from '../hooks/useVirtualState';
+
 import type getMaybeRangeChange from './getMaybeRangeChange';
+import type useVirtualProps from '../hooks/useVirtualProps';
 
 type Props<T> = {
 	state: ReturnType<typeof useVirtualState<T>>;

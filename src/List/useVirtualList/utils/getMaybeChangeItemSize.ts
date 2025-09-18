@@ -1,6 +1,6 @@
+import type getItemSizeListChange from './getItemSizeListChange';
 import type useVirtualProps from '../hooks/useVirtualProps';
 import type useVirtualState from '../hooks/useVirtualState';
-import type getItemSizeListChange from './getItemSizeListChange';
 
 type Props<T> = {
 	state: ReturnType<typeof useVirtualState<T>>;

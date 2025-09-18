@@ -6,7 +6,7 @@
 	"scripts": {
 		"dev": "vite",
 		"build": "tsc -b && vite build",
-		"lint": "eslint . && npx tsc -b --noEmit",
+		"lint": "eslint . --fix && npx tsc -b --noEmit",
 		"preview": "vite preview",
 		"prettier": "npx prettier **/* --write --ignore-unknown"
 	},
@@ -26,6 +26,7 @@
 		"@types/stats.js": "^0.17.4",
 		"@vitejs/plugin-react-swc": "^3.11.0",
 		"eslint": "^9.25.0",
+		"eslint-plugin-import": "^2.32.0",
 		"eslint-plugin-react-hooks": "^5.2.0",
 		"eslint-plugin-react-refresh": "^0.4.19",
 		"globals": "^16.0.0",

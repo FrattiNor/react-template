@@ -1,7 +1,9 @@
 import { flushSync } from 'react-dom';
+
+import binarySearch from './binarySearch';
+
 import type useVirtualProps from '../hooks/useVirtualProps';
 import type useVirtualState from '../hooks/useVirtualState';
-import binarySearch from './binarySearch';
 
 type Props<T> = {
 	state: ReturnType<typeof useVirtualState<T>>;

@@ -1,5 +1,5 @@
-import type useTableInstance from '../TableHooks/useTableInstance';
 import type { TableDataItem } from './type';
+import type useTableInstance from '../TableHooks/useTableInstance';
 
 export type TableInstance<T extends TableDataItem> = ReturnType<typeof useTableInstance<T>>;
 

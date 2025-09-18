@@ -1,9 +1,11 @@
 import { useCallback } from 'react';
+
+import useV from '../useV/useV';
+
 import type { TableDataItem } from '../../../TableTypes/type';
 import type useTableDomRef from '../../useTableDomRef';
 import type useTableProps from '../../useTableProps';
 import type useTableState from '../../useTableState';
-import useV from '../useV/useV';
 
 type Props<T extends TableDataItem> = {
 	tableProps: ReturnType<typeof useTableProps<T>>;

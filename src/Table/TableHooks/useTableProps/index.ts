@@ -1,8 +1,9 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useMemo } from 'react';
+
+import { FixedTwo } from '../../TableUtils';
+
 import type { TableDataItem, TableProps } from '../../TableTypes/type';
 import type { InnerColumn, InnerColumnGroup, TableColumn, TableColumnGroup } from '../../TableTypes/typeColumn';
-import { FixedTwo } from '../../TableUtils';
 
 type Props<T extends TableDataItem> = {
 	props: TableProps<T>;

@@ -1,7 +1,9 @@
 import { memo } from 'react';
-import type { TableInstance } from '../../../TableTypes/typeHooks';
-import type { TableDataItem } from '../../../TableTypes/type';
+
 import propsAreEqual, { getInstanceProps } from './propsAreEqual';
+
+import type { TableDataItem } from '../../../TableTypes/type';
+import type { TableInstance } from '../../../TableTypes/typeHooks';
 
 export type Props<T extends TableDataItem> = {
 	instance: TableInstance<T>;

@@ -1,10 +1,12 @@
 import { memo } from 'react';
-import type { TableInstance } from '../../../TableTypes/typeHooks';
-import type { TableDataItem } from '../../../TableTypes/type';
-import { FixedTwo } from '../../../TableUtils';
+
 
 import styles from './index.module.less';
 import propsAreEqual, { getInstanceProps } from './propsAreEqual';
+import { FixedTwo } from '../../../TableUtils';
+
+import type { TableDataItem } from '../../../TableTypes/type';
+import type { TableInstance } from '../../../TableTypes/typeHooks';
 
 export type Props<T extends TableDataItem> = {
 	instance: TableInstance<T>;

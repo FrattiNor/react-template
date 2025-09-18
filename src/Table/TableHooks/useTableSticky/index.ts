@@ -1,9 +1,12 @@
 import { useCallback, type CSSProperties } from 'react';
+
+import classNames from 'classnames';
+
+import styles from './index.module.less';
+
 import type useTableDomRef from '../useTableDomRef';
 import type useTableSecondaryState from '../useTableSecondaryState';
 import type useTableState from '../useTableState';
-import styles from './index.module.less';
-import classNames from 'classnames';
 
 type Props = {
 	tableState: ReturnType<typeof useTableState>;

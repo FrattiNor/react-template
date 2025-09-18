@@ -1,15 +1,16 @@
-import type { TableDataItem, TableProps } from '../../TableTypes/type';
-import useTableDomRef from '../useTableDomRef';
-import useTableState from '../useTableState';
-import useTableSecondaryState from '../useTableSecondaryState';
-import useTableTools from '../useTableTools';
-import useTableSticky from '../useTableSticky';
-import useTableResize from '../useTableResize';
 import useTableCellBg from '../useTableCellBg';
-import useTableProps from '../useTableProps';
-import useTableMeasureCol from '../useTableMeasureCol';
+import useTableDomRef from '../useTableDomRef';
 import useTableLogic from '../useTableLogic';
+import useTableMeasureCol from '../useTableMeasureCol';
+import useTableProps from '../useTableProps';
+import useTableResize from '../useTableResize';
+import useTableSecondaryState from '../useTableSecondaryState';
+import useTableState from '../useTableState';
+import useTableSticky from '../useTableSticky';
+import useTableTools from '../useTableTools';
 import useTableVirtual from '../useTableVirtual';
+
+import type { TableDataItem, TableProps } from '../../TableTypes/type';
 
 // 表格实例
 const useTableInstance = <T extends TableDataItem>(props: TableProps<T>) => {

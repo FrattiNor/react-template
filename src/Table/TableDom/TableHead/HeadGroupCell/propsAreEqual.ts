@@ -1,8 +1,9 @@
+import { getPropsAreEqual } from '../../../TableUtils';
+import { getTotalInstanceProps as ResizeHandle_getInstanceProps } from '../ResizeHandle/propsAreEqual';
+
 import type { Props } from './index';
 import type { TableDataItem } from '../../../TableTypes/type';
 import type { TableInstance } from '../../../TableTypes/typeHooks';
-import { getPropsAreEqual } from '../../../TableUtils';
-import { getTotalInstanceProps as ResizeHandle_getInstanceProps } from '../ResizeHandle/propsAreEqual';
 
 export const getProps = <T extends TableDataItem>({ rowIndex, colIndex }: Readonly<Props<T>>) => {
 	return { colIndex, rowIndex };

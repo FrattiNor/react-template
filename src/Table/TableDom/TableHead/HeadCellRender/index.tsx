@@ -1,10 +1,11 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { memo, type CSSProperties } from 'react';
-import styles from './index.module.less';
-import Sort from './Sort';
+
 import Filter from './Filter';
-import { getCellTitle } from '../../../TableUtils';
+import styles from './index.module.less';
 import propsAreEqual, { getProps } from './propsAreEqual';
+import Sort from './Sort';
+import { getCellTitle } from '../../../TableUtils';
+
 import type { InnerColumn, InnerColumnGroup } from '../../../TableTypes/typeColumn';
 
 export type Props = {

@@ -1,9 +1,10 @@
-import type { TableDataItem } from '../../TableTypes/type';
-import type { TableInstance } from '../../TableTypes/typeHooks';
 import { getPropsAreEqual } from '../../TableUtils';
 import { getTotalInstanceProps as BodyEmpty_getInstanceProps } from './BodyEmpty/propsAreEqual';
 import { getTotalInstanceProps as BodyRow_getInstanceProps } from './BodyRow/propsAreEqual';
 import { getTotalInstanceProps as MeasureColumnSize_getInstanceProps } from './MeasureColumnSize/propsAreEqual';
+
+import type { TableDataItem } from '../../TableTypes/type';
+import type { TableInstance } from '../../TableTypes/typeHooks';
 
 export const getInstanceProps = <T extends TableDataItem>({ instance }: Readonly<{ instance: Readonly<TableInstance<T>> }>) => {
 	const { data } = instance.tableProps;

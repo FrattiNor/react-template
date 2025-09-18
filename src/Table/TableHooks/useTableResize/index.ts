@@ -1,8 +1,9 @@
 import { startTransition, useCallback, useEffect } from 'react';
-import type useTableState from '../useTableState';
+
 import type { TableDataItem } from '../../TableTypes/type';
-import type useTableProps from '../useTableProps';
 import type { ResizeFlag } from '../../TableTypes/typeHooks';
+import type useTableProps from '../useTableProps';
+import type useTableState from '../useTableState';
 
 // 避免触发一些事件导致mouse无法触发
 function pauseEvent(e: Event) {
