@@ -1,11 +1,11 @@
-import { useMemo } from 'react';
+import { memo, useMemo } from 'react';
 
 import classNames from 'classnames';
 
 import styles from './index.module.less';
 import HeadCellRender from '../HeadCellRender';
 import ResizeHandle from '../ResizeHandle';
-import { getInstanceProps, getProps } from './propsAreEqual';
+import propsAreEqual, { getInstanceProps, getProps } from './propsAreEqual';
 
 import type { TableDataItem } from '../../../TableTypes/type';
 import type { TableInstance } from '../../../TableTypes/typeHooks';
@@ -52,5 +52,5 @@ const HeadGroupCell = <T extends TableDataItem>(props: Props<T>) => {
 	);
 };
 
-export default HeadGroupCell;
-// export default memo(HeadGroupCell, propsAreEqual) as typeof HeadGroupCell;
+// export default HeadGroupCell;
+export default memo(HeadGroupCell, propsAreEqual) as typeof HeadGroupCell;

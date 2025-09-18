@@ -1,8 +1,10 @@
+import { memo } from 'react';
+
 import styles from './index.module.less';
 import BodyCell from '../BodyCell';
 import BodyCellPlaceholder from '../BodyCellPlaceholder';
 import BodyRowMeasure from '../BodyRowMeasure';
-import { getInstanceProps, getProps } from './propsAreEqual';
+import propsAreEqual, { getInstanceProps, getProps } from './propsAreEqual';
 
 import type { TableDataItem } from '../../../TableTypes/type';
 import type { TableInstance } from '../../../TableTypes/typeHooks';
@@ -30,5 +32,5 @@ const BodyRow = <T extends TableDataItem>(props: Props<T>) => {
 	);
 };
 
-export default BodyRow;
-// export default memo(BodyRow, propsAreEqual) as typeof BodyRow;
+// export default BodyRow;
+export default memo(BodyRow, propsAreEqual) as typeof BodyRow;

@@ -1,10 +1,10 @@
-import { useMemo } from 'react';
+import { memo, useMemo } from 'react';
 
 import classNames from 'classnames';
 
 import styles from './index.module.less';
 import BodyCellRender from '../BodyCellRender';
-import { getInstanceProps, getProps } from './propsAreEqual';
+import propsAreEqual, { getInstanceProps, getProps } from './propsAreEqual';
 
 import type { TableDataItem } from '../../../TableTypes/type';
 import type { TableInstance } from '../../../TableTypes/typeHooks';
@@ -74,5 +74,5 @@ const BodyCell = <T extends TableDataItem>(props: Props<T>) => {
 	);
 };
 
-export default BodyCell;
-// export default memo(BodyCell, propsAreEqual) as typeof BodyCell;
+// export default BodyCell;
+export default memo(BodyCell, propsAreEqual) as typeof BodyCell;

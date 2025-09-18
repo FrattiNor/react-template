@@ -1,7 +1,7 @@
-import { type CSSProperties } from 'react';
+import { memo, type CSSProperties } from 'react';
 
 import styles from './index.module.less';
-import { getInstanceProps, getProps } from './propsAreEqual';
+import propsAreEqual, { getInstanceProps, getProps } from './propsAreEqual';
 import { getCellTitle } from '../../../TableUtils';
 
 import type { TableDataItem } from '../../../TableTypes/type';
@@ -32,5 +32,5 @@ const BodyCellRender = <T extends TableDataItem>(props: Props<T>) => {
 	);
 };
 
-export default BodyCellRender;
-// export default memo(BodyCellRender, propsAreEqual) as typeof BodyCellRender;
+// export default BodyCellRender;
+export default memo(BodyCellRender, propsAreEqual) as typeof BodyCellRender;

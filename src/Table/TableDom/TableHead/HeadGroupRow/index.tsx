@@ -1,6 +1,8 @@
+import { memo } from 'react';
+
 import styles from './index.module.less';
 import HeadGroupCell from '../HeadGroupCell';
-import { getInstanceProps, getProps } from './propsAreEqual';
+import propsAreEqual, { getInstanceProps, getProps } from './propsAreEqual';
 
 import type { TableDataItem } from '../../../TableTypes/type';
 import type { TableInstance } from '../../../TableTypes/typeHooks';
@@ -24,5 +26,5 @@ const HeadGroupRow = <T extends TableDataItem>(props: Props<T>) => {
 	);
 };
 
-export default HeadGroupRow;
-// export default memo(HeadGroupRow, propsAreEqual) as typeof HeadGroupRow;
+// export default HeadGroupRow;
+export default memo(HeadGroupRow, propsAreEqual) as typeof HeadGroupRow;

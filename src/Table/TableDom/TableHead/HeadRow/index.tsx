@@ -1,7 +1,9 @@
+import { memo } from 'react';
+
 import styles from './index.module.less';
 import HeadCell from '../HeadCell';
 import HeadCellPlaceholder from '../HeadCellPlaceholder';
-import { getInstanceProps, getProps } from './propsAreEqual';
+import propsAreEqual, { getInstanceProps, getProps } from './propsAreEqual';
 
 import type { TableDataItem } from '../../../TableTypes/type';
 import type { TableInstance } from '../../../TableTypes/typeHooks';
@@ -25,5 +27,5 @@ const HeadRow = <T extends TableDataItem>(props: Props<T>) => {
 	);
 };
 
-export default HeadRow;
-// export default memo(HeadRow, propsAreEqual) as typeof HeadRow;
+// export default HeadRow;
+export default memo(HeadRow, propsAreEqual) as typeof HeadRow;
