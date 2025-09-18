@@ -1,7 +1,7 @@
 import useTableCellBg from '../useTableCellBg';
 import useTableDomRef from '../useTableDomRef';
-import useTableLogic from '../useTableLogic';
 import useTableMeasureCol from '../useTableMeasureCol';
+import useTableObserver from '../useTableObserver';
 import useTableProps from '../useTableProps';
 import useTableResize from '../useTableResize';
 import useTableSecondaryState from '../useTableSecondaryState';
@@ -34,8 +34,8 @@ const useTableInstance = <T extends TableDataItem>(props: TableProps<T>) => {
 	const tableVirtual = useTableVirtual({ tableDomRef, tableProps, tableState, tableTools });
 	// cell resize
 	const tableResize = useTableResize({ tableState, tableProps });
-	// logic
-	useTableLogic({ tableDomRef, tableState, tableMeasureCol, tableSecondaryState });
+	// observer
+	useTableObserver({ tableDomRef, tableState, tableMeasureCol, tableSecondaryState });
 
 	// res
 	return {

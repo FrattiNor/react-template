@@ -12,7 +12,9 @@ type Props = {
 	tableSecondaryState: ReturnType<typeof useTableSecondaryState>;
 };
 
-const useTableLogic = ({ tableDomRef, tableState, tableSecondaryState }: Props) => {
+// 表格监测
+// 监测滚动、resize
+const useTableObserver = ({ tableDomRef, tableState, tableSecondaryState }: Props) => {
 	const { bodyRef, headRef } = tableDomRef;
 	const { fixedLeftObj, fixedRightObj } = tableSecondaryState;
 	const { colMeasure, resizeFlag, setLeftPingedIndex, setRightPingedIndex, setV_ScrollbarWidth, setH_ScrollbarWidth, setBodyClientWidth } =
@@ -128,4 +130,4 @@ const useTableLogic = ({ tableDomRef, tableState, tableSecondaryState }: Props) 
 	return { calcPingedIndex };
 };
 
-export default useTableLogic;
+export default useTableObserver;

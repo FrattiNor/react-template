@@ -7,6 +7,7 @@ type Props = {
 };
 
 // 表格 单元格 背景色
+// 根据点击、hover、resize决定
 const useTableCellBg = ({ tableState }: Props) => {
 	const { rowClickObj, rowHoverObj, setRowHoverObj, setRowClickObj, getColResized } = tableState;
 
