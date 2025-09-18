@@ -34,7 +34,7 @@ const BodyCell = <T extends TableDataItem>(props: Props<T>) => {
 
 	const rowData = data[rowIndex];
 	const column = columnsFlat[colIndex];
-	const { rowSpan = 1, colSpan = 1 } = column.onCell ? column.onCell(rowData, rowIndex) : {};
+	const { rowSpan = 1, colSpan = 1, title: onCellTitle = undefined } = column.onCell ? column.onCell(rowData, rowIndex) : {};
 	const colIndexs = useMemo(() => [colIndex, colIndex + colSpan - 1] as [number, number], [colIndex, colSpan]);
 
 	if (rowSpan <= 0) return null;
@@ -69,7 +69,7 @@ const BodyCell = <T extends TableDataItem>(props: Props<T>) => {
 				...stickyStyle,
 			}}
 		>
-			<BodyCellRender rowIndex={rowIndex} colIndex={colIndex} instance={props.instance} />
+			<BodyCellRender rowIndex={rowIndex} colIndex={colIndex} onCellTitle={onCellTitle} instance={props.instance} />
 		</div>
 	);
 };

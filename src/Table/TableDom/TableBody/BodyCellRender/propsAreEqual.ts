@@ -1,11 +1,12 @@
+import { getTotalInstanceProps as HighlightText_getInstanceProps } from './HighlightText/propsAreEqual';
 import { getPropsAreEqual } from '../../../TableUtils';
 
 import type { Props } from './index';
 import type { TableDataItem } from '../../../TableTypes/type';
 import type { TableInstance } from '../../../TableTypes/typeHooks';
 
-export const getProps = <T extends TableDataItem>({ rowIndex, colIndex, align }: Readonly<Props<T>>) => {
-	return { rowIndex, colIndex, align };
+export const getProps = <T extends TableDataItem>({ onCellTitle, rowIndex, colIndex, align }: Readonly<Props<T>>) => {
+	return { onCellTitle, rowIndex, colIndex, align };
 };
 
 export const getInstanceProps = <T extends TableDataItem>({ instance }: Readonly<{ instance: Readonly<TableInstance<T>> }>) => {
@@ -13,7 +14,12 @@ export const getInstanceProps = <T extends TableDataItem>({ instance }: Readonly
 	return { columnsFlat, data };
 };
 
-export const getTotalInstanceProps = getInstanceProps;
+export const getTotalInstanceProps = <T extends TableDataItem>({ instance }: Readonly<{ instance: Readonly<TableInstance<T>> }>) => {
+	return {
+		...getInstanceProps({ instance }),
+		...HighlightText_getInstanceProps({ instance }),
+	};
+};
 
 const propsAreEqual = getPropsAreEqual({ getProps, getTotalInstanceProps });
 

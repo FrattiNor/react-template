@@ -1,10 +1,15 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 
 import type { DataItem } from './AppTable.data';
 import type { TableColumns } from './Table/TableTypes/typeColumn';
 
-const useAppTableColumns = () => {
+const useAppTableColumns = ({ colIndex, keyword }: { colIndex: number | undefined; keyword: string }) => {
 	const [longColumns, setLongColumns] = useState(true);
+	const highlightKeywords = useMemo(() => [keyword], [keyword]);
+	const getHighlightKeywords = (index: number) => {
+		if (index === colIndex) return highlightKeywords;
+		return undefined;
+	};
 
 	const columns = (() => {
 		if (longColumns) {
@@ -18,7 +23,7 @@ const useAppTableColumns = () => {
 					onCell: (_, index) => ({
 						rowSpan: index % 2 === 0 ? 2 : 0,
 					}),
-					filter: { filtered: true },
+					filter: { filtered: true, highlightKeywords: getHighlightKeywords(0) },
 				},
 				{
 					key: 'nameGroup',
@@ -41,14 +46,15 @@ const useAppTableColumns = () => {
 									{firstName}
 								</div>
 							),
-							filter: { filtered: false },
+							filter: { filtered: false, highlightKeywords: getHighlightKeywords(1) },
 						},
 						{
 							key: 'lastName',
 							title: <span>{'lastName_1'}</span>,
-							render: ({ lastName }) => <span>{lastName}</span>,
+							render: ({ lastName }, { renderHighlightText }) => <span>{renderHighlightText(lastName)}</span>,
 							width: 300,
-							filter: { filtered: false },
+							filter: { filtered: false, highlightKeywords: getHighlightKeywords(2) },
+							onCell: ({ lastName }) => ({ title: lastName }),
 						},
 					],
 				},
@@ -60,7 +66,7 @@ const useAppTableColumns = () => {
 					onCell: () => ({
 						colSpan: 2,
 					}),
-					filter: { filtered: false },
+					filter: { filtered: false, highlightKeywords: getHighlightKeywords(3) },
 				},
 				{
 					key: 'avatar',
@@ -70,7 +76,7 @@ const useAppTableColumns = () => {
 					onCell: () => ({
 						colSpan: 0,
 					}),
-					filter: { filtered: false },
+					filter: { filtered: false, highlightKeywords: getHighlightKeywords(4) },
 				},
 				{
 					key: '123',
@@ -85,14 +91,14 @@ const useAppTableColumns = () => {
 									title: '密码_5',
 									render: ({ password }) => password,
 									width: 300,
-									filter: { filtered: false },
+									filter: { filtered: false, highlightKeywords: getHighlightKeywords(5) },
 								},
 								{
 									key: 'birthdate',
 									title: '生日_6',
 									render: ({ birthdate }) => birthdate.toString(),
 									width: 300,
-									filter: { filtered: false },
+									filter: { filtered: false, highlightKeywords: getHighlightKeywords(6) },
 								},
 							],
 						},
@@ -101,7 +107,7 @@ const useAppTableColumns = () => {
 							title: '注册时间_7',
 							render: ({ registeredAt }) => registeredAt.toString(),
 							width: 300,
-							filter: { filtered: false },
+							filter: { filtered: false, highlightKeywords: getHighlightKeywords(7) },
 						},
 					],
 				},
@@ -110,41 +116,42 @@ const useAppTableColumns = () => {
 					title: '年龄_8',
 					render: ({ age }) => age,
 					width: 300,
-					filter: { filtered: false },
+					filter: { filtered: false, highlightKeywords: getHighlightKeywords(8) },
 				},
 				{
 					key: 'gender',
 					title: '性别_9',
 					render: ({ gender }) => gender,
 					width: 300,
-					filter: { filtered: false },
+					filter: { filtered: false, highlightKeywords: getHighlightKeywords(9) },
 				},
 				{
 					key: 'height',
 					title: '身高_10',
 					render: ({ height }) => height,
 					width: 300,
-					filter: { filtered: false },
+					filter: { filtered: false, highlightKeywords: getHighlightKeywords(10) },
 				},
 				{
 					key: 'weight',
 					title: '体重_11',
 					render: ({ weight }) => weight,
 					width: 300,
-					filter: { filtered: false },
+					filter: { filtered: false, highlightKeywords: getHighlightKeywords(11) },
 				},
 				{
 					key: 'phoneNumber',
 					title: '电话号码_12',
 					render: ({ phoneNumber }) => phoneNumber,
 					width: 300,
-					filter: { filtered: false },
+					filter: { filtered: false, highlightKeywords: getHighlightKeywords(12) },
 				},
 				{
 					key: 'jobArea',
 					title: '工作地点_13',
 					render: ({ jobArea }) => jobArea,
 					width: 300,
+					filter: { filtered: false, highlightKeywords: getHighlightKeywords(13) },
 					sort: {
 						sorted: 'ascend',
 						sortDirections: ['ascend', 'descend'],
@@ -155,7 +162,7 @@ const useAppTableColumns = () => {
 					title: '工作头衔_14',
 					render: ({ jobTitle }) => jobTitle,
 					width: 300,
-					filter: { filtered: false },
+					filter: { filtered: false, highlightKeywords: getHighlightKeywords(14) },
 				},
 				{
 					key: 'nameGroup22',
@@ -182,7 +189,7 @@ const useAppTableColumns = () => {
 								sorted: 'ascend',
 								sortDirections: ['ascend', 'descend'],
 							},
-							filter: { filtered: false },
+							filter: { filtered: false, highlightKeywords: getHighlightKeywords(15) },
 						},
 						{
 							key: 'lastName22',
@@ -193,7 +200,7 @@ const useAppTableColumns = () => {
 								sorted: 'ascend',
 								sortDirections: ['ascend', 'descend'],
 							},
-							filter: { filtered: false },
+							filter: { filtered: false, highlightKeywords: getHighlightKeywords(16) },
 						},
 					],
 				},
@@ -207,7 +214,7 @@ const useAppTableColumns = () => {
 						sorted: 'ascend',
 						sortDirections: ['ascend', 'descend'],
 					},
-					filter: { filtered: false },
+					filter: { filtered: false, highlightKeywords: getHighlightKeywords(17) },
 				},
 			];
 
@@ -220,6 +227,7 @@ const useAppTableColumns = () => {
 				title: <span>{'lastName_1'}</span>,
 				render: ({ lastName }) => <span>{lastName}</span>,
 				width: 300,
+				filter: { filtered: false, highlightKeywords: getHighlightKeywords(0) },
 			},
 			{
 				key: 'userId',
@@ -229,6 +237,7 @@ const useAppTableColumns = () => {
 				onCell: (_, index) => ({
 					rowSpan: index % 2 === 0 ? 2 : 0,
 				}),
+				filter: { filtered: false, highlightKeywords: getHighlightKeywords(1) },
 			},
 			{
 				key: 'email',
@@ -238,12 +247,14 @@ const useAppTableColumns = () => {
 				onCell: () => ({
 					colSpan: 2,
 				}),
+				filter: { filtered: false, highlightKeywords: getHighlightKeywords(2) },
 			},
 			{
 				key: 'avatar',
 				title: '头像_4',
 				render: ({ avatar }) => avatar,
 				width: 300,
+				filter: { filtered: false, highlightKeywords: getHighlightKeywords(3) },
 			},
 		];
 

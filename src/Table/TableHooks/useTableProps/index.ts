@@ -65,12 +65,16 @@ const useTableProps = <T extends TableDataItem>({ props }: Props<T>) => {
 		return { columnGroups, columnsFlat, columnsWidthKeys, columnsFixedKeys };
 	}, [columns]);
 
+	// 避免组件内声明，触发重复渲染
+	const highlightKeywords = useMemo(() => restProps.highlightKeywords, [JSON.stringify(restProps.highlightKeywords)]);
+
 	return {
 		...restProps,
 		columnGroups,
 		columnsFlat,
 		columnsWidthKeys,
 		columnsFixedKeys,
+		highlightKeywords,
 		rowHeight: restProps.rowHeight ? FixedTwo(restProps.rowHeight) : 46,
 	};
 };

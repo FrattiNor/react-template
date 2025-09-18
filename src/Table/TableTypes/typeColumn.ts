@@ -9,7 +9,7 @@ export type TableColumn<T extends TableDataItem> = {
 	// 列标题
 	title: ReactNode;
 	// 列单元格渲染
-	render: (item: T, otherData: { index: number; highlightKeywords?: string[] }) => ReactNode;
+	render: (item: T, otherData: { index: number; renderHighlightText: (text: string) => ReactNode }) => ReactNode;
 	// 列宽
 	width: number | `${number}%`;
 	// 未resize的情况下，自动填充【默认1】
@@ -29,6 +29,8 @@ export type TableColumn<T extends TableDataItem> = {
 		rowSpan?: number;
 		// 列占据几格，用于合并单元格
 		colSpan?: number;
+		// 覆盖cell的title属性
+		title?: string;
 	};
 	// TODO 列筛选
 	filter?: {
