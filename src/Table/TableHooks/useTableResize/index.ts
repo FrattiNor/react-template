@@ -27,13 +27,13 @@ const useTableResize = <T extends TableDataItem>({ tableProps, tableState }: Pro
 	const { setResized, resizeFlag, setResizeFlag, setColumnSizes, maxColWidth, minColWidth, getColumnSize } = tableState;
 
 	// resize结束回调
-	const resizeEndCallback = useCallback(() => {
+	const resizeEndCallback = () => {
 		if (typeof onResizeEnd === 'function') {
 			const sizeObj: Record<string, number> = {};
 			columnsFlat.forEach(({ key }) => (sizeObj[key] = getColumnSize(key)));
 			onResizeEnd(sizeObj);
 		}
-	}, [columnsFlat, getColumnSize]);
+	};
 	// 提供ref版func，避免闭包问题
 	const resizeEndCallbackRef = useRef(resizeEndCallback);
 	resizeEndCallbackRef.current = resizeEndCallback;
