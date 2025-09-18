@@ -4,6 +4,7 @@ import tseslint from 'typescript-eslint';
 import eslintPluginReactHooks from 'eslint-plugin-react-hooks';
 import eslintPluginReactRefresh from 'eslint-plugin-react-refresh';
 import eslintPluginImport from 'eslint-plugin-import';
+import eslintPluginReactCompiler from 'eslint-plugin-react-compiler';
 
 export default tseslint.config(
 	{ ignores: ['dist'] },
@@ -18,9 +19,11 @@ export default tseslint.config(
 			import: eslintPluginImport,
 			'react-hooks': eslintPluginReactHooks,
 			'react-refresh': eslintPluginReactRefresh,
+			'react-compiler': eslintPluginReactCompiler,
 		},
 		rules: {
 			...eslintPluginReactHooks.configs.recommended.rules,
+			'react-compiler/react-compiler': 'error',
 			'react-refresh/only-export-components': 'error',
 			'react-hooks/exhaustive-deps': 'off', //  不强制 react hook 使用相关依赖
 			'@typescript-eslint/no-explicit-any': 'off', // 不限制使用any
@@ -31,18 +34,7 @@ export default tseslint.config(
 			'import/order': [
 				'error',
 				{
-					// 按照分组顺序进行排序
-					// builtin 内置模块【path，fs】
-					// external 外部模块【nanoid】
-					// internal 内部模块【相对路径的模块】
-					// parent 父级目录模块
-					// sibling 同级目录模块
-					// index 当前目录的模块
-					// object 使用ES6导入的模块
-					// type 导入的Type类型
-					// unknown 未知【alias被识别为unknown】
 					groups: ['builtin', 'external', 'unknown', ['internal', 'parent', 'sibling', 'index', 'object'], 'type'],
-					// 通过路径自定义分组
 					pathGroups: [
 						{
 							pattern: 'react*', // 对含react的包进行匹配

@@ -30,6 +30,7 @@ const VirtualScrollBar: FC<Props> = ({ width, height, className, scrollContentRe
 			const scrollHandle2 = () => {
 				if (typeof scrollContentRef.current?.scrollTop === 'number' && typeof vRef.current?.scrollTop === 'number') {
 					if (scrollContentRef.current.scrollTop !== vRef.current.scrollTop) {
+						// eslint-disable-next-line react-compiler/react-compiler
 						scrollContentRef.current.scrollTop = vRef.current.scrollTop;
 					}
 				}

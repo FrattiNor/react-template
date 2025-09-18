@@ -63,6 +63,7 @@ const useTableLogic = ({ tableDomRef, tableState, tableSecondaryState }: Props) 
 				const headScrollLeft = headRef.current?.scrollLeft;
 				if (typeof bodyScrollLeft === 'number' && typeof headScrollLeft === 'number' && bodyScrollLeft !== headScrollLeft) {
 					if (headRef.current) {
+						// eslint-disable-next-line react-compiler/react-compiler
 						headRef.current.scrollLeft = bodyScrollLeft;
 					}
 				}

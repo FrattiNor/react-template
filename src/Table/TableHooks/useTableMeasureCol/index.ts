@@ -18,12 +18,11 @@ const useTableMeasureCol = <T extends TableDataItem>({ tableProps, tableState }:
 
 	// body宽度变化、并且没有resize过
 	// 增加防抖
-	const bodyWidthChangeCallback = useCallback(
+	const bodyWidthChangeCallback = useCallback(() => {
 		debounce(() => {
 			setColMeasure({ measure: true, clear: true });
-		}, 500),
-		[],
-	);
+		}, 500);
+	}, []);
 	useLayoutEffect(() => {
 		if (bodyClientWidth > 0 && resized === false) {
 			bodyWidthChangeCallback();
