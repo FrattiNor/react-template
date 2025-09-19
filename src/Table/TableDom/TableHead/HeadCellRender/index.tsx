@@ -29,8 +29,8 @@ const HeadCellRender = (props: Props) => {
 			<div className={styles['head-cell-render']} style={alignStyle}>
 				<div className={cellIsStr ? styles['head-cell-render-str'] : styles['head-cell-render-block']}>{cellRenderValue}</div>
 			</div>
-			{haveFilter && <Filter tableRef={tableRef} />}
 			{haveSort && <Sort />}
+			{haveFilter && <Filter tableRef={tableRef} />}
 		</div>
 	);
 };

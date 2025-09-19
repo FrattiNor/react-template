@@ -42,41 +42,51 @@ const useTableResize = <T extends TableDataItem>({ tableProps, tableState }: Pro
 		if (resizeFlag) {
 			const mouseMove = (e: MouseEvent) => {
 				pauseEvent(e);
-				const nextSize: Record<string, number> = {};
-
-				const loop = (_totalSize: number, resizes: ResizeFlag['children']) => {
-					let totalSize = _totalSize;
-					const count = resizes.length;
-					const eachSize = totalSize / count;
-					const nextResizes: ResizeFlag['children'] = [];
-					resizes.forEach((item) => {
-						const { key, clientWidth } = item;
-						const oldSize = nextSize[key] ?? clientWidth;
-						const nextWidth = oldSize + eachSize;
-						if (nextWidth <= minColWidth) {
-							nextSize[key] = minColWidth;
-							totalSize -= minColWidth - oldSize;
-						} else if (nextWidth >= maxColWidth) {
-							nextSize[key] = maxColWidth;
-							totalSize -= maxColWidth - oldSize;
-						} else {
-							nextSize[key] = FixedTwo(nextWidth);
-							totalSize -= nextWidth - oldSize;
-							nextResizes.push(item);
-						}
-					});
-					if (totalSize !== 0 && nextResizes.length > 0) {
-						loop(totalSize, nextResizes);
+				// 修改后的size对象
+				const nextSizeObj: Record<string, number> = {};
+				// 移动列的数量
+				const count = resizeFlag.children.length;
+				// 整体移动距离【一定是整数】
+				const moveX = e.pageX - resizeFlag.pageX;
+				// 剩余移动距离
+				let remainingMoveX = moveX % count;
+				// 每列移动距离
+				const eachMoveX = (moveX - remainingMoveX) / count;
+				// 遍历需要移动的列
+				resizeFlag.children.forEach(({ clientWidth, key }, index) => {
+					// 当前列移动距离
+					let currentMoveX = eachMoveX;
+					// 从剩余移动距离中获取的移动距离
+					const _addMoveX = remainingMoveX / (count - index);
+					const addMoveX = _addMoveX >= 0 ? Math.ceil(_addMoveX) : Math.floor(_addMoveX);
+					currentMoveX = currentMoveX + addMoveX;
+					remainingMoveX = remainingMoveX - addMoveX;
+					// 移动后的宽度
+					const afterMoveWidth = clientWidth + currentMoveX;
+					// 判定宽度小于最小宽度
+					if (afterMoveWidth < minColWidth) {
+						nextSizeObj[key] = minColWidth;
+						remainingMoveX = remainingMoveX + Math.round(afterMoveWidth - minColWidth);
+						return currentMoveX - Math.round(afterMoveWidth - minColWidth);
 					}
-				};
-
-				loop(e.pageX - resizeFlag.pageX, resizeFlag.children);
-
+					// 判断宽度大于最大宽度
+					else if (afterMoveWidth > maxColWidth) {
+						nextSizeObj[key] = maxColWidth;
+						remainingMoveX = remainingMoveX + Math.round(afterMoveWidth - maxColWidth);
+						return currentMoveX - Math.round(afterMoveWidth - maxColWidth);
+					}
+					// 判断宽度在合理范围
+					else {
+						nextSizeObj[key] = FixedTwo(afterMoveWidth);
+						return currentMoveX;
+					}
+				});
+				// 更新宽度
 				startTransition(() => {
 					setResized(true);
 					setColumnSizes((old) => ({
 						...old,
-						...nextSize,
+						...nextSizeObj,
 					}));
 				});
 			};
