@@ -2,20 +2,23 @@ import { memo, type CSSProperties } from 'react';
 
 import Filter from './Filter';
 import styles from './index.module.less';
-import propsAreEqual, { getProps } from './propsAreEqual';
+import propsAreEqual, { getInstanceProps, getProps } from './propsAreEqual';
 import Sort from './Sort';
 import { getCellTitle } from '../../../TableUtils';
 
+import type { TableDataItem } from '../../../TableTypes/type';
 import type { InnerColumn, InnerColumnGroup } from '../../../TableTypes/typeColumn';
+import type { TableInstance } from '../../../TableTypes/typeHooks';
 
-export type Props = {
-	column: InnerColumn<any> | InnerColumnGroup<any>;
+export type Props<T extends TableDataItem> = {
+	instance: TableInstance<T>;
 	align?: 'left' | 'right' | 'center';
-	tableRef: React.RefObject<HTMLDivElement | null>;
+	column: InnerColumn<any> | InnerColumnGroup<any>;
 };
 
-const HeadCellRender = (props: Props) => {
-	const { column, align, tableRef } = getProps(props);
+const HeadCellRender = <T extends TableDataItem>(props: Props<T>) => {
+	const { column, align } = getProps(props);
+	const { tableRef, filterOpenKey, setFilterOpenKey } = getInstanceProps(props);
 
 	const haveSort = !!column.sort;
 	const haveFilter = !!column.filter;
@@ -30,7 +33,7 @@ const HeadCellRender = (props: Props) => {
 				<div className={cellIsStr ? styles['head-cell-render-str'] : styles['head-cell-render-block']}>{cellRenderValue}</div>
 			</div>
 			{haveSort && <Sort />}
-			{haveFilter && <Filter tableRef={tableRef} />}
+			{haveFilter && <Filter tableRef={tableRef} column={column} filterOpenKey={filterOpenKey} setFilterOpenKey={setFilterOpenKey} />}
 		</div>
 	);
 };

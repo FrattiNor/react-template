@@ -47,7 +47,7 @@ const HeadCell = <T extends TableDataItem>(props: Props<T>) => {
 				...stickyStyle,
 			}}
 		>
-			<HeadCellRender column={column} tableRef={props.instance.tableDomRef.tableRef} />
+			<HeadCellRender column={column} instance={props.instance} />
 			<ResizeHandle colKey={column.key} colIndexs={colIndexs} instance={props.instance} />
 		</div>
 	);

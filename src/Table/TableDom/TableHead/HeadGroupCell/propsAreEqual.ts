@@ -1,4 +1,5 @@
 import { getPropsAreEqual } from '../../../TableUtils';
+import { getTotalInstanceProps as HeadCellRender_getInstanceProps } from '../HeadCellRender/propsAreEqual';
 import { getTotalInstanceProps as ResizeHandle_getInstanceProps } from '../ResizeHandle/propsAreEqual';
 
 import type { Props } from './index';
@@ -29,6 +30,7 @@ export const getTotalInstanceProps = <T extends TableDataItem>({ instance }: Rea
 	return {
 		...getInstanceProps({ instance }),
 		...ResizeHandle_getInstanceProps({ instance }),
+		...HeadCellRender_getInstanceProps({ instance }),
 	};
 };
 

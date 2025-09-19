@@ -1,6 +1,6 @@
 import { useMemo, useState, type FC } from 'react';
 
-import List from './List';
+import List from '../List';
 
 const AppList: FC = () => {
 	const [gap, setGap] = useState(0);

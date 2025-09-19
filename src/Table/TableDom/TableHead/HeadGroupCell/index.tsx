@@ -46,7 +46,7 @@ const HeadGroupCell = <T extends TableDataItem>(props: Props<T>) => {
 				...stickyStyle,
 			}}
 		>
-			<HeadCellRender column={column} align="center" tableRef={props.instance.tableDomRef.tableRef} />
+			<HeadCellRender column={column} align="center" instance={props.instance} />
 			<ResizeHandle colKey={column.key} colIndexs={colIndexs} instance={props.instance} />
 		</div>
 	);

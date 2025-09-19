@@ -27,6 +27,8 @@ const useTableState = () => {
 	const [resized, setResized] = useState<boolean>(false);
 	// 是否需要测量宽度
 	const [colMeasure, setColMeasure] = useState<{ measure: boolean; clear: boolean }>({ measure: true, clear: true });
+	// 筛选弹窗openKey
+	const [filterOpenKey, setFilterOpenKey] = useState<string | undefined>(undefined);
 
 	// 拖拽时的keys
 	const resizeKeysObj = useMemo(() => {
@@ -68,6 +70,8 @@ const useTableState = () => {
 		setColMeasure,
 		bodyClientWidth,
 		setBodyClientWidth,
+		filterOpenKey,
+		setFilterOpenKey,
 	};
 };
 

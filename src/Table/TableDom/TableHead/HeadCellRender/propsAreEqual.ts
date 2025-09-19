@@ -1,11 +1,26 @@
 import { getPropsAreEqual } from '../../../TableUtils';
 
 import type { Props } from './index';
+import type { TableDataItem } from '../../../TableTypes/type';
+import type { TableInstance } from '../../../TableTypes/typeHooks';
 
-export const getProps = ({ column, align, tableRef }: Readonly<Props>) => {
-	return { column, align, tableRef };
+export const getProps = <T extends TableDataItem>({ column, align }: Readonly<Props<T>>) => {
+	return { column, align };
 };
 
-const propsAreEqual = getPropsAreEqual({ getProps });
+export const getInstanceProps = <T extends TableDataItem>({ instance }: Readonly<{ instance: Readonly<TableInstance<T>> }>) => {
+	const { tableRef } = instance.tableDomRef;
+	const { filterOpenKey, setFilterOpenKey } = instance.tableState;
+
+	return {
+		tableRef,
+		filterOpenKey,
+		setFilterOpenKey,
+	};
+};
+
+export const getTotalInstanceProps = getInstanceProps;
+
+const propsAreEqual = getPropsAreEqual({ getProps, getTotalInstanceProps });
 
 export default propsAreEqual;

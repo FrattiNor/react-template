@@ -35,22 +35,9 @@ const createRandomUser = () => ({
 	jobType: faker.person.jobType(),
 });
 
-export const data_empty = [];
-
-export const data1 = faker.helpers.multiple(createRandomUser, {
-	count: 5,
-});
-
-export const data2 = faker.helpers.multiple(createRandomUser, {
-	count: 100,
-});
-
-export const data3 = faker.helpers.multiple(createRandomUser, {
-	count: 1000,
-});
-
-export const data4 = faker.helpers.multiple(createRandomUser, {
-	count: 10000,
-});
+export const getData = (count: number) =>
+	faker.helpers.multiple(createRandomUser, {
+		count,
+	});
 
 export type DataItem = ReturnType<typeof createRandomUser>;

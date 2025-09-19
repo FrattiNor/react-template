@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react';
 
-import type { TableDataItem } from './type';
+import type { TableDataItem, TableFilter } from './type';
 
 // onCell 的 colSpan 和 fixed 存在冲突
 export type TableColumn<T extends TableDataItem> = {
@@ -33,12 +33,7 @@ export type TableColumn<T extends TableDataItem> = {
 		title?: string;
 	};
 	// TODO 列筛选
-	filter?: {
-		// 已筛选，对应icon高亮
-		filtered: boolean;
-		// 列高亮关键字
-		highlightKeywords?: string[];
-	};
+	filter?: TableFilter;
 	// TODO 列排序
 	sort?: {
 		// 已排序，对应icon高亮

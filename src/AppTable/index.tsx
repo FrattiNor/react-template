@@ -1,16 +1,29 @@
-import { useMemo, useState, type FC } from 'react';
+import { useEffect, useMemo, useRef, useState, type FC } from 'react';
 
-import { data_empty, data1, data2, data3, data4 } from './AppTable.data';
-import styles from './AppTable.module.less';
-import Table from './Table';
-import useAppTableColumns from './useAppTable.columns';
+import { getData } from './data';
+import styles from './index.module.less';
+import Table from '../Table';
+import useColumns from './useColumns';
 
 const AppTable: FC = () => {
+	const timeoutRef = useRef<ReturnType<typeof setInterval> | null>(null);
+
 	const [keyword, setKeyword] = useState('');
 
 	const [keywordColIndex, setKeywordColIndex] = useState('');
 
-	const [data, setData] = useState<typeof data1>(() => data4);
+	const [data, setData] = useState<ReturnType<typeof getData>>(() => getData(10000));
+
+	useEffect(() => {
+		timeoutRef.current = setInterval(() => {
+			const count = data.length;
+			setData(getData(count));
+			console.log(`refresh data(${count})`);
+		}, 5000);
+		return () => {
+			if (timeoutRef.current) clearInterval(timeoutRef.current);
+		};
+	}, [data]);
 
 	const colIndex = useMemo(() => {
 		if (keywordColIndex === '') return undefined;
@@ -19,7 +32,7 @@ const AppTable: FC = () => {
 		return num;
 	}, [keywordColIndex]);
 
-	const { columns, setLongColumns } = useAppTableColumns({ colIndex, keyword });
+	const { columns, setLongColumns } = useColumns({ colIndex, keyword });
 
 	const globalHighlightKeywords = useMemo(() => {
 		if (colIndex !== undefined) return undefined;
@@ -45,15 +58,15 @@ const AppTable: FC = () => {
 				<input className={styles['input']} value={keyword} onChange={(e) => setKeyword(e.target.value)} />
 			</div>
 			<div style={{ display: 'flex', gap: 16, alignItems: 'center' }}>
-				<button className={styles['btn']} onClick={() => setLongColumns(false)}>{`columns(less)`}</button>
-				<button className={styles['btn']} onClick={() => setLongColumns(true)}>{`columns(lot)`}</button>
+				<button className={styles['btn']} onClick={() => setLongColumns(false)}>{`columns(4)`}</button>
+				<button className={styles['btn']} onClick={() => setLongColumns(true)}>{`columns(17)`}</button>
 			</div>
 			<div style={{ display: 'flex', gap: 16, alignItems: 'center' }}>
-				<button className={styles['btn']} onClick={() => setData(data_empty)}>{`data(empty)`}</button>
-				<button className={styles['btn']} onClick={() => setData(data1)}>{`data(level1)`}</button>
-				<button className={styles['btn']} onClick={() => setData(data2)}>{`data(level2)`}</button>
-				<button className={styles['btn']} onClick={() => setData(data3)}>{`data(level3)`}</button>
-				<button className={styles['btn']} onClick={() => setData(data4)}>{`data(level4)`}</button>
+				<button className={styles['btn']} onClick={() => setData(getData(0))}>{`data(0)`}</button>
+				<button className={styles['btn']} onClick={() => setData(getData(5))}>{`data(5)`}</button>
+				<button className={styles['btn']} onClick={() => setData(getData(100))}>{`data(100)`}</button>
+				<button className={styles['btn']} onClick={() => setData(getData(1000))}>{`data(1000)`}</button>
+				<button className={styles['btn']} onClick={() => setData(getData(10000))}>{`data(10000)`}</button>
 			</div>
 			<div style={{ width: '80vw', maxHeight: 500, flexShrink: 0, padding: 8 }}>
 				<Table

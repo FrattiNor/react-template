@@ -17,8 +17,16 @@ type Props = {
 const useTableObserver = ({ tableDomRef, tableState, tableSecondaryState }: Props) => {
 	const { bodyRef, headRef } = tableDomRef;
 	const { fixedLeftObj, fixedRightObj } = tableSecondaryState;
-	const { colMeasure, resizeFlag, setLeftPingedIndex, setRightPingedIndex, setV_ScrollbarWidth, setH_ScrollbarWidth, setBodyClientWidth } =
-		tableState;
+	const {
+		colMeasure,
+		resizeFlag,
+		setLeftPingedIndex,
+		setRightPingedIndex,
+		setV_ScrollbarWidth,
+		setH_ScrollbarWidth,
+		setBodyClientWidth,
+		setFilterOpenKey,
+	} = tableState;
 
 	// 计算固定的index
 	const calcPingedIndex = useCallback(() => {
@@ -67,6 +75,9 @@ const useTableObserver = ({ tableDomRef, tableState, tableSecondaryState }: Prop
 					if (headRef.current) {
 						// eslint-disable-next-line react-compiler/react-compiler
 						headRef.current.scrollLeft = bodyScrollLeft;
+						startTransition(() => {
+							setFilterOpenKey(undefined);
+						});
 					}
 				}
 			};
