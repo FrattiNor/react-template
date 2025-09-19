@@ -19,16 +19,19 @@ const LoadingDiv: FC<Props> = (props) => {
 	return createElement(component, {
 		...divProps,
 		ref: wrapperRef,
-		className: classNames(styles['loading-div'], className, { [styles['loading']]: loading === true }),
+		className: classNames(styles['loading-div'], className),
 		children: (
 			<Fragment>
 				{children}
 				{loading === true && (
-					<div className={styles['loading-wrapper']}>
-						<div className={styles['dot-position']}>
-							<Dot />
+					<Fragment>
+						<div className={styles['loading-mask']} />
+						<div className={styles['loading-wrapper']}>
+							<div className={styles['dot-position']}>
+								<Dot />
+							</div>
 						</div>
-					</div>
+					</Fragment>
 				)}
 			</Fragment>
 		),

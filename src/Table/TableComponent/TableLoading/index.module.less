@@ -1,17 +1,15 @@
 .loading-div {
 	position: relative;
 
-	&.loading {
-		cursor: initial;
-		user-select: none;
-	}
-
-	&.loading > * {
-		opacity: 0.7 !important;
-	}
-
-	&.loading > .loading-wrapper {
-		opacity: 1 !important;
+	.loading-mask {
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		z-index: 999;
+		position: absolute;
+		opacity: 0.4;
+		background-color: var(--table-bg);
 	}
 
 	.loading-wrapper {
@@ -19,7 +17,7 @@
 		left: 0;
 		right: 0;
 		bottom: 0;
-		z-index: 999;
+		z-index: 1000;
 		position: absolute;
 
 		.dot-position {
