@@ -1,4 +1,4 @@
-import type { FC } from 'react';
+import type { ReactNode } from 'react';
 
 import type { TableColumns } from './typeColumn';
 
@@ -17,8 +17,8 @@ export type TableFilter = {
 	filtered: boolean;
 	// 列高亮关键字
 	highlightKeywords?: string[];
-	// 筛选组件
-	FilterComponent: FC<{ close: () => void }>;
+	// 渲染筛选组件
+	renderFilter: ({ close }: { close: () => void }) => ReactNode;
 };
 
 export type TableProps<T extends TableDataItem> = {

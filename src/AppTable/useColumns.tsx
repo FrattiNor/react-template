@@ -1,48 +1,28 @@
-/* eslint-disable react-refresh/only-export-components */
-import { useEffect, useMemo, useState, type FC } from 'react';
+import { useCallback, useState } from 'react';
 
-import { TableFilterTemplate } from '../Table/TableComponent';
+import { useAppTableContext } from './AppTableContext';
+import FilterComponent from './FilterComponent';
 
-import type { DataItem } from './data';
+import type { DataItem } from './useData';
 import type { TableFilter } from '../Table/TableTypes/type';
 import type { TableColumns } from '../Table/TableTypes/typeColumn';
 
-const FilterComponent: FC<{ close: () => void }> = ({ close }) => {
-	useEffect(() => {
-		console.log('FilterComponent');
-	}, []);
-	return (
-		<TableFilterTemplate
-			onReset={() => {
-				console.log('onReset');
-				close();
-			}}
-			onSubmit={() => {
-				console.log('onSubmit');
-				close();
-			}}
-		>
-			<div style={{ width: 200, height: 300 }}>FilterComponent</div>
-		</TableFilterTemplate>
-	);
-};
+const useAppTableColumns = () => {
+	const { params } = useAppTableContext();
 
-const useAppTableColumns = ({ colIndex, keyword }: { colIndex: number | undefined; keyword: string }) => {
 	const [longColumns, setLongColumns] = useState(true);
-	const highlightKeywords = useMemo(() => [keyword], [keyword]);
-	const getHighlightKeywords = (index: number) => {
-		if (index === colIndex) return highlightKeywords;
-		return undefined;
-	};
 
-	const createFilter = (index: number) => {
-		const filter: TableFilter = {
-			filtered: true,
-			FilterComponent: FilterComponent,
-			highlightKeywords: getHighlightKeywords(index),
-		};
-		return filter;
-	};
+	const getFilter = useCallback(
+		(colKey: string) => {
+			const filter: TableFilter = {
+				filtered: !!params[colKey],
+				highlightKeywords: [params[colKey]],
+				renderFilter: ({ close }) => <FilterComponent close={close} name={colKey} />,
+			};
+			return filter;
+		},
+		[params],
+	);
 
 	const columns = (() => {
 		if (longColumns) {
@@ -56,7 +36,7 @@ const useAppTableColumns = ({ colIndex, keyword }: { colIndex: number | undefine
 					onCell: (_, index) => ({
 						rowSpan: index % 2 === 0 ? 2 : 0,
 					}),
-					filter: createFilter(0),
+					filter: getFilter,
 				},
 				{
 					key: 'nameGroup',
@@ -79,14 +59,14 @@ const useAppTableColumns = ({ colIndex, keyword }: { colIndex: number | undefine
 									{firstName}
 								</div>
 							),
-							filter: createFilter(1),
+							filter: getFilter,
 						},
 						{
 							key: 'lastName',
 							title: <span>{'lastName_1'}</span>,
 							render: ({ lastName }, { renderHighlightText }) => <span>{renderHighlightText(lastName)}</span>,
 							width: 300,
-							filter: createFilter(2),
+							filter: getFilter,
 							onCell: ({ lastName }) => ({ title: lastName }),
 						},
 					],
@@ -99,7 +79,7 @@ const useAppTableColumns = ({ colIndex, keyword }: { colIndex: number | undefine
 					onCell: () => ({
 						colSpan: 2,
 					}),
-					filter: createFilter(3),
+					filter: getFilter,
 				},
 				{
 					key: 'avatar',
@@ -109,7 +89,7 @@ const useAppTableColumns = ({ colIndex, keyword }: { colIndex: number | undefine
 					onCell: () => ({
 						colSpan: 0,
 					}),
-					filter: createFilter(4),
+					filter: getFilter,
 				},
 				{
 					key: '123',
@@ -124,14 +104,14 @@ const useAppTableColumns = ({ colIndex, keyword }: { colIndex: number | undefine
 									title: '密码_5',
 									render: ({ password }) => password,
 									width: 50,
-									filter: createFilter(5),
+									filter: getFilter,
 								},
 								{
 									key: 'birthdate',
 									title: '生日_6',
 									render: ({ birthdate }) => birthdate.toString(),
 									width: 200,
-									filter: createFilter(6),
+									filter: getFilter,
 								},
 							],
 						},
@@ -140,7 +120,7 @@ const useAppTableColumns = ({ colIndex, keyword }: { colIndex: number | undefine
 							title: '注册时间_7',
 							render: ({ registeredAt }) => registeredAt.toString(),
 							width: 300,
-							filter: createFilter(7),
+							filter: getFilter,
 						},
 					],
 				},
@@ -149,42 +129,42 @@ const useAppTableColumns = ({ colIndex, keyword }: { colIndex: number | undefine
 					title: '年龄_8',
 					render: ({ age }) => age,
 					width: 300,
-					filter: createFilter(8),
+					filter: getFilter,
 				},
 				{
 					key: 'gender',
 					title: '性别_9',
 					render: ({ gender }) => gender,
 					width: 300,
-					filter: createFilter(9),
+					filter: getFilter,
 				},
 				{
 					key: 'height',
 					title: '身高_10',
 					render: ({ height }) => height,
 					width: 300,
-					filter: createFilter(10),
+					filter: getFilter,
 				},
 				{
 					key: 'weight',
 					title: '体重_11',
 					render: ({ weight }) => weight,
 					width: 300,
-					filter: createFilter(11),
+					filter: getFilter,
 				},
 				{
 					key: 'phoneNumber',
 					title: '电话号码_12',
 					render: ({ phoneNumber }) => phoneNumber,
 					width: 300,
-					filter: createFilter(12),
+					filter: getFilter,
 				},
 				{
 					key: 'jobArea',
 					title: '工作地点_13',
 					render: ({ jobArea }) => jobArea,
 					width: 300,
-					filter: createFilter(13),
+					filter: getFilter,
 					sort: {
 						sorted: 'ascend',
 						sortDirections: ['ascend', 'descend'],
@@ -195,7 +175,7 @@ const useAppTableColumns = ({ colIndex, keyword }: { colIndex: number | undefine
 					title: '工作头衔_14',
 					render: ({ jobTitle }) => jobTitle,
 					width: 300,
-					filter: createFilter(14),
+					filter: getFilter,
 				},
 				{
 					key: 'nameGroup22',
@@ -222,7 +202,7 @@ const useAppTableColumns = ({ colIndex, keyword }: { colIndex: number | undefine
 								sorted: 'ascend',
 								sortDirections: ['ascend', 'descend'],
 							},
-							filter: createFilter(15),
+							filter: getFilter,
 						},
 						{
 							key: 'lastName22',
@@ -233,7 +213,7 @@ const useAppTableColumns = ({ colIndex, keyword }: { colIndex: number | undefine
 								sorted: 'ascend',
 								sortDirections: ['ascend', 'descend'],
 							},
-							filter: createFilter(16),
+							filter: getFilter,
 						},
 					],
 				},
@@ -247,7 +227,7 @@ const useAppTableColumns = ({ colIndex, keyword }: { colIndex: number | undefine
 						sorted: 'ascend',
 						sortDirections: ['ascend', 'descend'],
 					},
-					filter: createFilter(17),
+					filter: getFilter,
 				},
 			];
 
@@ -260,7 +240,7 @@ const useAppTableColumns = ({ colIndex, keyword }: { colIndex: number | undefine
 				title: <span>{'lastName_1'}</span>,
 				render: ({ lastName }) => <span>{lastName}</span>,
 				width: 300,
-				filter: createFilter(0),
+				filter: getFilter,
 			},
 			{
 				key: 'userId',
@@ -270,7 +250,7 @@ const useAppTableColumns = ({ colIndex, keyword }: { colIndex: number | undefine
 				onCell: (_, index) => ({
 					rowSpan: index % 2 === 0 ? 2 : 0,
 				}),
-				filter: createFilter(1),
+				filter: getFilter,
 			},
 			{
 				key: 'email',
@@ -280,14 +260,14 @@ const useAppTableColumns = ({ colIndex, keyword }: { colIndex: number | undefine
 				onCell: () => ({
 					colSpan: 2,
 				}),
-				filter: createFilter(2),
+				filter: getFilter,
 			},
 			{
 				key: 'avatar',
 				title: '头像_4',
 				render: ({ avatar }) => avatar,
 				width: 300,
-				filter: createFilter(3),
+				filter: getFilter,
 			},
 		];
 

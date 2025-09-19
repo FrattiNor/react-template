@@ -3,6 +3,7 @@ import classNames from 'classnames';
 import styles from './index.module.less';
 import TableBody from './TableBody';
 import TableHead from './TableHead';
+import TableLoading from '../TableComponent/TableLoading';
 
 import type { TableDataItem } from '../TableTypes/type';
 import type { TableInstance } from '../TableTypes/typeHooks';
@@ -12,13 +13,14 @@ type Props<T extends TableDataItem> = {
 };
 
 const TableDom = <T extends TableDataItem>({ instance }: Props<T>) => {
-	const { bordered } = instance.tableProps;
 	const { tableRef } = instance.tableDomRef;
+	const { bordered, loading } = instance.tableProps;
 	const { V_ScrollbarWidth, H_ScrollbarWidth } = instance.tableState;
 
 	return (
-		<div
-			ref={tableRef}
+		<TableLoading
+			loading={loading}
+			wrapperRef={tableRef}
 			className={classNames(styles['table'], {
 				[styles['bordered']]: bordered,
 				[styles['have-scroll-v']]: V_ScrollbarWidth > 0,
@@ -29,7 +31,7 @@ const TableDom = <T extends TableDataItem>({ instance }: Props<T>) => {
 		>
 			<TableHead instance={instance} />
 			<TableBody instance={instance} />
-		</div>
+		</TableLoading>
 	);
 };
 

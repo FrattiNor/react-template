@@ -1,79 +1,43 @@
-import { useEffect, useMemo, useRef, useState, type FC } from 'react';
+import { type FC } from 'react';
 
-import { getData } from './data';
 import styles from './index.module.less';
 import Table from '../Table';
+import { AppTableContext, useProvider } from './AppTableContext';
 import useColumns from './useColumns';
+import useData from './useData';
+import useKeyword from './useKeyword';
 
 const AppTable: FC = () => {
-	const timeoutRef = useRef<ReturnType<typeof setInterval> | null>(null);
+	const { data, loading, fetchData } = useData();
 
-	const [keyword, setKeyword] = useState('');
+	const { globalHighlightKeywords, keyword, setKeyword } = useKeyword();
 
-	const [keywordColIndex, setKeywordColIndex] = useState('');
-
-	const [data, setData] = useState<ReturnType<typeof getData>>(() => getData(10000));
-
-	useEffect(() => {
-		timeoutRef.current = setInterval(() => {
-			const count = data.length;
-			setData(getData(count));
-			console.log(`refresh data(${count})`);
-		}, 5000);
-		return () => {
-			if (timeoutRef.current) clearInterval(timeoutRef.current);
-		};
-	}, [data]);
-
-	const colIndex = useMemo(() => {
-		if (keywordColIndex === '') return undefined;
-		const num = Number(keywordColIndex);
-		if (isNaN(num)) return undefined;
-		return num;
-	}, [keywordColIndex]);
-
-	const { columns, setLongColumns } = useColumns({ colIndex, keyword });
-
-	const globalHighlightKeywords = useMemo(() => {
-		if (colIndex !== undefined) return undefined;
-		return [keyword];
-	}, [colIndex, keyword]);
+	const { columns, setLongColumns } = useColumns();
 
 	return (
-		<div
-			style={{
-				gap: 16,
-				width: '100vw',
-				height: '100vh',
-				display: 'flex',
-				alignItems: 'center',
-				flexDirection: 'column',
-				justifyContent: 'center',
-			}}
-		>
-			<div style={{ display: 'flex', gap: 16, alignItems: 'center' }}>
-				<span>{'colIndex:'}</span>
-				<input className={styles['input']} value={keywordColIndex} onChange={(e) => setKeywordColIndex(e.target.value)} />
+		<div className={styles['wrapper']}>
+			<div className={styles['flex-container']}>
 				<span>{'keyword:'}</span>
 				<input className={styles['input']} value={keyword} onChange={(e) => setKeyword(e.target.value)} />
 			</div>
-			<div style={{ display: 'flex', gap: 16, alignItems: 'center' }}>
+			<div className={styles['flex-container']}>
 				<button className={styles['btn']} onClick={() => setLongColumns(false)}>{`columns(4)`}</button>
 				<button className={styles['btn']} onClick={() => setLongColumns(true)}>{`columns(17)`}</button>
 			</div>
-			<div style={{ display: 'flex', gap: 16, alignItems: 'center' }}>
-				<button className={styles['btn']} onClick={() => setData(getData(0))}>{`data(0)`}</button>
-				<button className={styles['btn']} onClick={() => setData(getData(5))}>{`data(5)`}</button>
-				<button className={styles['btn']} onClick={() => setData(getData(100))}>{`data(100)`}</button>
-				<button className={styles['btn']} onClick={() => setData(getData(1000))}>{`data(1000)`}</button>
-				<button className={styles['btn']} onClick={() => setData(getData(10000))}>{`data(10000)`}</button>
+			<div className={styles['flex-container']}>
+				<button className={styles['btn']} onClick={() => fetchData(0)}>{`data(0)`}</button>
+				<button className={styles['btn']} onClick={() => fetchData(5)}>{`data(5)`}</button>
+				<button className={styles['btn']} onClick={() => fetchData(100)}>{`data(100)`}</button>
+				<button className={styles['btn']} onClick={() => fetchData(1000)}>{`data(1000)`}</button>
+				<button className={styles['btn']} onClick={() => fetchData(10000)}>{`data(10000)`}</button>
 			</div>
-			<div style={{ width: '80vw', maxHeight: 500, flexShrink: 0, padding: 8 }}>
+			<div className={styles['table-wrapper']}>
 				<Table
 					bordered
 					data={data}
 					rowKey="userId"
 					columns={columns}
+					loading={loading}
 					highlightKeywords={globalHighlightKeywords}
 					highlightConfig={{ trim: true, caseSensitive: true, autoEscape: true }}
 				/>
@@ -82,4 +46,13 @@ const AppTable: FC = () => {
 	);
 };
 
-export default AppTable;
+const Wrapper: FC = () => {
+	const value = useProvider();
+	return (
+		<AppTableContext value={value}>
+			<AppTable />
+		</AppTableContext>
+	);
+};
+
+export default Wrapper;

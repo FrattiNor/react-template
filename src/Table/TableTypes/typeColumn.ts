@@ -33,7 +33,7 @@ export type TableColumn<T extends TableDataItem> = {
 		title?: string;
 	};
 	// TODO 列筛选
-	filter?: TableFilter;
+	filter?: (colKey: string) => TableFilter;
 	// TODO 列排序
 	sort?: {
 		// 已排序，对应icon高亮

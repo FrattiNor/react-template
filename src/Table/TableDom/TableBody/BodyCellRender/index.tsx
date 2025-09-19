@@ -23,7 +23,8 @@ const BodyCellRender = <T extends TableDataItem>(props: Props<T>) => {
 
 	const rowData = data[rowIndex];
 	const column = columnsFlat[colIndex];
-	const columnHighlightKeywords = useMemo(() => column.filter?.highlightKeywords, [JSON.stringify(column.filter?.highlightKeywords)]);
+	const columnFilter = column.filter ? column.filter(column.key) : undefined;
+	const columnHighlightKeywords = useMemo(() => columnFilter?.highlightKeywords, [JSON.stringify(columnFilter?.highlightKeywords)]);
 	const renderHighlightText = (text: string) => (
 		<HighlightText columnHighlightKeywords={columnHighlightKeywords} instance={props.instance}>
 			{text}

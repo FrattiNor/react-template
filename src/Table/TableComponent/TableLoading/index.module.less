@@ -1,0 +1,34 @@
+.loading-div {
+	position: relative;
+
+	&.loading {
+		cursor: initial;
+		user-select: none;
+	}
+
+	&.loading > * {
+		opacity: 0.7 !important;
+	}
+
+	&.loading > .loading-wrapper {
+		opacity: 1 !important;
+	}
+
+	.loading-wrapper {
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		z-index: 999;
+		position: absolute;
+
+		.dot-position {
+			top: 50%;
+			left: 50%;
+			z-index: 2;
+			position: absolute;
+			transform-origin: 50% 50%;
+			transform: translate(-50%, -50%);
+		}
+	}
+}

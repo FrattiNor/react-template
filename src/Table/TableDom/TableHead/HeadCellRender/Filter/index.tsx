@@ -18,9 +18,12 @@ export type Props = {
 
 const Filter: FC<Props> = (props) => {
 	const { tableRef, column, filterOpenKey, setFilterOpenKey } = getProps(props);
-	const filtered = column.filter?.filtered;
-	const open = filterOpenKey === column.key;
-	const FilterComponent = column.filter?.FilterComponent;
+	const colKey = column.key;
+	const open = filterOpenKey === colKey;
+	const columnFilter = column.filter ? column.filter(colKey) : undefined;
+	const filtered = columnFilter?.filtered;
+	const close = () => setFilterOpenKey(undefined);
+	const renderFilter = columnFilter?.renderFilter;
 
 	return (
 		<Dropdown
@@ -29,10 +32,12 @@ const Filter: FC<Props> = (props) => {
 			trigger={['click']}
 			placement="bottomRight"
 			getPopupContainer={() => tableRef.current ?? document.body}
+			popupRender={() => renderFilter && renderFilter({ close })}
 			onOpenChange={(o) => setFilterOpenKey(o === true ? column.key : undefined)}
-			popupRender={() => (FilterComponent ? <FilterComponent close={() => setFilterOpenKey(undefined)} /> : <div />)}
 		>
-			<div className={classNames(styles['filter'], { [styles['filtered']]: filtered === true })}>{filterIcon}</div>
+			<div className={classNames(styles['filter'], { [styles['open']]: open === true, [styles['filtered']]: filtered === true })}>
+				{filterIcon}
+			</div>
 		</Dropdown>
 	);
 };
