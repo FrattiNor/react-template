@@ -10,9 +10,9 @@ export const getProps = <T extends TableDataItem>({ onCellTitle, rowIndex, colIn
 };
 
 export const getInstanceProps = <T extends TableDataItem>({ instance }: Readonly<{ instance: Readonly<TableInstance<T>> }>) => {
-	const { data } = instance.tableProps;
+	const { datasource } = instance.tableData;
 	const { columnsFlat } = instance.tableColumn;
-	return { columnsFlat, data };
+	return { columnsFlat, datasource };
 };
 
 export const getTotalInstanceProps = <T extends TableDataItem>({ instance }: Readonly<{ instance: Readonly<TableInstance<T>> }>) => {

@@ -16,9 +16,9 @@ export type Props<T extends TableDataItem> = {
 
 const BodyRow = <T extends TableDataItem>(props: Props<T>) => {
 	const { rowIndex } = getProps(props);
-	const { getRowKey, columnsFlat, data } = getInstanceProps(props);
+	const { getRowKey, columnsFlat, datasource } = getInstanceProps(props);
 
-	const rowData = data[rowIndex];
+	const rowData = datasource[rowIndex];
 	const rowKey = getRowKey(rowData, rowIndex);
 
 	return (

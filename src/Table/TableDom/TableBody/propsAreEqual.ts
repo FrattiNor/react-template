@@ -7,13 +7,13 @@ import type { TableDataItem } from '../../TableTypes/type';
 import type { TableInstance } from '../../TableTypes/typeHooks';
 
 export const getInstanceProps = <T extends TableDataItem>({ instance }: Readonly<{ instance: Readonly<TableInstance<T>> }>) => {
-	const { data } = instance.tableProps;
+	const { datasource } = instance.tableData;
 	const { bodyRef } = instance.tableDomRef;
 	const { colMeasure } = instance.tableState;
 	const { getRowIndexs, getRowKey } = instance.tableTools;
 	const { VV_WrapperStyle, getRowShow } = instance.tableVirtual;
 	const { gridTemplateColumnsArr } = instance.tableSecondaryState;
-	return { data, bodyRef, colMeasure, getRowIndexs, getRowKey, VV_WrapperStyle, getRowShow, gridTemplateColumnsArr };
+	return { datasource, bodyRef, colMeasure, getRowIndexs, getRowKey, VV_WrapperStyle, getRowShow, gridTemplateColumnsArr };
 };
 
 export const getTotalInstanceProps = <T extends TableDataItem>({ instance }: Readonly<{ instance: Readonly<TableInstance<T>> }>) => {

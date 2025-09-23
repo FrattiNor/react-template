@@ -1,5 +1,6 @@
 import useTableCellBg from '../useTableCellBg';
 import useTableColumn from '../useTableColumn';
+import useTableData from '../useTableData';
 import useTableDomRef from '../useTableDomRef';
 import useTableMeasureCol from '../useTableMeasureCol';
 import useTableObserver from '../useTableObserver';
@@ -25,6 +26,8 @@ const useTableInstance = <T extends TableDataItem>(props: TableProps<T>) => {
 	const tableColumn = useTableColumn({ tableProps });
 	// 工具
 	const tableTools = useTableTools({ tableProps, tableColumn });
+	// data
+	const tableData = useTableData({ tableProps, tableTools });
 	// cell bg
 	const tableCellBg = useTableCellBg({ tableState });
 	// measure
@@ -42,9 +45,10 @@ const useTableInstance = <T extends TableDataItem>(props: TableProps<T>) => {
 
 	// res
 	return {
+		tableProps: tableProps as Omit<ReturnType<typeof useTableProps<T>>, 'columns' | 'data'>,
+		tableData,
 		tableColumn,
 		tableResize,
-		tableProps,
 		tableDomRef,
 		tableState,
 		tableSecondaryState,

@@ -13,15 +13,16 @@ export const getInstanceProps = <T extends TableDataItem>({ instance }: Readonly
 	const { getRowKeys } = instance.tableTools;
 	const { getColShow } = instance.tableVirtual;
 	const { getStickyStyleAndClassName } = instance.tableSticky;
-	const { data, bordered, rowHeight } = instance.tableProps;
+	const { bordered, rowHeight } = instance.tableProps;
 	const { getBodyCellBg, bodyRowClick, bodyRowMouseEnter, bodyRowMouseLeave } = instance.tableCellBg;
 	const { columnsFlat } = instance.tableColumn;
+	const { datasource } = instance.tableData;
 	return {
 		getRowKeys,
 		getColShow,
 		getStickyStyleAndClassName,
 		columnsFlat,
-		data,
+		datasource,
 		bordered,
 		rowHeight,
 		getBodyCellBg,

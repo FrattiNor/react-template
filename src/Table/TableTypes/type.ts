@@ -1,4 +1,4 @@
-import type { ReactNode } from 'react';
+import type { Dispatch, ReactNode, SetStateAction } from 'react';
 
 import type { TableColumns } from './typeColumn';
 
@@ -21,7 +21,15 @@ export type TableFilter = {
 	renderFilter: ({ close }: { close: () => void }) => ReactNode;
 };
 
+export type TableRowSelection<T extends TableDataItem> = {
+	selectedRowKeys?: string[];
+	onSelectedRowKeysChange?: Dispatch<SetStateAction<string[]>>;
+	getCheckboxProps?: (item: T) => { disabled: boolean };
+};
+
 export type TableProps<T extends TableDataItem> = {
+	// TODO 主题
+	theme?: 'light' | 'dark';
 	// 数据源
 	data: Array<T>;
 	// 列配置
@@ -39,7 +47,7 @@ export type TableProps<T extends TableDataItem> = {
 	// TODO 表格可展开
 	expandable?: undefined;
 	// TODO 表格可选中
-	rowSelection?: undefined;
+	rowSelection?: TableRowSelection<T>;
 	// 全局高亮关键字
 	highlightKeywords?: string[];
 	// 文本高亮配置

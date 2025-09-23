@@ -14,10 +14,10 @@ export type Props<T extends TableDataItem> = {
 };
 
 const TableBody = <T extends TableDataItem>(props: Props<T>) => {
-	const { data, bodyRef, colMeasure, getRowIndexs, getRowKey, VV_WrapperStyle, getRowShow, gridTemplateColumnsArr } = getInstanceProps(props);
+	const { datasource, bodyRef, colMeasure, getRowIndexs, getRowKey, VV_WrapperStyle, getRowShow, gridTemplateColumnsArr } = getInstanceProps(props);
 
 	const gridTemplateColumns = gridTemplateColumnsArr.join(' ');
-	const notEmpty = Array.isArray(data) && data.length > 0;
+	const notEmpty = Array.isArray(datasource) && datasource.length > 0;
 
 	let rowKeysObj: Record<string, number> = {};
 	rowKeysObj = {};
@@ -28,7 +28,7 @@ const TableBody = <T extends TableDataItem>(props: Props<T>) => {
 			{!notEmpty && <BodyEmpty instance={props.instance} />}
 			{notEmpty && (
 				<div className={styles['body-inner']} style={{ gridTemplateColumns, ...VV_WrapperStyle }}>
-					{data?.map((dataItem, rowIndex) => {
+					{datasource?.map((dataItem, rowIndex) => {
 						const rowIndexs = getRowIndexs(rowIndex);
 						const rowKey = getRowKey(dataItem, rowIndex);
 						// 检测存在重复rowKey

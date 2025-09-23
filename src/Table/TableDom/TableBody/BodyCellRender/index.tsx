@@ -19,9 +19,9 @@ export type Props<T extends TableDataItem> = {
 
 const BodyCellRender = <T extends TableDataItem>(props: Props<T>) => {
 	const { onCellTitle, colIndex, rowIndex, align } = getProps(props);
-	const { data, columnsFlat } = getInstanceProps(props);
+	const { datasource, columnsFlat } = getInstanceProps(props);
 
-	const rowData = data[rowIndex];
+	const rowData = datasource[rowIndex];
 	const column = columnsFlat[colIndex];
 	const columnFilter = column.filter ? column.filter(column.key) : undefined;
 	const columnHighlightKeywords = useMemo(() => columnFilter?.highlightKeywords, [JSON.stringify(columnFilter?.highlightKeywords)]);

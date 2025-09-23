@@ -13,9 +13,9 @@ export const getProps = <T extends TableDataItem>({ rowIndex }: Readonly<Props<T
 
 export const getInstanceProps = <T extends TableDataItem>({ instance }: Readonly<{ instance: Readonly<TableInstance<T>> }>) => {
 	const { getRowKey } = instance.tableTools;
-	const { data } = instance.tableProps;
+	const { datasource } = instance.tableData;
 	const { columnsFlat } = instance.tableColumn;
-	return { getRowKey, columnsFlat, data };
+	return { getRowKey, columnsFlat, datasource };
 };
 
 export const getTotalInstanceProps = <T extends TableDataItem>({ instance }: Readonly<{ instance: Readonly<TableInstance<T>> }>) => {
