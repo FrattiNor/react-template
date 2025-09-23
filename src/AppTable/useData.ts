@@ -48,6 +48,7 @@ export type DataItem = ReturnType<typeof createRandomUser>;
 
 const useData = () => {
 	const { params } = useAppTableContext();
+	const [autoReload, setAutoReload] = useState(false);
 	const [loading, setLoading] = useState(false);
 	const [data, setData] = useState<DataItem[]>(() => getData(10000));
 
@@ -70,7 +71,7 @@ const useData = () => {
 	const timeoutRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
 	useEffect(() => {
-		if (loading === false) {
+		if (autoReload === true && loading === false) {
 			timeoutRef.current = setInterval(() => {
 				const count = data.length;
 				console.log(`refresh data(${count})`);
@@ -80,9 +81,9 @@ const useData = () => {
 				if (timeoutRef.current) clearInterval(timeoutRef.current);
 			};
 		}
-	}, [data, loading]);
+	}, [data, loading, autoReload]);
 
-	return { data, loading, fetchData };
+	return { data, loading, fetchData, autoReload, setAutoReload };
 };
 
 export default useData;

@@ -4,7 +4,8 @@ import type { TableDataItem } from '../../../TableTypes/type';
 import type { TableInstance } from '../../../TableTypes/typeHooks';
 
 export const getInstanceProps = <T extends TableDataItem>({ instance }: Readonly<{ instance: Readonly<TableInstance<T>> }>) => {
-	const { columnGroups, columnsFlat, rowHeight } = instance.tableProps;
+	const { rowHeight } = instance.tableProps;
+	const { columnGroups, columnsFlat } = instance.tableColumn;
 	return {
 		columnGroups,
 		columnsFlat,

@@ -1,5 +1,7 @@
 import { type FC } from 'react';
 
+import Switch from 'antd/es/switch';
+
 import styles from './index.module.less';
 import Table from '../Table';
 import { AppTableContext, useProvider } from './AppTableContext';
@@ -8,7 +10,7 @@ import useData from './useData';
 import useKeyword from './useKeyword';
 
 const AppTable: FC = () => {
-	const { data, loading, fetchData } = useData();
+	const { data, loading, fetchData, autoReload, setAutoReload } = useData();
 
 	const { globalHighlightKeywords, keyword, setKeyword } = useKeyword();
 
@@ -16,6 +18,10 @@ const AppTable: FC = () => {
 
 	return (
 		<div className={styles['wrapper']}>
+			<div className={styles['flex-container']}>
+				<span>{'reload:'}</span>
+				<Switch checked={autoReload} onChange={setAutoReload} />
+			</div>
 			<div className={styles['flex-container']}>
 				<span>{'keyword:'}</span>
 				<input className={styles['input']} value={keyword} onChange={(e) => setKeyword(e.target.value)} />

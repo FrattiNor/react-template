@@ -32,7 +32,7 @@ export type TableColumn<T extends TableDataItem> = {
 		// 覆盖cell的title属性
 		title?: string;
 	};
-	// TODO 列筛选
+	// 列筛选
 	filter?: (colKey: string) => TableFilter;
 	// TODO 列排序
 	sort?: {

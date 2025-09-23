@@ -14,7 +14,8 @@ export const getInstanceProps = <T extends TableDataItem>({ instance }: Readonly
 	const { getColShow } = instance.tableVirtual;
 	const { getHeadCellBg } = instance.tableCellBg;
 	const { getStickyStyleAndClassName } = instance.tableSticky;
-	const { columnsFlat, columnGroups, bordered, rowHeight } = instance.tableProps;
+	const { bordered, rowHeight } = instance.tableProps;
+	const { columnsFlat, columnGroups } = instance.tableColumn;
 	return {
 		getHeadCellBg,
 		getColShow,

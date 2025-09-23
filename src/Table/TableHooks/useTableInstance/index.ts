@@ -1,4 +1,5 @@
 import useTableCellBg from '../useTableCellBg';
+import useTableColumn from '../useTableColumn';
 import useTableDomRef from '../useTableDomRef';
 import useTableMeasureCol from '../useTableMeasureCol';
 import useTableObserver from '../useTableObserver';
@@ -20,25 +21,28 @@ const useTableInstance = <T extends TableDataItem>(props: TableProps<T>) => {
 	const tableDomRef = useTableDomRef();
 	// props
 	const tableProps = useTableProps({ props });
+	// column
+	const tableColumn = useTableColumn({ tableProps });
 	// 工具
-	const tableTools = useTableTools({ tableProps });
+	const tableTools = useTableTools({ tableProps, tableColumn });
 	// cell bg
 	const tableCellBg = useTableCellBg({ tableState });
 	// measure
-	const tableMeasureCol = useTableMeasureCol({ tableState, tableProps });
+	const tableMeasureCol = useTableMeasureCol({ tableState, tableColumn });
 	// second state
-	const tableSecondaryState = useTableSecondaryState({ tableState, tableProps });
+	const tableSecondaryState = useTableSecondaryState({ tableState, tableColumn });
 	// cell sticky
 	const tableSticky = useTableSticky({ tableDomRef, tableState, tableSecondaryState });
 	// virtual
-	const tableVirtual = useTableVirtual({ tableDomRef, tableProps, tableState, tableTools });
+	const tableVirtual = useTableVirtual({ tableDomRef, tableProps, tableState, tableTools, tableColumn });
 	// cell resize
-	const tableResize = useTableResize({ tableState, tableProps });
+	const tableResize = useTableResize({ tableState, tableProps, tableColumn });
 	// observer
 	useTableObserver({ tableDomRef, tableState, tableMeasureCol, tableSecondaryState });
 
 	// res
 	return {
+		tableColumn,
 		tableResize,
 		tableProps,
 		tableDomRef,

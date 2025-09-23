@@ -4,20 +4,20 @@ import { useCallback } from 'react';
 import useV from '../useV/useV';
 
 import type { TableDataItem } from '../../../TableTypes/type';
+import type useTableColumn from '../../useTableColumn';
 import type useTableDomRef from '../../useTableDomRef';
-import type useTableProps from '../../useTableProps';
 import type useTableState from '../../useTableState';
 
 type Props<T extends TableDataItem> = {
-	tableProps: ReturnType<typeof useTableProps<T>>;
+	tableColumn: ReturnType<typeof useTableColumn<T>>;
 	tableDomRef: ReturnType<typeof useTableDomRef>;
 	tableState: ReturnType<typeof useTableState>;
 };
 
-const useTableHVirtual = <T extends TableDataItem>({ tableProps, tableDomRef, tableState }: Props<T>) => {
+const useTableHVirtual = <T extends TableDataItem>({ tableColumn, tableDomRef, tableState }: Props<T>) => {
 	'use no memo';
 	const { bodyRef } = tableDomRef;
-	const { columnsFlat } = tableProps;
+	const { columnsFlat } = tableColumn;
 	const { getColumnSize } = tableState;
 
 	// 横向虚拟

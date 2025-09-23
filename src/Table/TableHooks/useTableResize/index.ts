@@ -4,6 +4,7 @@ import { FixedTwo } from '../../TableUtils';
 
 import type { TableDataItem } from '../../TableTypes/type';
 import type { ResizeFlag } from '../../TableTypes/typeHooks';
+import type useTableColumn from '../useTableColumn';
 import type useTableProps from '../useTableProps';
 import type useTableState from '../useTableState';
 
@@ -17,13 +18,15 @@ function pauseEvent(e: Event) {
 }
 
 type Props<T extends TableDataItem> = {
+	tableColumn: ReturnType<typeof useTableColumn<T>>;
 	tableProps: ReturnType<typeof useTableProps<T>>;
 	tableState: ReturnType<typeof useTableState>;
 };
 
 // 表头resize
-const useTableResize = <T extends TableDataItem>({ tableProps, tableState }: Props<T>) => {
-	const { columnsFlat, onResizeEnd } = tableProps;
+const useTableResize = <T extends TableDataItem>({ tableColumn, tableProps, tableState }: Props<T>) => {
+	const { onResizeEnd } = tableProps;
+	const { columnsFlat } = tableColumn;
 	const { setResized, resizeFlag, setResizeFlag, setColumnSizes, maxColWidth, minColWidth, getColumnSize } = tableState;
 
 	// resize结束回调

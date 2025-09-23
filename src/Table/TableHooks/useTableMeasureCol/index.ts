@@ -3,17 +3,17 @@ import { useCallback, useLayoutEffect, type CSSProperties } from 'react';
 import { debounce } from '../../TableUtils';
 
 import type { TableDataItem } from '../../TableTypes/type';
-import type useTableProps from '../useTableProps';
+import type useTableColumn from '../useTableColumn';
 import type useTableState from '../useTableState';
 
 type Props<T extends TableDataItem> = {
-	tableProps: ReturnType<typeof useTableProps<T>>;
+	tableColumn: ReturnType<typeof useTableColumn<T>>;
 	tableState: ReturnType<typeof useTableState>;
 };
 
 // 测量列宽
-const useTableMeasureCol = <T extends TableDataItem>({ tableProps, tableState }: Props<T>) => {
-	const { columnsWidthKeys, columnsFlat } = tableProps;
+const useTableMeasureCol = <T extends TableDataItem>({ tableColumn, tableState }: Props<T>) => {
+	const { columnsWidthKeys, columnsFlat } = tableColumn;
 	const { minColWidth, maxColWidth, columnSizes, resized, bodyClientWidth, V_ScrollbarWidth, colMeasure, setColMeasure } = tableState;
 
 	// body宽度变化、并且没有resize过

@@ -1,18 +1,18 @@
 import { useMemo } from 'react';
 
 import type { TableDataItem } from '../../TableTypes/type';
-import type useTableProps from '../useTableProps';
+import type useTableColumn from '../useTableColumn';
 import type useTableState from '../useTableState';
 
 type Props<T extends TableDataItem> = {
-	tableProps: ReturnType<typeof useTableProps<T>>;
+	tableColumn: ReturnType<typeof useTableColumn<T>>;
 	tableState: ReturnType<typeof useTableState>;
 };
 
 // 表格二级状态
-const useTableSecondaryState = <T extends TableDataItem>({ tableProps, tableState }: Props<T>) => {
+const useTableSecondaryState = <T extends TableDataItem>({ tableColumn, tableState }: Props<T>) => {
 	const { columnSizes, getColumnSize } = tableState;
-	const { columnsFlat, columnsFixedKeys } = tableProps;
+	const { columnsFlat, columnsFixedKeys } = tableColumn;
 
 	const { gridTemplateColumnsArr, HTotalSize, fixedRightObj, fixedLeftObj } = useMemo(() => {
 		let HTotalSize: number = 0;

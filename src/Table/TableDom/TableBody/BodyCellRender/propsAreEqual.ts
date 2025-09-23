@@ -10,7 +10,8 @@ export const getProps = <T extends TableDataItem>({ onCellTitle, rowIndex, colIn
 };
 
 export const getInstanceProps = <T extends TableDataItem>({ instance }: Readonly<{ instance: Readonly<TableInstance<T>> }>) => {
-	const { columnsFlat, data } = instance.tableProps;
+	const { data } = instance.tableProps;
+	const { columnsFlat } = instance.tableColumn;
 	return { columnsFlat, data };
 };
 
