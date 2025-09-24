@@ -26,6 +26,8 @@ const HeadGroupCell = <T extends TableDataItem>(props: Props<T>) => {
 	const colShow = getColShow(colIndexs);
 	if (!(colShow === true || sticky === true)) return null;
 
+	const resize = column.resize ?? true;
+	const align = column.align ?? 'center';
 	const colMaxIndex = columnsFlat.length - 1;
 	const headCellBg = getHeadCellBg({ colIndexs });
 
@@ -46,8 +48,8 @@ const HeadGroupCell = <T extends TableDataItem>(props: Props<T>) => {
 				...stickyStyle,
 			}}
 		>
-			<HeadCellRender column={column} align="center" instance={props.instance} />
-			<ResizeHandle colKey={column.key} colIndexs={colIndexs} instance={props.instance} />
+			<HeadCellRender column={column} instance={props.instance} align={align} />
+			{resize && <ResizeHandle colKey={column.key} colIndexs={colIndexs} instance={props.instance} />}
 		</div>
 	);
 };

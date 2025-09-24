@@ -21,12 +21,14 @@ const HeadCell = <T extends TableDataItem>(props: Props<T>) => {
 	const { getHeadCellBg, getColShow, getStickyStyleAndClassName, columnsFlat, bordered, rowHeight } = getInstanceProps(props);
 
 	const column = columnsFlat[colIndex];
-	const colShow = getColShow([colIndex]);
 	const forceRender = column.forceRender;
+	const colShow = getColShow([colIndex]);
 	const colIndexs = useMemo(() => [colIndex] as [number], [colIndex]);
 	const { stickyStyle, stickyClassName, sticky } = getStickyStyleAndClassName({ colIndexs: [colIndex], type: 'head' });
 	if (!(colShow === true || forceRender === true || sticky === true)) return null;
 
+	const align = column.align;
+	const resize = column.resize ?? true;
 	const colMaxIndex = columnsFlat.length - 1;
 	const headCellBg = getHeadCellBg({ colIndexs: [colIndex] });
 
@@ -47,8 +49,8 @@ const HeadCell = <T extends TableDataItem>(props: Props<T>) => {
 				...stickyStyle,
 			}}
 		>
-			<HeadCellRender column={column} instance={props.instance} />
-			<ResizeHandle colKey={column.key} colIndexs={colIndexs} instance={props.instance} />
+			<HeadCellRender column={column} instance={props.instance} align={align} />
+			{resize && <ResizeHandle colKey={column.key} colIndexs={colIndexs} instance={props.instance} />}
 		</div>
 	);
 };

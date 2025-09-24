@@ -99,8 +99,9 @@ const useTableRowSelection = <T extends TableDataItem>({ tableProps, tableData, 
 		};
 		// 列配置
 		const column: TableColumn<T> = {
-			width: 80,
+			width: 50,
 			fixed: 'left',
+			resize: false,
 			align: 'center',
 			key: 'rowSelection',
 			title: columnTitle,

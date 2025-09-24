@@ -41,6 +41,8 @@ export type TableColumn<T extends TableDataItem> = {
 		// 支持的排序方式
 		sortDirections?: Array<'ascend' | 'descend'>;
 	};
+	// 允许拖拽修改宽度
+	resize?: boolean;
 	// 融合group的字段
 	children?: undefined;
 };
@@ -62,6 +64,7 @@ export type TableColumnGroup<T extends TableDataItem> = {
 	filter?: undefined;
 	sort?: undefined;
 	align?: undefined;
+	resize?: undefined;
 };
 
 export type TableColumns<T extends TableDataItem> = Array<TableColumnGroup<T> | TableColumn<T>>;
