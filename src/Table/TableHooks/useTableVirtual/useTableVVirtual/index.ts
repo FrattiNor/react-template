@@ -35,8 +35,8 @@ const useTableVVirtual = <T extends TableDataItem>({ tableData, tableProps, tabl
 	const VV_totalSize = VV.getTotalSize();
 	const VV_measureElement = VV.measureElement;
 	const VV_items = VV.getVirtualItems();
-	const startIndex = VV_items?.[0]?.index;
-	const endIndex = VV_items?.[VV_items.length - 1]?.index;
+	const VV_startIndex = VV_items?.[0]?.index;
+	const VV_endIndex = VV_items?.[VV_items.length - 1]?.index;
 
 	// VV_measurementsCache
 	const _VV_measurementsCache = VV.measurementsCache;
@@ -53,14 +53,14 @@ const useTableVVirtual = <T extends TableDataItem>({ tableData, tableProps, tabl
 	// row是否显示
 	const getRowShow = useCallback(
 		(indexs: [number] | [number, number]) => {
-			if (typeof endIndex === 'number' && typeof startIndex === 'number') {
+			if (typeof VV_endIndex === 'number' && typeof VV_startIndex === 'number') {
 				const start = indexs[0];
 				const end = indexs[indexs.length - 1];
-				return (start <= endIndex && start >= startIndex) || (end <= endIndex && end >= startIndex);
+				return (start <= VV_endIndex && start >= VV_startIndex) || (end <= VV_endIndex && end >= VV_startIndex);
 			}
 			return false;
 		},
-		[startIndex, endIndex],
+		[VV_startIndex, VV_endIndex],
 	);
 
 	return { VV_measureElement, VV_totalSize, VV_measurementsCache, getRowShow };

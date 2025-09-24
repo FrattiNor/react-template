@@ -46,7 +46,7 @@ export type TableProps<T extends TableDataItem> = {
 	loading?: boolean;
 	// TODO 表格可展开
 	expandable?: undefined;
-	// TODO 表格可选中
+	// 表格可选中
 	rowSelection?: TableRowSelection<T>;
 	// 全局高亮关键字
 	highlightKeywords?: string[];

@@ -34,6 +34,8 @@ const AppTable: FC = () => {
 				<button className={styles['btn']} onClick={() => fetchData(0)}>{`data(0)`}</button>
 				<button className={styles['btn']} onClick={() => fetchData(5)}>{`data(5)`}</button>
 				<button className={styles['btn']} onClick={() => fetchData(10)}>{`data(10)`}</button>
+				<button className={styles['btn']} onClick={() => fetchData(20)}>{`data(20)`}</button>
+				<button className={styles['btn']} onClick={() => fetchData(50)}>{`data(50)`}</button>
 				<button className={styles['btn']} onClick={() => fetchData(100)}>{`data(100)`}</button>
 				<button className={styles['btn']} onClick={() => fetchData(1000)}>{`data(1000)`}</button>
 				<button className={styles['btn']} onClick={() => fetchData(10000)}>{`data(10000)`}</button>

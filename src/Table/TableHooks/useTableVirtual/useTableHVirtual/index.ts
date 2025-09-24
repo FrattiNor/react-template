@@ -31,20 +31,20 @@ const useTableHVirtual = <T extends TableDataItem>({ tableColumn, tableDomRef, t
 	});
 
 	const HV_items = HV.getVirtualItems();
-	const startIndex = HV_items?.[0]?.index;
-	const endIndex = HV_items?.[HV_items.length - 1]?.index;
+	const HV_startIndex = HV_items?.[0]?.index;
+	const HV_endIndex = HV_items?.[HV_items.length - 1]?.index;
 
 	// col是否显示
 	const getColShow = useCallback(
 		(indexs: [number] | [number, number]) => {
-			if (typeof endIndex === 'number' && typeof startIndex === 'number') {
+			if (typeof HV_endIndex === 'number' && typeof HV_startIndex === 'number') {
 				const start = indexs[0];
 				const end = indexs[indexs.length - 1];
-				return (start <= endIndex && start >= startIndex) || (end <= endIndex && end >= startIndex);
+				return (start <= HV_endIndex && start >= HV_startIndex) || (end <= HV_endIndex && end >= HV_startIndex);
 			}
 			return false;
 		},
-		[endIndex, startIndex],
+		[HV_endIndex, HV_startIndex],
 	);
 
 	return { getColShow };

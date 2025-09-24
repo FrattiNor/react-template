@@ -2,6 +2,25 @@ import type { ReactNode } from 'react';
 
 import type { TableDataItem, TableFilter } from './type';
 
+type TableColumnOnCell<T extends TableDataItem> = (
+	item: T,
+	index: number,
+) => {
+	// 行占据几格，用于合并单元格
+	rowSpan?: number;
+	// 列占据几格，用于合并单元格
+	colSpan?: number;
+	// 覆盖cell的title属性
+	title?: string;
+};
+
+type TableColumnSort = {
+	// 已排序，对应icon高亮
+	sorted: 'ascend' | 'descend' | undefined;
+	// 支持的排序方式
+	sortDirections?: Array<'ascend' | 'descend'>;
+};
+
 // onCell 的 colSpan 和 fixed 存在冲突
 export type TableColumn<T extends TableDataItem> = {
 	// 列key
@@ -16,31 +35,16 @@ export type TableColumn<T extends TableDataItem> = {
 	flexGrow?: number;
 	// 左右固定
 	fixed?: 'left' | 'right';
-	// TODO 左右对齐
+	// 左右对齐
 	align?: 'left' | 'right' | 'center';
 	// 强制渲染，避免虚拟列表导致单元格未渲染，造成高度塌陷
 	forceRender?: boolean;
 	// 单元格属性
-	onCell?: (
-		item: T,
-		index: number,
-	) => {
-		// 行占据几格，用于合并单元格
-		rowSpan?: number;
-		// 列占据几格，用于合并单元格
-		colSpan?: number;
-		// 覆盖cell的title属性
-		title?: string;
-	};
+	onCell?: TableColumnOnCell<T>;
 	// 列筛选
 	filter?: (colKey: string) => TableFilter;
 	// TODO 列排序
-	sort?: {
-		// 已排序，对应icon高亮
-		sorted: 'ascend' | 'descend' | undefined;
-		// 支持的排序方式
-		sortDirections?: Array<'ascend' | 'descend'>;
-	};
+	sort?: TableColumnSort;
 	// 允许拖拽修改宽度
 	resize?: boolean;
 	// 融合group的字段
