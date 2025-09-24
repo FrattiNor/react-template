@@ -1,5 +1,5 @@
 /* eslint-disable react-compiler/react-compiler */
-import { useCallback, useMemo, type CSSProperties } from 'react';
+import { useCallback, useMemo } from 'react';
 
 import { type useTableTools_1 } from '../../useTableTools';
 import useV from '../useV/useV';
@@ -35,18 +35,19 @@ const useTableVVirtual = <T extends TableDataItem>({ tableData, tableProps, tabl
 	const VV_totalSize = VV.getTotalSize();
 	const VV_measureElement = VV.measureElement;
 	const VV_items = VV.getVirtualItems();
-	const VV_paddingTop = VV_items?.[0]?.start ?? 0;
 	const startIndex = VV_items?.[0]?.index;
 	const endIndex = VV_items?.[VV_items.length - 1]?.index;
 
-	// 虚拟容器style
-	const VV_WrapperStyle: CSSProperties = useMemo(
-		() => ({
-			boxSizing: 'border-box',
-			minHeight: VV_totalSize,
-			paddingTop: VV_paddingTop,
-		}),
-		[VV_totalSize, VV_paddingTop],
+	// VV_measurementsCache
+	const _VV_measurementsCache = VV.measurementsCache;
+	const VV_measurementsCache = useMemo(
+		() => _VV_measurementsCache,
+		[
+			_VV_measurementsCache[0]?.start,
+			_VV_measurementsCache[0]?.index,
+			_VV_measurementsCache[_VV_measurementsCache.length - 1]?.end,
+			_VV_measurementsCache[_VV_measurementsCache.length - 1]?.index,
+		],
 	);
 
 	// row是否显示
@@ -62,7 +63,7 @@ const useTableVVirtual = <T extends TableDataItem>({ tableData, tableProps, tabl
 		[startIndex, endIndex],
 	);
 
-	return { VV_measureElement, VV_WrapperStyle, getRowShow };
+	return { VV_measureElement, VV_totalSize, VV_measurementsCache, getRowShow };
 };
 
 export default useTableVVirtual;

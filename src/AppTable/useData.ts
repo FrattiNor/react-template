@@ -50,7 +50,7 @@ const useData = () => {
 	const { params } = useAppTableContext();
 	const [autoReload, setAutoReload] = useState(false);
 	const [loading, setLoading] = useState(false);
-	const [data, setData] = useState<DataItem[]>(() => getData(10000));
+	const [data, setData] = useState<DataItem[]>(() => getData(15));
 
 	const fetchData = (count: number) => {
 		return new Promise((res) => {

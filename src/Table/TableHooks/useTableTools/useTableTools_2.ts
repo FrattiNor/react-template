@@ -22,7 +22,7 @@ const useTableTools_2 = <T extends TableDataItem>({ tableColumn, tableData }: Pr
 			if (rowData) {
 				columnsFlat.forEach((column) => {
 					const { rowSpan = 1 } = column.onCell ? column.onCell(rowData, rowIndex) : {};
-					const nextEnd = rowIndex + rowSpan;
+					const nextEnd = rowIndex + rowSpan - 1;
 					if (nextEnd > end) end = nextEnd;
 				});
 			}

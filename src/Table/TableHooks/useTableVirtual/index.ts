@@ -20,8 +20,13 @@ type Props<T extends TableDataItem> = {
 
 const useTableVirtual = <T extends TableDataItem>({ tableColumn, tableProps, tableDomRef, tableState, tableData, tableTools_1 }: Props<T>) => {
 	const { getColShow } = useTableHVirtual({ tableColumn, tableDomRef, tableState });
-	const { VV_measureElement, VV_WrapperStyle, getRowShow } = useTableVVirtual({ tableData, tableProps, tableDomRef, tableTools_1 });
-	return { VV_measureElement, VV_WrapperStyle, getRowShow, getColShow };
+	const { VV_measureElement, VV_measurementsCache, VV_totalSize, getRowShow } = useTableVVirtual({
+		tableData,
+		tableProps,
+		tableDomRef,
+		tableTools_1,
+	});
+	return { VV_measureElement, VV_measurementsCache, VV_totalSize, getRowShow, getColShow };
 };
 
 export default useTableVirtual;
