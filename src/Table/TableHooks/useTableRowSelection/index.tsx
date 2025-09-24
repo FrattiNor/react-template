@@ -61,7 +61,7 @@ const useTableRowSelection = <T extends TableDataItem>({ tableProps, tableData, 
 			if (disabled) disabledCount++;
 		});
 		// 全部选中
-		const totalSelected = selectedCount === datasource.length;
+		const totalSelected = selectedCount !== 0 && selectedCount === datasource.length;
 		// 一半选中
 		const halfSelected = !totalSelected && selectedCount > 0;
 		// 全部禁用

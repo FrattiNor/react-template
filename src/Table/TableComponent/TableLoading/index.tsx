@@ -19,7 +19,7 @@ const LoadingDiv: FC<Props> = (props) => {
 	return createElement(component, {
 		...divProps,
 		ref: wrapperRef,
-		className: classNames(styles['loading-div'], className),
+		className: classNames(className, styles['loading-div']),
 		children: (
 			<Fragment>
 				{children}
