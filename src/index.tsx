@@ -3,11 +3,11 @@
 import { createRoot } from 'react-dom/client';
 
 import App from './AppTable';
-import initFps from './initFps';
+// import initFps from './initFps';
 
 import './index.css';
 
-initFps();
+// initFps();
 
 // createRoot(document.getElementById('root')!).render(
 // 	<StrictMode>
