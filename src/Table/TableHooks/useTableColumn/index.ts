@@ -1,16 +1,20 @@
 import { useMemo } from 'react';
 
-import type { TableDataItem } from '../../TableTypes/type';
+import type { TableDataItem, TableProps } from '../../TableTypes/type';
 import type { InnerColumn, InnerColumnGroup, TableColumnGroup, TableColumn } from '../../TableTypes/typeColumn';
 import type useTableProps from '../useTableProps';
+import type useTableRowSelection from '../useTableRowSelection';
 
 type Props<T extends TableDataItem> = {
 	tableProps: ReturnType<typeof useTableProps<T>>;
+	tableRowSelection: ReturnType<typeof useTableRowSelection<T>>;
 };
 
 // column处理
-const useTableColumn = <T extends TableDataItem>({ tableProps }: Props<T>) => {
-	const { columns } = tableProps;
+const useTableColumn = <T extends TableDataItem>({ tableProps, tableRowSelection }: Props<T>) => {
+	// 内部使用，使用断言赋予类别
+	const { columns } = tableProps as TableProps<T>;
+	const { rowSelectionColumn } = tableRowSelection;
 
 	// 遍历columns
 	const { columnsFlat, columnGroups, columnsWidthKeys, columnsFixedKeys } = useMemo(() => {
@@ -59,10 +63,12 @@ const useTableColumn = <T extends TableDataItem>({ tableProps }: Props<T>) => {
 			});
 		};
 
-		loopColumns(columns, {}, 0);
+		const totalColumns = [...columns];
+		if (rowSelectionColumn) totalColumns.unshift(rowSelectionColumn);
+		loopColumns(totalColumns, {}, 0);
 
 		return { columnGroups, columnsFlat, columnsWidthKeys, columnsFixedKeys };
-	}, [columns]);
+	}, [columns, rowSelectionColumn]);
 
 	return {
 		columnGroups,

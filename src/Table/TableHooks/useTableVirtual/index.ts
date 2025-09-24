@@ -1,24 +1,26 @@
 import useTableHVirtual from './useTableHVirtual';
 import useTableVVirtual from './useTableVVirtual';
+import { type useTableTools_1 } from '../useTableTools';
 
 import type { TableDataItem } from '../../TableTypes/type';
 import type useTableColumn from '../useTableColumn';
+import type useTableData from '../useTableData';
 import type useTableDomRef from '../useTableDomRef';
 import type useTableProps from '../useTableProps';
 import type useTableState from '../useTableState';
-import type useTableTools from '../useTableTools';
 
 type Props<T extends TableDataItem> = {
 	tableProps: ReturnType<typeof useTableProps<T>>;
 	tableDomRef: ReturnType<typeof useTableDomRef>;
 	tableState: ReturnType<typeof useTableState>;
-	tableTools: ReturnType<typeof useTableTools<T>>;
+	tableTools_1: ReturnType<typeof useTableTools_1<T>>;
 	tableColumn: ReturnType<typeof useTableColumn<T>>;
+	tableData: ReturnType<typeof useTableData<T>>;
 };
 
-const useTableVirtual = <T extends TableDataItem>({ tableColumn, tableProps, tableDomRef, tableState, tableTools }: Props<T>) => {
+const useTableVirtual = <T extends TableDataItem>({ tableColumn, tableProps, tableDomRef, tableState, tableData, tableTools_1 }: Props<T>) => {
 	const { getColShow } = useTableHVirtual({ tableColumn, tableDomRef, tableState });
-	const { VV_measureElement, VV_WrapperStyle, getRowShow } = useTableVVirtual({ tableProps, tableDomRef, tableTools });
+	const { VV_measureElement, VV_WrapperStyle, getRowShow } = useTableVVirtual({ tableData, tableProps, tableDomRef, tableTools_1 });
 	return { VV_measureElement, VV_WrapperStyle, getRowShow, getColShow };
 };
 

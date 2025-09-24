@@ -6,10 +6,11 @@ import useTableMeasureCol from '../useTableMeasureCol';
 import useTableObserver from '../useTableObserver';
 import useTableProps from '../useTableProps';
 import useTableResize from '../useTableResize';
+import useTableRowSelection from '../useTableRowSelection';
 import useTableSecondaryState from '../useTableSecondaryState';
 import useTableState from '../useTableState';
 import useTableSticky from '../useTableSticky';
-import useTableTools from '../useTableTools';
+import { useTableTools_1, useTableTools_2 } from '../useTableTools';
 import useTableVirtual from '../useTableVirtual';
 
 import type { TableDataItem, TableProps } from '../../TableTypes/type';
@@ -22,12 +23,16 @@ const useTableInstance = <T extends TableDataItem>(props: TableProps<T>) => {
 	const tableDomRef = useTableDomRef();
 	// props
 	const tableProps = useTableProps({ props });
-	// column
-	const tableColumn = useTableColumn({ tableProps });
 	// 工具
-	const tableTools = useTableTools({ tableProps, tableColumn });
+	const tableTools_1 = useTableTools_1({ tableProps });
 	// data
-	const tableData = useTableData({ tableProps, tableTools });
+	const tableData = useTableData({ tableProps, tableTools_1 });
+	//
+	const tableRowSelection = useTableRowSelection({ tableData, tableProps, tableTools_1 });
+	// column
+	const tableColumn = useTableColumn({ tableProps, tableRowSelection });
+	// 工具
+	const tableTools_2 = useTableTools_2({ tableColumn, tableData });
 	// cell bg
 	const tableCellBg = useTableCellBg({ tableState });
 	// measure
@@ -37,15 +42,20 @@ const useTableInstance = <T extends TableDataItem>(props: TableProps<T>) => {
 	// cell sticky
 	const tableSticky = useTableSticky({ tableDomRef, tableState, tableSecondaryState });
 	// virtual
-	const tableVirtual = useTableVirtual({ tableDomRef, tableProps, tableState, tableTools, tableColumn });
+	const tableVirtual = useTableVirtual({ tableData, tableDomRef, tableProps, tableState, tableTools_1, tableColumn });
 	// cell resize
 	const tableResize = useTableResize({ tableState, tableProps, tableColumn });
 	// observer
 	useTableObserver({ tableDomRef, tableState, tableMeasureCol, tableSecondaryState });
+	// 合并tableTools
+	const tableTools = {
+		...tableTools_1,
+		...tableTools_2,
+	};
 
 	// res
 	return {
-		tableProps: tableProps as Omit<ReturnType<typeof useTableProps<T>>, 'columns' | 'data'>,
+		tableProps,
 		tableData,
 		tableColumn,
 		tableResize,

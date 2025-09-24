@@ -28,7 +28,7 @@ const TableBody = <T extends TableDataItem>(props: Props<T>) => {
 			{!notEmpty && <BodyEmpty instance={props.instance} />}
 			{notEmpty && (
 				<div className={styles['body-inner']} style={{ gridTemplateColumns, ...VV_WrapperStyle }}>
-					{datasource?.map((dataItem, rowIndex) => {
+					{datasource.map((dataItem, rowIndex) => {
 						const rowIndexs = getRowIndexs(rowIndex);
 						const rowKey = getRowKey(dataItem, rowIndex);
 						// 检测存在重复rowKey

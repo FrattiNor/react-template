@@ -11,9 +11,9 @@ export const getInstanceProps = <T extends TableDataItem>({ instance }: Readonly
 	const { bodyRef } = instance.tableDomRef;
 	const { colMeasure } = instance.tableState;
 	const { getRowIndexs, getRowKey } = instance.tableTools;
-	const { VV_WrapperStyle, getRowShow } = instance.tableVirtual;
 	const { gridTemplateColumnsArr } = instance.tableSecondaryState;
-	return { datasource, bodyRef, colMeasure, getRowIndexs, getRowKey, VV_WrapperStyle, getRowShow, gridTemplateColumnsArr };
+	const { VV_measurementsCache, VV_totalSize, getRowShow } = instance.tableVirtual;
+	return { datasource, bodyRef, colMeasure, getRowIndexs, getRowKey, VV_measurementsCache, VV_totalSize, getRowShow, gridTemplateColumnsArr };
 };
 
 export const getTotalInstanceProps = <T extends TableDataItem>({ instance }: Readonly<{ instance: Readonly<TableInstance<T>> }>) => {

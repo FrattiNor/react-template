@@ -1,32 +1,35 @@
 import { useMemo } from 'react';
 
-import type { TableDataItem } from '../../TableTypes/type';
+import { type useTableTools_1 } from '../useTableTools';
+
+import type { TableDataItem, TableProps } from '../../TableTypes/type';
 import type useTableProps from '../useTableProps';
-import type useTableTools from '../useTableTools';
 
 type Props<T extends TableDataItem> = {
 	tableProps: ReturnType<typeof useTableProps<T>>;
-	tableTools: ReturnType<typeof useTableTools<T>>;
+	tableTools_1: ReturnType<typeof useTableTools_1<T>>;
 };
 
 // data处理
-const useTableData = <T extends TableDataItem>({ tableProps, tableTools }: Props<T>) => {
-	const { data } = tableProps;
+const useTableData = <T extends TableDataItem>({ tableProps, tableTools_1 }: Props<T>) => {
+	// 内部使用，使用断言赋予类别
+	const { data } = tableProps as TableProps<T>;
+	const { getRowKey } = tableTools_1;
 
-	const { dataKeys, dataKeyObj } = useMemo(() => {
+	const { dataKeys, dataKeysObj } = useMemo(() => {
 		const dataKeys: string[] = [];
-		const dataKeyObj: Record<string, true> = {};
-		data.forEach((item, index) => {
-			const rowKey = tableTools.getRowKey(item, index);
+		const dataKeysObj: Record<string, true> = {};
+		data?.forEach((item, index) => {
+			const rowKey = getRowKey(item, index);
 			dataKeys.push(rowKey);
-			dataKeyObj[rowKey] = true;
+			dataKeysObj[rowKey] = true;
 		});
-		return { dataKeys, dataKeyObj };
-	}, [data]);
+		return { dataKeys, dataKeysObj };
+	}, [data, getRowKey]);
 
-	const datasource = data;
+	const datasource = useMemo(() => data ?? [], [data]);
 
-	return { dataKeys, dataKeyObj, datasource };
+	return { dataKeys, dataKeysObj, datasource };
 };
 
 export default useTableData;

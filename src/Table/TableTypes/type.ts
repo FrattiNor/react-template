@@ -24,14 +24,14 @@ export type TableFilter = {
 export type TableRowSelection<T extends TableDataItem> = {
 	selectedRowKeys?: string[];
 	onSelectedRowKeysChange?: Dispatch<SetStateAction<string[]>>;
-	getCheckboxProps?: (item: T) => { disabled: boolean };
+	getCheckboxProps?: (item: T) => { disabled?: boolean };
 };
 
 export type TableProps<T extends TableDataItem> = {
 	// TODO 主题
 	theme?: 'light' | 'dark';
 	// 数据源
-	data: Array<T>;
+	data?: Array<T>;
 	// 列配置
 	columns: TableColumns<T>;
 	// 行key

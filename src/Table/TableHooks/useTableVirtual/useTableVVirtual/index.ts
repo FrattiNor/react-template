@@ -1,32 +1,35 @@
 /* eslint-disable react-compiler/react-compiler */
 import { useCallback, useMemo, type CSSProperties } from 'react';
 
+import { type useTableTools_1 } from '../../useTableTools';
 import useV from '../useV/useV';
 
 import type { TableDataItem } from '../../../TableTypes/type';
+import type useTableData from '../../useTableData';
 import type useTableDomRef from '../../useTableDomRef';
 import type useTableProps from '../../useTableProps';
-import type useTableTools from '../../useTableTools';
 
 type Props<T extends TableDataItem> = {
 	tableProps: ReturnType<typeof useTableProps<T>>;
 	tableDomRef: ReturnType<typeof useTableDomRef>;
-	tableTools: ReturnType<typeof useTableTools<T>>;
+	tableData: ReturnType<typeof useTableData<T>>;
+	tableTools_1: ReturnType<typeof useTableTools_1<T>>;
 };
 
-const useTableVVirtual = <T extends TableDataItem>({ tableProps, tableDomRef, tableTools }: Props<T>) => {
+const useTableVVirtual = <T extends TableDataItem>({ tableData, tableProps, tableDomRef, tableTools_1 }: Props<T>) => {
 	'use no memo';
 	const { bodyRef } = tableDomRef;
-	const { getRowKey } = tableTools;
-	const { data, rowHeight } = tableProps;
+	const { rowHeight } = tableProps;
+	const { datasource } = tableData;
+	const { getRowKey } = tableTools_1;
 
 	// 竖向虚拟
 	const VV = useV({
 		overscan: 0,
-		count: data?.length ?? 0,
+		count: datasource?.length ?? 0,
 		estimateSize: () => rowHeight,
 		getScrollElement: () => bodyRef.current,
-		getItemKey: (index) => getRowKey(data?.[index], index),
+		getItemKey: (index) => getRowKey(datasource?.[index], index),
 	});
 
 	const VV_totalSize = VV.getTotalSize();
