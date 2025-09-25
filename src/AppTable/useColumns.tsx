@@ -34,7 +34,7 @@ const useAppTableColumns = () => {
 					render: ({ userId }) => userId,
 					width: '10%',
 					onCell: (_, index) => ({
-						rowSpan: index % 2 === 0 ? 2 : 0,
+						rowSpan: index % 5 === 0 ? 5 : 0,
 					}),
 					filter: getFilter,
 				},

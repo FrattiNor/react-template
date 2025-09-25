@@ -6,11 +6,12 @@ import useTableMeasureCol from '../useTableMeasureCol';
 import useTableObserver from '../useTableObserver';
 import useTableProps from '../useTableProps';
 import useTableResize from '../useTableResize';
+import useTableRowIndexs from '../useTableRowIndexs';
 import useTableRowSelection from '../useTableRowSelection';
 import useTableSecondaryState from '../useTableSecondaryState';
 import useTableState from '../useTableState';
 import useTableSticky from '../useTableSticky';
-import { useTableTools_1, useTableTools_2 } from '../useTableTools';
+import { useTableTools_1 } from '../useTableTools';
 import useTableVirtual from '../useTableVirtual';
 
 import type { TableDataItem, TableProps } from '../../TableTypes/type';
@@ -27,12 +28,12 @@ const useTableInstance = <T extends TableDataItem>(props: TableProps<T>) => {
 	const tableTools_1 = useTableTools_1({ tableProps });
 	// data
 	const tableData = useTableData({ tableProps, tableTools_1 });
-	//
+	// row select
 	const tableRowSelection = useTableRowSelection({ tableData, tableProps, tableTools_1 });
 	// column
 	const tableColumn = useTableColumn({ tableProps, tableRowSelection });
-	// 工具
-	const tableTools_2 = useTableTools_2({ tableColumn, tableData });
+	// rowIndexs
+	const tableRowIndexs = useTableRowIndexs({ tableColumn, tableData });
 	// cell bg
 	const tableCellBg = useTableCellBg({ tableState });
 	// measure
@@ -47,11 +48,6 @@ const useTableInstance = <T extends TableDataItem>(props: TableProps<T>) => {
 	const tableResize = useTableResize({ tableState, tableProps, tableColumn });
 	// observer
 	useTableObserver({ tableDomRef, tableState, tableMeasureCol, tableSecondaryState });
-	// 合并tableTools
-	const tableTools = {
-		...tableTools_1,
-		...tableTools_2,
-	};
 
 	// res
 	return {
@@ -62,11 +58,12 @@ const useTableInstance = <T extends TableDataItem>(props: TableProps<T>) => {
 		tableDomRef,
 		tableState,
 		tableSecondaryState,
-		tableTools,
+		tableTools: tableTools_1,
 		tableCellBg,
 		tableMeasureCol,
 		tableSticky,
 		tableVirtual,
+		tableRowIndexs,
 	};
 };
 

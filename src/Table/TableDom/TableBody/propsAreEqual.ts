@@ -10,10 +10,21 @@ export const getInstanceProps = <T extends TableDataItem>({ instance }: Readonly
 	const { datasource } = instance.tableData;
 	const { bodyRef } = instance.tableDomRef;
 	const { colMeasure } = instance.tableState;
-	const { getRowIndexs, getRowKey } = instance.tableTools;
+	const { rowIndexsRecord } = instance.tableRowIndexs;
+	const { getRowKey } = instance.tableTools;
 	const { gridTemplateColumnsArr } = instance.tableSecondaryState;
 	const { VV_measurementsCache, VV_totalSize, getRowShow } = instance.tableVirtual;
-	return { datasource, bodyRef, colMeasure, getRowIndexs, getRowKey, VV_measurementsCache, VV_totalSize, getRowShow, gridTemplateColumnsArr };
+	return {
+		datasource,
+		bodyRef,
+		colMeasure,
+		getRowKey,
+		VV_measurementsCache,
+		VV_totalSize,
+		getRowShow,
+		gridTemplateColumnsArr,
+		rowIndexsRecord,
+	};
 };
 
 export const getTotalInstanceProps = <T extends TableDataItem>({ instance }: Readonly<{ instance: Readonly<TableInstance<T>> }>) => {

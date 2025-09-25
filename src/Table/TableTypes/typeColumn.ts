@@ -80,4 +80,4 @@ export type InnerColumnGroup<T extends TableDataItem> = Omit<
 >;
 
 // 内部使用的column类型
-export type InnerColumn<T extends TableDataItem> = Omit<TableColumn<T> & { level: number }, 'children'>;
+export type InnerColumn<T extends TableDataItem> = Omit<TableColumn<T> & { level: number; index: number }, 'children'>;

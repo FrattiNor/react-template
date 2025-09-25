@@ -17,11 +17,12 @@ const useTableColumn = <T extends TableDataItem>({ tableProps, tableRowSelection
 	const { rowSelectionColumn } = tableRowSelection;
 
 	// 遍历columns
-	const { columnsFlat, columnGroups, columnsWidthKeys, columnsFixedKeys } = useMemo(() => {
+	const { columnsFlat, columnsFlatWidthOnCell, columnGroups, columnsWidthKeys, columnsFixedKeys } = useMemo(() => {
 		let colIndex = -1;
 		let columnsWidthKeys = '';
 		let columnsFixedKeys = '';
 		const columnsFlat: Array<InnerColumn<T>> = [];
+		const columnsFlatWidthOnCell: Array<InnerColumn<T>> = [];
 		const columnGroups: Array<Array<InnerColumnGroup<T>>> = [];
 		const colKeysObj: Record<string, number> = {};
 
@@ -41,6 +42,7 @@ const useTableColumn = <T extends TableDataItem>({ tableProps, tableRowSelection
 		// 添加column
 		const addColumnFlat = (column: InnerColumn<T>) => {
 			columnsFlat.push(column);
+			if (typeof column.onCell === 'function') columnsFlatWidthOnCell.push(column);
 			columnsWidthKeys += `_${column.key}&${column.width ?? 'default'}_`;
 			columnsFixedKeys += `_${column.key}&${column.fixed ?? 'default'}_`;
 		};
@@ -58,7 +60,7 @@ const useTableColumn = <T extends TableDataItem>({ tableProps, tableRowSelection
 					addColumnGroup({ ...(column as TableColumnGroup<T>), level, startIndex, endIndex });
 				} else {
 					colIndex++;
-					addColumnFlat({ ...(column as TableColumn<T>), level });
+					addColumnFlat({ ...(column as TableColumn<T>), level, index: colIndex });
 				}
 			});
 		};
@@ -67,12 +69,13 @@ const useTableColumn = <T extends TableDataItem>({ tableProps, tableRowSelection
 		if (rowSelectionColumn) totalColumns.unshift(rowSelectionColumn);
 		loopColumns(totalColumns, {}, 0);
 
-		return { columnGroups, columnsFlat, columnsWidthKeys, columnsFixedKeys };
+		return { columnsFlat, columnsFlatWidthOnCell, columnGroups, columnsWidthKeys, columnsFixedKeys };
 	}, [columns, rowSelectionColumn]);
 
 	return {
-		columnGroups,
 		columnsFlat,
+		columnsFlatWidthOnCell,
+		columnGroups,
 		columnsWidthKeys,
 		columnsFixedKeys,
 	};

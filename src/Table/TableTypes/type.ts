@@ -7,9 +7,12 @@ type ValueTypeKeys<T, Type> = { [K in keyof T]: T[K] extends Type ? K : never }[
 export type TableDataItem = Record<string, any>;
 
 export type TableHighlightConfig = {
-	trim?: boolean; // 清除首尾空格【默认false】
-	autoEscape?: boolean; // 自动转义【默认false】
-	caseSensitive?: boolean; // 大小写敏感【默认false】
+	// 清除首尾空格【默认false】
+	trim?: boolean;
+	// 自动转义【默认false】
+	autoEscape?: boolean;
+	// 大小写敏感【默认false】
+	caseSensitive?: boolean;
 };
 
 export type TableFilter = {
@@ -22,9 +25,14 @@ export type TableFilter = {
 };
 
 export type TableRowSelection<T extends TableDataItem> = {
+	// 外置选中key
 	selectedRowKeys?: string[];
+	// 外置选中key变更回调
 	onSelectedRowKeysChange?: Dispatch<SetStateAction<string[]>>;
+	// 获取checkbox的参数
 	getCheckboxProps?: (item: T) => { disabled?: boolean };
+	// TODO 主动清理选中key【data变更时自动删除不存在的key】
+	autoCleanByData?: boolean;
 };
 
 export type TableProps<T extends TableDataItem> = {
@@ -52,4 +60,6 @@ export type TableProps<T extends TableDataItem> = {
 	highlightKeywords?: string[];
 	// 文本高亮配置
 	highlightConfig?: TableHighlightConfig;
+	// TODO 虚拟滚动是否需要flushSync
+	virtualFlushSync?: boolean;
 };

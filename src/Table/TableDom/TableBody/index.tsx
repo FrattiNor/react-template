@@ -14,7 +14,7 @@ export type Props<T extends TableDataItem> = {
 };
 
 const TableBody = <T extends TableDataItem>(props: Props<T>) => {
-	const { datasource, bodyRef, colMeasure, getRowIndexs, getRowKey, VV_measurementsCache, VV_totalSize, getRowShow, gridTemplateColumnsArr } =
+	const { datasource, bodyRef, colMeasure, getRowKey, VV_measurementsCache, VV_totalSize, getRowShow, gridTemplateColumnsArr, rowIndexsRecord } =
 		getInstanceProps(props);
 
 	const gridTemplateColumns = gridTemplateColumnsArr.join(' ');
@@ -25,7 +25,9 @@ const TableBody = <T extends TableDataItem>(props: Props<T>) => {
 			const rowKeysObj: Record<string, number> = {};
 			let paddingTop: undefined | number = undefined;
 			const rowsDom = datasource.map((dataItem, rowIndex) => {
-				const rowIndexs = getRowIndexs(rowIndex);
+				const rowIndexStart = rowIndexsRecord[rowIndex]?.start ?? -1;
+				const rowIndexEnd = rowIndexsRecord[rowIndex]?.end ?? -1;
+				const rowIndexs = [rowIndexStart, rowIndexEnd] as [number, number];
 				const rowKey = getRowKey(dataItem, rowIndex);
 				// 检测存在重复rowKey
 				if (rowKeysObj[rowKey] === 1) console.error(`same row key: ${rowKey}`);
