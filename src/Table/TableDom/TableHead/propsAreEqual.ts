@@ -1,5 +1,4 @@
 import { getPropsAreEqual } from '../../TableUtils';
-import { getTotalInstanceProps as HeaderHeightRetainer_getInstanceProps } from './HeaderHeightRetainer/propsAreEqual';
 import { getTotalInstanceProps as HeadRow_getInstanceProps } from './HeadRow/propsAreEqual';
 
 import type { TableDataItem } from '../../TableTypes/type';
@@ -21,7 +20,6 @@ export const getInstanceProps = <T extends TableDataItem>({ instance }: Readonly
 export const getTotalInstanceProps = <T extends TableDataItem>({ instance }: Readonly<{ instance: Readonly<TableInstance<T>> }>) => {
 	return {
 		...getInstanceProps({ instance }),
-		...HeaderHeightRetainer_getInstanceProps({ instance }),
 		...HeadRow_getInstanceProps({ instance }),
 	};
 };

@@ -12,8 +12,10 @@ export const getInstanceProps = <T extends TableDataItem>({ instance }: Readonly
 	const { getRowKey } = instance.tableTools;
 	const { datasource } = instance.tableData;
 	const { columnsFlat } = instance.tableColumn;
+	const { getRowShow } = instance.tableVirtual;
 	const { getBodyCellBg, bodyRowClick, bodyRowMouseEnter, bodyRowMouseLeave } = instance.tableCellBg;
 	return {
+		getRowShow,
 		getRowKey,
 		columnsFlat,
 		datasource,

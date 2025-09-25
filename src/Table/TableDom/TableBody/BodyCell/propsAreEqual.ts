@@ -11,7 +11,7 @@ export const getProps = <T extends TableDataItem>({ rowIndex, colIndex }: Readon
 
 export const getInstanceProps = <T extends TableDataItem>({ instance }: Readonly<{ instance: Readonly<TableInstance<T>> }>) => {
 	const { getRowKeys } = instance.tableTools;
-	const { getColShow } = instance.tableVirtual;
+	const { getColShow, getRowShow } = instance.tableVirtual;
 	const { getStickyStyleAndClassName } = instance.tableSticky;
 	const { bordered, rowHeight } = instance.tableProps;
 	const { getBodyCellBg, bodyRowClick, bodyRowMouseEnter, bodyRowMouseLeave } = instance.tableCellBg;
@@ -19,6 +19,7 @@ export const getInstanceProps = <T extends TableDataItem>({ instance }: Readonly
 	const { datasource } = instance.tableData;
 	return {
 		getRowKeys,
+		getRowShow,
 		getColShow,
 		getStickyStyleAndClassName,
 		columnsFlat,

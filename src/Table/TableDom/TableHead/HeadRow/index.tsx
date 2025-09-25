@@ -4,6 +4,7 @@ import styles from './index.module.less';
 import HeadCell from '../HeadCell';
 import HeadCellPlaceholder from '../HeadCellPlaceholder';
 import propsAreEqual, { getInstanceProps, getProps } from './propsAreEqual';
+import HeaderHeightRetainer from '../HeaderHeightRetainer';
 
 import type { TableDataItem } from '../../../TableTypes/type';
 import type { TableInstance } from '../../../TableTypes/typeHooks';
@@ -18,11 +19,12 @@ const HeadRow = <T extends TableDataItem>(props: Props<T>) => {
 	const { columnsFlat } = getInstanceProps(props);
 
 	return (
-		<div className={styles['head-row']} data-row-index={rowIndex}>
+		<div data-row-index={rowIndex} className={styles['head-row']}>
 			{columnsFlat.map((column, colIndex) => (
 				<HeadCell key={column.key} rowIndex={rowIndex} colIndex={colIndex} instance={props.instance} />
 			))}
 			<HeadCellPlaceholder rowIndex={rowIndex} instance={props.instance} />
+			<HeaderHeightRetainer rowIndex={rowIndex} instance={props.instance} />
 		</div>
 	);
 };

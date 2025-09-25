@@ -1,27 +1,32 @@
-import { Fragment, memo } from 'react';
+import { memo } from 'react';
 
-import propsAreEqual, { getInstanceProps } from './propsAreEqual';
+import propsAreEqual, { getInstanceProps, getProps } from './propsAreEqual';
 
 import type { TableDataItem } from '../../../TableTypes/type';
 import type { TableInstance } from '../../../TableTypes/typeHooks';
 
 export type Props<T extends TableDataItem> = {
 	instance: TableInstance<T>;
+	rowIndex: number;
 };
 
 const HeaderHeightRetainer = <T extends TableDataItem>(props: Props<T>) => {
-	const { columnGroups, columnsFlat, rowHeight } = getInstanceProps(props);
-	const rowCount = columnGroups.length + 1;
-	const colCount = columnsFlat.length;
+	const { rowIndex } = getProps(props);
+	const { columnsFlat, rowHeight } = getInstanceProps(props);
+	const colMaxIndex = columnsFlat.length - 1;
 
 	return (
-		<Fragment>
-			{Array(rowCount)
-				.fill('')
-				.map((_, index) => (
-					<div key={index} style={{ gridRow: `${index + 1}/${index + 2}`, gridColumn: `1/${colCount + 1}`, minHeight: rowHeight }} />
-				))}
-		</Fragment>
+		<div
+			style={{
+				zIndex: -1,
+				opacity: 0,
+				userSelect: 'none',
+				pointerEvents: 'none',
+				minHeight: rowHeight,
+				gridRow: `${rowIndex + 1}/${rowIndex + 2}`,
+				gridColumn: `1/${colMaxIndex + 2}`,
+			}}
+		/>
 	);
 };
 

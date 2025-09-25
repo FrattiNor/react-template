@@ -22,7 +22,7 @@ const BodyRow = <T extends TableDataItem>(props: Props<T>) => {
 	const rowKey = getRowKey(rowData, rowIndex);
 
 	return (
-		<div key={rowKey} className={styles['body-row']} data-row-index={rowIndex}>
+		<div key={rowKey} data-row-index={rowIndex} className={styles['body-row']}>
 			{columnsFlat.map((column, colIndex) => {
 				return <BodyCell key={column.key} rowIndex={rowIndex} colIndex={colIndex} instance={props.instance} />;
 			})}

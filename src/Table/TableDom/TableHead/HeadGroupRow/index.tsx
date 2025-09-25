@@ -3,6 +3,7 @@ import { memo } from 'react';
 import styles from './index.module.less';
 import HeadGroupCell from '../HeadGroupCell';
 import propsAreEqual, { getInstanceProps, getProps } from './propsAreEqual';
+import HeaderHeightRetainer from '../HeaderHeightRetainer';
 
 import type { TableDataItem } from '../../../TableTypes/type';
 import type { TableInstance } from '../../../TableTypes/typeHooks';
@@ -18,10 +19,11 @@ const HeadGroupRow = <T extends TableDataItem>(props: Props<T>) => {
 	const headerColumnGroup = columnGroups[rowIndex];
 
 	return (
-		<div className={styles['head-row']}>
+		<div data-row-index={rowIndex} className={styles['head-row']}>
 			{headerColumnGroup.map((column, colIndex) => (
 				<HeadGroupCell key={column.key} rowIndex={rowIndex} colIndex={colIndex} instance={props.instance} />
 			))}
+			<HeaderHeightRetainer rowIndex={rowIndex} instance={props.instance} />
 		</div>
 	);
 };

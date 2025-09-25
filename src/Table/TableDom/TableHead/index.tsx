@@ -1,6 +1,5 @@
 import { memo } from 'react';
 
-import HeaderHeightRetainer from './HeaderHeightRetainer';
 import HeadGroupRow from './HeadGroupRow';
 import HeadRow from './HeadRow';
 import styles from './index.module.less';
@@ -25,7 +24,6 @@ const TableHead = <T extends TableDataItem>(props: Props<T>) => {
 					<HeadGroupRow key={rowIndex} rowIndex={rowIndex} instance={props.instance} />
 				))}
 				<HeadRow rowIndex={columnGroups.length} instance={props.instance} />
-				<HeaderHeightRetainer instance={props.instance} />
 			</div>
 		</div>
 	);

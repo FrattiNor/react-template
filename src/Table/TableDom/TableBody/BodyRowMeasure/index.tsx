@@ -12,7 +12,7 @@ export type Props<T extends TableDataItem> = {
 
 const BodyRowMeasure = <T extends TableDataItem>(props: Props<T>) => {
 	const { rowIndex } = getProps(props);
-	const { VV_measureElement, columnsFlat } = getInstanceProps(props);
+	const { VV_measureElement, columnsFlat, rowHeight } = getInstanceProps(props);
 	const colMaxIndex = columnsFlat.length - 1;
 
 	return (
@@ -24,6 +24,7 @@ const BodyRowMeasure = <T extends TableDataItem>(props: Props<T>) => {
 				opacity: 0,
 				userSelect: 'none',
 				pointerEvents: 'none',
+				minHeight: rowHeight,
 				gridRow: `${rowIndex + 1}/${rowIndex + 2}`,
 				gridColumn: `1/${colMaxIndex + 2}`,
 			}}

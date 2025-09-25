@@ -1,4 +1,5 @@
 import { getPropsAreEqual } from '../../../TableUtils';
+import { getTotalInstanceProps as HeaderHeightRetainer_getInstanceProps } from '../HeaderHeightRetainer/propsAreEqual';
 import { getTotalInstanceProps as HeadGroupCell_getInstanceProps } from '../HeadGroupCell/propsAreEqual';
 
 import type { Props } from './index';
@@ -20,6 +21,7 @@ export const getTotalInstanceProps = <T extends TableDataItem>({ instance }: Rea
 	return {
 		...getInstanceProps({ instance }),
 		...HeadGroupCell_getInstanceProps({ instance }),
+		...HeaderHeightRetainer_getInstanceProps({ instance }),
 	};
 };
 

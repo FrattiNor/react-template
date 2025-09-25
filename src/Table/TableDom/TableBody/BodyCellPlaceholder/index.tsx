@@ -13,7 +13,10 @@ export type Props<T extends TableDataItem> = {
 
 const BodyCellPlaceholder = <T extends TableDataItem>(props: Props<T>) => {
 	const { rowIndex } = getProps(props);
-	const { datasource, columnsFlat, getRowKey, getBodyCellBg, bodyRowClick, bodyRowMouseEnter, bodyRowMouseLeave } = getInstanceProps(props);
+	const { datasource, columnsFlat, getRowKey, getRowShow, getBodyCellBg, bodyRowClick, bodyRowMouseEnter, bodyRowMouseLeave } =
+		getInstanceProps(props);
+
+	if (getRowShow([rowIndex]) === false) return null;
 
 	const rowData = datasource[rowIndex];
 	const colMaxIndex = columnsFlat.length - 1;

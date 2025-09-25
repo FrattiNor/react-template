@@ -24,6 +24,7 @@ const BodyCell = <T extends TableDataItem>(props: Props<T>) => {
 		rowHeight,
 		columnsFlat,
 		getRowKeys,
+		getRowShow,
 		getColShow,
 		getBodyCellBg,
 		bodyRowClick,
@@ -39,6 +40,7 @@ const BodyCell = <T extends TableDataItem>(props: Props<T>) => {
 
 	if (rowSpan <= 0) return null;
 	if (colSpan <= 0) return null;
+	if (rowSpan === 1 && getRowShow([rowIndex]) === false) return null;
 
 	const colShow = getColShow(colIndexs);
 	const forceRender = column.forceRender;
