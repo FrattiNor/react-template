@@ -47,4 +47,4 @@ const TableDom = <T extends TableDataItem>({ instance }: Props<T>) => {
 	);
 };
 
-export default memo(TableDom);
+export default memo(TableDom) as typeof TableDom;
