@@ -22,6 +22,7 @@ const useTableVVirtual = <T extends TableDataItem>({ tableData, tableProps, tabl
 	const { rowHeight } = tableProps;
 	const { datasource } = tableData;
 	const { getRowKey } = tableTools_1;
+	const { virtualFlushSync } = tableProps;
 
 	// 竖向虚拟
 	const VV = useV({
@@ -30,6 +31,7 @@ const useTableVVirtual = <T extends TableDataItem>({ tableData, tableProps, tabl
 		estimateSize: () => rowHeight,
 		getScrollElement: () => bodyRef.current,
 		getItemKey: (index) => getRowKey(datasource?.[index], index),
+		virtualFlushSync,
 	});
 
 	const VV_totalSize = VV.getTotalSize();

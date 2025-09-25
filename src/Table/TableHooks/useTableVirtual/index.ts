@@ -19,7 +19,7 @@ type Props<T extends TableDataItem> = {
 };
 
 const useTableVirtual = <T extends TableDataItem>({ tableColumn, tableProps, tableDomRef, tableState, tableData, tableTools_1 }: Props<T>) => {
-	const { getColShow } = useTableHVirtual({ tableColumn, tableDomRef, tableState });
+	const { getColShow } = useTableHVirtual({ tableProps, tableColumn, tableDomRef, tableState });
 	const { VV_measureElement, VV_measurementsCache, VV_totalSize, getRowShow } = useTableVVirtual({
 		tableData,
 		tableProps,

@@ -7,9 +7,12 @@ import Table from '../Table';
 import { AppTableContext, useProvider } from './AppTableContext';
 import useColumns from './useColumns';
 import useData from './useData';
+import useFlushSync from './useFlushSync';
 import useKeyword from './useKeyword';
 
 const AppTable: FC = () => {
+	const { vfs, setVfs } = useFlushSync();
+
 	const { data, loading, fetchData, autoReload, setAutoReload } = useData();
 
 	const { globalHighlightKeywords, keyword, setKeyword } = useKeyword();
@@ -21,6 +24,8 @@ const AppTable: FC = () => {
 			<div className={styles['flex-container']}>
 				<span>{'reload:'}</span>
 				<Switch checked={autoReload} onChange={setAutoReload} />
+				<span>{'flushSync:'}</span>
+				<Switch checked={vfs} onChange={setVfs} />
 			</div>
 			<div className={styles['flex-container']}>
 				<span>{'keyword:'}</span>
@@ -48,6 +53,7 @@ const AppTable: FC = () => {
 					columns={columns}
 					loading={loading}
 					rowSelection={{}}
+					virtualFlushSync={vfs}
 					highlightKeywords={globalHighlightKeywords}
 					highlightConfig={{ trim: true, caseSensitive: true, autoEscape: true }}
 				/>

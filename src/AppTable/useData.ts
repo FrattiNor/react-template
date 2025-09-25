@@ -48,8 +48,8 @@ export type DataItem = ReturnType<typeof createRandomUser>;
 
 const useData = () => {
 	const { params } = useAppTableContext();
-	const [autoReload, setAutoReload] = useState(false);
 	const [loading, setLoading] = useState(false);
+	const [autoReload, setAutoReload] = useState(false);
 	const [data, setData] = useState<DataItem[]>(() => getData(20));
 
 	const fetchData = (count: number) => {

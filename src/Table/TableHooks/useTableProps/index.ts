@@ -13,6 +13,7 @@ type Props<T extends TableDataItem> = {
 const useTableProps = <T extends TableDataItem>({ props }: Props<T>) => {
 	const nextProps = {
 		...props,
+		virtualFlushSync: props.virtualFlushSync ?? true,
 		rowHeight: props.rowHeight ? FixedTwo(props.rowHeight) : 46,
 		// 避免组件内声明，触发重复渲染
 		highlightKeywords: useMemo(() => props.highlightKeywords, [JSON.stringify(props?.highlightKeywords)]),
