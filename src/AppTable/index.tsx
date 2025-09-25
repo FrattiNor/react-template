@@ -13,7 +13,7 @@ import useTableState from './useTableState';
 const AppTable: FC = () => {
 	const { vfs, setVfs, rowHover, setRowHover, rowClick, setRowClick, rowSelect, setRowSelect } = useTableState();
 
-	const { data, loading, fetchData, autoReload, setAutoReload } = useData();
+	const { data, loading, changeOriginData, autoReload, setAutoReload } = useData();
 
 	const { globalHighlightKeywords, keyword, setKeyword } = useKeyword();
 
@@ -42,14 +42,14 @@ const AppTable: FC = () => {
 				<button className={styles['btn']} onClick={() => setLongColumns(true)}>{`columns(17)`}</button>
 			</div>
 			<div className={styles['flex-container']}>
-				<button className={styles['btn']} onClick={() => fetchData(0)}>{`data(0)`}</button>
-				<button className={styles['btn']} onClick={() => fetchData(5)}>{`data(5)`}</button>
-				<button className={styles['btn']} onClick={() => fetchData(10)}>{`data(10)`}</button>
-				<button className={styles['btn']} onClick={() => fetchData(20)}>{`data(20)`}</button>
-				<button className={styles['btn']} onClick={() => fetchData(50)}>{`data(50)`}</button>
-				<button className={styles['btn']} onClick={() => fetchData(100)}>{`data(100)`}</button>
-				<button className={styles['btn']} onClick={() => fetchData(1000)}>{`data(1000)`}</button>
-				<button className={styles['btn']} onClick={() => fetchData(10000)}>{`data(10000)`}</button>
+				<button className={styles['btn']} onClick={() => changeOriginData(0)}>{`data(0)`}</button>
+				<button className={styles['btn']} onClick={() => changeOriginData(5)}>{`data(5)`}</button>
+				<button className={styles['btn']} onClick={() => changeOriginData(10)}>{`data(10)`}</button>
+				<button className={styles['btn']} onClick={() => changeOriginData(20)}>{`data(20)`}</button>
+				<button className={styles['btn']} onClick={() => changeOriginData(50)}>{`data(50)`}</button>
+				<button className={styles['btn']} onClick={() => changeOriginData(100)}>{`data(100)`}</button>
+				<button className={styles['btn']} onClick={() => changeOriginData(1000)}>{`data(1000)`}</button>
+				<button className={styles['btn']} onClick={() => changeOriginData(10000)}>{`data(10000)`}</button>
 			</div>
 			<div className={styles['table-wrapper']}>
 				<Table

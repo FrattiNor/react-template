@@ -50,22 +50,34 @@ const useData = () => {
 	const { params } = useAppTableContext();
 	const [loading, setLoading] = useState(false);
 	const [autoReload, setAutoReload] = useState(false);
-	const [data, setData] = useState<DataItem[]>(() => getData(20));
+	const [originData, setOriginData] = useState<DataItem[]>(() => getData(20));
+	const [data, setData] = useState<DataItem[]>(() => originData);
 
-	const fetchData = (count: number) => {
-		return new Promise((res) => {
+	const changeOriginData = (count: number) => {
+		setOriginData(getData(count));
+	};
+
+	useEffect(() => {
+		const nextData = originData.filter((item) => {
+			return Object.keys(params).every((paramsKey) => {
+				const itemValue = item[paramsKey as keyof DataItem];
+				if (itemValue === undefined) return true;
+				const paramsValue = params[paramsKey] as string;
+				if (typeof itemValue === 'string') return itemValue.includes(paramsValue);
+				if (typeof itemValue === 'number') return String(itemValue).includes(paramsValue);
+				if (itemValue instanceof Date) return itemValue.toString().includes(paramsValue);
+				return false;
+			});
+		});
+
+		new Promise((res) => {
 			setLoading(true);
 			setTimeout(() => res(0), 1000);
 		}).then(() => {
 			setLoading(false);
-			setData(getData(count));
+			setData(nextData);
 		});
-	};
-
-	useEffect(() => {
-		const count = data.length;
-		fetchData(count);
-	}, [params]);
+	}, [originData, params]);
 
 	// refetch
 	const timeoutRef = useRef<ReturnType<typeof setInterval> | null>(null);
@@ -73,17 +85,17 @@ const useData = () => {
 	useEffect(() => {
 		if (autoReload === true && loading === false) {
 			timeoutRef.current = setInterval(() => {
-				const count = data.length;
+				const count = originData.length;
 				console.log(`refresh data(${count})`);
-				fetchData(count);
+				changeOriginData(count);
 			}, 10000);
 			return () => {
 				if (timeoutRef.current) clearInterval(timeoutRef.current);
 			};
 		}
-	}, [data, loading, autoReload]);
+	}, [originData, loading, autoReload]);
 
-	return { data, loading, fetchData, autoReload, setAutoReload };
+	return { data, loading, changeOriginData, autoReload, setAutoReload };
 };
 
 export default useData;
