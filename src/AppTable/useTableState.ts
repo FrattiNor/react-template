@@ -6,7 +6,8 @@ const useTableState = () => {
 	const [rowClick, setRowClick] = useState(false);
 	const [rowSelect, setRowSelect] = useState(false);
 	const [bordered, setBordered] = useState(true);
-	return { bordered, setBordered, vfs, setVfs, rowHover, setRowHover, rowClick, setRowClick, rowSelect, setRowSelect };
+	const [lightTheme, setLightTheme] = useState(true);
+	return { lightTheme, setLightTheme, bordered, setBordered, vfs, setVfs, rowHover, setRowHover, rowClick, setRowClick, rowSelect, setRowSelect };
 };
 
 export default useTableState;

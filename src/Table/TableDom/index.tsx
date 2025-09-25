@@ -12,9 +12,10 @@ type Props<T extends TableDataItem> = {
 	instance: TableInstance<T>;
 };
 
+// TODO bordered 样式需要优化
 const TableDom = <T extends TableDataItem>({ instance }: Props<T>) => {
 	const { tableRef } = instance.tableDomRef;
-	const { bordered, loading } = instance.tableProps;
+	const { bordered, loading, theme } = instance.tableProps;
 	const { V_ScrollbarWidth, H_ScrollbarWidth } = instance.tableState;
 
 	return (
@@ -22,6 +23,8 @@ const TableDom = <T extends TableDataItem>({ instance }: Props<T>) => {
 			loading={loading}
 			wrapperRef={tableRef}
 			className={classNames(styles['table'], {
+				[styles['table-theme-dark']]: theme === 'dark',
+				[styles['table-theme-light']]: theme === 'light',
 				[styles['bordered']]: bordered,
 				[styles['have-scroll-v']]: V_ScrollbarWidth > 0,
 				[styles['not-have-scroll-v']]: V_ScrollbarWidth <= 0,

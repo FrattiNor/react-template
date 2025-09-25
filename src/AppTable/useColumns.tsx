@@ -76,8 +76,8 @@ const useAppTableColumns = () => {
 					title: '邮箱_3',
 					render: ({ email }) => email,
 					width: 300,
-					onCell: () => ({
-						colSpan: 2,
+					onCell: (_, index) => ({
+						colSpan: index % 2 ? 2 : 1,
 					}),
 					filter: getFilter,
 				},
@@ -86,8 +86,8 @@ const useAppTableColumns = () => {
 					title: '头像_4',
 					render: ({ avatar }) => avatar,
 					width: 300,
-					onCell: () => ({
-						colSpan: 0,
+					onCell: (_, index) => ({
+						colSpan: index % 2 ? 0 : 1,
 					}),
 					filter: getFilter,
 				},

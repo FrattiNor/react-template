@@ -11,7 +11,8 @@ import useKeyword from './useKeyword';
 import useTableState from './useTableState';
 
 const AppTable: FC = () => {
-	const { bordered, setBordered, vfs, setVfs, rowHover, setRowHover, rowClick, setRowClick, rowSelect, setRowSelect } = useTableState();
+	const { lightTheme, setLightTheme, bordered, setBordered, vfs, setVfs, rowHover, setRowHover, rowClick, setRowClick, rowSelect, setRowSelect } =
+		useTableState();
 
 	const { data, loading, changeOriginData, autoReload, setAutoReload } = useData();
 
@@ -22,6 +23,8 @@ const AppTable: FC = () => {
 	return (
 		<div className={styles['wrapper']}>
 			<div className={styles['flex-container']}>
+				<span>{'light:'}</span>
+				<Switch checked={lightTheme} onChange={setLightTheme} />
 				<span>{'bordered:'}</span>
 				<Switch checked={bordered} onChange={setBordered} />
 				<span>{'reload:'}</span>
@@ -62,6 +65,7 @@ const AppTable: FC = () => {
 					rowSelection={{}}
 					bordered={bordered}
 					virtualFlushSync={vfs}
+					theme={lightTheme ? 'light' : 'dark'}
 					highlightKeywords={globalHighlightKeywords}
 					rowBgHighlight={{ rowClick, rowHover, rowSelect }}
 					highlightConfig={{ trim: true, caseSensitive: true, autoEscape: true }}
