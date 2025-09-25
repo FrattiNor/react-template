@@ -1,20 +1,13 @@
 import { memo } from 'react';
 
-import propsAreEqual, { getInstanceProps, getProps } from './propsAreEqual';
-
-import type { TableDataItem } from '../../../TableTypes/type';
-import type { TableInstance } from '../../../TableTypes/typeHooks';
-
-export type Props<T extends TableDataItem> = {
-	instance: TableInstance<T>;
+export type Props = {
 	rowIndex: number;
+	VV_measureElement: (node: Element | null | undefined) => void;
+	colMaxIndex: number;
+	rowHeight: number;
 };
 
-const BodyRowMeasure = <T extends TableDataItem>(props: Props<T>) => {
-	const { rowIndex } = getProps(props);
-	const { VV_measureElement, columnsFlat, rowHeight } = getInstanceProps(props);
-	const colMaxIndex = columnsFlat.length - 1;
-
+const BodyRowMeasure = ({ rowHeight, rowIndex, VV_measureElement, colMaxIndex }: Props) => {
 	return (
 		<div
 			data-index={rowIndex}
@@ -32,5 +25,4 @@ const BodyRowMeasure = <T extends TableDataItem>(props: Props<T>) => {
 	);
 };
 
-// export default BodyRowMeasure;
-export default memo(BodyRowMeasure, propsAreEqual) as typeof BodyRowMeasure;
+export default memo(BodyRowMeasure);

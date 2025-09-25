@@ -14,9 +14,10 @@ type Props<T extends TableDataItem> = {
 
 const useTableDraggable = <T extends TableDataItem>({ tableProps, tableTools_1 }: Props<T>) => {
 	const { draggable } = tableProps;
+	const onDragEnd = draggable?.onDragEnd;
 	const haveDraggable = !!draggable;
 	const { getRowKey } = tableTools_1;
-	const [dragActiveItem, setDragActiveItem] = useState(null);
+	const [dragActiveItem, setDragActiveItem] = useState<{ rowKey: string; rowData: any; rowIndex: number } | null>(null);
 
 	const draggableColumn = useMemo(() => {
 		if (haveDraggable) {
@@ -39,7 +40,7 @@ const useTableDraggable = <T extends TableDataItem>({ tableProps, tableTools_1 }
 		return undefined;
 	}, [haveDraggable, getRowKey]);
 
-	return { haveDraggable, draggableColumn, dragActiveItem, setDragActiveItem };
+	return { haveDraggable, draggableColumn, dragActiveItem, setDragActiveItem, onDragEnd };
 };
 
 export default useTableDraggable;

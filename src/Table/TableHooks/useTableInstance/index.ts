@@ -63,6 +63,7 @@ const useTableInstance = <T extends TableDataItem>(props: TableProps<T>) => {
 		tableMeasureCol,
 		tableSticky,
 		tableVirtual,
+		tableDraggable,
 	};
 };
 

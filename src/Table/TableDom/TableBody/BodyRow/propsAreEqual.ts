@@ -1,7 +1,6 @@
 import { getPropsAreEqual } from '../../../TableUtils';
 import { getTotalInstanceProps as BodyCell_getInstanceProps } from '../BodyCell/propsAreEqual';
 import { getTotalInstanceProps as BodyCellPlaceholder_getInstanceProps } from '../BodyCellPlaceholder/propsAreEqual';
-import { getTotalInstanceProps as BodyRowMeasure_getInstanceProps } from '../BodyRowMeasure/propsAreEqual';
 
 import type { Props } from './index';
 import type { TableDataItem } from '../../../TableTypes/type';
@@ -15,7 +14,10 @@ export const getInstanceProps = <T extends TableDataItem>({ instance }: Readonly
 	const { getRowKey } = instance.tableTools;
 	const { datasource } = instance.tableData;
 	const { columnsFlat } = instance.tableColumn;
-	return { getRowKey, columnsFlat, datasource };
+	const { rowHeight } = instance.tableProps;
+	const { VV_measureElement } = instance.tableVirtual;
+	const { haveDraggable } = instance.tableDraggable;
+	return { getRowKey, VV_measureElement, columnsFlat, datasource, rowHeight, haveDraggable };
 };
 
 export const getTotalInstanceProps = <T extends TableDataItem>({ instance }: Readonly<{ instance: Readonly<TableInstance<T>> }>) => {
@@ -23,7 +25,6 @@ export const getTotalInstanceProps = <T extends TableDataItem>({ instance }: Rea
 		...getInstanceProps({ instance }),
 		...BodyCell_getInstanceProps({ instance }),
 		...BodyCellPlaceholder_getInstanceProps({ instance }),
-		...BodyRowMeasure_getInstanceProps({ instance }),
 	};
 };
 
