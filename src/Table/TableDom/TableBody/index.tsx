@@ -14,45 +14,23 @@ export type Props<T extends TableDataItem> = {
 };
 
 const TableBody = <T extends TableDataItem>(props: Props<T>) => {
-	const { datasource, bodyRef, colMeasure, getRowKey, VV_measurementsCache, VV_totalSize, getRowShow, gridTemplateColumnsArr, rowIndexsRecord } =
-		getInstanceProps(props);
-
+	const { datasource, bodyRef, colMeasure, getRowKey, VV_wrapperStyle, showRowIndexs, gridTemplateColumnsArr } = getInstanceProps(props);
 	const gridTemplateColumns = gridTemplateColumnsArr.join(' ');
 	const notEmpty = Array.isArray(datasource) && datasource.length > 0;
-
-	const bodyInner = (() => {
-		if (notEmpty) {
-			const rowKeysObj: Record<string, number> = {};
-			let paddingTop: undefined | number = undefined;
-			const rowsDom = datasource.map((dataItem, rowIndex) => {
-				const rowIndexStart = rowIndexsRecord[rowIndex]?.start ?? -1;
-				const rowIndexEnd = rowIndexsRecord[rowIndex]?.end ?? -1;
-				const rowIndexs = [rowIndexStart, rowIndexEnd] as [number, number];
-				const rowKey = getRowKey(dataItem, rowIndex);
-				// 检测存在重复rowKey
-				if (rowKeysObj[rowKey] === 1) console.error(`same row key: ${rowKey}`);
-				rowKeysObj[rowKey] = (rowKeysObj[rowKey] ?? 0) + 1;
-				// 检测存在重复rowKey
-				if (getRowShow(rowIndexs)) {
-					// eslint-disable-next-line react-compiler/react-compiler
-					if (paddingTop === undefined) paddingTop = VV_measurementsCache?.[rowIndex]?.start ?? 0;
-					return <BodyRow key={rowKey} rowIndex={rowIndex} instance={props.instance} />;
-				}
-			});
-			return (
-				<div className={styles['body-inner']} style={{ gridTemplateColumns, minHeight: VV_totalSize, paddingTop }}>
-					{rowsDom}
-				</div>
-			);
-		}
-		return null;
-	})();
 
 	return (
 		<div className={styles['body']} ref={bodyRef}>
 			{colMeasure.measure && <MeasureColumnSize instance={props.instance} />}
 			{!notEmpty && <BodyEmpty instance={props.instance} />}
-			{notEmpty && bodyInner}
+			{notEmpty && (
+				<div className={styles['body-inner']} style={{ gridTemplateColumns, ...VV_wrapperStyle }}>
+					{showRowIndexs.map(({ index: rowIndex }) => {
+						const rowData = datasource[rowIndex];
+						const rowKey = getRowKey(rowData, rowIndex);
+						return <BodyRow key={rowKey} rowIndex={rowIndex} instance={props.instance} />;
+					})}
+				</div>
+			)}
 		</div>
 	);
 };

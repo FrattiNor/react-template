@@ -6,7 +6,6 @@ import useTableMeasureCol from '../useTableMeasureCol';
 import useTableObserver from '../useTableObserver';
 import useTableProps from '../useTableProps';
 import useTableResize from '../useTableResize';
-import useTableRowIndexs from '../useTableRowIndexs';
 import useTableRowSelection from '../useTableRowSelection';
 import useTableSecondaryState from '../useTableSecondaryState';
 import useTableState from '../useTableState';
@@ -32,8 +31,6 @@ const useTableInstance = <T extends TableDataItem>(props: TableProps<T>) => {
 	const tableRowSelection = useTableRowSelection({ tableData, tableProps, tableTools_1 });
 	// column
 	const tableColumn = useTableColumn({ tableProps, tableRowSelection });
-	// rowIndexs
-	const tableRowIndexs = useTableRowIndexs({ tableColumn, tableData });
 	// cell bg
 	const tableCellBg = useTableCellBg({ tableState, tableProps, tableRowSelection });
 	// measure
@@ -63,7 +60,6 @@ const useTableInstance = <T extends TableDataItem>(props: TableProps<T>) => {
 		tableMeasureCol,
 		tableSticky,
 		tableVirtual,
-		tableRowIndexs,
 	};
 };
 

@@ -1,10 +1,11 @@
 /* eslint-disable react-compiler/react-compiler */
-import { useCallback, useMemo } from 'react';
+import { useCallback, useMemo, type CSSProperties } from 'react';
 
 import { type useTableTools_1 } from '../../useTableTools';
 import useV from '../useV/useV';
 
 import type { TableDataItem } from '../../../TableTypes/type';
+import type useTableColumn from '../../useTableColumn';
 import type useTableData from '../../useTableData';
 import type useTableDomRef from '../../useTableDomRef';
 import type useTableProps from '../../useTableProps';
@@ -14,15 +15,17 @@ type Props<T extends TableDataItem> = {
 	tableDomRef: ReturnType<typeof useTableDomRef>;
 	tableData: ReturnType<typeof useTableData<T>>;
 	tableTools_1: ReturnType<typeof useTableTools_1<T>>;
+	tableColumn: ReturnType<typeof useTableColumn<T>>;
 };
 
-const useTableVVirtual = <T extends TableDataItem>({ tableData, tableProps, tableDomRef, tableTools_1 }: Props<T>) => {
+const useTableVVirtual = <T extends TableDataItem>({ tableColumn, tableData, tableProps, tableDomRef, tableTools_1 }: Props<T>) => {
 	'use no memo';
 	const { bodyRef } = tableDomRef;
 	const { rowHeight } = tableProps;
 	const { datasource } = tableData;
 	const { getRowKey } = tableTools_1;
 	const { virtualFlushSync } = tableProps;
+	const { columnsFlatWidthOnCell } = tableColumn;
 
 	// 竖向虚拟
 	const VV = useV({
@@ -65,7 +68,50 @@ const useTableVVirtual = <T extends TableDataItem>({ tableData, tableProps, tabl
 		[VV_startIndex, VV_endIndex],
 	);
 
-	return { VV_measureElement, VV_totalSize, VV_measurementsCache, getRowShow };
+	const showRowIndexs = useMemo(() => {
+		const rowKeysObj: Record<string, number> = {};
+		const columnRowIndexs: Array<Array<{ start: number; end: number; span: number }>> = [];
+		const showRowIndexs: Array<{ index: number; start: number; end: number; span: number }> = [];
+
+		datasource.forEach((rowData, rowIndex) => {
+			// 检测存在重复rowKey
+			const rowKey = getRowKey(rowData, rowIndex);
+			if (rowKeysObj[rowKey] === 1) console.error(`same row key: ${rowKey}`);
+			rowKeysObj[rowKey] = (rowKeysObj[rowKey] ?? 0) + 1;
+			// 逻辑
+			let rowEnd = rowIndex;
+			let rowStart = rowIndex;
+			const currentRowColumnIndexs: Array<{ start: number; end: number; span: number }> = [];
+			columnsFlatWidthOnCell.forEach((column, colIndex) => {
+				let columnIndexs = { start: -1, end: -1, span: 0 };
+				const { start = -1, end = -1, span = 0 } = columnRowIndexs[rowIndex - 1]?.[colIndex] ?? {};
+				if (start <= rowIndex && end >= rowIndex) {
+					columnIndexs = { start, end, span };
+				} else {
+					const { rowSpan = 1 } = typeof column.onCell === 'function' ? column.onCell(rowData, rowIndex) : {};
+					columnIndexs = { start: rowIndex, end: rowIndex + rowSpan - 1, span: rowSpan };
+				}
+				currentRowColumnIndexs.push(columnIndexs);
+				if (columnIndexs.start < rowStart) rowStart = columnIndexs.start;
+				if (columnIndexs.end > rowEnd) rowEnd = columnIndexs.end;
+			});
+			columnRowIndexs.push(currentRowColumnIndexs);
+			if (getRowShow([rowStart, rowEnd])) {
+				showRowIndexs.push({ index: rowIndex, start: rowStart, end: rowEnd, span: rowEnd - rowStart + 1 });
+			}
+		});
+
+		return showRowIndexs;
+	}, [datasource, columnsFlatWidthOnCell, getRowShow, getRowKey]);
+
+	const VV_wrapperStyle = useMemo(() => {
+		const minHeight = VV_totalSize;
+		const paddingTop = VV_measurementsCache?.[showRowIndexs?.[0]?.index]?.start ?? 0;
+		const style: CSSProperties = { minHeight, paddingTop };
+		return style;
+	}, [showRowIndexs, VV_totalSize, VV_measurementsCache]);
+
+	return { VV_measureElement, VV_wrapperStyle, getRowShow, showRowIndexs };
 };
 
 export default useTableVVirtual;

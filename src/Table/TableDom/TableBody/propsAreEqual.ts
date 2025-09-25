@@ -10,20 +10,17 @@ export const getInstanceProps = <T extends TableDataItem>({ instance }: Readonly
 	const { datasource } = instance.tableData;
 	const { bodyRef } = instance.tableDomRef;
 	const { colMeasure } = instance.tableState;
-	const { rowIndexsRecord } = instance.tableRowIndexs;
 	const { getRowKey } = instance.tableTools;
 	const { gridTemplateColumnsArr } = instance.tableSecondaryState;
-	const { VV_measurementsCache, VV_totalSize, getRowShow } = instance.tableVirtual;
+	const { VV_wrapperStyle, showRowIndexs } = instance.tableVirtual;
 	return {
 		datasource,
 		bodyRef,
 		colMeasure,
 		getRowKey,
-		VV_measurementsCache,
-		VV_totalSize,
-		getRowShow,
+		VV_wrapperStyle,
+		showRowIndexs,
 		gridTemplateColumnsArr,
-		rowIndexsRecord,
 	};
 };
 

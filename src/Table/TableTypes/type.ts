@@ -35,6 +35,15 @@ export type TableRowSelection<T extends TableDataItem> = {
 	autoCleanByData?: boolean;
 };
 
+export type TableRowBgHighlight = {
+	// hover
+	rowHover?: boolean;
+	// click
+	rowClick?: boolean;
+	// select
+	rowSelect?: boolean;
+};
+
 export type TableProps<T extends TableDataItem> = {
 	// TODO 主题
 	theme?: 'light' | 'dark';
@@ -52,8 +61,6 @@ export type TableProps<T extends TableDataItem> = {
 	onResizeEnd?: (widths: Record<string, number>) => void;
 	// 表格loading状态
 	loading?: boolean;
-	// TODO 表格可展开
-	expandable?: undefined;
 	// 表格可选中
 	rowSelection?: TableRowSelection<T>;
 	// 全局高亮关键字
@@ -62,15 +69,10 @@ export type TableProps<T extends TableDataItem> = {
 	highlightConfig?: TableHighlightConfig;
 	// 虚拟滚动是否需要flushSync
 	virtualFlushSync?: boolean;
-	// TODO 可拖拽排序、和rowSpan冲突
-	draggable?: undefined;
 	// 行背景高亮
-	rowBgHighlight?: {
-		// hover
-		rowHover?: boolean;
-		// click
-		rowClick?: boolean;
-		// select
-		rowSelect?: boolean;
-	};
+	rowBgHighlight?: TableRowBgHighlight;
+	// TODO 表格可展开【和rowSpan冲突】
+	expandable?: undefined;
+	// TODO 可拖拽排序【和rowSpan冲突】
+	draggable?: undefined;
 };
