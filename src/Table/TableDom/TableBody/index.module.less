@@ -14,4 +14,24 @@
 		width: max-content;
 		box-sizing: border-box;
 	}
+
+	&::-webkit-scrollbar {
+		width: 10px;
+		height: 10px;
+		background-color: var(--table-scroll-bar-bg);
+	}
+
+	&::-webkit-scrollbar-corner {
+		background-color: var(--table-scroll-bar-bg);
+	}
+
+	&::-webkit-scrollbar-thumb {
+		background-color: var(--table-scroll-bar-color);
+		border-radius: 2px;
+	}
+
+	&::-webkit-scrollbar-thumb:hover,
+	&::-webkit-scrollbar-thumb:active {
+		background-color: var(--table-scroll-bar-active-color);
+	}
 }

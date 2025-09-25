@@ -35,15 +35,15 @@ const BodyCell = <T extends TableDataItem>(props: Props<T>) => {
 
 	const rowData = datasource[rowIndex];
 	const column = columnsFlat[colIndex];
+	const forceRender = column.forceRender;
 	const { rowSpan = 1, colSpan = 1, title: onCellTitle = undefined } = column.onCell ? column.onCell(rowData, rowIndex) : {};
 	const colIndexs = useMemo(() => [colIndex, colIndex + colSpan - 1] as [number, number], [colIndex, colSpan]);
 
 	if (rowSpan <= 0) return null;
 	if (colSpan <= 0) return null;
-	if (rowSpan === 1 && getRowShow([rowIndex]) === false) return null;
+	if (forceRender !== true && rowSpan === 1 && getRowShow([rowIndex]) === false) return null;
 
 	const colShow = getColShow(colIndexs);
-	const forceRender = column.forceRender;
 	const { stickyStyle, stickyClassName, sticky } = getStickyStyleAndClassName({ colIndexs, type: 'body' });
 	if (!(colShow === true || forceRender === true || sticky === true)) return null;
 

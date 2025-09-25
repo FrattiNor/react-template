@@ -49,6 +49,12 @@
 	--table-highlight-color: #f5222d;
 	// 表格固定阴影颜色
 	--table-sticky-box-shadow-color: rgba(17, 17, 17, 0.13);
+	//
+	--table-scroll-bar-bg: rgba(0, 0, 0, 0.03);
+	//
+	--table-scroll-bar-color: rgba(0, 0, 0, 0.3);
+	//
+	--table-scroll-bar-active-color: rgba(0, 0, 0, 0.35);
 }
 
 .table-theme-dark {
@@ -104,6 +110,12 @@
 	--table-highlight-color: #f5222d;
 	// 表格固定阴影颜色
 	--table-sticky-box-shadow-color: rgba(255, 255, 255, 0.3);
+	//
+	--table-scroll-bar-bg: rgba(255, 255, 255, 0.03);
+	//
+	--table-scroll-bar-color: rgba(255, 255, 255, 0.3);
+	//
+	--table-scroll-bar-active-color: rgba(255, 255, 255, 0.35);
 }
 
 .table {
@@ -155,25 +167,5 @@
 				background-color: var(--table-cell-border-color);
 			}
 		}
-	}
-
-	::-webkit-scrollbar {
-		width: 10px;
-		height: 10px;
-		background-color: rgba(0, 0, 0, 0.03);
-	}
-
-	::-webkit-scrollbar-corner {
-		background-color: rgba(0, 0, 0, 0.03);
-	}
-
-	::-webkit-scrollbar-thumb {
-		background-color: rgba(0, 0, 0, 0.3);
-		border-radius: 2px;
-	}
-
-	::-webkit-scrollbar-thumb:hover,
-	::-webkit-scrollbar-thumb:active {
-		background-color: rgba(0, 0, 0, 0.35);
 	}
 }

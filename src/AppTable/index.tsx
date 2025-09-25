@@ -21,7 +21,7 @@ const AppTable: FC = () => {
 	const { columns, setLongColumns } = useColumns();
 
 	return (
-		<div className={styles['wrapper']}>
+		<div className={styles['wrapper']} style={{ background: lightTheme ? '#fff' : '#141414', color: lightTheme ? '#262626' : '#f2f2f2' }}>
 			<div className={styles['flex-container']}>
 				<span>{'light:'}</span>
 				<Switch checked={lightTheme} onChange={setLightTheme} />

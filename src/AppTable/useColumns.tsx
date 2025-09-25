@@ -45,12 +45,13 @@ const useAppTableColumns = () => {
 						{
 							width: 300,
 							key: 'firstName',
+							forceRender: true,
 							title: 'firstName_0',
 							render: ({ firstName }) => (
 								<div
 									style={{
 										color: '#fff',
-										padding: '2px 6px',
+										padding: '12px 6px',
 										borderRadius: '4px',
 										display: 'inline-block',
 										backgroundColor: 'rgba(0,0,0,0.25)',
