@@ -11,7 +11,7 @@ import useKeyword from './useKeyword';
 import useTableState from './useTableState';
 
 const AppTable: FC = () => {
-	const { vfs, setVfs, rowHover, setRowHover, rowClick, setRowClick, rowSelect, setRowSelect } = useTableState();
+	const { bordered, setBordered, vfs, setVfs, rowHover, setRowHover, rowClick, setRowClick, rowSelect, setRowSelect } = useTableState();
 
 	const { data, loading, changeOriginData, autoReload, setAutoReload } = useData();
 
@@ -22,6 +22,8 @@ const AppTable: FC = () => {
 	return (
 		<div className={styles['wrapper']}>
 			<div className={styles['flex-container']}>
+				<span>{'bordered:'}</span>
+				<Switch checked={bordered} onChange={setBordered} />
 				<span>{'reload:'}</span>
 				<Switch checked={autoReload} onChange={setAutoReload} />
 				<span>{'flushSync:'}</span>
@@ -53,12 +55,12 @@ const AppTable: FC = () => {
 			</div>
 			<div className={styles['table-wrapper']}>
 				<Table
-					bordered
 					data={data}
 					rowKey="userId"
 					columns={columns}
 					loading={loading}
 					rowSelection={{}}
+					bordered={bordered}
 					virtualFlushSync={vfs}
 					highlightKeywords={globalHighlightKeywords}
 					rowBgHighlight={{ rowClick, rowHover, rowSelect }}

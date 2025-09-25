@@ -5,7 +5,8 @@ const useTableState = () => {
 	const [rowHover, setRowHover] = useState(false);
 	const [rowClick, setRowClick] = useState(false);
 	const [rowSelect, setRowSelect] = useState(false);
-	return { vfs, setVfs, rowHover, setRowHover, rowClick, setRowClick, rowSelect, setRowSelect };
+	const [bordered, setBordered] = useState(true);
+	return { bordered, setBordered, vfs, setVfs, rowHover, setRowHover, rowClick, setRowClick, rowSelect, setRowSelect };
 };
 
 export default useTableState;
