@@ -60,6 +60,17 @@ export type TableProps<T extends TableDataItem> = {
 	highlightKeywords?: string[];
 	// 文本高亮配置
 	highlightConfig?: TableHighlightConfig;
-	// TODO 虚拟滚动是否需要flushSync
+	// 虚拟滚动是否需要flushSync
 	virtualFlushSync?: boolean;
+	// TODO 可拖拽排序、和rowSpan冲突
+	draggable?: undefined;
+	// 行背景高亮
+	rowBgHighlight?: {
+		// hover
+		rowHover?: boolean;
+		// click
+		rowClick?: boolean;
+		// select
+		rowSelect?: boolean;
+	};
 };

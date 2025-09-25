@@ -35,7 +35,7 @@ const useTableInstance = <T extends TableDataItem>(props: TableProps<T>) => {
 	// rowIndexs
 	const tableRowIndexs = useTableRowIndexs({ tableColumn, tableData });
 	// cell bg
-	const tableCellBg = useTableCellBg({ tableState });
+	const tableCellBg = useTableCellBg({ tableState, tableProps, tableRowSelection });
 	// measure
 	const tableMeasureCol = useTableMeasureCol({ tableState, tableColumn });
 	// second state

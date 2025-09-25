@@ -178,6 +178,18 @@ const useAppTableColumns = () => {
 					filter: getFilter,
 				},
 				{
+					key: 'jobType',
+					title: '工作类型_15',
+					render: ({ jobType }) => jobType,
+					width: 300,
+					fixed: 'right',
+					sort: {
+						sorted: 'ascend',
+						sortDirections: ['ascend', 'descend'],
+					},
+					filter: getFilter,
+				},
+				{
 					key: 'nameGroup22',
 					title: 'NameGroup',
 					children: [
@@ -217,18 +229,6 @@ const useAppTableColumns = () => {
 						},
 					],
 				},
-				{
-					key: 'jobType',
-					title: '工作类型_15',
-					render: ({ jobType }) => jobType,
-					width: 300,
-					fixed: 'right',
-					sort: {
-						sorted: 'ascend',
-						sortDirections: ['ascend', 'descend'],
-					},
-					filter: getFilter,
-				},
 			];
 
 			return columns1;
@@ -257,9 +257,6 @@ const useAppTableColumns = () => {
 				title: '邮箱_3',
 				render: ({ email }) => email,
 				width: 300,
-				onCell: () => ({
-					colSpan: 2,
-				}),
 				filter: getFilter,
 			},
 			{

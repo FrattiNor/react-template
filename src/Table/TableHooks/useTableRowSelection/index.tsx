@@ -111,7 +111,7 @@ const useTableRowSelection = <T extends TableDataItem>({ tableProps, tableData, 
 		return column;
 	}, [haveRowSelection, datasource, selectRowKeysObj, getRowKey]);
 
-	return { rowSelectionColumn };
+	return { rowSelectionColumn, selectRowKeysObj };
 };
 
 export default useTableRowSelection;

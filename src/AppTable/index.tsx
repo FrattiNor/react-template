@@ -7,11 +7,11 @@ import Table from '../Table';
 import { AppTableContext, useProvider } from './AppTableContext';
 import useColumns from './useColumns';
 import useData from './useData';
-import useFlushSync from './useFlushSync';
 import useKeyword from './useKeyword';
+import useTableState from './useTableState';
 
 const AppTable: FC = () => {
-	const { vfs, setVfs } = useFlushSync();
+	const { vfs, setVfs, rowHover, setRowHover, rowClick, setRowClick, rowSelect, setRowSelect } = useTableState();
 
 	const { data, loading, fetchData, autoReload, setAutoReload } = useData();
 
@@ -26,6 +26,12 @@ const AppTable: FC = () => {
 				<Switch checked={autoReload} onChange={setAutoReload} />
 				<span>{'flushSync:'}</span>
 				<Switch checked={vfs} onChange={setVfs} />
+				<span>{'rowHoverBg:'}</span>
+				<Switch checked={rowHover} onChange={setRowHover} />
+				<span>{'rowClickBg:'}</span>
+				<Switch checked={rowClick} onChange={setRowClick} />
+				<span>{'rowSelectBg:'}</span>
+				<Switch checked={rowSelect} onChange={setRowSelect} />
 			</div>
 			<div className={styles['flex-container']}>
 				<span>{'keyword:'}</span>
@@ -55,6 +61,7 @@ const AppTable: FC = () => {
 					rowSelection={{}}
 					virtualFlushSync={vfs}
 					highlightKeywords={globalHighlightKeywords}
+					rowBgHighlight={{ rowClick, rowHover, rowSelect }}
 					highlightConfig={{ trim: true, caseSensitive: true, autoEscape: true }}
 				/>
 			</div>
