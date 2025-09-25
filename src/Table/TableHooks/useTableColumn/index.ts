@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 
 import type { TableDataItem, TableProps } from '../../TableTypes/type';
-import type { InnerColumn, InnerColumnGroup, TableColumnGroup, TableColumn } from '../../TableTypes/typeColumn';
+import type { InnerColumn, InnerColumnGroup, TableColumnGroup, TableColumn, TableColumnOnCell } from '../../TableTypes/typeColumn';
 import type useTableProps from '../useTableProps';
 import type useTableRowSelection from '../useTableRowSelection';
 
@@ -13,7 +13,8 @@ type Props<T extends TableDataItem> = {
 // column处理
 const useTableColumn = <T extends TableDataItem>({ tableProps, tableRowSelection }: Props<T>) => {
 	// 内部使用，使用断言赋予类别
-	const { columns } = tableProps as TableProps<T>;
+	const { columns } = tableProps as unknown as TableProps<T>;
+	const { disabledRowSpan } = tableProps;
 	const { rowSelectionColumn } = tableRowSelection;
 
 	// 遍历columns
@@ -39,10 +40,25 @@ const useTableColumn = <T extends TableDataItem>({ tableProps, tableRowSelection
 			columnGroups[column.level].push(column);
 		};
 
+		// 根据disabledRowSpan 替换onCell
+		const replaceOnCell = (column: InnerColumn<T>) => {
+			if (disabledRowSpan === true && typeof column.onCell === 'function') {
+				const nextColumn = { ...column };
+				const onCell: TableColumnOnCell<T> = (item, index) => {
+					if (typeof column.onCell === 'function') return { ...column.onCell(item, index), rowSpan: 1 };
+					return { rowSpan: 1 };
+				};
+				nextColumn.onCell = onCell;
+				return nextColumn;
+			}
+			return column;
+		};
+
 		// 添加column
 		const addColumnFlat = (column: InnerColumn<T>) => {
-			columnsFlat.push(column);
-			if (typeof column.onCell === 'function') columnsFlatWidthOnCell.push(column);
+			const _column = replaceOnCell(column);
+			columnsFlat.push(_column);
+			if (typeof column.onCell === 'function') columnsFlatWidthOnCell.push(_column);
 			columnsWidthKeys += `_${column.key}&${column.width ?? 'default'}_`;
 			columnsFixedKeys += `_${column.key}&${column.fixed ?? 'default'}_`;
 		};
@@ -70,7 +86,7 @@ const useTableColumn = <T extends TableDataItem>({ tableProps, tableRowSelection
 		loopColumns(totalColumns, {}, 0);
 
 		return { columnsFlat, columnsFlatWidthOnCell, columnGroups, columnsWidthKeys, columnsFixedKeys };
-	}, [columns, rowSelectionColumn]);
+	}, [columns, rowSelectionColumn, disabledRowSpan]);
 
 	return {
 		columnsFlat,

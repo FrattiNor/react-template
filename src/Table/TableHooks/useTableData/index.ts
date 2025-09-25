@@ -13,7 +13,7 @@ type Props<T extends TableDataItem> = {
 // data处理
 const useTableData = <T extends TableDataItem>({ tableProps, tableTools_1 }: Props<T>) => {
 	// 内部使用，使用断言赋予类别
-	const { data } = tableProps as TableProps<T>;
+	const { data } = tableProps as unknown as TableProps<T>;
 	const { getRowKey } = tableTools_1;
 
 	const { dataKeys, dataKeysObj } = useMemo(() => {

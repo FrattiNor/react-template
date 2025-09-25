@@ -71,8 +71,8 @@ export type TableProps<T extends TableDataItem> = {
 	virtualFlushSync?: boolean;
 	// 行背景高亮
 	rowBgHighlight?: TableRowBgHighlight;
-	// TODO 表格可展开【和rowSpan冲突】
+	// TODO 表格可展开【和onCell的rowSpan冲突】
 	expandable?: undefined;
-	// TODO 可拖拽排序【和rowSpan冲突】【和expandable冲突】
+	// TODO 可拖拽排序【和onCell的rowSpan冲突】【和expandable冲突】
 	draggable?: undefined;
 };

@@ -2,7 +2,7 @@ import type { ReactNode } from 'react';
 
 import type { TableDataItem, TableFilter } from './type';
 
-type TableColumnOnCell<T extends TableDataItem> = (
+export type TableColumnOnCell<T extends TableDataItem> = (
 	item: T,
 	index: number,
 ) => {
