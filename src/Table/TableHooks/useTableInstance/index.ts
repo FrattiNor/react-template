@@ -2,6 +2,7 @@ import useTableCellBg from '../useTableCellBg';
 import useTableColumn from '../useTableColumn';
 import useTableData from '../useTableData';
 import useTableDomRef from '../useTableDomRef';
+import useTableDraggable from '../useTableDraggable';
 import useTableMeasureCol from '../useTableMeasureCol';
 import useTableObserver from '../useTableObserver';
 import useTableProps from '../useTableProps';
@@ -27,10 +28,12 @@ const useTableInstance = <T extends TableDataItem>(props: TableProps<T>) => {
 	const tableTools_1 = useTableTools_1({ tableProps });
 	// data
 	const tableData = useTableData({ tableProps, tableTools_1 });
+	// draggable
+	const tableDraggable = useTableDraggable({ tableProps, tableTools_1 });
 	// row select
 	const tableRowSelection = useTableRowSelection({ tableData, tableProps, tableTools_1 });
 	// column
-	const tableColumn = useTableColumn({ tableProps, tableRowSelection });
+	const tableColumn = useTableColumn({ tableProps, tableRowSelection, tableDraggable });
 	// cell bg
 	const tableCellBg = useTableCellBg({ tableState, tableProps, tableRowSelection });
 	// measure

@@ -2,19 +2,22 @@ import { useMemo } from 'react';
 
 import type { TableDataItem, TableProps } from '../../TableTypes/type';
 import type { InnerColumn, InnerColumnGroup, TableColumnGroup, TableColumn, TableColumnOnCell } from '../../TableTypes/typeColumn';
+import type useTableDraggable from '../useTableDraggable';
 import type useTableProps from '../useTableProps';
 import type useTableRowSelection from '../useTableRowSelection';
 
 type Props<T extends TableDataItem> = {
 	tableProps: ReturnType<typeof useTableProps<T>>;
 	tableRowSelection: ReturnType<typeof useTableRowSelection<T>>;
+	tableDraggable: ReturnType<typeof useTableDraggable<T>>;
 };
 
 // column处理
-const useTableColumn = <T extends TableDataItem>({ tableProps, tableRowSelection }: Props<T>) => {
+const useTableColumn = <T extends TableDataItem>({ tableProps, tableRowSelection, tableDraggable }: Props<T>) => {
 	// 内部使用，使用断言赋予类别
 	const { columns } = tableProps as unknown as TableProps<T>;
 	const { disabledRowSpan } = tableProps;
+	const { draggableColumn } = tableDraggable;
 	const { rowSelectionColumn } = tableRowSelection;
 
 	// 遍历columns
@@ -83,10 +86,11 @@ const useTableColumn = <T extends TableDataItem>({ tableProps, tableRowSelection
 
 		const totalColumns = [...columns];
 		if (rowSelectionColumn) totalColumns.unshift(rowSelectionColumn);
+		if (draggableColumn) totalColumns.unshift(draggableColumn);
 		loopColumns(totalColumns, {}, 0);
 
 		return { columnsFlat, columnsFlatWidthOnCell, columnGroups, columnsWidthKeys, columnsFixedKeys };
-	}, [columns, rowSelectionColumn, disabledRowSpan]);
+	}, [columns, rowSelectionColumn, draggableColumn, disabledRowSpan]);
 
 	return {
 		columnsFlat,

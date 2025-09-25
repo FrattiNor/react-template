@@ -44,6 +44,10 @@ export type TableRowBgHighlight = {
 	rowSelect?: boolean;
 };
 
+export type TableDraggable = {
+	onDragEnd: (params: { activeId: string; overId: string; arrayMove: <T>(array: T[], from: number, to: number) => T[] }) => void;
+};
+
 export type TableProps<T extends TableDataItem> = {
 	// TODO 主题 dark需优化
 	theme?: 'light' | 'dark';
@@ -74,5 +78,5 @@ export type TableProps<T extends TableDataItem> = {
 	// TODO 表格可展开【和onCell的rowSpan冲突】
 	expandable?: undefined;
 	// TODO 可拖拽排序【和onCell的rowSpan冲突】【和expandable冲突】
-	draggable?: undefined;
+	draggable?: TableDraggable;
 };

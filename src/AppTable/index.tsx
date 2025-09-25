@@ -69,6 +69,7 @@ const AppTable: FC = () => {
 					highlightKeywords={globalHighlightKeywords}
 					rowBgHighlight={{ rowClick, rowHover, rowSelect }}
 					highlightConfig={{ trim: true, caseSensitive: true, autoEscape: true }}
+					draggable={{ onDragEnd: () => {} }}
 				/>
 			</div>
 		</div>
