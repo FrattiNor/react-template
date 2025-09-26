@@ -32,7 +32,7 @@ const useAppTableColumns = () => {
 					fixed: 'left',
 					key: 'index',
 					title: 'Index',
-					render: (_, { index }) => index,
+					render: ({ index }) => index,
 				},
 				{
 					fixed: 'left',

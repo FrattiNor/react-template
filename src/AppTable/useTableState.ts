@@ -1,13 +1,15 @@
 import { useState } from 'react';
 
+const isDev = process.env.NODE_ENV === 'development';
+
 const useTableState = () => {
-	const [vfs, setVfs] = useState(false);
+	const [vfs, setVfs] = useState(!isDev);
 	const [rowHover, setRowHover] = useState(false);
 	const [rowClick, setRowClick] = useState(false);
 	const [rowSelect, setRowSelect] = useState(false);
 	const [bordered, setBordered] = useState(true);
 	const [lightTheme, setLightTheme] = useState(true);
-	const [draggable, setDraggable] = useState(true);
+	const [draggable, setDraggable] = useState(false);
 	return {
 		draggable,
 		setDraggable,
