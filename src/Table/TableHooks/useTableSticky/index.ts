@@ -51,7 +51,13 @@ const useTableSticky = <T extends TableDataItem>({ tableSecondaryState, tableSta
 				const lastPinged = colStartIndex === pingedRightLast;
 				if (pinged) className = classNames(className, styles['pinged']);
 				if (firstPinged) className = classNames(className, styles['first-pinged']);
-				if (lastPinged) className = classNames(className, styles['last-pinged']);
+				if (lastPinged) {
+					if (type === 'head') {
+						className = classNames(className, styles['last-pinged']);
+					} else if (V_ScrollbarWidth <= 0) {
+						className = classNames(className, styles['last-pinged']);
+					}
+				}
 				return { stickyStyle: style, stickyClassName: className, sticky: true };
 			}
 
