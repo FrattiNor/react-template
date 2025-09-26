@@ -13,10 +13,11 @@ export type Props<T extends TableDataItem> = {
 	instance: TableInstance<T>;
 	rowIndex: number;
 	colIndex: number;
+	forceRender?: boolean; // 提供给overlay强制渲染
 };
 
 const BodyCell = <T extends TableDataItem>(props: Props<T>) => {
-	const { colIndex, rowIndex } = getProps(props);
+	const { colIndex, rowIndex, forceRender: propsForceRender } = getProps(props);
 
 	const {
 		datasource,
@@ -35,7 +36,8 @@ const BodyCell = <T extends TableDataItem>(props: Props<T>) => {
 
 	const rowData = datasource[rowIndex];
 	const column = columnsFlat[colIndex];
-	const forceRender = column.forceRender;
+	const columnForceRender = column.forceRender;
+	const forceRender = propsForceRender || columnForceRender;
 	const { rowSpan = 1, colSpan = 1, title: onCellTitle = undefined } = column.onCell ? column.onCell(rowData, rowIndex) : {};
 	const colIndexs = useMemo(() => [colIndex, colIndex + colSpan - 1] as [number, number], [colIndex, colSpan]);
 
