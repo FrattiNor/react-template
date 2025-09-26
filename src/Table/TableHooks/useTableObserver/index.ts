@@ -38,30 +38,26 @@ const useTableObserver = ({ tableDomRef, tableState, tableSecondaryState }: Prop
 		if (typeof bodyScrollLeft === 'number' && typeof bodyScrollWidth === 'number' && typeof bodyClientWidth === 'number') {
 			const scrollLeft = bodyScrollLeft;
 			const scrollRight = bodyScrollWidth - bodyClientWidth - bodyScrollLeft;
-			// 计算固定的index数组
-			const leftPingedIndexsArr: number[] = [];
-			const rightPingedIndexsArr: number[] = [];
+			// 计算固定的index
+			let leftPingedFirst: number | undefined = undefined;
+			let leftPingedLast: number | undefined = undefined;
+			let rightPingedFirst: number | undefined = undefined;
+			let rightPingedLast: number | undefined = undefined;
+
 			Object.values(fixedLeftObj).forEach(({ pingedSize, index }) => {
-				const pinged = scrollLeft > pingedSize;
-				if (pinged) leftPingedIndexsArr.push(index);
+				if (scrollLeft > pingedSize) {
+					if (leftPingedFirst === undefined) leftPingedFirst = index;
+					if (leftPingedLast === undefined || leftPingedLast < index) leftPingedLast = index;
+				}
 			});
+
 			Object.values(fixedRightObj).forEach(({ pingedSize, index }) => {
-				const pinged = scrollRight > pingedSize;
-				if (pinged) rightPingedIndexsArr.push(index);
+				if (scrollRight > pingedSize) {
+					if (rightPingedFirst === undefined) rightPingedFirst = index;
+					if (rightPingedLast === undefined || rightPingedLast < index) rightPingedLast = index;
+				}
 			});
-			// 计算index fist last
-			let leftPingedFirst = undefined;
-			let leftPingedLast = undefined;
-			let rightPingedFirst = undefined;
-			let rightPingedLast = undefined;
-			if (leftPingedIndexsArr.length > 0) {
-				leftPingedFirst = leftPingedIndexsArr[0];
-				leftPingedLast = leftPingedIndexsArr[leftPingedIndexsArr.length - 1];
-			}
-			if (rightPingedIndexsArr.length > 0) {
-				rightPingedFirst = rightPingedIndexsArr[0];
-				rightPingedLast = rightPingedIndexsArr[rightPingedIndexsArr.length - 1];
-			}
+
 			startTransition(() => {
 				setPingedLeftFirst(leftPingedFirst);
 				setPingedLeftLast(leftPingedLast);
