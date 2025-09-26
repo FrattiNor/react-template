@@ -27,5 +27,4 @@ const HeadCellPlaceholder = <T extends TableDataItem>(props: Props<T>) => {
 	);
 };
 
-// export default HeadCellPlaceholder;
 export default memo(HeadCellPlaceholder, propsAreEqual) as typeof HeadCellPlaceholder;

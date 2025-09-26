@@ -7,7 +7,23 @@ const useTableState = () => {
 	const [rowSelect, setRowSelect] = useState(false);
 	const [bordered, setBordered] = useState(true);
 	const [lightTheme, setLightTheme] = useState(true);
-	return { lightTheme, setLightTheme, bordered, setBordered, vfs, setVfs, rowHover, setRowHover, rowClick, setRowClick, rowSelect, setRowSelect };
+	const [draggable, setDraggable] = useState(true);
+	return {
+		draggable,
+		setDraggable,
+		lightTheme,
+		setLightTheme,
+		bordered,
+		setBordered,
+		vfs,
+		setVfs,
+		rowHover,
+		setRowHover,
+		rowClick,
+		setRowClick,
+		rowSelect,
+		setRowSelect,
+	};
 };
 
 export default useTableState;

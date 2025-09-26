@@ -54,5 +54,4 @@ const HeadGroupCell = <T extends TableDataItem>(props: Props<T>) => {
 	);
 };
 
-// export default HeadGroupCell;
 export default memo(HeadGroupCell, propsAreEqual) as typeof HeadGroupCell;

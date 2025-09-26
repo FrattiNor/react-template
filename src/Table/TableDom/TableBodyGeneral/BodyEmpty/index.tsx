@@ -37,5 +37,4 @@ const BodyEmpty = <T extends TableDataItem>(props: Props<T>) => {
 	);
 };
 
-// export default BodyEmpty;
 export default memo(BodyEmpty, propsAreEqual) as typeof BodyEmpty;

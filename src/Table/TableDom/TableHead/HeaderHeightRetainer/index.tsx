@@ -30,5 +30,4 @@ const HeaderHeightRetainer = <T extends TableDataItem>(props: Props<T>) => {
 	);
 };
 
-// export default HeaderHeightRetainer;
 export default memo(HeaderHeightRetainer, propsAreEqual) as typeof HeaderHeightRetainer;

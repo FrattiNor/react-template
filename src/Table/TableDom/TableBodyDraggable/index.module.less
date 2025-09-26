@@ -1,0 +1,37 @@
+.body {
+	z-index: 1;
+	min-height: 0;
+	flex-shrink: 1;
+	overflow: auto;
+	position: relative;
+	color: var(--table-body-font-color);
+
+	.body-inner {
+		display: grid;
+		min-width: 100%;
+		position: relative;
+		align-content: start;
+		width: max-content;
+		box-sizing: border-box;
+	}
+
+	&::-webkit-scrollbar {
+		width: 10px;
+		height: 10px;
+		background-color: var(--table-scroll-bar-bg);
+	}
+
+	&::-webkit-scrollbar-corner {
+		background-color: var(--table-scroll-bar-bg);
+	}
+
+	&::-webkit-scrollbar-thumb {
+		background-color: var(--table-scroll-bar-color);
+		border-radius: 2px;
+	}
+
+	&::-webkit-scrollbar-thumb:hover,
+	&::-webkit-scrollbar-thumb:active {
+		background-color: var(--table-scroll-bar-active-color);
+	}
+}

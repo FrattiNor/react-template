@@ -24,5 +24,4 @@ const ResizeHandle = <T extends TableDataItem>(props: Props<T>) => {
 	);
 };
 
-// export default ResizeHandle;
 export default memo(ResizeHandle, propsAreEqual) as typeof ResizeHandle;

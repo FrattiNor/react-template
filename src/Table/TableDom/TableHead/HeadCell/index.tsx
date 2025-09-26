@@ -55,5 +55,4 @@ const HeadCell = <T extends TableDataItem>(props: Props<T>) => {
 	);
 };
 
-// export default HeadCell;
 export default memo(HeadCell, propsAreEqual) as typeof HeadCell;

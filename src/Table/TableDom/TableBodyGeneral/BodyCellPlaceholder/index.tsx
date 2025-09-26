@@ -38,5 +38,4 @@ const BodyCellPlaceholder = <T extends TableDataItem>(props: Props<T>) => {
 	);
 };
 
-// export default BodyCellPlaceholder;
 export default memo(BodyCellPlaceholder, propsAreEqual) as typeof BodyCellPlaceholder;

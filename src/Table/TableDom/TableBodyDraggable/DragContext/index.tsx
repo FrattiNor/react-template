@@ -6,8 +6,8 @@ import { arrayMove, SortableContext, verticalListSortingStrategy } from '@dnd-ki
 
 import propsAreEqual, { getInstanceProps } from './propsAreEqual';
 
-import type { TableDataItem } from '../../TableTypes/type';
-import type { TableInstance } from '../../TableTypes/typeHooks';
+import type { TableDataItem } from '../../../TableTypes/type';
+import type { TableInstance } from '../../../TableTypes/typeHooks';
 
 export type Props<T extends TableDataItem> = PropsWithChildren<{
 	instance: TableInstance<T>;

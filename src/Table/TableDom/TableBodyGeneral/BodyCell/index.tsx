@@ -76,5 +76,4 @@ const BodyCell = <T extends TableDataItem>(props: Props<T>) => {
 	);
 };
 
-// export default BodyCell;
 export default memo(BodyCell, propsAreEqual) as typeof BodyCell;

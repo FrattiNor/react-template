@@ -38,5 +38,4 @@ const HeadCellRender = <T extends TableDataItem>(props: Props<T>) => {
 	);
 };
 
-// export default HeadCellRender;
 export default memo(HeadCellRender, propsAreEqual) as typeof HeadCellRender;

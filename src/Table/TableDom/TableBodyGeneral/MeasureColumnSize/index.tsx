@@ -42,5 +42,4 @@ const MeasureColumnSize = <T extends TableDataItem>(props: Props<T>) => {
 	);
 };
 
-// export default MeasureColumnSize;
 export default memo(MeasureColumnSize, propsAreEqual) as typeof MeasureColumnSize;

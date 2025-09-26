@@ -1,5 +1,7 @@
 import { getPropsAreEqual } from '../../TableUtils';
-import { getTotalInstanceProps as BodyRow_getInstanceProps } from './BodyRow/propsAreEqual';
+import { getTotalInstanceProps as BodyRowDraggable_getInstanceProps } from './BodyRowDraggable/propsAreEqual';
+import { getTotalInstanceProps as DragContext_getInstanceProps } from './DragContext/propsAreEqual';
+import { getTotalInstanceProps as DragOverlay_getInstanceProps } from './DragOverlay/propsAreEqual';
 import { getTotalInstanceProps as BodyEmpty_getInstanceProps } from '../TableBodyGeneral/BodyEmpty/propsAreEqual';
 import { getTotalInstanceProps as MeasureColumnSize_getInstanceProps } from '../TableBodyGeneral/MeasureColumnSize/propsAreEqual';
 
@@ -28,7 +30,9 @@ export const getTotalInstanceProps = <T extends TableDataItem>({ instance }: Rea
 	return {
 		...getInstanceProps({ instance }),
 		...BodyEmpty_getInstanceProps({ instance }),
-		...BodyRow_getInstanceProps({ instance }),
+		...DragContext_getInstanceProps({ instance }),
+		...DragOverlay_getInstanceProps({ instance }),
+		...BodyRowDraggable_getInstanceProps({ instance }),
 		...MeasureColumnSize_getInstanceProps({ instance }),
 	};
 };

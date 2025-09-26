@@ -29,5 +29,4 @@ const TableHead = <T extends TableDataItem>(props: Props<T>) => {
 	);
 };
 
-// export default TableHead;
 export default memo(TableHead, propsAreEqual) as typeof TableHead;

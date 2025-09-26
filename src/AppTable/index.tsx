@@ -10,9 +10,25 @@ import useData from './useData';
 import useKeyword from './useKeyword';
 import useTableState from './useTableState';
 
+const drag = { onDragEnd: () => {} };
+
 const AppTable: FC = () => {
-	const { lightTheme, setLightTheme, bordered, setBordered, vfs, setVfs, rowHover, setRowHover, rowClick, setRowClick, rowSelect, setRowSelect } =
-		useTableState();
+	const {
+		draggable,
+		setDraggable,
+		lightTheme,
+		setLightTheme,
+		bordered,
+		setBordered,
+		vfs,
+		setVfs,
+		rowHover,
+		setRowHover,
+		rowClick,
+		setRowClick,
+		rowSelect,
+		setRowSelect,
+	} = useTableState();
 
 	const { data, loading, changeOriginData, autoReload, setAutoReload } = useData();
 
@@ -23,6 +39,8 @@ const AppTable: FC = () => {
 	return (
 		<div className={styles['wrapper']} style={{ background: lightTheme ? '#fff' : '#141414', color: lightTheme ? '#262626' : '#f2f2f2' }}>
 			<div className={styles['flex-container']}>
+				<span>{'draggable:'}</span>
+				<Switch checked={draggable} onChange={setDraggable} />
 				<span>{'light:'}</span>
 				<Switch checked={lightTheme} onChange={setLightTheme} />
 				<span>{'bordered:'}</span>
@@ -66,10 +84,10 @@ const AppTable: FC = () => {
 					bordered={bordered}
 					virtualFlushSync={vfs}
 					theme={lightTheme ? 'light' : 'dark'}
+					draggable={draggable ? drag : undefined}
 					highlightKeywords={globalHighlightKeywords}
 					rowBgHighlight={{ rowClick, rowHover, rowSelect }}
 					highlightConfig={{ trim: true, caseSensitive: true, autoEscape: true }}
-					draggable={{ onDragEnd: () => {} }}
 				/>
 			</div>
 		</div>

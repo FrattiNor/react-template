@@ -29,5 +29,4 @@ const HeadRow = <T extends TableDataItem>(props: Props<T>) => {
 	);
 };
 
-// export default HeadRow;
 export default memo(HeadRow, propsAreEqual) as typeof HeadRow;
