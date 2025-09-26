@@ -29,7 +29,6 @@ const HeadCell = <T extends TableDataItem>(props: Props<T>) => {
 
 	const align = column.align;
 	const resize = column.resize ?? true;
-	const colMaxIndex = columnsFlat.length - 1;
 	const headCellBg = getHeadCellBg({ colIndexs: [colIndex] });
 
 	return (
@@ -39,7 +38,6 @@ const HeadCell = <T extends TableDataItem>(props: Props<T>) => {
 			className={classNames(styles['head-cell'], stickyClassName, {
 				[styles['bordered']]: bordered,
 				[styles['first-col']]: colIndex === 0,
-				[styles['last-col']]: colIndex === colMaxIndex,
 			})}
 			style={{
 				minHeight: rowHeight,

@@ -49,7 +49,7 @@ export type TableDraggable = {
 };
 
 export type TableProps<T extends TableDataItem> = {
-	// TODO 主题 dark需优化
+	// 主题 dark需优化
 	theme?: 'light' | 'dark';
 	// 数据源
 	data?: Array<T>;
@@ -75,8 +75,8 @@ export type TableProps<T extends TableDataItem> = {
 	virtualFlushSync?: boolean;
 	// 行背景高亮
 	rowBgHighlight?: TableRowBgHighlight;
+	// 可拖拽排序【和onCell的rowSpan冲突】【和expandable冲突】
+	draggable?: TableDraggable;
 	// TODO 表格可展开【和onCell的rowSpan冲突】
 	expandable?: undefined;
-	// TODO 可拖拽排序【和onCell的rowSpan冲突】【和expandable冲突】
-	draggable?: TableDraggable;
 };

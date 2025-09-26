@@ -18,7 +18,7 @@ export type Props<T extends TableDataItem> = {
 
 const HeadGroupCell = <T extends TableDataItem>(props: Props<T>) => {
 	const { colIndex, rowIndex } = getProps(props);
-	const { getHeadCellBg, getColShow, getStickyStyleAndClassName, columnsFlat, bordered, rowHeight, columnGroups } = getInstanceProps(props);
+	const { getHeadCellBg, getColShow, getStickyStyleAndClassName, bordered, rowHeight, columnGroups } = getInstanceProps(props);
 
 	const column = columnGroups[rowIndex][colIndex];
 	const colIndexs = useMemo(() => [column.startIndex, column.endIndex] as [number, number], [column.startIndex, column.endIndex]);
@@ -28,7 +28,6 @@ const HeadGroupCell = <T extends TableDataItem>(props: Props<T>) => {
 
 	const resize = column.resize ?? true;
 	const align = column.align ?? 'center';
-	const colMaxIndex = columnsFlat.length - 1;
 	const headCellBg = getHeadCellBg({ colIndexs });
 
 	return (
@@ -38,7 +37,6 @@ const HeadGroupCell = <T extends TableDataItem>(props: Props<T>) => {
 			className={classNames(styles['head-group-cell'], stickyClassName, {
 				[styles['bordered']]: bordered,
 				[styles['first-col']]: column.startIndex === 0,
-				[styles['last-col']]: column.endIndex === colMaxIndex,
 			})}
 			style={{
 				minHeight: rowHeight,

@@ -14,7 +14,6 @@ type Props<T extends TableDataItem> = {
 	instance: TableInstance<T>;
 };
 
-// TODO dragBody 需要单独拎出来【目前不满足drag要求】
 // TODO bordered 样式需要优化
 const TableDom = <T extends TableDataItem>({ instance }: Props<T>) => {
 	const { tableRef } = instance.tableDomRef;

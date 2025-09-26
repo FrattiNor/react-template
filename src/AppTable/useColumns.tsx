@@ -244,6 +244,13 @@ const useAppTableColumns = () => {
 
 		const columns2: TableColumns<DataItem> = [
 			{
+				width: 100,
+				fixed: 'left',
+				key: 'index',
+				title: 'Index',
+				render: ({ index }) => index,
+			},
+			{
 				key: 'lastName',
 				title: <span>{'lastName_1'}</span>,
 				render: ({ lastName }) => <span>{lastName}</span>,

@@ -41,8 +41,8 @@ const AppTable: FC = () => {
 				<input className={styles['input']} value={keyword} onChange={(e) => setKeyword(e.target.value)} />
 			</div>
 			<div className={styles['flex-container']}>
-				<button className={styles['btn']} onClick={() => setLongColumns(false)}>{`columns(4)`}</button>
-				<button className={styles['btn']} onClick={() => setLongColumns(true)}>{`columns(17)`}</button>
+				<button className={styles['btn']} onClick={() => setLongColumns(false)}>{`columns(5)`}</button>
+				<button className={styles['btn']} onClick={() => setLongColumns(true)}>{`columns(18)`}</button>
 			</div>
 			<div className={styles['flex-container']}>
 				<button className={styles['btn']} onClick={() => changeOriginData(0)}>{`data(0)`}</button>
