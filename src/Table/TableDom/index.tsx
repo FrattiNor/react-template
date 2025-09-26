@@ -4,7 +4,6 @@ import classNames from 'classnames';
 
 import styles from './index.module.less';
 import TableBody from './TableBody';
-import TableBodyDraggable from './TableBodyDraggable';
 import TableHead from './TableHead';
 import TableLoading from '../TableComponent/TableLoading';
 
@@ -19,7 +18,6 @@ type Props<T extends TableDataItem> = {
 // TODO bordered 样式需要优化
 const TableDom = <T extends TableDataItem>({ instance }: Props<T>) => {
 	const { tableRef } = instance.tableDomRef;
-	const { haveDraggable } = instance.tableDraggable;
 	const { bordered, loading, theme } = instance.tableProps;
 	const { V_ScrollbarWidth, H_ScrollbarWidth } = instance.tableState;
 
@@ -38,8 +36,7 @@ const TableDom = <T extends TableDataItem>({ instance }: Props<T>) => {
 			})}
 		>
 			<TableHead instance={instance} />
-			{!haveDraggable && <TableBody instance={instance} />}
-			{haveDraggable && <TableBodyDraggable instance={instance} />}
+			<TableBody instance={instance} />
 		</TableLoading>
 	);
 };

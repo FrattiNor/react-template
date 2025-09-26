@@ -1,7 +1,8 @@
 import { getPropsAreEqual } from '../../TableUtils';
-import { getTotalInstanceProps as BodyRow_getInstanceProps } from './BodyRow/propsAreEqual';
-import { getTotalInstanceProps as BodyEmpty_getInstanceProps } from '../TableBodyGeneral/BodyEmpty/propsAreEqual';
-import { getTotalInstanceProps as MeasureColumnSize_getInstanceProps } from '../TableBodyGeneral/MeasureColumnSize/propsAreEqual';
+import { getTotalInstanceProps as BodyEmpty_getInstanceProps } from './BodyGeneralComponent/BodyEmpty/propsAreEqual';
+import { getTotalInstanceProps as MeasureColumnSize_getInstanceProps } from './BodyGeneralComponent/MeasureColumnSize/propsAreEqual';
+import { getTotalInstanceProps as BodyInner_getInstanceProps } from './BodyInner/propsAreEqual';
+import { getTotalInstanceProps as BodyInnerDraggable_getInstanceProps } from './BodyInnerDraggable/propsAreEqual';
 
 import type { TableDataItem } from '../../TableTypes/type';
 import type { TableInstance } from '../../TableTypes/typeHooks';
@@ -9,18 +10,13 @@ import type { TableInstance } from '../../TableTypes/typeHooks';
 export const getInstanceProps = <T extends TableDataItem>({ instance }: Readonly<{ instance: Readonly<TableInstance<T>> }>) => {
 	const { datasource } = instance.tableData;
 	const { bodyRef } = instance.tableDomRef;
+	const { haveDraggable } = instance.tableDraggable;
 	const { colMeasure } = instance.tableState;
-	const { getRowKey } = instance.tableTools;
-	const { gridTemplateColumnsArr } = instance.tableSecondaryState;
-	const { VV_wrapperStyle, showRowIndexs } = instance.tableVirtual;
 	return {
-		datasource,
 		bodyRef,
 		colMeasure,
-		getRowKey,
-		VV_wrapperStyle,
-		showRowIndexs,
-		gridTemplateColumnsArr,
+		datasource,
+		haveDraggable,
 	};
 };
 
@@ -28,8 +24,9 @@ export const getTotalInstanceProps = <T extends TableDataItem>({ instance }: Rea
 	return {
 		...getInstanceProps({ instance }),
 		...BodyEmpty_getInstanceProps({ instance }),
-		...BodyRow_getInstanceProps({ instance }),
+		...BodyInner_getInstanceProps({ instance }),
 		...MeasureColumnSize_getInstanceProps({ instance }),
+		...BodyInnerDraggable_getInstanceProps({ instance }),
 	};
 };
 
