@@ -171,7 +171,8 @@ const useAppTableColumns = () => {
 					key: 'jobArea',
 					title: '工作地点_13',
 					render: ({ jobArea }) => jobArea,
-					width: 300,
+					width: 150,
+					fixed: 'right',
 					filter: getFilter,
 					sort: {
 						sorted: 'ascend',
@@ -189,7 +190,7 @@ const useAppTableColumns = () => {
 					key: 'jobType',
 					title: '工作类型_15',
 					render: ({ jobType }) => jobType,
-					width: 300,
+					width: 150,
 					fixed: 'right',
 					sort: {
 						sorted: 'ascend',

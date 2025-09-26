@@ -1,5 +1,7 @@
 import { memo } from 'react';
 
+import classNames from 'classnames';
+
 import styles from './index.module.less';
 import propsAreEqual, { getInstanceProps, getProps } from './propsAreEqual';
 
@@ -15,7 +17,7 @@ export type Props<T extends TableDataItem> = {
 
 const BodyCellPlaceholder = <T extends TableDataItem>(props: Props<T>) => {
 	const { rowIndex, forceRender, defaultBgLevel } = getProps(props);
-	const { datasource, columnsFlat, getRowKey, getRowShow, getBodyCellBg, bodyRowClick, bodyRowMouseEnter, bodyRowMouseLeave } =
+	const { bordered, datasource, columnsFlat, getRowKey, getRowShow, getBodyCellBg, bodyRowClick, bodyRowMouseEnter, bodyRowMouseLeave } =
 		getInstanceProps(props);
 
 	if (forceRender !== true && getRowShow([rowIndex]) === false) return null;
@@ -30,7 +32,7 @@ const BodyCellPlaceholder = <T extends TableDataItem>(props: Props<T>) => {
 			onClick={() => bodyRowClick({ rowKeys: [rowKey] })}
 			onMouseEnter={() => bodyRowMouseEnter({ rowKeys: [rowKey] })}
 			onMouseLeave={() => bodyRowMouseLeave({ rowKeys: [rowKey] })}
-			className={styles['body-cell-placeholder']}
+			className={classNames(styles['body-cell-placeholder'], { [styles['bordered']]: bordered })}
 			style={{
 				backgroundColor: bodyCellBg,
 				gridRow: `${rowIndex + 1}/${rowIndex + 2}`,

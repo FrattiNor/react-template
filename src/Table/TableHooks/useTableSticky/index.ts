@@ -4,18 +4,22 @@ import classNames from 'classnames';
 
 import styles from './index.module.less';
 
+import type { TableDataItem } from '../../TableTypes/type';
 import type useTableDomRef from '../useTableDomRef';
+import type useTableProps from '../useTableProps';
 import type useTableSecondaryState from '../useTableSecondaryState';
 import type useTableState from '../useTableState';
 
-type Props = {
+type Props<T extends TableDataItem> = {
+	tableProps: ReturnType<typeof useTableProps<T>>;
 	tableState: ReturnType<typeof useTableState>;
 	tableDomRef: ReturnType<typeof useTableDomRef>;
 	tableSecondaryState: ReturnType<typeof useTableSecondaryState>;
 };
 
 // 表格左右固定
-const useTableSticky = ({ tableSecondaryState, tableState }: Props) => {
+const useTableSticky = <T extends TableDataItem>({ tableSecondaryState, tableState, tableProps }: Props<T>) => {
+	const { bordered } = tableProps;
 	const { fixedLeftObj, fixedRightObj } = tableSecondaryState;
 	const { V_ScrollbarWidth, leftPingedIndex, rightPingedIndex } = tableState;
 
@@ -25,24 +29,24 @@ const useTableSticky = ({ tableSecondaryState, tableState }: Props) => {
 			const colEndIndex = colIndexs[colIndexs.length - 1];
 
 			if (fixedLeftObj[colStartIndex]) {
-				let className = styles['sticky-left'];
+				let className = classNames(styles['sticky-left'], { [styles['bordered']]: bordered });
 				const { stickySize } = fixedLeftObj[colStartIndex];
 				const style: CSSProperties = { left: stickySize };
 				const pinged = colStartIndex <= (leftPingedIndex ?? -1);
 				const lastPinged = colEndIndex === leftPingedIndex;
-				if (pinged) style.zIndex = 10;
+				if (pinged) className = classNames(className, styles['pinged']);
 				if (lastPinged) className = classNames(className, styles['last-pinged']);
 				return { stickyStyle: style, stickyClassName: className, sticky: true };
 			}
 
 			if (fixedRightObj[colEndIndex]) {
-				let className = styles['sticky-right'];
+				let className = classNames(styles['sticky-right'], { [styles['bordered']]: bordered });
 				const { stickySize } = fixedRightObj[colEndIndex];
 				const right = type === 'head' ? stickySize + V_ScrollbarWidth : stickySize;
 				const style: CSSProperties = { right };
 				const pinged = colEndIndex >= (rightPingedIndex ?? Infinity);
 				const lastPinged = colStartIndex === rightPingedIndex;
-				if (pinged) style.zIndex = 10;
+				if (pinged) className = classNames(className, styles['pinged']);
 				if (lastPinged) className = classNames(className, styles['last-pinged']);
 				return { stickyStyle: style, stickyClassName: className, sticky: true };
 			}
@@ -53,7 +57,7 @@ const useTableSticky = ({ tableSecondaryState, tableState }: Props) => {
 				stickyClassName: undefined,
 			};
 		},
-		[fixedLeftObj, fixedRightObj, V_ScrollbarWidth, leftPingedIndex, rightPingedIndex],
+		[bordered, fixedLeftObj, fixedRightObj, V_ScrollbarWidth, leftPingedIndex, rightPingedIndex],
 	);
 
 	return { getStickyStyleAndClassName };

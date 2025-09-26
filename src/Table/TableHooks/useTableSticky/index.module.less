@@ -1,10 +1,17 @@
 .sticky-left {
-	position: sticky;
 	z-index: 5;
+	position: sticky;
+
+	&.pinged {
+		z-index: 10;
+	}
+
+	&.pinged.bordered {
+		border-right: 0;
+		border-left: var(--table-cell-border-width) solid var(--table-cell-border-color);
+	}
 
 	&.last-pinged {
-		border-right-color: transparent;
-
 		&::after {
 			content: '';
 			top: 0;
@@ -20,12 +27,19 @@
 }
 
 .sticky-right {
-	position: sticky;
 	z-index: 5;
+	position: sticky;
+
+	&.pinged {
+		z-index: 10;
+	}
+
+	&.pinged.bordered {
+		border-left: 0;
+		border-right: var(--table-cell-border-width) solid var(--table-cell-border-color);
+	}
 
 	&.last-pinged {
-		border-left-color: transparent;
-
 		&::before {
 			content: '';
 			top: 0;

@@ -41,7 +41,7 @@ const useTableInstance = <T extends TableDataItem>(props: TableProps<T>) => {
 	// second state
 	const tableSecondaryState = useTableSecondaryState({ tableState, tableColumn });
 	// cell sticky
-	const tableSticky = useTableSticky({ tableDomRef, tableState, tableSecondaryState });
+	const tableSticky = useTableSticky({ tableProps, tableDomRef, tableState, tableSecondaryState });
 	// virtual
 	const tableVirtual = useTableVirtual({ tableData, tableDomRef, tableProps, tableState, tableTools_1, tableColumn });
 	// cell resize

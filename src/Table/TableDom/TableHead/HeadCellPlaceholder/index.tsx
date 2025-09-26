@@ -1,5 +1,7 @@
 import { memo } from 'react';
 
+import classNames from 'classnames';
+
 import styles from './index.module.less';
 import propsAreEqual, { getInstanceProps, getProps } from './propsAreEqual';
 
@@ -13,12 +15,12 @@ export type Props<T extends TableDataItem> = {
 
 const HeadCellPlaceholder = <T extends TableDataItem>(props: Props<T>) => {
 	const { rowIndex } = getProps(props);
-	const { columnsFlat } = getInstanceProps(props);
+	const { columnsFlat, bordered } = getInstanceProps(props);
 	const colMaxIndex = columnsFlat.length - 1;
 
 	return (
 		<div
-			className={styles['head-cell-placeholder']}
+			className={classNames(styles['head-cell-placeholder'], { [styles['bordered']]: bordered })}
 			style={{
 				gridRow: `${1}/${rowIndex + 2}`,
 				gridColumn: `${colMaxIndex + 2}/${colMaxIndex + 3}`,
