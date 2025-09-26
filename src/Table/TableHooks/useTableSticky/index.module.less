@@ -11,18 +11,20 @@
 		border-left: var(--table-cell-border-width) solid var(--table-cell-border-color);
 	}
 
-	&.last-pinged {
-		&::after {
-			content: '';
-			top: 0;
-			width: 30px;
-			left: 100%;
-			bottom: -1px;
-			position: absolute;
-			pointer-events: none;
-			transition: box-shadow 0.2s;
-			box-shadow: var(--table-sticky-box-shadow-color) 10px 0px 8px -8px inset;
-		}
+	&.first-pinged.bordered {
+		border-left: 0;
+	}
+
+	&.last-pinged::after {
+		content: '';
+		top: 0;
+		width: 30px;
+		left: 100%;
+		bottom: -1px;
+		position: absolute;
+		pointer-events: none;
+		transition: box-shadow 0.2s;
+		box-shadow: var(--table-sticky-box-shadow-color) 10px 0px 8px -8px inset;
 	}
 }
 
@@ -39,17 +41,19 @@
 		border-right: var(--table-cell-border-width) solid var(--table-cell-border-color);
 	}
 
-	&.last-pinged {
-		&::before {
-			content: '';
-			top: 0;
-			width: 30px;
-			right: 100%;
-			bottom: -1px;
-			position: absolute;
-			pointer-events: none;
-			transition: box-shadow 0.2s;
-			box-shadow: var(--table-sticky-box-shadow-color) -10px 0px 8px -8px inset;
-		}
+	&.last-pinged.bordered {
+		border-right: 0;
+	}
+
+	&.first-pinged::before {
+		content: '';
+		top: 0;
+		width: 30px;
+		right: 100%;
+		bottom: -1px;
+		position: absolute;
+		pointer-events: none;
+		transition: box-shadow 0.2s;
+		box-shadow: var(--table-sticky-box-shadow-color) -10px 0px 8px -8px inset;
 	}
 }

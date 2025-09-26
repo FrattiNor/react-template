@@ -8,8 +8,10 @@ const maxColWidth = 1500;
 // 表格状态
 const useTableState = () => {
 	// 左右固定的index
-	const [leftPingedIndex, setLeftPingedIndex] = useState<undefined | number>(undefined);
-	const [rightPingedIndex, setRightPingedIndex] = useState<undefined | number>(undefined);
+	const [pingedLeftFirst, setPingedLeftFirst] = useState<number | undefined>(undefined);
+	const [pingedLeftLast, setPingedLeftLast] = useState<number | undefined>(undefined);
+	const [pingedRightFirst, setPingedRightFirst] = useState<number | undefined>(undefined);
+	const [pingedRightLast, setPingedRightLast] = useState<number | undefined>(undefined);
 	// body宽度
 	const [bodyClientWidth, setBodyClientWidth] = useState(0);
 	// 滚动条宽度
@@ -46,10 +48,14 @@ const useTableState = () => {
 	return {
 		minColWidth,
 		maxColWidth,
-		leftPingedIndex,
-		setLeftPingedIndex,
-		rightPingedIndex,
-		setRightPingedIndex,
+		pingedLeftFirst,
+		setPingedLeftFirst,
+		pingedLeftLast,
+		setPingedLeftLast,
+		pingedRightFirst,
+		setPingedRightFirst,
+		pingedRightLast,
+		setPingedRightLast,
 		H_ScrollbarWidth,
 		setH_ScrollbarWidth,
 		V_ScrollbarWidth,

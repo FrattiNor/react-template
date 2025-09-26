@@ -20,8 +20,10 @@ const useTableObserver = ({ tableDomRef, tableState, tableSecondaryState }: Prop
 	const {
 		colMeasure,
 		resizeFlag,
-		setLeftPingedIndex,
-		setRightPingedIndex,
+		setPingedLeftFirst,
+		setPingedLeftLast,
+		setPingedRightFirst,
+		setPingedRightLast,
 		setV_ScrollbarWidth,
 		setH_ScrollbarWidth,
 		setBodyClientWidth,
@@ -36,19 +38,35 @@ const useTableObserver = ({ tableDomRef, tableState, tableSecondaryState }: Prop
 		if (typeof bodyScrollLeft === 'number' && typeof bodyScrollWidth === 'number' && typeof bodyClientWidth === 'number') {
 			const scrollLeft = bodyScrollLeft;
 			const scrollRight = bodyScrollWidth - bodyClientWidth - bodyScrollLeft;
-			let leftPingedIndex: undefined | number = undefined;
-			let rightPingedIndex: undefined | number = undefined;
+			// 计算固定的index数组
+			const leftPingedIndexsArr: number[] = [];
+			const rightPingedIndexsArr: number[] = [];
 			Object.values(fixedLeftObj).forEach(({ pingedSize, index }) => {
 				const pinged = scrollLeft > pingedSize;
-				if (pinged && index > (leftPingedIndex ?? -1)) leftPingedIndex = index;
+				if (pinged) leftPingedIndexsArr.push(index);
 			});
 			Object.values(fixedRightObj).forEach(({ pingedSize, index }) => {
 				const pinged = scrollRight > pingedSize;
-				if (pinged && index < (rightPingedIndex ?? Infinity)) rightPingedIndex = index;
+				if (pinged) rightPingedIndexsArr.push(index);
 			});
+			// 计算index fist last
+			let leftPingedFirst = undefined;
+			let leftPingedLast = undefined;
+			let rightPingedFirst = undefined;
+			let rightPingedLast = undefined;
+			if (leftPingedIndexsArr.length > 0) {
+				leftPingedFirst = leftPingedIndexsArr[0];
+				leftPingedLast = leftPingedIndexsArr[leftPingedIndexsArr.length - 1];
+			}
+			if (rightPingedIndexsArr.length > 0) {
+				rightPingedFirst = rightPingedIndexsArr[0];
+				rightPingedLast = rightPingedIndexsArr[rightPingedIndexsArr.length - 1];
+			}
 			startTransition(() => {
-				setLeftPingedIndex(leftPingedIndex);
-				setRightPingedIndex(rightPingedIndex);
+				setPingedLeftFirst(leftPingedFirst);
+				setPingedLeftLast(leftPingedLast);
+				setPingedRightFirst(rightPingedFirst);
+				setPingedRightLast(rightPingedLast);
 			});
 		}
 	}, [fixedLeftObj, fixedRightObj]);

@@ -21,9 +21,7 @@ type Props<T extends TableDataItem> = {
 const useTableSticky = <T extends TableDataItem>({ tableSecondaryState, tableState, tableProps }: Props<T>) => {
 	const { bordered } = tableProps;
 	const { fixedLeftObj, fixedRightObj } = tableSecondaryState;
-	const { V_ScrollbarWidth, leftPingedIndex, rightPingedIndex } = tableState;
-
-	console.log('leftPingedIndex', fixedLeftObj, fixedRightObj, leftPingedIndex, rightPingedIndex);
+	const { V_ScrollbarWidth, pingedLeftFirst, pingedLeftLast, pingedRightFirst, pingedRightLast } = tableState;
 
 	const getStickyStyleAndClassName = useCallback(
 		({ colIndexs, type }: { colIndexs: [number, number] | [number]; type: 'head' | 'body' }) => {
@@ -34,9 +32,11 @@ const useTableSticky = <T extends TableDataItem>({ tableSecondaryState, tableSta
 				let className = classNames(styles['sticky-left'], { [styles['bordered']]: bordered });
 				const { stickySize } = fixedLeftObj[colStartIndex];
 				const style: CSSProperties = { left: stickySize };
-				const pinged = colStartIndex <= (leftPingedIndex ?? -1);
-				const lastPinged = colEndIndex === leftPingedIndex;
+				const pinged = colStartIndex <= (pingedLeftLast ?? -1);
+				const firstPinged = colEndIndex === pingedLeftFirst;
+				const lastPinged = colEndIndex === pingedLeftLast;
 				if (pinged) className = classNames(className, styles['pinged']);
+				if (firstPinged) className = classNames(className, styles['first-pinged']);
 				if (lastPinged) className = classNames(className, styles['last-pinged']);
 				return { stickyStyle: style, stickyClassName: className, sticky: true };
 			}
@@ -46,9 +46,11 @@ const useTableSticky = <T extends TableDataItem>({ tableSecondaryState, tableSta
 				const { stickySize } = fixedRightObj[colEndIndex];
 				const right = type === 'head' ? stickySize + V_ScrollbarWidth : stickySize;
 				const style: CSSProperties = { right };
-				const pinged = colEndIndex >= (rightPingedIndex ?? Infinity);
-				const lastPinged = colStartIndex === rightPingedIndex;
+				const pinged = colEndIndex >= (pingedRightFirst ?? Infinity);
+				const firstPinged = colStartIndex === pingedRightFirst;
+				const lastPinged = colStartIndex === pingedRightLast;
 				if (pinged) className = classNames(className, styles['pinged']);
+				if (firstPinged) className = classNames(className, styles['first-pinged']);
 				if (lastPinged) className = classNames(className, styles['last-pinged']);
 				return { stickyStyle: style, stickyClassName: className, sticky: true };
 			}
@@ -59,7 +61,7 @@ const useTableSticky = <T extends TableDataItem>({ tableSecondaryState, tableSta
 				stickyClassName: undefined,
 			};
 		},
-		[bordered, fixedLeftObj, fixedRightObj, V_ScrollbarWidth, leftPingedIndex, rightPingedIndex],
+		[bordered, fixedLeftObj, fixedRightObj, V_ScrollbarWidth, pingedLeftFirst, pingedLeftLast, pingedRightFirst, pingedRightLast],
 	);
 
 	return { getStickyStyleAndClassName };
