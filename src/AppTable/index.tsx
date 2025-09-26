@@ -37,25 +37,7 @@ const AppTable: FC = () => {
 	return (
 		<div className={styles['wrapper']} style={{ background: lightTheme ? '#fff' : '#141414', color: lightTheme ? '#262626' : '#f2f2f2' }}>
 			<div className={styles['flex-container']}>
-				<span>{'draggable:'}</span>
-				<Switch checked={draggable} onChange={setDraggable} />
-				<span>{'light:'}</span>
-				<Switch checked={lightTheme} onChange={setLightTheme} />
-				<span>{'bordered:'}</span>
-				<Switch checked={bordered} onChange={setBordered} />
-				<span>{'reload:'}</span>
-				<Switch checked={autoReload} onChange={setAutoReload} />
-				<span>{'flushSync:'}</span>
-				<Switch checked={vfs} onChange={setVfs} />
-				<span>{'rowHoverBg:'}</span>
-				<Switch checked={rowHover} onChange={setRowHover} />
-				<span>{'rowClickBg:'}</span>
-				<Switch checked={rowClick} onChange={setRowClick} />
-				<span>{'rowSelectBg:'}</span>
-				<Switch checked={rowSelect} onChange={setRowSelect} />
-			</div>
-			<div className={styles['flex-container']}>
-				<span>{'keyword:'}</span>
+				<span>{'高亮关键字:'}</span>
 				<input className={styles['input']} value={keyword} onChange={(e) => setKeyword(e.target.value)} />
 			</div>
 			<div className={styles['flex-container']}>
@@ -71,6 +53,24 @@ const AppTable: FC = () => {
 				<button className={styles['btn']} onClick={() => changeOriginData(100)}>{`data(100)`}</button>
 				<button className={styles['btn']} onClick={() => changeOriginData(1000)}>{`data(1000)`}</button>
 				<button className={styles['btn']} onClick={() => changeOriginData(10000)}>{`data(10000)`}</button>
+			</div>
+			<div className={styles['flex-container']}>
+				<span>{'拖拽:'}</span>
+				<Switch checked={draggable} onChange={setDraggable} />
+				<span>{'亮色主题:'}</span>
+				<Switch checked={lightTheme} onChange={setLightTheme} />
+				<span>{'边框:'}</span>
+				<Switch checked={bordered} onChange={setBordered} />
+				<span>{'强刷:'}</span>
+				<Switch checked={vfs} onChange={setVfs} />
+				<span>{'hover背景:'}</span>
+				<Switch checked={rowHover} onChange={setRowHover} />
+				<span>{'click背景:'}</span>
+				<Switch checked={rowClick} onChange={setRowClick} />
+				<span>{'select背景:'}</span>
+				<Switch checked={rowSelect} onChange={setRowSelect} />
+				<span>{'自动刷新:'}</span>
+				<Switch checked={autoReload} onChange={setAutoReload} />
 			</div>
 			<div className={styles['table-wrapper']}>
 				<Table

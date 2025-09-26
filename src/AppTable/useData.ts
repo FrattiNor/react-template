@@ -6,6 +6,8 @@ import { useAppTableContext } from './AppTableContext';
 
 import type { TableDraggable } from '../Table/TableTypes/type';
 
+const isDev = process.env.NODE_ENV === 'development';
+
 const createRandomUser = (_: unknown, index: number) => {
 	return {
 		index,
@@ -55,7 +57,7 @@ const useData = () => {
 	const { params } = useAppTableContext();
 	const [loading, setLoading] = useState(false);
 	const [autoReload, setAutoReload] = useState(false);
-	const [originData, setOriginData] = useState<DataItem[]>(() => getData(20));
+	const [originData, setOriginData] = useState<DataItem[]>(() => getData(isDev ? 20 : 1000));
 	const [data, setData] = useState<DataItem[]>(() => originData);
 
 	const changeOriginData = (count: number) => {

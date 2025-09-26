@@ -6,7 +6,7 @@ const useTableState = () => {
 	const [vfs, setVfs] = useState(!isDev);
 	const [rowHover, setRowHover] = useState(false);
 	const [rowClick, setRowClick] = useState(false);
-	const [rowSelect, setRowSelect] = useState(false);
+	const [rowSelect, setRowSelect] = useState(!isDev);
 	const [bordered, setBordered] = useState(true);
 	const [lightTheme, setLightTheme] = useState(true);
 	const [draggable, setDraggable] = useState(false);
