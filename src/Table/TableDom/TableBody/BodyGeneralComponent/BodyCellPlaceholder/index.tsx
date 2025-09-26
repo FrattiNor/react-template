@@ -9,11 +9,12 @@ import type { TableInstance } from '../../../../TableTypes/typeHooks';
 export type Props<T extends TableDataItem> = {
 	instance: TableInstance<T>;
 	rowIndex: number;
-	forceRender?: boolean;
+	forceRender?: boolean; // 提供给overlay强制渲染
+	defaultBgLevel?: number; // 提供给overlay, 增加bgColor等级
 };
 
 const BodyCellPlaceholder = <T extends TableDataItem>(props: Props<T>) => {
-	const { rowIndex, forceRender } = getProps(props);
+	const { rowIndex, forceRender, defaultBgLevel } = getProps(props);
 	const { datasource, columnsFlat, getRowKey, getRowShow, getBodyCellBg, bodyRowClick, bodyRowMouseEnter, bodyRowMouseLeave } =
 		getInstanceProps(props);
 
@@ -22,7 +23,7 @@ const BodyCellPlaceholder = <T extends TableDataItem>(props: Props<T>) => {
 	const rowData = datasource[rowIndex];
 	const colMaxIndex = columnsFlat.length - 1;
 	const rowKey = getRowKey(rowData, rowIndex);
-	const bodyCellBg = getBodyCellBg({ rowKeys: [rowKey], colIndexs: [-1] });
+	const bodyCellBg = getBodyCellBg({ rowKeys: [rowKey], colIndexs: [-1], defaultBgLevel });
 
 	return (
 		<div

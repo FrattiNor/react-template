@@ -4,6 +4,8 @@ import { DndContext, type DragEndEvent, type DragStartEvent } from '@dnd-kit/cor
 import { arrayMove, SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable';
 
 import propsAreEqual, { getInstanceProps } from './propsAreEqual';
+import DragOverlay from '../DragOverlay';
+import { customModifier } from './modifier';
 
 import type { TableDataItem } from '../../../../TableTypes/type';
 import type { TableInstance } from '../../../../TableTypes/typeHooks';
@@ -14,7 +16,7 @@ export type Props<T extends TableDataItem> = PropsWithChildren<{
 
 const DragContext = <T extends TableDataItem>(props: Props<T>) => {
 	const { children } = props;
-	const { dataKeys, haveDraggable, setDragActiveItem, onDragEnd: dragEndCallback } = getInstanceProps(props);
+	const { dataKeys, haveDraggable, setDragActiveItem, onDragEnd: dragEndCallback, bodyRef } = getInstanceProps(props);
 	if (!haveDraggable) return children;
 
 	const onDragStart = ({ active }: DragStartEvent) => {
@@ -37,9 +39,15 @@ const DragContext = <T extends TableDataItem>(props: Props<T>) => {
 	};
 
 	return (
-		<DndContext onDragEnd={onDragEnd} onDragStart={onDragStart} autoScroll={{ enabled: true, threshold: { x: 0, y: 0.1 }, acceleration: 20 }}>
+		<DndContext
+			onDragEnd={onDragEnd}
+			onDragStart={onDragStart}
+			modifiers={[customModifier({ bodyRef })]}
+			autoScroll={{ enabled: true, threshold: { x: -1, y: 0.1 }, acceleration: 20 }}
+		>
 			<SortableContext items={dataKeys} strategy={verticalListSortingStrategy}>
 				{children}
+				<DragOverlay instance={props.instance} />
 			</SortableContext>
 		</DndContext>
 	);

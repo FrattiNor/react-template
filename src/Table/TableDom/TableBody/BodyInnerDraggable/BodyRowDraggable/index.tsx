@@ -27,7 +27,7 @@ const BodyRowDraggable = <T extends TableDataItem>(props: Props<T>) => {
 
 	const _style: React.CSSProperties = {
 		transition,
-		zIndex: isDragging ? 2 : 1,
+		opacity: isDragging ? 0 : 1,
 		transform: CSS.Translate.toString(transform ? { ...transform, x: 0 } : null),
 	};
 
@@ -37,16 +37,16 @@ const BodyRowDraggable = <T extends TableDataItem>(props: Props<T>) => {
 			data-index={rowIndex}
 			data-row-index={rowIndex}
 			className={styles['body-row']}
-			style={{ gridRow: `${rowIndex + 1}/${rowIndex + 2}`, gridColumn: `1/${colMaxIndex + 2}`, ..._style }}
+			style={{ gridRow: `${rowIndex + 1}/${rowIndex + 2}`, gridColumn: `1/${colMaxIndex + 3}`, ..._style }}
 			ref={(node) => {
 				setNodeRef(node);
 				VV_measureElement(node);
 			}}
 		>
 			{columnsFlat.map((column, colIndex) => {
-				return <BodyCell key={column.key} rowIndex={rowIndex} colIndex={colIndex} instance={props.instance} forceRender={isDragging} />;
+				return <BodyCell key={column.key} rowIndex={rowIndex} colIndex={colIndex} instance={props.instance} />;
 			})}
-			<BodyCellPlaceholder rowIndex={rowIndex} instance={props.instance} forceRender={isDragging} />
+			<BodyCellPlaceholder rowIndex={rowIndex} instance={props.instance} />
 		</div>
 	);
 };

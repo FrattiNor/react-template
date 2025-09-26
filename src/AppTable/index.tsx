@@ -10,8 +10,6 @@ import useData from './useData';
 import useKeyword from './useKeyword';
 import useTableState from './useTableState';
 
-const drag = { onDragEnd: () => {} };
-
 const AppTable: FC = () => {
 	const {
 		draggable,
@@ -30,7 +28,7 @@ const AppTable: FC = () => {
 		setRowSelect,
 	} = useTableState();
 
-	const { data, loading, changeOriginData, autoReload, setAutoReload } = useData();
+	const { data, loading, changeOriginData, autoReload, setAutoReload, onDragEnd } = useData();
 
 	const { globalHighlightKeywords, keyword, setKeyword } = useKeyword();
 
@@ -84,8 +82,8 @@ const AppTable: FC = () => {
 					bordered={bordered}
 					virtualFlushSync={vfs}
 					theme={lightTheme ? 'light' : 'dark'}
-					draggable={draggable ? drag : undefined}
 					highlightKeywords={globalHighlightKeywords}
+					draggable={draggable ? { onDragEnd } : undefined}
 					rowBgHighlight={{ rowClick, rowHover, rowSelect }}
 					highlightConfig={{ trim: true, caseSensitive: true, autoEscape: true }}
 				/>

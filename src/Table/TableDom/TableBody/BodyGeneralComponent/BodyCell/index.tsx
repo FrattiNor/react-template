@@ -14,10 +14,11 @@ export type Props<T extends TableDataItem> = {
 	rowIndex: number;
 	colIndex: number;
 	forceRender?: boolean; // 提供给overlay强制渲染
+	defaultBgLevel?: number; // 提供给overlay, 增加bgColor等级
 };
 
 const BodyCell = <T extends TableDataItem>(props: Props<T>) => {
-	const { colIndex, rowIndex, forceRender: propsForceRender } = getProps(props);
+	const { colIndex, rowIndex, forceRender: propsForceRender, defaultBgLevel } = getProps(props);
 
 	const {
 		datasource,
@@ -41,17 +42,18 @@ const BodyCell = <T extends TableDataItem>(props: Props<T>) => {
 	const { rowSpan = 1, colSpan = 1, title: onCellTitle = undefined } = column.onCell ? column.onCell(rowData, rowIndex) : {};
 	const colIndexs = useMemo(() => [colIndex, colIndex + colSpan - 1] as [number, number], [colIndex, colSpan]);
 
+	// span为0
 	if (rowSpan <= 0) return null;
 	if (colSpan <= 0) return null;
-	if (forceRender !== true && rowSpan === 1 && getRowShow([rowIndex]) === false) return null;
-
-	const colShow = getColShow(colIndexs);
+	// 非forceRender，并且当前rowSpan为1，并且当前row不显示
+	if (forceRender !== true && rowSpan === 1 && getRowShow([rowIndex]) !== true) return null;
+	// 非forceRender，并且非sticky，并且当前col不显示
 	const { stickyStyle, stickyClassName, sticky } = getStickyStyleAndClassName({ colIndexs, type: 'body' });
-	if (!(colShow === true || forceRender === true || sticky === true)) return null;
+	if (forceRender !== true && sticky !== true && getColShow(colIndexs) !== true) return null;
 
 	const colMaxIndex = columnsFlat.length - 1;
 	const rowKeys = getRowKeys({ currentIndex: rowIndex, rowSpan, datasource });
-	const bodyCellBg = getBodyCellBg({ rowKeys, colIndexs });
+	const bodyCellBg = getBodyCellBg({ rowKeys, colIndexs, defaultBgLevel });
 
 	return (
 		<div

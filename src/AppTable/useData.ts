@@ -1,8 +1,10 @@
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
 import { faker } from '@faker-js/faker';
 
 import { useAppTableContext } from './AppTableContext';
+
+import type { TableDraggable } from '../Table/TableTypes/type';
 
 const createRandomUser = () => ({
 	// 用户id
@@ -95,7 +97,41 @@ const useData = () => {
 		}
 	}, [originData, loading, autoReload]);
 
-	return { data, loading, changeOriginData, autoReload, setAutoReload };
+	const onDragEnd: TableDraggable['onDragEnd'] = useCallback(({ activeId, overId, arrayMove }) => {
+		if (overId && activeId !== overId) {
+			setData((_items) => {
+				let oldIndex = -1;
+				let newIndex = -1;
+
+				for (let i = 0; i < _items.length; i++) {
+					const _item = _items[i];
+					const itemId = _item['userId'];
+
+					if (itemId === activeId) {
+						oldIndex = i;
+					}
+
+					if (itemId === overId) {
+						newIndex = i;
+					}
+
+					if (oldIndex >= 0 && newIndex >= 0) {
+						break;
+					}
+				}
+
+				let nextItems = [..._items];
+
+				if (oldIndex >= 0 && newIndex >= 0) {
+					nextItems = arrayMove(_items, oldIndex, newIndex);
+				}
+
+				return nextItems;
+			});
+		}
+	}, []);
+
+	return { data, loading, changeOriginData, autoReload, setAutoReload, onDragEnd };
 };
 
 export default useData;
