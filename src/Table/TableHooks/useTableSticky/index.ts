@@ -23,6 +23,8 @@ const useTableSticky = <T extends TableDataItem>({ tableSecondaryState, tableSta
 	const { fixedLeftObj, fixedRightObj } = tableSecondaryState;
 	const { V_ScrollbarWidth, leftPingedIndex, rightPingedIndex } = tableState;
 
+	console.log('leftPingedIndex', fixedLeftObj, fixedRightObj, leftPingedIndex, rightPingedIndex);
+
 	const getStickyStyleAndClassName = useCallback(
 		({ colIndexs, type }: { colIndexs: [number, number] | [number]; type: 'head' | 'body' }) => {
 			const colStartIndex = colIndexs[0];
