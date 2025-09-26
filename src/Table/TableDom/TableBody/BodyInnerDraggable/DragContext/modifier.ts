@@ -26,8 +26,9 @@ export function customModifier({ bodyRef }: { bodyRef: React.RefObject<HTMLDivEl
 	return ({ draggingNodeRect, transform }) => {
 		const _transform = { ...transform, x: 0 };
 		if (!draggingNodeRect) return _transform;
-		const firstScrollableAncestorRect = bodyRef.current?.getBoundingClientRect();
-		if (!firstScrollableAncestorRect) return _transform;
+		if (!bodyRef.current) return _transform;
+		const firstScrollableAncestorRect = bodyRef.current.getBoundingClientRect();
+		firstScrollableAncestorRect.height = bodyRef.current.clientHeight;
 		return restrictToBoundingRect(_transform, draggingNodeRect, firstScrollableAncestorRect);
 	};
 }

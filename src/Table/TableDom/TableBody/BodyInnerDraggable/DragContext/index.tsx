@@ -3,9 +3,9 @@ import { memo, type PropsWithChildren } from 'react';
 import { DndContext, type DragEndEvent, type DragStartEvent } from '@dnd-kit/core';
 import { arrayMove, SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable';
 
-import propsAreEqual, { getInstanceProps } from './propsAreEqual';
-import DragOverlay from '../DragOverlay';
+import DragOverlay from './DragOverlay';
 import { customModifier } from './modifier';
+import propsAreEqual, { getInstanceProps } from './propsAreEqual';
 
 import type { TableDataItem } from '../../../../TableTypes/type';
 import type { TableInstance } from '../../../../TableTypes/typeHooks';

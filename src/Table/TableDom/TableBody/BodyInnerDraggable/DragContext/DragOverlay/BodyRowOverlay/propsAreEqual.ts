@@ -1,10 +1,10 @@
-import { getPropsAreEqual } from '../../../../TableUtils';
-import { getTotalInstanceProps as BodyCell_getInstanceProps } from '../../BodyGeneralComponent/BodyCell/propsAreEqual';
-import { getTotalInstanceProps as BodyCellPlaceholder_getInstanceProps } from '../../BodyGeneralComponent/BodyCellPlaceholder/propsAreEqual';
+import { getPropsAreEqual } from '../../../../../../TableUtils';
+import { getTotalInstanceProps as BodyCell_getInstanceProps } from '../../../../BodyGeneralComponent/BodyCell/propsAreEqual';
+import { getTotalInstanceProps as BodyCellPlaceholder_getInstanceProps } from '../../../../BodyGeneralComponent/BodyCellPlaceholder/propsAreEqual';
 
 import type { Props } from './index';
-import type { TableDataItem } from '../../../../TableTypes/type';
-import type { TableInstance } from '../../../../TableTypes/typeHooks';
+import type { TableDataItem } from '../../../../../../TableTypes/type';
+import type { TableInstance } from '../../../../../../TableTypes/typeHooks';
 
 export const getProps = <T extends TableDataItem>({ rowIndex }: Readonly<Props<T>>) => {
 	return { rowIndex };

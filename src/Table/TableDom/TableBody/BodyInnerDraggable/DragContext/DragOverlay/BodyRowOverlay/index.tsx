@@ -2,11 +2,11 @@ import { memo, useEffect, useRef } from 'react';
 
 import styles from './index.module.less';
 import propsAreEqual, { getInstanceProps, getProps } from './propsAreEqual';
-import BodyCell from '../../BodyGeneralComponent/BodyCell';
-import BodyCellPlaceholder from '../../BodyGeneralComponent/BodyCellPlaceholder';
+import BodyCell from '../../../../BodyGeneralComponent/BodyCell';
+import BodyCellPlaceholder from '../../../../BodyGeneralComponent/BodyCellPlaceholder';
 
-import type { TableDataItem } from '../../../../TableTypes/type';
-import type { TableInstance } from '../../../../TableTypes/typeHooks';
+import type { TableDataItem } from '../../../../../../TableTypes/type';
+import type { TableInstance } from '../../../../../../TableTypes/typeHooks';
 
 export type Props<T extends TableDataItem> = {
 	instance: TableInstance<T>;
@@ -43,7 +43,7 @@ const BodyRowOverlay = <T extends TableDataItem>(props: Props<T>) => {
 	}, []);
 
 	return (
-		<div ref={rowRef} data-row-index={rowIndex} className={styles['body-row']} style={{ gridTemplateColumns }}>
+		<div ref={rowRef} data-row-index={rowIndex} className={styles['body-row']} style={{ pointerEvents: 'none', gridTemplateColumns }}>
 			{columnsFlat.map((column, colIndex) => {
 				return <BodyCell key={column.key} rowIndex={rowIndex} colIndex={colIndex} instance={props.instance} defaultBgLevel={1} forceRender />;
 			})}
