@@ -2,7 +2,6 @@ import { memo } from 'react';
 
 import BodyRowDraggable from './BodyRowDraggable';
 import DragContext from './DragContext';
-import DragOverlay from './DragOverlay';
 import styles from './index.module.less';
 import propsAreEqual, { getInstanceProps } from './propsAreEqual';
 
@@ -26,7 +25,6 @@ const TableBodyDraggable = <T extends TableDataItem>(props: Props<T>) => {
 					return <BodyRowDraggable key={rowKey} rowIndex={rowIndex} instance={props.instance} />;
 				})}
 			</div>
-			<DragOverlay instance={props.instance} />
 		</DragContext>
 	);
 };

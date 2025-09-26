@@ -23,12 +23,12 @@ const BodyRowDraggable = <T extends TableDataItem>(props: Props<T>) => {
 	const rowData = datasource[rowIndex];
 	const rowKey = getRowKey(rowData, rowIndex);
 	const colMaxIndex = columnsFlat.length - 1;
-	const { attributes, setNodeRef, transform, transition, isDragging } = useSortable({ id: rowKey, data: { rowKey, rowData, rowIndex } });
+	const { attributes, setNodeRef, transform, transition, isDragging } = useSortable({ id: rowKey, data: { rowIndex } });
 
 	const _style: React.CSSProperties = {
 		transition,
-		opacity: isDragging ? 0 : undefined,
-		transform: CSS.Translate.toString(transform),
+		zIndex: isDragging ? 2 : 1,
+		transform: CSS.Translate.toString(transform ? { ...transform, x: 0 } : null),
 	};
 
 	return (
@@ -44,9 +44,9 @@ const BodyRowDraggable = <T extends TableDataItem>(props: Props<T>) => {
 			}}
 		>
 			{columnsFlat.map((column, colIndex) => {
-				return <BodyCell key={column.key} rowIndex={rowIndex} colIndex={colIndex} instance={props.instance} />;
+				return <BodyCell key={column.key} rowIndex={rowIndex} colIndex={colIndex} instance={props.instance} forceRender={isDragging} />;
 			})}
-			<BodyCellPlaceholder rowIndex={rowIndex} instance={props.instance} />
+			<BodyCellPlaceholder rowIndex={rowIndex} instance={props.instance} forceRender={isDragging} />
 		</div>
 	);
 };

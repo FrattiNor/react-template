@@ -28,6 +28,13 @@ const useAppTableColumns = () => {
 		if (longColumns) {
 			const columns1: TableColumns<DataItem> = [
 				{
+					width: 100,
+					fixed: 'left',
+					key: 'index',
+					title: 'Index',
+					render: (_, { index }) => index,
+				},
+				{
 					fixed: 'left',
 					key: 'userId',
 					title: '用户id_2',

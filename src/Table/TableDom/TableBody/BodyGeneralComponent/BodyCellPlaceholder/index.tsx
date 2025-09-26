@@ -9,14 +9,15 @@ import type { TableInstance } from '../../../../TableTypes/typeHooks';
 export type Props<T extends TableDataItem> = {
 	instance: TableInstance<T>;
 	rowIndex: number;
+	forceRender?: boolean;
 };
 
 const BodyCellPlaceholder = <T extends TableDataItem>(props: Props<T>) => {
-	const { rowIndex } = getProps(props);
+	const { rowIndex, forceRender } = getProps(props);
 	const { datasource, columnsFlat, getRowKey, getRowShow, getBodyCellBg, bodyRowClick, bodyRowMouseEnter, bodyRowMouseLeave } =
 		getInstanceProps(props);
 
-	if (getRowShow([rowIndex]) === false) return null;
+	if (forceRender !== true && getRowShow([rowIndex]) === false) return null;
 
 	const rowData = datasource[rowIndex];
 	const colMaxIndex = columnsFlat.length - 1;

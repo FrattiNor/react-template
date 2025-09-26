@@ -17,7 +17,7 @@ const useTableDraggable = <T extends TableDataItem>({ tableProps, tableTools_1 }
 	const onDragEnd = draggable?.onDragEnd;
 	const haveDraggable = !!draggable;
 	const { getRowKey } = tableTools_1;
-	const [dragActiveItem, setDragActiveItem] = useState<{ rowKey: string; rowData: any; rowIndex: number } | null>(null);
+	const [dragActiveItem, setDragActiveItem] = useState<{ rowIndex: number } | null>(null);
 
 	const draggableColumn = useMemo(() => {
 		if (haveDraggable) {
