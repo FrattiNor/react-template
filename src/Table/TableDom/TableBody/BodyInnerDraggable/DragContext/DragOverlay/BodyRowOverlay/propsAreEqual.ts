@@ -13,8 +13,8 @@ export const getProps = <T extends TableDataItem>({ rowIndex }: Readonly<Props<T
 export const getInstanceProps = <T extends TableDataItem>({ instance }: Readonly<{ instance: Readonly<TableInstance<T>> }>) => {
 	const { columnsFlat } = instance.tableColumn;
 	const { bodyRef } = instance.tableDomRef;
-	const { gridTemplateColumnsArr } = instance.tableSecondaryState;
-	return { gridTemplateColumnsArr, columnsFlat, bodyRef };
+	const { bodyGridTemplateColumns } = instance.tableSecondaryState;
+	return { bodyGridTemplateColumns, columnsFlat, bodyRef };
 };
 
 export const getTotalInstanceProps = <T extends TableDataItem>({ instance }: Readonly<{ instance: Readonly<TableInstance<T>> }>) => {

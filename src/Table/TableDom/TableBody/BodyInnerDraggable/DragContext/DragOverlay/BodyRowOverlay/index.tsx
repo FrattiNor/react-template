@@ -16,8 +16,7 @@ export type Props<T extends TableDataItem> = {
 const BodyRowOverlay = <T extends TableDataItem>(props: Props<T>) => {
 	const rowRef = useRef<HTMLDivElement>(null);
 	const { rowIndex } = getProps(props);
-	const { columnsFlat, gridTemplateColumnsArr, bodyRef } = getInstanceProps(props);
-	const gridTemplateColumns = gridTemplateColumnsArr.join(' ');
+	const { columnsFlat, bodyGridTemplateColumns, bodyRef } = getInstanceProps(props);
 
 	// 同步row和body的滚动
 	useLayoutEffect(() => {
@@ -43,7 +42,12 @@ const BodyRowOverlay = <T extends TableDataItem>(props: Props<T>) => {
 	}, []);
 
 	return (
-		<div ref={rowRef} data-row-index={rowIndex} className={styles['body-row']} style={{ pointerEvents: 'none', gridTemplateColumns }}>
+		<div
+			ref={rowRef}
+			data-row-index={rowIndex}
+			className={styles['body-row']}
+			style={{ pointerEvents: 'none', gridTemplateColumns: bodyGridTemplateColumns }}
+		>
 			{columnsFlat.map((column, colIndex) => {
 				return <BodyCell key={column.key} rowIndex={rowIndex} colIndex={colIndex} instance={props.instance} defaultBgLevel={1} forceRender />;
 			})}
