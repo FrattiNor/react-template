@@ -57,7 +57,7 @@ const useData = () => {
 	const { params } = useAppTableContext();
 	const [loading, setLoading] = useState(false);
 	const [autoReload, setAutoReload] = useState(false);
-	const [originData, setOriginData] = useState<DataItem[]>(() => getData(isDev ? 20 : 1000));
+	const [originData, setOriginData] = useState<DataItem[]>(() => getData(isDev ? 5 : 1000));
 	const [data, setData] = useState<DataItem[]>(() => originData);
 
 	const changeOriginData = (count: number) => {
