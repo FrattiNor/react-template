@@ -20,8 +20,11 @@ const useTableMeasureCol = <T extends TableDataItem>({ tableColumn, tableState }
 	// 增加防抖
 	const bodyWidthChangeCallback = useCallback(() => {
 		debounce(() => {
-			setColMeasure({ measure: true, clear: true });
-		}, 500);
+			setColMeasure((old) => {
+				if (old.measure === true) return old;
+				return { measure: true, clear: true };
+			});
+		}, 500)();
 	}, []);
 	useLayoutEffect(() => {
 		if (bodyClientWidth > 0 && resized === false) {
@@ -32,15 +35,21 @@ const useTableMeasureCol = <T extends TableDataItem>({ tableColumn, tableState }
 	// 垂直滚动条是否存在、并且没有resize过
 	// 不需要防抖
 	useLayoutEffect(() => {
-		if (V_ScrollbarWidth > 0 && resized === false) {
-			setColMeasure({ measure: true, clear: true });
+		if (resized === false) {
+			setColMeasure((old) => {
+				if (old.measure === true) return old;
+				return { measure: true, clear: true };
+			});
 		}
 	}, [V_ScrollbarWidth]);
 
 	// column数量或者width变化
 	useLayoutEffect(() => {
 		// 未修改过宽度时，需要清空原来的宽度
-		setColMeasure({ measure: true, clear: resized === false });
+		setColMeasure((old) => {
+			if (old.measure === true) return old;
+			return { measure: true, clear: resized === false };
+		});
 	}, [columnsWidthKeys]);
 
 	// 测量样式
