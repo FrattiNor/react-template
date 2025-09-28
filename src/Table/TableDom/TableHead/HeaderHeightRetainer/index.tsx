@@ -12,8 +12,7 @@ export type Props<T extends TableDataItem> = {
 
 const HeaderHeightRetainer = <T extends TableDataItem>(props: Props<T>) => {
 	const { rowIndex } = getProps(props);
-	const { columnsFlat, rowHeight } = getInstanceProps(props);
-	const colMaxIndex = columnsFlat.length - 1;
+	const { colMaxIndex, rowHeight } = getInstanceProps(props);
 
 	return (
 		<div

@@ -17,13 +17,12 @@ export type Props<T extends TableDataItem> = {
 
 const BodyCellPlaceholder = <T extends TableDataItem>(props: Props<T>) => {
 	const { rowIndex, forceRender, defaultBgLevel } = getProps(props);
-	const { bordered, datasource, columnsFlat, getRowKey, getRowShow, getBodyCellBg, bodyRowClick, bodyRowMouseEnter, bodyRowMouseLeave } =
+	const { colMaxIndex, bordered, datasource, getRowKey, getRowShow, getBodyCellBg, bodyRowClick, bodyRowMouseEnter, bodyRowMouseLeave } =
 		getInstanceProps(props);
 
 	if (forceRender !== true && getRowShow([rowIndex]) === false) return null;
 
 	const rowData = datasource[rowIndex];
-	const colMaxIndex = columnsFlat.length - 1;
 	const rowKey = getRowKey(rowData, rowIndex);
 	const bodyCellBg = getBodyCellBg({ rowKeys: [rowKey], colIndexs: [-1], defaultBgLevel });
 

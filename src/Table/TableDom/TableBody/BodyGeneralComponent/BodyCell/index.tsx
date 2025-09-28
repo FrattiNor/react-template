@@ -21,6 +21,7 @@ const BodyCell = <T extends TableDataItem>(props: Props<T>) => {
 	const { colIndex, rowIndex, forceRender: propsForceRender, defaultBgLevel } = getProps(props);
 
 	const {
+		colMaxIndex,
 		datasource,
 		bordered,
 		rowHeight,
@@ -51,7 +52,6 @@ const BodyCell = <T extends TableDataItem>(props: Props<T>) => {
 	const { stickyStyle, stickyClassName, sticky } = getStickyStyleAndClassName({ colIndexs, type: 'body' });
 	if (forceRender !== true && sticky !== true && getColShow(colIndexs) !== true) return null;
 
-	const colMaxIndex = columnsFlat.length - 1;
 	const rowKeys = getRowKeys({ currentIndex: rowIndex, rowSpan, datasource });
 	const bodyCellBg = getBodyCellBg({ rowKeys, colIndexs, defaultBgLevel });
 

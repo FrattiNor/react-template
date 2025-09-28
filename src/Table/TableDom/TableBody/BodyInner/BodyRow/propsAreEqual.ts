@@ -11,10 +11,10 @@ export const getProps = <T extends TableDataItem>({ rowIndex }: Readonly<Props<T
 };
 
 export const getInstanceProps = <T extends TableDataItem>({ instance }: Readonly<{ instance: Readonly<TableInstance<T>> }>) => {
-	const { columnsFlat } = instance.tableColumn;
+	const { columnsFlat, colMaxIndex } = instance.tableColumn;
 	const { rowHeight } = instance.tableProps;
 	const { VV_measureElement } = instance.tableVirtual;
-	return { columnsFlat, rowHeight, VV_measureElement };
+	return { columnsFlat, colMaxIndex, rowHeight, VV_measureElement };
 };
 
 export const getTotalInstanceProps = <T extends TableDataItem>({ instance }: Readonly<{ instance: Readonly<TableInstance<T>> }>) => {

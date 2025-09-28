@@ -92,7 +92,10 @@ const useTableColumn = <T extends TableDataItem>({ tableProps, tableRowSelection
 		return { columnsFlat, columnsFlatWidthOnCell, columnGroups, columnsWidthKeys, columnsFixedKeys };
 	}, [columns, rowSelectionColumn, draggableColumn, disabledRowSpan]);
 
+	const colMaxIndex = columnsFlat.length - 1;
+
 	return {
+		colMaxIndex,
 		columnsFlat,
 		columnsFlatWidthOnCell,
 		columnGroups,

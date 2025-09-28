@@ -16,8 +16,7 @@ export type Props<T extends TableDataItem> = {
 
 const BodyRow = <T extends TableDataItem>(props: Props<T>) => {
 	const { rowIndex } = getProps(props);
-	const { columnsFlat, rowHeight, VV_measureElement } = getInstanceProps(props);
-	const colMaxIndex = columnsFlat.length - 1;
+	const { columnsFlat, colMaxIndex, rowHeight, VV_measureElement } = getInstanceProps(props);
 
 	return (
 		<div data-row-index={rowIndex} className={styles['body-row']}>

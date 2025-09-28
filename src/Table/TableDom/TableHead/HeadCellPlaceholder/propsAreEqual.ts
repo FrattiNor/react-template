@@ -10,8 +10,8 @@ export const getProps = <T extends TableDataItem>({ rowIndex }: Readonly<Props<T
 
 export const getInstanceProps = <T extends TableDataItem>({ instance }: Readonly<{ instance: Readonly<TableInstance<T>> }>) => {
 	const { bordered } = instance.tableProps;
-	const { columnsFlat } = instance.tableColumn;
-	return { columnsFlat, bordered };
+	const { colMaxIndex } = instance.tableColumn;
+	return { colMaxIndex, bordered };
 };
 
 export const getTotalInstanceProps = getInstanceProps;

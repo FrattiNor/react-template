@@ -15,8 +15,7 @@ export type Props<T extends TableDataItem> = {
 
 const HeadCellPlaceholder = <T extends TableDataItem>(props: Props<T>) => {
 	const { rowIndex } = getProps(props);
-	const { columnsFlat, bordered } = getInstanceProps(props);
-	const colMaxIndex = columnsFlat.length - 1;
+	const { colMaxIndex, bordered } = getInstanceProps(props);
 
 	return (
 		<div

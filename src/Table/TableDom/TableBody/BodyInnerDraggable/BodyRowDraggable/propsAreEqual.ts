@@ -13,9 +13,9 @@ export const getProps = <T extends TableDataItem>({ rowIndex }: Readonly<Props<T
 export const getInstanceProps = <T extends TableDataItem>({ instance }: Readonly<{ instance: Readonly<TableInstance<T>> }>) => {
 	const { getRowKey } = instance.tableTools;
 	const { datasource } = instance.tableData;
-	const { columnsFlat } = instance.tableColumn;
+	const { colMaxIndex, columnsFlat } = instance.tableColumn;
 	const { VV_measureElement } = instance.tableVirtual;
-	return { getRowKey, columnsFlat, datasource, VV_measureElement };
+	return { getRowKey, colMaxIndex, columnsFlat, datasource, VV_measureElement };
 };
 
 export const getTotalInstanceProps = <T extends TableDataItem>({ instance }: Readonly<{ instance: Readonly<TableInstance<T>> }>) => {

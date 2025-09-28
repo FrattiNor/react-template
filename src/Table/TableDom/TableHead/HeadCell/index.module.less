@@ -1,14 +1,18 @@
 .head-cell {
 	position: relative;
 	box-sizing: border-box;
-	border-bottom: var(--table-cell-border-width) solid var(--table-cell-border-color);
+	border-bottom: var(--table-cell-border-width) solid #ffc53d;
 	transition: background-color 0.2s;
 
 	&.bordered {
-		border-left: var(--table-cell-border-width) solid var(--table-cell-border-color);
+		border-left: var(--table-cell-border-width) solid #ffc53d;
 
 		&.first-col {
 			border-left: 0;
+		}
+
+		&.last-col {
+			border-right: var(--table-cell-border-width) solid #ffc53d;
 		}
 	}
 }

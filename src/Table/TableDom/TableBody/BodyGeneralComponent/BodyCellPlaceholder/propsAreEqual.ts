@@ -12,14 +12,14 @@ export const getInstanceProps = <T extends TableDataItem>({ instance }: Readonly
 	const { getRowKey } = instance.tableTools;
 	const { datasource } = instance.tableData;
 	const { bordered } = instance.tableProps;
-	const { columnsFlat } = instance.tableColumn;
+	const { colMaxIndex } = instance.tableColumn;
 	const { getRowShow } = instance.tableVirtual;
 	const { getBodyCellBg, bodyRowClick, bodyRowMouseEnter, bodyRowMouseLeave } = instance.tableCellBg;
 	return {
 		bordered,
 		getRowShow,
 		getRowKey,
-		columnsFlat,
+		colMaxIndex,
 		datasource,
 		getBodyCellBg,
 		bodyRowClick,

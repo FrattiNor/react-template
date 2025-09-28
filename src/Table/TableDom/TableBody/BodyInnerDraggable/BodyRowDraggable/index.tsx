@@ -18,11 +18,10 @@ export type Props<T extends TableDataItem> = {
 
 const BodyRowDraggable = <T extends TableDataItem>(props: Props<T>) => {
 	const { rowIndex } = getProps(props);
-	const { getRowKey, columnsFlat, datasource, VV_measureElement } = getInstanceProps(props);
+	const { colMaxIndex, getRowKey, columnsFlat, datasource, VV_measureElement } = getInstanceProps(props);
 
 	const rowData = datasource[rowIndex];
 	const rowKey = getRowKey(rowData, rowIndex);
-	const colMaxIndex = columnsFlat.length - 1;
 	const { attributes, setNodeRef, transform, transition, isDragging } = useSortable({ id: rowKey, data: { rowIndex } });
 
 	const _style: React.CSSProperties = {
