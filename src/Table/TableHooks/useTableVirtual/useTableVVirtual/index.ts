@@ -3,6 +3,7 @@ import { useCallback, useMemo, type CSSProperties } from 'react';
 
 import { type useTableTools_1 } from '../../useTableTools';
 import useV from '../useV/useV';
+import { useVirtualConf } from '../utils';
 
 import type { TableDataItem } from '../../../TableTypes/type';
 import type useTableColumn from '../../useTableColumn';
@@ -20,21 +21,25 @@ type Props<T extends TableDataItem> = {
 
 const useTableVVirtual = <T extends TableDataItem>({ tableColumn, tableData, tableProps, tableDomRef, tableTools_1 }: Props<T>) => {
 	'use no memo';
+	const { virtual } = tableProps;
 	const { bodyRef } = tableDomRef;
 	const { rowHeight } = tableProps;
 	const { datasource } = tableData;
 	const { getRowKey } = tableTools_1;
-	const { virtualFlushSync } = tableProps;
 	const { columnsFlatWidthOnCell } = tableColumn;
+
+	const count = datasource?.length ?? 0;
+	const { enabled, virtualFlushSync } = useVirtualConf('v', virtual, count);
 
 	// 竖向虚拟
 	const VV = useV({
+		count,
+		enabled,
 		overscan: 0,
-		count: datasource?.length ?? 0,
+		virtualFlushSync,
 		estimateSize: () => rowHeight,
 		getScrollElement: () => bodyRef.current,
 		getItemKey: (index) => getRowKey(datasource?.[index], index),
-		virtualFlushSync,
 	});
 
 	const VV_totalSize = VV.getTotalSize();
@@ -58,6 +63,9 @@ const useTableVVirtual = <T extends TableDataItem>({ tableColumn, tableData, tab
 	// row是否显示
 	const getRowShow = useCallback(
 		(indexs: [number] | [number, number]) => {
+			// 未启用
+			if (enabled === false) return true;
+			// 启用
 			if (typeof VV_endIndex === 'number' && typeof VV_startIndex === 'number') {
 				const start = indexs[0];
 				const end = indexs[indexs.length - 1];
@@ -65,13 +73,17 @@ const useTableVVirtual = <T extends TableDataItem>({ tableColumn, tableData, tab
 			}
 			return false;
 		},
-		[VV_startIndex, VV_endIndex],
+		[enabled, VV_startIndex, VV_endIndex],
 	);
 
-	const showRowIndexs = useMemo(() => {
+	// 虚拟显示行
+	const virtualRowIndexs = useMemo(() => {
+		// 未启用
+		if (enabled === false) return undefined;
+		// 启用
 		const rowKeysObj: Record<string, number> = {};
 		const columnRowIndexs: Array<Array<{ start: number; end: number; span: number }>> = [];
-		const showRowIndexs: Array<{ index: number; start: number; end: number; span: number }> = [];
+		const virtualRowIndexs: Array<number> = [];
 
 		datasource.forEach((rowData, rowIndex) => {
 			// 检测存在重复rowKey
@@ -97,21 +109,26 @@ const useTableVVirtual = <T extends TableDataItem>({ tableColumn, tableData, tab
 			});
 			columnRowIndexs.push(currentRowColumnIndexs);
 			if (getRowShow([rowStart, rowEnd])) {
-				showRowIndexs.push({ index: rowIndex, start: rowStart, end: rowEnd, span: rowEnd - rowStart + 1 });
+				virtualRowIndexs.push(rowIndex);
 			}
 		});
 
-		return showRowIndexs;
-	}, [datasource, columnsFlatWidthOnCell, getRowShow, getRowKey]);
+		return virtualRowIndexs;
+	}, [enabled, datasource, columnsFlatWidthOnCell, getRowShow, getRowKey]);
 
+	// 外部容器相关样式
 	const VV_wrapperStyle = useMemo(() => {
-		const minHeight = VV_totalSize + 0.5;
-		const paddingTop = VV_measurementsCache?.[showRowIndexs?.[0]?.index]?.start ?? 0;
-		const style: CSSProperties = { minHeight, paddingTop };
+		// 未启用
+		if (enabled === false) return {};
+		// 启用
+		const style: CSSProperties = {
+			minHeight: VV_totalSize + 0.5,
+			paddingTop: VV_measurementsCache?.[(virtualRowIndexs as Array<number>)?.[0]]?.start ?? 0,
+		};
 		return style;
-	}, [showRowIndexs, VV_totalSize, VV_measurementsCache]);
+	}, [enabled, virtualRowIndexs, VV_totalSize, VV_measurementsCache]);
 
-	return { VV_measureElement, VV_wrapperStyle, getRowShow, showRowIndexs };
+	return { VV_measureElement, VV_wrapperStyle, getRowShow, virtualRowIndexs, VV_enabled: enabled };
 };
 
 export default useTableVVirtual;

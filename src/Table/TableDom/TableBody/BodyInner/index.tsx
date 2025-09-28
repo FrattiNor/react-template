@@ -12,16 +12,19 @@ export type Props<T extends TableDataItem> = {
 };
 
 const TableBody = <T extends TableDataItem>(props: Props<T>) => {
-	const { datasource, getRowKey, VV_wrapperStyle, showRowIndexs, bodyGridTemplateColumns } = getInstanceProps(props);
+	const { datasource, getRowKey, VV_enabled, VV_wrapperStyle, virtualRowIndexs, bodyGridTemplateColumns } = getInstanceProps(props);
+
+	const renderRow = (rowIndex: number) => {
+		const rowData = datasource[rowIndex];
+		const rowKey = getRowKey(rowData, rowIndex);
+		return <BodyRow key={rowKey} rowIndex={rowIndex} instance={props.instance} />;
+	};
 
 	return (
 		<Fragment>
 			<div className={styles['body-inner']} style={{ gridTemplateColumns: bodyGridTemplateColumns, ...VV_wrapperStyle }}>
-				{showRowIndexs.map(({ index: rowIndex }) => {
-					const rowData = datasource[rowIndex];
-					const rowKey = getRowKey(rowData, rowIndex);
-					return <BodyRow key={rowKey} rowIndex={rowIndex} instance={props.instance} />;
-				})}
+				{VV_enabled === true && virtualRowIndexs?.map((rowIndex) => renderRow(rowIndex))}
+				{VV_enabled !== true && datasource?.map((_, rowIndex) => renderRow(rowIndex))}
 			</div>
 		</Fragment>
 	);

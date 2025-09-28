@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react';
 
-import type { TableDataItem, TableFilter } from './type';
+import type { TableDataItem, TableFilter } from './typeOther';
 
 export type TableColumnOnCell<T extends TableDataItem> = (
 	item: T,

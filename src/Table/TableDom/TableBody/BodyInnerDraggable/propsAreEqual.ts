@@ -9,12 +9,13 @@ export const getInstanceProps = <T extends TableDataItem>({ instance }: Readonly
 	const { datasource } = instance.tableData;
 	const { getRowKey } = instance.tableTools;
 	const { bodyGridTemplateColumns } = instance.tableSecondaryState;
-	const { VV_wrapperStyle, showRowIndexs } = instance.tableVirtual;
+	const { VV_enabled, VV_wrapperStyle, virtualRowIndexs } = instance.tableVirtual;
 	return {
 		datasource,
 		getRowKey,
+		VV_enabled,
 		VV_wrapperStyle,
-		showRowIndexs,
+		virtualRowIndexs,
 		bodyGridTemplateColumns,
 	};
 };

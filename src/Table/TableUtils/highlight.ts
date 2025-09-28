@@ -1,6 +1,6 @@
 import { findAll } from 'highlight-words-core';
 
-import type { TableHighlightConfig } from '../TableTypes/type';
+import type { TableHighlightConfig } from '../TableTypes/typeOther';
 
 type Chunks = Array<{
 	end: number;

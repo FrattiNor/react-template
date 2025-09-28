@@ -2,6 +2,7 @@
 import { useCallback } from 'react';
 
 import useV from '../useV/useV';
+import { useVirtualConf } from '../utils';
 
 import type { TableDataItem } from '../../../TableTypes/type';
 import type useTableColumn from '../../useTableColumn';
@@ -18,20 +19,24 @@ type Props<T extends TableDataItem> = {
 
 const useTableHVirtual = <T extends TableDataItem>({ tableProps, tableColumn, tableDomRef, tableState }: Props<T>) => {
 	'use no memo';
+	const { virtual } = tableProps;
 	const { bodyRef } = tableDomRef;
 	const { columnsFlat } = tableColumn;
 	const { getColumnSize } = tableState;
-	const { virtualFlushSync } = tableProps;
+
+	const count = columnsFlat.length;
+	const { enabled, virtualFlushSync } = useVirtualConf('h', virtual, count);
 
 	// 横向虚拟
 	const HV = useV({
+		count,
+		enabled,
 		overscan: 0,
 		horizontal: true,
-		count: columnsFlat.length,
+		virtualFlushSync,
 		getScrollElement: () => bodyRef.current,
 		getItemKey: (index) => columnsFlat[index].key,
 		estimateSize: (index) => getColumnSize(columnsFlat[index].key),
-		virtualFlushSync,
 	});
 
 	const HV_items = HV.getVirtualItems();
@@ -41,6 +46,9 @@ const useTableHVirtual = <T extends TableDataItem>({ tableProps, tableColumn, ta
 	// col是否显示
 	const getColShow = useCallback(
 		(indexs: [number] | [number, number]) => {
+			// 未启用
+			if (enabled === false) return true;
+			// 启用
 			if (typeof HV_endIndex === 'number' && typeof HV_startIndex === 'number') {
 				const start = indexs[0];
 				const end = indexs[indexs.length - 1];
@@ -48,7 +56,7 @@ const useTableHVirtual = <T extends TableDataItem>({ tableProps, tableColumn, ta
 			}
 			return false;
 		},
-		[HV_endIndex, HV_startIndex],
+		[enabled, HV_endIndex, HV_startIndex],
 	);
 
 	return { getColShow };

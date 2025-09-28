@@ -26,6 +26,10 @@ const AppTable: FC = () => {
 		setRowClick,
 		rowSelect,
 		setRowSelect,
+		hEnabled,
+		setHEnabled,
+		vEnabled,
+		setVEnabled,
 	} = useTableState();
 
 	const { data, loading, changeOriginData, autoReload, setAutoReload, onDragEnd } = useData();
@@ -61,8 +65,12 @@ const AppTable: FC = () => {
 				<Switch checked={lightTheme} onChange={setLightTheme} />
 				<span>{'边框:'}</span>
 				<Switch checked={bordered} onChange={setBordered} />
-				<span>{'强刷:'}</span>
+				<span>{'flushSync:'}</span>
 				<Switch checked={vfs} onChange={setVfs} />
+				<span>{'横向virtual:'}</span>
+				<Switch checked={hEnabled} onChange={setHEnabled} />
+				<span>{'纵向virtual:'}</span>
+				<Switch checked={vEnabled} onChange={setVEnabled} />
 				<span>{'hover背景:'}</span>
 				<Switch checked={rowHover} onChange={setRowHover} />
 				<span>{'click背景:'}</span>
@@ -80,12 +88,16 @@ const AppTable: FC = () => {
 					loading={loading}
 					rowSelection={{}}
 					bordered={bordered}
-					virtualFlushSync={vfs}
 					theme={lightTheme ? 'light' : 'dark'}
 					highlightKeywords={globalHighlightKeywords}
 					draggable={draggable ? { onDragEnd } : undefined}
 					rowBgHighlight={{ rowClick, rowHover, rowSelect }}
 					highlightConfig={{ trim: true, caseSensitive: true, autoEscape: true }}
+					virtual={{
+						virtualFlushSync: vfs,
+						verticalVirtual: { enabled: vEnabled },
+						horizontalVirtual: { enabled: hEnabled },
+					}}
 				/>
 			</div>
 		</div>
