@@ -10,11 +10,14 @@
 		left: 0;
 		right: 0;
 		bottom: 0;
-		border-bottom: var(--table-cell-border-width) solid #a0d911;
+		border-top: var(--table-cell-border-width) solid #a0d911;
+	}
+
+	&.first-row::after {
+		border-top: 0;
 	}
 
 	&.bordered::after {
-		// border-left: var(--table-cell-border-width) solid #a0d911;
-		border-right: var(--table-cell-border-width) solid #a0d911;
+		border-left: var(--table-cell-border-width) solid #a0d911;
 	}
 }

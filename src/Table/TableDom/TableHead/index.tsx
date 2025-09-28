@@ -18,7 +18,7 @@ const TableHead = <T extends TableDataItem>(props: Props<T>) => {
 		V_ScrollbarWidth > 0 ? [...gridTemplateColumnsArr, `minmax(${V_ScrollbarWidth}px, 1fr)`].join(' ') : gridTemplateColumnsArr.join(' ');
 
 	return (
-		<div className={styles['head']} ref={headRef}>
+		<div ref={headRef} className={styles['head']}>
 			<div className={styles['head-inner']} style={{ gridTemplateColumns }}>
 				{columnGroups.map((_, rowIndex) => (
 					<HeadGroupRow key={rowIndex} rowIndex={rowIndex} instance={props.instance} />

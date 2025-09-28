@@ -19,7 +19,6 @@ type Props<T extends TableDataItem> = {
 const TableDom = <T extends TableDataItem>({ instance }: Props<T>) => {
 	const { tableRef } = instance.tableDomRef;
 	const { bordered, loading, theme } = instance.tableProps;
-	const { V_ScrollbarWidth, H_ScrollbarWidth } = instance.tableState;
 
 	return (
 		<TableLoading
@@ -29,10 +28,6 @@ const TableDom = <T extends TableDataItem>({ instance }: Props<T>) => {
 				[styles['bordered']]: bordered,
 				[styles['table-theme-dark']]: theme === 'dark',
 				[styles['table-theme-light']]: theme === 'light',
-				[styles['have-scroll-v']]: V_ScrollbarWidth > 0,
-				[styles['have-scroll-h']]: H_ScrollbarWidth > 0,
-				[styles['not-have-scroll-v']]: V_ScrollbarWidth <= 0,
-				[styles['not-have-scroll-h']]: H_ScrollbarWidth <= 0,
 			})}
 		>
 			<TableHead instance={instance} />

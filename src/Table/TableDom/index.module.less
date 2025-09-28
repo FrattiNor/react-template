@@ -131,41 +131,7 @@
 	&.bordered {
 		border-top: var(--table-cell-border-width) solid #ff7875;
 		border-left: var(--table-cell-border-width) solid #ff7875;
-
-		&.have-scroll-v {
-			border-right: var(--table-cell-border-width) solid #ff7875;
-		}
-
-		&.not-have-scroll-v {
-			// borderRight
-			&::after {
-				content: '';
-				z-index: 2;
-				position: absolute;
-				top: 0;
-				bottom: 0;
-				right: 0;
-				width: var(--table-cell-border-width);
-				background-color: #ff7875;
-			}
-		}
-
-		&.have-scroll-h {
-			border-bottom: var(--table-cell-border-width) solid #ff7875;
-		}
-
-		&.not-have-scroll-h {
-			// borderBottom
-			&::before {
-				content: '';
-				z-index: 2;
-				position: absolute;
-				left: 0;
-				right: 0;
-				bottom: 0;
-				height: var(--table-cell-border-width);
-				background-color: #ff7875;
-			}
-		}
+		border-right: var(--table-cell-border-width) solid #ff7875;
+		border-bottom: var(--table-cell-border-width) solid #ff7875;
 	}
 }

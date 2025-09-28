@@ -58,7 +58,7 @@ const useTableSticky = <T extends TableDataItem>({ tableSecondaryState, tableSta
 			return {
 				sticky: false,
 				stickyStyle: undefined,
-				stickyClassName: undefined,
+				stickyClassName: '',
 			};
 		},
 		[bordered, fixedLeftObj, fixedRightObj, V_ScrollbarWidth, pingedLeftFirst, pingedLeftLast, pingedRightFirst, pingedRightLast],

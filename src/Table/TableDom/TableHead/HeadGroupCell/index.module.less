@@ -4,15 +4,15 @@
 	transition: background-color 0.2s;
 
 	&.bordered {
+		border-top: var(--table-cell-border-width) solid #4096ff;
 		border-left: var(--table-cell-border-width) solid #4096ff;
-		border-bottom: var(--table-cell-border-width) solid #4096ff;
+
+		&.first-row {
+			border-top: 0;
+		}
 
 		&.first-col {
 			border-left: 0;
-		}
-
-		&.last-col {
-			border-right: var(--table-cell-border-width) solid #4096ff;
 		}
 	}
 }
