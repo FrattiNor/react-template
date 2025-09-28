@@ -31,7 +31,7 @@ const BodyCellPlaceholder = <T extends TableDataItem>(props: Props<T>) => {
 			onClick={() => bodyRowClick({ rowKeys: [rowKey] })}
 			onMouseEnter={() => bodyRowMouseEnter({ rowKeys: [rowKey] })}
 			onMouseLeave={() => bodyRowMouseLeave({ rowKeys: [rowKey] })}
-			className={classNames(styles['body-cell-placeholder'], { [styles['bordered']]: bordered, [styles['first-row']]: rowIndex === 0 })}
+			className={classNames(styles['body-cell-placeholder'], { [styles['bordered']]: bordered })}
 			style={{
 				backgroundColor: bodyCellBg,
 				gridRow: `${rowIndex + 1}/${rowIndex + 2}`,

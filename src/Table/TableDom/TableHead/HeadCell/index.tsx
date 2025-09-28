@@ -37,7 +37,6 @@ const HeadCell = <T extends TableDataItem>(props: Props<T>) => {
 			data-col-index={colIndex}
 			className={classNames(styles['head-cell'], stickyClassName, {
 				[styles['bordered']]: bordered,
-				[styles['first-col']]: colIndex === 0,
 				[styles['first-row']]: column.level === 0,
 			})}
 			style={{

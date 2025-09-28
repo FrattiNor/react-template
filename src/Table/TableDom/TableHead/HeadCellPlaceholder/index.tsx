@@ -19,7 +19,7 @@ const HeadCellPlaceholder = <T extends TableDataItem>(props: Props<T>) => {
 
 	return (
 		<div
-			className={classNames(styles['head-cell-placeholder'], { [styles['bordered']]: bordered })}
+			className={classNames(styles['head-cell-placeholder'], { [styles['bordered']]: bordered, [styles['first-row']]: true })}
 			style={{
 				gridRow: `${1}/${rowIndex + 2}`,
 				gridColumn: `${colMaxIndex + 2}/${colMaxIndex + 3}`,

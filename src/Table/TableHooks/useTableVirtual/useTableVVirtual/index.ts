@@ -105,8 +105,7 @@ const useTableVVirtual = <T extends TableDataItem>({ tableColumn, tableData, tab
 	}, [datasource, columnsFlatWidthOnCell, getRowShow, getRowKey]);
 
 	const VV_wrapperStyle = useMemo(() => {
-		// 偶尔会出现高度足够依旧显示纵向滚动条问题，可能是小数点问题
-		const minHeight = VV_totalSize + 1;
+		const minHeight = VV_totalSize;
 		const paddingTop = VV_measurementsCache?.[showRowIndexs?.[0]?.index]?.start ?? 0;
 		const style: CSSProperties = { minHeight, paddingTop };
 		return style;

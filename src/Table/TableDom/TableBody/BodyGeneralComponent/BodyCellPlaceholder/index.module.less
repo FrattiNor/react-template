@@ -2,22 +2,15 @@
 	overflow: hidden;
 	position: relative;
 	transition: background-color 0.2s;
+	border-bottom: var(--table-cell-border-width) solid var(--table-cell-border-color);
 
-	&::after {
+	&.bordered::after {
 		content: '';
 		position: absolute;
 		top: 0;
 		left: 0;
 		right: 0;
 		bottom: 0;
-		border-top: var(--table-cell-border-width) solid var(--table-cell-border-color);
-	}
-
-	&.first-row::after {
-		border-top: 0;
-	}
-
-	&.bordered::after {
 		border-left: var(--table-cell-border-width) solid var(--table-cell-border-color);
 	}
 }

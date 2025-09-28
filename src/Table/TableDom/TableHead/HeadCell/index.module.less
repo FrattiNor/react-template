@@ -2,17 +2,13 @@
 	position: relative;
 	box-sizing: border-box;
 	transition: background-color 0.2s;
-	border-top: var(--table-cell-border-width) solid var(--table-cell-border-color);
-
-	&.first-row {
-		border-top: 0;
-	}
+	border-bottom: var(--table-cell-border-width) solid var(--table-cell-border-color);
 
 	&.bordered {
 		border-left: var(--table-cell-border-width) solid var(--table-cell-border-color);
 
-		&.first-col {
-			border-left: 0;
+		&.first-row {
+			border-top: var(--table-cell-border-width) solid var(--table-cell-border-color);
 		}
 	}
 }

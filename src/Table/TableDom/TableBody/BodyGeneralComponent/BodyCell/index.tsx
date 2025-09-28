@@ -61,11 +61,7 @@ const BodyCell = <T extends TableDataItem>(props: Props<T>) => {
 			onClick={() => bodyRowClick({ rowKeys })}
 			onMouseEnter={() => bodyRowMouseEnter({ rowKeys })}
 			onMouseLeave={() => bodyRowMouseLeave({ rowKeys })}
-			className={classNames(styles['body-cell'], stickyClassName, {
-				[styles['bordered']]: bordered,
-				[styles['first-row']]: rowIndex === 0,
-				[styles['first-col']]: colIndex === 0,
-			})}
+			className={classNames(styles['body-cell'], stickyClassName, { [styles['bordered']]: bordered })}
 			style={{
 				minHeight: rowHeight,
 				backgroundColor: bodyCellBg,

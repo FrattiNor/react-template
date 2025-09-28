@@ -3,6 +3,7 @@ import { memo } from 'react';
 import classNames from 'classnames';
 
 import styles from './index.module.less';
+import themeStyles from './index.theme.module.less';
 import TableBody from './TableBody';
 import TableHead from './TableHead';
 import TableLoading from '../TableComponent/TableLoading';
@@ -18,16 +19,15 @@ type Props<T extends TableDataItem> = {
 // TODO V_ScrollbarWidth head body border对不齐
 const TableDom = <T extends TableDataItem>({ instance }: Props<T>) => {
 	const { tableRef } = instance.tableDomRef;
-	const { bordered, loading, theme } = instance.tableProps;
+	const { loading, theme } = instance.tableProps;
 
 	return (
 		<TableLoading
 			loading={loading}
 			wrapperRef={tableRef}
 			className={classNames(styles['table'], {
-				[styles['bordered']]: bordered,
-				[styles['table-theme-dark']]: theme === 'dark',
-				[styles['table-theme-light']]: theme === 'light',
+				[themeStyles['table-theme-dark']]: theme === 'dark',
+				[themeStyles['table-theme-light']]: theme === 'light',
 			})}
 		>
 			<TableHead instance={instance} />
