@@ -6,10 +6,6 @@
 	background-color: var(--table-head-cell-bg);
 	border-bottom: var(--table-cell-border-width) solid var(--table-cell-border-color);
 
-	&.bordered.first-row {
-		border-top: var(--table-cell-border-width) solid var(--table-cell-border-color);
-	}
-
 	&.bordered::after {
 		content: '';
 		position: absolute;
@@ -17,10 +13,6 @@
 		left: 0;
 		right: 0;
 		bottom: 0;
-		border-right: var(--table-cell-border-width) solid var(--table-cell-border-color);
-	}
-
-	&.bordered.border-left::after {
 		border-left: var(--table-cell-border-width) solid var(--table-cell-border-color);
 	}
 }

@@ -25,22 +25,21 @@
 
 	&.pinged {
 		z-index: 10;
-
-		&.bordered {
-			border-left: 0;
-			border-right: var(--table-cell-border-width) solid var(--table-cell-border-color);
-		}
 	}
 
-	&.first-pinged::before {
-		content: '';
-		top: 0;
-		width: 30px;
-		right: 100%;
-		bottom: -1px;
-		position: absolute;
-		pointer-events: none;
-		transition: box-shadow 0.2s;
-		box-shadow: var(--table-sticky-box-shadow-color) -10px 0px 8px -8px inset;
+	&.first-pinged {
+		border-left-color: transparent;
+
+		&::before {
+			content: '';
+			top: 0;
+			width: 30px;
+			right: 100%;
+			bottom: -1px;
+			position: absolute;
+			pointer-events: none;
+			transition: box-shadow 0.2s;
+			box-shadow: var(--table-sticky-box-shadow-color) -10px 0px 8px -8px inset;
+		}
 	}
 }

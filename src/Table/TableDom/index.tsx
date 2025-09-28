@@ -15,19 +15,20 @@ type Props<T extends TableDataItem> = {
 	instance: TableInstance<T>;
 };
 
-// TODO bordered 样式需要优化
-// TODO V_ScrollbarWidth head body border对不齐
 const TableDom = <T extends TableDataItem>({ instance }: Props<T>) => {
 	const { tableRef } = instance.tableDomRef;
-	const { loading, theme } = instance.tableProps;
+	const { H_ScrollbarWidth } = instance.tableState;
+	const { loading, theme, bordered } = instance.tableProps;
 
 	return (
 		<TableLoading
 			loading={loading}
 			wrapperRef={tableRef}
 			className={classNames(styles['table'], {
+				[styles['bordered']]: bordered,
 				[themeStyles['table-theme-dark']]: theme === 'dark',
 				[themeStyles['table-theme-light']]: theme === 'light',
+				[styles['not-bordered-and-have-h-scrollbar']]: bordered !== true && H_ScrollbarWidth > 0,
 			})}
 		>
 			<TableHead instance={instance} />

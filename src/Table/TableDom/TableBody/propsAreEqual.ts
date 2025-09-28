@@ -12,8 +12,10 @@ export const getInstanceProps = <T extends TableDataItem>({ instance }: Readonly
 	const { bodyRef } = instance.tableDomRef;
 	const { haveDraggable } = instance.tableDraggable;
 	const { colMeasure } = instance.tableState;
+	const { bordered } = instance.tableProps;
 	return {
 		bodyRef,
+		bordered,
 		colMeasure,
 		datasource,
 		haveDraggable,

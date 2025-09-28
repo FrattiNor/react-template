@@ -24,8 +24,8 @@ const useTableObserver = ({ tableDomRef, tableState, tableSecondaryState }: Prop
 		setPingedLeftLast,
 		setPingedRightFirst,
 		setPingedRightLast,
-		setPingedHeadPlaceholder,
 		setV_ScrollbarWidth,
+		setH_ScrollbarWidth,
 		setBodyClientWidth,
 		setFilterOpenKey,
 	} = tableState;
@@ -43,7 +43,6 @@ const useTableObserver = ({ tableDomRef, tableState, tableSecondaryState }: Prop
 			let leftPingedLast: number | undefined = undefined;
 			let rightPingedFirst: number | undefined = undefined;
 			let rightPingedLast: number | undefined = undefined;
-			const pingedHeadPlaceholder = scrollRight > 0;
 
 			Object.values(fixedLeftObj).forEach(({ pingedSize, index }) => {
 				if (scrollLeft > pingedSize) {
@@ -64,7 +63,6 @@ const useTableObserver = ({ tableDomRef, tableState, tableSecondaryState }: Prop
 				setPingedLeftLast(leftPingedLast);
 				setPingedRightFirst(rightPingedFirst);
 				setPingedRightLast(rightPingedLast);
-				setPingedHeadPlaceholder(pingedHeadPlaceholder);
 			});
 		}
 	}, [fixedLeftObj, fixedRightObj]);
@@ -115,22 +113,9 @@ const useTableObserver = ({ tableDomRef, tableState, tableSecondaryState }: Prop
 	useLayoutEffect(() => {
 		if (bodyRef.current) {
 			const calc = () => {
-				// 计算垂直滚动条宽度
-				const getV_ScrollbarWidth = () => {
-					if (bodyRef.current) {
-						return bodyRef.current.offsetWidth - bodyRef.current.clientWidth;
-					}
-					return 0;
-				};
-				// 计算body宽度
-				const getBodyClientWidth = () => {
-					if (bodyRef.current) {
-						return bodyRef.current.clientWidth;
-					}
-					return 0;
-				};
-				setV_ScrollbarWidth(getV_ScrollbarWidth());
-				setBodyClientWidth(getBodyClientWidth());
+				setBodyClientWidth(bodyRef.current ? bodyRef.current.clientWidth : 0);
+				setV_ScrollbarWidth(bodyRef.current ? bodyRef.current.offsetWidth - bodyRef.current.clientWidth : 0);
+				setH_ScrollbarWidth(bodyRef.current ? bodyRef.current.offsetHeight - bodyRef.current.clientHeight : 0);
 			};
 
 			// 直接执行一次

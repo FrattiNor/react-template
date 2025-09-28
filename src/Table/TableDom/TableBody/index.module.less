@@ -12,6 +12,14 @@
 		background-color: var(--table-scroll-bar-bg);
 	}
 
+	&::-webkit-scrollbar:horizontal {
+		border-top: var(--table-cell-border-width) solid var(--table-cell-border-color);
+	}
+
+	&.bordered::-webkit-scrollbar:vertical {
+		border-left: var(--table-cell-border-width) solid var(--table-cell-border-color);
+	}
+
 	&::-webkit-scrollbar-corner {
 		background-color: var(--table-scroll-bar-bg);
 	}

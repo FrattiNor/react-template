@@ -12,11 +12,11 @@ const useTableState = () => {
 	const [pingedLeftLast, setPingedLeftLast] = useState<number | undefined>(undefined);
 	const [pingedRightFirst, setPingedRightFirst] = useState<number | undefined>(undefined);
 	const [pingedRightLast, setPingedRightLast] = useState<number | undefined>(undefined);
-	const [pingedHeadPlaceholder, setPingedHeadPlaceholder] = useState<boolean>(false);
 	// body宽度
 	const [bodyClientWidth, setBodyClientWidth] = useState(0);
 	// 滚动条宽度
 	const [V_ScrollbarWidth, setV_ScrollbarWidth] = useState(0);
+	const [H_ScrollbarWidth, setH_ScrollbarWidth] = useState(0);
 	// 横向column的size对象
 	const [columnSizes, setColumnSizes] = useState<Record<string, number>>({});
 	// 行click
@@ -56,10 +56,10 @@ const useTableState = () => {
 		setPingedRightFirst,
 		pingedRightLast,
 		setPingedRightLast,
-		pingedHeadPlaceholder,
-		setPingedHeadPlaceholder,
 		V_ScrollbarWidth,
 		setV_ScrollbarWidth,
+		H_ScrollbarWidth,
+		setH_ScrollbarWidth,
 		columnSizes,
 		getColumnSize,
 		setColumnSizes,

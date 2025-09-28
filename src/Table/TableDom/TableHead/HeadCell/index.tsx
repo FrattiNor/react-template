@@ -18,7 +18,7 @@ export type Props<T extends TableDataItem> = {
 
 const HeadCell = <T extends TableDataItem>(props: Props<T>) => {
 	const { colIndex, rowIndex } = getProps(props);
-	const { getHeadCellBg, getColShow, getStickyStyleAndClassName, columnsFlat, bordered, rowHeight, colMaxIndex } = getInstanceProps(props);
+	const { getHeadCellBg, getColShow, getStickyStyleAndClassName, columnsFlat, bordered, rowHeight } = getInstanceProps(props);
 
 	const column = columnsFlat[colIndex];
 	const forceRender = column.forceRender;
@@ -37,8 +37,7 @@ const HeadCell = <T extends TableDataItem>(props: Props<T>) => {
 			data-col-index={colIndex}
 			className={classNames(styles['head-cell'], stickyClassName, {
 				[styles['bordered']]: bordered,
-				[styles['first-row']]: column.level === 0,
-				[styles['last-col']]: colMaxIndex === colIndex,
+				[styles['first-col']]: colIndex === 0,
 			})}
 			style={{
 				minHeight: rowHeight,

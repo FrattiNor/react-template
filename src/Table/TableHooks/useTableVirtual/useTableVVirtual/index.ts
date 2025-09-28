@@ -105,7 +105,7 @@ const useTableVVirtual = <T extends TableDataItem>({ tableColumn, tableData, tab
 	}, [datasource, columnsFlatWidthOnCell, getRowShow, getRowKey]);
 
 	const VV_wrapperStyle = useMemo(() => {
-		const minHeight = VV_totalSize;
+		const minHeight = VV_totalSize + 0.5;
 		const paddingTop = VV_measurementsCache?.[showRowIndexs?.[0]?.index]?.start ?? 0;
 		const style: CSSProperties = { minHeight, paddingTop };
 		return style;
