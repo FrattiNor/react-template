@@ -138,16 +138,26 @@ const useTableObserver = ({ tableDomRef, tableState, tableSecondaryState }: Prop
 			setH_ScrollbarWidth(getH_ScrollbarWidth());
 			setBodyClientWidth(getBodyClientWidth());
 
-			const ob = new ResizeObserver(() => {
+			const ob1 = new ResizeObserver(() => {
 				setV_ScrollbarWidth(getV_ScrollbarWidth());
 				setH_ScrollbarWidth(getH_ScrollbarWidth());
 				setBodyClientWidth(getBodyClientWidth());
 			});
 
-			ob.observe(bodyRef.current, { box: 'border-box' });
+			const ob2 = new ResizeObserver(() => {
+				setV_ScrollbarWidth(getV_ScrollbarWidth());
+				setH_ScrollbarWidth(getH_ScrollbarWidth());
+				setBodyClientWidth(getBodyClientWidth());
+			});
+
+			// content
+			ob1.observe(bodyRef.current);
+			// border
+			ob2.observe(bodyRef.current, { box: 'border-box' });
 
 			return () => {
-				ob.disconnect();
+				ob1.disconnect();
+				ob2.disconnect();
 			};
 		}
 	}, []);

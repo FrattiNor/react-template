@@ -1,4 +1,4 @@
-import { memo, useEffect, useRef } from 'react';
+import { memo, useLayoutEffect, useRef } from 'react';
 
 import styles from './index.module.less';
 import propsAreEqual, { getInstanceProps, getProps } from './propsAreEqual';
@@ -20,7 +20,7 @@ const BodyRowOverlay = <T extends TableDataItem>(props: Props<T>) => {
 	const gridTemplateColumns = gridTemplateColumnsArr.join(' ');
 
 	// 同步row和body的滚动
-	useEffect(() => {
+	useLayoutEffect(() => {
 		if (bodyRef.current && rowRef.current) {
 			const synchronizedScrolling = () => {
 				const bodyScrollLeft = bodyRef.current?.scrollLeft;
