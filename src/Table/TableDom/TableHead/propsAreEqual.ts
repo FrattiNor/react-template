@@ -7,13 +7,11 @@ import type { TableInstance } from '../../TableTypes/typeHooks';
 export const getInstanceProps = <T extends TableDataItem>({ instance }: Readonly<{ instance: Readonly<TableInstance<T>> }>) => {
 	const { headRef } = instance.tableDomRef;
 	const { columnGroups } = instance.tableColumn;
-	const { V_ScrollbarWidth } = instance.tableState;
-	const { gridTemplateColumnsArr } = instance.tableSecondaryState;
+	const { headGridTemplateColumns } = instance.tableSecondaryState;
 	return {
 		headRef,
 		columnGroups,
-		V_ScrollbarWidth,
-		gridTemplateColumnsArr,
+		headGridTemplateColumns,
 	};
 };
 

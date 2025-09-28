@@ -24,8 +24,8 @@ const useTableObserver = ({ tableDomRef, tableState, tableSecondaryState }: Prop
 		setPingedLeftLast,
 		setPingedRightFirst,
 		setPingedRightLast,
+		setPingedHeadPlaceholder,
 		setV_ScrollbarWidth,
-		setH_ScrollbarWidth,
 		setBodyClientWidth,
 		setFilterOpenKey,
 	} = tableState;
@@ -43,6 +43,7 @@ const useTableObserver = ({ tableDomRef, tableState, tableSecondaryState }: Prop
 			let leftPingedLast: number | undefined = undefined;
 			let rightPingedFirst: number | undefined = undefined;
 			let rightPingedLast: number | undefined = undefined;
+			const pingedHeadPlaceholder = scrollRight > 0;
 
 			Object.values(fixedLeftObj).forEach(({ pingedSize, index }) => {
 				if (scrollLeft > pingedSize) {
@@ -63,6 +64,7 @@ const useTableObserver = ({ tableDomRef, tableState, tableSecondaryState }: Prop
 				setPingedLeftLast(leftPingedLast);
 				setPingedRightFirst(rightPingedFirst);
 				setPingedRightLast(rightPingedLast);
+				setPingedHeadPlaceholder(pingedHeadPlaceholder);
 			});
 		}
 	}, [fixedLeftObj, fixedRightObj]);
@@ -112,43 +114,30 @@ const useTableObserver = ({ tableDomRef, tableState, tableSecondaryState }: Prop
 	// body Resize
 	useLayoutEffect(() => {
 		if (bodyRef.current) {
-			// 计算垂直滚动条宽度
-			const getV_ScrollbarWidth = () => {
-				if (bodyRef.current) {
-					return bodyRef.current.offsetWidth - bodyRef.current.clientWidth;
-				}
-				return 0;
+			const calc = () => {
+				// 计算垂直滚动条宽度
+				const getV_ScrollbarWidth = () => {
+					if (bodyRef.current) {
+						return bodyRef.current.offsetWidth - bodyRef.current.clientWidth;
+					}
+					return 0;
+				};
+				// 计算body宽度
+				const getBodyClientWidth = () => {
+					if (bodyRef.current) {
+						return bodyRef.current.clientWidth;
+					}
+					return 0;
+				};
+				setV_ScrollbarWidth(getV_ScrollbarWidth());
+				setBodyClientWidth(getBodyClientWidth());
 			};
-			// 计算水平滚动条宽度
-			const getH_ScrollbarWidth = () => {
-				if (bodyRef.current) {
-					return bodyRef.current.offsetHeight - bodyRef.current.clientHeight;
-				}
-				return 0;
-			};
-			// 计算body宽度
-			const getBodyClientWidth = () => {
-				if (bodyRef.current) {
-					return bodyRef.current.clientWidth;
-				}
-				return 0;
-			};
+
 			// 直接执行一次
-			setV_ScrollbarWidth(getV_ScrollbarWidth());
-			setH_ScrollbarWidth(getH_ScrollbarWidth());
-			setBodyClientWidth(getBodyClientWidth());
+			calc();
 
-			const ob1 = new ResizeObserver(() => {
-				setV_ScrollbarWidth(getV_ScrollbarWidth());
-				setH_ScrollbarWidth(getH_ScrollbarWidth());
-				setBodyClientWidth(getBodyClientWidth());
-			});
-
-			const ob2 = new ResizeObserver(() => {
-				setV_ScrollbarWidth(getV_ScrollbarWidth());
-				setH_ScrollbarWidth(getH_ScrollbarWidth());
-				setBodyClientWidth(getBodyClientWidth());
-			});
+			const ob1 = new ResizeObserver(calc);
+			const ob2 = new ResizeObserver(calc);
 
 			// content
 			ob1.observe(bodyRef.current);

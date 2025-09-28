@@ -15,11 +15,15 @@ export type Props<T extends TableDataItem> = {
 
 const HeadCellPlaceholder = <T extends TableDataItem>(props: Props<T>) => {
 	const { rowIndex } = getProps(props);
-	const { colMaxIndex, bordered } = getInstanceProps(props);
+	const { colMaxIndex, bordered, pingedHeadPlaceholder, pingedRightLast } = getInstanceProps(props);
 
 	return (
 		<div
-			className={classNames(styles['head-cell-placeholder'], { [styles['bordered']]: bordered, [styles['first-row']]: true })}
+			className={classNames(styles['head-cell-placeholder'], {
+				[styles['first-row']]: true,
+				[styles['bordered']]: bordered,
+				[styles['border-left']]: pingedHeadPlaceholder === true && pingedRightLast === undefined,
+			})}
 			style={{
 				gridRow: `${1}/${rowIndex + 2}`,
 				gridColumn: `${colMaxIndex + 2}/${colMaxIndex + 3}`,

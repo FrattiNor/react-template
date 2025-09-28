@@ -12,12 +12,11 @@ export type Props<T extends TableDataItem> = {
 };
 
 const TableBody = <T extends TableDataItem>(props: Props<T>) => {
-	const { datasource, getRowKey, VV_wrapperStyle, showRowIndexs, gridTemplateColumnsArr } = getInstanceProps(props);
-	const gridTemplateColumns = gridTemplateColumnsArr.join(' ');
+	const { datasource, getRowKey, VV_wrapperStyle, showRowIndexs, bodyGridTemplateColumns } = getInstanceProps(props);
 
 	return (
 		<Fragment>
-			<div className={styles['body-inner']} style={{ gridTemplateColumns, ...VV_wrapperStyle }}>
+			<div className={styles['body-inner']} style={{ gridTemplateColumns: bodyGridTemplateColumns, ...VV_wrapperStyle }}>
 				{showRowIndexs.map(({ index: rowIndex }) => {
 					const rowData = datasource[rowIndex];
 					const rowKey = getRowKey(rowData, rowIndex);

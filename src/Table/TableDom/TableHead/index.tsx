@@ -13,13 +13,11 @@ export type Props<T extends TableDataItem> = {
 };
 
 const TableHead = <T extends TableDataItem>(props: Props<T>) => {
-	const { headRef, columnGroups, V_ScrollbarWidth, gridTemplateColumnsArr } = getInstanceProps(props);
-	const gridTemplateColumns =
-		V_ScrollbarWidth > 0 ? [...gridTemplateColumnsArr, `minmax(${V_ScrollbarWidth}px, 1fr)`].join(' ') : gridTemplateColumnsArr.join(' ');
+	const { headRef, columnGroups, headGridTemplateColumns } = getInstanceProps(props);
 
 	return (
 		<div ref={headRef} className={styles['head']}>
-			<div className={styles['head-inner']} style={{ gridTemplateColumns }}>
+			<div className={styles['head-inner']} style={{ gridTemplateColumns: headGridTemplateColumns }}>
 				{columnGroups.map((_, rowIndex) => (
 					<HeadGroupRow key={rowIndex} rowIndex={rowIndex} instance={props.instance} />
 				))}

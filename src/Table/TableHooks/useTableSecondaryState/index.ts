@@ -11,8 +11,8 @@ type Props<T extends TableDataItem> = {
 
 // 表格二级状态
 const useTableSecondaryState = <T extends TableDataItem>({ tableColumn, tableState }: Props<T>) => {
-	const { columnSizes, getColumnSize } = tableState;
 	const { columnsFlat, columnsFixedKeys } = tableColumn;
+	const { columnSizes, V_ScrollbarWidth, getColumnSize } = tableState;
 
 	const { gridTemplateColumnsArr, HTotalSize, fixedRightObj, fixedLeftObj } = useMemo(() => {
 		let HTotalSize: number = 0;
@@ -51,7 +51,14 @@ const useTableSecondaryState = <T extends TableDataItem>({ tableColumn, tableSta
 		return { gridTemplateColumnsArr, HTotalSize, fixedLeftObj, fixedRightObj };
 	}, [columnsFixedKeys, columnSizes]);
 
-	return { gridTemplateColumnsArr, HTotalSize, fixedRightObj, fixedLeftObj };
+	const bodyGridTemplateColumns = useMemo(() => gridTemplateColumnsArr.join(' '), [gridTemplateColumnsArr]);
+
+	const headGridTemplateColumns = useMemo(
+		() => (V_ScrollbarWidth > 0 ? [...gridTemplateColumnsArr, `minmax(${V_ScrollbarWidth}px, 1fr)`].join(' ') : gridTemplateColumnsArr.join(' ')),
+		[V_ScrollbarWidth, gridTemplateColumnsArr],
+	);
+
+	return { bodyGridTemplateColumns, headGridTemplateColumns, HTotalSize, fixedRightObj, fixedLeftObj };
 };
 
 export default useTableSecondaryState;

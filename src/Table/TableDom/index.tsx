@@ -16,6 +16,7 @@ type Props<T extends TableDataItem> = {
 };
 
 // TODO bordered 样式需要优化
+// V_ScrollbarWidth width resize bug
 // TODO V_ScrollbarWidth head body border对不齐
 const TableDom = <T extends TableDataItem>({ instance }: Props<T>) => {
 	const { tableRef } = instance.tableDomRef;

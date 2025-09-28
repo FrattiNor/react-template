@@ -8,14 +8,14 @@ import type { TableInstance } from '../../../TableTypes/typeHooks';
 export const getInstanceProps = <T extends TableDataItem>({ instance }: Readonly<{ instance: Readonly<TableInstance<T>> }>) => {
 	const { datasource } = instance.tableData;
 	const { getRowKey } = instance.tableTools;
-	const { gridTemplateColumnsArr } = instance.tableSecondaryState;
+	const { bodyGridTemplateColumns } = instance.tableSecondaryState;
 	const { VV_wrapperStyle, showRowIndexs } = instance.tableVirtual;
 	return {
 		datasource,
 		getRowKey,
 		VV_wrapperStyle,
 		showRowIndexs,
-		gridTemplateColumnsArr,
+		bodyGridTemplateColumns,
 	};
 };
 
