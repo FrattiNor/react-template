@@ -21,6 +21,7 @@ const BodyCell = <T extends TableDataItem>(props: Props<T>) => {
 	const { colIndex, rowIndex, forceRender: propsForceRender, defaultBgLevel } = getProps(props);
 
 	const {
+		colMaxIndex,
 		datasource,
 		bordered,
 		rowHeight,
@@ -61,7 +62,10 @@ const BodyCell = <T extends TableDataItem>(props: Props<T>) => {
 			onClick={() => bodyRowClick({ rowKeys })}
 			onMouseEnter={() => bodyRowMouseEnter({ rowKeys })}
 			onMouseLeave={() => bodyRowMouseLeave({ rowKeys })}
-			className={classNames(styles['body-cell'], stickyClassName, { [styles['bordered']]: bordered })}
+			className={classNames(styles['body-cell'], stickyClassName, {
+				[styles['bordered']]: bordered,
+				[styles['last-col']]: colMaxIndex === colIndex,
+			})}
 			style={{
 				minHeight: rowHeight,
 				backgroundColor: bodyCellBg,

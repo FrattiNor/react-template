@@ -15,7 +15,7 @@ export const getInstanceProps = <T extends TableDataItem>({ instance }: Readonly
 	const { getStickyStyleAndClassName } = instance.tableSticky;
 	const { bordered, rowHeight } = instance.tableProps;
 	const { getBodyCellBg, bodyRowClick, bodyRowMouseEnter, bodyRowMouseLeave } = instance.tableCellBg;
-	const { columnsFlat } = instance.tableColumn;
+	const { columnsFlat, colMaxIndex } = instance.tableColumn;
 	const { datasource } = instance.tableData;
 	return {
 		getRowKeys,
@@ -23,6 +23,7 @@ export const getInstanceProps = <T extends TableDataItem>({ instance }: Readonly
 		getColShow,
 		getStickyStyleAndClassName,
 		columnsFlat,
+		colMaxIndex,
 		datasource,
 		bordered,
 		rowHeight,

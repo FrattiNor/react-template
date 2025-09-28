@@ -4,18 +4,22 @@ import classNames from 'classnames';
 
 import styles from './index.module.less';
 
+import type { TableDataItem } from '../../TableTypes/type';
 import type useTableDomRef from '../useTableDomRef';
+import type useTableProps from '../useTableProps';
 import type useTableSecondaryState from '../useTableSecondaryState';
 import type useTableState from '../useTableState';
 
-type Props = {
+type Props<T extends TableDataItem> = {
+	tableProps: ReturnType<typeof useTableProps<T>>;
 	tableState: ReturnType<typeof useTableState>;
 	tableDomRef: ReturnType<typeof useTableDomRef>;
 	tableSecondaryState: ReturnType<typeof useTableSecondaryState>;
 };
 
 // 表格左右固定
-const useTableSticky = ({ tableSecondaryState, tableState }: Props) => {
+const useTableSticky = <T extends TableDataItem>({ tableProps, tableSecondaryState, tableState }: Props<T>) => {
+	const { bordered } = tableProps;
 	const { fixedLeftObj, fixedRightObj } = tableSecondaryState;
 	const { V_ScrollbarWidth, pingedLeftFirst, pingedLeftLast, pingedRightFirst, pingedRightLast } = tableState;
 
@@ -34,7 +38,7 @@ const useTableSticky = ({ tableSecondaryState, tableState }: Props) => {
 			}
 
 			if (fixedRightObj[colEndIndex]) {
-				let className = styles['sticky-right'];
+				let className = classNames(styles['sticky-right'], { [styles['bordered']]: bordered });
 				const { stickySize } = fixedRightObj[colEndIndex];
 				const right = type === 'head' ? stickySize + V_ScrollbarWidth : stickySize;
 				const style: CSSProperties = { right };
@@ -49,7 +53,7 @@ const useTableSticky = ({ tableSecondaryState, tableState }: Props) => {
 				stickyClassName: '',
 			};
 		},
-		[fixedLeftObj, fixedRightObj, V_ScrollbarWidth, pingedLeftFirst, pingedLeftLast, pingedRightFirst, pingedRightLast],
+		[bordered, fixedLeftObj, fixedRightObj, V_ScrollbarWidth, pingedLeftFirst, pingedLeftLast, pingedRightFirst, pingedRightLast],
 	);
 
 	return { getStickyStyleAndClassName };
