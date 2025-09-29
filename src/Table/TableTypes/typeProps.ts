@@ -39,7 +39,7 @@ export type TableProps<T extends TableDataItem> = {
 	// TODO 表格可展开【和onCell的rowSpan冲突】
 	expandable?: undefined;
 	// 虚拟列表开关、可开启关闭虚拟功能
-	virtual?: TableVirtualConfig;
+	virtual?: TableVirtualConfig<T>;
 	// TODO 列配置
 	columnConf?: undefined;
 };

@@ -108,11 +108,13 @@ export type TableVirtualDirectionConfig = {
 };
 
 // Table 虚拟化配置
-export type TableVirtualConfig = {
+export type TableVirtualConfig<T extends TableDataItem> = {
 	// 启用flushSync
 	virtualFlushSync?: boolean;
 	// 启用纵向虚拟，可设置到达多少数量后自动启用
 	verticalVirtual?: TableVirtualEnable | TableVirtualDirectionConfig;
 	// 启用横向虚拟，可设置到达多少数量后自动启用
 	horizontalVirtual?: TableVirtualEnable | TableVirtualDirectionConfig;
+	// 是否应该清除虚拟size缓存【纵向】
+	shouldClearSizeCache?: (prevDatasource: T[], nextDatasource: T[]) => boolean;
 };

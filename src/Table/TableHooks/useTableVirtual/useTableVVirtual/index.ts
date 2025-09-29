@@ -1,5 +1,5 @@
 /* eslint-disable react-compiler/react-compiler */
-import { useCallback, useMemo, type CSSProperties } from 'react';
+import { useCallback, useMemo, useRef, type CSSProperties } from 'react';
 
 import { type useTableTools_1 } from '../../useTableTools';
 import useV from '../useV/useV';
@@ -29,7 +29,7 @@ const useTableVVirtual = <T extends TableDataItem>({ tableColumn, tableData, tab
 	const { columnsFlatWidthOnCell } = tableColumn;
 
 	const count = datasource?.length ?? 0;
-	const { enabled, virtualFlushSync } = useVirtualConf('v', virtual, count);
+	const { enabled, virtualFlushSync, shouldClearSizeCache } = useVirtualConf('v', virtual, count);
 
 	// 竖向虚拟
 	const VV = useV({
@@ -39,8 +39,19 @@ const useTableVVirtual = <T extends TableDataItem>({ tableColumn, tableData, tab
 		virtualFlushSync,
 		estimateSize: () => rowHeight,
 		getScrollElement: () => bodyRef.current,
+		useAnimationFrameWithResizeObserver: true,
 		getItemKey: (index) => getRowKey(datasource?.[index], index),
 	});
+
+	// 数据源改变，清除size缓存
+	const datasourceRef = useRef(datasource);
+	if (datasource !== datasourceRef.current) {
+		const needClearSizeCache = typeof shouldClearSizeCache === 'function' ? shouldClearSizeCache(datasourceRef.current, datasource) : false;
+		datasourceRef.current = datasource;
+		if (needClearSizeCache && ((VV as any).itemSizeCache as Map<string, number>).size !== 0) {
+			((VV as any).itemSizeCache as Map<string, number>).clear();
+		}
+	}
 
 	const VV_totalSize = VV.getTotalSize();
 	const VV_measureElement = VV.measureElement;

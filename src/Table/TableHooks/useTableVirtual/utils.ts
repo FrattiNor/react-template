@@ -41,9 +41,11 @@ export const useVirtualConf = (direction: 'h' | 'v', virtual: TableProps<any>['v
 		return false;
 	})();
 
+	const shouldClearSizeCache = virtual?.shouldClearSizeCache;
+
 	const enabled = useMemo(() => _enabled, [_enabled]);
 
 	const virtualFlushSync = useMemo(() => _virtualFlushSync, [_virtualFlushSync]);
 
-	return { enabled, virtualFlushSync };
+	return { enabled, virtualFlushSync, shouldClearSizeCache };
 };

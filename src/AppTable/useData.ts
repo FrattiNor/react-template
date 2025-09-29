@@ -57,42 +57,49 @@ const useData = () => {
 	const { params } = useAppTableContext();
 	const [loading, setLoading] = useState(false);
 	const [autoReload, setAutoReload] = useState(false);
-	const [originData, setOriginData] = useState<DataItem[]>(() => getData(isDev ? 20 : 1000));
-	const [data, setData] = useState<DataItem[]>(() => originData);
+	const [data, setData] = useState<undefined | DataItem[]>(() => undefined);
+	const [originData, setOriginData] = useState<undefined | DataItem[]>(() => undefined);
 
 	const changeOriginData = (count: number) => {
 		setOriginData(getData(count));
 	};
 
+	// 搜索
 	useEffect(() => {
-		const nextData = originData.filter((item) => {
-			return Object.keys(params).every((paramsKey) => {
-				const itemValue = item[paramsKey as keyof DataItem];
-				if (itemValue === undefined) return true;
-				const paramsValue = params[paramsKey] as string;
-				if (typeof itemValue === 'string') return itemValue.includes(paramsValue);
-				if (typeof itemValue === 'number') return String(itemValue).includes(paramsValue);
-				if (itemValue instanceof Date) return itemValue.toString().includes(paramsValue);
-				return false;
+		if (originData !== undefined) {
+			const nextData = originData.filter((item) => {
+				return Object.keys(params).every((paramsKey) => {
+					const itemValue = item[paramsKey as keyof DataItem];
+					if (itemValue === undefined) return true;
+					const paramsValue = params[paramsKey] as string;
+					if (typeof itemValue === 'string') return itemValue.includes(paramsValue);
+					if (typeof itemValue === 'number') return String(itemValue).includes(paramsValue);
+					if (itemValue instanceof Date) return itemValue.toString().includes(paramsValue);
+					return false;
+				});
 			});
-		});
 
-		new Promise((res) => {
-			setLoading(true);
-			setTimeout(() => res(0), 1000);
-		}).then(() => {
-			setLoading(false);
-			setData(nextData);
-		});
+			new Promise((res) => {
+				setLoading(true);
+				setTimeout(() => res(0), 1000);
+			}).then(() => {
+				setLoading(false);
+				setData(nextData);
+			});
+		}
 	}, [originData, params]);
+
+	// first fetchData
+	useEffect(() => {
+		changeOriginData(isDev ? 20 : 1000);
+	}, []);
 
 	// refetch
 	const timeoutRef = useRef<ReturnType<typeof setInterval> | null>(null);
-
 	useEffect(() => {
-		if (autoReload === true && loading === false) {
+		if (autoReload === true) {
 			timeoutRef.current = setInterval(() => {
-				const count = originData.length;
+				const count = originData?.length ?? 0;
 				console.log(`refresh data(${count})`);
 				changeOriginData(count);
 			}, 10000);
@@ -100,43 +107,46 @@ const useData = () => {
 				if (timeoutRef.current) clearInterval(timeoutRef.current);
 			};
 		}
-	}, [originData, loading, autoReload]);
+	}, [originData, autoReload]);
 
 	const onDragEnd: TableDraggable['onDragEnd'] = useCallback(({ activeId, overId, arrayMove }) => {
 		if (overId && activeId !== overId) {
 			setData((_items) => {
-				let oldIndex = -1;
-				let newIndex = -1;
+				if (_items !== undefined) {
+					let oldIndex = -1;
+					let newIndex = -1;
 
-				for (let i = 0; i < _items.length; i++) {
-					const _item = _items[i];
-					const itemId = _item['userId'];
+					for (let i = 0; i < _items.length; i++) {
+						const _item = _items[i];
+						const itemId = _item['userId'];
 
-					if (itemId === activeId) {
-						oldIndex = i;
+						if (itemId === activeId) {
+							oldIndex = i;
+						}
+
+						if (itemId === overId) {
+							newIndex = i;
+						}
+
+						if (oldIndex >= 0 && newIndex >= 0) {
+							break;
+						}
 					}
 
-					if (itemId === overId) {
-						newIndex = i;
-					}
+					let nextItems = [..._items];
 
 					if (oldIndex >= 0 && newIndex >= 0) {
-						break;
+						nextItems = arrayMove(_items, oldIndex, newIndex);
 					}
+
+					return nextItems;
 				}
-
-				let nextItems = [..._items];
-
-				if (oldIndex >= 0 && newIndex >= 0) {
-					nextItems = arrayMove(_items, oldIndex, newIndex);
-				}
-
-				return nextItems;
+				return _items;
 			});
 		}
 	}, []);
 
-	return { data, loading, changeOriginData, autoReload, setAutoReload, onDragEnd };
+	return { data, loading, setLoading, changeOriginData, autoReload, setAutoReload, onDragEnd };
 };
 
 export default useData;

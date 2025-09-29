@@ -35,6 +35,7 @@ const useTableHVirtual = <T extends TableDataItem>({ tableProps, tableColumn, ta
 		horizontal: true,
 		virtualFlushSync,
 		getScrollElement: () => bodyRef.current,
+		useAnimationFrameWithResizeObserver: true,
 		getItemKey: (index) => columnsFlat[index].key,
 		estimateSize: (index) => getColumnSize(columnsFlat[index].key),
 	});

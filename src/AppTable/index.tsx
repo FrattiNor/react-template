@@ -32,7 +32,7 @@ const AppTable: FC = () => {
 		setVEnabled,
 	} = useTableState();
 
-	const { data, loading, changeOriginData, autoReload, setAutoReload, onDragEnd } = useData();
+	const { data, loading, setLoading, changeOriginData, autoReload, setAutoReload, onDragEnd } = useData();
 
 	const { globalHighlightKeywords, keyword, setKeyword } = useKeyword();
 
@@ -79,6 +79,8 @@ const AppTable: FC = () => {
 				<Switch checked={rowSelect} onChange={setRowSelect} />
 				<span>{'自动刷新:'}</span>
 				<Switch checked={autoReload} onChange={setAutoReload} />
+				<span>{'loading:'}</span>
+				<Switch checked={loading} onChange={setLoading} />
 			</div>
 			<div className={styles['table-wrapper']}>
 				<Table
@@ -97,6 +99,13 @@ const AppTable: FC = () => {
 						virtualFlushSync: vfs,
 						verticalVirtual: { enabled: vEnabled },
 						horizontalVirtual: { enabled: hEnabled },
+						shouldClearSizeCache: (prev, next) => {
+							if (prev.length !== next.length) return true;
+							const prevKeys: Record<string, true> = {};
+							prev.forEach((item) => (prevKeys[item.userId] = true));
+							const haveDiff = next.some((item) => prevKeys[item.userId] !== true);
+							return haveDiff;
+						},
 					}}
 				/>
 			</div>
