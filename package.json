@@ -21,7 +21,9 @@
 		"classnames": "^2.5.1",
 		"highlight-words-core": "^1.2.3",
 		"react": "^19.1.0",
-		"react-dom": "^19.1.0"
+		"react-dom": "^19.1.0",
+		"react-virtualized": "^9.22.6",
+		"react-window": "^2.1.2"
 	},
 	"devDependencies": {
 		"@eslint/js": "^9.25.0",
