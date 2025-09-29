@@ -27,12 +27,16 @@ export const useVirtualConf = (direction: 'h' | 'v', virtual: TableProps<any>['v
 	})();
 
 	const _virtualFlushSync = (() => {
-		if (typeof _conf === 'boolean') return true;
-		if (typeof _conf === 'number') return true;
-		if (typeof _conf === 'undefined') return true;
+		// 总配置，默认为true
+		const totalFlushSync = typeof virtual?.virtualFlushSync === 'boolean' ? virtual?.virtualFlushSync : true;
+		// 不存在单独的flushSync配置，读总配置
+		if (typeof _conf === 'boolean') return totalFlushSync;
+		if (typeof _conf === 'number') return totalFlushSync;
+		if (typeof _conf === 'undefined') return totalFlushSync;
 		if (typeof _conf === 'object') {
+			if (typeof _conf.virtualFlushSync === 'undefined') return totalFlushSync;
+			// 存在单独的flushSync配置，读子配置
 			if (typeof _conf.virtualFlushSync === 'boolean') return _conf.virtualFlushSync;
-			if (typeof _conf.virtualFlushSync === 'undefined') return true;
 		}
 		return false;
 	})();
