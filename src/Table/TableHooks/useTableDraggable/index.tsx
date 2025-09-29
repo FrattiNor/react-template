@@ -14,9 +14,9 @@ type Props<T extends TableDataItem> = {
 
 const useTableDraggable = <T extends TableDataItem>({ tableProps, tableTools_1 }: Props<T>) => {
 	const { draggable } = tableProps;
-	const onDragEnd = draggable?.onDragEnd;
 	const haveDraggable = !!draggable;
 	const { getRowKey } = tableTools_1;
+	const onDragEnd = draggable?.onDragEnd;
 	const [dragActiveItem, setDragActiveItem] = useState<{ rowIndex: number } | null>(null);
 
 	const draggableColumn = useMemo(() => {
@@ -30,9 +30,9 @@ const useTableDraggable = <T extends TableDataItem>({ tableProps, tableTools_1 }
 				align: 'center',
 				key: 'rowDraggable',
 				title: '',
-				render: (item, { index }) => {
+				render: (item, { index, isOverlay }) => {
 					const key = getRowKey(item, index);
-					return <DragIcon id={key} />;
+					return <DragIcon id={key} isOverlay={isOverlay} />;
 				},
 			};
 			return column;

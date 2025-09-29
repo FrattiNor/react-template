@@ -15,10 +15,11 @@ export type Props<T extends TableDataItem> = {
 	colIndex: number;
 	onCellTitle: string | undefined;
 	align?: 'left' | 'right' | 'center';
+	isOverlay?: boolean; // draggable overlay
 };
 
 const BodyCellRender = <T extends TableDataItem>(props: Props<T>) => {
-	const { onCellTitle, colIndex, rowIndex, align } = getProps(props);
+	const { onCellTitle, colIndex, rowIndex, align, isOverlay } = getProps(props);
 	const { datasource, columnsFlat } = getInstanceProps(props);
 
 	const rowData = datasource[rowIndex];
@@ -30,7 +31,7 @@ const BodyCellRender = <T extends TableDataItem>(props: Props<T>) => {
 			{text}
 		</HighlightText>
 	);
-	const cellRenderValue = column.render(rowData, { index: rowIndex, renderHighlightText });
+	const cellRenderValue = column.render(rowData, { index: rowIndex, renderHighlightText, isOverlay: isOverlay ?? false });
 	const title = onCellTitle ?? getCellTitle(cellRenderValue);
 	const cellIsStr = typeof cellRenderValue === 'string' || typeof cellRenderValue === 'number';
 	const alignStyle: CSSProperties = { justifyContent: align === 'center' ? 'center' : align === 'right' ? 'flex-end' : 'flex-start' };

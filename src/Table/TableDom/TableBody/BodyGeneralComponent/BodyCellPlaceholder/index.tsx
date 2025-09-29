@@ -11,27 +11,31 @@ import type { TableInstance } from '../../../../TableTypes/typeHooks';
 export type Props<T extends TableDataItem> = {
 	instance: TableInstance<T>;
 	rowIndex: number;
-	forceRender?: boolean; // 提供给overlay强制渲染
-	defaultBgLevel?: number; // 提供给overlay, 增加bgColor等级
+	isOverlay?: boolean; // draggable overlay
 };
 
 const BodyCellPlaceholder = <T extends TableDataItem>(props: Props<T>) => {
-	const { rowIndex, forceRender, defaultBgLevel } = getProps(props);
+	const { rowIndex, isOverlay } = getProps(props);
 	const { colMaxIndex, bordered, datasource, getRowKey, getRowShow, getBodyCellBg, bodyRowClick, bodyRowMouseEnter, bodyRowMouseLeave } =
 		getInstanceProps(props);
 
+	const forceRender = isOverlay;
 	if (forceRender !== true && getRowShow([rowIndex]) === false) return null;
 
 	const rowData = datasource[rowIndex];
 	const rowKey = getRowKey(rowData, rowIndex);
-	const bodyCellBg = getBodyCellBg({ rowKeys: [rowKey], colIndexs: [-1], defaultBgLevel });
+	const bodyCellBg = getBodyCellBg({ rowKeys: [rowKey], colIndexs: [-1], defaultBgLevel: isOverlay ? 1 : 0 });
 
 	return (
 		<div
 			onClick={() => bodyRowClick({ rowKeys: [rowKey] })}
 			onMouseEnter={() => bodyRowMouseEnter({ rowKeys: [rowKey] })}
 			onMouseLeave={() => bodyRowMouseLeave({ rowKeys: [rowKey] })}
-			className={classNames(styles['body-cell-placeholder'], { [styles['bordered']]: bordered })}
+			className={classNames(styles['body-cell-placeholder'], {
+				[styles['bordered']]: bordered,
+				[styles['first-row']]: rowIndex === 0,
+				[styles['is-overlay']]: isOverlay === true,
+			})}
 			style={{
 				backgroundColor: bodyCellBg,
 				gridRow: `${rowIndex + 1}/${rowIndex + 2}`,

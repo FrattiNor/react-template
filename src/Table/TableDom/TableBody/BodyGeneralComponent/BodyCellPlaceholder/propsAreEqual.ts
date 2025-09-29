@@ -4,8 +4,8 @@ import type { Props } from './index';
 import type { TableDataItem } from '../../../../TableTypes/type';
 import type { TableInstance } from '../../../../TableTypes/typeHooks';
 
-export const getProps = <T extends TableDataItem>({ rowIndex, forceRender, defaultBgLevel }: Readonly<Props<T>>) => {
-	return { rowIndex, forceRender, defaultBgLevel };
+export const getProps = <T extends TableDataItem>({ rowIndex, isOverlay }: Readonly<Props<T>>) => {
+	return { rowIndex, isOverlay };
 };
 
 export const getInstanceProps = <T extends TableDataItem>({ instance }: Readonly<{ instance: Readonly<TableInstance<T>> }>) => {

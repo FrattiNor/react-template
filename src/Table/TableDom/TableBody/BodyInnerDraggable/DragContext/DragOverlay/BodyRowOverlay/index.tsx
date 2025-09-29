@@ -49,9 +49,9 @@ const BodyRowOverlay = <T extends TableDataItem>(props: Props<T>) => {
 			style={{ pointerEvents: 'none', gridTemplateColumns: bodyGridTemplateColumns }}
 		>
 			{columnsFlat.map((column, colIndex) => {
-				return <BodyCell key={column.key} rowIndex={rowIndex} colIndex={colIndex} instance={props.instance} defaultBgLevel={1} forceRender />;
+				return <BodyCell key={column.key} rowIndex={rowIndex} colIndex={colIndex} instance={props.instance} isOverlay />;
 			})}
-			<BodyCellPlaceholder rowIndex={rowIndex} instance={props.instance} defaultBgLevel={1} forceRender />
+			<BodyCellPlaceholder rowIndex={rowIndex} instance={props.instance} isOverlay />
 		</div>
 	);
 };

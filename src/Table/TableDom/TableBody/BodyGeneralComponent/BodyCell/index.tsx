@@ -13,12 +13,11 @@ export type Props<T extends TableDataItem> = {
 	instance: TableInstance<T>;
 	rowIndex: number;
 	colIndex: number;
-	forceRender?: boolean; // 提供给overlay强制渲染
-	defaultBgLevel?: number; // 提供给overlay, 增加bgColor等级
+	isOverlay?: boolean; // draggable overlay
 };
 
 const BodyCell = <T extends TableDataItem>(props: Props<T>) => {
-	const { colIndex, rowIndex, forceRender: propsForceRender, defaultBgLevel } = getProps(props);
+	const { colIndex, rowIndex, isOverlay } = getProps(props);
 
 	const {
 		datasource,
@@ -38,7 +37,7 @@ const BodyCell = <T extends TableDataItem>(props: Props<T>) => {
 	const rowData = datasource[rowIndex];
 	const column = columnsFlat[colIndex];
 	const columnForceRender = column.forceRender;
-	const forceRender = propsForceRender || columnForceRender;
+	const forceRender = isOverlay || columnForceRender;
 	const { rowSpan = 1, colSpan = 1, title: onCellTitle = undefined } = column.onCell ? column.onCell(rowData, rowIndex) : {};
 	const colIndexs = useMemo(() => [colIndex, colIndex + colSpan - 1] as [number, number], [colIndex, colSpan]);
 
@@ -52,7 +51,7 @@ const BodyCell = <T extends TableDataItem>(props: Props<T>) => {
 	if (forceRender !== true && sticky !== true && getColShow(colIndexs) !== true) return null;
 
 	const rowKeys = getRowKeys({ currentIndex: rowIndex, rowSpan, datasource });
-	const bodyCellBg = getBodyCellBg({ rowKeys, colIndexs, defaultBgLevel });
+	const bodyCellBg = getBodyCellBg({ rowKeys, colIndexs, defaultBgLevel: isOverlay ? 1 : 0 });
 
 	return (
 		<div
@@ -65,6 +64,7 @@ const BodyCell = <T extends TableDataItem>(props: Props<T>) => {
 				[styles['bordered']]: bordered,
 				[styles['first-row']]: rowIndex === 0,
 				[styles['first-col']]: colIndex === 0,
+				[styles['is-overlay']]: isOverlay === true,
 			})}
 			style={{
 				minHeight: rowHeight,
@@ -74,7 +74,14 @@ const BodyCell = <T extends TableDataItem>(props: Props<T>) => {
 				...stickyStyle,
 			}}
 		>
-			<BodyCellRender rowIndex={rowIndex} colIndex={colIndex} onCellTitle={onCellTitle} instance={props.instance} align={column.align} />
+			<BodyCellRender
+				rowIndex={rowIndex}
+				colIndex={colIndex}
+				align={column.align}
+				isOverlay={isOverlay}
+				onCellTitle={onCellTitle}
+				instance={props.instance}
+			/>
 		</div>
 	);
 };
