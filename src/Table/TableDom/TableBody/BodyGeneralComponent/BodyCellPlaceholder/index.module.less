@@ -1,7 +1,9 @@
 .body-cell-placeholder {
 	overflow: hidden;
 	position: relative;
-	transition: background-color 0.2s;
+	transition:
+		background-color 0.2s,
+		border-color 0.2s;
 	border-bottom: var(--table-cell-border-width) solid var(--table-cell-border-color);
 
 	&.bordered::after {
@@ -11,6 +13,7 @@
 		left: 0;
 		right: 0;
 		bottom: 0;
+		transition: border-color 0.2s;
 		border-left: var(--table-cell-border-width) solid var(--table-cell-border-color);
 	}
 }

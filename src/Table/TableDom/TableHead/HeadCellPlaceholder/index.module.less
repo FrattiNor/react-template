@@ -3,6 +3,9 @@
 	z-index: 99;
 	overflow: hidden;
 	position: sticky;
+	transition:
+		background-color 0.2s,
+		border-color 0.2s;
 	background-color: var(--table-head-cell-bg);
 	border-bottom: var(--table-cell-border-width) solid var(--table-cell-border-color);
 
@@ -13,6 +16,7 @@
 		left: 0;
 		right: 0;
 		bottom: 0;
+		transition: border-color 0.2s;
 		border-left: var(--table-cell-border-width) solid var(--table-cell-border-color);
 	}
 }
