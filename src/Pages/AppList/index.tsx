@@ -53,7 +53,7 @@ const AppList: FC = () => {
 				direction="v"
 				overscan={overscan}
 				getItemSize={() => 40}
-				style={{ width: '30%', height: '70%', position: 'relative' }}
+				style={{ width: 300, height: '70%', position: 'relative', maxHeight: '1000px', border: '1px solid rgba(0,0,0,0.1)' }}
 				data={(dataType === 1 ? data : data2) as Array<string | { x: string }>}
 				getItemKey={(item) => (typeof item === 'string' ? item : item.x)}
 				renderData={(item, { index, key, measureElement }) => {
