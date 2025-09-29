@@ -1,0 +1,44 @@
+.wrapper {
+	width: 100vw;
+	height: 100vh;
+	display: flex;
+
+	.menu {
+		z-index: 2;
+		position: relative;
+		gap: 8px;
+		width: 256px;
+		flex-shrink: 0;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		background-color: rgba(0, 0, 0, 0.03);
+		border-right: 1px solid rgba(0, 0, 0, 0.05);
+		box-shadow: rgba(0, 0, 0, 0.2) 10px 0px 8px -4px;
+
+		.menu-item {
+			height: 50px;
+			cursor: pointer;
+			padding: 0 16px;
+			line-height: 50px;
+			background-color: rgba(0, 0, 0, 0.03);
+			transition: background-color 0.2s;
+
+			&:hover {
+				background-color: #e6f4ff;
+			}
+
+			&:active {
+				background-color: #bae0ff;
+			}
+		}
+	}
+
+	.content {
+		width: 0;
+		flex-grow: 1;
+		overflow: hidden;
+		z-index: 1;
+		position: relative;
+	}
+}

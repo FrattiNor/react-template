@@ -6,7 +6,6 @@ import styles from './index.module.less';
 import useVirtualList from './useVirtualList';
 import VirtualScrollBar from './VirtualScrollBar';
 
-
 type RenderProps<T> = {
 	index: number;
 	start: number;

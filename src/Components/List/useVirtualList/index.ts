@@ -1,3 +1,4 @@
+/* eslint-disable react-compiler/react-compiler */
 import { useEffect } from 'react';
 
 import useContainerObserver from './hooks/useContainerObserver';
@@ -21,6 +22,7 @@ export type VirtualListProps<T> = {
 };
 
 const useVirtualList = <T>(props: VirtualListProps<T>) => {
+	'use no memo';
 	const getProps = useVirtualProps<T>(props);
 
 	const state = useVirtualState<T>();

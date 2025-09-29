@@ -4,7 +4,7 @@ import { faker } from '@faker-js/faker';
 
 import { useAppTableContext } from './AppTableContext';
 
-import type { TableDraggable } from '../Table/TableTypes/type';
+import type { TableDraggable } from '../../Components/Table/TableTypes/type';
 
 const isDev = process.env.NODE_ENV === 'development';
 

@@ -2,13 +2,13 @@ import { type FC } from 'react';
 
 import Switch from 'antd/es/switch';
 
-import styles from './index.module.less';
-import Table from '../Table';
 import { AppTableContext, useProvider } from './AppTableContext';
+import styles from './index.module.less';
 import useColumns from './useColumns';
 import useData from './useData';
 import useKeyword from './useKeyword';
 import useTableState from './useTableState';
+import Table from '../../Components/Table';
 
 const AppTable: FC = () => {
 	const {

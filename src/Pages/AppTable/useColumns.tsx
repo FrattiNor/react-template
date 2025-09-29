@@ -4,8 +4,8 @@ import { useAppTableContext } from './AppTableContext';
 import FilterComponent from './FilterComponent';
 
 import type { DataItem } from './useData';
-import type { TableColumnFilter } from '../Table/TableTypes/type';
-import type { TableColumns } from '../Table/TableTypes/typeColumn';
+import type { TableColumnFilter } from '../../Components/Table/TableTypes/type';
+import type { TableColumns } from '../../Components/Table/TableTypes/typeColumn';
 
 const useAppTableColumns = () => {
 	const { params } = useAppTableContext();

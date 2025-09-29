@@ -3,7 +3,7 @@ import { useEffect, useState, type FC } from 'react';
 import { Input } from 'antd';
 
 import { useAppTableContext } from './AppTableContext';
-import { TableFilterTemplate } from '../Table/TableComponent';
+import { TableFilterTemplate } from '../../Components/Table/TableComponent';
 
 type Props = {
 	close: () => void;

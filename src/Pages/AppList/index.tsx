@@ -1,6 +1,6 @@
 import { useMemo, useState, type FC } from 'react';
 
-import List from '../List';
+import List from '../../Components/List';
 
 const AppList: FC = () => {
 	const [gap, setGap] = useState(0);
@@ -9,29 +9,32 @@ const AppList: FC = () => {
 	const [dataType, setDataType] = useState(1);
 
 	const data: Array<string> = useMemo(() => {
-		return [...Array(100000)].map((_, i) => `${i}_1`);
+		return [...Array(100000)].map((_, i) => `${i + 1}_1`);
 	}, []);
 
 	const data2: Array<{ x: string }> = useMemo(() => {
-		return [...Array(2)].map((_, i) => ({ x: `${i}_2` }));
+		return [...Array(2)].map((_, i) => ({ x: `${i + 1}_2` }));
 	}, []);
 
 	return (
 		<div
 			style={{
 				gap: 12,
-				width: '100vw',
-				height: '100vh',
+				width: '100%',
+				height: '100%',
 				display: 'flex',
 				alignItems: 'center',
 				flexDirection: 'column',
 				justifyContent: 'center',
-				background: 'rgba(0,0,0,0.25)',
 			}}
 		>
 			<div>
-				<span style={{ display: 'inline-block', width: 100, textAlign: 'right' }}>Gap：</span>
+				<span style={{ display: 'inline-block', width: 100, textAlign: 'right' }}>itemGap：</span>
 				<input onChange={(e) => !isNaN(parseInt(e.target.value, 10)) && setGap(parseInt(e.target.value, 10))} />
+			</div>
+			<div>
+				<span style={{ display: 'inline-block', width: 100, textAlign: 'right' }}>itemSize：</span>
+				<input onChange={(e) => !isNaN(parseInt(e.target.value, 10)) && setSize(parseInt(e.target.value, 10))} />
 			</div>
 			<div>
 				<span style={{ display: 'inline-block', width: 100, textAlign: 'right' }}>Overscan1：</span>
@@ -42,11 +45,7 @@ const AppList: FC = () => {
 				<input onChange={(e) => !isNaN(parseInt(e.target.value, 10)) && setOverscan((old) => [old[0], parseInt(e.target.value, 10)])} />
 			</div>
 			<div>
-				<span style={{ display: 'inline-block', width: 100, textAlign: 'right' }}>Size：</span>
-				<input onChange={(e) => !isNaN(parseInt(e.target.value, 10)) && setSize(parseInt(e.target.value, 10))} />
-			</div>
-			<div>
-				<span style={{ display: 'inline-block', width: 100, textAlign: 'right' }}>DataType：</span>
+				<span style={{ display: 'inline-block', width: 150, textAlign: 'right' }}>ChangeDataType：</span>
 				<button onClick={() => setDataType((old) => (old === 1 ? 2 : 1))}>change</button>
 			</div>
 			<List
@@ -54,9 +53,9 @@ const AppList: FC = () => {
 				direction="v"
 				overscan={overscan}
 				getItemSize={() => 40}
+				style={{ width: '30%', height: '70%', position: 'relative' }}
 				data={(dataType === 1 ? data : data2) as Array<string | { x: string }>}
 				getItemKey={(item) => (typeof item === 'string' ? item : item.x)}
-				style={{ width: '30vw', height: '70vh', position: 'relative' }}
 				renderData={(item, { index, key, measureElement }) => {
 					return (
 						<div
@@ -67,7 +66,7 @@ const AppList: FC = () => {
 								padding: '0 12px',
 								height: Math.max(20, size),
 								lineHeight: `${Math.max(20, size)}px`,
-								background: index % 2 === 0 ? '#dcdcdc' : '#fff',
+								background: index % 2 === 0 ? 'rgba(0,0,0,0.05)' : '#fff',
 							}}
 						>
 							{typeof item === 'string' ? item : item.x}
