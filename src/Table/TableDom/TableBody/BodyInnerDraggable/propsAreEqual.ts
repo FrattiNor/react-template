@@ -2,8 +2,7 @@ import { getTotalInstanceProps as BodyRowDraggable_getInstanceProps } from './Bo
 import { getTotalInstanceProps as DragContext_getInstanceProps } from './DragContext/propsAreEqual';
 import { getPropsAreEqual } from '../../../TableUtils';
 
-import type { TableDataItem } from '../../../TableTypes/type';
-import type { TableInstance } from '../../../TableTypes/typeHooks';
+import type { TableDataItem, TableInstance } from '../../../TableTypes/type';
 
 export const getInstanceProps = <T extends TableDataItem>({ instance }: Readonly<{ instance: Readonly<TableInstance<T>> }>) => {
 	const { datasource } = instance.tableData;

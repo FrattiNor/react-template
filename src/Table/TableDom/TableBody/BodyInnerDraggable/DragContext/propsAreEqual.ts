@@ -2,8 +2,7 @@ import { getPropsAreEqual } from '../../../../TableUtils';
 import { getTotalInstanceProps as BodyRowDraggable_getInstanceProps } from '../BodyRowDraggable/propsAreEqual';
 import { getTotalInstanceProps as DragOverlay_getInstanceProps } from './DragOverlay/propsAreEqual';
 
-import type { TableDataItem } from '../../../../TableTypes/type';
-import type { TableInstance } from '../../../../TableTypes/typeHooks';
+import type { TableDataItem, TableInstance } from '../../../../TableTypes/type';
 
 export const getInstanceProps = <T extends TableDataItem>({ instance }: Readonly<{ instance: Readonly<TableInstance<T>> }>) => {
 	const { haveDraggable, setDragActiveItem, onDragEnd } = instance.tableDraggable;

@@ -3,8 +3,7 @@ import { getTotalInstanceProps as HeadCellRender_getInstanceProps } from '../Hea
 import { getTotalInstanceProps as ResizeHandle_getInstanceProps } from '../ResizeHandle/propsAreEqual';
 
 import type { Props } from './index';
-import type { TableDataItem } from '../../../TableTypes/type';
-import type { TableInstance } from '../../../TableTypes/typeHooks';
+import type { TableDataItem, TableInstance } from '../../../TableTypes/type';
 
 export const getProps = <T extends TableDataItem>({ rowIndex, colIndex }: Readonly<Props<T>>) => {
 	return { colIndex, rowIndex };

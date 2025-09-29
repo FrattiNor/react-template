@@ -1,7 +1,8 @@
 import { useMemo } from 'react';
 
-import type { TableDataItem, TableProps } from '../../TableTypes/type';
-import type { InnerColumn, InnerColumnGroup, TableColumnGroup, TableColumn, TableColumnOnCell } from '../../TableTypes/typeColumn';
+import type { TableColumnOnCell, TableDataItem } from '../../TableTypes/type';
+import type { InnerColumn, InnerColumnGroup, TableColumn, TableColumnGroup } from '../../TableTypes/typeColumn';
+import type { TableProps } from '../../TableTypes/typeProps';
 import type useTableDraggable from '../useTableDraggable';
 import type useTableProps from '../useTableProps';
 import type useTableRowSelection from '../useTableRowSelection';

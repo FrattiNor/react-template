@@ -2,8 +2,7 @@ import { getTotalInstanceProps as HighlightText_getInstanceProps } from './Highl
 import { getPropsAreEqual } from '../../../../TableUtils';
 
 import type { Props } from './index';
-import type { TableDataItem } from '../../../../TableTypes/type';
-import type { TableInstance } from '../../../../TableTypes/typeHooks';
+import type { TableDataItem, TableInstance } from '../../../../TableTypes/type';
 
 export const getProps = <T extends TableDataItem>({ onCellTitle, rowIndex, colIndex, align }: Readonly<Props<T>>) => {
 	return { onCellTitle, rowIndex, colIndex, align };

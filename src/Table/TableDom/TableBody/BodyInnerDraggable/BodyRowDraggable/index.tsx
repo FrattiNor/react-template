@@ -8,8 +8,7 @@ import propsAreEqual, { getInstanceProps, getProps } from './propsAreEqual';
 import BodyCell from '../../BodyGeneralComponent/BodyCell';
 import BodyCellPlaceholder from '../../BodyGeneralComponent/BodyCellPlaceholder';
 
-import type { TableDataItem } from '../../../../TableTypes/type';
-import type { TableInstance } from '../../../../TableTypes/typeHooks';
+import type { TableDataItem, TableInstance } from '../../../../TableTypes/type';
 
 export type Props<T extends TableDataItem> = {
 	instance: TableInstance<T>;

@@ -1,25 +1,6 @@
 import type { ReactNode } from 'react';
 
-import type { TableDataItem, TableFilter } from './typeOther';
-
-export type TableColumnOnCell<T extends TableDataItem> = (
-	item: T,
-	index: number,
-) => {
-	// 行占据几格，用于合并单元格
-	rowSpan?: number;
-	// 列占据几格，用于合并单元格
-	colSpan?: number;
-	// 覆盖cell的title属性
-	title?: string;
-};
-
-type TableColumnSort = {
-	// 已排序，对应icon高亮
-	sorted: 'ascend' | 'descend' | undefined;
-	// 支持的排序方式
-	sortDirections?: Array<'ascend' | 'descend'>;
-};
+import type { TableDataItem, TableColumnFilter, TableColumnSort, TableColumnOnCell, TableColumnRender } from './type';
 
 // onCell 的 colSpan 和 fixed 存在冲突
 export type TableColumn<T extends TableDataItem> = {
@@ -28,7 +9,7 @@ export type TableColumn<T extends TableDataItem> = {
 	// 列标题
 	title: ReactNode;
 	// 列单元格渲染
-	render: (item: T, otherData: { index: number; renderHighlightText: (text: string) => ReactNode }) => ReactNode;
+	render: TableColumnRender<T>;
 	// 列宽
 	width: number | `${number}%`;
 	// 未resize的情况下，自动填充【默认1】
@@ -42,7 +23,7 @@ export type TableColumn<T extends TableDataItem> = {
 	// 单元格属性
 	onCell?: TableColumnOnCell<T>;
 	// 列筛选
-	filter?: (colKey: string) => TableFilter;
+	filter?: (colKey: string) => TableColumnFilter;
 	// TODO 列排序
 	sort?: TableColumnSort;
 	// 允许拖拽修改宽度

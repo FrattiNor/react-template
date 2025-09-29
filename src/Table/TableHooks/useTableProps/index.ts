@@ -3,7 +3,8 @@ import { useMemo } from 'react';
 
 import { FixedTwo } from '../../TableUtils';
 
-import type { TableDataItem, TableProps } from '../../TableTypes/type';
+import type { TableDataItem } from '../../TableTypes/type';
+import type { TableProps } from '../../TableTypes/typeProps';
 
 type Props<T extends TableDataItem> = {
 	props: TableProps<T>;

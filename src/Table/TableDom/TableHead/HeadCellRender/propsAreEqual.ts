@@ -1,8 +1,7 @@
 import { getPropsAreEqual } from '../../../TableUtils';
 
 import type { Props } from './index';
-import type { TableDataItem } from '../../../TableTypes/type';
-import type { TableInstance } from '../../../TableTypes/typeHooks';
+import type { TableDataItem, TableInstance } from '../../../TableTypes/type';
 
 export const getProps = <T extends TableDataItem>({ column, align }: Readonly<Props<T>>) => {
 	return { column, align };

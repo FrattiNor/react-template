@@ -2,7 +2,8 @@ import { useMemo } from 'react';
 
 import { type useTableTools_1 } from '../useTableTools';
 
-import type { TableDataItem, TableProps } from '../../TableTypes/type';
+import type { TableDataItem } from '../../TableTypes/type';
+import type { TableProps } from '../../TableTypes/typeProps';
 import type useTableProps from '../useTableProps';
 
 type Props<T extends TableDataItem> = {

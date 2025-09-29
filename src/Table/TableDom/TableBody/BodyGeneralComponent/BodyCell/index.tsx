@@ -6,8 +6,7 @@ import styles from './index.module.less';
 import BodyCellRender from '../BodyCellRender';
 import propsAreEqual, { getInstanceProps, getProps } from './propsAreEqual';
 
-import type { TableDataItem } from '../../../../TableTypes/type';
-import type { TableInstance } from '../../../../TableTypes/typeHooks';
+import type { TableDataItem, TableInstance } from '../../../../TableTypes/type';
 
 export type Props<T extends TableDataItem> = {
 	instance: TableInstance<T>;

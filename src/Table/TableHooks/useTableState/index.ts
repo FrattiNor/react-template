@@ -1,6 +1,6 @@
 import { useCallback, useMemo, useState } from 'react';
 
-import type { ResizeFlag } from '../../TableTypes/typeHooks';
+import type { ResizeFlag } from '../../TableTypes/type';
 
 const minColWidth = 50;
 const maxColWidth = 1500;

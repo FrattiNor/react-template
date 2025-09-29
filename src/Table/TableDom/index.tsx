@@ -8,8 +8,7 @@ import TableBody from './TableBody';
 import TableHead from './TableHead';
 import TableLoading from '../TableComponent/TableLoading';
 
-import type { TableDataItem } from '../TableTypes/type';
-import type { TableInstance } from '../TableTypes/typeHooks';
+import type { TableDataItem, TableInstance } from '../TableTypes/type';
 
 type Props<T extends TableDataItem> = {
 	instance: TableInstance<T>;

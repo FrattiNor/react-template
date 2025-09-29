@@ -1,54 +1,118 @@
-import type { TableColumns } from './typeColumn';
-import type {
-	TableDataItem,
-	TableRowSelection,
-	TableHighlightConfig,
-	TableRowBgHighlight,
-	TableDraggable,
-	TableVirtualEnable,
-	TableVirtualConfig,
-	ValueTypeKeys,
-} from './typeOther';
+import type { Dispatch, ReactNode, SetStateAction } from 'react';
 
-export { type TableDataItem };
+import type useTableInstance from '../TableHooks/useTableInstance';
 
-// TODO type 整理
-export type TableProps<T extends TableDataItem> = {
-	// 主题 dark需优化
-	theme?: 'light' | 'dark';
-	// 数据源
-	data?: Array<T>;
-	// 列配置
-	columns: TableColumns<T>;
-	// 行key
-	rowKey: ValueTypeKeys<T, string> | ((item: T, index: number) => string);
-	// 边框样式
-	bordered?: boolean;
-	// 行高
-	rowHeight?: number;
-	// 拖动修改大小的回调，用于保存列宽配置
-	onResizeEnd?: (widths: Record<string, number>) => void;
-	// 表格loading状态
-	loading?: boolean;
-	// 表格可选中
-	rowSelection?: TableRowSelection<T>;
-	// 全局高亮关键字
+// Table实例
+export type TableInstance<T extends TableDataItem> = ReturnType<typeof useTableInstance<T>>;
+
+// Table Resize标记
+export type ResizeFlag = {
+	activeKey: string;
+	pageX: number;
+	children: {
+		key: string;
+		index: number;
+		clientWidth: number;
+	}[];
+};
+
+// Table 数据源 的基础类型
+export type TableDataItem = Record<string, any>;
+
+// Table 列render配置
+export type TableColumnRender<T extends TableDataItem> = (
+	item: T,
+	otherData: { index: number; renderHighlightText: (text: string) => ReactNode },
+) => ReactNode;
+
+// Table 列筛选配置
+export type TableColumnFilter = {
+	// 已筛选，对应icon高亮
+	filtered: boolean;
+	// 列高亮关键字
 	highlightKeywords?: string[];
-	// 文本高亮配置
-	highlightConfig?: TableHighlightConfig;
-	// 行背景高亮
-	rowBgHighlight?: TableRowBgHighlight;
-	// 可拖拽排序【和onCell的rowSpan冲突】【和expandable冲突】
-	draggable?: TableDraggable;
-	// TODO 表格可展开【和onCell的rowSpan冲突】
-	expandable?: undefined;
-	// 虚拟列表开关、可开启关闭虚拟功能
-	virtual?: {
-		// 是否启用flushSync
-		virtualFlushSync?: boolean;
-		// 启用纵向虚拟，可设置到达多少数量后自动启用
-		verticalVirtual?: TableVirtualEnable | TableVirtualConfig;
-		// 启用横向虚拟，可设置到达多少数量后自动启用
-		horizontalVirtual?: TableVirtualEnable | TableVirtualConfig;
-	};
+	// 渲染筛选组件
+	renderFilter: ({ close }: { close: () => void }) => ReactNode;
+};
+
+// Table 列排序配置
+export type TableColumnSort = {
+	// 已排序，对应icon高亮
+	sorted: 'ascend' | 'descend' | undefined;
+	// 支持的排序方式
+	sortDirections?: Array<'ascend' | 'descend'>;
+};
+
+// Table 列属性配置
+export type TableColumnOnCell<T extends TableDataItem> = (
+	item: T,
+	index: number,
+) => {
+	// 行占据几格，用于合并单元格
+	rowSpan?: number;
+	// 列占据几格，用于合并单元格
+	colSpan?: number;
+	// 覆盖cell的title属性
+	title?: string;
+};
+
+// 取对象对应value的key
+export type ValueTypeKeys<T, Type> = { [K in keyof T]: T[K] extends Type ? K : never }[keyof T];
+
+// Table 文本高亮配置
+export type TableHighlightConfig = {
+	// 清除首尾空格【默认false】
+	trim?: boolean;
+	// 自动转义【默认false】
+	autoEscape?: boolean;
+	// 大小写敏感【默认false】
+	caseSensitive?: boolean;
+};
+
+// Table 行选择配置
+export type TableRowSelection<T extends TableDataItem> = {
+	// 外置选中key
+	selectedRowKeys?: string[];
+	// 外置选中key变更回调
+	onSelectedRowKeysChange?: Dispatch<SetStateAction<string[]>>;
+	// 获取checkbox的参数
+	getCheckboxProps?: (item: T) => { disabled?: boolean };
+	// TODO 主动清理选中key【data变更时自动删除不存在的key】
+	autoCleanByData?: boolean;
+};
+
+// Table 行背景高亮配置
+export type TableRowBgHighlight = {
+	// hover
+	rowHover?: boolean;
+	// click
+	rowClick?: boolean;
+	// select
+	rowSelect?: boolean;
+};
+
+// Table 拖拽配置
+export type TableDraggable = {
+	onDragEnd: (params: { activeId: string; overId: string; arrayMove: <T>(array: T[], from: number, to: number) => T[] }) => void;
+};
+
+// Table 虚拟化enable配置
+export type TableVirtualEnable = boolean | number;
+
+// Table 虚拟化方向配置
+export type TableVirtualDirectionConfig = {
+	// 启用
+	enabled?: TableVirtualEnable;
+	// 启用flushSync
+	virtualFlushSync?: boolean;
+};
+
+// Table 虚拟化配置
+export type TableVirtualConfig = {
+	// 启用flushSync
+	virtualFlushSync?: boolean;
+	// 启用纵向虚拟，可设置到达多少数量后自动启用
+	verticalVirtual?: TableVirtualEnable | TableVirtualDirectionConfig;
+	// 启用横向虚拟，可设置到达多少数量后自动启用
+	horizontalVirtual?: TableVirtualEnable | TableVirtualDirectionConfig;
 };

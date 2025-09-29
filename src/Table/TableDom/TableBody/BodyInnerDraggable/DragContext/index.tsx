@@ -7,8 +7,7 @@ import DragOverlay from './DragOverlay';
 import { customModifier } from './modifier';
 import propsAreEqual, { getInstanceProps } from './propsAreEqual';
 
-import type { TableDataItem } from '../../../../TableTypes/type';
-import type { TableInstance } from '../../../../TableTypes/typeHooks';
+import type { TableDataItem, TableInstance } from '../../../../TableTypes/type';
 
 export type Props<T extends TableDataItem> = PropsWithChildren<{
 	instance: TableInstance<T>;

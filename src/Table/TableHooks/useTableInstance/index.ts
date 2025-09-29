@@ -14,7 +14,8 @@ import useTableSticky from '../useTableSticky';
 import { useTableTools_1 } from '../useTableTools';
 import useTableVirtual from '../useTableVirtual';
 
-import type { TableDataItem, TableProps } from '../../TableTypes/type';
+import type { TableDataItem } from '../../TableTypes/type';
+import type { TableProps } from '../../TableTypes/typeProps';
 
 // 表格实例
 const useTableInstance = <T extends TableDataItem>(props: TableProps<T>) => {

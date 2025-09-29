@@ -4,8 +4,7 @@ import { getTotalInstanceProps as HeadCellPlaceholder_getInstanceProps } from '.
 import { getTotalInstanceProps as HeaderHeightRetainer_getInstanceProps } from '../HeaderHeightRetainer/propsAreEqual';
 
 import type { Props } from './index';
-import type { TableDataItem } from '../../../TableTypes/type';
-import type { TableInstance } from '../../../TableTypes/typeHooks';
+import type { TableDataItem, TableInstance } from '../../../TableTypes/type';
 
 export const getProps = <T extends TableDataItem>({ rowIndex }: Readonly<Props<T>>) => {
 	return { rowIndex };

@@ -4,8 +4,8 @@ import { useAppTableContext } from './AppTableContext';
 import FilterComponent from './FilterComponent';
 
 import type { DataItem } from './useData';
+import type { TableColumnFilter } from '../Table/TableTypes/type';
 import type { TableColumns } from '../Table/TableTypes/typeColumn';
-import type { TableFilter } from '../Table/TableTypes/typeOther';
 
 const useAppTableColumns = () => {
 	const { params } = useAppTableContext();
@@ -14,7 +14,7 @@ const useAppTableColumns = () => {
 
 	const getFilter = useCallback(
 		(colKey: string) => {
-			const filter: TableFilter = {
+			const filter: TableColumnFilter = {
 				filtered: !!params[colKey],
 				highlightKeywords: [params[colKey]],
 				renderFilter: ({ close }) => <FilterComponent close={close} name={colKey} />,

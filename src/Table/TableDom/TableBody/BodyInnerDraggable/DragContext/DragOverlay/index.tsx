@@ -5,8 +5,7 @@ import { DragOverlay as DndDragOverlay } from '@dnd-kit/core';
 import BodyRowOverlay from './BodyRowOverlay';
 import propsAreEqual, { getInstanceProps } from './propsAreEqual';
 
-import type { TableDataItem } from '../../../../../TableTypes/type';
-import type { TableInstance } from '../../../../../TableTypes/typeHooks';
+import type { TableDataItem, TableInstance } from '../../../../../TableTypes/type';
 
 export type Props<T extends TableDataItem> = {
 	instance: TableInstance<T>;

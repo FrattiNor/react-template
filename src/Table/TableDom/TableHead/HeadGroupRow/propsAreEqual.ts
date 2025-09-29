@@ -3,8 +3,7 @@ import { getTotalInstanceProps as HeaderHeightRetainer_getInstanceProps } from '
 import { getTotalInstanceProps as HeadGroupCell_getInstanceProps } from '../HeadGroupCell/propsAreEqual';
 
 import type { Props } from './index';
-import type { TableDataItem } from '../../../TableTypes/type';
-import type { TableInstance } from '../../../TableTypes/typeHooks';
+import type { TableDataItem, TableInstance } from '../../../TableTypes/type';
 
 export const getProps = <T extends TableDataItem>({ rowIndex }: Readonly<Props<T>>) => {
 	return { rowIndex };

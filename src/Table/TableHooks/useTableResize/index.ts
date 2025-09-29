@@ -2,8 +2,7 @@ import { startTransition, useCallback, useEffect, useRef } from 'react';
 
 import { FixedTwo } from '../../TableUtils';
 
-import type { TableDataItem } from '../../TableTypes/type';
-import type { ResizeFlag } from '../../TableTypes/typeHooks';
+import type { ResizeFlag, TableDataItem } from '../../TableTypes/type';
 import type useTableColumn from '../useTableColumn';
 import type useTableProps from '../useTableProps';
 import type useTableState from '../useTableState';

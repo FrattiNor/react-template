@@ -4,8 +4,7 @@ import { getTotalInstanceProps as MeasureColumnSize_getInstanceProps } from './B
 import { getTotalInstanceProps as BodyInner_getInstanceProps } from './BodyInner/propsAreEqual';
 import { getTotalInstanceProps as BodyInnerDraggable_getInstanceProps } from './BodyInnerDraggable/propsAreEqual';
 
-import type { TableDataItem } from '../../TableTypes/type';
-import type { TableInstance } from '../../TableTypes/typeHooks';
+import type { TableDataItem, TableInstance } from '../../TableTypes/type';
 
 export const getInstanceProps = <T extends TableDataItem>({ instance }: Readonly<{ instance: Readonly<TableInstance<T>> }>) => {
 	const { datasource } = instance.tableData;

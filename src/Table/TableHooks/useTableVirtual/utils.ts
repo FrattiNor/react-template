@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 
-import type { TableProps } from '../../TableTypes/type';
+import type { TableProps } from '../../TableTypes/typeProps';
 
 export const useVirtualConf = (direction: 'h' | 'v', virtual: TableProps<any>['virtual'], count: number) => {
 	const _conf = (() => {

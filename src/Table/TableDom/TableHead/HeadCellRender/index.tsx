@@ -6,9 +6,8 @@ import propsAreEqual, { getInstanceProps, getProps } from './propsAreEqual';
 import Sort from './Sort';
 import { getCellTitle } from '../../../TableUtils';
 
-import type { TableDataItem } from '../../../TableTypes/type';
+import type { TableDataItem, TableInstance } from '../../../TableTypes/type';
 import type { InnerColumn, InnerColumnGroup } from '../../../TableTypes/typeColumn';
-import type { TableInstance } from '../../../TableTypes/typeHooks';
 
 export type Props<T extends TableDataItem> = {
 	instance: TableInstance<T>;

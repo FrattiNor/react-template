@@ -1,8 +1,7 @@
 import { getProps, getInstanceProps } from './propsAreEqual';
 import { getHighlightChunks } from '../../../../../TableUtils/highlight';
 
-import type { TableDataItem } from '../../../../../TableTypes/type';
-import type { TableInstance } from '../../../../../TableTypes/typeHooks';
+import type { TableDataItem, TableInstance } from '../../../../../TableTypes/type';
 
 export type Props<T extends TableDataItem> = {
 	instance: TableInstance<T>;
