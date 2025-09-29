@@ -30,9 +30,9 @@ const useTableDraggable = <T extends TableDataItem>({ tableProps, tableTools_1 }
 				align: 'center',
 				key: 'rowDraggable',
 				title: '',
-				render: (item, { index, isOverlay }) => {
+				render: (item, { index }) => {
 					const key = getRowKey(item, index);
-					return <DragIcon id={key} isOverlay={isOverlay} />;
+					return <DragIcon id={key} />;
 				},
 			};
 			return column;

@@ -28,7 +28,7 @@ export type TableColumn<T extends TableDataItem> = {
 	// 列标题
 	title: ReactNode;
 	// 列单元格渲染
-	render: (item: T, otherData: { index: number; renderHighlightText: (text: string) => ReactNode; isOverlay: boolean }) => ReactNode;
+	render: (item: T, otherData: { index: number; renderHighlightText: (text: string) => ReactNode }) => ReactNode;
 	// 列宽
 	width: number | `${number}%`;
 	// 未resize的情况下，自动填充【默认1】

@@ -74,14 +74,7 @@ const BodyCell = <T extends TableDataItem>(props: Props<T>) => {
 				...stickyStyle,
 			}}
 		>
-			<BodyCellRender
-				rowIndex={rowIndex}
-				colIndex={colIndex}
-				align={column.align}
-				isOverlay={isOverlay}
-				onCellTitle={onCellTitle}
-				instance={props.instance}
-			/>
+			<BodyCellRender rowIndex={rowIndex} colIndex={colIndex} align={column.align} onCellTitle={onCellTitle} instance={props.instance} />
 		</div>
 	);
 };
