@@ -1,6 +1,6 @@
 import { createRoot } from 'react-dom/client';
 
-import App from './AppTable';
+import App from './AppReactWindow';
 
 import '@ant-design/v5-patch-for-react-19';
 import './index.css';
