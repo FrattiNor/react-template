@@ -9,10 +9,10 @@
 	transition: background-color 0.2s;
 
 	&:hover {
-		background-color: rgba(0, 0, 0, 0.04);
+		background-color: var(--table-icon-hover-bg);
 	}
 
-	&:active {
-		background-color: rgba(0, 0, 0, 0.15);
+	&.dragging {
+		color: var(--table-primary-color);
 	}
 }

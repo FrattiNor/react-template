@@ -21,7 +21,7 @@ const DragContext = <T extends TableDataItem>(props: Props<T>) => {
 
 	const onDragStart = ({ active }: DragStartEvent) => {
 		const rowIndex = (active.data.current as any).rowIndex;
-		if (active.id) {
+		if (active.id && typeof rowIndex === 'number') {
 			setDragActiveItem({ rowIndex });
 		} else {
 			setDragActiveItem(null);
