@@ -3,15 +3,15 @@
 	box-sizing: border-box;
 	transition: background-color 0.2s;
 	transition:
-		background-color 0.2s,
-		border-color 0.2s;
+		border-color 0.2s,
+		background-color 0.2s;
 
 	&.bordered {
 		border-left: var(--table-cell-border-width) solid var(--table-cell-border-color);
 		border-bottom: var(--table-cell-border-width) solid var(--table-cell-border-color);
 
 		&.first-col {
-			border-left: 0;
+			border-left-width: 0;
 		}
 	}
 }

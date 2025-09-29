@@ -1,20 +1,20 @@
 .body-cell {
 	position: relative;
 	box-sizing: border-box;
-	transition:
-		background-color 0.2s,
-		border-color 0.2s;
 	border-top: var(--table-cell-border-width) solid var(--table-cell-border-color);
+	transition:
+		border-color 0.2s,
+		background-color 0.2s;
 
 	&.first-row {
-		border-top: 0;
+		border-top-width: 0;
 	}
 
 	&.bordered {
 		border-left: var(--table-cell-border-width) solid var(--table-cell-border-color);
 
 		&.first-col {
-			border-left: 0;
+			border-left-width: 0;
 		}
 	}
 }
