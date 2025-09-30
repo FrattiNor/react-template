@@ -82,11 +82,9 @@ const useAppTableColumns = () => {
 				{
 					key: 'email',
 					title: '邮箱_3',
+					fixed: 'left',
 					render: ({ email }) => email,
-					width: 300,
-					onCell: (_, index) => ({
-						colSpan: index % 2 ? 2 : 1,
-					}),
+					width: 150,
 					filter: getFilter,
 				},
 				{
@@ -95,7 +93,7 @@ const useAppTableColumns = () => {
 					render: ({ avatar }) => avatar,
 					width: 300,
 					onCell: (_, index) => ({
-						colSpan: index % 2 ? 0 : 1,
+						colSpan: index % 2 ? 2 : 1,
 					}),
 					filter: getFilter,
 				},
@@ -113,6 +111,9 @@ const useAppTableColumns = () => {
 									render: ({ password }) => password,
 									width: 50,
 									filter: getFilter,
+									onCell: (_, index) => ({
+										colSpan: index % 2 ? 0 : 1,
+									}),
 								},
 								{
 									key: 'birthdate',
