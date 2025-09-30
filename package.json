@@ -32,6 +32,7 @@
 		"@types/node": "^24.3.1",
 		"@types/react": "^19.1.2",
 		"@types/react-dom": "^19.1.2",
+		"@types/react-virtualized": "^9.22.3",
 		"@types/stats.js": "^0.17.4",
 		"@vitejs/plugin-react": "^5.0.3",
 		"babel-plugin-react-compiler": "19.1.0-rc.3",
