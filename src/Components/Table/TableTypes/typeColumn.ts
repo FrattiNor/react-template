@@ -14,7 +14,7 @@ export type TableColumn<T extends TableDataItem> = {
 	width: number | `${number}%`;
 	// 未resize的情况下，自动填充【默认1】
 	flexGrow?: number;
-	// 左右固定
+	// 左右固定【和colSpan有冲突】
 	fixed?: 'left' | 'right';
 	// 左右对齐
 	align?: 'left' | 'right' | 'center';

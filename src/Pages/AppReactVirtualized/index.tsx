@@ -1,10 +1,30 @@
-import type { FC } from 'react';
-import * as V from 'react-virtualized';
+import { useState, type FC } from 'react';
 
-console.log('react-virtualized', V);
+import { Segmented } from 'antd';
+
+import ReactVirtualizedCollection from './Collection';
+import ReactVirtualizedGrid from './Grid';
 
 const AppReactVirtualized: FC = () => {
-	return <div style={{ width: '100%', height: '100%' }}></div>;
+	const [key, setKey] = useState('collection');
+
+	return (
+		<div
+			style={{
+				gap: 16,
+				width: '100%',
+				height: '100%',
+				display: 'flex',
+				alignItems: 'center',
+				flexDirection: 'column',
+				justifyContent: 'center',
+			}}
+		>
+			<Segmented<string> value={key} onChange={setKey} options={['collection', 'grid']} />
+			{key === 'grid' && <ReactVirtualizedGrid />}
+			{key === 'collection' && <ReactVirtualizedCollection />}
+		</div>
+	);
 };
 
 export default AppReactVirtualized;

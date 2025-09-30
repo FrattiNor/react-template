@@ -7,7 +7,7 @@ import styles from './index.module.less';
 import { closeIcon, getLocationKey, menu, menuKeys, openIcon, setLocationKey, type MenuKey } from './utils';
 
 const App = () => {
-	const [mask, setMask] = useState(false);
+	const [mask, setMask] = useState(true);
 	const [menuHidden, setMenuHidden] = useState(true);
 	const [activeKey, setActiveKey] = useState<MenuKey>(() => getLocationKey() ?? menuKeys[0]);
 	const Component = menu[activeKey];
