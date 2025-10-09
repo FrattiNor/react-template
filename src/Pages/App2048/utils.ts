@@ -1,7 +1,23 @@
 import type { Data, MoveType } from './type';
 
+export const initData = () => {
+	const nextData: Data = [
+		[0, 0, 0, 0],
+		[0, 0, 0, 0],
+		[0, 0, 0, 0],
+		[0, 0, 0, 0],
+	];
+	const firstData = 2;
+	const emptyBlock1 = getAnEmptyBlock(nextData);
+	if (emptyBlock1) nextData[emptyBlock1.row][emptyBlock1.col] = firstData;
+	const secondData = getAnInitData();
+	const emptyBlock2 = getAnEmptyBlock(nextData);
+	if (emptyBlock2) nextData[emptyBlock2.row][emptyBlock2.col] = secondData;
+	return nextData;
+};
+
 // 获取一个初始值
-export const getAnInitData = () => {
+const getAnInitData = () => {
 	return Math.random() >= 0.5 ? 2 : 4;
 };
 
@@ -41,8 +57,18 @@ export const consoleData = (_data: Data) => {
 	console.warn(text);
 };
 
+const getTotal = (_data: Data) => {
+	let total = 0;
+	_data.forEach((row) => {
+		row.forEach((item) => {
+			total += item;
+		});
+	});
+	return total;
+};
+
 // 获取一个空格子
-export const getAnEmptyBlock = (_data: Data) => {
+const getAnEmptyBlock = (_data: Data) => {
 	const datasource = _data;
 	const emptyBlocks: Array<{ row: number; col: number }> = [];
 	datasource.forEach((row, rowIndex) => {
@@ -56,10 +82,10 @@ export const getAnEmptyBlock = (_data: Data) => {
 };
 
 const Up = (data: Data) => {
-	let merged = false;
 	let changed = false;
 	for (let col = 0; col <= 3; col++) {
 		for (let row = 1; row <= 3; row++) {
+			let merged = false;
 			if (data[row][col] !== 0) {
 				let curRow = row;
 				while (curRow > 0) {
@@ -90,10 +116,10 @@ const Up = (data: Data) => {
 };
 
 const Down = (data: Data) => {
-	let merged = false;
 	let changed = false;
 	for (let col = 0; col <= 3; col++) {
 		for (let row = 2; row >= 0; row--) {
+			let merged = false;
 			if (data[row][col] !== 0) {
 				let curRow = row;
 				while (curRow < 3) {
@@ -124,10 +150,10 @@ const Down = (data: Data) => {
 };
 
 const Left = (data: Data) => {
-	let merged = false;
 	let changed = false;
 	for (let row = 0; row <= 3; row++) {
 		for (let col = 1; col <= 3; col++) {
+			let merged = false;
 			if (data[row][col] !== 0) {
 				let curCol = col;
 				while (curCol > 0) {
@@ -158,10 +184,10 @@ const Left = (data: Data) => {
 };
 
 const Right = (data: Data) => {
-	let merged = false;
 	let changed = false;
 	for (let row = 0; row <= 3; row++) {
 		for (let col = 2; col >= 0; col--) {
+			let merged = false;
 			if (data[row][col] !== 0) {
 				let curCol = col;
 				while (curCol < 3) {
@@ -206,22 +232,44 @@ export const keyDownUp = (data: Data, type: MoveType) => {
 		}
 	};
 
+	const calcScore = (changed: boolean) => {
+		if (changed) {
+			return getTotal(data);
+		} else {
+			return 0;
+		}
+	};
+
+	let addScore = 0;
+
 	switch (type) {
-		case 'up':
-			AddEmpty(Up(data));
+		case 'up': {
+			const changed = Up(data);
+			AddEmpty(changed);
+			addScore += calcScore(changed);
 			break;
-		case 'down':
-			AddEmpty(Down(data));
+		}
+		case 'down': {
+			const changed = Down(data);
+			AddEmpty(changed);
+			addScore += calcScore(changed);
 			break;
-		case 'left':
-			AddEmpty(Left(data));
+		}
+		case 'left': {
+			const changed = Left(data);
+			AddEmpty(changed);
+			addScore += calcScore(changed);
 			break;
-		case 'right':
-			AddEmpty(Right(data));
+		}
+		case 'right': {
+			const changed = Right(data);
+			AddEmpty(changed);
+			addScore += calcScore(changed);
 			break;
+		}
 	}
 
-	return data;
+	return { data, addScore };
 };
 
 export const canMove = (data: Data) => {

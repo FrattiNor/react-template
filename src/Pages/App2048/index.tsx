@@ -1,65 +1,63 @@
 import { useEffect, useState } from 'react';
 
-import { canMove, consoleData, getAnEmptyBlock, getAnInitData, keyDownUp } from './utils';
+import { canMove, consoleData, initData, keyDownUp } from './utils';
 
 import type { Data } from './type';
 
-const initData: Data = [
-	[0, 0, 0, 0],
-	[0, 0, 0, 0],
-	[0, 0, 0, 0],
-	[0, 0, 0, 0],
-];
-
 const App2048 = () => {
 	const [end, setEnd] = useState(false);
+	const [score, setScore] = useState(0);
 
-	const [data, setData] = useState<Data>(() => {
-		const nextData: Data = initData;
-		const firstData = 2;
-		const emptyBlock1 = getAnEmptyBlock(nextData);
-		if (emptyBlock1) nextData[emptyBlock1.row][emptyBlock1.col] = firstData;
-		const secondData = getAnInitData();
-		const emptyBlock2 = getAnEmptyBlock(nextData);
-		if (emptyBlock2) nextData[emptyBlock2.row][emptyBlock2.col] = secondData;
-		return nextData;
-	});
+	const [data, setData] = useState<Data>(initData);
 
 	// 监听
 	useEffect(() => {
 		if (end === false) {
 			const keydown = (e: KeyboardEvent) => {
+				console.log(e.key);
 				switch (e.key) {
+					case 'w':
 					case 'ArrowUp':
 						setData((oldData) => {
 							console.clear();
 							consoleData(oldData);
 							console.log('up');
-							return [...keyDownUp(oldData, 'up')];
+							const { data, addScore } = keyDownUp(oldData, 'up');
+							setScore((old) => old + addScore);
+							return [...data];
 						});
 						break;
+					case 's':
 					case 'ArrowDown':
 						setData((oldData) => {
 							console.clear();
 							consoleData(oldData);
 							console.log('down');
-							return [...keyDownUp(oldData, 'down')];
+							const { data, addScore } = keyDownUp(oldData, 'down');
+							setScore((old) => old + addScore);
+							return [...data];
 						});
 						break;
+					case 'a':
 					case 'ArrowLeft':
 						setData((oldData) => {
 							console.clear();
 							consoleData(oldData);
 							console.log('left');
-							return [...keyDownUp(oldData, 'left')];
+							const { data, addScore } = keyDownUp(oldData, 'left');
+							setScore((old) => old + addScore);
+							return [...data];
 						});
 						break;
+					case 'd':
 					case 'ArrowRight':
 						setData((oldData) => {
 							console.clear();
 							consoleData(oldData);
 							console.log('right');
-							return [...keyDownUp(oldData, 'right')];
+							const { data, addScore } = keyDownUp(oldData, 'right');
+							setScore((old) => old + addScore);
+							return [...data];
 						});
 						break;
 				}
@@ -75,8 +73,17 @@ const App2048 = () => {
 
 	useEffect(() => {
 		consoleData(data);
+		console.log(`score: ${score}`);
 		setEnd(!canMove(data));
 	}, [data]);
+
+	useEffect(() => {
+		(window as any).resetGame = () => {
+			console.clear();
+			setScore(0);
+			setData(initData);
+		};
+	}, []);
 
 	return (
 		<div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
