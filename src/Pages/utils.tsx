@@ -1,9 +1,11 @@
+import App2048 from './App2048';
 import AppList from './AppList';
 import AppReactVirtualized from './AppReactVirtualized';
 import AppReactWindow from './AppReactWindow';
 import AppTable from './AppTable';
 
 export const menu = {
+	2048: App2048,
 	ReactVirtualized: AppReactVirtualized,
 	ReactWindow: AppReactWindow,
 	List: AppList,
