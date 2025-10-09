@@ -1,13 +1,12 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, type FC } from 'react';
 
 import { canMove, consoleData, initData, keyDownUp } from './utils';
 
 import type { Data } from './type';
 
-const App2048 = () => {
+const App2048: FC = () => {
 	const [end, setEnd] = useState(false);
 	const [score, setScore] = useState(0);
-
 	const [data, setData] = useState<Data>(initData);
 
 	// 监听

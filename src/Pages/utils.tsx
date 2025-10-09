@@ -5,7 +5,7 @@ import AppReactWindow from './AppReactWindow';
 import AppTable from './AppTable';
 
 export const menu = {
-	2048: App2048,
+	'2048': App2048,
 	ReactVirtualized: AppReactVirtualized,
 	ReactWindow: AppReactWindow,
 	List: AppList,
