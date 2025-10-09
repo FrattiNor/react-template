@@ -13,7 +13,6 @@ const App2048: FC = () => {
 	useEffect(() => {
 		if (end === false) {
 			const keydown = (e: KeyboardEvent) => {
-				console.log(e.key);
 				switch (e.key) {
 					case 'w':
 					case 'ArrowUp':
