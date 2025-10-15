@@ -1,12 +1,12 @@
 {
-    "restartable": "rs",
-    "ignore": [".git", "node_modules/"],
-    "watch": ["src/"],
-    "execMap": {
-        "ts": "node --loader ts-node/esm"
-    },
-    "env": {
-        "NODE_ENV": "development"
-    },
-    "ext": "js,json,ts,tsx,txt"
+	"restartable": "rs",
+	"ignore": [".git", "node_modules/"],
+	"watch": ["src/"],
+	"execMap": {
+		"ts": "node --loader ts-node/esm"
+	},
+	"env": {
+		"NODE_ENV": "development"
+	},
+	"ext": "js,json,ts,tsx"
 }
