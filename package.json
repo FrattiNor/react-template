@@ -12,11 +12,13 @@
 		"check-update": "npx npm-check-updates"
 	},
 	"dependencies": {
+		"highlight-words-core": "^1.2.3",
 		"react": "^19.2.0",
 		"react-dom": "^19.2.0"
 	},
 	"devDependencies": {
 		"@eslint/js": "^9.38.0",
+		"@types/highlight-words-core": "^1.2.3",
 		"@types/node": "^24.9.1",
 		"@types/react": "^19.2.2",
 		"@types/react-dom": "^19.2.2",

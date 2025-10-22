@@ -1,13 +1,7 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
-import './index.css';
-import App from './App.tsx';
-
-createRoot(document.getElementById('root')!).render(
-	<StrictMode>
-		<App />
-	</StrictMode>,
-);
+import Pages from './Pages/index.tsx';
+import './main.css';
 
 // == Hook ==
 // useActionState
@@ -26,3 +20,9 @@ createRoot(document.getElementById('root')!).render(
 
 // == API ==
 // use
+
+createRoot(document.getElementById('root')!).render(
+	<StrictMode>
+		<Pages />
+	</StrictMode>,
+);
