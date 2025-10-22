@@ -1,0 +1,22 @@
+.table {
+	width: 100%;
+	max-height: 100%;
+	display: flex;
+	position: relative;
+	flex-direction: column;
+	background-color: var(--table-bg);
+	font-size: var(--table-font-size);
+	font-family: var(--table-font-family);
+	transition: border-color 0.2s;
+	border-bottom: var(--table-cell-border-width) solid var(--table-cell-border-color);
+
+	&.bordered {
+		border-top: var(--table-cell-border-width) solid var(--table-cell-border-color);
+		border-left: var(--table-cell-border-width) solid var(--table-cell-border-color);
+		border-right: var(--table-cell-border-width) solid var(--table-cell-border-color);
+	}
+
+	&.not-bordered-and-have-h-scrollbar {
+		border-bottom-width: 0;
+	}
+}

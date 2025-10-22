@@ -1,0 +1,17 @@
+.head-cell {
+	outline: none;
+	position: relative;
+	box-sizing: border-box;
+	border-bottom: var(--table-cell-border-width) solid var(--table-cell-border-color);
+	transition:
+		border-color 0.2s,
+		background-color 0.2s;
+
+	&.bordered {
+		border-left: var(--table-cell-border-width) solid var(--table-cell-border-color);
+
+		&.first-col {
+			border-left-width: 0;
+		}
+	}
+}

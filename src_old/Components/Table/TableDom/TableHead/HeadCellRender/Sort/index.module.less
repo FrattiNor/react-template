@@ -1,0 +1,33 @@
+.sort {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	font-size: var(--table-icon-font-size);
+	color: var(--table-icon-color);
+	background-color: transparent;
+	height: 28px;
+	padding: 0 4px;
+	transition: all 0.2s;
+	border-radius: var(--table-border-radius);
+	cursor: pointer;
+	margin-right: 4px;
+
+	// background-color: var(--table-icon-hover-bg);
+
+	&:hover {
+		color: var(--table-icon-hover-color);
+		background-color: var(--table-icon-hover-bg);
+	}
+
+	.sort-up {
+		display: inline-flex;
+		position: relative;
+	}
+
+	.sort-down {
+		display: inline-flex;
+		position: relative;
+		margin-top: -0.3em;
+	}
+}
