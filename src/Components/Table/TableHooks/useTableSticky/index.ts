@@ -29,6 +29,7 @@ const useTableSticky = ({ tableSecondaryState, tableState }: Props) => {
 				const { stickySize } = fixedLeftObj[colStartIndex];
 				const style: CSSProperties = { left: stickySize };
 				if (colStartIndex <= (pingedLeftLast ?? -1)) className = classNames(className, styles['pinged']);
+				if (colEndIndex === pingedLeftFirst) className = classNames(className, styles['first-pinged']);
 				if (colEndIndex === pingedLeftLast) className = classNames(className, styles['last-pinged']);
 				return { stickyStyle: style, stickyClassName: className, sticky: true };
 			}
