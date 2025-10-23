@@ -1,0 +1,161 @@
+import type { Props, SizeList, State } from './type';
+import { binarySearch, getSizeList } from './utils';
+
+class Virtual {
+	props: Props = {} as Props;
+	state: State = { sizeList: null, rangeStart: null, rangeEnd: null, totalSize: null, scrollOffset: null, containerSize: null };
+
+	// 初始化
+	constructor(virtual?: Virtual) {
+		if (virtual) {
+			this.props = virtual.props;
+			this.state = virtual.state;
+		}
+	}
+
+	// 更新props【外部使用】，用于更新props，并触发一系列修改
+	updateProps(props: Props) {
+		// 判断propsChanged
+		const enabledChanged = props.enabled !== this.props.enabled;
+		const countChanged = props.count !== this.props.count;
+		const overscanChanged = props.overscan?.[0] !== this.props.overscan?.[0] || props.overscan?.[1] !== this.props.overscan?.[1];
+		const gapChanged =
+			props.gap?.itemGap !== this.props.gap?.itemGap ||
+			props.gap?.startGap !== this.props.gap?.startGap ||
+			props.gap?.endGap !== this.props.gap?.endGap;
+		const getItemKeyChanged = props.getItemKey !== this.props.getItemKey;
+		const getItemSizeChanged = props.getItemSize !== this.props.getItemSize;
+		// 更新props
+		this.props = props;
+		//
+		if (enabledChanged) {
+			if ((this.props.enabled ?? true) === true) {
+				this.updateSizeList();
+				this.updateRange({ isScroll: false });
+			} else {
+				this.end();
+			}
+			return;
+		}
+		if (countChanged || getItemKeyChanged || getItemSizeChanged || gapChanged) {
+			this.updateSizeList();
+			this.updateRange({ isScroll: false });
+			return;
+		}
+		if (overscanChanged) {
+			this.updateRange({ isScroll: false });
+			return;
+		}
+	}
+
+	// 更新sizeList，同时触发更新totalSize
+	private updateSizeList() {
+		// 更新sizeList
+		this.state.sizeList = getSizeList({
+			gap: this.props.gap,
+			count: this.props.count,
+			getItemKey: this.props.getItemKey,
+			getItemSize: this.props.getItemSize,
+		});
+		if (this.props.debugger) console.log('updateSizeList', this.state.sizeList);
+		// 更新totalSize
+		const nextTotalSize = (() => {
+			if (Array.isArray(this.state.sizeList) && this.state.sizeList.length > 0)
+				return this.state.sizeList[this.state.sizeList.length - 1].nextStart;
+			return null;
+		})();
+		if (this.state.totalSize !== nextTotalSize) {
+			this.state.totalSize = nextTotalSize;
+			// 触发totalSizeChange回调
+			if (this.props.onTotalSizeChange) {
+				if (this.props.debugger) console.log('onTotalSizeChange', this.state.totalSize);
+				this.props.onTotalSizeChange(this.state.totalSize);
+			}
+		}
+	}
+
+	// 更新range
+	private updateRange({ isScroll }: { isScroll: boolean }) {
+		const { startIndex, endIndex } = (() => {
+			if (
+				typeof this.state.scrollOffset === 'number' &&
+				typeof this.state.containerSize === 'number' &&
+				Array.isArray(this.state.sizeList) &&
+				this.state.sizeList.length > 0
+			) {
+				const _startIndex = binarySearch({
+					startIndex: 0,
+					endIndex: this.props.count - 1,
+					getSize: (i) => this.state.sizeList?.[i].start ?? 0,
+					target: this.state.scrollOffset,
+				})[0];
+				const _endIndex = binarySearch({
+					startIndex: _startIndex,
+					endIndex: this.props.count - 1,
+					getSize: (i) => this.state.sizeList?.[i].end ?? 0,
+					target: this.state.scrollOffset + this.state.containerSize,
+				})[1];
+				const startIndex = Math.max(0, _startIndex - (this.props.overscan?.[0] ?? 0));
+				const endIndex = Math.min(this.props.count - 1, _endIndex + (this.props.overscan?.[1] ?? 0));
+				return { startIndex, endIndex };
+			}
+			return { startIndex: null, endIndex: null };
+		})();
+		if (this.state.rangeStart !== startIndex || this.state.rangeEnd !== endIndex) {
+			this.state.rangeStart = startIndex;
+			this.state.rangeEnd = endIndex;
+			// 触发rangeChange回调
+			if (this.props.onRangeChange) {
+				if (this.props.debugger) console.log('onRangeChange', { start: this.state.rangeStart, end: this.state.rangeEnd, isScroll });
+				this.props.onRangeChange({ start: this.state.rangeStart, end: this.state.rangeEnd, isScroll, getVirtualItems: this.getVirtualItems });
+			}
+		}
+	}
+
+	// 根据range获取items
+	getVirtualItems() {
+		const items: SizeList = [];
+		if (
+			typeof this.state.rangeStart === 'number' &&
+			typeof this.state.rangeEnd === 'number' &&
+			Array.isArray(this.state.sizeList) &&
+			this.state.sizeList.length > 0
+		) {
+			for (let i = this.state.rangeStart; i <= this.state.rangeEnd; i++) {
+				const item = this.state.sizeList[i];
+				items.push(item);
+			}
+		}
+		return items;
+	}
+
+	// 结束
+	end() {
+		// 清空state
+		this.state = { sizeList: null, rangeStart: null, rangeEnd: null, totalSize: null, scrollOffset: null, containerSize: null };
+		// 触发totalSizeChange回调
+		if (this.props.onTotalSizeChange) this.props.onTotalSizeChange(null);
+		// 触发rangeChange回调
+		if (this.props.onRangeChange) this.props.onRangeChange({ start: null, end: null, isScroll: false, getVirtualItems: this.getVirtualItems });
+	}
+
+	// 更新容器size【外部使用】
+	updateContainerSize(size: number | null) {
+		if (this.state.containerSize !== size) {
+			if (this.props.debugger) console.log('updateContainerSize', size);
+			this.state.containerSize = size;
+			this.updateRange({ isScroll: false });
+		}
+	}
+
+	// 更新滚动offset【外部使用】
+	updateScrollOffset(offset: number | null) {
+		if (this.state.scrollOffset !== offset) {
+			if (this.props.debugger) console.log('updateScrollOffset', offset);
+			this.state.scrollOffset = offset;
+			this.updateRange({ isScroll: true });
+		}
+	}
+}
+
+export default Virtual;
