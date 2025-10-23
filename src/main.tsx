@@ -1,6 +1,6 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
-import Pages from './Pages/index.tsx';
+import App from './App/index.tsx';
 import './main.css';
 
 // == Hook ==
@@ -23,6 +23,6 @@ import './main.css';
 
 createRoot(document.getElementById('root')!).render(
 	<StrictMode>
-		<Pages />
+		<App />
 	</StrictMode>,
 );

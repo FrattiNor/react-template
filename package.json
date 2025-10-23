@@ -12,7 +12,9 @@
 		"check-update": "npx npm-check-updates"
 	},
 	"dependencies": {
+		"classnames": "^2.5.1",
 		"highlight-words-core": "^1.2.3",
+		"less": "^4.4.2",
 		"react": "^19.2.0",
 		"react-dom": "^19.2.0"
 	},

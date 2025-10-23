@@ -13,17 +13,20 @@ export type Props<T> = {
 	getItemSize: (item: T, index: number) => number;
 	// 【注意Memo】
 	updateItemSize?: (key: string) => number;
-	// 【注意Memo】
-	containerRect: { width: number; height: number };
+	//
+	containerSize: number;
 	//
 	getContainer: () => HTMLElement | null;
 	//
-	onRangeChange?: (p: { rangeStart: number; rangeEnd: number }) => void;
+	onRangeChange?: (p: { start: number; end: number }) => void;
+	//
+	onTotalSizeChange?: (size: number) => void;
 };
 
 export type SizeList = Array<{ index: number; start: number; end: number; key: string }>;
 
 export type State = {
+	totalSize: number;
 	scrollOffset: number;
 	sizeList: SizeList | null;
 	rangeStart: number | null;

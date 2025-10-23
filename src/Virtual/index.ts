@@ -4,7 +4,14 @@ import { binarySearch, getSizeList } from './utils';
 class Virtual<T> {
 	container: HTMLElement | null = null;
 	props: Props<T> = {} as Props<T>;
-	state: State = { sizeList: null, rangeStart: null, rangeEnd: null, scrollOffset: 0 };
+	state: State = { sizeList: null, rangeStart: null, rangeEnd: null, totalSize: 0, scrollOffset: 0 };
+	resizeObserver: null = null;
+
+	scrollFun = (e: Event) => {
+		const offset = (e.target as HTMLDivElement)[this.props.horizontal === true ? 'scrollLeft' : 'scrollTop'];
+		this.state.scrollOffset = offset;
+		this.calcRange();
+	};
 
 	// 初始化
 	constructor(props: Props<T>) {
@@ -29,7 +36,7 @@ class Virtual<T> {
 		const dataChanged = props.data !== this.props.data;
 		const overscanChanged = props.overscan !== this.props.overscan;
 		const horizontalChanged = props.horizontal !== this.props.horizontal;
-		const containerRectChanged = props.containerRect !== this.props.containerRect;
+		const containerRectChanged = props.containerSize !== this.props.containerSize;
 		const getItemKeyChanged = props.getItemKey !== this.props.getItemKey;
 		const containerChanged = this.container !== this.props.getContainer();
 		const getItemSizeChanged = props.getItemSize !== this.props.getItemSize;
@@ -58,6 +65,15 @@ class Virtual<T> {
 
 	private updateSizeList() {
 		this.state.sizeList = getSizeList(this.props.data, this.props.getItemKey, this.props.getItemSize);
+		this.updateTotalSize();
+	}
+
+	private updateTotalSize() {
+		const nextTotalSize = this.state.sizeList?.[this.state.sizeList?.length - 1]?.end ?? 0;
+		if (this.state.totalSize !== nextTotalSize) {
+			this.state.totalSize = nextTotalSize;
+			if (this.props.onTotalSizeChange) this.props.onTotalSizeChange(nextTotalSize);
+		}
 	}
 
 	private calcRange() {
@@ -71,23 +87,26 @@ class Virtual<T> {
 			startIndex: _startIndex,
 			endIndex: this.props.data.length - 1,
 			getSize: (i) => this.state.sizeList?.[i].end ?? 0,
-			target: this.state.scrollOffset + this.props.containerRect[this.props.horizontal ? 'width' : 'height'],
+			target: this.state.scrollOffset + this.props.containerSize,
 		})[1];
 		const startIndex = Math.max(0, _startIndex - (this.props.overscan?.[0] ?? 0));
 		const endIndex = Math.min(this.props.data.length - 1, _endIndex + (this.props.overscan?.[1] ?? 0));
 		if (this.state.rangeStart !== startIndex || this.state.rangeEnd !== endIndex) {
 			this.state.rangeStart = startIndex;
 			this.state.rangeEnd = endIndex;
-			if (this.props.onRangeChange) this.props.onRangeChange({ rangeStart: startIndex, rangeEnd: endIndex });
+			if (this.props.onRangeChange) this.props.onRangeChange({ start: startIndex, end: endIndex });
 		}
 	}
 
 	private start() {
 		this.updateSizeList();
 		this.calcRange();
+		this.container?.addEventListener('scroll', this.scrollFun, { passive: true });
 	}
 
-	end() {}
+	end() {
+		this.container?.removeEventListener('scroll', this.scrollFun);
+	}
 }
 
 export default Virtual;
