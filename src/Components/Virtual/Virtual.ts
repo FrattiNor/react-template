@@ -1,9 +1,9 @@
-import type { Props, SizeList, State } from './type';
+import type { VirtualProps, VirtualSizeList, VirtualState } from './type';
 import { binarySearch, getSizeList } from './utils';
 
 class Virtual {
-	props: Props = {} as Props;
-	state: State = { sizeList: null, rangeStart: null, rangeEnd: null, totalSize: null, scrollOffset: null, containerSize: null };
+	props: VirtualProps = {} as VirtualProps;
+	state: VirtualState = { sizeList: null, rangeStart: null, rangeEnd: null, totalSize: null, scrollOffset: null, containerSize: null };
 
 	// 初始化
 	constructor(virtual?: Virtual) {
@@ -14,7 +14,7 @@ class Virtual {
 	}
 
 	// 更新props【外部使用】，用于更新props，并触发一系列修改
-	updateProps(props: Props) {
+	updateProps(props: VirtualProps) {
 		// 判断propsChanged
 		const enabledChanged = props.enabled !== this.props.enabled;
 		const countChanged = props.count !== this.props.count;
@@ -57,7 +57,6 @@ class Virtual {
 			getItemKey: this.props.getItemKey,
 			getItemSize: this.props.getItemSize,
 		});
-		if (this.props.debugger) console.log('updateSizeList', this.state.sizeList);
 		// 更新totalSize
 		const nextTotalSize = (() => {
 			if (Array.isArray(this.state.sizeList) && this.state.sizeList.length > 0)
@@ -68,7 +67,6 @@ class Virtual {
 			this.state.totalSize = nextTotalSize;
 			// 触发totalSizeChange回调
 			if (this.props.onTotalSizeChange) {
-				if (this.props.debugger) console.log('onTotalSizeChange', this.state.totalSize);
 				this.props.onTotalSizeChange(this.state.totalSize);
 			}
 		}
@@ -106,7 +104,6 @@ class Virtual {
 			this.state.rangeEnd = endIndex;
 			// 触发rangeChange回调
 			if (this.props.onRangeChange) {
-				if (this.props.debugger) console.log('onRangeChange', { start: this.state.rangeStart, end: this.state.rangeEnd, isScroll });
 				this.props.onRangeChange({ start: this.state.rangeStart, end: this.state.rangeEnd, isScroll, getVirtualItems: this.getVirtualItems });
 			}
 		}
@@ -114,7 +111,7 @@ class Virtual {
 
 	// 根据range获取items
 	getVirtualItems() {
-		const items: SizeList = [];
+		const items: VirtualSizeList = [];
 		if (
 			typeof this.state.rangeStart === 'number' &&
 			typeof this.state.rangeEnd === 'number' &&
@@ -142,7 +139,6 @@ class Virtual {
 	// 更新容器size【外部使用】
 	updateContainerSize(size: number | null) {
 		if (this.state.containerSize !== size) {
-			if (this.props.debugger) console.log('updateContainerSize', size);
 			this.state.containerSize = size;
 			this.updateRange({ isScroll: false });
 		}
@@ -151,7 +147,6 @@ class Virtual {
 	// 更新滚动offset【外部使用】
 	updateScrollOffset(offset: number | null) {
 		if (this.state.scrollOffset !== offset) {
-			if (this.props.debugger) console.log('updateScrollOffset', offset);
 			this.state.scrollOffset = offset;
 			this.updateRange({ isScroll: true });
 		}

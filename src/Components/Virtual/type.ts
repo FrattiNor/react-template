@@ -1,4 +1,4 @@
-export type Props = {
+export type VirtualProps = {
 	// 启用
 	enabled?: boolean;
 	// 数量
@@ -13,20 +13,18 @@ export type Props = {
 	getItemSize: (index: number) => number;
 
 	// range变更【isScroll判断是否需要flushSync】
-	onRangeChange?: (p: { start: number | null; end: number | null; isScroll: boolean; getVirtualItems: () => SizeList }) => void;
+	onRangeChange?: (p: { start: number | null; end: number | null; isScroll: boolean; getVirtualItems: () => VirtualSizeList }) => void;
 	// totalSize变更
 	onTotalSizeChange?: (size: number | null) => void;
-	// debugger
-	debugger?: boolean;
 };
 
-export type SizeList = Array<{ key: string; index: number; start: number; end: number; size: number; nextStart: number }>;
+export type VirtualSizeList = Array<{ key: string; index: number; start: number; end: number; size: number; nextStart: number }>;
 
-export type State = {
+export type VirtualState = {
 	totalSize: number | null;
 	scrollOffset: number | null;
 	containerSize: number | null;
-	sizeList: SizeList | null;
+	sizeList: VirtualSizeList | null;
 	rangeStart: number | null;
 	rangeEnd: number | null;
 };

@@ -1,10 +1,10 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
-import type { Props } from './type';
+import { useEffect, useEffectEvent, useLayoutEffect, useMemo, useRef, useState } from 'react';
+import type { VirtualProps } from './type';
 import Virtual from './Virtual';
 import { flushSync } from 'react-dom';
 
-const useVirtual = (props: Omit<Props, 'onRangeChange' | 'onTotalSizeChange'>) => {
+const useVirtual = (props: Omit<VirtualProps, 'onRangeChange' | 'onTotalSizeChange'>) => {
 	const containerRef = useRef<HTMLDivElement | null>(null);
 	const [virtual, setVirtual] = useState(() => new Virtual());
 
@@ -24,14 +24,18 @@ const useVirtual = (props: Omit<Props, 'onRangeChange' | 'onTotalSizeChange'>) =
 		});
 	}, [props]);
 
+	const updateScrollOffset = useEffectEvent((offset: number | null) => virtual.updateScrollOffset(offset));
+
+	const updateContainerSize = useEffectEvent((size: number | null) => virtual.updateContainerSize(size));
+
 	useLayoutEffect(() => {
 		if (containerRef.current && (props.enabled ?? true) === true) {
 			// observer resize
-			const updateRect = () => virtual.updateContainerSize(containerRef.current?.clientHeight ?? null);
+			const updateRect = () => updateContainerSize(containerRef.current?.clientHeight ?? null);
 			const ob = new ResizeObserver(updateRect);
 			ob.observe(containerRef.current);
 			// observer scroll
-			const onScroll = () => virtual.updateScrollOffset(containerRef.current?.scrollTop ?? null);
+			const onScroll = () => updateScrollOffset(containerRef.current?.scrollTop ?? null);
 			containerRef.current.addEventListener('scroll', onScroll, { passive: true });
 			// 直接执行一次
 			updateRect();
