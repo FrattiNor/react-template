@@ -53,8 +53,8 @@ const Slider: FC<Props> = ({ label, min, max, value, width, onChange }) => {
 
 	return (
 		<div style={{ display: 'flex', alignItems: 'center', gap: 16, userSelect: 'none' }}>
-			<div>{label}:</div>
-			<div>{min}</div>
+			<div style={{ width: 100, borderRadius: 4, textAlign: 'right' }}>{label}:</div>
+			<div style={{ width: 50, textAlign: 'right' }}>{min}</div>
 			<div style={{ width, height: 6, background: 'rgba(0,0,0,0.05)', borderRadius: 3, position: 'relative' }}>
 				<div
 					onMouseDown={(e) => setStart({ pageX: e.pageX, value })}
@@ -71,7 +71,7 @@ const Slider: FC<Props> = ({ label, min, max, value, width, onChange }) => {
 					}}
 				/>
 			</div>
-			<div>{max}</div>
+			<div style={{ width: 50, textAlign: 'left' }}>{max}</div>
 			<div style={{ border: '1px solid rgba(0,0,0,0.8)', width: 50, borderRadius: 4, textAlign: 'center' }}>{value}</div>
 		</div>
 	);

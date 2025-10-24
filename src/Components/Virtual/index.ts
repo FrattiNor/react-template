@@ -1,4 +1,4 @@
-import Virtual from './Virtual';
+import VirtualCore from './Core';
 import useVirtual from './useVirtual';
 
-export { Virtual, useVirtual };
+export { VirtualCore, useVirtual };

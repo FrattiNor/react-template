@@ -1,12 +1,12 @@
-import type { VirtualProps, VirtualSizeList, VirtualState } from './type';
+import type { VirtualInnerProps, VirtualProps, VirtualSizeList, VirtualState } from './type';
 import { binarySearch, getSizeList } from './utils';
 
-class Virtual {
-	props: VirtualProps = {} as VirtualProps;
+class VirtualCore {
+	props: VirtualInnerProps = {} as VirtualInnerProps;
 	state: VirtualState = { sizeList: null, rangeStart: null, rangeEnd: null, totalSize: null, scrollOffset: null, containerSize: null };
 
 	// 初始化
-	constructor(virtual?: Virtual) {
+	constructor(virtual?: VirtualCore) {
 		if (virtual) {
 			this.props = virtual.props;
 			this.state = virtual.state;
@@ -26,7 +26,10 @@ class Virtual {
 		const getItemKeyChanged = props.getItemKey !== this.props.getItemKey;
 		const getItemSizeChanged = props.getItemSize !== this.props.getItemSize;
 		// 更新props
-		this.props = props;
+		this.props = {
+			enabled: props.enabled ?? true,
+			...props,
+		};
 		//
 		if (enabledChanged) {
 			if ((this.props.enabled ?? true) === true) {
@@ -153,4 +156,4 @@ class Virtual {
 	}
 }
 
-export default Virtual;
+export default VirtualCore;

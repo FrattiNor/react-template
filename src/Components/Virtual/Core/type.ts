@@ -1,4 +1,5 @@
-export type VirtualProps = {
+// 对外
+export interface VirtualProps {
 	// 启用
 	enabled?: boolean;
 	// 数量
@@ -16,7 +17,13 @@ export type VirtualProps = {
 	onRangeChange?: (p: { start: number | null; end: number | null; isScroll: boolean; getVirtualItems: () => VirtualSizeList }) => void;
 	// totalSize变更
 	onTotalSizeChange?: (size: number | null) => void;
-};
+}
+
+// 对内
+export interface VirtualInnerProps extends VirtualProps {
+	// 启用
+	enabled: boolean;
+}
 
 export type VirtualSizeList = Array<{ key: string; index: number; start: number; end: number; size: number; nextStart: number }>;
 

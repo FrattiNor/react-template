@@ -1,8 +1,8 @@
-import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import App from './App/index.tsx';
 import initFps from './initFps.ts';
 import './main.css';
+import { StrictMode } from 'react';
 
 // == Hook ==
 // useActionState

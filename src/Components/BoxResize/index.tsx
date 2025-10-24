@@ -1,0 +1,84 @@
+import { useEffect, useRef, useState, type FC, type PropsWithChildren } from 'react';
+import styles from './index.module.less';
+import classNames from 'classnames';
+
+// 避免触发一些事件导致mouse无法触发
+function pauseEvent(e: Event) {
+	if (e.stopPropagation) e.stopPropagation();
+	if (e.preventDefault) e.preventDefault();
+	e.cancelBubble = true;
+	e.returnValue = false;
+	return false;
+}
+
+type Props = PropsWithChildren<{
+	width: number;
+	height: number;
+}>;
+
+const BoxResize: FC<Props> = (props) => {
+	const ref = useRef<HTMLDivElement | null>(null);
+	const [width, setWidth] = useState(() => props.width);
+	const [height, setHeight] = useState(() => props.height);
+
+	const [hStart, setHStart] = useState<{ pageX: number; value: number } | null>(null);
+	const [vStart, setVStart] = useState<{ pageY: number; value: number } | null>(null);
+
+	useEffect(() => {
+		if (hStart) {
+			const mouseUp = () => {
+				setHStart(null);
+			};
+			const mouseMove = (e: MouseEvent) => {
+				pauseEvent(e);
+				const moveX = e.pageX - hStart.pageX;
+				setWidth(Math.max(50, Math.min(1000, hStart.value + moveX)));
+			};
+
+			document.addEventListener('mouseup', mouseUp);
+			document.addEventListener('mousemove', mouseMove);
+
+			return () => {
+				document.removeEventListener('mouseup', mouseUp);
+				document.removeEventListener('mousemove', mouseMove);
+			};
+		}
+	}, [hStart]);
+
+	useEffect(() => {
+		if (vStart) {
+			const mouseUp = () => {
+				setVStart(null);
+			};
+			const mouseMove = (e: MouseEvent) => {
+				pauseEvent(e);
+				const moveY = e.pageY - vStart.pageY;
+				setHeight(Math.max(50, Math.min(1000, vStart.value + moveY)));
+			};
+
+			document.addEventListener('mouseup', mouseUp);
+			document.addEventListener('mousemove', mouseMove);
+
+			return () => {
+				document.removeEventListener('mouseup', mouseUp);
+				document.removeEventListener('mousemove', mouseMove);
+			};
+		}
+	}, [vStart]);
+
+	return (
+		<div ref={ref} style={{ width, height }} className={styles['wrapper']}>
+			{props.children}
+			<div
+				className={classNames(styles['h'], { [styles['active']]: hStart })}
+				onMouseDown={(e) => setHStart({ pageX: e.pageX, value: width })}
+			/>
+			<div
+				className={classNames(styles['v'], { [styles['active']]: vStart })}
+				onMouseDown={(e) => setVStart({ pageY: e.pageY, value: height })}
+			/>
+		</div>
+	);
+};
+
+export default BoxResize;
