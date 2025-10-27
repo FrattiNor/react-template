@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffectEvent, useLayoutEffect, useRef } from 'react';
 import VirtualCore from '../Core';
 
@@ -18,23 +17,24 @@ const useObserverContainer = ({ virtualCore, horizontal, enabled }: Props) => {
 	// 监听容器的size和scroll
 	useLayoutEffect(() => {
 		if (containerRef.current && enabled === true) {
+			const container = containerRef.current;
 			// observer resize
-			const updateRect = () => updateContainerSize(containerRef.current?.[horizontal ? 'clientWidth' : 'clientHeight'] ?? null);
+			const updateRect = () => updateContainerSize(container?.[horizontal ? 'clientWidth' : 'clientHeight'] ?? null);
 			const ob = new ResizeObserver(updateRect);
-			ob.observe(containerRef.current);
+			ob.observe(container);
 			// observer scroll
-			const onScroll = () => updateScrollOffset(containerRef.current?.[horizontal ? 'scrollLeft' : 'scrollTop'] ?? null);
-			containerRef.current.addEventListener('scroll', onScroll, { passive: true });
+			const onScroll = () => updateScrollOffset(container?.[horizontal ? 'scrollLeft' : 'scrollTop'] ?? null);
+			container.addEventListener('scroll', onScroll, { passive: true });
 			// 直接执行一次
 			updateRect();
 			onScroll();
 
 			return () => {
 				ob.disconnect();
-				containerRef.current?.removeEventListener('scroll', onScroll);
+				container.removeEventListener('scroll', onScroll);
 			};
 		}
-	}, [enabled]);
+	}, [enabled, horizontal]);
 
 	return { containerRef };
 };

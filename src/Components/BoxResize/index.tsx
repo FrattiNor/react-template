@@ -71,11 +71,11 @@ const BoxResize: FC<Props> = (props) => {
 			{props.children}
 			<div
 				className={classNames(styles['h'], { [styles['active']]: hStart })}
-				onMouseDown={(e) => setHStart({ pageX: e.pageX, value: width })}
+				onMouseDown={(e) => setHStart({ pageX: e.pageX, value: ref.current?.clientWidth ?? 0 })}
 			/>
 			<div
 				className={classNames(styles['v'], { [styles['active']]: vStart })}
-				onMouseDown={(e) => setVStart({ pageY: e.pageY, value: height })}
+				onMouseDown={(e) => setVStart({ pageY: e.pageY, value: ref.current?.clientHeight ?? 0 })}
 			/>
 		</div>
 	);

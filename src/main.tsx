@@ -2,7 +2,7 @@ import { createRoot } from 'react-dom/client';
 import App from './App/index.tsx';
 import initFps from './initFps.ts';
 import './main.css';
-import { StrictMode } from 'react';
+// import { StrictMode } from 'react';
 
 // == Hook ==
 // useActionState
@@ -25,7 +25,7 @@ import { StrictMode } from 'react';
 initFps();
 
 createRoot(document.getElementById('root')!).render(
-	<StrictMode>
-		<App />
-	</StrictMode>,
+	// <StrictMode>
+	<App />,
+	// </StrictMode>,
 );

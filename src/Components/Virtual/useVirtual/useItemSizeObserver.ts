@@ -1,27 +1,27 @@
-import { type Dispatch, type SetStateAction, useRef, useEffect } from 'react';
+import { useRef, useEffect } from 'react';
+import type useSizeCacheMap from './useSizeCacheMap';
 
 type Props = {
 	horizontal: boolean;
-	setSizeCacheMap: Dispatch<SetStateAction<Map<string, number>>>;
+	sizeCache: ReturnType<typeof useSizeCacheMap>;
 };
 
-const useItemSizeObserver = ({ setSizeCacheMap, horizontal }: Props) => {
+const useItemSizeObserver = ({ sizeCache, horizontal }: Props) => {
 	const itemSizeObserverRef = useRef<ResizeObserver | null>(null);
+
+	// 避免闭包问题
+	const updateItemSizeRef = useRef(sizeCache.updateItemSize);
+	// eslint-disable-next-line react-hooks/refs
+	if (updateItemSizeRef.current !== sizeCache.updateItemSize) updateItemSizeRef.current = sizeCache.updateItemSize;
 
 	const getItemSizeObserver = () => {
 		if (itemSizeObserverRef.current === null) {
 			itemSizeObserverRef.current = new ResizeObserver((entries) => {
 				entries.forEach((item) => {
-					const key = item.target.getAttribute('data-key');
-					if (typeof key === 'string' && key !== '') {
-						setSizeCacheMap((old) => {
-							const nodeSize = item.contentRect[horizontal ? 'width' : 'height'];
-							if (old.get(key) !== nodeSize) {
-								old.set(key, nodeSize);
-								return new Map(old);
-							}
-							return old;
-						});
+					const index = parseInt(item.target.getAttribute('data-index') ?? '');
+					if (!isNaN(index)) {
+						const size = item.contentRect[horizontal ? 'width' : 'height'];
+						updateItemSizeRef.current({ index, size, from: 'resize' });
 					}
 				});
 			});
@@ -36,7 +36,20 @@ const useItemSizeObserver = ({ setSizeCacheMap, horizontal }: Props) => {
 		};
 	}, []);
 
-	return { getItemSizeObserver };
+	// 用于测量itemSize，在不定高情况使用
+	// warning 【StrictMode会影响此运行，导致动态监测高度失效】
+	const measureItemRef = (index: number, node: HTMLElement | null) => {
+		if (node) {
+			const size = node[horizontal ? 'clientWidth' : 'clientHeight'];
+			updateItemSizeRef.current({ index, size, from: 'ref' });
+			getItemSizeObserver().observe(node);
+			return () => {
+				getItemSizeObserver().unobserve(node);
+			};
+		}
+	};
+
+	return { measureItemRef };
 };
 
 export default useItemSizeObserver;

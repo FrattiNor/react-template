@@ -14,7 +14,7 @@ export interface VirtualProps {
 	getItemSize: (index: number) => number;
 
 	// range变更【isScroll判断是否需要flushSync】
-	onRangeChange?: (p: { start: number | null; end: number | null; isScroll: boolean; getVirtualItems: () => VirtualSizeList }) => void;
+	onRangeChange?: (p: { start: number | null; end: number | null; isScroll: boolean }) => void;
 	// totalSize变更
 	onTotalSizeChange?: (size: number | null) => void;
 }

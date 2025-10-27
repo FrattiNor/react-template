@@ -1,4 +1,4 @@
-import type { VirtualInnerProps, VirtualProps, VirtualSizeList, VirtualState } from './type';
+import type { VirtualInnerProps, VirtualProps, VirtualState } from './type';
 import { binarySearch, getSizeList } from './utils';
 
 class VirtualCore {
@@ -107,26 +107,9 @@ class VirtualCore {
 			this.state.rangeEnd = endIndex;
 			// 触发rangeChange回调
 			if (this.props.onRangeChange) {
-				this.props.onRangeChange({ start: this.state.rangeStart, end: this.state.rangeEnd, isScroll, getVirtualItems: this.getVirtualItems });
+				this.props.onRangeChange({ start: this.state.rangeStart, end: this.state.rangeEnd, isScroll });
 			}
 		}
-	}
-
-	// 根据range获取items
-	getVirtualItems() {
-		const items: VirtualSizeList = [];
-		if (
-			typeof this.state.rangeStart === 'number' &&
-			typeof this.state.rangeEnd === 'number' &&
-			Array.isArray(this.state.sizeList) &&
-			this.state.sizeList.length > 0
-		) {
-			for (let i = this.state.rangeStart; i <= this.state.rangeEnd; i++) {
-				const item = this.state.sizeList[i];
-				items.push(item);
-			}
-		}
-		return items;
 	}
 
 	// 结束
@@ -136,7 +119,7 @@ class VirtualCore {
 		// 触发totalSizeChange回调
 		if (this.props.onTotalSizeChange) this.props.onTotalSizeChange(null);
 		// 触发rangeChange回调
-		if (this.props.onRangeChange) this.props.onRangeChange({ start: null, end: null, isScroll: false, getVirtualItems: this.getVirtualItems });
+		if (this.props.onRangeChange) this.props.onRangeChange({ start: null, end: null, isScroll: false });
 	}
 
 	// 更新容器size【外部使用】
