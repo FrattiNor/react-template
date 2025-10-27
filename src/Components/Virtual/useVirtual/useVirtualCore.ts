@@ -12,7 +12,7 @@ type Props = {
 
 const useVirtual = ({ props, sizeCache }: Props) => {
 	const { getItemSizeCover } = sizeCache;
-	const { enabled, count, overscan, gap, getItemKey } = props;
+	const { syncUpdate, enabled, count, overscan, gap, getItemKey } = props;
 	const [virtualCore, setVirtualCore] = useState(() => new VirtualCore());
 
 	// 获取需要使用的state
@@ -30,7 +30,11 @@ const useVirtual = ({ props, sizeCache }: Props) => {
 			},
 			onRangeChange: ({ isScroll }) => {
 				if (isScroll) {
-					flushSync(() => setVirtualCore(new VirtualCore(virtualCore)));
+					if ((syncUpdate ?? true) === true) {
+						flushSync(() => setVirtualCore(new VirtualCore(virtualCore)));
+					} else {
+						setVirtualCore(new VirtualCore(virtualCore));
+					}
 				} else {
 					setVirtualCore(new VirtualCore(virtualCore));
 				}
@@ -58,7 +62,7 @@ const useVirtual = ({ props, sizeCache }: Props) => {
 		const totalSize = virtualCore.state.totalSize;
 
 		return { renderVirtualItems, totalSize };
-	}, [virtualCore, enabled, count, overscan, gap, getItemKey, getItemSizeCover]);
+	}, [virtualCore, syncUpdate, enabled, count, overscan, gap, getItemKey, getItemSizeCover]);
 
 	return { renderVirtualItems, totalSize, virtualCore };
 };

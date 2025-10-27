@@ -8,7 +8,8 @@ import getData from './data';
 
 const App = () => {
 	const [enabled, setEnabled] = useState(true);
-	const [horizontal, setHorizontal] = useState(false);
+	const [vertical, setVertical] = useState(true);
+	const [syncUpdate, setSyncUpdate] = useState(true);
 
 	const [count, setCount] = useState(100);
 	const [endGap, setEndGap] = useState(0);
@@ -26,9 +27,10 @@ const App = () => {
 	const { totalSize, renderVirtualItems, containerRef, measureItemRef } = useVirtual({
 		count,
 		enabled,
-		horizontal,
+		syncUpdate,
 		getItemKey,
 		getItemSize,
+		horizontal: !vertical,
 		gap: { itemGap, startGap, endGap },
 		overscan: [overscanStart, overscanEnd],
 	});
@@ -44,8 +46,13 @@ const App = () => {
 				</label>
 
 				<label style={{ display: 'flex', alignItems: 'flex-end', gap: 4, userSelect: 'none' }}>
-					<input type="checkbox" checked={horizontal} onChange={(e) => setHorizontal(e.target.checked)} style={{ outline: 'none' }} />
-					<span style={{ display: 'inline-block', lineHeight: '19px' }}>{'Horizontal'}</span>
+					<input type="checkbox" checked={vertical} onChange={(e) => setVertical(e.target.checked)} style={{ outline: 'none' }} />
+					<span style={{ display: 'inline-block', lineHeight: '19px' }}>{'Vertical'}</span>
+				</label>
+
+				<label style={{ display: 'flex', alignItems: 'flex-end', gap: 4, userSelect: 'none' }}>
+					<input type="checkbox" checked={syncUpdate} onChange={(e) => setSyncUpdate(e.target.checked)} style={{ outline: 'none' }} />
+					<span style={{ display: 'inline-block', lineHeight: '19px' }}>{'SyncUpdate'}</span>
 				</label>
 
 				<label style={{ display: 'flex', alignItems: 'flex-end', gap: 4, userSelect: 'none' }}>
@@ -80,7 +87,7 @@ const App = () => {
 			<div className={styles['content']}>
 				<BoxResize width={300} height={500}>
 					<div ref={containerRef} className={styles['container']}>
-						{totalSize !== null && horizontal === false && (
+						{totalSize !== null && vertical === true && (
 							<div className={styles['virtual-content']} style={{ height: totalSize }}>
 								{renderVirtualItems(({ index, key, start }) => {
 									const itemData = data[index];
@@ -105,7 +112,7 @@ const App = () => {
 								})}
 							</div>
 						)}
-						{totalSize !== null && horizontal === true && (
+						{totalSize !== null && vertical === false && (
 							<div className={styles['virtual-content']} style={{ width: totalSize }}>
 								{renderVirtualItems(({ index, key, start }) => {
 									const itemData = data[index];
