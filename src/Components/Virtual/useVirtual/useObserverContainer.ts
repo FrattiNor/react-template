@@ -11,7 +11,7 @@ const useObserverContainer = ({ virtualCore, horizontal, enabled }: Props) => {
 	// 容器
 	const containerRef = useRef<HTMLDivElement | null>(null);
 	// useEffectEvent避免闭包问题
-	const updateScrollOffset = useEffectEvent((offset: number | null) => virtualCore.updateScrollOffset(offset));
+	const updateScrollOffset = useEffectEvent((offset: number | null, opt: { isScroll: boolean }) => virtualCore.updateScrollOffset(offset, opt));
 	// useEffectEvent避免闭包问题
 	const updateContainerSize = useEffectEvent((size: number | null) => virtualCore.updateContainerSize(size));
 	// 监听容器的size和scroll
@@ -23,11 +23,11 @@ const useObserverContainer = ({ virtualCore, horizontal, enabled }: Props) => {
 			const ob = new ResizeObserver(updateRect);
 			ob.observe(container);
 			// observer scroll
-			const onScroll = () => updateScrollOffset(container?.[horizontal ? 'scrollLeft' : 'scrollTop'] ?? null);
+			const onScroll = () => updateScrollOffset(container?.[horizontal ? 'scrollLeft' : 'scrollTop'] ?? null, { isScroll: true });
 			container.addEventListener('scroll', onScroll, { passive: true });
-			// 直接执行一次
-			updateRect();
-			onScroll();
+			// 直接更新一次size和offset
+			updateContainerSize(container?.[horizontal ? 'clientWidth' : 'clientHeight'] ?? null);
+			updateScrollOffset(container?.[horizontal ? 'scrollLeft' : 'scrollTop'] ?? null, { isScroll: false });
 
 			return () => {
 				ob.disconnect();

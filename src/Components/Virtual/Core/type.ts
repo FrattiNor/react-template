@@ -25,13 +25,13 @@ export interface VirtualInnerProps extends VirtualProps {
 	enabled: boolean;
 }
 
-export type VirtualSizeList = Array<{ key: string; index: number; start: number; end: number; size: number; nextStart: number }>;
+export type VirtualSizeListItem = { key: string; index: number; start: number; end: number; size: number; nextStart: number };
 
 export type VirtualState = {
 	totalSize: number | null;
 	scrollOffset: number | null;
 	containerSize: number | null;
-	sizeList: VirtualSizeList | null;
+	sizeList: Array<VirtualSizeListItem> | null;
 	rangeStart: number | null;
 	rangeEnd: number | null;
 };

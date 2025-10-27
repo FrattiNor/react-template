@@ -12,13 +12,13 @@ const useVirtual = (props: UseVirtualProps) => {
 	// itemSize缓存
 	const sizeCache = useSizeCacheMap({ props });
 	// virtual core
-	const { totalSize, virtualItems, virtualCore } = useVirtualCore({ props, sizeCache });
+	const { totalSize, renderVirtualItems, virtualCore } = useVirtualCore({ props, sizeCache });
 	// 监测item动态size
 	const { measureItemRef } = useItemSizeObserver({ horizontal, sizeCache });
 	// 监测容器
 	const { containerRef } = useObserverContainer({ enabled, horizontal, virtualCore });
 
-	return { totalSize, virtualItems, containerRef, measureItemRef };
+	return { totalSize, renderVirtualItems, containerRef, measureItemRef };
 };
 
 export default useVirtual;

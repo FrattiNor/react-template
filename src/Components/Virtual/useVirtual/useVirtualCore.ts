@@ -1,8 +1,9 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useMemo, useState, type ReactNode } from 'react';
 import VirtualCore from '../Core';
 import { flushSync } from 'react-dom';
 import type { UseVirtualProps } from './type';
 import type useSizeCacheMap from './useSizeCacheMap';
+import type { VirtualSizeListItem } from '../Core/type';
 
 type Props = {
 	props: UseVirtualProps;
@@ -14,8 +15,9 @@ const useVirtual = ({ props, sizeCache }: Props) => {
 	const { enabled, count, overscan, gap, getItemKey } = props;
 	const [virtualCore, setVirtualCore] = useState(() => new VirtualCore());
 
-	// 更新参数，并触state变更
-	useEffect(() => {
+	// 获取需要使用的state
+	const { renderVirtualItems, totalSize } = useMemo(() => {
+		// 更新virtualCore参数
 		virtualCore.updateProps({
 			gap,
 			count,
@@ -23,7 +25,9 @@ const useVirtual = ({ props, sizeCache }: Props) => {
 			overscan,
 			getItemKey,
 			getItemSize: getItemSizeCover,
-			onTotalSizeChange: () => setVirtualCore(new VirtualCore(virtualCore)),
+			onTotalSizeChange: () => {
+				setVirtualCore(new VirtualCore(virtualCore));
+			},
 			onRangeChange: ({ isScroll }) => {
 				if (isScroll) {
 					flushSync(() => setVirtualCore(new VirtualCore(virtualCore)));
@@ -32,14 +36,10 @@ const useVirtual = ({ props, sizeCache }: Props) => {
 				}
 			},
 		});
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [enabled, count, overscan, gap, getItemKey, getItemSizeCover]);
 
-	// 获取需要使用的state
-	const { totalSize, virtualItems } = useMemo(() => {
-		const totalSize = virtualCore.state.totalSize;
-		const virtualItems = (() => {
-			const items: Array<{ key: string; index: number; start: number; end: number; size: number }> = [];
+		// 渲染virtualItems
+		const renderVirtualItems = (render: (sizeListItem: VirtualSizeListItem) => ReactNode) => {
+			const renderData: ReactNode[] = [];
 			if (
 				typeof virtualCore.state.rangeStart === 'number' &&
 				typeof virtualCore.state.rangeEnd === 'number' &&
@@ -48,15 +48,19 @@ const useVirtual = ({ props, sizeCache }: Props) => {
 			) {
 				for (let i = virtualCore.state.rangeStart; i <= virtualCore.state.rangeEnd; i++) {
 					const item = virtualCore.state.sizeList[i];
-					items.push(item);
+					renderData.push(render(item));
 				}
 			}
-			return items;
-		})();
-		return { totalSize, virtualItems };
-	}, [virtualCore]);
+			return renderData;
+		};
 
-	return { totalSize, virtualItems, virtualCore };
+		// totalSize
+		const totalSize = virtualCore.state.totalSize;
+
+		return { renderVirtualItems, totalSize };
+	}, [virtualCore, enabled, count, overscan, gap, getItemKey, getItemSizeCover]);
+
+	return { renderVirtualItems, totalSize, virtualCore };
 };
 
 export default useVirtual;

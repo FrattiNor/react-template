@@ -18,7 +18,7 @@ const App = () => {
 	const data = useMemo(() => getData(count), [count]);
 	const getItemSize = useCallback(() => confHeight, [confHeight]);
 	const getItemKey = useCallback((index: number) => data[index].userId, [data]);
-	const { totalSize, virtualItems, containerRef, measureItemRef } = useVirtual({
+	const { totalSize, renderVirtualItems, containerRef, measureItemRef } = useVirtual({
 		count,
 		enabled,
 		getItemKey,
@@ -52,30 +52,26 @@ const App = () => {
 					<div ref={containerRef} className={styles['container']}>
 						{totalSize !== null && (
 							<div className={styles['virtual-content']} style={{ height: totalSize }}>
-								{virtualItems.map(({ index, key, start }) => {
-									// TODO，data和virtualItems同步一致性问题
-									// data和virtualItems可能出现不同步的情况
+								{renderVirtualItems(({ index, key, start }) => {
 									const itemData = data[index];
-									if (itemData) {
-										return (
-											<div
-												key={key}
-												data-index={index}
-												style={{ top: start }}
-												ref={(node) => measureItemRef(index, node)}
-												className={classNames(styles['virtual-item'], { [styles['odd']]: index % 2 === 1 })}
-											>
-												<div className={styles['item']} style={{ lineHeight: `${lineHeight}px` }}>
-													<span>{itemData.userId}</span>
-													<span>
-														{Array(30)
-															.fill(`${index + 1}`)
-															.join(';')}
-													</span>
-												</div>
+									return (
+										<div
+											key={key}
+											data-index={index}
+											style={{ top: start }}
+											ref={(node) => measureItemRef(index, node)}
+											className={classNames(styles['virtual-item'], { [styles['odd']]: index % 2 === 1 })}
+										>
+											<div className={styles['item']} style={{ lineHeight: `${lineHeight}px` }}>
+												<span>{itemData.userId}</span>
+												<span>
+													{Array(30)
+														.fill(`${index + 1}`)
+														.join(';')}
+												</span>
 											</div>
-										);
-									}
+										</div>
+									);
 								})}
 							</div>
 						)}

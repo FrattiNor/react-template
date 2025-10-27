@@ -131,10 +131,10 @@ class VirtualCore {
 	}
 
 	// 更新滚动offset【外部使用】
-	updateScrollOffset(offset: number | null) {
+	updateScrollOffset(offset: number | null, { isScroll }: { isScroll: boolean }) {
 		if (this.state.scrollOffset !== offset) {
 			this.state.scrollOffset = offset;
-			this.updateRange({ isScroll: true });
+			this.updateRange({ isScroll });
 		}
 	}
 }

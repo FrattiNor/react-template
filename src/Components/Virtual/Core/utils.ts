@@ -1,4 +1,4 @@
-import type { VirtualProps, VirtualSizeList } from './type';
+import type { VirtualProps, VirtualSizeListItem } from './type';
 
 export const getSizeList = ({
 	gap,
@@ -12,7 +12,7 @@ export const getSizeList = ({
 	getItemSize: VirtualProps['getItemSize'];
 }) => {
 	const { itemGap = 0, startGap = 0, endGap = 0 } = gap ?? {};
-	const sizeList: VirtualSizeList = [];
+	const sizeList: Array<VirtualSizeListItem> = [];
 	for (let index = 0; index < count; index++) {
 		const key = getItemKey(index);
 		const size = getItemSize(index);
