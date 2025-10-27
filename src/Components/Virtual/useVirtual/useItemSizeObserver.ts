@@ -6,13 +6,13 @@ type Props = {
 	sizeCache: ReturnType<typeof useSizeCacheMap>;
 };
 
-const useItemSizeObserver = ({ sizeCache, horizontal }: Props) => {
+const useItemSizeObserver = (props: Props) => {
 	const itemSizeObserverRef = useRef<ResizeObserver | null>(null);
 
 	// 避免闭包问题
-	const updateItemSizeRef = useRef(sizeCache.updateItemSize);
+	const propsRef = useRef(props);
 	// eslint-disable-next-line react-hooks/refs
-	if (updateItemSizeRef.current !== sizeCache.updateItemSize) updateItemSizeRef.current = sizeCache.updateItemSize;
+	propsRef.current = props;
 
 	const getItemSizeObserver = () => {
 		if (itemSizeObserverRef.current === null) {
@@ -20,8 +20,10 @@ const useItemSizeObserver = ({ sizeCache, horizontal }: Props) => {
 				entries.forEach((item) => {
 					const index = parseInt(item.target.getAttribute('data-index') ?? '');
 					if (!isNaN(index)) {
+						const horizontal = propsRef.current.horizontal;
 						const size = item.contentRect[horizontal ? 'width' : 'height'];
-						updateItemSizeRef.current({ index, size, from: 'resize' });
+						const updateItemSize = propsRef.current.sizeCache.updateItemSize;
+						updateItemSize({ index, size, from: 'resize' });
 					}
 				});
 			});
@@ -40,8 +42,10 @@ const useItemSizeObserver = ({ sizeCache, horizontal }: Props) => {
 	// warning 【StrictMode会影响此运行，导致动态监测高度失效】
 	const measureItemRef = (index: number, node: HTMLElement | null) => {
 		if (node) {
+			const horizontal = propsRef.current.horizontal;
 			const size = node[horizontal ? 'clientWidth' : 'clientHeight'];
-			updateItemSizeRef.current({ index, size, from: 'ref' });
+			const updateItemSize = propsRef.current.sizeCache.updateItemSize;
+			updateItemSize({ index, size, from: 'ref' });
 			getItemSizeObserver().observe(node);
 			return () => {
 				getItemSizeObserver().unobserve(node);
