@@ -6,7 +6,7 @@ import Slider from '../../Components/Slider';
 import BoxResize from '../../Components/BoxResize';
 import getData from './data';
 
-const App = () => {
+const ListDemo = () => {
 	const [enabled, setEnabled] = useState(true);
 	const [vertical, setVertical] = useState(true);
 	const [syncUpdate, setSyncUpdate] = useState(true);
@@ -144,4 +144,4 @@ const App = () => {
 	);
 };
 
-export default App;
+export default ListDemo;

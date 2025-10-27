@@ -1,7 +1,7 @@
-import List from './List';
+import ListDemo from './ListDemo';
 
 const App = () => {
-	return <List />;
+	return <ListDemo />;
 };
 
 export default App;
