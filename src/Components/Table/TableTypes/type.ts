@@ -7,7 +7,4 @@ export type TableDataItem = Record<string, unknown>;
 export type ValueTypeKeys<T, Type> = { [K in keyof T]: T[K] extends Type ? K : never }[keyof T];
 
 // Table 列render配置
-export type TableColumnRender<T extends TableDataItem> = (
-	item: T,
-	otherData: { index: number; renderHighlightText: (text: string) => ReactNode },
-) => ReactNode;
+export type TableColumnRender<T extends TableDataItem> = (item: T, otherData: { index: number }) => ReactNode;

@@ -32,7 +32,7 @@ const BoxResize: FC<Props> = (props) => {
 			const mouseMove = (e: MouseEvent) => {
 				pauseEvent(e);
 				const moveX = e.pageX - hStart.pageX;
-				setWidth(Math.max(50, Math.min(1000, hStart.value + moveX)));
+				setWidth(Math.max(50, Math.min(1500, hStart.value + moveX)));
 			};
 
 			document.addEventListener('mouseup', mouseUp);

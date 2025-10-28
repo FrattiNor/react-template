@@ -1,7 +1,7 @@
-import ListDemo from './ListDemo';
+import TableDemo from './TableDemo';
 
 const App = () => {
-	return <ListDemo />;
+	return <TableDemo />;
 };
 
 export default App;

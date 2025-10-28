@@ -8,4 +8,6 @@ export type TableProps<T extends TableDataItem> = {
 	columns: TableColumns<T>;
 	// 行key
 	rowKey: ValueTypeKeys<T, string> | ((item: T, index: number) => string);
+	// 边框样式
+	bordered?: boolean;
 };
