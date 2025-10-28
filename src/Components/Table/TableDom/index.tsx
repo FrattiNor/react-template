@@ -2,12 +2,15 @@ import classNames from 'classnames';
 import styles from './index.module.less';
 import TableBody from './TableBody';
 import TableHead from './TableHead';
+import type { FC } from 'react';
+import { useTableContext } from '../TableContext';
 
-const TableDom = () => {
+const TableDom: FC = () => {
 	console.log('TableDom re-render');
-
+	const { props } = useTableContext();
+	const { bordered } = props;
 	return (
-		<div className={classNames(styles['table'])}>
+		<div className={classNames(styles['table'], { [styles['bordered']]: bordered })}>
 			<TableHead />
 			<TableBody />
 		</div>

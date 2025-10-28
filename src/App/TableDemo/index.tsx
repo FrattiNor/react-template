@@ -5,7 +5,7 @@ import getData, { type DataItem } from './data';
 import styles from './index.module.less';
 import type { TableColumns } from '../../Components/Table/TableTypes/typeColumn';
 
-const data = getData(100);
+const data = getData(20);
 
 const TableDemo = () => {
 	// eslint-disable-next-line @typescript-eslint/no-unused-vars

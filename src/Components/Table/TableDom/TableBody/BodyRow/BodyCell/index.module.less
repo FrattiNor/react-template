@@ -1,0 +1,28 @@
+.body-cell {
+	outline: none;
+	position: relative;
+	box-sizing: border-box;
+	border-top: var(--table-cell-border-width) solid var(--table-cell-border-color);
+	transition:
+		border-color 0.2s,
+		background-color 0.2s;
+	padding: var(--table-cell-padding);
+	display: flex;
+	align-items: center;
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	display: table-column-group;
+
+	&.first-row {
+		border-top-width: 0;
+	}
+
+	&.bordered {
+		border-left: var(--table-cell-border-width) solid var(--table-cell-border-color);
+
+		&.first-col {
+			border-left-width: 0;
+		}
+	}
+}

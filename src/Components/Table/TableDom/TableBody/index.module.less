@@ -1,3 +1,24 @@
 .body {
-	height: 10px;
+	z-index: 1;
+	min-height: 0;
+	flex-shrink: 1;
+	overflow: auto;
+	position: relative;
+	color: var(--table-body-font-color);
+
+	&::-webkit-scrollbar:horizontal {
+		border-top: var(--table-cell-border-width) solid var(--table-cell-border-color);
+	}
+
+	&.bordered::-webkit-scrollbar:vertical {
+		border-left: var(--table-cell-border-width) solid var(--table-cell-border-color);
+	}
+
+	.body-inner {
+		display: grid;
+		min-width: 100%;
+		position: relative;
+		align-content: start;
+		width: max-content;
+	}
 }

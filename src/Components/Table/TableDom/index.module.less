@@ -8,11 +8,13 @@
 	display: flex;
 	position: relative;
 	flex-direction: column;
+	box-sizing: border-box;
 	transition: border-color 0.2s;
 	background-color: var(--table-bg);
 	font-size: var(--table-font-size);
 	font-family: var(--table-font-family);
 	border-bottom: var(--table-cell-border-width) solid var(--table-cell-border-color);
+	border-radius: 8px;
 
 	&.bordered {
 		border-top: var(--table-cell-border-width) solid var(--table-cell-border-color);
