@@ -1,20 +1,21 @@
 import classNames from 'classnames';
 import styles from './index.module.less';
-import type { FC } from 'react';
-import { useTableContext } from '../../../../TableContext';
+import type { TableDataItem } from '../../../../TableTypes/type';
+import type { TableInstance } from '../../../../useTableInstance';
+import { memo } from 'react';
 
 type Props = {
 	rowIndex: number;
 	colIndex: number;
 };
 
-const HeadCell: FC<Props> = ({ colIndex, rowIndex }) => {
-	const { props } = useTableContext();
+const HeadCell = <T extends TableDataItem>(props: TableInstance<T> & Props) => {
+	const { columns, bordered, rowIndex, colIndex } = props;
 	if (props.logRender?.headCell) console.log(`HeadCell(${rowIndex}-${colIndex}) re-render`);
-	const { columns, bordered } = props;
 	const column = columns[colIndex];
 	return (
 		<div
+			data-col={colIndex + 1}
 			className={classNames(styles['head-cell'], {
 				[styles['bordered']]: bordered,
 				[styles['first-col']]: colIndex === 0,
@@ -30,4 +31,4 @@ const HeadCell: FC<Props> = ({ colIndex, rowIndex }) => {
 	);
 };
 
-export default HeadCell;
+export default memo(HeadCell) as typeof HeadCell;

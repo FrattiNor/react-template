@@ -1,12 +1,10 @@
-import { useLayoutEffect, useRef } from 'react';
-import { useAppDispatch } from '../../../TableState';
-import { setV_ScrollBarWidth } from '../../../TableState/counterSlice';
+import { useLayoutEffect, useRef, useState } from 'react';
 
 // 表格dom的ref
 const useTableDomRef = () => {
-	const dispatch = useAppDispatch();
 	const bodyRef = useRef<HTMLDivElement>(null);
 	const headRef = useRef<HTMLDivElement>(null);
+	const [v_ScrollbarWidth, setV_ScrollbarWidth] = useState(0);
 
 	useLayoutEffect(() => {
 		if (bodyRef.current && headRef.current) {
@@ -15,8 +13,7 @@ const useTableDomRef = () => {
 
 			// === ob content resize ===
 			const calcV_ScrollBarWidth = () => {
-				console.log(body.offsetWidth - body.clientWidth);
-				dispatch(setV_ScrollBarWidth(body.offsetWidth - body.clientWidth));
+				setV_ScrollbarWidth(body.offsetWidth - body.clientWidth);
 			};
 			// 直接执行一次
 			calcV_ScrollBarWidth();
@@ -28,6 +25,9 @@ const useTableDomRef = () => {
 				if (head.scrollLeft !== body.scrollLeft) {
 					head.scrollLeft = body.scrollLeft;
 				}
+				if (head.scrollLeft !== body.scrollLeft) {
+					head.scrollLeft = body.scrollLeft;
+				}
 			};
 			body.addEventListener('scroll', handleBodyScroll, { passive: true });
 
@@ -36,10 +36,9 @@ const useTableDomRef = () => {
 				body.removeEventListener('scroll', handleBodyScroll);
 			};
 		}
-		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
-	return { bodyRef, headRef };
+	return { v_ScrollbarWidth, bodyRef, headRef };
 };
 
 export default useTableDomRef;

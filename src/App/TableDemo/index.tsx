@@ -27,7 +27,8 @@ const TableDemo = () => {
 					<div
 						style={{
 							color: '#fff',
-							padding: '12px 6px',
+							// padding: '12px 6px',
+							padding: '0 6px',
 							borderRadius: '4px',
 							display: 'inline-block',
 							backgroundColor: 'rgba(0,0,0,0.25)',

@@ -21,4 +21,10 @@ export type TableProps<T extends TableDataItem> = {
 	rowKey: ValueTypeKeys<T, string> | ((item: T, index: number) => string);
 	// 边框样式
 	bordered?: boolean;
+	//
+	columnsConf?: {
+		order?: Record<string, number>;
+		visible?: Record<string, boolean>;
+		width?: Record<string, number | `${number}%`>;
+	};
 };
