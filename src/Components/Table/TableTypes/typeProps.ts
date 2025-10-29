@@ -2,6 +2,17 @@ import type { TableDataItem, ValueTypeKeys } from './type';
 import type { TableColumns } from './typeColumn';
 
 export type TableProps<T extends TableDataItem> = {
+	//
+	logRender?: {
+		table?: boolean;
+		tableDom?: boolean;
+		body?: boolean;
+		bodyRow?: boolean;
+		bodyCell?: boolean;
+		head?: boolean;
+		headRow?: boolean;
+		headCell?: boolean;
+	};
 	// 数据源
 	data?: Array<T>;
 	// 列配置

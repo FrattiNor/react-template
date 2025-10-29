@@ -9,14 +9,15 @@ type Props = {
 };
 
 const HeadRow: FC<Props> = ({ rowIndex }) => {
-	console.log(`HeadRow(${rowIndex}) re-render`);
 	const { props } = useTableContext();
+	if (props.logRender?.headRow) console.log(`HeadRow(${rowIndex}) re-render`);
 	const { columns } = props;
 	return (
 		<div className={classNames(styles['head-row'])}>
 			{columns.map((item, colIndex) => (
 				<HeadCell key={item.key} rowIndex={rowIndex} colIndex={colIndex} />
 			))}
+			<div />
 		</div>
 	);
 };

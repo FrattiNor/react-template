@@ -1,14 +1,10 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { useDispatch, useSelector } from 'react-redux';
 import counterSlice from './counterSlice';
-import counter2Slice from './counter2Slice';
 
 export const getStore = () =>
 	configureStore({
-		reducer: {
-			counter: counterSlice,
-			counter2: counter2Slice,
-		},
+		reducer: counterSlice,
 	});
 
 export type Store = ReturnType<typeof getStore>;

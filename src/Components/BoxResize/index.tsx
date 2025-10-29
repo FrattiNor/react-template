@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, type FC, type PropsWithChildren } from 'react';
+import { memo, useEffect, useRef, useState, type FC, type PropsWithChildren } from 'react';
 import styles from './index.module.less';
 import classNames from 'classnames';
 
@@ -12,14 +12,16 @@ function pauseEvent(e: Event) {
 }
 
 type Props = PropsWithChildren<{
-	width: number;
-	height: number;
+	width?: number;
+	height?: number;
+	logRender?: boolean;
 }>;
 
 const BoxResize: FC<Props> = (props) => {
+	if (props.logRender) console.log('BoxResize re-render');
 	const ref = useRef<HTMLDivElement | null>(null);
-	const [width, setWidth] = useState(() => props.width);
-	const [height, setHeight] = useState(() => props.height);
+	const [width, setWidth] = useState(() => props.width ?? 500);
+	const [height, setHeight] = useState(() => props.height ?? 500);
 
 	const [hStart, setHStart] = useState<{ pageX: number; value: number } | null>(null);
 	const [vStart, setVStart] = useState<{ pageY: number; value: number } | null>(null);
@@ -81,4 +83,4 @@ const BoxResize: FC<Props> = (props) => {
 	);
 };
 
-export default BoxResize;
+export default memo(BoxResize);

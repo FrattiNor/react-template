@@ -9,8 +9,8 @@ type Props = {
 };
 
 const HeadCell: FC<Props> = ({ colIndex, rowIndex }) => {
-	console.log(`HeadCell(${rowIndex}-${colIndex}) re-render`);
 	const { props } = useTableContext();
+	if (props.logRender?.headCell) console.log(`HeadCell(${rowIndex}-${colIndex}) re-render`);
 	const { columns, bordered } = props;
 	const column = columns[colIndex];
 	return (

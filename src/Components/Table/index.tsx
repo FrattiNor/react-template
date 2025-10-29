@@ -6,15 +6,21 @@ import type { TableProps } from './TableTypes/typeProps';
 import { getStore } from './TableState';
 import { memo, useState } from 'react';
 
-const Table = <T extends TableDataItem>(props: TableProps<T>) => {
-	console.log('Table re-render');
+const TableInner = <T extends TableDataItem>(props: TableProps<T>) => {
 	const instance = useTableInstance(props);
+	return (
+		<TableContext value={instance as never}>
+			<TableDom />
+		</TableContext>
+	);
+};
+
+const Table = <T extends TableDataItem>(props: TableProps<T>) => {
+	if (props.logRender?.table) console.log('Table re-render');
 	const [store] = useState(() => getStore());
 	return (
 		<Provider store={store}>
-			<TableContext value={instance as never}>
-				<TableDom />
-			</TableContext>
+			<TableInner {...props} />
 		</Provider>
 	);
 };

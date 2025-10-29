@@ -5,8 +5,8 @@ import { useTableContext } from '../../TableContext';
 import BodyRow from './BodyRow';
 
 const TableBody: FC = () => {
-	console.log('TableBody re-render');
 	const { props, tableColumns, tableData, tableDomRef } = useTableContext();
+	if (props.logRender?.body) console.log('TableBody re-render');
 	const { bodyRef } = tableDomRef;
 	const { gridTemplateColumns } = tableColumns;
 	const { bordered, data } = props;

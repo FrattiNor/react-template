@@ -10,8 +10,8 @@ type Props = {
 };
 
 const BodyCell: FC<Props> = ({ colIndex, rowIndex }) => {
-	console.log(`BodyCell(${rowIndex}-${colIndex}) re-render`);
 	const { props } = useTableContext();
+	if (props.logRender?.bodyCell) console.log(`BodyCell(${rowIndex}-${colIndex}) re-render`);
 	const { columns, bordered, data } = props;
 	const column = columns[colIndex];
 	const dataItem = data?.[rowIndex] as TableDataItem;

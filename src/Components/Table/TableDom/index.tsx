@@ -6,8 +6,8 @@ import type { FC } from 'react';
 import { useTableContext } from '../TableContext';
 
 const TableDom: FC = () => {
-	console.log('TableDom re-render');
 	const { props } = useTableContext();
+	if (props.logRender?.tableDom) console.log('TableDom re-render');
 	const { bordered } = props;
 	return (
 		<div className={classNames(styles['table'], { [styles['bordered']]: bordered })}>

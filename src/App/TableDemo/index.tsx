@@ -5,11 +5,8 @@ import getData, { type DataItem } from './data';
 import styles from './index.module.less';
 import type { TableColumns } from '../../Components/Table/TableTypes/typeColumn';
 
-const data = getData(20);
-
 const TableDemo = () => {
-	// eslint-disable-next-line @typescript-eslint/no-unused-vars
-	const [_count, setCount] = useState(0);
+	const [data, setData] = useState(() => getData(20));
 
 	const columns: TableColumns<DataItem> = useMemo(
 		() => [
@@ -116,10 +113,28 @@ const TableDemo = () => {
 
 	return (
 		<div className={styles['wrapper']}>
-			<button onClick={() => setCount((old) => old + 1)}>ADD</button>
-			<BoxResize width={1000} height={500}>
+			<button onClick={() => setData((old) => (old.length === 20 ? getData(5) : getData(20)))}>ADD</button>
+			<BoxResize width={1000} height={500} logRender>
 				<div className={styles['container']}>
-					<Table data={data} columns={columns} rowKey={'userId'} bordered />
+					<Table
+						bordered
+						data={data}
+						columns={columns}
+						rowKey={'userId'}
+						logRender={useMemo(
+							() => ({
+								table: true,
+								tableDom: true,
+								body: true,
+								bodyRow: false,
+								bodyCell: false,
+								head: true,
+								headRow: false,
+								headCell: false,
+							}),
+							[],
+						)}
+					/>
 				</div>
 			</BoxResize>
 		</div>

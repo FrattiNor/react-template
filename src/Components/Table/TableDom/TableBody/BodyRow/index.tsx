@@ -9,8 +9,8 @@ type Props = {
 };
 
 const BodyRow: FC<Props> = ({ rowIndex }) => {
-	console.log(`BodyRow(${rowIndex}) re-render`);
 	const { props } = useTableContext();
+	if (props.logRender?.bodyRow) console.log(`BodyRow(${rowIndex}) re-render`);
 	const { columns } = props;
 	return (
 		<div className={classNames(styles['body-row'])}>
