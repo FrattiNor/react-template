@@ -9,27 +9,31 @@ import styles from './index.module.less';
 import type { TableDataItem } from '../../../TableTypes/type';
 import type { TableInstance } from '../../../useTableInstance';
 
-
-type Props<T extends TableDataItem> = Required<Pick<TableInstance<T>, 'columns' | 'bordered' | 'logRender'>> & {
+type Props<T extends TableDataItem> = Required<Pick<TableInstance<T>, 'flatColumns' | 'bordered' | 'logRender'>> & {
 	rowIndex: number;
 };
 
 const HeadRow = <T extends TableDataItem>(props: Props<T>) => {
 	if (props.logRender?.headRow) console.log(`HeadRow(${props.rowIndex}) re-render`);
-	const { columns, rowIndex } = props;
+	const { flatColumns, rowIndex } = props;
 	return (
 		<div data-row={rowIndex + 1} className={classNames(styles['head-row'])}>
-			{columns.map((item, colIndex) => (
+			{flatColumns.map((item, colIndex) => (
 				<HeadCell
 					key={item.key}
 					colIndex={colIndex}
-					columns={props.columns}
 					rowIndex={props.rowIndex}
 					bordered={props.bordered}
 					logRender={props.logRender}
+					flatColumns={props.flatColumns}
 				/>
 			))}
-			<HeadCellPlaceholder logRender={props.logRender} bordered={props.bordered} rowIndex={props.rowIndex} colIndex={props.columns.length} />
+			<HeadCellPlaceholder
+				bordered={props.bordered}
+				rowIndex={props.rowIndex}
+				logRender={props.logRender}
+				colIndex={props.flatColumns.length}
+			/>
 		</div>
 	);
 };

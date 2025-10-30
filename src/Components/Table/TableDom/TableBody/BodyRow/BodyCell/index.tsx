@@ -8,17 +8,17 @@ import { getCellTitle, isStrNum } from '../../../../TableUtils';
 import type { TableDataItem } from '../../../../TableTypes/type';
 import type { TableInstance } from '../../../../useTableInstance';
 
-type Props<T extends TableDataItem> = Required<Pick<TableInstance<T>, 'columns' | 'bordered' | 'logRender' | 'data'>> & {
+type Props<T extends TableDataItem> = Required<Pick<TableInstance<T>, 'flatColumns' | 'bordered' | 'logRender' | 'data'>> & {
 	rowIndex: number;
 	colIndex: number;
 };
 
 const BodyCell = <T extends TableDataItem>(props: Props<T>) => {
 	if (props.logRender?.bodyCell) console.log(`BodyCell(${props.rowIndex}-${props.colIndex}) re-render`);
-	const { columns, bordered, data, rowIndex, colIndex } = props;
+	const { flatColumns, bordered, data, rowIndex, colIndex } = props;
 
 	const dataItem = data[rowIndex];
-	const column = columns[colIndex];
+	const column = flatColumns[colIndex];
 	const renderDom = column.render(dataItem, { index: rowIndex });
 	const title = getCellTitle(renderDom);
 	const canEllipsis = isStrNum(renderDom);

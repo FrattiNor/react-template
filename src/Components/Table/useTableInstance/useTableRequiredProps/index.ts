@@ -29,10 +29,9 @@ const useTableRequiredProps = <T extends TableDataItem>(props: TableProps<T>) =>
 
 	const bordered = useMemo(() => props.bordered ?? false, [props.bordered]);
 
-	const requiredProps: Required<TableProps<T>> = {
+	const requiredProps: Required<Omit<TableProps<T>, 'columns'>> = {
 		data: props.data,
 		rowKey: props.rowKey,
-		columns: props.columns,
 		bordered: bordered,
 		logRender: logRender,
 		columnsConf: columnsConf,

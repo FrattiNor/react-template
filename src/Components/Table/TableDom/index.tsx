@@ -18,10 +18,10 @@ const Table = <T extends TableDataItem>(props: TableProps<T>) => {
 	return (
 		<div className={classNames(styles['table'], { [styles['bordered']]: bordered })}>
 			<TableHead
-				columns={instance.columns}
 				headRef={instance.headRef}
 				bordered={instance.bordered}
 				logRender={instance.logRender}
+				flatColumns={instance.flatColumns}
 				v_ScrollbarWidth={instance.v_ScrollbarWidth}
 				gridTemplateColumns={instance.gridTemplateColumns}
 			/>
@@ -29,9 +29,9 @@ const Table = <T extends TableDataItem>(props: TableProps<T>) => {
 				data={instance.data}
 				rowKey={instance.rowKey}
 				bodyRef={instance.bodyRef}
-				columns={instance.columns}
 				bordered={instance.bordered}
 				logRender={instance.logRender}
+				flatColumns={instance.flatColumns}
 				gridTemplateColumns={instance.gridTemplateColumns}
 			/>
 		</div>

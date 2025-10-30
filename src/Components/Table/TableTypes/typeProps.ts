@@ -1,4 +1,4 @@
-import type { TableDataItem } from './type';
+import type { TableColumnWidth, TableDataItem } from './type';
 import type { TableColumns } from './typeColumn';
 import type { ValueTypeKeys } from './typeUtil';
 
@@ -28,6 +28,6 @@ export type TableProps<T extends TableDataItem> = {
 	columnsConf?: {
 		order?: Record<string, number>;
 		visible?: Record<string, boolean>;
-		width?: Record<string, number | `${number}%`>;
+		width?: Record<string, TableColumnWidth>;
 	};
 };

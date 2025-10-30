@@ -9,9 +9,8 @@ import { getRowKey } from '../../TableUtils';
 import type { TableDataItem } from '../../TableTypes/type';
 import type { TableInstance } from '../../useTableInstance';
 
-
 type Props<T extends TableDataItem> = Required<
-	Pick<TableInstance<T>, 'columns' | 'bordered' | 'logRender' | 'data'> & Pick<TableInstance<T>, 'rowKey' | 'gridTemplateColumns' | 'bodyRef'>
+	Pick<TableInstance<T>, 'flatColumns' | 'bordered' | 'logRender' | 'data'> & Pick<TableInstance<T>, 'rowKey' | 'gridTemplateColumns' | 'bodyRef'>
 >;
 
 const TableBody = <T extends TableDataItem>(props: Props<T>) => {
@@ -28,9 +27,9 @@ const TableBody = <T extends TableDataItem>(props: Props<T>) => {
 							key={key}
 							data={props.data}
 							rowIndex={rowIndex}
-							columns={props.columns}
 							bordered={props.bordered}
 							logRender={props.logRender}
+							flatColumns={props.flatColumns}
 						/>
 					);
 				})}

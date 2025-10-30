@@ -25,9 +25,6 @@ const useTableDomRef = () => {
 				if (head.scrollLeft !== body.scrollLeft) {
 					head.scrollLeft = body.scrollLeft;
 				}
-				if (head.scrollLeft !== body.scrollLeft) {
-					head.scrollLeft = body.scrollLeft;
-				}
 			};
 			body.addEventListener('scroll', handleBodyScroll, { passive: true });
 
