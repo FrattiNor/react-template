@@ -6,7 +6,11 @@ import type { TableDataItem } from '../../TableTypes/type';
 import type { TableInstance } from '../../useTableInstance';
 import { memo } from 'react';
 
-const TableHead = <T extends TableDataItem>(props: TableInstance<T>) => {
+type Props<T extends TableDataItem> = Required<
+	Pick<TableInstance<T>, 'columns' | 'bordered' | 'logRender'> & Pick<TableInstance<T>, 'headRef' | 'gridTemplateColumns' | 'v_ScrollbarWidth'>
+>;
+
+const TableHead = <T extends TableDataItem>(props: Props<T>) => {
 	if (props.logRender?.head) console.log('TableHead re-render');
 	const { headRef, gridTemplateColumns, v_ScrollbarWidth } = props;
 	return (
@@ -15,7 +19,7 @@ const TableHead = <T extends TableDataItem>(props: TableInstance<T>) => {
 				className={classNames(styles['head-inner'])}
 				style={{ gridTemplateColumns: gridTemplateColumns + ` minmax(${v_ScrollbarWidth}px, 1fr)` }}
 			>
-				<HeadRow rowIndex={0} {...props} />
+				<HeadRow rowIndex={0} columns={props.columns} bordered={props.bordered} logRender={props.logRender} />
 			</div>
 		</div>
 	);

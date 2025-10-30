@@ -5,17 +5,24 @@ import type { TableDataItem } from '../../../TableTypes/type';
 import type { TableInstance } from '../../../useTableInstance';
 import { memo } from 'react';
 
-type Props = {
+type Props<T extends TableDataItem> = Required<Pick<TableInstance<T>, 'columns' | 'bordered' | 'logRender'>> & {
 	rowIndex: number;
 };
 
-const HeadRow = <T extends TableDataItem>(props: TableInstance<T> & Props) => {
+const HeadRow = <T extends TableDataItem>(props: Props<T>) => {
+	if (props.logRender?.headRow) console.log(`HeadRow(${props.rowIndex}) re-render`);
 	const { columns, rowIndex } = props;
-	if (props.logRender?.headRow) console.log(`HeadRow(${rowIndex}) re-render`);
 	return (
 		<div data-row={rowIndex + 1} className={classNames(styles['head-row'])}>
 			{columns.map((item, colIndex) => (
-				<HeadCell key={item.key} colIndex={colIndex} {...props} />
+				<HeadCell
+					key={item.key}
+					colIndex={colIndex}
+					columns={props.columns}
+					rowIndex={props.rowIndex}
+					bordered={props.bordered}
+					logRender={props.logRender}
+				/>
 			))}
 			<div />
 		</div>

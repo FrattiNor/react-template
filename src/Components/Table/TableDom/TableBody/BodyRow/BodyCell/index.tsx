@@ -4,14 +4,14 @@ import type { TableDataItem } from '../../../../TableTypes/type';
 import type { TableInstance } from '../../../../useTableInstance';
 import { memo } from 'react';
 
-type Props = {
+type Props<T extends TableDataItem> = Required<Pick<TableInstance<T>, 'columns' | 'bordered' | 'logRender' | 'data'>> & {
 	rowIndex: number;
 	colIndex: number;
 };
 
-const BodyCell = <T extends TableDataItem>(props: TableInstance<T> & Props) => {
+const BodyCell = <T extends TableDataItem>(props: Props<T>) => {
+	if (props.logRender?.bodyCell) console.log(`BodyCell(${props.rowIndex}-${props.colIndex}) re-render`);
 	const { columns, bordered, data, rowIndex, colIndex } = props;
-	if (props.logRender?.bodyCell) console.log(`BodyCell(${rowIndex}-${colIndex}) re-render`);
 	const column = columns[colIndex];
 	const dataItem = data?.[rowIndex] as T;
 	return (

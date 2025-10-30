@@ -6,7 +6,11 @@ import type { TableInstance } from '../../useTableInstance';
 import { getRowKey } from '../../TableUtils';
 import { memo } from 'react';
 
-const TableBody = <T extends TableDataItem>(props: TableInstance<T>) => {
+type Props<T extends TableDataItem> = Required<
+	Pick<TableInstance<T>, 'columns' | 'bordered' | 'logRender' | 'data'> & Pick<TableInstance<T>, 'rowKey' | 'gridTemplateColumns' | 'bodyRef'>
+>;
+
+const TableBody = <T extends TableDataItem>(props: Props<T>) => {
 	if (props.logRender?.body) console.log('TableBody re-render');
 	const { bordered, data, rowKey, gridTemplateColumns, bodyRef } = props;
 
@@ -15,7 +19,16 @@ const TableBody = <T extends TableDataItem>(props: TableInstance<T>) => {
 			<div className={classNames(styles['body-inner'])} style={{ gridTemplateColumns }}>
 				{data?.map((dataItem, rowIndex) => {
 					const key = getRowKey(rowKey, dataItem, rowIndex);
-					return <BodyRow key={key} rowIndex={rowIndex} {...props} />;
+					return (
+						<BodyRow
+							key={key}
+							data={props.data}
+							rowIndex={rowIndex}
+							columns={props.columns}
+							bordered={props.bordered}
+							logRender={props.logRender}
+						/>
+					);
 				})}
 			</div>
 		</div>

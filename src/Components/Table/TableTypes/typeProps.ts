@@ -1,5 +1,8 @@
-import type { TableDataItem, ValueTypeKeys } from './type';
+import type { TableDataItem } from './type';
 import type { TableColumns } from './typeColumn';
+import type { ValueTypeKeys } from './typeUtil';
+
+type TableRowKey<T> = ValueTypeKeys<T, string> | ((item: T, index: number) => string);
 
 export type TableProps<T extends TableDataItem> = {
 	//
@@ -14,11 +17,11 @@ export type TableProps<T extends TableDataItem> = {
 		headCell?: boolean;
 	};
 	// 数据源
-	data?: Array<T>;
+	data: Array<T>;
 	// 列配置
 	columns: TableColumns<T>;
 	// 行key
-	rowKey: ValueTypeKeys<T, string> | ((item: T, index: number) => string);
+	rowKey: TableRowKey<T>;
 	// 边框样式
 	bordered?: boolean;
 	//
