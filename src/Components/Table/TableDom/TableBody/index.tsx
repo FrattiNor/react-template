@@ -17,7 +17,7 @@ const TableBody = <T extends TableDataItem>(props: Props<T>) => {
 	return (
 		<div ref={bodyRef} className={classNames(styles['body'], { [styles['bordered']]: bordered })}>
 			<div className={classNames(styles['body-inner'])} style={{ gridTemplateColumns }}>
-				{data?.map((dataItem, rowIndex) => {
+				{data.map((dataItem, rowIndex) => {
 					const key = getRowKey(rowKey, dataItem, rowIndex);
 					return (
 						<BodyRow

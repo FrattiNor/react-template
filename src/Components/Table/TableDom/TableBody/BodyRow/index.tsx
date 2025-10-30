@@ -4,6 +4,7 @@ import BodyCell from './BodyCell';
 import type { TableDataItem } from '../../../TableTypes/type';
 import type { TableInstance } from '../../../useTableInstance';
 import { memo } from 'react';
+import BodyCellPlaceholder from './BodyCellPlaceholder';
 
 type Props<T extends TableDataItem> = Required<Pick<TableInstance<T>, 'columns' | 'bordered' | 'logRender' | 'data'>> & {
 	rowIndex: number;
@@ -25,6 +26,7 @@ const BodyRow = <T extends TableDataItem>(props: Props<T>) => {
 					logRender={props.logRender}
 				/>
 			))}
+			<BodyCellPlaceholder rowIndex={props.rowIndex} colIndex={columns.length} logRender={props.logRender} bordered={props.bordered} />
 		</div>
 	);
 };

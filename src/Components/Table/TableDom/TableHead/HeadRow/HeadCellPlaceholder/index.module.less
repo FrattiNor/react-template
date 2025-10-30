@@ -1,11 +1,8 @@
-.head-cell {
+.head-cell-placeholder {
 	outline: none;
 	position: relative;
 	box-sizing: border-box;
 	border-bottom: var(--table-cell-border-width) solid var(--table-cell-border-color);
-	padding: var(--table-cell-padding);
-	display: flex;
-	align-items: center;
 
 	&.bordered {
 		border-left: var(--table-cell-border-width) solid var(--table-cell-border-color);
@@ -13,13 +10,5 @@
 		&.first-col {
 			border-left-width: 0;
 		}
-	}
-
-	.ellipsis-wrapper {
-		width: 100%;
-		min-width: 0;
-		overflow: hidden;
-		white-space: nowrap;
-		text-overflow: ellipsis;
 	}
 }

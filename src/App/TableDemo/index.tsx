@@ -38,76 +38,76 @@ const TableDemo = () => {
 					</div>
 				),
 			},
-			{
-				key: 'lastName',
-				title: <span>{'lastName_1'}</span>,
-				render: ({ lastName }) => <span>{lastName}</span>,
-			},
-			{
-				key: 'email',
-				title: '邮箱_3',
-				render: ({ email }) => email,
-			},
-			{
-				key: 'avatar',
-				title: '头像_4',
-				render: ({ avatar }) => avatar,
-			},
-			{
-				key: 'password',
-				title: '密码_5',
-				render: ({ password }) => password,
-			},
-			{
-				key: 'birthdate',
-				title: '生日_6',
-				render: ({ birthdate }) => birthdate.toString(),
-			},
-			{
-				key: 'registeredAt',
-				title: '注册时间_7',
-				render: ({ registeredAt }) => registeredAt.toString(),
-			},
-			{
-				key: 'age',
-				title: '年龄_8',
-				render: ({ age }) => age,
-			},
-			{
-				key: 'gender',
-				title: '性别_9',
-				render: ({ gender }) => gender,
-			},
-			{
-				key: 'height',
-				title: '身高_10',
-				render: ({ height }) => height,
-			},
-			{
-				key: 'weight',
-				title: '体重_11',
-				render: ({ weight }) => weight,
-			},
-			{
-				key: 'phoneNumber',
-				title: '电话号码_12',
-				render: ({ phoneNumber }) => phoneNumber,
-			},
-			{
-				key: 'jobArea',
-				title: '工作地点_13',
-				render: ({ jobArea }) => jobArea,
-			},
-			{
-				key: 'jobTitle',
-				title: '工作头衔_14',
-				render: ({ jobTitle }) => jobTitle,
-			},
-			{
-				key: 'jobType',
-				title: '工作类型_15',
-				render: ({ jobType }) => jobType,
-			},
+			// {
+			// 	key: 'lastName',
+			// 	title: <span>{'lastName_1'}</span>,
+			// 	render: ({ lastName }) => <span>{lastName}</span>,
+			// },
+			// {
+			// 	key: 'email',
+			// 	title: '邮箱_3',
+			// 	render: ({ email }) => email,
+			// },
+			// {
+			// 	key: 'avatar',
+			// 	title: '头像_4',
+			// 	render: ({ avatar }) => avatar,
+			// },
+			// {
+			// 	key: 'password',
+			// 	title: '密码_5',
+			// 	render: ({ password }) => password,
+			// },
+			// {
+			// 	key: 'birthdate',
+			// 	title: '生日_6',
+			// 	render: ({ birthdate }) => birthdate.toString(),
+			// },
+			// {
+			// 	key: 'registeredAt',
+			// 	title: '注册时间_7',
+			// 	render: ({ registeredAt }) => registeredAt.toString(),
+			// },
+			// {
+			// 	key: 'age',
+			// 	title: '年龄_8',
+			// 	render: ({ age }) => age,
+			// },
+			// {
+			// 	key: 'gender',
+			// 	title: '性别_9',
+			// 	render: ({ gender }) => gender,
+			// },
+			// {
+			// 	key: 'height',
+			// 	title: '身高_10',
+			// 	render: ({ height }) => height,
+			// },
+			// {
+			// 	key: 'weight',
+			// 	title: '体重_11',
+			// 	render: ({ weight }) => weight,
+			// },
+			// {
+			// 	key: 'phoneNumber',
+			// 	title: '电话号码_12',
+			// 	render: ({ phoneNumber }) => phoneNumber,
+			// },
+			// {
+			// 	key: 'jobArea',
+			// 	title: '工作地点_13',
+			// 	render: ({ jobArea }) => jobArea,
+			// },
+			// {
+			// 	key: 'jobTitle',
+			// 	title: '工作头衔_14',
+			// 	render: ({ jobTitle }) => jobTitle,
+			// },
+			// {
+			// 	key: 'jobType',
+			// 	title: '工作类型_15',
+			// 	render: ({ jobType }) => jobType,
+			// },
 		],
 		[],
 	);

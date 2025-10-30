@@ -4,6 +4,7 @@ import HeadCell from './HeadCell';
 import type { TableDataItem } from '../../../TableTypes/type';
 import type { TableInstance } from '../../../useTableInstance';
 import { memo } from 'react';
+import HeadCellPlaceholder from './HeadCellPlaceholder';
 
 type Props<T extends TableDataItem> = Required<Pick<TableInstance<T>, 'columns' | 'bordered' | 'logRender'>> & {
 	rowIndex: number;
@@ -24,7 +25,7 @@ const HeadRow = <T extends TableDataItem>(props: Props<T>) => {
 					logRender={props.logRender}
 				/>
 			))}
-			<div />
+			<HeadCellPlaceholder logRender={props.logRender} bordered={props.bordered} rowIndex={props.rowIndex} colIndex={props.columns.length} />
 		</div>
 	);
 };
