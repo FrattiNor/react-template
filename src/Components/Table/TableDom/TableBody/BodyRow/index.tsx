@@ -8,12 +8,12 @@ import styles from './index.module.less';
 
 import type { TableInstance } from '../../../useTableInstance';
 
-type Props<T> = Required<Pick<TableInstance<T>, 'leafColumns' | 'bordered' | 'logRender' | 'data'>> & {
+type Props<T> = Required<Pick<TableInstance<T>, 'leafColumns' | 'bordered' | 'data'>> & {
 	rowIndex: number;
 };
 
 const BodyRow = <T,>(props: Props<T>) => {
-	if (props.logRender?.bodyRow) console.log(`BodyRow(${props.rowIndex}) re-render`);
+	//  console.log(`BodyRow(${props.rowIndex}) re-render`);
 	const { leafColumns, rowIndex } = props;
 	return (
 		<div data-row={rowIndex + 1} className={classNames(styles['body-row'])}>
@@ -24,11 +24,10 @@ const BodyRow = <T,>(props: Props<T>) => {
 					colIndex={colIndex}
 					rowIndex={props.rowIndex}
 					bordered={props.bordered}
-					logRender={props.logRender}
 					leafColumns={props.leafColumns}
 				/>
 			))}
-			<BodyCellPlaceholder rowIndex={props.rowIndex} colIndex={leafColumns.length} logRender={props.logRender} bordered={props.bordered} />
+			<BodyCellPlaceholder rowIndex={props.rowIndex} colIndex={leafColumns.length} bordered={props.bordered} />
 		</div>
 	);
 };

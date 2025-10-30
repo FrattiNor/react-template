@@ -7,13 +7,13 @@ import { getCellTitle, isStrNum } from '../../../../TableUtils';
 
 import type { TableInstance } from '../../../../useTableInstance';
 
-type Props<T> = Required<Pick<TableInstance<T>, 'leafColumns' | 'bordered' | 'logRender' | 'data'>> & {
+type Props<T> = Required<Pick<TableInstance<T>, 'leafColumns' | 'bordered' | 'data'>> & {
 	rowIndex: number;
 	colIndex: number;
 };
 
 const BodyCell = <T,>(props: Props<T>) => {
-	if (props.logRender?.bodyCell) console.log(`BodyCell(${props.rowIndex}-${props.colIndex}) re-render`);
+	//  console.log(`BodyCell(${props.rowIndex}-${props.colIndex}) re-render`);
 	const { leafColumns, bordered, data, rowIndex, colIndex } = props;
 
 	const dataItem = data[rowIndex];

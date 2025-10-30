@@ -12,7 +12,7 @@ type Props<T> = {
 const useTableColumns = <T>({ props, tableState }: Props<T>) => {
 	const columns = props.columns;
 	const { sizeCache } = tableState;
-	const { visibleConf, orderConf, widthConf } = props.columnConf ?? {};
+	const { visibleConf, sortConf, widthConf } = props.columnConf ?? {};
 
 	const { gridTemplateColumns, deepLevel, splitColumnsArr, leafColumns } = useMemo(() => {
 		// 检测重复的columnKey
@@ -75,12 +75,12 @@ const useTableColumns = <T>({ props, tableState }: Props<T>) => {
 		let splitColumnsArr = getSplitColumns(columns);
 
 		// 增加判断order
-		if (orderConf) {
+		if (sortConf) {
 			splitColumnsArr = splitColumnsArr.sort((a, b) => {
 				const aLast = a[a.length - 1] as InnerColumn<T>;
 				const bLast = b[b.length - 1] as InnerColumn<T>;
-				const aIndex = orderConf[aLast.key] ?? aLast.index;
-				const bIndex = orderConf[bLast.key] ?? bLast.index;
+				const aIndex = sortConf[aLast.key] ?? aLast.index;
+				const bIndex = sortConf[bLast.key] ?? bLast.index;
 				return aIndex - bIndex;
 			});
 		}
@@ -88,7 +88,7 @@ const useTableColumns = <T>({ props, tableState }: Props<T>) => {
 		console.log('splitColumnsArr', splitColumnsArr);
 
 		return { gridTemplateColumns, deepLevel, splitColumnsArr, leafColumns };
-	}, [sizeCache, visibleConf, orderConf, widthConf, columns]);
+	}, [sizeCache, visibleConf, sortConf, widthConf, columns]);
 
 	return { gridTemplateColumns, deepLevel, splitColumnsArr, leafColumns };
 };

@@ -8,13 +8,13 @@ import { getCellTitle, isStrNum } from '../../../../TableUtils';
 import type { InnerColumn } from '../../../../TableTypes/typeColumn';
 import type { TableInstance } from '../../../../useTableInstance';
 
-type Props<T> = Required<Pick<TableInstance<T>, 'splitColumnsArr' | 'deepLevel' | 'bordered' | 'logRender'>> & {
+type Props<T> = Required<Pick<TableInstance<T>, 'splitColumnsArr' | 'deepLevel' | 'bordered'>> & {
 	rowIndex: number;
 	colIndex: number;
 };
 
 const HeadCell = <T,>(props: Props<T>) => {
-	if (props.logRender?.headCell) console.log(`HeadCell(${props.rowIndex}-${props.colIndex}) re-render`);
+	//  console.log(`HeadCell(${props.rowIndex}-${props.colIndex}) re-render`);
 	const { splitColumnsArr, bordered, rowIndex, colIndex, deepLevel } = props;
 
 	const column = splitColumnsArr[colIndex][deepLevel - rowIndex] as InnerColumn<T>;

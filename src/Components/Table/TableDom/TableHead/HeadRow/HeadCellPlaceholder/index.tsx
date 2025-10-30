@@ -6,13 +6,13 @@ import styles from './index.module.less';
 
 import type { TableInstance } from '../../../../useTableInstance';
 
-type Props<T> = Required<Pick<TableInstance<T>, 'bordered' | 'logRender'>> & {
+type Props<T> = Required<Pick<TableInstance<T>, 'bordered'>> & {
 	rowIndex: number;
 	colIndex: number;
 };
 
 const HeadCellPlaceholder = <T,>(props: Props<T>) => {
-	if (props.logRender?.bodyCell) console.log(`HeadCellPlaceholder(${props.rowIndex}-${props.colIndex}) re-render`);
+	// console.log(`HeadCellPlaceholder(${props.rowIndex}-${props.colIndex}) re-render`);
 	const { bordered, rowIndex, colIndex } = props;
 
 	return (

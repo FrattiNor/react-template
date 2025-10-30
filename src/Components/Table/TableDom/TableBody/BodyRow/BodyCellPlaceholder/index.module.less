@@ -1,5 +1,6 @@
 .body-cell-placeholder {
 	outline: none;
+	overflow: hidden;
 	position: relative;
 	box-sizing: border-box;
 	border-top: var(--table-cell-border-width) solid var(--table-cell-border-color);
@@ -9,9 +10,18 @@
 	}
 
 	&.bordered {
-		border-left: var(--table-cell-border-width) solid var(--table-cell-border-color);
+		&.bordered::after {
+			content: '';
+			position: absolute;
+			top: 0;
+			left: 0;
+			right: 0;
+			bottom: 0;
+			transition: border-color 0.2s;
+			border-left: var(--table-cell-border-width) solid var(--table-cell-border-color);
+		}
 
-		&.first-col {
+		&.first-col.bordered::after {
 			border-left-width: 0;
 		}
 	}

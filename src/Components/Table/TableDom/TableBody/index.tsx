@@ -8,10 +8,10 @@ import { getRowKey } from '../../TableUtils';
 
 import type { TableInstance } from '../../useTableInstance';
 
-type Props<T> = Required<Pick<TableInstance<T>, 'leafColumns' | 'bordered' | 'logRender' | 'data' | 'rowKey' | 'gridTemplateColumns' | 'bodyRef'>>;
+type Props<T> = Required<Pick<TableInstance<T>, 'leafColumns' | 'bordered' | 'data' | 'rowKey' | 'gridTemplateColumns' | 'bodyRef'>>;
 
 const TableBody = <T,>(props: Props<T>) => {
-	if (props.logRender?.body) console.log('TableBody re-render');
+	//  console.log('TableBody re-render');
 	const { bordered, data, rowKey, gridTemplateColumns, bodyRef } = props;
 
 	return (
@@ -19,16 +19,7 @@ const TableBody = <T,>(props: Props<T>) => {
 			<div className={classNames(styles['body-inner'])} style={{ gridTemplateColumns }}>
 				{data.map((dataItem, rowIndex) => {
 					const key = getRowKey(rowKey, dataItem, rowIndex);
-					return (
-						<BodyRow
-							key={key}
-							data={props.data}
-							rowIndex={rowIndex}
-							bordered={props.bordered}
-							logRender={props.logRender}
-							leafColumns={props.leafColumns}
-						/>
-					);
+					return <BodyRow key={key} data={props.data} rowIndex={rowIndex} bordered={props.bordered} leafColumns={props.leafColumns} />;
 				})}
 			</div>
 		</div>

@@ -11,7 +11,7 @@ import type { TableComponent } from '../TableTypes/type';
 import type { TableProps } from '../TableTypes/typeProps';
 
 const Table = <T,>(props: TableProps<T>) => {
-	if (props.logRender?.table) console.log('Table re-render');
+	// console.log('Table re-render');
 	const instance = useTableInstance(props);
 	const { bordered } = instance;
 
@@ -20,7 +20,6 @@ const Table = <T,>(props: TableProps<T>) => {
 			<TableHead
 				headRef={instance.headRef}
 				bordered={instance.bordered}
-				logRender={instance.logRender}
 				deepLevel={instance.deepLevel}
 				splitColumnsArr={instance.splitColumnsArr}
 				v_ScrollbarWidth={instance.v_ScrollbarWidth}
@@ -31,7 +30,6 @@ const Table = <T,>(props: TableProps<T>) => {
 				rowKey={instance.rowKey}
 				bodyRef={instance.bodyRef}
 				bordered={instance.bordered}
-				logRender={instance.logRender}
 				leafColumns={instance.leafColumns}
 				gridTemplateColumns={instance.gridTemplateColumns}
 			/>
