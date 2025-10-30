@@ -1,8 +1,9 @@
 import useItemSizeObserver from './useItemSizeObserver';
 import useObserverContainer from './useObserverContainer';
-import useVirtualCore from './useVirtualCore';
-import type { UseVirtualProps } from './type';
 import useSizeCacheMap from './useSizeCacheMap';
+import useVirtualCore from './useVirtualCore';
+
+import type { UseVirtualProps } from './type';
 
 const useVirtual = (props: UseVirtualProps) => {
 	// enabled

@@ -1,6 +1,8 @@
 import { memo, useEffect, useRef, useState, type FC, type PropsWithChildren } from 'react';
-import styles from './index.module.less';
+
 import classNames from 'classnames';
+
+import styles from './index.module.less';
 
 // 避免触发一些事件导致mouse无法触发
 function pauseEvent(e: Event) {

@@ -1,5 +1,6 @@
-import type { VirtualInnerProps, VirtualProps, VirtualState } from './type';
 import { binarySearch, getSizeList } from './utils';
+
+import type { VirtualInnerProps, VirtualProps, VirtualState } from './type';
 
 class VirtualCore {
 	props: VirtualInnerProps = {} as VirtualInnerProps;

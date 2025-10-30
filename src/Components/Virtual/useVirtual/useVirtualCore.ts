@@ -1,6 +1,8 @@
 import { useMemo, useState, type ReactNode } from 'react';
-import VirtualCore from '../Core';
 import { flushSync } from 'react-dom';
+
+import VirtualCore from '../Core';
+
 import type { UseVirtualProps } from './type';
 import type useSizeCacheMap from './useSizeCacheMap';
 import type { VirtualSizeListItem } from '../Core/type';

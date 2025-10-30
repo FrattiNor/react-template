@@ -1,8 +1,9 @@
-import type { TableDataItem } from '../TableTypes/type';
-import type { TableProps } from '../TableTypes/typeProps';
 import useTableColumns from './useTableColumns';
 import useTableDomRef from './useTableDomRef';
 import useTableRequiredProps from './useTableRequiredProps';
+
+import type { TableDataItem } from '../TableTypes/type';
+import type { TableProps } from '../TableTypes/typeProps';
 
 const useTableInstance = <T extends TableDataItem>(props: TableProps<T>) => {
 	const tableDomRef = useTableDomRef();

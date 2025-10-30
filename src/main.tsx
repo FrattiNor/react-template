@@ -1,4 +1,5 @@
 import { createRoot } from 'react-dom/client';
+
 import App from './App/index.tsx';
 import initFps from './initFps.ts';
 import './main.css';

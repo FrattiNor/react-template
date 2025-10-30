@@ -1,10 +1,14 @@
+import { memo } from 'react';
+
 import classNames from 'classnames';
-import styles from './index.module.less';
+
 import BodyCell from './BodyCell';
+import BodyCellPlaceholder from './BodyCellPlaceholder';
+import styles from './index.module.less';
+
 import type { TableDataItem } from '../../../TableTypes/type';
 import type { TableInstance } from '../../../useTableInstance';
-import { memo } from 'react';
-import BodyCellPlaceholder from './BodyCellPlaceholder';
+
 
 type Props<T extends TableDataItem> = Required<Pick<TableInstance<T>, 'columns' | 'bordered' | 'logRender' | 'data'>> & {
 	rowIndex: number;

@@ -1,5 +1,5 @@
-import type { TableColumns } from '../../Components/Table/TableTypes/typeColumn';
 import type { DataItem } from './data';
+import type { TableColumns } from '../../Components/Table/TableTypes/typeColumn';
 
 const columns: TableColumns<DataItem> = [
 	{

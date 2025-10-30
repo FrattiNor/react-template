@@ -1,8 +1,10 @@
 import { useMemo, useState } from 'react';
-import BoxResize from '../../Components/BoxResize';
-import Table from '../../Components/Table';
+
 import getData, { type DataItem } from './data';
 import styles from './index.module.less';
+import BoxResize from '../../Components/BoxResize';
+import Table from '../../Components/Table';
+
 import type { TableColumns } from '../../Components/Table/TableTypes/typeColumn';
 
 const TableDemo = () => {

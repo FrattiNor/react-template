@@ -1,11 +1,14 @@
+import { memo } from 'react';
+
+import classNames from 'classnames';
+
+import useTableInstance from '../useTableInstance';
+import styles from './index.module.less';
+import TableBody from './TableBody';
+import TableHead from './TableHead';
+
 import type { TableDataItem } from '../TableTypes/type';
 import type { TableProps } from '../TableTypes/typeProps';
-import { memo } from 'react';
-import useTableInstance from '../useTableInstance';
-import classNames from 'classnames';
-import TableHead from './TableHead';
-import TableBody from './TableBody';
-import styles from './index.module.less';
 
 const Table = <T extends TableDataItem>(props: TableProps<T>) => {
 	if (props.logRender?.table) console.log('Table re-render');

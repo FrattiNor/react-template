@@ -1,10 +1,12 @@
 import { useCallback, useMemo, useState } from 'react';
-import styles from './index.module.less';
+
 import classNames from 'classnames';
-import { useVirtual } from '../../Components/Virtual';
-import Slider from '../../Components/Slider';
-import BoxResize from '../../Components/BoxResize';
+
 import getData from './data';
+import styles from './index.module.less';
+import BoxResize from '../../Components/BoxResize';
+import Slider from '../../Components/Slider';
+import { useVirtual } from '../../Components/Virtual';
 
 const ListDemo = () => {
 	const [enabled, setEnabled] = useState(true);

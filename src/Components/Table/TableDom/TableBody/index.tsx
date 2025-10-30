@@ -1,10 +1,14 @@
+import { memo } from 'react';
+
 import classNames from 'classnames';
-import styles from './index.module.less';
+
 import BodyRow from './BodyRow';
+import styles from './index.module.less';
+import { getRowKey } from '../../TableUtils';
+
 import type { TableDataItem } from '../../TableTypes/type';
 import type { TableInstance } from '../../useTableInstance';
-import { getRowKey } from '../../TableUtils';
-import { memo } from 'react';
+
 
 type Props<T extends TableDataItem> = Required<
 	Pick<TableInstance<T>, 'columns' | 'bordered' | 'logRender' | 'data'> & Pick<TableInstance<T>, 'rowKey' | 'gridTemplateColumns' | 'bodyRef'>

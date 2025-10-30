@@ -1,9 +1,12 @@
+import { memo } from 'react';
+
 import classNames from 'classnames';
+
 import styles from './index.module.less';
+import { getCellTitle, isStrNum } from '../../../../TableUtils';
+
 import type { TableDataItem } from '../../../../TableTypes/type';
 import type { TableInstance } from '../../../../useTableInstance';
-import { memo } from 'react';
-import { getCellTitle, isStrNum } from '../../../../TableUtils';
 
 type Props<T extends TableDataItem> = Required<Pick<TableInstance<T>, 'columns' | 'bordered' | 'logRender'>> & {
 	rowIndex: number;
