@@ -5,20 +5,19 @@ import classNames from 'classnames';
 import styles from './index.module.less';
 import { getCellTitle, isStrNum } from '../../../../TableUtils';
 
-import type { TableDataItem } from '../../../../TableTypes/type';
 import type { TableInstance } from '../../../../useTableInstance';
 
-type Props<T extends TableDataItem> = Required<Pick<TableInstance<T>, 'flatColumns' | 'bordered' | 'logRender' | 'data'>> & {
+type Props<T> = Required<Pick<TableInstance<T>, 'leafColumns' | 'bordered' | 'logRender' | 'data'>> & {
 	rowIndex: number;
 	colIndex: number;
 };
 
-const BodyCell = <T extends TableDataItem>(props: Props<T>) => {
+const BodyCell = <T,>(props: Props<T>) => {
 	if (props.logRender?.bodyCell) console.log(`BodyCell(${props.rowIndex}-${props.colIndex}) re-render`);
-	const { flatColumns, bordered, data, rowIndex, colIndex } = props;
+	const { leafColumns, bordered, data, rowIndex, colIndex } = props;
 
 	const dataItem = data[rowIndex];
-	const column = flatColumns[colIndex];
+	const column = leafColumns[colIndex];
 	const renderDom = column.render(dataItem, { index: rowIndex });
 	const title = getCellTitle(renderDom);
 	const canEllipsis = isStrNum(renderDom);

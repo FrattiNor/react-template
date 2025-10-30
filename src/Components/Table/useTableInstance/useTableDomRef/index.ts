@@ -1,10 +1,16 @@
-import { useLayoutEffect, useRef, useState } from 'react';
+import { useLayoutEffect, useRef } from 'react';
+
+import type useTableState from '../useTableState';
+
+type Props = {
+	tableState: ReturnType<typeof useTableState>;
+};
 
 // 表格dom的ref
-const useTableDomRef = () => {
+const useTableDomRef = ({ tableState }: Props) => {
+	const { setV_ScrollbarWidth } = tableState;
 	const bodyRef = useRef<HTMLDivElement>(null);
 	const headRef = useRef<HTMLDivElement>(null);
-	const [v_ScrollbarWidth, setV_ScrollbarWidth] = useState(0);
 
 	useLayoutEffect(() => {
 		if (bodyRef.current && headRef.current) {
@@ -33,9 +39,10 @@ const useTableDomRef = () => {
 				body.removeEventListener('scroll', handleBodyScroll);
 			};
 		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
-	return { v_ScrollbarWidth, bodyRef, headRef };
+	return { bodyRef, headRef };
 };
 
 export default useTableDomRef;

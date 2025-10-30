@@ -1,10 +1,10 @@
-import type { TableColumnWidth, TableDataItem } from './type';
+import type { TableColumnWidth } from './type';
 import type { TableColumns } from './typeColumn';
 import type { ValueTypeKeys } from './typeUtil';
 
 type TableRowKey<T> = ValueTypeKeys<T, string> | ((item: T, index: number) => string);
 
-export type TableProps<T extends TableDataItem> = {
+export type TableProps<T> = {
 	//
 	logRender?: {
 		table?: boolean;
@@ -25,9 +25,9 @@ export type TableProps<T extends TableDataItem> = {
 	// 边框样式
 	bordered?: boolean;
 	//
-	columnsConf?: {
-		order?: Record<string, number>;
-		visible?: Record<string, boolean>;
-		width?: Record<string, TableColumnWidth>;
+	columnConf?: {
+		orderConf?: Record<string, number>;
+		visibleConf?: Record<string, boolean>;
+		widthConf?: Record<string, TableColumnWidth>;
 	};
 };

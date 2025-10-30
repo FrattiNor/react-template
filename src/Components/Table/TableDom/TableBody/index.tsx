@@ -6,14 +6,13 @@ import BodyRow from './BodyRow';
 import styles from './index.module.less';
 import { getRowKey } from '../../TableUtils';
 
-import type { TableDataItem } from '../../TableTypes/type';
 import type { TableInstance } from '../../useTableInstance';
 
-type Props<T extends TableDataItem> = Required<
-	Pick<TableInstance<T>, 'flatColumns' | 'bordered' | 'logRender' | 'data'> & Pick<TableInstance<T>, 'rowKey' | 'gridTemplateColumns' | 'bodyRef'>
+type Props<T> = Required<
+	Pick<TableInstance<T>, 'leafColumns' | 'bordered' | 'logRender' | 'data'> & Pick<TableInstance<T>, 'rowKey' | 'gridTemplateColumns' | 'bodyRef'>
 >;
 
-const TableBody = <T extends TableDataItem>(props: Props<T>) => {
+const TableBody = <T,>(props: Props<T>) => {
 	if (props.logRender?.body) console.log('TableBody re-render');
 	const { bordered, data, rowKey, gridTemplateColumns, bodyRef } = props;
 
@@ -29,7 +28,7 @@ const TableBody = <T extends TableDataItem>(props: Props<T>) => {
 							rowIndex={rowIndex}
 							bordered={props.bordered}
 							logRender={props.logRender}
-							flatColumns={props.flatColumns}
+							leafColumns={props.leafColumns}
 						/>
 					);
 				})}

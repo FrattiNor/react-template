@@ -5,14 +5,13 @@ import classNames from 'classnames';
 import HeadRow from './HeadRow';
 import styles from './index.module.less';
 
-import type { TableDataItem } from '../../TableTypes/type';
 import type { TableInstance } from '../../useTableInstance';
 
-type Props<T extends TableDataItem> = Required<
-	Pick<TableInstance<T>, 'flatColumns' | 'bordered' | 'logRender'> & Pick<TableInstance<T>, 'headRef' | 'gridTemplateColumns' | 'v_ScrollbarWidth'>
+type Props<T> = Required<
+	Pick<TableInstance<T>, 'leafColumns' | 'bordered' | 'logRender'> & Pick<TableInstance<T>, 'headRef' | 'gridTemplateColumns' | 'v_ScrollbarWidth'>
 >;
 
-const TableHead = <T extends TableDataItem>(props: Props<T>) => {
+const TableHead = <T,>(props: Props<T>) => {
 	if (props.logRender?.head) console.log('TableHead re-render');
 	const { headRef, gridTemplateColumns, v_ScrollbarWidth } = props;
 	return (
@@ -21,7 +20,7 @@ const TableHead = <T extends TableDataItem>(props: Props<T>) => {
 				className={classNames(styles['head-inner'])}
 				style={{ gridTemplateColumns: gridTemplateColumns + ` minmax(${v_ScrollbarWidth}px, 1fr)` }}
 			>
-				<HeadRow rowIndex={0} flatColumns={props.flatColumns} bordered={props.bordered} logRender={props.logRender} />
+				<HeadRow rowIndex={0} leafColumns={props.leafColumns} bordered={props.bordered} logRender={props.logRender} />
 			</div>
 		</div>
 	);

@@ -1,9 +1,8 @@
 import { useMemo } from 'react';
 
-import type { TableDataItem } from '../../TableTypes/type';
 import type { TableProps } from '../../TableTypes/typeProps';
 
-const useTableRequiredProps = <T extends TableDataItem>(props: TableProps<T>) => {
+const useTableRequiredProps = <T>(props: TableProps<T>) => {
 	const logRender = useMemo(
 		() => ({
 			table: props.logRender?.table,
@@ -18,13 +17,13 @@ const useTableRequiredProps = <T extends TableDataItem>(props: TableProps<T>) =>
 		[props.logRender],
 	);
 
-	const columnsConf = useMemo(
+	const columnConf = useMemo(
 		() => ({
-			order: props.columnsConf?.order,
-			visible: props.columnsConf?.visible,
-			width: props.columnsConf?.width,
+			orderConf: props.columnConf?.orderConf,
+			widthConf: props.columnConf?.widthConf,
+			visibleConf: props.columnConf?.visibleConf,
 		}),
-		[props.columnsConf],
+		[props.columnConf],
 	);
 
 	const bordered = useMemo(() => props.bordered ?? false, [props.bordered]);
@@ -34,7 +33,7 @@ const useTableRequiredProps = <T extends TableDataItem>(props: TableProps<T>) =>
 		rowKey: props.rowKey,
 		bordered: bordered,
 		logRender: logRender,
-		columnsConf: columnsConf,
+		columnConf: columnConf,
 	};
 
 	return { ...requiredProps };

@@ -1,10 +1,12 @@
 import type { ReactNode } from 'react';
 
-// Table 数据源 的基础类型
-export type TableDataItem = Record<string, unknown>;
+import type { TableProps } from './typeProps';
+
+// Table组件类型
+export type TableComponent = <T extends Record<string, unknown>>(props: TableProps<T>) => ReactNode;
 
 // Table 列render配置
-export type TableColumnRender<T extends TableDataItem> = (item: T, otherData: { index: number }) => ReactNode;
+export type TableColumnRender<T> = (item: T, otherData: { index: number }) => ReactNode;
 
 // Table 列宽度
 export type TableColumnWidth = number | `${number}%`;

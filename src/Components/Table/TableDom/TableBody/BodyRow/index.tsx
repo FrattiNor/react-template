@@ -6,19 +6,18 @@ import BodyCell from './BodyCell';
 import BodyCellPlaceholder from './BodyCellPlaceholder';
 import styles from './index.module.less';
 
-import type { TableDataItem } from '../../../TableTypes/type';
 import type { TableInstance } from '../../../useTableInstance';
 
-type Props<T extends TableDataItem> = Required<Pick<TableInstance<T>, 'flatColumns' | 'bordered' | 'logRender' | 'data'>> & {
+type Props<T> = Required<Pick<TableInstance<T>, 'leafColumns' | 'bordered' | 'logRender' | 'data'>> & {
 	rowIndex: number;
 };
 
-const BodyRow = <T extends TableDataItem>(props: Props<T>) => {
+const BodyRow = <T,>(props: Props<T>) => {
 	if (props.logRender?.bodyRow) console.log(`BodyRow(${props.rowIndex}) re-render`);
-	const { flatColumns, rowIndex } = props;
+	const { leafColumns, rowIndex } = props;
 	return (
 		<div data-row={rowIndex + 1} className={classNames(styles['body-row'])}>
-			{flatColumns.map((item, colIndex) => (
+			{leafColumns.map((item, colIndex) => (
 				<BodyCell
 					key={item.key}
 					data={props.data}
@@ -26,10 +25,10 @@ const BodyRow = <T extends TableDataItem>(props: Props<T>) => {
 					rowIndex={props.rowIndex}
 					bordered={props.bordered}
 					logRender={props.logRender}
-					flatColumns={props.flatColumns}
+					leafColumns={props.leafColumns}
 				/>
 			))}
-			<BodyCellPlaceholder rowIndex={props.rowIndex} colIndex={flatColumns.length} logRender={props.logRender} bordered={props.bordered} />
+			<BodyCellPlaceholder rowIndex={props.rowIndex} colIndex={leafColumns.length} logRender={props.logRender} bordered={props.bordered} />
 		</div>
 	);
 };

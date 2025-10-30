@@ -7,10 +7,10 @@ import styles from './index.module.less';
 import TableBody from './TableBody';
 import TableHead from './TableHead';
 
-import type { TableDataItem } from '../TableTypes/type';
+import type { TableComponent } from '../TableTypes/type';
 import type { TableProps } from '../TableTypes/typeProps';
 
-const Table = <T extends TableDataItem>(props: TableProps<T>) => {
+const Table = <T,>(props: TableProps<T>) => {
 	if (props.logRender?.table) console.log('Table re-render');
 	const instance = useTableInstance(props);
 	const { bordered } = instance;
@@ -21,7 +21,7 @@ const Table = <T extends TableDataItem>(props: TableProps<T>) => {
 				headRef={instance.headRef}
 				bordered={instance.bordered}
 				logRender={instance.logRender}
-				flatColumns={instance.flatColumns}
+				leafColumns={instance.leafColumns}
 				v_ScrollbarWidth={instance.v_ScrollbarWidth}
 				gridTemplateColumns={instance.gridTemplateColumns}
 			/>
@@ -31,11 +31,11 @@ const Table = <T extends TableDataItem>(props: TableProps<T>) => {
 				bodyRef={instance.bodyRef}
 				bordered={instance.bordered}
 				logRender={instance.logRender}
-				flatColumns={instance.flatColumns}
+				leafColumns={instance.leafColumns}
 				gridTemplateColumns={instance.gridTemplateColumns}
 			/>
 		</div>
 	);
 };
 
-export default memo(Table) as typeof Table;
+export default memo(Table) as TableComponent;

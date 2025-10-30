@@ -4,15 +4,14 @@ import classNames from 'classnames';
 
 import styles from './index.module.less';
 
-import type { TableDataItem } from '../../../../TableTypes/type';
 import type { TableInstance } from '../../../../useTableInstance';
 
-type Props<T extends TableDataItem> = Required<Pick<TableInstance<T>, 'bordered' | 'logRender'>> & {
+type Props<T> = Required<Pick<TableInstance<T>, 'bordered' | 'logRender'>> & {
 	rowIndex: number;
 	colIndex: number;
 };
 
-const BodyCellPlaceholder = <T extends TableDataItem>(props: Props<T>) => {
+const BodyCellPlaceholder = <T,>(props: Props<T>) => {
 	if (props.logRender?.bodyCell) console.log(`BodyCellPlaceholder(${props.rowIndex}-${props.colIndex}) re-render`);
 	const { bordered, rowIndex, colIndex } = props;
 

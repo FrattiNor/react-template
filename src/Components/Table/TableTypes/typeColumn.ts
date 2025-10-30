@@ -1,10 +1,10 @@
 import type { ReactNode } from 'react';
 
-import type { TableColumnRender, TableColumnWidth, TableDataItem } from './type';
+import type { TableColumnRender, TableColumnWidth } from './type';
 import type { Partial2Undefined } from './typeUtil';
 
 // onCell 的 colSpan 和 fixed 存在冲突
-export type TableColumn<T extends TableDataItem> = {
+export type TableColumn<T> = {
 	// 列key
 	key: string;
 	// 列标题
@@ -21,7 +21,7 @@ export type TableColumn<T extends TableDataItem> = {
 };
 
 // Group的fixed将会覆盖子节点，不论left|right|undefined
-export type TableColumnGroup<T extends TableDataItem> = Partial2Undefined<Omit<TableColumn<T>, 'key' | 'title' | 'children'>> & {
+export type TableColumnGroup<T> = Partial2Undefined<Omit<TableColumn<T>, 'key' | 'title' | 'children'>> & {
 	// 列key
 	key: string;
 	// 列标题
@@ -30,13 +30,10 @@ export type TableColumnGroup<T extends TableDataItem> = Partial2Undefined<Omit<T
 	children: Array<TableColumnGroup<T> | TableColumn<T>>;
 };
 
-export type TableColumns<T extends TableDataItem> = Array<TableColumnGroup<T> | TableColumn<T>>;
+export type TableColumns<T> = Array<TableColumnGroup<T> | TableColumn<T>>;
 
 // 内部使用的columnGroup类型
-export type InnerColumnGroup<T extends TableDataItem> = Omit<
-	TableColumnGroup<T> & { level: number; startIndex: number; endIndex: number },
-	'children'
->;
+export type InnerColumnGroup<T> = Omit<TableColumnGroup<T> & { level: number }, 'children'>;
 
 // 内部使用的column类型
-export type InnerColumn<T extends TableDataItem> = Omit<TableColumn<T> & { level: number; index: number }, 'children'>;
+export type InnerColumn<T> = Omit<TableColumn<T> & { level: number; index: number }, 'children'>;
