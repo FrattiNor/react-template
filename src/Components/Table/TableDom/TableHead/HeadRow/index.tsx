@@ -8,30 +8,47 @@ import styles from './index.module.less';
 
 import type { TableInstance } from '../../../useTableInstance';
 
-type Props<T> = Required<Pick<TableInstance<T>, 'leafColumns' | 'bordered' | 'logRender'>> & {
+type Props<T> = Required<Pick<TableInstance<T>, 'splitColumnsArr' | 'deepLevel' | 'bordered' | 'logRender'>> & {
 	rowIndex: number;
 };
 
 const HeadRow = <T,>(props: Props<T>) => {
 	if (props.logRender?.headRow) console.log(`HeadRow(${props.rowIndex}) re-render`);
-	const { leafColumns, rowIndex } = props;
-	return (
-		<div data-row={rowIndex + 1} className={classNames(styles['head-row'])}>
-			{leafColumns.map((item, colIndex) => (
+	const { rowIndex, splitColumnsArr, deepLevel } = props;
+
+	const renderRow = () => {
+		// splitColumnsArr.map((splitColumns) => {
+		// 	const column = splitColumns[deepLevel - rowIndex - splitColumns.length + 1];
+		// 	console.log(rowIndex, column);
+		// });
+
+		return splitColumnsArr.map((splitColumns, index) => {
+			const column = splitColumns[deepLevel - rowIndex];
+			if (!column) return null;
+			return (
 				<HeadCell
-					key={item.key}
-					colIndex={colIndex}
+					key={index}
+					colIndex={index}
 					rowIndex={props.rowIndex}
 					bordered={props.bordered}
+					deepLevel={props.deepLevel}
 					logRender={props.logRender}
-					leafColumns={props.leafColumns}
+					splitColumnsArr={props.splitColumnsArr}
 				/>
-			))}
+			);
+		});
+	};
+
+	renderRow();
+
+	return (
+		<div data-row={rowIndex + 1} className={classNames(styles['head-row'])}>
+			{renderRow()}
 			<HeadCellPlaceholder
 				bordered={props.bordered}
 				rowIndex={props.rowIndex}
 				logRender={props.logRender}
-				colIndex={props.leafColumns.length}
+				colIndex={props.splitColumnsArr.length}
 			/>
 		</div>
 	);

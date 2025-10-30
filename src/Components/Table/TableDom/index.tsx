@@ -21,7 +21,8 @@ const Table = <T,>(props: TableProps<T>) => {
 				headRef={instance.headRef}
 				bordered={instance.bordered}
 				logRender={instance.logRender}
-				leafColumns={instance.leafColumns}
+				deepLevel={instance.deepLevel}
+				splitColumnsArr={instance.splitColumnsArr}
 				v_ScrollbarWidth={instance.v_ScrollbarWidth}
 				gridTemplateColumns={instance.gridTemplateColumns}
 			/>

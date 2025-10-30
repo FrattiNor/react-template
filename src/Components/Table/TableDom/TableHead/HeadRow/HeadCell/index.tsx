@@ -5,18 +5,20 @@ import classNames from 'classnames';
 import styles from './index.module.less';
 import { getCellTitle, isStrNum } from '../../../../TableUtils';
 
+import type { InnerColumn } from '../../../../TableTypes/typeColumn';
 import type { TableInstance } from '../../../../useTableInstance';
 
-type Props<T> = Required<Pick<TableInstance<T>, 'leafColumns' | 'bordered' | 'logRender'>> & {
+type Props<T> = Required<Pick<TableInstance<T>, 'splitColumnsArr' | 'deepLevel' | 'bordered' | 'logRender'>> & {
 	rowIndex: number;
 	colIndex: number;
 };
 
 const HeadCell = <T,>(props: Props<T>) => {
 	if (props.logRender?.headCell) console.log(`HeadCell(${props.rowIndex}-${props.colIndex}) re-render`);
-	const { leafColumns, bordered, rowIndex, colIndex } = props;
+	const { splitColumnsArr, bordered, rowIndex, colIndex, deepLevel } = props;
 
-	const column = leafColumns[colIndex];
+	const column = splitColumnsArr[colIndex][deepLevel - rowIndex] as InnerColumn<T>;
+	console.log('column', colIndex, rowIndex, column);
 	const renderDom = column.title;
 	const title = getCellTitle(renderDom);
 	const canEllipsis = isStrNum(renderDom);

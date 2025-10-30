@@ -12,15 +12,9 @@ type Props<T> = {
 const useTableColumns = <T>({ props, tableState }: Props<T>) => {
 	const columns = props.columns;
 	const { sizeCache } = tableState;
+	const { visibleConf, orderConf, widthConf } = props.columnConf ?? {};
 
-	// const { visible, order, width } = props.columnConf ?? {};
-
-	const { gridTemplateColumns, deepIndex, splitColumns, leafColumns } = useMemo(() => {
-		let index = -1;
-		let deepIndex = -1;
-		let gridTemplateColumns = '';
-		const leafColumns: Array<InnerColumn<T>> = [];
-
+	const { gridTemplateColumns, deepLevel, splitColumnsArr, leafColumns } = useMemo(() => {
 		// 检测重复的columnKey
 		const colKeysObj: Record<string, number> = {};
 		const judgeSameKey = (key: string) => {
@@ -28,53 +22,75 @@ const useTableColumns = <T>({ props, tableState }: Props<T>) => {
 			colKeysObj[key] = (colKeysObj[key] ?? 0) + 1;
 		};
 
+		// colIndex
+		let index = -1;
+		// columns深度
+		let deepLevel = -1;
+		// 叶子节点
+		const leafColumns: Array<InnerColumn<T>> = [];
+		// gridTemplateColumns
+		let gridTemplateColumns = '';
 		const addGridTemplateColumns = (column: TableColumn<T>) => {
 			const width = (() => {
 				const sizeCacheWidth = sizeCache.get(column.key);
 				if (typeof sizeCacheWidth === 'number') return sizeCacheWidth;
-				if (typeof column.width === 'number') return column.width;
-				if (column.width === undefined) return 150;
+				const width = widthConf?.[column.key] ?? column.width;
+				if (typeof width === 'number') return width;
+				if (width === undefined) return 150;
 				return 150;
 			})();
 			gridTemplateColumns += gridTemplateColumns === '' ? `${width}px` : ` ${width}px`;
 		};
 
+		// 遍历columns
 		const getSplitColumns = (c: TableProps<T>['columns'], opt?: { level: number; parents: Array<InnerColumnGroup<T>> }) => {
 			const level = opt?.level ?? 0;
 			const parents = opt?.parents ?? [];
-			const splitColumns: Array<Array<InnerColumnGroup<T> | InnerColumn<T>>> = [];
+			const splitColumnsArr: Array<Array<InnerColumnGroup<T> | InnerColumn<T>>> = [];
 
-			if (level > deepIndex) deepIndex = level;
+			if (level > deepLevel) deepLevel = level;
 
-			c.forEach((item) => {
-				judgeSameKey(item.key);
+			c.forEach((column) => {
+				judgeSameKey(column.key);
 				// isGroup
-				if (Array.isArray(item.children)) {
-					const current: InnerColumnGroup<T> = { ...(item as TableColumnGroup<T>), level };
+				if (Array.isArray(column.children)) {
+					const current: InnerColumnGroup<T> = { ...(column as TableColumnGroup<T>), level };
 					// eslint-disable-next-line @typescript-eslint/no-explicit-any
 					delete (current as any)['children'];
-					splitColumns.push(...getSplitColumns(item.children, { level: level + 1, parents: [...parents, current] }));
+					splitColumnsArr.push(...getSplitColumns(column.children, { level: level + 1, parents: [...parents, current] }));
 				}
 				// isColumn
-				else {
+				// 增加判断visible
+				else if (visibleConf?.[column.key] === undefined || visibleConf?.[column.key] === true) {
 					index++;
-					addGridTemplateColumns(item as TableColumn<T>);
-					const current: InnerColumn<T> = { ...(item as TableColumn<T>), level, index };
-					splitColumns.push([...parents, current]);
+					addGridTemplateColumns(column as TableColumn<T>);
+					const current: InnerColumn<T> = { ...(column as TableColumn<T>), level, index };
+					splitColumnsArr.push([...parents, current].reverse());
 					leafColumns.push(current);
 				}
 			});
-			return splitColumns;
+			return splitColumnsArr;
 		};
 
-		const splitColumns = getSplitColumns(columns);
+		let splitColumnsArr = getSplitColumns(columns);
 
-		console.log('leafColumns', leafColumns);
+		// 增加判断order
+		if (orderConf) {
+			splitColumnsArr = splitColumnsArr.sort((a, b) => {
+				const aLast = a[a.length - 1] as InnerColumn<T>;
+				const bLast = b[b.length - 1] as InnerColumn<T>;
+				const aIndex = orderConf[aLast.key] ?? aLast.index;
+				const bIndex = orderConf[bLast.key] ?? bLast.index;
+				return aIndex - bIndex;
+			});
+		}
 
-		return { gridTemplateColumns, deepIndex, splitColumns, leafColumns };
-	}, [sizeCache, columns]);
+		console.log('splitColumnsArr', splitColumnsArr);
 
-	return { gridTemplateColumns, deepIndex, splitColumns, leafColumns };
+		return { gridTemplateColumns, deepLevel, splitColumnsArr, leafColumns };
+	}, [sizeCache, visibleConf, orderConf, widthConf, columns]);
+
+	return { gridTemplateColumns, deepLevel, splitColumnsArr, leafColumns };
 };
 
 export default useTableColumns;
