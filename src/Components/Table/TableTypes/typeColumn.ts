@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react';
 
-import type { TableColumnRender, TableColumnWidth } from './type';
+import type { TableColumnOnCellSpan, TableColumnRender, TableColumnWidth } from './type';
 import type { Partial2Undefined } from './typeUtil';
 
 // onCell 的 colSpan 和 fixed 存在冲突
@@ -15,6 +15,8 @@ export type TableColumn<T> = {
 	width?: TableColumnWidth;
 	// 未resize的情况下，自动填充【默认1】
 	flexGrow?: number;
+	// 配置span
+	onCellSpan?: TableColumnOnCellSpan<T>;
 } & {
 	// 兼容group
 	children?: undefined;

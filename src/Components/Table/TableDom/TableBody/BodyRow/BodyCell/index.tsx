@@ -19,6 +19,9 @@ const BodyCell = <T,>(props: Props<T>) => {
 	const { column, bordered, data, rowIndex, colIndex, rowHeight } = props;
 
 	const dataItem = data[rowIndex];
+	const { rowSpan = 1, colSpan = 1 } = column.onCellSpan ? column.onCellSpan(dataItem, rowIndex) : {};
+	if (rowSpan <= 0 || colSpan <= 0) return null;
+
 	const renderDom = column.render(dataItem, { index: rowIndex });
 	const title = getCellTitle(renderDom);
 	const canEllipsis = isStrNum(renderDom);
@@ -28,7 +31,11 @@ const BodyCell = <T,>(props: Props<T>) => {
 			title={title}
 			data-col={colIndex + 1}
 			className={styles['body-cell']}
-			style={{ minHeight: rowHeight, gridRow: `${rowIndex + 1}/${rowIndex + 2}`, gridColumn: `${colIndex + 1}/${colIndex + 2}` }}
+			style={{
+				minHeight: rowHeight,
+				gridRow: `${rowIndex + 1}/${rowIndex + rowSpan + 1}`,
+				gridColumn: `${colIndex + 1}/${colIndex + colSpan + 1}`,
+			}}
 		>
 			<div
 				className={classNames(styles['body-cell-inner'], {

@@ -10,6 +10,9 @@ const useColumns = () => {
 				key: 'index',
 				title: 'Index',
 				render: ({ index }) => index,
+				onCellSpan: (_, i) => ({
+					rowSpan: i % 3 === 0 ? 3 : 0,
+				}),
 			},
 			{
 				key: 'user',
@@ -19,6 +22,9 @@ const useColumns = () => {
 						key: 'userId',
 						title: '用户id_2',
 						render: ({ userId }) => userId,
+						onCellSpan: () => ({
+							colSpan: 3,
+						}),
 					},
 					{
 						key: 'userName',
@@ -31,8 +37,8 @@ const useColumns = () => {
 									<div
 										style={{
 											color: '#fff',
-											padding: '12px 6px',
-											// padding: '0 6px',
+											// padding: '12px 6px',
+											padding: '0 6px',
 											borderRadius: '4px',
 											display: 'inline-block',
 											backgroundColor: 'rgba(0,0,0,0.25)',
@@ -41,11 +47,17 @@ const useColumns = () => {
 										{firstName}
 									</div>
 								),
+								onCellSpan: () => ({
+									colSpan: 0,
+								}),
 							},
 							{
 								key: 'lastName',
 								title: <span>{'lastName_1'}</span>,
 								render: ({ lastName }) => <span>{lastName}</span>,
+								onCellSpan: () => ({
+									colSpan: 0,
+								}),
 							},
 						],
 					},
