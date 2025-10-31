@@ -8,7 +8,7 @@ import BoxResize from '../../Components/BoxResize';
 import Table from '../../Components/Table';
 
 const TableDemo = () => {
-	const { data } = useData();
+	const { data, changeData } = useData();
 	const { columns, leafColumns } = useColumns();
 	const [visible, setVisible] = useState<boolean>(false);
 	const [sortConf, setSortConf] = useState<Record<string, number>>({});
@@ -18,9 +18,14 @@ const TableDemo = () => {
 	return (
 		<Fragment>
 			<div className={styles['wrapper']}>
-				<button style={{ cursor: 'pointer' }} onClick={() => setVisible((old) => !old)}>
-					{'Config'}
-				</button>
+				<div className={styles['btn-wrapper']}>
+					<button style={{ cursor: 'pointer' }} onClick={changeData}>
+						{'ChangeData'}
+					</button>
+					<button style={{ cursor: 'pointer' }} onClick={() => setVisible((old) => !old)}>
+						{'Config'}
+					</button>
+				</div>
 				<BoxResize width={1000} height={500} logRender>
 					<div className={styles['container']}>
 						<Table bordered data={data} columns={columns} rowKey={'userId'} columnConf={{ widthConf, sortConf, visibleConf }} />

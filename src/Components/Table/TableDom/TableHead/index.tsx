@@ -8,7 +8,7 @@ import styles from './index.module.less';
 import type { TableInstance } from '../../useTableInstance';
 
 type Props<T> = Required<
-	Pick<TableInstance<T>, 'deepLevel' | 'splitColumnsArr' | 'bordered' | 'headRef' | 'gridTemplateColumns' | 'v_ScrollbarWidth'>
+	Pick<TableInstance<T>, 'deepLevel' | 'splitColumnsArr' | 'bordered' | 'headRef' | 'gridTemplateColumns' | 'v_ScrollbarWidth' | 'rowHeight'>
 >;
 
 const TableHead = <T,>(props: Props<T>) => {
@@ -28,6 +28,7 @@ const TableHead = <T,>(props: Props<T>) => {
 							key={rowIndex}
 							rowIndex={rowIndex}
 							bordered={props.bordered}
+							rowHeight={props.rowHeight}
 							deepLevel={props.deepLevel}
 							splitColumnsArr={props.splitColumnsArr}
 						/>

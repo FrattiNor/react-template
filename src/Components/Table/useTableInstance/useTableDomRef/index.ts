@@ -17,26 +17,31 @@ const useTableDomRef = ({ tableState }: Props) => {
 			const body = bodyRef.current;
 			const head = headRef.current;
 
-			// === ob content resize ===
+			// === ob body content resize ===
 			const calcV_ScrollBarWidth = () => {
 				setV_ScrollbarWidth(body.offsetWidth - body.clientWidth);
 			};
-			// 直接执行一次
-			calcV_ScrollBarWidth();
 			const ob = new ResizeObserver(calcV_ScrollBarWidth);
 			ob.observe(body, { box: 'content-box' });
+			// 直接执行一次
+			calcV_ScrollBarWidth();
 
-			// === ob scroll ===
+			// === ob body scroll ===
 			const handleBodyScroll = () => {
-				if (head.scrollLeft !== body.scrollLeft) {
-					head.scrollLeft = body.scrollLeft;
-				}
+				if (head.scrollLeft !== body.scrollLeft) head.scrollLeft = body.scrollLeft;
 			};
 			body.addEventListener('scroll', handleBodyScroll, { passive: true });
+
+			// === ob head scroll ===
+			const handleHeadScroll = () => {
+				if (head.scrollLeft !== body.scrollLeft) body.scrollLeft = head.scrollLeft;
+			};
+			head.addEventListener('scroll', handleHeadScroll, { passive: true });
 
 			return () => {
 				ob.disconnect();
 				body.removeEventListener('scroll', handleBodyScroll);
+				head.removeEventListener('scroll', handleHeadScroll);
 			};
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps

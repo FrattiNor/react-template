@@ -13,14 +13,14 @@ import type { TableProps } from '../TableTypes/typeProps';
 const Table = <T,>(props: TableProps<T>) => {
 	// console.log('Table re-render');
 	const instance = useTableInstance(props);
-	const { bordered } = instance;
 
 	return (
-		<div className={classNames(styles['table'], { [styles['bordered']]: bordered })}>
+		<div className={classNames(styles['table'], { [styles['bordered']]: instance.bordered })}>
 			<TableHead
 				headRef={instance.headRef}
 				bordered={instance.bordered}
 				deepLevel={instance.deepLevel}
+				rowHeight={instance.rowHeight}
 				splitColumnsArr={instance.splitColumnsArr}
 				v_ScrollbarWidth={instance.v_ScrollbarWidth}
 				gridTemplateColumns={instance.gridTemplateColumns}
@@ -30,7 +30,8 @@ const Table = <T,>(props: TableProps<T>) => {
 				rowKey={instance.rowKey}
 				bodyRef={instance.bodyRef}
 				bordered={instance.bordered}
-				leafColumns={instance.leafColumns}
+				rowHeight={instance.rowHeight}
+				splitColumnsArr={instance.splitColumnsArr}
 				gridTemplateColumns={instance.gridTemplateColumns}
 			/>
 		</div>

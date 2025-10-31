@@ -5,29 +5,39 @@ import classNames from 'classnames';
 import BodyCell from './BodyCell';
 import BodyCellPlaceholder from './BodyCellPlaceholder';
 import styles from './index.module.less';
+import { getLeafColumn } from '../../../TableUtils';
 
 import type { TableInstance } from '../../../useTableInstance';
 
-type Props<T> = Required<Pick<TableInstance<T>, 'leafColumns' | 'bordered' | 'data'>> & {
+type Props<T> = Required<Pick<TableInstance<T>, 'splitColumnsArr' | 'bordered' | 'data' | 'rowHeight'>> & {
 	rowIndex: number;
 };
 
 const BodyRow = <T,>(props: Props<T>) => {
 	//  console.log(`BodyRow(${props.rowIndex}) re-render`);
-	const { leafColumns, rowIndex } = props;
+	const { splitColumnsArr, rowIndex } = props;
 	return (
 		<div data-row={rowIndex + 1} className={classNames(styles['body-row'])}>
-			{leafColumns.map((item, colIndex) => (
-				<BodyCell
-					key={item.key}
-					data={props.data}
-					colIndex={colIndex}
-					rowIndex={props.rowIndex}
-					bordered={props.bordered}
-					leafColumns={props.leafColumns}
-				/>
-			))}
-			<BodyCellPlaceholder rowIndex={props.rowIndex} colIndex={leafColumns.length} bordered={props.bordered} />
+			{splitColumnsArr.map((splitColumns, colIndex) => {
+				const column = getLeafColumn(splitColumns);
+				return (
+					<BodyCell
+						key={column.key}
+						column={column}
+						data={props.data}
+						colIndex={colIndex}
+						rowIndex={props.rowIndex}
+						bordered={props.bordered}
+						rowHeight={props.rowHeight}
+					/>
+				);
+			})}
+			<BodyCellPlaceholder
+				rowIndex={props.rowIndex}
+				bordered={props.bordered}
+				rowHeight={props.rowHeight}
+				colIndex={props.splitColumnsArr.length}
+			/>
 		</div>
 	);
 };

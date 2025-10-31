@@ -13,10 +13,12 @@ export type TableProps<T> = {
 	rowKey: TableRowKey<T>;
 	// 边框样式
 	bordered?: boolean;
-	//
+	// 列配置【覆盖】
 	columnConf?: {
-		sortConf?: Record<string, number>;
-		visibleConf?: Record<string, boolean>;
-		widthConf?: Record<string, TableColumnWidth>;
+		sortConf?: Record<string, number>; // 排序
+		visibleConf?: Record<string, boolean>; // 可见
+		widthConf?: Record<string, TableColumnWidth>; // 宽度
 	};
+	// 最小行高
+	rowHeight?: number;
 };

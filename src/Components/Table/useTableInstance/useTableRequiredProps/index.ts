@@ -16,6 +16,7 @@ const useTableRequiredProps = <T>(props: TableProps<T>) => {
 		data: props.data,
 		rowKey: props.rowKey,
 		columnConf: columnConf,
+		rowHeight: props.rowHeight ?? 46,
 		bordered: props.bordered ?? false,
 	};
 

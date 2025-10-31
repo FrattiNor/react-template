@@ -1,9 +1,18 @@
 .head {
 	z-index: 1;
 	flex-shrink: 0;
-	overflow: hidden;
+	overflow-x: auto;
+	overflow-y: hidden;
 	position: relative;
 	color: var(--table-head-font-color);
+
+	// === hidden scroll bar ===
+	scrollbar-width: none !important;
+	-ms-overflow-style: none !important;
+	&::-webkit-scrollbar {
+		display: none !important;
+	}
+	// === hidden scroll bar ===
 
 	.head-inner {
 		display: grid;

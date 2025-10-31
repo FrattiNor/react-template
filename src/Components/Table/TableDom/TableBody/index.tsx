@@ -8,7 +8,9 @@ import { getRowKey } from '../../TableUtils';
 
 import type { TableInstance } from '../../useTableInstance';
 
-type Props<T> = Required<Pick<TableInstance<T>, 'leafColumns' | 'bordered' | 'data' | 'rowKey' | 'gridTemplateColumns' | 'bodyRef'>>;
+type Props<T> = Required<
+	Pick<TableInstance<T>, 'splitColumnsArr' | 'bordered' | 'data' | 'rowKey' | 'gridTemplateColumns' | 'bodyRef' | 'rowHeight'>
+>;
 
 const TableBody = <T,>(props: Props<T>) => {
 	//  console.log('TableBody re-render');
@@ -16,10 +18,19 @@ const TableBody = <T,>(props: Props<T>) => {
 
 	return (
 		<div ref={bodyRef} className={classNames(styles['body'], { [styles['bordered']]: bordered })}>
-			<div className={classNames(styles['body-inner'])} style={{ gridTemplateColumns }}>
+			<div className={classNames(styles['body-inner'])} style={{ gridTemplateColumns: gridTemplateColumns + ` minmax(0px, 1fr)` }}>
 				{data.map((dataItem, rowIndex) => {
 					const key = getRowKey(rowKey, dataItem, rowIndex);
-					return <BodyRow key={key} data={props.data} rowIndex={rowIndex} bordered={props.bordered} leafColumns={props.leafColumns} />;
+					return (
+						<BodyRow
+							key={key}
+							data={props.data}
+							rowIndex={rowIndex}
+							bordered={props.bordered}
+							rowHeight={props.rowHeight}
+							splitColumnsArr={props.splitColumnsArr}
+						/>
+					);
 				})}
 			</div>
 		</div>

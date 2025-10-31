@@ -1,14 +1,16 @@
-import { memo } from 'react';
+import { Fragment, memo } from 'react';
 
 import classNames from 'classnames';
 
 import HeadCell from './HeadCell';
 import HeadCellPlaceholder from './HeadCellPlaceholder';
 import styles from './index.module.less';
+import { getGroupColumnMergeKey } from '../../../TableUtils';
 
+import type { InnerColumn } from '../../../TableTypes/typeColumn';
 import type { TableInstance } from '../../../useTableInstance';
 
-type Props<T> = Required<Pick<TableInstance<T>, 'splitColumnsArr' | 'deepLevel' | 'bordered'>> & {
+type Props<T> = Required<Pick<TableInstance<T>, 'splitColumnsArr' | 'deepLevel' | 'bordered' | 'rowHeight'>> & {
 	rowIndex: number;
 };
 
@@ -17,33 +19,60 @@ const HeadRow = <T,>(props: Props<T>) => {
 	const { rowIndex, splitColumnsArr, deepLevel } = props;
 
 	const renderRow = () => {
-		// splitColumnsArr.map((splitColumns) => {
-		// 	const column = splitColumns[deepLevel - rowIndex - splitColumns.length + 1];
-		// 	console.log(rowIndex, column);
-		// });
-
-		return splitColumnsArr.map((splitColumns, index) => {
-			const column = splitColumns[deepLevel - rowIndex];
+		let colSameCount = 0;
+		return splitColumnsArr.map((splitColumns, colIndex) => {
+			// 当前column
+			const column = splitColumns[rowIndex];
+			// 不存在column
 			if (!column) return null;
+			// 同行下一列column
+			const nextColumn = splitColumnsArr[colIndex + 1]?.[rowIndex];
+			// 同行下一列和当前列相同，跳过当前渲染
+			if (column.key === nextColumn?.key) {
+				colSameCount++;
+				return null;
+			}
+			// 是否是叶子节点
+			const isLeaf = rowIndex === splitColumns.length - 1;
+			// index
+			const colIndexStart = colIndex - colSameCount;
+			const colIndexEnd = colIndex;
+			const rowIndexStart = isLeaf ? (column as InnerColumn<T>).level : rowIndex;
+			const rowIndexEnd = rowIndex;
+			// 获取key
+			const key = isLeaf ? column.key : getGroupColumnMergeKey(splitColumnsArr, rowIndex, deepLevel, colIndexStart, colIndexEnd);
+			// 重置colSameCount
+			colSameCount = 0;
+
 			return (
-				<HeadCell
-					key={index}
-					colIndex={index}
-					rowIndex={props.rowIndex}
-					bordered={props.bordered}
-					deepLevel={props.deepLevel}
-					splitColumnsArr={props.splitColumnsArr}
-				/>
+				<Fragment key={key}>
+					<HeadCell
+						column={column}
+						colIndexEnd={colIndexEnd}
+						rowIndexEnd={rowIndexEnd}
+						colIndexStart={colIndexStart}
+						rowIndexStart={rowIndexStart}
+						bordered={props.bordered}
+						rowHeight={props.rowHeight}
+					/>
+					{/* 是否是当前行最后一列 */}
+					{colIndex === splitColumnsArr.length - 1 && (
+						<HeadCellPlaceholder
+							rowIndexEnd={rowIndexEnd}
+							rowIndexStart={rowIndexStart}
+							colIndex={splitColumnsArr.length}
+							bordered={props.bordered}
+							rowHeight={props.rowHeight}
+						/>
+					)}
+				</Fragment>
 			);
 		});
 	};
 
-	renderRow();
-
 	return (
 		<div data-row={rowIndex + 1} className={classNames(styles['head-row'])}>
 			{renderRow()}
-			<HeadCellPlaceholder bordered={props.bordered} rowIndex={props.rowIndex} colIndex={props.splitColumnsArr.length} />
 		</div>
 	);
 };

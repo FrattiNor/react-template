@@ -6,28 +6,24 @@ import styles from './index.module.less';
 
 import type { TableInstance } from '../../../../useTableInstance';
 
-type Props<T> = Required<Pick<TableInstance<T>, 'bordered'>> & {
+type Props<T> = Required<Pick<TableInstance<T>, 'bordered' | 'rowHeight'>> & {
 	rowIndex: number;
 	colIndex: number;
 };
 
 const BodyCellPlaceholder = <T,>(props: Props<T>) => {
 	//  console.log(`BodyCellPlaceholder(${props.rowIndex}-${props.colIndex}) re-render`);
-	const { bordered, rowIndex, colIndex } = props;
+	const { bordered, rowIndex, colIndex, rowHeight } = props;
 
 	return (
 		<div
 			data-col={colIndex + 1}
+			style={{ minHeight: rowHeight, gridRow: `${rowIndex + 1}/${rowIndex + 2}`, gridColumn: `${colIndex + 1}/${colIndex + 2}` }}
 			className={classNames(styles['body-cell-placeholder'], {
 				[styles['bordered']]: bordered,
 				[styles['first-col']]: colIndex === 0,
 				[styles['first-row']]: rowIndex === 0,
 			})}
-			style={{
-				minHeight: 46,
-				gridRow: `${rowIndex + 1}/${rowIndex + 2}`,
-				gridColumn: `${colIndex + 1}/${colIndex + 2}`,
-			}}
 		/>
 	);
 };
