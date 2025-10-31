@@ -15,6 +15,7 @@ const useColumns = () => {
 				}),
 			},
 			{
+				align: 'center',
 				key: 'user',
 				title: '用户',
 				children: [
@@ -22,15 +23,14 @@ const useColumns = () => {
 						key: 'userId',
 						title: '用户id_2',
 						render: ({ userId }) => userId,
-						onCellSpan: () => ({
-							colSpan: 3,
-						}),
 					},
 					{
+						align: 'center',
 						key: 'userName',
 						title: '用户名称',
 						children: [
 							{
+								align: 'center',
 								key: 'firstName',
 								title: 'firstName_0',
 								render: ({ firstName }) => (
@@ -48,7 +48,7 @@ const useColumns = () => {
 									</div>
 								),
 								onCellSpan: () => ({
-									colSpan: 0,
+									colSpan: 3,
 								}),
 							},
 							{
@@ -67,6 +67,9 @@ const useColumns = () => {
 				key: 'email',
 				title: '邮箱_3',
 				render: ({ email }) => email,
+				onCellSpan: () => ({
+					colSpan: 0,
+				}),
 			},
 			{
 				key: 'avatar',

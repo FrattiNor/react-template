@@ -32,7 +32,6 @@ const BodyCell = <T,>(props: Props<T>) => {
 			data-col={colIndex + 1}
 			className={styles['body-cell']}
 			style={{
-				minHeight: rowHeight,
 				gridRow: `${rowIndex + 1}/${rowIndex + rowSpan + 1}`,
 				gridColumn: `${colIndex + 1}/${colIndex + colSpan + 1}`,
 			}}
@@ -43,6 +42,10 @@ const BodyCell = <T,>(props: Props<T>) => {
 					[styles['first-col']]: colIndex === 0,
 					[styles['first-row']]: rowIndex === 0,
 				})}
+				style={{
+					minHeight: rowHeight,
+					justifyContent: column.align === 'center' ? 'center' : column.align === 'right' ? 'flex-end' : 'flex-start',
+				}}
 			>
 				{!canEllipsis ? renderDom : <div className={styles['ellipsis-wrapper']}>{renderDom}</div>}
 			</div>

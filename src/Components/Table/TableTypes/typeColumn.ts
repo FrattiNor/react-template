@@ -17,17 +17,21 @@ export type TableColumn<T> = {
 	flexGrow?: number;
 	// 配置span
 	onCellSpan?: TableColumnOnCellSpan<T>;
+	// 左右对齐
+	align?: 'left' | 'right' | 'center';
 } & {
 	// 兼容group
 	children?: undefined;
 };
 
 // Group的fixed将会覆盖子节点，不论left|right|undefined
-export type TableColumnGroup<T> = Partial2Undefined<Omit<TableColumn<T>, 'key' | 'title' | 'children'>> & {
+export type TableColumnGroup<T> = Partial2Undefined<Omit<TableColumn<T>, 'key' | 'title' | 'children' | 'align'>> & {
 	// 列key
 	key: string;
 	// 列标题
 	title: ReactNode;
+	// 左右对齐
+	align?: 'left' | 'right' | 'center';
 	// group下的列配置
 	children: Array<TableColumnGroup<T> | TableColumn<T>>;
 };

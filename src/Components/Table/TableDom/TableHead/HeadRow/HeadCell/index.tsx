@@ -30,12 +30,17 @@ const HeadCell = <T,>(props: Props<T>) => {
 			data-col={colIndexStart + 1}
 			className={styles['head-cell']}
 			style={{
-				minHeight: rowHeight,
 				gridRow: `${rowIndexStart + 1}/${rowIndexEnd + 2}`,
 				gridColumn: `${colIndexStart + 1}/${colIndexEnd + 2}`,
 			}}
 		>
-			<div className={classNames(styles['head-cell-inner'], { [styles['bordered']]: bordered, [styles['first-col']]: colIndexStart === 0 })}>
+			<div
+				className={classNames(styles['head-cell-inner'], { [styles['bordered']]: bordered, [styles['first-col']]: colIndexStart === 0 })}
+				style={{
+					minHeight: rowHeight,
+					justifyContent: column.align === 'center' ? 'center' : column.align === 'right' ? 'flex-end' : 'flex-start',
+				}}
+			>
 				{!canEllipsis ? renderDom : <div className={styles['ellipsis-wrapper']}>{renderDom}</div>}
 			</div>
 		</div>
