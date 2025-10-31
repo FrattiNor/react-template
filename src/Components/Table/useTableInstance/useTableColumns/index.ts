@@ -77,15 +77,13 @@ const useTableColumns = <T>({ props, tableState }: Props<T>) => {
 		// 增加判断order
 		if (sortConf) {
 			splitColumnsArr = splitColumnsArr.sort((a, b) => {
-				const aLast = a[a.length - 1] as InnerColumn<T>;
-				const bLast = b[b.length - 1] as InnerColumn<T>;
-				const aIndex = sortConf[aLast.key] ?? aLast.index;
-				const bIndex = sortConf[bLast.key] ?? bLast.index;
+				const aLeaf = a[0] as InnerColumn<T>;
+				const bLeaf = b[0] as InnerColumn<T>;
+				const aIndex = sortConf[aLeaf.key] ?? aLeaf.index;
+				const bIndex = sortConf[bLeaf.key] ?? bLeaf.index;
 				return aIndex - bIndex;
 			});
 		}
-
-		console.log('splitColumnsArr', splitColumnsArr);
 
 		return { gridTemplateColumns, deepLevel, splitColumnsArr, leafColumns };
 	}, [sizeCache, visibleConf, sortConf, widthConf, columns]);

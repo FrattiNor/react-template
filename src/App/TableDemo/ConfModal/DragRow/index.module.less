@@ -1,0 +1,56 @@
+.item {
+	padding: 4px 6px 4px 4px;
+	min-width: 0;
+	flex-shrink: 0;
+	border-radius: 4px;
+	position: relative;
+	box-sizing: border-box;
+	background-color: #fff;
+	border: 1px solid rgba(0, 0, 0, 0.35);
+	gap: 6px;
+	display: flex;
+	align-items: center;
+	transition: background-color 0.15s;
+
+	&.active {
+		background-color: #ebebeb;
+	}
+
+	.visible {
+		width: 0;
+		flex-grow: 1;
+		cursor: pointer;
+		user-select: none;
+		white-space: nowrap;
+		gap: 6px;
+		display: flex;
+		align-items: center;
+
+		.input {
+			margin: 0;
+		}
+
+		.title {
+			min-width: 0;
+			overflow: hidden;
+			white-space: nowrap;
+			text-overflow: ellipsis;
+		}
+	}
+
+	.width-input {
+		outline: 0;
+		width: 150px;
+		padding: 4px;
+		text-align: right;
+		border-radius: 4px;
+		color: rgba(0, 0, 0, 0.85);
+		border: 1px solid transparent;
+		transition: border 0.15s;
+
+		&:hover,
+		&:focus {
+			border: 1px solid rgba(0, 0, 0, 0.35);
+		}
+	}
+}

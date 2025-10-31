@@ -18,7 +18,6 @@ const HeadCell = <T,>(props: Props<T>) => {
 	const { splitColumnsArr, bordered, rowIndex, colIndex, deepLevel } = props;
 
 	const column = splitColumnsArr[colIndex][deepLevel - rowIndex] as InnerColumn<T>;
-	console.log('column', colIndex, rowIndex, column);
 	const renderDom = column.title;
 	const title = getCellTitle(renderDom);
 	const canEllipsis = isStrNum(renderDom);

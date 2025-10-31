@@ -1,12 +1,46 @@
-.dialog {
-	top: 50%;
-	left: 50%;
+.mask {
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
 	z-index: 999;
 	position: fixed;
-	background-color: #fff;
-	transform: translate3d(-50%, -50%, 0);
-	box-shadow:
-		0 6px 16px 0 rgba(0, 0, 0, 0.08),
-		0 3px 6px -4px rgba(0, 0, 0, 0.12),
-		0 9px 28px 8px rgba(0, 0, 0, 0.05);
+	background-color: rgba(0, 0, 0, 0.1);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+	.dialog {
+		border-radius: 4px;
+		background-color: #fff;
+		box-shadow:
+			0 6px 16px 0 rgba(0, 0, 0, 0.08),
+			0 3px 6px -4px rgba(0, 0, 0, 0.12),
+			0 9px 28px 8px rgba(0, 0, 0, 0.05);
+
+		.head {
+			font-size: 16px;
+			font-weight: 600;
+			text-align: center;
+			position: relative;
+			padding: 8px 16px;
+			color: rgba(0, 0, 0, 0.85);
+		}
+
+		.body {
+			gap: 6px;
+			padding: 16px;
+			display: flex;
+			overflow: auto;
+			max-height: 50vh;
+			position: relative;
+			flex-direction: column;
+			color: rgba(0, 0, 0, 0.85);
+		}
+
+		.bottom {
+			padding: 8px 16px;
+			text-align: right;
+		}
+	}
 }

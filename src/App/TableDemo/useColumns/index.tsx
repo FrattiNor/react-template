@@ -1,7 +1,7 @@
-import { useMemo } from 'react';
+import { useMemo, type ReactNode } from 'react';
 
-import type { DataItem } from './data';
-import type { TableColumns } from '../../Components/Table/TableTypes/typeColumn';
+import type { TableColumns } from '../../../Components/Table/TableTypes/typeColumn';
+import type { DataItem } from '../useData/data';
 
 const useColumns = () => {
 	const columns: TableColumns<DataItem> = useMemo(
@@ -121,13 +121,13 @@ const useColumns = () => {
 	);
 
 	const leafColumns = useMemo(() => {
-		const _columns: Array<{ key: string }> = [];
+		const _columns: Array<{ key: string; title: ReactNode }> = [];
 		const loop = (c: TableColumns<DataItem>) => {
 			c.forEach((item) => {
 				if (Array.isArray(item.children)) {
 					loop(item.children);
 				} else {
-					_columns.push({ key: item.key });
+					_columns.push({ key: item.key, title: item.title });
 				}
 			});
 		};

@@ -1,0 +1,21 @@
+.close {
+	top: 50%;
+	right: 12px;
+	padding: 4px;
+	cursor: pointer;
+	border-radius: 2px;
+	position: absolute;
+	color: rgba(0, 0, 0, 0.5);
+	transform: translate3d(0, -50%, 0);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	transition:
+		color 0.15s,
+		background-color 0.15s;
+
+	&:hover {
+		color: #f5222d;
+		background-color: rgba(0, 0, 0, 0.08);
+	}
+}

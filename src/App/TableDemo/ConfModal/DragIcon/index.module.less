@@ -1,0 +1,21 @@
+.drag-btn {
+	padding: 8px;
+	cursor: move;
+	border-radius: 2px;
+	color: rgba(0, 0, 0, 0.5);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	transition:
+		color 0.15s,
+		background-color 0.15s;
+
+	&:hover {
+		color: #1677ff;
+		background-color: rgba(0, 0, 0, 0.08);
+	}
+
+	&.active {
+		color: #1677ff;
+	}
+}
