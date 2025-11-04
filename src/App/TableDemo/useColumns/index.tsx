@@ -15,6 +15,23 @@ const useColumns = () => {
 				}),
 			},
 			{
+				key: 'index2',
+				title: 'Index2',
+				render: ({ index }) => index,
+				fixed: 'left',
+			},
+			{
+				key: 'index3',
+				title: 'Index3',
+				render: ({ index }) => index,
+			},
+			{
+				key: 'index4',
+				title: 'Index4',
+				render: ({ index }) => index,
+				fixed: 'left',
+			},
+			{
 				align: 'center',
 				key: 'user',
 				title: '用户',
@@ -115,6 +132,7 @@ const useColumns = () => {
 				key: 'phoneNumber',
 				title: '电话号码_12',
 				render: ({ phoneNumber }) => phoneNumber,
+				fixed: 'right',
 			},
 			{
 				key: 'jobArea',
@@ -125,6 +143,7 @@ const useColumns = () => {
 				key: 'jobTitle',
 				title: '工作头衔_14',
 				render: ({ jobTitle }) => jobTitle,
+				fixed: 'right',
 			},
 			{
 				key: 'jobType',

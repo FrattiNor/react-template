@@ -21,4 +21,25 @@
 		align-content: start;
 		width: max-content;
 	}
+
+	&::-webkit-scrollbar {
+		width: 10px;
+		height: 10px;
+		transition: border-color 0.2s;
+		background-color: var(--table-scroll-bar-bg);
+	}
+
+	&::-webkit-scrollbar-corner {
+		background-color: var(--table-scroll-bar-bg);
+	}
+
+	&::-webkit-scrollbar-thumb {
+		background-color: var(--table-scroll-bar-color);
+		border-radius: 100px;
+	}
+
+	&::-webkit-scrollbar-thumb:hover,
+	&::-webkit-scrollbar-thumb:active {
+		background-color: var(--table-scroll-bar-active-color);
+	}
 }

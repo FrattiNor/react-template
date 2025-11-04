@@ -8,7 +8,7 @@ import { getCellTitle, isStrNum } from '../../../../TableUtils';
 import type { InnerColumn } from '../../../../TableTypes/typeColumn';
 import type { TableInstance } from '../../../../useTableInstance';
 
-type Props<T> = Required<Pick<TableInstance<T>, 'bordered' | 'data' | 'rowHeight'>> & {
+type Props<T> = Required<Pick<TableInstance<T>, 'bordered' | 'data' | 'rowHeight' | 'getStickyStyle'>> & {
 	rowIndex: number;
 	colIndex: number;
 	column: InnerColumn<T>;
@@ -16,36 +16,40 @@ type Props<T> = Required<Pick<TableInstance<T>, 'bordered' | 'data' | 'rowHeight
 
 const BodyCell = <T,>(props: Props<T>) => {
 	//  console.log(`BodyCell(${props.rowIndex}-${props.colIndex}) re-render`);
-	const { column, bordered, data, rowIndex, colIndex, rowHeight } = props;
+	const { column, bordered, data, rowIndex, colIndex, rowHeight, getStickyStyle } = props;
 
 	const dataItem = data[rowIndex];
 	const { rowSpan = 1, colSpan = 1 } = column.onCellSpan ? column.onCellSpan(dataItem, rowIndex) : {};
 	if (rowSpan <= 0 || colSpan <= 0) return null;
 
+	const rowIndexStart = rowIndex;
+	const rowIndexEnd = rowIndex + rowSpan - 1;
+	const colIndexStart = colIndex;
+	const colIndexEnd = colIndex + colSpan - 1;
+
 	const renderDom = column.render(dataItem, { index: rowIndex });
 	const title = getCellTitle(renderDom);
 	const canEllipsis = isStrNum(renderDom);
+	const stickyStyle = getStickyStyle({ colIndexStart, colIndexEnd, type: 'body' });
 
 	return (
 		<div
 			title={title}
-			data-col={colIndex + 1}
-			className={styles['body-cell']}
+			className={classNames(styles['body-cell'], {
+				[styles['bordered']]: bordered,
+				[styles['first-col']]: colIndex === 0,
+				[styles['first-row']]: rowIndex === 0,
+			})}
 			style={{
-				gridRow: `${rowIndex + 1}/${rowIndex + rowSpan + 1}`,
-				gridColumn: `${colIndex + 1}/${colIndex + colSpan + 1}`,
+				...stickyStyle,
+				minHeight: rowHeight,
+				gridRow: `${rowIndexStart + 1}/${rowIndexEnd + 2}`,
+				gridColumn: `${colIndexStart + 1}/${colIndexEnd + 2}`,
 			}}
 		>
 			<div
-				className={classNames(styles['body-cell-inner'], {
-					[styles['bordered']]: bordered,
-					[styles['first-col']]: colIndex === 0,
-					[styles['first-row']]: rowIndex === 0,
-				})}
-				style={{
-					minHeight: rowHeight,
-					justifyContent: column.align === 'center' ? 'center' : column.align === 'right' ? 'flex-end' : 'flex-start',
-				}}
+				className={styles['body-cell-inner']}
+				style={{ justifyContent: column.align === 'center' ? 'center' : column.align === 'right' ? 'flex-end' : 'flex-start' }}
 			>
 				{!canEllipsis ? renderDom : <div className={styles['ellipsis-wrapper']}>{renderDom}</div>}
 			</div>

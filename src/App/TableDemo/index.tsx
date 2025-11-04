@@ -26,7 +26,7 @@ const TableDemo = () => {
 						{'Config'}
 					</button>
 				</div>
-				<BoxResize width={1000} height={500} logRender>
+				<BoxResize width={1500} height={500} logRender>
 					<div className={styles['container']}>
 						<Table bordered data={data} columns={columns} rowKey={'userId'} columnConf={{ widthConf, sortConf, visibleConf }} />
 					</div>

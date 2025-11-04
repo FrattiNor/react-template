@@ -8,7 +8,7 @@ import { getCellTitle, isStrNum } from '../../../../TableUtils';
 import type { InnerColumn, InnerColumnGroup } from '../../../../TableTypes/typeColumn';
 import type { TableInstance } from '../../../../useTableInstance';
 
-type Props<T> = Required<Pick<TableInstance<T>, 'bordered' | 'rowHeight'>> & {
+type Props<T> = Required<Pick<TableInstance<T>, 'bordered' | 'rowHeight' | 'getStickyStyle'>> & {
 	rowIndexStart: number;
 	rowIndexEnd: number;
 	colIndexStart: number;
@@ -18,28 +18,30 @@ type Props<T> = Required<Pick<TableInstance<T>, 'bordered' | 'rowHeight'>> & {
 
 const HeadCell = <T,>(props: Props<T>) => {
 	//  console.log(`HeadCell(${props.rowIndex}-${props.colIndex}) re-render`);
-	const { column, bordered, rowIndexStart, rowIndexEnd, colIndexStart, colIndexEnd, rowHeight } = props;
+	const { column, bordered, rowIndexStart, rowIndexEnd, colIndexStart, colIndexEnd, rowHeight, getStickyStyle } = props;
 
 	const renderDom = column.title;
 	const title = getCellTitle(renderDom);
 	const canEllipsis = isStrNum(renderDom);
+	const stickyStyle = getStickyStyle({ colIndexStart, colIndexEnd, type: 'head' });
 
 	return (
 		<div
 			title={title}
-			data-col={colIndexStart + 1}
-			className={styles['head-cell']}
+			className={classNames(styles['head-cell'], {
+				[styles['bordered']]: bordered,
+				[styles['first-col']]: colIndexStart === 0,
+			})}
 			style={{
+				...stickyStyle,
+				minHeight: rowHeight,
 				gridRow: `${rowIndexStart + 1}/${rowIndexEnd + 2}`,
 				gridColumn: `${colIndexStart + 1}/${colIndexEnd + 2}`,
 			}}
 		>
 			<div
-				className={classNames(styles['head-cell-inner'], { [styles['bordered']]: bordered, [styles['first-col']]: colIndexStart === 0 })}
-				style={{
-					minHeight: rowHeight,
-					justifyContent: column.align === 'center' ? 'center' : column.align === 'right' ? 'flex-end' : 'flex-start',
-				}}
+				className={styles['head-cell-inner']}
+				style={{ justifyContent: column.align === 'center' ? 'center' : column.align === 'right' ? 'flex-end' : 'flex-start' }}
 			>
 				{!canEllipsis ? renderDom : <div className={styles['ellipsis-wrapper']}>{renderDom}</div>}
 			</div>

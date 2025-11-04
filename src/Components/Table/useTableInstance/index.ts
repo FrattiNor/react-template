@@ -2,15 +2,17 @@ import useTableColumns from './useTableColumns';
 import useTableDomRef from './useTableDomRef';
 import useTableRequiredProps from './useTableRequiredProps';
 import useTableState from './useTableState';
+import useTableSticky from './useTableSticky';
 
 import type { TableProps } from '../TableTypes/typeProps';
 
 const useTableInstance = <T>(props: TableProps<T>) => {
 	const tableState = useTableState();
-	const tableDomRef = useTableDomRef({ tableState });
-	const tableColumns = useTableColumns({ tableState, props });
 	const tableRequiredProps = useTableRequiredProps(props);
-	return { ...tableState, ...tableRequiredProps, ...tableDomRef, ...tableColumns };
+	const tableColumns = useTableColumns({ tableState, props });
+	const tableDomRef = useTableDomRef({ tableState, tableColumns });
+	const tableSticky = useTableSticky({ tableState, tableColumns });
+	return { ...tableState, ...tableRequiredProps, ...tableDomRef, ...tableColumns, ...tableSticky };
 };
 
 export type TableInstance<T> = ReturnType<typeof useTableInstance<T>>;

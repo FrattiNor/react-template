@@ -9,7 +9,7 @@ import { getRowKey } from '../../TableUtils';
 import type { TableInstance } from '../../useTableInstance';
 
 type Props<T> = Required<
-	Pick<TableInstance<T>, 'splitColumnsArr' | 'bordered' | 'data' | 'rowKey' | 'gridTemplateColumns' | 'bodyRef' | 'rowHeight'>
+	Pick<TableInstance<T>, 'splitColumnsArr' | 'bordered' | 'data' | 'rowKey' | 'gridTemplateColumns' | 'bodyRef' | 'rowHeight' | 'getStickyStyle'>
 >;
 
 const TableBody = <T,>(props: Props<T>) => {
@@ -28,6 +28,7 @@ const TableBody = <T,>(props: Props<T>) => {
 							rowIndex={rowIndex}
 							bordered={props.bordered}
 							rowHeight={props.rowHeight}
+							getStickyStyle={props.getStickyStyle}
 							splitColumnsArr={props.splitColumnsArr}
 						/>
 					);

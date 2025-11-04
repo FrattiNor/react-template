@@ -9,7 +9,7 @@ import { getLeafColumn } from '../../../TableUtils';
 
 import type { TableInstance } from '../../../useTableInstance';
 
-type Props<T> = Required<Pick<TableInstance<T>, 'splitColumnsArr' | 'bordered' | 'data' | 'rowHeight'>> & {
+type Props<T> = Required<Pick<TableInstance<T>, 'splitColumnsArr' | 'bordered' | 'data' | 'rowHeight' | 'getStickyStyle'>> & {
 	rowIndex: number;
 };
 
@@ -29,6 +29,7 @@ const BodyRow = <T,>(props: Props<T>) => {
 						rowIndex={props.rowIndex}
 						bordered={props.bordered}
 						rowHeight={props.rowHeight}
+						getStickyStyle={props.getStickyStyle}
 					/>
 				);
 			})}

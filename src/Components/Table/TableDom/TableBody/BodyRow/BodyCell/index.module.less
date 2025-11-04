@@ -2,31 +2,32 @@
 	width: 100%;
 	height: 100%;
 	outline: none;
-	overflow: hidden;
 	position: relative;
+	box-sizing: border-box;
+	background-color: var(--table-body-cell-bg);
+	border-top: var(--table-cell-border-width) solid var(--table-cell-border-color);
+
+	&.first-row {
+		border-top-width: 0;
+	}
+
+	&.bordered {
+		border-left: var(--table-cell-border-width) solid var(--table-cell-border-color);
+
+		&.first-col {
+			border-left-width: 0;
+		}
+	}
 
 	.body-cell-inner {
 		width: 100%;
 		height: 100%;
-		outline: none;
 		position: relative;
 		box-sizing: border-box;
 		padding: var(--table-cell-padding);
-		border-top: var(--table-cell-border-width) solid var(--table-cell-border-color);
+
 		display: flex;
 		align-items: center;
-
-		&.first-row {
-			border-top-width: 0;
-		}
-
-		&.bordered {
-			border-left: var(--table-cell-border-width) solid var(--table-cell-border-color);
-
-			&.first-col {
-				border-left-width: 0;
-			}
-		}
 
 		.ellipsis-wrapper {
 			min-width: 0;

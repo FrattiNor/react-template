@@ -10,7 +10,7 @@ import { getGroupColumnMergeKey } from '../../../TableUtils';
 import type { InnerColumn } from '../../../TableTypes/typeColumn';
 import type { TableInstance } from '../../../useTableInstance';
 
-type Props<T> = Required<Pick<TableInstance<T>, 'splitColumnsArr' | 'deepLevel' | 'bordered' | 'rowHeight'>> & {
+type Props<T> = Required<Pick<TableInstance<T>, 'splitColumnsArr' | 'deepLevel' | 'bordered' | 'rowHeight' | 'getStickyStyle'>> & {
 	rowIndex: number;
 };
 
@@ -54,6 +54,7 @@ const HeadRow = <T,>(props: Props<T>) => {
 						rowIndexStart={rowIndexStart}
 						bordered={props.bordered}
 						rowHeight={props.rowHeight}
+						getStickyStyle={props.getStickyStyle}
 					/>
 					{/* 是否是当前行最后一列 */}
 					{colIndex === splitColumnsArr.length - 1 && (

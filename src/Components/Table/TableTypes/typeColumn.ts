@@ -1,4 +1,4 @@
-import type { ReactNode } from 'react';
+import { type ReactNode } from 'react';
 
 import type { TableColumnOnCellSpan, TableColumnRender, TableColumnWidth } from './type';
 import type { Partial2Undefined } from './typeUtil';
@@ -19,6 +19,8 @@ export type TableColumn<T> = {
 	onCellSpan?: TableColumnOnCellSpan<T>;
 	// 左右对齐
 	align?: 'left' | 'right' | 'center';
+	// 左右固定【和colSpan有冲突】
+	fixed?: 'left' | 'right';
 } & {
 	// 兼容group
 	children?: undefined;
