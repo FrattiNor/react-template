@@ -22,6 +22,7 @@ const Table = <T,>(props: TableProps<T>) => {
 				bordered={instance.bordered}
 				deepLevel={instance.deepLevel}
 				rowHeight={instance.rowHeight}
+				pingedRightEnd={instance.pingedRightEnd}
 				getStickyStyle={instance.getStickyStyle}
 				splitColumnsArr={instance.splitColumnsArr}
 				v_ScrollbarWidth={instance.v_ScrollbarWidth}

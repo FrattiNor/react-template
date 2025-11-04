@@ -1,9 +1,15 @@
 .head-cell-placeholder {
 	outline: none;
+	overflow: hidden;
 	position: relative;
 	box-sizing: border-box;
 	background-color: var(--table-head-cell-bg);
 	border-bottom: var(--table-cell-border-width) solid var(--table-cell-border-color);
+
+	&.sticky {
+		position: sticky;
+		right: 0;
+	}
 
 	&.bordered {
 		&.bordered::after {

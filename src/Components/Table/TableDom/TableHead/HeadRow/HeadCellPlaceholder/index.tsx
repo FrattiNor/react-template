@@ -6,7 +6,7 @@ import styles from './index.module.less';
 
 import type { TableInstance } from '../../../../useTableInstance';
 
-type Props<T> = Required<Pick<TableInstance<T>, 'bordered' | 'rowHeight'>> & {
+type Props<T> = Required<Pick<TableInstance<T>, 'bordered' | 'rowHeight' | 'pingedRightEnd'>> & {
 	rowIndexStart: number;
 	rowIndexEnd: number;
 	colIndex: number;
@@ -14,7 +14,7 @@ type Props<T> = Required<Pick<TableInstance<T>, 'bordered' | 'rowHeight'>> & {
 
 const HeadCellPlaceholder = <T,>(props: Props<T>) => {
 	// console.log(`HeadCellPlaceholder(${props.rowIndex}-${props.colIndex}) re-render`);
-	const { bordered, rowIndexStart, rowIndexEnd, colIndex, rowHeight } = props;
+	const { bordered, rowIndexStart, rowIndexEnd, colIndex, rowHeight, pingedRightEnd } = props;
 
 	return (
 		<div
@@ -27,6 +27,7 @@ const HeadCellPlaceholder = <T,>(props: Props<T>) => {
 			className={classNames(styles['head-cell-placeholder'], {
 				[styles['bordered']]: bordered,
 				[styles['first-col']]: colIndex === 0,
+				[styles['sticky']]: typeof pingedRightEnd === 'number',
 			})}
 		/>
 	);

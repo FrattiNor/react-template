@@ -11,6 +11,7 @@ const TableDemo = () => {
 	const { data, changeData } = useData();
 	const { columns, leafColumns } = useColumns();
 	const [visible, setVisible] = useState<boolean>(false);
+	const [bordered, setBordered] = useState<boolean>(true);
 	const [sortConf, setSortConf] = useState<Record<string, number>>({});
 	const [widthConf, setWidthConf] = useState<Record<string, number>>({});
 	const [visibleConf, setVisibleConf] = useState<Record<string, boolean>>({});
@@ -19,6 +20,9 @@ const TableDemo = () => {
 		<Fragment>
 			<div className={styles['wrapper']}>
 				<div className={styles['btn-wrapper']}>
+					<button style={{ cursor: 'pointer' }} onClick={() => setBordered((old) => !old)}>
+						{'Bordered'}
+					</button>
 					<button style={{ cursor: 'pointer' }} onClick={changeData}>
 						{'ChangeData'}
 					</button>
@@ -28,7 +32,13 @@ const TableDemo = () => {
 				</div>
 				<BoxResize width={1500} height={500} logRender>
 					<div className={styles['container']}>
-						<Table bordered data={data} columns={columns} rowKey={'userId'} columnConf={{ widthConf, sortConf, visibleConf }} />
+						<Table
+							data={data}
+							columns={columns}
+							rowKey={'userId'}
+							bordered={bordered}
+							columnConf={{ widthConf, sortConf, visibleConf }}
+						/>
 					</div>
 				</BoxResize>
 			</div>

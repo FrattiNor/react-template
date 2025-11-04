@@ -13,7 +13,7 @@ const useTableDomRef = <T>({ tableState, tableColumns }: Props<T>) => {
 	const bodyRef = useRef<HTMLDivElement>(null);
 	const headRef = useRef<HTMLDivElement>(null);
 	const { fixedLeftArr, fixedRightArr } = tableColumns;
-	const { setV_ScrollbarWidth, setH_ScrollbarWidth, setPingedLeftStart, setPingedLeftEnd, setPingedRightStart, setPingedRightEnd } = tableState;
+	const { setV_ScrollbarWidth, setH_ScrollbarWidth, setPingedLeftEnd, setPingedRightEnd } = tableState;
 
 	// 计算固定的index
 	const calcPingedIndex = useEffectEvent(() => {
@@ -24,15 +24,12 @@ const useTableDomRef = <T>({ tableState, tableColumns }: Props<T>) => {
 			const scrollLeft = bodyScrollLeft;
 			const scrollRight = bodyScrollWidth - bodyClientWidth - bodyScrollLeft;
 			// 计算固定的index
-			let leftPingedStart: number | undefined = undefined;
 			let leftPingedEnd: number | undefined = undefined;
-			let rightPingedStart: number | undefined = undefined;
 			let rightPingedEnd: number | undefined = undefined;
 
 			for (let i = 0; i < fixedLeftArr.length; i++) {
 				const { pingedSize, index } = fixedLeftArr[i];
 				if (scrollLeft > pingedSize) {
-					if (leftPingedStart === undefined) leftPingedStart = index;
 					if (leftPingedEnd === undefined || leftPingedEnd < index) leftPingedEnd = index;
 				} else {
 					break;
@@ -42,16 +39,13 @@ const useTableDomRef = <T>({ tableState, tableColumns }: Props<T>) => {
 			for (let i = 0; i < fixedRightArr.length; i++) {
 				const { pingedSize, index } = fixedRightArr[i];
 				if (scrollRight > pingedSize) {
-					if (rightPingedStart === undefined) rightPingedStart = index;
 					if (rightPingedEnd === undefined || rightPingedEnd > index) rightPingedEnd = index;
 				} else {
 					break;
 				}
 			}
 
-			setPingedLeftStart(leftPingedStart);
 			setPingedLeftEnd(leftPingedEnd);
-			setPingedRightStart(rightPingedStart);
 			setPingedRightEnd(rightPingedEnd);
 		}
 	});

@@ -10,7 +10,15 @@ import type { TableInstance } from '../../useTableInstance';
 type Props<T> = Required<
 	Pick<
 		TableInstance<T>,
-		'deepLevel' | 'splitColumnsArr' | 'bordered' | 'headRef' | 'gridTemplateColumns' | 'v_ScrollbarWidth' | 'rowHeight' | 'getStickyStyle'
+		| 'deepLevel'
+		| 'splitColumnsArr'
+		| 'bordered'
+		| 'headRef'
+		| 'gridTemplateColumns'
+		| 'v_ScrollbarWidth'
+		| 'rowHeight'
+		| 'getStickyStyle'
+		| 'pingedRightEnd'
 	>
 >;
 
@@ -35,6 +43,7 @@ const TableHead = <T,>(props: Props<T>) => {
 							deepLevel={props.deepLevel}
 							getStickyStyle={props.getStickyStyle}
 							splitColumnsArr={props.splitColumnsArr}
+							pingedRightEnd={props.pingedRightEnd}
 						/>
 					))}
 			</div>
