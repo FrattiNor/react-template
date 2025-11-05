@@ -16,7 +16,7 @@ type Props = {
 };
 
 const DragRow: FC<Props> = ({ item, _visibleConf, _setVisibleConf, _widthConf, _setWidthConf }) => {
-	const width = _widthConf[item.key] ?? 150;
+	const width = _widthConf[item.key];
 	const visible = _visibleConf[item.key] ?? true;
 
 	const { attributes, setNodeRef, transform, transition, isDragging } = useSortable({ id: item.key });

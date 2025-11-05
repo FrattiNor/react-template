@@ -67,6 +67,7 @@ const useColumns = () => {
 				key: 'age',
 				title: '年龄_8',
 				render: ({ age }) => age,
+				fixed: 'left',
 			},
 			{
 				key: 'gender',

@@ -45,10 +45,6 @@ export const getGroupColumnMergeKey = <T>(
 	colIndexStart: number, // 当前列[start]
 	colIndexEnd: number, // 当前列[end]
 ) => {
-	// 存在mergeKey
-	const currentColumn = splitColumnsArr[colIndexStart][rowIndex];
-	if ((currentColumn as InnerColumnGroup<T>).mergeKey) return (currentColumn as InnerColumnGroup<T>).mergeKey;
-	// 不存在mergeKey
 	const mergeKeyList = [];
 	for (let row = rowIndex; row <= deepLevel; row++) {
 		for (let col = colIndexStart; col <= colIndexEnd; col++) {
@@ -57,8 +53,6 @@ export const getGroupColumnMergeKey = <T>(
 		}
 	}
 	const mergeKey = mergeKeyList.join('_');
-	// 赋值到column中，避免多次计算
-	(currentColumn as InnerColumnGroup<T>).mergeKey = mergeKey;
 	return mergeKey;
 };
 

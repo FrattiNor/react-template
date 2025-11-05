@@ -10,31 +10,31 @@ type Props<T> = {
 
 // 表格左右固定
 const useTableSticky = <T>({ tableColumns, tableState }: Props<T>) => {
-	const { v_ScrollbarWidth, pingedLeftEnd, pingedRightEnd } = tableState;
+	const { v_ScrollbarWidth } = tableState;
 	const { fixedLeftObj, fixedRightObj } = tableColumns;
 
 	const getStickyStyle = useCallback(
 		({ colIndexStart, colIndexEnd, type }: { colIndexStart: number; colIndexEnd: number; type: 'head' | 'body' }) => {
 			if (fixedLeftObj[colIndexStart]) {
 				const { stickySize } = fixedLeftObj[colIndexStart];
-				const style: CSSProperties = { position: 'sticky', zIndex: 5, left: stickySize };
-				const pinged = colIndexStart <= (pingedLeftEnd ?? -1);
-				if (pinged) style.zIndex = 10;
+				const style: CSSProperties = { position: 'sticky', zIndex: 6, left: stickySize, backgroundColor: '#fff1f0' };
+				// const pinged = colIndexStart <= (pingedLeftEnd ?? -1);
+				// if (pinged) style.zIndex = 10;
 				return style;
 			}
 
 			if (fixedRightObj[colIndexEnd]) {
 				const { stickySize } = fixedRightObj[colIndexEnd];
 				const right = type === 'head' ? stickySize + v_ScrollbarWidth : stickySize;
-				const style: CSSProperties = { position: 'sticky', zIndex: 5, right };
-				const pinged = colIndexEnd >= (pingedRightEnd ?? Infinity);
-				if (pinged) style.zIndex = 10;
+				const style: CSSProperties = { position: 'sticky', zIndex: 5, right, backgroundColor: '#e6f4ff' };
+				// const pinged = colIndexEnd >= (pingedRightEnd ?? Infinity);
+				// if (pinged) style.zIndex = 10;
 				return style;
 			}
 
 			return undefined;
 		},
-		[fixedLeftObj, fixedRightObj, v_ScrollbarWidth, pingedLeftEnd, pingedRightEnd],
+		[fixedLeftObj, fixedRightObj, v_ScrollbarWidth],
 	);
 
 	return { getStickyStyle };
