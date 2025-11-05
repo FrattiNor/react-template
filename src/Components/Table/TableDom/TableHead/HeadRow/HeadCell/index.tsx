@@ -34,7 +34,7 @@ const HeadCell = <T,>(props: Props<T>) => {
 			})}
 			style={{
 				...stickyStyle,
-				minHeight: rowHeight,
+				minHeight: (rowIndexEnd - rowIndexStart + 1) * rowHeight,
 				gridRow: `${rowIndexStart + 1}/${rowIndexEnd + 2}`,
 				gridColumn: `${colIndexStart + 1}/${colIndexEnd + 2}`,
 			}}

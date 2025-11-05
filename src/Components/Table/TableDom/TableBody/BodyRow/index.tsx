@@ -15,16 +15,17 @@ type Props<T> = Required<Pick<TableInstance<T>, 'splitColumnsArr' | 'bordered' |
 
 const BodyRow = <T,>(props: Props<T>) => {
 	//  console.log(`BodyRow(${props.rowIndex}) re-render`);
-	const { splitColumnsArr, rowIndex } = props;
+	const { splitColumnsArr, rowIndex, data } = props;
 	return (
 		<div data-row={rowIndex + 1} className={classNames(styles['body-row'])}>
 			{splitColumnsArr.map((splitColumns, colIndex) => {
 				const column = getLeafColumn(splitColumns);
+				const dataItem = data[rowIndex];
 				return (
 					<BodyCell
 						key={column.key}
 						column={column}
-						data={props.data}
+						dataItem={dataItem}
 						colIndex={colIndex}
 						rowIndex={props.rowIndex}
 						bordered={props.bordered}

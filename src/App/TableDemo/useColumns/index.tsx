@@ -9,76 +9,33 @@ const useColumns = () => {
 			{
 				key: 'index',
 				title: 'Index',
-				render: ({ index }) => index,
+				render: ({ index }) => `row1_${index}`,
 				onCellSpan: (_, i) => ({
 					rowSpan: i % 3 === 0 ? 3 : 0,
 				}),
 			},
 			{
+				flexGrow: 0,
+				width: 300.55555555,
 				key: 'index2',
 				title: 'Index2',
-				render: ({ index }) => index,
+				render: ({ index }) => `row2_${index}`,
 				fixed: 'left',
 			},
 			{
+				flexGrow: 0,
+				width: '50%',
 				key: 'index3',
 				title: 'Index3',
-				render: ({ index }) => index,
+				render: ({ index }) => `row3_${index}`,
 			},
 			{
+				flexGrow: 0,
+				width: 300.55555555,
 				key: 'index4',
 				title: 'Index4',
-				render: ({ index }) => index,
+				render: ({ index }) => `row4_${index}`,
 				fixed: 'left',
-			},
-			{
-				align: 'center',
-				key: 'user',
-				title: '用户',
-				children: [
-					{
-						key: 'userId',
-						title: '用户id_2',
-						render: ({ userId }) => userId,
-					},
-					{
-						align: 'center',
-						key: 'userName',
-						title: '用户名称',
-						children: [
-							{
-								align: 'center',
-								key: 'firstName',
-								title: 'firstName_0',
-								render: ({ firstName }) => (
-									<div
-										style={{
-											color: '#fff',
-											// padding: '12px 6px',
-											padding: '0 6px',
-											borderRadius: '4px',
-											display: 'inline-block',
-											backgroundColor: 'rgba(0,0,0,0.25)',
-										}}
-									>
-										{firstName}
-									</div>
-								),
-								onCellSpan: () => ({
-									colSpan: 3,
-								}),
-							},
-							{
-								key: 'lastName',
-								title: <span>{'lastName_1'}</span>,
-								render: ({ lastName }) => <span>{lastName}</span>,
-								onCellSpan: () => ({
-									colSpan: 0,
-								}),
-							},
-						],
-					},
-				],
 			},
 			{
 				key: 'email',
@@ -149,6 +106,55 @@ const useColumns = () => {
 				key: 'jobType',
 				title: '工作类型_15',
 				render: ({ jobType }) => jobType,
+			},
+			{
+				align: 'center',
+				key: 'user',
+				title: '用户',
+				children: [
+					{
+						align: 'center',
+						key: 'userName',
+						title: '用户名称',
+						children: [
+							{
+								align: 'center',
+								key: 'firstName',
+								title: 'firstName_0',
+								render: ({ firstName }) => (
+									<div
+										style={{
+											color: '#fff',
+											// padding: '12px 6px',
+											padding: '0 6px',
+											borderRadius: '4px',
+											display: 'inline-block',
+											backgroundColor: 'rgba(0,0,0,0.25)',
+										}}
+									>
+										{firstName}
+									</div>
+								),
+								onCellSpan: () => ({
+									colSpan: 3,
+								}),
+							},
+							{
+								key: 'lastName',
+								title: <span>{'lastName_1'}</span>,
+								render: ({ lastName }) => <span>{lastName}</span>,
+								onCellSpan: () => ({
+									colSpan: 0,
+								}),
+							},
+						],
+					},
+					{
+						key: 'userId',
+						title: '用户id_2',
+						render: ({ userId }) => userId,
+					},
+				],
 			},
 		],
 		[],

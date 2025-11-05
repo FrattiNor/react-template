@@ -1,4 +1,6 @@
-import { useEffectEvent, useLayoutEffect, useRef } from 'react';
+import { useLayoutEffect, useRef } from 'react';
+
+import useRefValue from '../../TableHooks/useRefValue';
 
 import type useTableColumns from '../useTableColumns';
 import type useTableState from '../useTableState';
@@ -12,11 +14,14 @@ type Props<T> = {
 const useTableDomRef = <T>({ tableState, tableColumns }: Props<T>) => {
 	const bodyRef = useRef<HTMLDivElement>(null);
 	const headRef = useRef<HTMLDivElement>(null);
+	// 避免闭包
 	const { fixedLeftArr, fixedRightArr } = tableColumns;
+	const [getFixedLeftArr] = useRefValue(fixedLeftArr);
+	const [getFixedRightArr] = useRefValue(fixedRightArr);
 	const { setV_ScrollbarWidth, setH_ScrollbarWidth, setPingedLeftEnd, setPingedRightEnd } = tableState;
 
 	// 计算固定的index
-	const calcPingedIndex = useEffectEvent(() => {
+	const calcPingedIndex = () => {
 		const bodyScrollLeft = bodyRef.current?.scrollLeft;
 		const bodyScrollWidth = bodyRef.current?.scrollWidth;
 		const bodyClientWidth = bodyRef.current?.clientWidth;
@@ -27,28 +32,40 @@ const useTableDomRef = <T>({ tableState, tableColumns }: Props<T>) => {
 			let leftPingedEnd: number | undefined = undefined;
 			let rightPingedEnd: number | undefined = undefined;
 
-			for (let i = 0; i < fixedLeftArr.length; i++) {
-				const { pingedSize, index } = fixedLeftArr[i];
-				if (scrollLeft > pingedSize) {
-					if (leftPingedEnd === undefined || leftPingedEnd < index) leftPingedEnd = index;
-				} else {
-					break;
+			if (scrollLeft > 0) {
+				const fixedLeftArr = getFixedLeftArr();
+				for (let i = 0; i < fixedLeftArr.length; i++) {
+					const { pingedSize, index } = fixedLeftArr[i];
+					if (scrollLeft > pingedSize) {
+						if (leftPingedEnd === undefined || leftPingedEnd < index) leftPingedEnd = index;
+					} else {
+						break;
+					}
 				}
 			}
 
-			for (let i = 0; i < fixedRightArr.length; i++) {
-				const { pingedSize, index } = fixedRightArr[i];
-				if (scrollRight > pingedSize) {
-					if (rightPingedEnd === undefined || rightPingedEnd > index) rightPingedEnd = index;
-				} else {
-					break;
+			if (scrollRight > 0) {
+				const fixedRightArr = getFixedRightArr();
+				for (let i = 0; i < fixedRightArr.length; i++) {
+					const { pingedSize, index } = fixedRightArr[i];
+					if (scrollRight > pingedSize) {
+						if (rightPingedEnd === undefined || rightPingedEnd > index) rightPingedEnd = index;
+					} else {
+						break;
+					}
 				}
 			}
 
 			setPingedLeftEnd(leftPingedEnd);
 			setPingedRightEnd(rightPingedEnd);
 		}
-	});
+	};
+
+	useLayoutEffect(() => {
+		// fixedLeftArr和fixedRightArr变化时触发一次计算
+		calcPingedIndex();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [fixedLeftArr, fixedRightArr]);
 
 	useLayoutEffect(() => {
 		if (bodyRef.current && headRef.current) {
@@ -56,14 +73,14 @@ const useTableDomRef = <T>({ tableState, tableColumns }: Props<T>) => {
 			const head = headRef.current;
 
 			// === ob body content resize ===
-			const calcV_ScrollBarWidth = () => {
+			const calcScrollBarWidth = () => {
 				setV_ScrollbarWidth(body.offsetWidth - body.clientWidth);
 				setH_ScrollbarWidth(body.offsetHeight - body.clientHeight);
 			};
-			const ob = new ResizeObserver(calcV_ScrollBarWidth);
+			const ob = new ResizeObserver(calcScrollBarWidth);
 			ob.observe(body, { box: 'content-box' });
 			// 直接执行一次
-			calcV_ScrollBarWidth();
+			calcScrollBarWidth();
 
 			// === ob body scroll ===
 			const handleBodyScroll = () => {

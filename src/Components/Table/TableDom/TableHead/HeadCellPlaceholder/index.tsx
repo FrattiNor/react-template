@@ -4,7 +4,7 @@ import classNames from 'classnames';
 
 import styles from './index.module.less';
 
-import type { TableInstance } from '../../../../useTableInstance';
+import type { TableInstance } from '../../../useTableInstance';
 
 type Props<T> = Required<Pick<TableInstance<T>, 'bordered' | 'rowHeight' | 'pingedRightEnd'>> & {
 	rowIndexStart: number;
@@ -20,7 +20,7 @@ const HeadCellPlaceholder = <T,>(props: Props<T>) => {
 		<div
 			data-col={colIndex + 1}
 			style={{
-				minHeight: rowHeight,
+				minHeight: (rowIndexEnd - rowIndexStart + 1) * rowHeight,
 				gridColumn: `${colIndex + 1}/${colIndex + 2}`,
 				gridRow: `${rowIndexStart + 1}/${rowIndexEnd + 2}`,
 			}}

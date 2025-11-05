@@ -1,9 +1,15 @@
-.body-cell-placeholder {
+.head-cell-placeholder {
 	outline: none;
 	overflow: hidden;
 	position: relative;
 	box-sizing: border-box;
-	background-color: var(--table-body-cell-bg);
+	background-color: var(--table-head-cell-bg);
+
+	&.sticky {
+		right: 0;
+		z-index: 10;
+		position: sticky;
+	}
 
 	&::after {
 		content: '';
@@ -13,11 +19,7 @@
 		right: 0;
 		bottom: 0;
 		transition: border-color 0.2s;
-		border-top: var(--table-cell-border-width) solid var(--table-cell-border-color);
-	}
-
-	&.first-row::after {
-		border-top-width: 0;
+		border-bottom: var(--table-cell-border-width) solid var(--table-cell-border-color);
 	}
 
 	&.bordered::after {

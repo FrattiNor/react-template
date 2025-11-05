@@ -2,6 +2,7 @@ import { memo } from 'react';
 
 import classNames from 'classnames';
 
+import HeadCellPlaceholder from './HeadCellPlaceholder';
 import HeadRow from './HeadRow';
 import styles from './index.module.less';
 
@@ -43,9 +44,17 @@ const TableHead = <T,>(props: Props<T>) => {
 							deepLevel={props.deepLevel}
 							getStickyStyle={props.getStickyStyle}
 							splitColumnsArr={props.splitColumnsArr}
-							pingedRightEnd={props.pingedRightEnd}
 						/>
 					))}
+
+				<HeadCellPlaceholder
+					rowIndexStart={0}
+					rowIndexEnd={deepLevel}
+					bordered={props.bordered}
+					rowHeight={props.rowHeight}
+					pingedRightEnd={props.pingedRightEnd}
+					colIndex={props.splitColumnsArr.length}
+				/>
 			</div>
 		</div>
 	);

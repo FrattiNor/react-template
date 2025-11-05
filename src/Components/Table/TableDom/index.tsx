@@ -35,7 +35,9 @@ const Table = <T,>(props: TableProps<T>) => {
 				bordered={instance.bordered}
 				rowHeight={instance.rowHeight}
 				getStickyStyle={instance.getStickyStyle}
+				setSizeCacheMap={instance.setSizeCacheMap}
 				splitColumnsArr={instance.splitColumnsArr}
+				splitColumnsArr_01={instance.splitColumnsArr_01}
 				gridTemplateColumns={instance.gridTemplateColumns}
 			/>
 			<TableSticky

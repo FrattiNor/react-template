@@ -18,7 +18,11 @@ const BodyCellPlaceholder = <T,>(props: Props<T>) => {
 	return (
 		<div
 			data-col={colIndex + 1}
-			style={{ minHeight: rowHeight, gridRow: `${rowIndex + 1}/${rowIndex + 2}`, gridColumn: `${colIndex + 1}/${colIndex + 2}` }}
+			style={{
+				minHeight: rowHeight,
+				gridRow: `${rowIndex + 1}/${rowIndex + 2}`,
+				gridColumn: `${colIndex + 1}/${colIndex + 2}`,
+			}}
 			className={classNames(styles['body-cell-placeholder'], {
 				[styles['bordered']]: bordered,
 				[styles['first-col']]: colIndex === 0,

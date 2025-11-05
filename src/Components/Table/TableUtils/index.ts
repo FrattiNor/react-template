@@ -61,3 +61,8 @@ export const getGroupColumnMergeKey = <T>(
 	(currentColumn as InnerColumnGroup<T>).mergeKey = mergeKey;
 	return mergeKey;
 };
+
+// 将数字精度置为2
+export const FixedTwo = (v: number) => {
+	return Number(v.toFixed(2));
+};

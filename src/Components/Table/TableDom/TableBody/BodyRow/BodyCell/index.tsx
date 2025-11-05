@@ -8,18 +8,19 @@ import { getCellTitle, isStrNum } from '../../../../TableUtils';
 import type { InnerColumn } from '../../../../TableTypes/typeColumn';
 import type { TableInstance } from '../../../../useTableInstance';
 
-type Props<T> = Required<Pick<TableInstance<T>, 'bordered' | 'data' | 'rowHeight' | 'getStickyStyle'>> & {
+type Props<T> = Required<Pick<TableInstance<T>, 'bordered' | 'rowHeight' | 'getStickyStyle'>> & {
 	rowIndex: number;
 	colIndex: number;
 	column: InnerColumn<T>;
+	dataItem: T;
 };
 
 const BodyCell = <T,>(props: Props<T>) => {
 	//  console.log(`BodyCell(${props.rowIndex}-${props.colIndex}) re-render`);
-	const { column, bordered, data, rowIndex, colIndex, rowHeight, getStickyStyle } = props;
+	const { column, bordered, dataItem, rowIndex, colIndex, rowHeight, getStickyStyle } = props;
 
-	const dataItem = data[rowIndex];
 	const { rowSpan = 1, colSpan = 1 } = column.onCellSpan ? column.onCellSpan(dataItem, rowIndex) : {};
+	// span为0
 	if (rowSpan <= 0 || colSpan <= 0) return null;
 
 	const rowIndexStart = rowIndex;

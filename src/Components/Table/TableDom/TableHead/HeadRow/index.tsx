@@ -1,16 +1,15 @@
-import { Fragment, memo } from 'react';
+import { memo } from 'react';
 
 import classNames from 'classnames';
 
 import HeadCell from './HeadCell';
-import HeadCellPlaceholder from './HeadCellPlaceholder';
 import styles from './index.module.less';
 import { getGroupColumnMergeKey } from '../../../TableUtils';
 
 import type { InnerColumn } from '../../../TableTypes/typeColumn';
 import type { TableInstance } from '../../../useTableInstance';
 
-type Props<T> = Required<Pick<TableInstance<T>, 'splitColumnsArr' | 'deepLevel' | 'bordered' | 'rowHeight' | 'getStickyStyle' | 'pingedRightEnd'>> & {
+type Props<T> = Required<Pick<TableInstance<T>, 'splitColumnsArr' | 'deepLevel' | 'bordered' | 'rowHeight' | 'getStickyStyle'>> & {
 	rowIndex: number;
 };
 
@@ -45,29 +44,17 @@ const HeadRow = <T,>(props: Props<T>) => {
 			colSameCount = 0;
 
 			return (
-				<Fragment key={key}>
-					<HeadCell
-						column={column}
-						colIndexEnd={colIndexEnd}
-						rowIndexEnd={rowIndexEnd}
-						colIndexStart={colIndexStart}
-						rowIndexStart={rowIndexStart}
-						bordered={props.bordered}
-						rowHeight={props.rowHeight}
-						getStickyStyle={props.getStickyStyle}
-					/>
-					{/* 是否是当前行最后一列 */}
-					{colIndex === splitColumnsArr.length - 1 && (
-						<HeadCellPlaceholder
-							rowIndexEnd={rowIndexEnd}
-							rowIndexStart={rowIndexStart}
-							colIndex={splitColumnsArr.length}
-							bordered={props.bordered}
-							rowHeight={props.rowHeight}
-							pingedRightEnd={props.pingedRightEnd}
-						/>
-					)}
-				</Fragment>
+				<HeadCell
+					key={key}
+					column={column}
+					colIndexEnd={colIndexEnd}
+					rowIndexEnd={rowIndexEnd}
+					bordered={props.bordered}
+					rowHeight={props.rowHeight}
+					colIndexStart={colIndexStart}
+					rowIndexStart={rowIndexStart}
+					getStickyStyle={props.getStickyStyle}
+				/>
 			);
 		});
 	};

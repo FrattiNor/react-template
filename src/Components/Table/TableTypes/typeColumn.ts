@@ -44,4 +44,4 @@ export type TableColumns<T> = Array<TableColumnGroup<T> | TableColumn<T>>;
 export type InnerColumnGroup<T> = Omit<TableColumnGroup<T> & { mergeKey?: string }, 'children'>;
 
 // 内部使用的column类型
-export type InnerColumn<T> = Omit<TableColumn<T> & { level: number; index: number }, 'children'>;
+export type InnerColumn<T> = Omit<TableColumn<T> & { level: number; index: number; sizeCache?: number }, 'children'>;
