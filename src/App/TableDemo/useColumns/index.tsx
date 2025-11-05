@@ -41,9 +41,6 @@ const useColumns = () => {
 				key: 'email',
 				title: '邮箱_3',
 				render: ({ email }) => email,
-				onCellSpan: () => ({
-					colSpan: 0,
-				}),
 			},
 			{
 				key: 'avatar',
@@ -141,7 +138,7 @@ const useColumns = () => {
 									</div>
 								),
 								onCellSpan: () => ({
-									colSpan: 3,
+									colSpan: 2,
 								}),
 							},
 							{
@@ -160,7 +157,7 @@ const useColumns = () => {
 					{
 						width: 120,
 						flexGrow: 0,
-						fixed: 'right',
+						// fixed: 'right',
 						key: 'userId',
 						title: '用户id_2',
 						render: ({ userId }) => userId,

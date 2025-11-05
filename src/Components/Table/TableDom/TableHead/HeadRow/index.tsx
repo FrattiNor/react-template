@@ -4,7 +4,7 @@ import classNames from 'classnames';
 
 import HeadCell from './HeadCell';
 import styles from './index.module.less';
-import { getGroupColumnMergeKey } from '../../../TableUtils';
+import { getGroupColumnMergeKey, getLeafColumn } from '../../../TableUtils';
 
 import type { InnerColumn } from '../../../TableTypes/typeColumn';
 import type { TableInstance } from '../../../useTableInstance';
@@ -26,8 +26,12 @@ const HeadRow = <T,>(props: Props<T>) => {
 			if (!column) return null;
 			// 同行下一列column
 			const nextColumn = splitColumnsArr[colIndex + 1]?.[rowIndex];
-			// 同行下一列和当前列相同，跳过当前渲染
-			if (column.key === nextColumn?.key) {
+			// 叶子节点
+			const leafColumn = getLeafColumn(splitColumns);
+			// 同行下一列叶子节点
+			const nextLeafColumn = splitColumnsArr[colIndex + 1]?.[splitColumnsArr[colIndex + 1]?.length - 1];
+			// 同行下一列和当前列相同【key和fixed都相同】，跳过当前渲染
+			if (column.key === nextColumn?.key && leafColumn.fixed === nextLeafColumn?.fixed) {
 				colSameCount++;
 				return null;
 			}
