@@ -16,7 +16,7 @@ const useColumns = () => {
 			},
 			{
 				flexGrow: 0,
-				width: 300.55555555,
+				width: 200.55555555,
 				key: 'index2',
 				title: 'Index2',
 				render: ({ index }) => `row2_${index}`,
@@ -31,7 +31,7 @@ const useColumns = () => {
 			},
 			{
 				flexGrow: 0,
-				width: 300.55555555,
+				width: 200.55555555,
 				key: 'index4',
 				title: 'Index4',
 				render: ({ index }) => `row4_${index}`,
@@ -64,6 +64,7 @@ const useColumns = () => {
 				key: 'registeredAt',
 				title: '注册时间_7',
 				render: ({ registeredAt }) => registeredAt.toString(),
+				fixed: 'right',
 			},
 			{
 				key: 'age',
@@ -86,6 +87,8 @@ const useColumns = () => {
 				render: ({ weight }) => weight,
 			},
 			{
+				width: 120,
+				flexGrow: 0,
 				key: 'phoneNumber',
 				title: '电话号码_12',
 				render: ({ phoneNumber }) => phoneNumber,
@@ -100,7 +103,6 @@ const useColumns = () => {
 				key: 'jobTitle',
 				title: '工作头衔_14',
 				render: ({ jobTitle }) => jobTitle,
-				fixed: 'right',
 			},
 			{
 				key: 'jobType',
@@ -118,6 +120,9 @@ const useColumns = () => {
 						title: '用户名称',
 						children: [
 							{
+								width: 120,
+								flexGrow: 0,
+								fixed: 'right',
 								align: 'center',
 								key: 'firstName',
 								title: 'firstName_0',
@@ -140,6 +145,9 @@ const useColumns = () => {
 								}),
 							},
 							{
+								width: 120,
+								flexGrow: 0,
+								fixed: 'right',
 								key: 'lastName',
 								title: <span>{'lastName_1'}</span>,
 								render: ({ lastName }) => <span>{lastName}</span>,
@@ -150,6 +158,9 @@ const useColumns = () => {
 						],
 					},
 					{
+						width: 120,
+						flexGrow: 0,
+						fixed: 'right',
 						key: 'userId',
 						title: '用户id_2',
 						render: ({ userId }) => userId,

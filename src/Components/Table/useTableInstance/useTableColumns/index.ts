@@ -66,22 +66,34 @@ const useTableColumns = <T>({ props, tableState }: Props<T>) => {
 	// ======================================== part1 ========================================
 
 	// ======================================== part2 ========================================
-	const { splitColumnsArr, gridTemplateColumns, fixedLeftObj, fixedRightObj, fixedLeftArr, fixedRightArr } = useMemo(() => {
-		// sort
-		const splitColumnsArr_02 = (() => {
-			// 增加判断order
-			if (sortConf) {
-				return splitColumnsArr_01.sort((a, b) => {
-					const aLeaf = getLeafColumn(a);
-					const bLeaf = getLeafColumn(b);
-					const aIndex = sortConf?.[aLeaf.key] ?? aLeaf.index;
-					const bIndex = sortConf?.[bLeaf.key] ?? bLeaf.index;
-					return aIndex - bIndex;
-				});
-			}
-			return splitColumnsArr_01;
-		})();
+	const splitColumnsArr_02 = useMemo(() => {
+		// 增加判断order
+		if (sortConf) {
+			return splitColumnsArr_01.sort((a, b) => {
+				fillSplitColumns(a, deepLevel);
+				fillSplitColumns(b, deepLevel);
+				const aLeaf = getLeafColumn(a);
+				const bLeaf = getLeafColumn(b);
+				const aIndex = sortConf?.[aLeaf.key] ?? aLeaf.index;
+				const bIndex = sortConf?.[bLeaf.key] ?? bLeaf.index;
+				return aIndex - bIndex;
+			});
+		}
+		return splitColumnsArr_01;
+	}, [deepLevel, sortConf, splitColumnsArr_01]);
+	// ======================================== part2 ========================================
 
+	// ======================================== part3 ========================================
+	const splitColumnsArr = useMemo(() => {
+		if (sizeCacheMap.size === 0) {
+			return [];
+		}
+		return splitColumnsArr_02;
+	}, [sizeCacheMap, splitColumnsArr_02]);
+	// ======================================== part3 ========================================
+
+	// ======================================== part4 ========================================
+	const { gridTemplateColumns, fixedLeftObj, fixedRightObj, fixedLeftArr, fixedRightArr } = useMemo(() => {
 		// gridTemplateColumns
 		let gridTemplateColumns = '';
 		// index，当前column所在index
@@ -98,14 +110,10 @@ const useTableColumns = <T>({ props, tableState }: Props<T>) => {
 		let leftCalcSize = bordered === true ? -1 : 0;
 		let leftPingedSize = leftCalcSize;
 		//
-		const splitColumnsArr: Array<Array<InnerColumnGroup<T> | InnerColumn<T> | null>> = [];
-		//
 		splitColumnsArr_02.forEach((splitColumns) => {
 			const column = getLeafColumn(splitColumns);
 			const sizeCache = sizeCacheMap.get(column.key);
-
-			if (typeof sizeCache === 'number' && sizeCache > 0) {
-				column.sizeCache = sizeCache;
+			if (typeof sizeCache === 'number') {
 				totalSize += sizeCache;
 				gridTemplateColumns += gridTemplateColumns === '' ? `${sizeCache}px` : ` ${sizeCache}px`;
 
@@ -133,9 +141,6 @@ const useTableColumns = <T>({ props, tableState }: Props<T>) => {
 						leftTotalSize: totalSize,
 					});
 				}
-
-				fillSplitColumns(splitColumns, deepLevel);
-				splitColumnsArr.push(splitColumns);
 			}
 		});
 
@@ -149,13 +154,9 @@ const useTableColumns = <T>({ props, tableState }: Props<T>) => {
 			rightCalcSize += size;
 		});
 
-		// console.log(fixedLeftArr);
-		// console.log(fixedRightArr);
-		console.log('splitColumnsArr', splitColumnsArr);
-
-		return { splitColumnsArr, gridTemplateColumns, fixedLeftObj, fixedRightObj, fixedLeftArr, fixedRightArr };
-	}, [bordered, splitColumnsArr_01, sizeCacheMap, deepLevel, sortConf]);
-	// ======================================== part2 ========================================
+		return { gridTemplateColumns, fixedLeftObj, fixedRightObj, fixedLeftArr, fixedRightArr };
+	}, [bordered, splitColumnsArr_02, sizeCacheMap]);
+	// ======================================== part4 ========================================
 
 	return { splitColumnsArr_01, splitColumnsArr, gridTemplateColumns, deepLevel, fixedLeftObj, fixedRightObj, fixedLeftArr, fixedRightArr };
 };

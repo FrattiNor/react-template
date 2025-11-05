@@ -18,6 +18,8 @@ const useTableSticky = <T>({ tableColumns, tableState }: Props<T>) => {
 			if (fixedLeftObj[colIndexStart]) {
 				const { stickySize } = fixedLeftObj[colIndexStart];
 				const style: CSSProperties = { position: 'sticky', zIndex: 5, left: stickySize };
+				// const pinged = colIndexStart >= (pingedLeftEnd ?? Infinity);
+				// if (pinged) style.zIndex = 10;
 				return style;
 			}
 
@@ -25,6 +27,8 @@ const useTableSticky = <T>({ tableColumns, tableState }: Props<T>) => {
 				const { stickySize } = fixedRightObj[colIndexEnd];
 				const right = type === 'head' ? stickySize + v_ScrollbarWidth : stickySize;
 				const style: CSSProperties = { position: 'sticky', zIndex: 5, right };
+				// const pinged = colIndexEnd >= (pingedRightEnd ?? Infinity);
+				// if (pinged) style.zIndex = 10;
 				return style;
 			}
 
