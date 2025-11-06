@@ -31,12 +31,12 @@ const BodyCell = <T,>(props: Props<T>) => {
 	const renderDom = column.render(dataItem, { index: rowIndex });
 	const title = getCellTitle(renderDom);
 	const canEllipsis = isStrNum(renderDom);
-	const stickyStyle = getStickyStyle({ colIndexStart, colIndexEnd, type: 'body' });
+	const { stickyStyle, stickyClassName } = getStickyStyle({ colIndexStart, colIndexEnd, type: 'body' });
 
 	return (
 		<div
 			title={title}
-			className={classNames(styles['body-cell'], {
+			className={classNames(styles['body-cell'], stickyClassName, {
 				[styles['bordered']]: bordered,
 				[styles['first-col']]: colIndex === 0,
 				[styles['first-row']]: rowIndex === 0,

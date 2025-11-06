@@ -23,12 +23,12 @@ const HeadCell = <T,>(props: Props<T>) => {
 	const renderDom = column.title;
 	const title = getCellTitle(renderDom);
 	const canEllipsis = isStrNum(renderDom);
-	const stickyStyle = getStickyStyle({ colIndexStart, colIndexEnd, type: 'head' });
+	const { stickyStyle, stickyClassName } = getStickyStyle({ colIndexStart, colIndexEnd, type: 'head' });
 
 	return (
 		<div
 			title={title}
-			className={classNames(styles['head-cell'], {
+			className={classNames(styles['head-cell'], stickyClassName, {
 				[styles['bordered']]: bordered,
 				[styles['first-col']]: colIndexStart === 0,
 			})}
