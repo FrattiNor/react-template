@@ -1,0 +1,9 @@
+{
+    "directory": "../",
+    "filename": "isdm_web",
+    "host": "10.30.76.33",
+    "username": "root",
+    "password": "Sup@2021",
+    "clearDep": true,
+    "deepClear": true
+}

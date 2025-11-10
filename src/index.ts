@@ -1,39 +1,119 @@
-import getAppZip from './getAppZip.js';
+import { execSync } from 'child_process';
+import { colorMap, getRecord } from './utils.js';
 import getConfig from './getConfig.js';
-import login from './req/login.js';
-import uninstallApp from './req/uninstallApp.js';
-import uploadApp from './req/uploadApp.js';
-import installApp from './req/installApp.js';
-import clearAppZip from './clearAppZip.js';
-import { colorMap, getTotalRecord } from './utils.js';
+import { rimrafSync } from 'rimraf';
+import fs from 'fs';
+import { NodeSSH } from 'node-ssh';
+import AdmZip from 'adm-zip';
 
-// 当前Supos版本
-// V5.00.02.00-24062008-M
+const delZip = ({ zipFilename }: { zipFilename: string }) => {
+    const record = getRecord('删除压缩包');
+    record.start();
+    rimrafSync(zipFilename);
+    record.end();
+};
+
+const delFile = ({ filePath }: { filePath: string }) => {
+    const record = getRecord('删除文件');
+    record.start();
+    rimrafSync(filePath);
+    record.end();
+};
+
+const zipFile = ({ filePath, zipFilename }: { filePath: string; zipFilename: string }) => {
+    const record = getRecord('压缩');
+    record.start();
+    const zip = new AdmZip();
+    zip.addLocalFolder(filePath);
+    zip.writeZip(zipFilename);
+    record.end();
+};
+
+const unzipFile = ({ filePath, zipFilename }: { filePath: string; zipFilename: string }) => {
+    const record = getRecord('解压缩');
+    record.start();
+    const zip = new AdmZip(zipFilename);
+    zip.extractAllTo(filePath, true); // true = 覆盖现有文件
+    record.end();
+};
+
+const uploadZip = async ({ username, password, host, zipFilename }: { host: string; username: string; password: string; zipFilename: string }) => {
+    const record = getRecord('上传压缩包');
+    record.start();
+    const ssh = new NodeSSH();
+    await ssh.connect({ host, username, password });
+    await ssh.putFile(`./${zipFilename}`, `/home/web_code/${zipFilename}`);
+    ssh.dispose();
+    record.end();
+};
+
+const downloadZip = async ({ username, password, host, zipFilename }: { host: string; username: string; password: string; zipFilename: string }) => {
+    const record = getRecord('下载压缩包');
+    record.start();
+    const ssh = new NodeSSH();
+    await ssh.connect({ host, username, password });
+    await ssh.getFile(`./${zipFilename}`, `/home/web_code/${zipFilename}`);
+    ssh.dispose();
+    record.end();
+};
+
+const bakZip = ({ zipFilename }: { zipFilename: string }) => {
+    const record = getRecord('备份源文件');
+    record.start();
+    fs.rename(`./${zipFilename}`, `./${zipFilename}.bak`, (err) => {
+        if (err) throw err;
+    });
+    record.end();
+};
+
+const clearNodeModules = ({ filePath, deepClear }: { filePath: string; deepClear: boolean }) => {
+    const record = getRecord('清除依赖');
+    record.start();
+    rimrafSync(`${filePath}/node_modules`);
+    execSync('cd', { stdio: 'inherit', cwd: filePath });
+    if (deepClear) execSync('npm run rm-dep', { stdio: 'inherit', cwd: filePath });
+    record.end();
+};
+
+const getArgs1 = () => {
+    const args = process.argv.slice(2);
+    const args1 = args[0];
+    if (args1 === 'upload') return 'upload';
+    if (args1 === 'download') return 'download';
+    return 'null';
+};
+
 (async () => {
     try {
-        console.log(colorMap.cyan('SuposApp安装助手'));
-        console.log(colorMap.cyan(`当前适配版本: V5.00.02.00-24062008-M\n`));
+        const { clearDep, deepClear, directory, filename, username, password, host } = getConfig();
 
-        const totalRecord = getTotalRecord();
+        const zipFilename = `${filename}.zip`;
 
-        totalRecord.start();
+        const filePath = `${directory}${filename}`;
 
-        // 读取当前文件夹的安装包
-        const { file, uploadInfo, AppZipName } = getAppZip();
-        // 读取配置
-        const { suposHost, username, password, appName, appConfig } = getConfig();
-        // 登录
-        const { supOsTicket } = await login({ suposHost, username, password });
-        // 卸载
-        await uninstallApp({ suposHost, supOsTicket, appName });
-        // 上传
-        await uploadApp({ suposHost, supOsTicket, uploadInfo, file });
-        // 安装
-        await installApp({ suposHost, supOsTicket, appName, appConfig });
-        // 清除
-        clearAppZip({ AppZipName });
+        const args1 = getArgs1();
 
-        totalRecord.end();
+        switch (args1) {
+            case 'upload': {
+                if (clearDep) clearNodeModules({ filePath, deepClear });
+                zipFile({ filePath, zipFilename });
+                await uploadZip({ host, username, password, zipFilename });
+                delZip({ zipFilename });
+                break;
+            }
+            case 'download': {
+                if (clearDep) clearNodeModules({ filePath, deepClear });
+                delZip({ zipFilename });
+                zipFile({ filePath, zipFilename });
+                bakZip({ zipFilename });
+                await downloadZip({ host, username, password, zipFilename });
+                delFile({ filePath });
+                unzipFile({ filePath, zipFilename });
+                delZip({ zipFilename });
+                break;
+            }
+            default:
+        }
     } catch (e) {
         console.log(colorMap.red(String(e)));
     }
