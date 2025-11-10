@@ -1,26 +1,27 @@
-import { execSync } from 'child_process';
-import { colorMap, getRecord } from './utils.js';
-import getConfig from './getConfig.js';
-import { rimrafSync } from 'rimraf';
-import fs from 'fs';
-import { NodeSSH } from 'node-ssh';
-import AdmZip from 'adm-zip';
+/* eslint-disable @typescript-eslint/no-var-requires */
+const { execSync } = require('child_process');
+const { colorMap, getRecord } = require('./utils.cjs');
+const { getConfig } = require('./getConfig.cjs');
+const { rimrafSync } = require('rimraf');
+const fs = require('fs');
+const { NodeSSH } = require('node-ssh');
+const AdmZip = require('adm-zip');
 
-const delZip = ({ zipFilename }: { zipFilename: string }) => {
+const delZip = ({ zipFilename }) => {
     const record = getRecord('删除压缩包');
     record.start();
     rimrafSync(zipFilename);
     record.end();
 };
 
-const delFile = ({ filePath }: { filePath: string }) => {
+const delFile = ({ filePath }) => {
     const record = getRecord('删除文件');
     record.start();
     rimrafSync(filePath);
     record.end();
 };
 
-const zipFile = ({ filePath, zipFilename }: { filePath: string; zipFilename: string }) => {
+const zipFile = ({ filePath, zipFilename }) => {
     const record = getRecord('压缩');
     record.start();
     const zip = new AdmZip();
@@ -29,7 +30,7 @@ const zipFile = ({ filePath, zipFilename }: { filePath: string; zipFilename: str
     record.end();
 };
 
-const unzipFile = ({ filePath, zipFilename }: { filePath: string; zipFilename: string }) => {
+const unzipFile = ({ filePath, zipFilename }) => {
     const record = getRecord('解压缩');
     record.start();
     const zip = new AdmZip(zipFilename);
@@ -37,7 +38,7 @@ const unzipFile = ({ filePath, zipFilename }: { filePath: string; zipFilename: s
     record.end();
 };
 
-const uploadZip = async ({ username, password, host, zipFilename }: { host: string; username: string; password: string; zipFilename: string }) => {
+const uploadZip = async ({ username, password, host, zipFilename }) => {
     const record = getRecord('上传压缩包');
     record.start();
     const ssh = new NodeSSH();
@@ -47,7 +48,7 @@ const uploadZip = async ({ username, password, host, zipFilename }: { host: stri
     record.end();
 };
 
-const downloadZip = async ({ username, password, host, zipFilename }: { host: string; username: string; password: string; zipFilename: string }) => {
+const downloadZip = async ({ username, password, host, zipFilename }) => {
     const record = getRecord('下载压缩包');
     record.start();
     const ssh = new NodeSSH();
@@ -57,7 +58,7 @@ const downloadZip = async ({ username, password, host, zipFilename }: { host: st
     record.end();
 };
 
-const bakZip = ({ zipFilename }: { zipFilename: string }) => {
+const bakZip = ({ zipFilename }) => {
     const record = getRecord('备份源文件');
     record.start();
     fs.rename(`./${zipFilename}`, `./${zipFilename}.bak`, (err) => {
@@ -66,7 +67,7 @@ const bakZip = ({ zipFilename }: { zipFilename: string }) => {
     record.end();
 };
 
-const clearNodeModules = ({ filePath, deepClear }: { filePath: string; deepClear: boolean }) => {
+const clearNodeModules = ({ filePath, deepClear }) => {
     const record = getRecord('清除依赖');
     record.start();
     rimrafSync(`${filePath}/node_modules`);

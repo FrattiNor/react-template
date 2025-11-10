@@ -1,5 +1,6 @@
-import fs from 'fs';
-import { getRecord } from './utils.js';
+/* eslint-disable @typescript-eslint/no-var-requires */
+const fs = require('fs');
+const { getRecord } = require('./utils.cjs');
 
 // 获取本地配置文件
 const getConfig = () => {
@@ -28,13 +29,13 @@ const getConfig = () => {
             if (typeof configJSON.deepClear !== 'boolean') throw new Error('config.json deepClear 字段不存在或者格式错误');
 
             return {
-                directory: configJSON.directory as string,
-                filename: configJSON.filename as string,
-                username: configJSON.username as string,
-                password: configJSON.password as string,
-                host: configJSON.host as string,
-                clearDep: configJSON.clearDep as boolean,
-                deepClear: configJSON.deepClear as boolean,
+                directory: configJSON.directory,
+                filename: configJSON.filename,
+                username: configJSON.username,
+                password: configJSON.password,
+                host: configJSON.host,
+                clearDep: configJSON.clearDep,
+                deepClear: configJSON.deepClear,
             };
         })();
 
@@ -42,8 +43,8 @@ const getConfig = () => {
 
         return config;
     } catch (e) {
-        throw new Error(`config.json 获取错误: ${(e as Error).message}`);
+        throw new Error(`config.json 获取错误: ${e.message}`);
     }
 };
 
-export default getConfig;
+module.exports = { getConfig };
