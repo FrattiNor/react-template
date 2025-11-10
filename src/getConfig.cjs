@@ -25,6 +25,7 @@ const getConfig = () => {
             if (typeof configJSON.username !== 'string') throw new Error('config.json username 字段不存在或者格式错误');
             if (typeof configJSON.password !== 'string') throw new Error('config.json password 字段不存在或者格式错误');
             if (typeof configJSON.host !== 'string') throw new Error('config.json host 字段不存在或者格式错误');
+            if (typeof configJSON.port !== 'number') throw new Error('config.json port 字段不存在或者格式错误');
             if (typeof configJSON.clearDep !== 'boolean') throw new Error('config.json clearDep 字段不存在或者格式错误');
             if (typeof configJSON.deepClear !== 'boolean') throw new Error('config.json deepClear 字段不存在或者格式错误');
 
@@ -34,6 +35,7 @@ const getConfig = () => {
                 username: configJSON.username,
                 password: configJSON.password,
                 host: configJSON.host,
+                port: configJSON.port,
                 clearDep: configJSON.clearDep,
                 deepClear: configJSON.deepClear,
             };

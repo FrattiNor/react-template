@@ -38,21 +38,21 @@ const unzipFile = ({ filePath, zipFilename }) => {
     record.end();
 };
 
-const uploadZip = async ({ username, password, host, zipFilename }) => {
+const uploadZip = async ({ username, password, host, zipFilename, port }) => {
     const record = getRecord('上传压缩包');
     record.start();
     const ssh = new NodeSSH();
-    await ssh.connect({ host, username, password });
+    await ssh.connect({ host, username, password, port });
     await ssh.putFile(`./${zipFilename}`, `/home/web_code/${zipFilename}`);
     ssh.dispose();
     record.end();
 };
 
-const downloadZip = async ({ username, password, host, zipFilename }) => {
+const downloadZip = async ({ username, password, host, zipFilename, port }) => {
     const record = getRecord('下载压缩包');
     record.start();
     const ssh = new NodeSSH();
-    await ssh.connect({ host, username, password });
+    await ssh.connect({ host, username, password, port });
     await ssh.getFile(`./${zipFilename}`, `/home/web_code/${zipFilename}`);
     ssh.dispose();
     record.end();
@@ -96,7 +96,7 @@ const getArgs1 = () => {
 
 (async () => {
     try {
-        const { clearDep, deepClear, directory, filename, username, password, host } = getConfig();
+        const { clearDep, deepClear, directory, filename, username, password, host, port } = getConfig();
 
         const zipFilename = `${filename}.zip`;
 
@@ -108,7 +108,7 @@ const getArgs1 = () => {
             case 'upload': {
                 if (clearDep) clearNodeModules({ filePath, deepClear });
                 zipFile({ filePath, zipFilename });
-                await uploadZip({ host, username, password, zipFilename });
+                await uploadZip({ host, username, password, zipFilename, port });
                 delZip({ zipFilename });
                 break;
             }
@@ -117,7 +117,7 @@ const getArgs1 = () => {
                 delZip({ zipFilename });
                 zipFile({ filePath, zipFilename });
                 bakZip({ zipFilename });
-                await downloadZip({ host, username, password, zipFilename });
+                await downloadZip({ host, username, password, zipFilename, port });
                 delFile({ filePath });
                 unzipFile({ filePath, zipFilename });
                 delZip({ zipFilename });
