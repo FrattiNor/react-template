@@ -85,6 +85,16 @@ const clearNodeModules = ({ filePath, deepClear }) => {
     record.end();
 };
 
+const haveFile = ({ filePath }) => {
+    if (fs.existsSync(filePath)) {
+        const files = fs.readdirSync(filePath);
+        if (files.length > 0) {
+            return true;
+        }
+    }
+    return false;
+};
+
 const getArgs1 = () => {
     const args = process.argv.slice(2);
     const args1 = args[0];
@@ -106,6 +116,7 @@ const getArgs1 = () => {
 
         switch (args1) {
             case 'upload': {
+                if (!haveFile({ filePath })) throw new Error('文件夹为空');
                 if (clearDep) clearNodeModules({ filePath, deepClear });
                 zipFile({ filePath, zipFilename });
                 await uploadZip({ host, username, password, zipFilename, port });
@@ -113,10 +124,12 @@ const getArgs1 = () => {
                 break;
             }
             case 'download': {
-                if (clearDep) clearNodeModules({ filePath, deepClear });
-                delZip({ zipFilename });
-                zipFile({ filePath, zipFilename });
-                bakZip({ zipFilename });
+                if (haveFile({ filePath })) {
+                    if (clearDep) clearNodeModules({ filePath, deepClear });
+                    delZip({ zipFilename });
+                    zipFile({ filePath, zipFilename });
+                    bakZip({ zipFilename });
+                }
                 await downloadZip({ host, username, password, zipFilename, port });
                 delFile({ filePath });
                 unzipFile({ filePath, zipFilename });
