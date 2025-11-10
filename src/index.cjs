@@ -67,6 +67,15 @@ const bakZip = ({ zipFilename }) => {
     record.end();
 };
 
+const unbakZip = ({ zipFilename }) => {
+    const record = getRecord('还原备份源文件');
+    record.start();
+    fs.rename(`./${zipFilename}.bak`, `./${zipFilename}`, (err) => {
+        if (err) throw err;
+    });
+    record.end();
+};
+
 const clearNodeModules = ({ filePath, deepClear }) => {
     const record = getRecord('清除依赖');
     record.start();
@@ -81,6 +90,7 @@ const getArgs1 = () => {
     const args1 = args[0];
     if (args1 === 'upload') return 'upload';
     if (args1 === 'download') return 'download';
+    if (args1 === 'unbak') return 'unbak';
     return 'null';
 };
 
@@ -111,6 +121,12 @@ const getArgs1 = () => {
                 delFile({ filePath });
                 unzipFile({ filePath, zipFilename });
                 delZip({ zipFilename });
+                break;
+            }
+            case 'unbak': {
+                unbakZip({ zipFilename });
+                unzipFile({ filePath, zipFilename });
+                bakZip({ zipFilename });
                 break;
             }
             default:
