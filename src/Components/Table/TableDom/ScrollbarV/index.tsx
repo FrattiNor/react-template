@@ -1,0 +1,57 @@
+import { memo, useEffect } from 'react';
+
+import classNames from 'classnames';
+
+import styles from './index.module.less';
+import { type TableInstance } from '../../useTableInstance';
+
+type Props<T> = Required<Pick<TableInstance<T>, 'v_scrollbar' | 'bordered' | 'vScrollbarRef' | 'bodyRef'>>;
+
+const ScrollbarV = <T,>(props: Props<T>) => {
+	const { v_scrollbar, bordered, vScrollbarRef, bodyRef } = props;
+
+	useEffect(() => {
+		if (v_scrollbar.have && vScrollbarRef.current) {
+			const vScrollbar = vScrollbarRef.current;
+			const handleScroll = () => {
+				requestAnimationFrame(() => {
+					if (bodyRef.current && bodyRef.current.scrollTop !== vScrollbar.scrollTop) {
+						bodyRef.current.scrollTop = vScrollbar.scrollTop;
+					}
+				});
+			};
+			vScrollbar.addEventListener('scroll', handleScroll, { passive: true });
+
+			return () => {
+				vScrollbar.removeEventListener('scroll', handleScroll);
+			};
+		}
+	}, [v_scrollbar.have]);
+
+	if (v_scrollbar.have && v_scrollbar.width > 0) {
+		return (
+			<div
+				ref={vScrollbarRef}
+				className={classNames(styles['virtual-v-scrollbar'], { [styles['bordered']]: bordered })}
+				style={{ width: v_scrollbar.width, minWidth: v_scrollbar.width, maxWidth: v_scrollbar.width }}
+			>
+				<div
+					className={styles['v-scrollbar-inner']}
+					style={{ height: v_scrollbar.innerSize, width: v_scrollbar.width, minWidth: v_scrollbar.width, maxWidth: v_scrollbar.width }}
+				/>
+			</div>
+		);
+	}
+
+	if (v_scrollbar.have && v_scrollbar.width === 0) {
+		return (
+			<div ref={vScrollbarRef} className={styles['virtual-v-scrollbar-wrapper-absolute']}>
+				<div className={styles['v-scrollbar-absolute-inner']} style={{ height: v_scrollbar.innerSize }} />
+			</div>
+		);
+	}
+
+	return null;
+};
+
+export default memo(ScrollbarV) as typeof ScrollbarV;

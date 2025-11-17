@@ -4,51 +4,66 @@ import classNames from 'classnames';
 
 import useTableInstance from '../useTableInstance';
 import styles from './index.module.less';
+import ScrollbarH from './ScrollbarH';
+import ScrollbarV from './ScrollbarV';
 import TableBody from './TableBody';
 import TableHead from './TableHead';
-import TableSticky from './TableSticky';
+import TableLoading from './TableLoading';
 
 import type { TableComponent } from '../TableTypes/type';
 import type { TableProps } from '../TableTypes/typeProps';
 
-const Table = <T,>(props: TableProps<T>) => {
-	// console.log('Table re-render');
-	const instance = useTableInstance(props);
+const Table = <T,>(_props: TableProps<T>) => {
+	const props = useTableInstance(_props);
 
 	return (
-		<div className={classNames(styles['table'], { [styles['bordered']]: instance.bordered })}>
+		<TableLoading
+			loadingMaxHeight={400}
+			loading={props.loading}
+			className={classNames(styles['table'], {
+				[styles['bordered']]: props.bordered,
+				[styles['no-bordered-and-no-h-scrollbar']]: !props.bordered && !(props.h_scrollbar.width > 0),
+			})}
+		>
 			<TableHead
-				headRef={instance.headRef}
-				bordered={instance.bordered}
-				deepLevel={instance.deepLevel}
-				rowHeight={instance.rowHeight}
-				pingedRightEnd={instance.pingedRightEnd}
-				getStickyStyle={instance.getStickyStyle}
-				splitColumnsArr={instance.splitColumnsArr}
-				v_ScrollbarWidth={instance.v_ScrollbarWidth}
-				gridTemplateColumns={instance.gridTemplateColumns}
+				headRef={props.headRef}
+				bordered={props.bordered}
+				deepLevel={props.deepLevel}
+				rowHeight={props.rowHeight}
+				v_scrollbar={props.v_scrollbar}
+				getStickyStyle={props.getStickyStyle}
+				splitColumnsArr={props.splitColumnsArr}
+				pingedRightStart={props.pingedRightStart}
+				gridTemplateColumns={props.gridTemplateColumns}
 			/>
-			<TableBody
-				data={instance.data}
-				rowKey={instance.rowKey}
-				bodyRef={instance.bodyRef}
-				bordered={instance.bordered}
-				rowHeight={instance.rowHeight}
-				getStickyStyle={instance.getStickyStyle}
-				setSizeCacheMap={instance.setSizeCacheMap}
-				splitColumnsArr={instance.splitColumnsArr}
-				splitColumnsArr_01={instance.splitColumnsArr_01}
-				gridTemplateColumns={instance.gridTemplateColumns}
+			<div className={styles['table-body-wrapper']}>
+				<TableBody
+					data={props.data}
+					rowKey={props.rowKey}
+					bodyRef={props.bodyRef}
+					bordered={props.bordered}
+					rowHeight={props.rowHeight}
+					bodyInnerRef={props.bodyInnerRef}
+					setPingedObj={props.setPingedObj}
+					fixedLeftObj={props.fixedLeftObj}
+					fixedRightObj={props.fixedRightObj}
+					getStickyStyle={props.getStickyStyle}
+					setSizeCacheMap={props.setSizeCacheMap}
+					splitColumnsArr={props.splitColumnsArr}
+					splitColumnsArr_01={props.splitColumnsArr_01}
+					gridTemplateColumns={props.gridTemplateColumns}
+				/>
+				<ScrollbarV bodyRef={props.bodyRef} vScrollbarRef={props.vScrollbarRef} bordered={props.bordered} v_scrollbar={props.v_scrollbar} />
+			</div>
+			<ScrollbarH
+				bodyRef={props.bodyRef}
+				headRef={props.headRef}
+				bordered={props.bordered}
+				h_scrollbar={props.h_scrollbar}
+				v_scrollbar={props.v_scrollbar}
+				hScrollbarRef={props.hScrollbarRef}
 			/>
-			<TableSticky
-				fixedLeftObj={instance.fixedLeftObj}
-				fixedRightObj={instance.fixedRightObj}
-				pingedLeftEnd={instance.pingedLeftEnd}
-				pingedRightEnd={instance.pingedRightEnd}
-				v_ScrollbarWidth={instance.v_ScrollbarWidth}
-				h_ScrollbarWidth={instance.h_ScrollbarWidth}
-			/>
-		</div>
+		</TableLoading>
 	);
 };
 

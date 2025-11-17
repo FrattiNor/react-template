@@ -9,7 +9,7 @@ import Table from '../../Components/Table';
 
 const TableDemo = () => {
 	const { data, changeData } = useData();
-	const { columns, leafColumns } = useColumns();
+	const { columns, leafColumns, setLongColumn } = useColumns();
 	const [visible, setVisible] = useState<boolean>(false);
 	const [bordered, setBordered] = useState<boolean>(true);
 	const [sortConf, setSortConf] = useState<Record<string, number>>({});
@@ -20,13 +20,16 @@ const TableDemo = () => {
 		<Fragment>
 			<div className={styles['wrapper']}>
 				<div className={styles['btn-wrapper']}>
-					<button style={{ cursor: 'pointer' }} onClick={() => setBordered((old) => !old)}>
+					<button style={{ cursor: 'pointer', outline: 'none' }} onClick={() => setBordered((old) => !old)}>
 						{'Bordered'}
 					</button>
-					<button style={{ cursor: 'pointer' }} onClick={changeData}>
+					<button style={{ cursor: 'pointer', outline: 'none' }} onClick={() => setLongColumn((old) => !old)}>
+						{'ChangeColumn'}
+					</button>
+					<button style={{ cursor: 'pointer', outline: 'none' }} onClick={changeData}>
 						{'ChangeData'}
 					</button>
-					<button style={{ cursor: 'pointer' }} onClick={() => setVisible((old) => !old)}>
+					<button style={{ cursor: 'pointer', outline: 'none' }} onClick={() => setVisible((old) => !old)}>
 						{'Config'}
 					</button>
 				</div>

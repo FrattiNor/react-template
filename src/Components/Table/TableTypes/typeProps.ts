@@ -6,7 +6,7 @@ type TableRowKey<T> = ValueTypeKeys<T, string> | ((item: T, index: number) => st
 
 export type TableProps<T> = {
 	// 数据源
-	data: Array<T>;
+	data: Array<T> | undefined;
 	// 列配置
 	columns: TableColumns<T>;
 	// 行key
@@ -21,4 +21,6 @@ export type TableProps<T> = {
 	};
 	// 最小行高
 	rowHeight?: number;
+	// 加载中
+	loading?: boolean;
 };

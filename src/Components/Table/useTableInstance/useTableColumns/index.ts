@@ -12,7 +12,7 @@ type Props<T> = {
 };
 
 const useTableColumns = <T>({ props, tableState }: Props<T>) => {
-	const { columns, bordered } = props;
+	const { columns } = props;
 	const { sizeCacheMap } = tableState;
 	const { visibleConf, sortConf, widthConf } = props.columnConf ?? {};
 
@@ -40,7 +40,7 @@ const useTableColumns = <T>({ props, tableState }: Props<T>) => {
 				// isGroup
 				if (Array.isArray(column.children)) {
 					const current: InnerColumnGroup<T> = { ...(column as TableColumnGroup<T>) };
-					// eslint-disable-next-line @typescript-eslint/no-explicit-any
+
 					delete (current as any)['children'];
 					splitColumnsArrInner.push(...getSplitColumnsArr(column.children, { level: level + 1, parents: [...parents, current] }));
 				}
@@ -107,7 +107,7 @@ const useTableColumns = <T>({ props, tableState }: Props<T>) => {
 		const fixedRightObj: Record<string, { index: number; size: number; stickySize: number; pingedSize: number; leftTotalSize: number }> = {};
 		//
 		let totalSize = 0;
-		let leftCalcSize = bordered === true ? -1 : 0;
+		let leftCalcSize = 0;
 		let leftPingedSize = leftCalcSize;
 		//
 		splitColumnsArr_02.forEach((splitColumns) => {
@@ -155,7 +155,7 @@ const useTableColumns = <T>({ props, tableState }: Props<T>) => {
 		});
 
 		return { gridTemplateColumns, fixedLeftObj, fixedRightObj, fixedLeftArr, fixedRightArr };
-	}, [bordered, splitColumnsArr_02, sizeCacheMap]);
+	}, [splitColumnsArr_02, sizeCacheMap]);
 	// ======================================== part4 ========================================
 
 	return { splitColumnsArr_01, splitColumnsArr, gridTemplateColumns, deepLevel, fixedLeftObj, fixedRightObj, fixedLeftArr, fixedRightArr };

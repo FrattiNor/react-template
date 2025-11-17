@@ -10,39 +10,37 @@ type Props<T> = {
 
 // 表格左右固定
 const useTableSticky = <T>({ tableColumns, tableState }: Props<T>) => {
-	const { v_ScrollbarWidth, pingedRightEnd, pingedLeftEnd } = tableState;
 	const { fixedLeftObj, fixedRightObj } = tableColumns;
+	const { v_scrollbar, pingedLeftEnd, pingedLeftStart, pingedRightStart } = tableState;
 
 	const getStickyStyle = useCallback(
 		({ colIndexStart, colIndexEnd, type }: { colIndexStart: number; colIndexEnd: number; type: 'head' | 'body' }) => {
+			let leftLastPinged = false;
+			let leftFirstPinged = false;
+			let rightLastPinged = false;
+			let stickyStyle: CSSProperties = {};
+
 			if (fixedLeftObj[colIndexStart]) {
-				const { stickySize } = fixedLeftObj[colIndexStart];
-				const stickyStyle: CSSProperties = {
-					left: stickySize,
-					position: 'sticky',
-					zIndex: 6,
-				};
+				const stickySize = fixedLeftObj[colIndexStart].stickySize;
+				stickyStyle = { left: stickySize, position: 'sticky', zIndex: 6 };
+				leftFirstPinged = colIndexStart === pingedLeftStart;
+				leftLastPinged = colIndexEnd === pingedLeftEnd;
 				const pinged = colIndexStart <= (pingedLeftEnd ?? -1);
 				if (pinged) stickyStyle.zIndex = 10;
-				return { stickyStyle };
 			}
 
 			if (fixedRightObj[colIndexEnd]) {
-				const { stickySize } = fixedRightObj[colIndexEnd];
-				const right = type === 'head' ? stickySize + v_ScrollbarWidth : stickySize;
-				const stickyStyle: CSSProperties = {
-					position: 'sticky',
-					zIndex: 5,
-					right,
-				};
-				const pinged = colIndexEnd >= (pingedRightEnd ?? Infinity);
+				const stickySize = fixedRightObj[colIndexEnd].stickySize;
+				const right = type === 'head' && v_scrollbar.have ? stickySize + v_scrollbar.width : stickySize;
+				stickyStyle = { position: 'sticky', zIndex: 5, right };
+				rightLastPinged = colIndexStart === pingedRightStart;
+				const pinged = colIndexEnd >= (pingedRightStart ?? Infinity);
 				if (pinged) stickyStyle.zIndex = 10;
-				return { stickyStyle };
 			}
 
-			return { stickyStyle: undefined };
+			return { stickyStyle, leftLastPinged, leftFirstPinged, rightLastPinged };
 		},
-		[fixedLeftObj, fixedRightObj, pingedLeftEnd, pingedRightEnd, v_ScrollbarWidth],
+		[fixedLeftObj, fixedRightObj, v_scrollbar, pingedLeftEnd, pingedLeftStart, pingedRightStart],
 	);
 
 	return { getStickyStyle };

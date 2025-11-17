@@ -4,7 +4,7 @@ import classNames from 'classnames';
 
 import styles from './index.module.less';
 
-import type { TableInstance } from '../../../../useTableInstance';
+import type { TableInstance } from '../../../../../useTableInstance';
 
 type Props<T> = Required<Pick<TableInstance<T>, 'bordered' | 'rowHeight'>> & {
 	rowIndex: number;
@@ -12,7 +12,6 @@ type Props<T> = Required<Pick<TableInstance<T>, 'bordered' | 'rowHeight'>> & {
 };
 
 const BodyCellPlaceholder = <T,>(props: Props<T>) => {
-	//  console.log(`BodyCellPlaceholder(${props.rowIndex}-${props.colIndex}) re-render`);
 	const { bordered, rowIndex, colIndex, rowHeight } = props;
 
 	return (

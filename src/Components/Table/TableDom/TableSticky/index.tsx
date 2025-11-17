@@ -1,37 +1,48 @@
 import { memo, useMemo } from 'react';
 
+import classNames from 'classnames';
+
 import styles from './index.module.less';
 
 import type { TableInstance } from '../../useTableInstance';
-
 type Props<T> = Required<
-	Pick<TableInstance<T>, 'fixedLeftObj' | 'fixedRightObj' | 'pingedLeftEnd' | 'pingedRightEnd' | 'v_ScrollbarWidth' | 'h_ScrollbarWidth'>
+	Pick<TableInstance<T>, 'fixedLeftObj' | 'fixedRightObj' | 'pingedLeftEnd' | 'pingedRightStart' | 'v_scrollbar' | 'h_scrollbar'>
 >;
 
+// TODO empty时
 const TableSticky = <T,>(props: Props<T>) => {
-	const { fixedLeftObj, fixedRightObj, pingedLeftEnd, pingedRightEnd, v_ScrollbarWidth, h_ScrollbarWidth } = props;
+	const { fixedLeftObj, fixedRightObj, pingedLeftEnd, pingedRightStart, v_scrollbar, h_scrollbar } = props;
 
 	const stickyLeftWidth = useMemo(() => {
 		if (typeof pingedLeftEnd === 'number') {
-			return fixedLeftObj[pingedLeftEnd].stickySize + fixedLeftObj[pingedLeftEnd].size;
+			const size = fixedLeftObj[pingedLeftEnd]?.size;
+			const stickySize = fixedLeftObj[pingedLeftEnd]?.stickySize;
+			if (typeof size === 'number' && typeof stickySize === 'number') {
+				return size + stickySize;
+			}
 		}
-		return undefined;
+		return 0;
 	}, [fixedLeftObj, pingedLeftEnd]);
 
 	const stickyRightWidth = useMemo(() => {
-		if (typeof pingedRightEnd === 'number') {
-			return fixedRightObj[pingedRightEnd].stickySize + fixedRightObj[pingedRightEnd].size;
+		if (typeof pingedRightStart === 'number') {
+			const size = fixedRightObj[pingedRightStart]?.size;
+			const stickySize = fixedRightObj[pingedRightStart]?.stickySize;
+			if (typeof size === 'number' && typeof stickySize === 'number') {
+				return size + stickySize;
+			}
 		}
-		return undefined;
-	}, [fixedRightObj, pingedRightEnd]);
-
-	if (typeof stickyLeftWidth !== 'number' && typeof stickyRightWidth !== 'number') return null;
+		return 0;
+	}, [fixedRightObj, pingedRightStart]);
 
 	return (
-		<div className={styles['table-sticky']} style={{ bottom: h_ScrollbarWidth, right: v_ScrollbarWidth }}>
-			{typeof stickyLeftWidth === 'number' && <div className={styles['sticky-left']} style={{ width: stickyLeftWidth }}></div>}
-			{typeof stickyRightWidth === 'number' && <div className={styles['sticky-right']} style={{ width: stickyRightWidth }}></div>}
-		</div>
+		<div
+			style={{ bottom: h_scrollbar.width, right: stickyRightWidth + v_scrollbar.width, left: stickyLeftWidth }}
+			className={classNames(styles['table-sticky'], {
+				[styles['sticky-left']]: stickyLeftWidth > 0,
+				[styles['sticky-right']]: stickyRightWidth > 0,
+			})}
+		/>
 	);
 };
 

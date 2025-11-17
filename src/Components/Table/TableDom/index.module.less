@@ -14,11 +14,24 @@
 	font-size: var(--table-font-size);
 	font-family: var(--table-font-family);
 	border-radius: var(--table-border-radius);
-	border-bottom: var(--table-cell-border-width) solid var(--table-cell-border-color);
 
 	&.bordered {
 		border-top: var(--table-cell-border-width) solid var(--table-cell-border-color);
 		border-left: var(--table-cell-border-width) solid var(--table-cell-border-color);
 		border-right: var(--table-cell-border-width) solid var(--table-cell-border-color);
+		border-bottom: var(--table-cell-border-width) solid var(--table-cell-border-color);
+	}
+
+	&.no-bordered-and-no-h-scrollbar {
+		border-bottom: var(--table-cell-border-width) solid var(--table-cell-border-color);
+	}
+
+	.table-body-wrapper {
+		z-index: 1;
+		width: 100%;
+		min-height: 0;
+		flex-shrink: 1;
+		display: flex;
+		position: relative;
 	}
 }

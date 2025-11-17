@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { isValidElement, type ReactNode } from 'react';
 
 import type { InnerColumnGroup, InnerColumn } from '../TableTypes/typeColumn';

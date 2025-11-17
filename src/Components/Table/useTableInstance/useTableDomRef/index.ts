@@ -1,115 +1,138 @@
-import { useLayoutEffect, useRef } from 'react';
+import { useEffect, useLayoutEffect, useRef } from 'react';
 
-import useRefValue from '../../TableHooks/useRefValue';
-
-import type useTableColumns from '../useTableColumns';
 import type useTableState from '../useTableState';
 
-type Props<T> = {
+type Props = {
 	tableState: ReturnType<typeof useTableState>;
-	tableColumns: ReturnType<typeof useTableColumns<T>>;
 };
 
 // 表格dom的ref 以及 对dom的监测【resize、scroll】
-const useTableDomRef = <T>({ tableState, tableColumns }: Props<T>) => {
-	const bodyRef = useRef<HTMLDivElement>(null);
+const useTableDomRef = ({ tableState }: Props) => {
 	const headRef = useRef<HTMLDivElement>(null);
-	// 避免闭包
-	const { fixedLeftArr, fixedRightArr } = tableColumns;
-	const [getFixedLeftArr] = useRefValue(fixedLeftArr);
-	const [getFixedRightArr] = useRefValue(fixedRightArr);
-	const { setV_ScrollbarWidth, setH_ScrollbarWidth, setPingedLeftEnd, setPingedRightEnd } = tableState;
-
-	// 计算固定的index
-	const calcPingedIndex = () => {
-		const bodyScrollLeft = bodyRef.current?.scrollLeft;
-		const bodyScrollWidth = bodyRef.current?.scrollWidth;
-		const bodyClientWidth = bodyRef.current?.clientWidth;
-		if (typeof bodyScrollLeft === 'number' && typeof bodyScrollWidth === 'number' && typeof bodyClientWidth === 'number') {
-			const scrollLeft = bodyScrollLeft;
-			const scrollRight = bodyScrollWidth - bodyClientWidth - bodyScrollLeft;
-			// 计算固定的index
-			let leftPingedEnd: number | undefined = undefined;
-			let rightPingedEnd: number | undefined = undefined;
-
-			if (scrollLeft > 0) {
-				const fixedLeftArr = getFixedLeftArr();
-				for (let i = 0; i < fixedLeftArr.length; i++) {
-					const { pingedSize, index } = fixedLeftArr[i];
-					if (scrollLeft > pingedSize) {
-						if (leftPingedEnd === undefined || leftPingedEnd < index) leftPingedEnd = index;
-					} else {
-						break;
-					}
-				}
-			}
-
-			if (scrollRight > 0) {
-				const fixedRightArr = getFixedRightArr();
-				for (let i = 0; i < fixedRightArr.length; i++) {
-					const { pingedSize, index } = fixedRightArr[i];
-					if (scrollRight > pingedSize) {
-						if (rightPingedEnd === undefined || rightPingedEnd > index) rightPingedEnd = index;
-					} else {
-						break;
-					}
-				}
-			}
-
-			setPingedLeftEnd(leftPingedEnd);
-			setPingedRightEnd(rightPingedEnd);
-		}
-	};
+	const bodyRef = useRef<HTMLDivElement>(null);
+	const bodyInnerRef = useRef<HTMLDivElement>(null);
+	const vScrollbarRef = useRef<HTMLDivElement>(null);
+	const hScrollbarRef = useRef<HTMLDivElement>(null);
+	const { setV_scrollbar, setH_scrollbar } = tableState;
 
 	useLayoutEffect(() => {
-		// fixedLeftArr和fixedRightArr变化时触发一次计算
-		calcPingedIndex();
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [fixedLeftArr, fixedRightArr]);
-
-	useLayoutEffect(() => {
-		if (bodyRef.current && headRef.current) {
+		if (bodyRef.current && bodyInnerRef.current) {
 			const body = bodyRef.current;
-			const head = headRef.current;
+			const bodyInner = bodyInnerRef.current;
 
 			// === ob body content resize ===
-			const calcScrollBarWidth = () => {
-				setV_ScrollbarWidth(body.offsetWidth - body.clientWidth);
-				setH_ScrollbarWidth(body.offsetHeight - body.clientHeight);
+			const calcScrollBar = (entries?: ResizeObserverEntry[]) => {
+				const hScrollbarHave = body.scrollWidth > body.clientWidth;
+				const vScrollbarHave = body.scrollHeight > body.clientHeight;
+				if (!entries) {
+					// 创建隐藏的div容器
+					const outer = document.createElement('div');
+					outer.style.width = '100px';
+					outer.style.height = '100px';
+					outer.style.visibility = 'hidden';
+					outer.style.opacity = '0';
+					outer.style.zIndex = '-1';
+					outer.style.overflow = 'scroll';
+					outer.style.position = 'absolute';
+					outer.style.top = '0px';
+					outer.style.left = '0px';
+					body.appendChild(outer);
+					// 创建内部元素并放置在容器中
+					const inner = document.createElement('div');
+					inner.style.width = '1000px';
+					inner.style.height = '1000px';
+					outer.appendChild(inner);
+					// 保存宽度
+					setV_scrollbar({
+						have: vScrollbarHave,
+						outSize: body.clientHeight,
+						innerSize: body.scrollHeight,
+						width: outer.offsetWidth - outer.clientWidth,
+					});
+					setH_scrollbar({
+						have: hScrollbarHave,
+						outSize: body.clientWidth,
+						innerSize: body.scrollWidth,
+						width: outer.offsetHeight - outer.clientHeight,
+					});
+					// 从DOM中移除临时元素
+					outer.parentNode?.removeChild(outer);
+				} else {
+					setV_scrollbar((old) => ({
+						...old,
+						have: vScrollbarHave,
+						outSize: body.clientHeight,
+						innerSize: body.scrollHeight,
+					}));
+					setH_scrollbar((old) => ({
+						...old,
+						have: hScrollbarHave,
+						outSize: body.clientWidth,
+						innerSize: body.scrollWidth,
+					}));
+				}
 			};
-			const ob = new ResizeObserver(calcScrollBarWidth);
-			ob.observe(body, { box: 'content-box' });
+			const ob = new ResizeObserver(calcScrollBar);
+			ob.observe(body, { box: 'border-box' });
+			ob.observe(bodyInner, { box: 'border-box' });
 			// 直接执行一次
-			calcScrollBarWidth();
-
-			// === ob body scroll ===
-			const handleBodyScroll = () => {
-				if (head.scrollLeft !== body.scrollLeft) {
-					head.scrollLeft = body.scrollLeft;
-					calcPingedIndex();
-				}
-			};
-			body.addEventListener('scroll', handleBodyScroll, { passive: true });
-
-			// === ob head scroll ===
-			const handleHeadScroll = () => {
-				if (head.scrollLeft !== body.scrollLeft) {
-					body.scrollLeft = head.scrollLeft;
-					calcPingedIndex();
-				}
-			};
-			head.addEventListener('scroll', handleHeadScroll, { passive: true });
+			calcScrollBar();
 
 			return () => {
 				ob.disconnect();
-				body.removeEventListener('scroll', handleBodyScroll);
-				head.removeEventListener('scroll', handleHeadScroll);
 			};
 		}
-		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
-	return { bodyRef, headRef };
+	useEffect(() => {
+		if (bodyRef.current) {
+			const body = bodyRef.current;
+			const handleWheel = (e: WheelEvent) => {
+				const scrollCoefficient = -(((e as any).wheelDeltaY as number) ?? -e.deltaY) > 0 ? 1 : -1;
+				const scrollDistance = scrollCoefficient * 300;
+				if (e.shiftKey === true) {
+					if (hScrollbarRef.current) {
+						hScrollbarRef.current?.scrollBy({ left: scrollDistance, behavior: 'smooth' });
+					}
+				} else {
+					if (vScrollbarRef.current) {
+						vScrollbarRef.current?.scrollBy({ top: scrollDistance, behavior: 'smooth' });
+					}
+				}
+			};
+			body.addEventListener('wheel', handleWheel, { passive: true });
+
+			return () => {
+				body.removeEventListener('wheel', handleWheel);
+			};
+		}
+	}, []);
+
+	useEffect(() => {
+		if (headRef.current) {
+			const head = headRef.current;
+			const handleWheel = (e: WheelEvent) => {
+				const scrollCoefficient = -(((e as any).wheelDeltaY as number) ?? -e.deltaY) > 0 ? 1 : -1;
+				const scrollDistance = scrollCoefficient * 300;
+				if (e.shiftKey === true) {
+					if (hScrollbarRef.current) {
+						hScrollbarRef.current?.scrollBy({ left: scrollDistance, behavior: 'smooth' });
+					}
+				} else {
+					if (vScrollbarRef.current) {
+						vScrollbarRef.current?.scrollBy({ top: scrollDistance, behavior: 'smooth' });
+					}
+				}
+			};
+			head.addEventListener('wheel', handleWheel, { passive: true });
+
+			return () => {
+				head.removeEventListener('wheel', handleWheel);
+			};
+		}
+	}, []);
+
+	return { bodyRef, headRef, bodyInnerRef, vScrollbarRef, hScrollbarRef };
 };
 
 export default useTableDomRef;

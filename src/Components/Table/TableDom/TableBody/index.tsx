@@ -2,10 +2,11 @@ import { memo } from 'react';
 
 import classNames from 'classnames';
 
-import BodyRow from './BodyRow';
+import BodyEmpty from './BodyEmpty';
+import BodyInner from './BodyInner';
 import styles from './index.module.less';
-import MeasureRow from './MeasureRow';
-import { getRowKey } from '../../TableUtils';
+import MeasureCol from './MeasureCol';
+import StickyObserver from './StickyObserver';
 
 import type { TableInstance } from '../../useTableInstance';
 
@@ -19,35 +20,48 @@ type Props<T> = Required<
 		| 'rowKey'
 		| 'gridTemplateColumns'
 		| 'bodyRef'
+		| 'bodyInnerRef'
 		| 'rowHeight'
 		| 'getStickyStyle'
 		| 'setSizeCacheMap'
+		| 'setPingedObj'
+		| 'fixedLeftObj'
+		| 'fixedRightObj'
 	>
 >;
 
 const TableBody = <T,>(props: Props<T>) => {
-	//  console.log('TableBody re-render');
-	const { bordered, data, rowKey, gridTemplateColumns, bodyRef } = props;
+	const { bordered, data, bodyRef, bodyInnerRef } = props;
+	const isEmpty = (data ?? []).length === 0;
 
 	return (
 		<div ref={bodyRef} className={classNames(styles['body'], { [styles['bordered']]: bordered })}>
-			<MeasureRow splitColumnsArr_01={props.splitColumnsArr_01} setSizeCacheMap={props.setSizeCacheMap} />
-
-			<div className={classNames(styles['body-inner'])} style={{ gridTemplateColumns: gridTemplateColumns + ` minmax(0px, 1fr)` }}>
-				{data.map((dataItem, rowIndex) => {
-					const key = getRowKey(rowKey, dataItem, rowIndex);
-					return (
-						<BodyRow
-							key={key}
-							data={props.data}
-							rowIndex={rowIndex}
-							bordered={props.bordered}
-							rowHeight={props.rowHeight}
-							getStickyStyle={props.getStickyStyle}
-							splitColumnsArr={props.splitColumnsArr}
-						/>
-					);
-				})}
+			{/* 监测col宽度 */}
+			<MeasureCol setSizeCacheMap={props.setSizeCacheMap} splitColumnsArr_01={props.splitColumnsArr_01} />
+			{/* 监测fixed状态 */}
+			<StickyObserver
+				bodyRef={props.bodyRef}
+				setPingedObj={props.setPingedObj}
+				fixedLeftObj={props.fixedLeftObj}
+				fixedRightObj={props.fixedRightObj}
+				splitColumnsArr={props.splitColumnsArr}
+				gridTemplateColumns={props.gridTemplateColumns}
+			/>
+			<div ref={bodyInnerRef} className={styles['body-inner']}>
+				{/* Body本体 */}
+				{!isEmpty && (
+					<BodyInner
+						data={props.data}
+						rowKey={props.rowKey}
+						bordered={props.bordered}
+						rowHeight={props.rowHeight}
+						getStickyStyle={props.getStickyStyle}
+						splitColumnsArr={props.splitColumnsArr}
+						gridTemplateColumns={props.gridTemplateColumns}
+					/>
+				)}
+				{/* 空Body */}
+				{isEmpty && <BodyEmpty />}
 			</div>
 		</div>
 	);

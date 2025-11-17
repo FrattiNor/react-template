@@ -5,22 +5,21 @@ import classNames from 'classnames';
 import BodyCell from './BodyCell';
 import BodyCellPlaceholder from './BodyCellPlaceholder';
 import styles from './index.module.less';
-import { getLeafColumn } from '../../../TableUtils';
+import { getLeafColumn } from '../../../../TableUtils';
 
-import type { TableInstance } from '../../../useTableInstance';
+import type { TableInstance } from '../../../../useTableInstance';
 
-type Props<T> = Required<Pick<TableInstance<T>, 'splitColumnsArr' | 'bordered' | 'data' | 'rowHeight' | 'getStickyStyle'>> & {
+type Props<T> = Required<Pick<TableInstance<T>, 'splitColumnsArr' | 'bordered' | 'rowHeight' | 'getStickyStyle'>> & {
 	rowIndex: number;
+	dataItem: T;
 };
 
 const BodyRow = <T,>(props: Props<T>) => {
-	//  console.log(`BodyRow(${props.rowIndex}) re-render`);
-	const { splitColumnsArr, rowIndex, data } = props;
+	const { splitColumnsArr, rowIndex, dataItem } = props;
 	return (
 		<div data-row={rowIndex + 1} className={classNames(styles['body-row'])}>
 			{splitColumnsArr.map((splitColumns, colIndex) => {
 				const column = getLeafColumn(splitColumns);
-				const dataItem = data[rowIndex];
 				return (
 					<BodyCell
 						key={column.key}

@@ -16,23 +16,20 @@ type Props<T> = Required<
 		| 'bordered'
 		| 'headRef'
 		| 'gridTemplateColumns'
-		| 'v_ScrollbarWidth'
+		| 'v_scrollbar'
 		| 'rowHeight'
 		| 'getStickyStyle'
-		| 'pingedRightEnd'
+		| 'pingedRightStart'
 	>
 >;
 
 const TableHead = <T,>(props: Props<T>) => {
-	//  console.log('TableHead re-render');
-	const { headRef, gridTemplateColumns, v_ScrollbarWidth, deepLevel } = props;
+	const { headRef, gridTemplateColumns, v_scrollbar, deepLevel } = props;
+	const headGridTemplateColumns = v_scrollbar.have ? gridTemplateColumns + ` minmax(${v_scrollbar.width}px, 1fr)` : gridTemplateColumns;
 
 	return (
 		<div ref={headRef} className={classNames(styles['head'])}>
-			<div
-				className={classNames(styles['head-inner'])}
-				style={{ gridTemplateColumns: gridTemplateColumns + ` minmax(${v_ScrollbarWidth}px, 1fr)` }}
-			>
+			<div className={classNames(styles['head-inner'])} style={{ gridTemplateColumns: headGridTemplateColumns }}>
 				{Array(deepLevel + 1)
 					.fill(undefined)
 					.map((_, rowIndex) => (
@@ -52,8 +49,8 @@ const TableHead = <T,>(props: Props<T>) => {
 					rowIndexEnd={deepLevel}
 					bordered={props.bordered}
 					rowHeight={props.rowHeight}
-					pingedRightEnd={props.pingedRightEnd}
-					colIndex={props.splitColumnsArr.length}
+					splitColumnsArr={props.splitColumnsArr}
+					pingedRightStart={props.pingedRightStart}
 				/>
 			</div>
 		</div>

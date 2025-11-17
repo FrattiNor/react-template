@@ -10,7 +10,7 @@ const useTableInstance = <T>(props: TableProps<T>) => {
 	const tableState = useTableState();
 	const tableRequiredProps = useTableRequiredProps(props);
 	const tableColumns = useTableColumns({ tableState, props });
-	const tableDomRef = useTableDomRef({ tableState, tableColumns });
+	const tableDomRef = useTableDomRef({ tableState });
 	const tableSticky = useTableSticky({ tableState, tableColumns });
 	return { ...tableState, ...tableRequiredProps, ...tableDomRef, ...tableColumns, ...tableSticky };
 };

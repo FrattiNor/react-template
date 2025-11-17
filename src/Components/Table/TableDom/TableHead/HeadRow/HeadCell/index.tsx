@@ -17,20 +17,19 @@ type Props<T> = Required<Pick<TableInstance<T>, 'bordered' | 'rowHeight' | 'getS
 };
 
 const HeadCell = <T,>(props: Props<T>) => {
-	//  console.log(`HeadCell(${props.rowIndex}-${props.colIndex}) re-render`);
 	const { column, bordered, rowIndexStart, rowIndexEnd, colIndexStart, colIndexEnd, rowHeight, getStickyStyle } = props;
 
 	const renderDom = column.title;
 	const title = getCellTitle(renderDom);
 	const canEllipsis = isStrNum(renderDom);
-	const { stickyStyle } = getStickyStyle({ colIndexStart, colIndexEnd, type: 'head' });
+	const { stickyStyle, rightLastPinged, leftFirstPinged, leftLastPinged } = getStickyStyle({ colIndexStart, colIndexEnd, type: 'head' });
 
 	return (
 		<div
 			title={title}
 			className={classNames(styles['head-cell'], {
-				[styles['bordered']]: bordered,
-				[styles['first-col']]: colIndexStart === 0,
+				[styles['left-last-pinged']]: leftLastPinged,
+				[styles['right-last-pinged']]: rightLastPinged,
 			})}
 			style={{
 				...stickyStyle,
@@ -40,8 +39,13 @@ const HeadCell = <T,>(props: Props<T>) => {
 			}}
 		>
 			<div
-				className={styles['head-cell-inner']}
 				style={{ justifyContent: column.align === 'center' ? 'center' : column.align === 'right' ? 'flex-end' : 'flex-start' }}
+				className={classNames(styles['head-cell-inner'], {
+					[styles['bordered']]: bordered,
+					[styles['first-col']]: colIndexStart === 0,
+					[styles['not-first-col-and-left-first-pinged']]: colIndexStart !== 0 && leftFirstPinged,
+					[styles['not-first-col-and-right-last-pinged']]: colIndexStart !== 0 && rightLastPinged,
+				})}
 			>
 				{!canEllipsis ? renderDom : <div className={styles['ellipsis-wrapper']}>{renderDom}</div>}
 			</div>

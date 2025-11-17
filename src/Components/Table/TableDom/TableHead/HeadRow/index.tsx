@@ -14,7 +14,6 @@ type Props<T> = Required<Pick<TableInstance<T>, 'splitColumnsArr' | 'deepLevel' 
 };
 
 const HeadRow = <T,>(props: Props<T>) => {
-	//  console.log(`HeadRow(${props.rowIndex}) re-render`);
 	const { rowIndex, splitColumnsArr, deepLevel } = props;
 
 	const renderRow = () => {
