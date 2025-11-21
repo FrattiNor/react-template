@@ -13,6 +13,14 @@ const ScrollbarV = <T,>(props: Props<T>) => {
 	useEffect(() => {
 		if (v_scrollbar.have && vScrollbarRef.current) {
 			const vScrollbar = vScrollbarRef.current;
+
+			// 同步一次scrollTop
+			(() => {
+				if (bodyRef.current && bodyRef.current.scrollTop !== vScrollbar.scrollTop) {
+					vScrollbar.scrollTop = bodyRef.current.scrollTop;
+				}
+			})();
+
 			const handleScroll = () => {
 				requestAnimationFrame(() => {
 					if (bodyRef.current && bodyRef.current.scrollTop !== vScrollbar.scrollTop) {

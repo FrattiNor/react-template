@@ -1,5 +1,7 @@
 import { useEffect, useLayoutEffect, useRef } from 'react';
 
+import { useScrollBy } from './useScroll';
+
 import type useTableState from '../useTableState';
 
 type Props = {
@@ -8,6 +10,8 @@ type Props = {
 
 // 表格dom的ref 以及 对dom的监测【resize、scroll】
 const useTableDomRef = ({ tableState }: Props) => {
+	const scrollByTop = useScrollBy('scrollTop');
+	const scrollByLeft = useScrollBy('scrollLeft');
 	const headRef = useRef<HTMLDivElement>(null);
 	const bodyRef = useRef<HTMLDivElement>(null);
 	const bodyInnerRef = useRef<HTMLDivElement>(null);
@@ -89,14 +93,14 @@ const useTableDomRef = ({ tableState }: Props) => {
 			const body = bodyRef.current;
 			const handleWheel = (e: WheelEvent) => {
 				const scrollCoefficient = -(((e as any).wheelDeltaY as number) ?? -e.deltaY) > 0 ? 1 : -1;
-				const scrollDistance = scrollCoefficient * 300;
+				const scrollDistance = scrollCoefficient * 150;
 				if (e.shiftKey === true) {
 					if (hScrollbarRef.current) {
-						hScrollbarRef.current?.scrollBy({ left: scrollDistance, behavior: 'smooth' });
+						scrollByLeft({ el: hScrollbarRef.current, offset: scrollDistance, duration: 150 });
 					}
 				} else {
 					if (vScrollbarRef.current) {
-						vScrollbarRef.current?.scrollBy({ top: scrollDistance, behavior: 'smooth' });
+						scrollByTop({ el: vScrollbarRef.current, offset: scrollDistance, duration: 150 });
 					}
 				}
 			};
@@ -113,14 +117,14 @@ const useTableDomRef = ({ tableState }: Props) => {
 			const head = headRef.current;
 			const handleWheel = (e: WheelEvent) => {
 				const scrollCoefficient = -(((e as any).wheelDeltaY as number) ?? -e.deltaY) > 0 ? 1 : -1;
-				const scrollDistance = scrollCoefficient * 300;
+				const scrollDistance = scrollCoefficient * 150;
 				if (e.shiftKey === true) {
 					if (hScrollbarRef.current) {
-						hScrollbarRef.current?.scrollBy({ left: scrollDistance, behavior: 'smooth' });
+						scrollByLeft({ el: hScrollbarRef.current, offset: scrollDistance, duration: 150 });
 					}
 				} else {
 					if (vScrollbarRef.current) {
-						vScrollbarRef.current?.scrollBy({ top: scrollDistance, behavior: 'smooth' });
+						scrollByTop({ el: vScrollbarRef.current, offset: scrollDistance, duration: 150 });
 					}
 				}
 			};

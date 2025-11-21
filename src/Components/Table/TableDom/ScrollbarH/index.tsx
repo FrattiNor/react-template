@@ -13,6 +13,14 @@ const ScrollbarH = <T,>(props: Props<T>) => {
 	useEffect(() => {
 		if (h_scrollbar.have && hScrollbarRef.current) {
 			const hScrollbar = hScrollbarRef.current;
+
+			// 同步一次scrollLeft
+			(() => {
+				if (bodyRef.current && bodyRef.current.scrollLeft !== hScrollbar.scrollLeft) {
+					hScrollbar.scrollLeft = bodyRef.current.scrollLeft;
+				}
+			})();
+
 			const handleScroll = () => {
 				requestAnimationFrame(() => {
 					if (headRef.current && headRef.current.scrollLeft !== hScrollbar.scrollLeft) {
