@@ -1,4 +1,4 @@
-import { memo, useLayoutEffect, useRef, useState } from 'react';
+import { memo, useEffect, useLayoutEffect, useRef, useState } from 'react';
 
 import styles from './index.module.less';
 import MeasureColItem from './MeasureColItem';
@@ -13,36 +13,40 @@ const MeasureCol = <T,>(props: Props<T>) => {
 	const { splitColumnsArr_01, setSizeCacheMap } = props;
 	const [resizeObserver, setResizeObserver] = useState<ResizeObserver | null>(null);
 
-	// ResizeObserver，监测itemWidth
+	const sizeCacheChangeBatch = <B,>(items: Array<B>, getKey: (item: B) => string | null, getSize: (item: B) => number) => {
+		setSizeCacheMap((old) => {
+			let changed = false;
+			items.forEach((item) => {
+				const key = getKey(item);
+				if (typeof key === 'string') {
+					const size = FixedTwo(getSize(item));
+					if (old.get(key) !== size) {
+						old.set(key, size);
+						changed = true;
+					}
+				}
+			});
+			if (changed) return new Map(old);
+			return old;
+		});
+	};
+
+	// first calc
 	useLayoutEffect(() => {
 		if (ref.current) {
 			const element = ref.current;
-
-			const sizeCacheChangeBatch = <B,>(items: Array<B>, getKey: (item: B) => string | null, getSize: (item: B) => number) => {
-				setSizeCacheMap((old) => {
-					let changed = false;
-					items.forEach((item) => {
-						const key = getKey(item);
-						if (typeof key === 'string') {
-							const size = FixedTwo(getSize(item));
-							if (old.get(key) !== size) {
-								old.set(key, size);
-								changed = true;
-							}
-						}
-					});
-					if (changed) return new Map(old);
-					return old;
-				});
-			};
-
 			// 直接执行一次
 			sizeCacheChangeBatch(
 				Array.from(element.children),
 				(node) => node.getAttribute('data-key'),
 				(node) => node.getBoundingClientRect().width,
 			);
+		}
+	}, []);
 
+	// ResizeObserver
+	useEffect(() => {
+		if (ref.current) {
 			const _observer = new ResizeObserver((entries) => {
 				sizeCacheChangeBatch(
 					entries,

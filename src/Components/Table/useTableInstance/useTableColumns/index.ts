@@ -84,16 +84,7 @@ const useTableColumns = <T>({ props, tableState }: Props<T>) => {
 	// ======================================== part2 ========================================
 
 	// ======================================== part3 ========================================
-	const splitColumnsArr = useMemo(() => {
-		if (sizeCacheMap.size === 0) {
-			return [];
-		}
-		return splitColumnsArr_02;
-	}, [sizeCacheMap, splitColumnsArr_02]);
-	// ======================================== part3 ========================================
-
-	// ======================================== part4 ========================================
-	const { gridTemplateColumns, fixedLeftObj, fixedRightObj, fixedLeftArr, fixedRightArr } = useMemo(() => {
+	const { splitColumnsArr, gridTemplateColumns, fixedLeftObj, fixedRightObj, fixedLeftArr, fixedRightArr } = useMemo(() => {
 		// gridTemplateColumns
 		let gridTemplateColumns = '';
 		// index，当前column所在index
@@ -110,10 +101,12 @@ const useTableColumns = <T>({ props, tableState }: Props<T>) => {
 		let leftCalcSize = 0;
 		let leftPingedSize = leftCalcSize;
 		//
+		const splitColumnsArr: Array<Array<InnerColumnGroup<T> | InnerColumn<T> | null>> = [];
 		splitColumnsArr_02.forEach((splitColumns) => {
 			const column = getLeafColumn(splitColumns);
 			const sizeCache = sizeCacheMap.get(column.key);
 			if (typeof sizeCache === 'number') {
+				splitColumnsArr.push(splitColumns);
 				totalSize += sizeCache;
 				gridTemplateColumns += gridTemplateColumns === '' ? `${sizeCache}px` : ` ${sizeCache}px`;
 
@@ -154,9 +147,9 @@ const useTableColumns = <T>({ props, tableState }: Props<T>) => {
 			rightCalcSize += size;
 		});
 
-		return { gridTemplateColumns, fixedLeftObj, fixedRightObj, fixedLeftArr, fixedRightArr };
+		return { splitColumnsArr, gridTemplateColumns, fixedLeftObj, fixedRightObj, fixedLeftArr, fixedRightArr };
 	}, [splitColumnsArr_02, sizeCacheMap]);
-	// ======================================== part4 ========================================
+	// ======================================== part3 ========================================
 
 	return { splitColumnsArr_01, splitColumnsArr, gridTemplateColumns, deepLevel, fixedLeftObj, fixedRightObj, fixedLeftArr, fixedRightArr };
 };

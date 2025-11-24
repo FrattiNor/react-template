@@ -6,29 +6,25 @@ const useTableState = () => {
 	const [h_scrollbar, setH_scrollbar] = useState({ have: false, outSize: 0, innerSize: 0, width: 0 });
 
 	// 左右固定的index
-	const [pingedObj, setPingedObj] = useState<{ left: Record<string, true>; right: Record<string, true> }>({ left: {}, right: {} });
+	const [pingedObj, setPingedObj] = useState<{ [key: string]: { fixed: 'left' | 'right'; index: number } }>({});
 
-	const { pingedLeftStart, pingedLeftEnd } = useMemo(() => {
+	const { pingedLeftStart, pingedLeftEnd, pingedRightStart } = useMemo(() => {
 		let pingedLeftStart: number | undefined = undefined;
 		let pingedLeftEnd: number | undefined = undefined;
-		Object.keys(pingedObj.left).forEach((_index) => {
-			const index = parseInt(_index);
-			if (pingedLeftStart === undefined || index < pingedLeftStart) pingedLeftStart = index;
-			if (pingedLeftEnd === undefined || index > pingedLeftEnd) pingedLeftEnd = index;
-		});
-		return { pingedLeftStart, pingedLeftEnd };
-	}, [pingedObj.left]);
-
-	const { pingedRightStart } = useMemo(() => {
 		let pingedRightStart: number | undefined = undefined;
 		let pingedRightEnd: number | undefined = undefined;
-		Object.keys(pingedObj.right).forEach((_index) => {
-			const index = parseInt(_index);
-			if (pingedRightStart === undefined || index < pingedRightStart) pingedRightStart = index;
-			if (pingedRightEnd === undefined || index > pingedRightEnd) pingedRightEnd = index;
+		Object.values(pingedObj).forEach(({ index, fixed }) => {
+			if (fixed === 'left') {
+				if (pingedLeftStart === undefined || index < pingedLeftStart) pingedLeftStart = index;
+				if (pingedLeftEnd === undefined || index > pingedLeftEnd) pingedLeftEnd = index;
+			}
+			if (fixed === 'right') {
+				if (pingedRightStart === undefined || index < pingedRightStart) pingedRightStart = index;
+				if (pingedRightEnd === undefined || index > pingedRightEnd) pingedRightEnd = index;
+			}
 		});
-		return { pingedRightStart, pingedRightEnd };
-	}, [pingedObj.right]);
+		return { pingedLeftStart, pingedLeftEnd, pingedRightStart, pingedRightEnd };
+	}, [pingedObj]);
 
 	return {
 		sizeCacheMap,

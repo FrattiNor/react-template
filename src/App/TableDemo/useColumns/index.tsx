@@ -172,7 +172,15 @@ const useColumns = () => {
 		} else {
 			return [
 				{
-					key: 'index',
+					flexGrow: 0,
+					width: 200.55555555,
+					key: 'index2',
+					title: 'Index2',
+					render: ({ index }) => `row2_${index}`,
+					fixed: 'left',
+				},
+				{
+					key: 'index333',
 					title: 'Index',
 					render: ({ index }) => `row1_${index}`,
 					onCellSpan: (_, i) => ({
@@ -181,22 +189,15 @@ const useColumns = () => {
 				},
 				{
 					flexGrow: 0,
-					width: 200.55555555,
-					key: 'index2',
-					title: 'Index2',
-					render: ({ index }) => `row2_${index}`,
-				},
-				{
-					flexGrow: 0,
 					width: '50%',
-					key: 'index3',
+					key: 'index444',
 					title: 'Index3',
 					render: ({ index }) => `row3_${index}`,
 				},
 				{
 					flexGrow: 0,
 					width: 200.55555555,
-					key: 'index4',
+					key: 'index5555',
 					title: 'Index4',
 					render: ({ index }) => `row4_${index}`,
 				},
