@@ -45,20 +45,33 @@ const ScrollbarH = <T,>(props: Props<T>) => {
 			<div className={styles['h-scrollbar-wrapper']}>
 				<div
 					ref={hScrollbarRef}
-					className={classNames(styles['h-scrollbar'], scrollbarStyles['scrollbar'], { [scrollbarStyles['bordered']]: bordered })}
 					style={{ height: h_scrollbar.width, minHeight: h_scrollbar.width, maxHeight: h_scrollbar.width }}
+					className={classNames(styles['h-scrollbar'], scrollbarStyles['scrollbar'], { [scrollbarStyles['bordered']]: bordered })}
 				>
 					<div
 						className={styles['h-scrollbar-inner']}
 						style={{
-							width: h_scrollbar.innerSize,
 							height: h_scrollbar.width,
+							minHeight: h_scrollbar.width,
+							maxHeight: h_scrollbar.width,
+							width: h_scrollbar.innerSize,
+						}}
+					/>
+				</div>
+
+				{v_scrollbar.have && (
+					<div
+						className={classNames(styles['v-scrollbar-placeholder'], { [styles['bordered']]: bordered })}
+						style={{
+							width: v_scrollbar.width,
+							height: h_scrollbar.width,
+							minWidth: v_scrollbar.width,
+							maxWidth: v_scrollbar.width,
 							minHeight: h_scrollbar.width,
 							maxHeight: h_scrollbar.width,
 						}}
 					/>
-				</div>
-				{v_scrollbar.have && <div style={{ flexShrink: 0, width: v_scrollbar.width, backgroundColor: 'var(--table-scroll-bar-bg)' }} />}
+				)}
 			</div>
 		);
 	}

@@ -41,8 +41,8 @@ const ScrollbarV = <T,>(props: Props<T>) => {
 		return (
 			<div
 				ref={vScrollbarRef}
-				className={classNames(styles['v-scrollbar'], scrollbarStyles['scrollbar'], { [scrollbarStyles['bordered']]: bordered })}
 				style={{ width: v_scrollbar.width, minWidth: v_scrollbar.width, maxWidth: v_scrollbar.width }}
+				className={classNames(styles['v-scrollbar'], scrollbarStyles['scrollbar'], { [scrollbarStyles['bordered']]: bordered })}
 			>
 				<div
 					className={styles['v-scrollbar-inner']}

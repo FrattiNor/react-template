@@ -4,12 +4,9 @@
 	position: relative;
 	box-sizing: border-box;
 	background-color: var(--table-head-cell-bg);
-
-	&.sticky {
-		right: 0;
-		z-index: 10;
-		position: sticky;
-	}
+	right: 0;
+	z-index: 10;
+	position: sticky;
 
 	&::after {
 		content: '';
@@ -18,7 +15,6 @@
 		left: 0;
 		right: 0;
 		bottom: 0;
-		transition: border-color 0.2s;
 		border-bottom: var(--table-cell-border-width) solid var(--table-cell-border-color);
 	}
 

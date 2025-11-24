@@ -50,7 +50,6 @@ const TableHead = <T,>(props: Props<T>) => {
 					bordered={props.bordered}
 					rowHeight={props.rowHeight}
 					splitColumnsArr={props.splitColumnsArr}
-					pingedRightStart={props.pingedRightStart}
 				/>
 			</div>
 		</div>

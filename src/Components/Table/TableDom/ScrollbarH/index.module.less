@@ -9,11 +9,32 @@
 		width: 100%;
 		flex-shrink: 1;
 		position: relative;
-		overflow-x: auto;
+		overflow-x: scroll;
 		overflow-y: hidden;
 
 		.h-scrollbar-inner {
 			position: relative;
+		}
+	}
+
+	.v-scrollbar-placeholder {
+		width: 0;
+		flex-shrink: 0;
+		position: relative;
+		background-color: var(--table-scroll-bar-bg);
+
+		&.bordered {
+			background-color: var(--table-scroll-bar-bg-bordered);
+		}
+
+		&.bordered::before {
+			top: 0;
+			left: 0;
+			content: '';
+			position: absolute;
+			width: var(--table-cell-border-width);
+			height: var(--table-cell-border-width);
+			background-color: var(--table-cell-border-color);
 		}
 	}
 }
@@ -24,7 +45,7 @@
 	height: 17px;
 	min-height: 17px;
 	max-height: 17px;
-	overflow-x: auto;
+	overflow-x: scroll;
 	overflow-y: hidden;
 	left: 0;
 	bottom: 0;

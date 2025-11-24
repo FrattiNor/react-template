@@ -3,20 +3,17 @@ import { memo } from 'react';
 import classNames from 'classnames';
 
 import styles from './index.module.less';
-import { getLeafColumn } from '../../../TableUtils';
 
 import type { TableInstance } from '../../../useTableInstance';
 
-type Props<T> = Required<Pick<TableInstance<T>, 'bordered' | 'rowHeight' | 'pingedRightStart' | 'splitColumnsArr'>> & {
+type Props<T> = Required<Pick<TableInstance<T>, 'bordered' | 'rowHeight' | 'splitColumnsArr'>> & {
 	rowIndexStart: number;
 	rowIndexEnd: number;
 };
 
 const HeadCellPlaceholder = <T,>(props: Props<T>) => {
-	const { bordered, rowIndexStart, rowIndexEnd, splitColumnsArr, rowHeight, pingedRightStart } = props;
+	const { bordered, rowIndexStart, rowIndexEnd, splitColumnsArr, rowHeight } = props;
 	const colIndex = splitColumnsArr.length;
-	const lastSplitColumns = splitColumnsArr[splitColumnsArr.length - 1];
-	const lastIsFixedRight = lastSplitColumns ? getLeafColumn(lastSplitColumns).fixed === 'right' : false;
 
 	return (
 		<div
@@ -29,7 +26,6 @@ const HeadCellPlaceholder = <T,>(props: Props<T>) => {
 			className={classNames(styles['head-cell-placeholder'], {
 				[styles['bordered']]: bordered,
 				[styles['first-col']]: colIndex === 0,
-				[styles['sticky']]: lastIsFixedRight || typeof pingedRightStart === 'number',
 			})}
 		/>
 	);

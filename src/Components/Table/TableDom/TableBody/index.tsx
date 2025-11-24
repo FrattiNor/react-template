@@ -1,7 +1,5 @@
 import { memo } from 'react';
 
-import classNames from 'classnames';
-
 import BodyEmpty from './BodyEmpty';
 import BodyInner from './BodyInner';
 import styles from './index.module.less';
@@ -31,11 +29,11 @@ type Props<T> = Required<
 >;
 
 const TableBody = <T,>(props: Props<T>) => {
-	const { bordered, data, bodyRef, bodyInnerRef } = props;
+	const { data, bodyRef, bodyInnerRef } = props;
 	const isEmpty = (data ?? []).length === 0;
 
 	return (
-		<div ref={bodyRef} className={classNames(styles['body'], { [styles['bordered']]: bordered })}>
+		<div ref={bodyRef} className={styles['body']}>
 			{/* 监测col宽度 */}
 			<MeasureCol setSizeCacheMap={props.setSizeCacheMap} splitColumnsArr_01={props.splitColumnsArr_01} />
 			{/* 监测fixed状态 */}
