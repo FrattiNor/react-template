@@ -5,6 +5,7 @@ import classNames from 'classnames';
 import useTableInstance from '../useTableInstance';
 import styles from './index.module.less';
 import ScrollbarH from './ScrollbarH';
+import DelayVisible from './ScrollbarH/DelayVisible';
 import ScrollbarV from './ScrollbarV';
 import TableBody from './TableBody';
 import TableHead from './TableHead';
@@ -55,14 +56,16 @@ const Table = <T,>(_props: TableProps<T>) => {
 				/>
 				<ScrollbarV bodyRef={props.bodyRef} vScrollbarRef={props.vScrollbarRef} bordered={props.bordered} v_scrollbar={props.v_scrollbar} />
 			</div>
-			<ScrollbarH
-				bodyRef={props.bodyRef}
-				headRef={props.headRef}
-				bordered={props.bordered}
-				h_scrollbar={props.h_scrollbar}
-				v_scrollbar={props.v_scrollbar}
-				hScrollbarRef={props.hScrollbarRef}
-			/>
+			<DelayVisible visible={props.h_scrollbar.have} delayTime={25}>
+				<ScrollbarH
+					bodyRef={props.bodyRef}
+					headRef={props.headRef}
+					bordered={props.bordered}
+					h_scrollbar={props.h_scrollbar}
+					v_scrollbar={props.v_scrollbar}
+					hScrollbarRef={props.hScrollbarRef}
+				/>
+			</DelayVisible>
 		</TableLoading>
 	);
 };

@@ -32,33 +32,57 @@ const useTableDomRef = ({ tableState }: Props) => {
 				if (!entries) {
 					const { calcDom, HScrollbarWidth, VScrollbarWidth } = calcBorderWidth(body);
 					// 保存宽度
-					setV_scrollbar({
-						have: vScrollbarHave,
-						outSize: body.clientHeight,
-						innerSize: body.scrollHeight,
-						width: VScrollbarWidth,
+					setV_scrollbar((old) => {
+						const next = {
+							have: vScrollbarHave,
+							outSize: body.clientHeight,
+							innerSize: body.scrollHeight,
+							width: VScrollbarWidth,
+						};
+						if (next.have !== old.have || next.outSize !== old.outSize || next.innerSize !== old.innerSize || next.width !== old.width) {
+							return next;
+						}
+						return old;
 					});
-					setH_scrollbar({
-						have: hScrollbarHave,
-						outSize: body.clientWidth,
-						innerSize: body.scrollWidth,
-						width: HScrollbarWidth,
+					setH_scrollbar((old) => {
+						const next = {
+							have: hScrollbarHave,
+							outSize: body.clientWidth,
+							innerSize: body.scrollWidth,
+							width: HScrollbarWidth,
+						};
+						if (next.have !== old.have || next.outSize !== old.outSize || next.innerSize !== old.innerSize || next.width !== old.width) {
+							return next;
+						}
+						return old;
 					});
 					// 从DOM中移除临时元素
 					calcDom.parentNode?.removeChild(calcDom);
 				} else {
-					setV_scrollbar((old) => ({
-						...old,
-						have: vScrollbarHave,
-						outSize: body.clientHeight,
-						innerSize: body.scrollHeight,
-					}));
-					setH_scrollbar((old) => ({
-						...old,
-						have: hScrollbarHave,
-						outSize: body.clientWidth,
-						innerSize: body.scrollWidth,
-					}));
+					setV_scrollbar((old) => {
+						const next = {
+							...old,
+							have: vScrollbarHave,
+							outSize: body.clientHeight,
+							innerSize: body.scrollHeight,
+						};
+						if (next.have !== old.have || next.outSize !== old.outSize || next.innerSize !== old.innerSize || next.width !== old.width) {
+							return next;
+						}
+						return old;
+					});
+					setH_scrollbar((old) => {
+						const next = {
+							...old,
+							have: hScrollbarHave,
+							outSize: body.clientWidth,
+							innerSize: body.scrollWidth,
+						};
+						if (next.have !== old.have || next.outSize !== old.outSize || next.innerSize !== old.innerSize || next.width !== old.width) {
+							return next;
+						}
+						return old;
+					});
 				}
 			};
 			const ob = new ResizeObserver(calcScrollBar);

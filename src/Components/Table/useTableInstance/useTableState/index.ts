@@ -1,9 +1,11 @@
 import { useMemo, useState } from 'react';
 
+import { type TableScrollbarState } from '../../TableTypes/type';
+
 const useTableState = () => {
 	const [sizeCacheMap, setSizeCacheMap] = useState<Map<string, number>>(() => new Map());
-	const [v_scrollbar, setV_scrollbar] = useState({ have: false, outSize: 0, innerSize: 0, width: 0 });
-	const [h_scrollbar, setH_scrollbar] = useState({ have: false, outSize: 0, innerSize: 0, width: 0 });
+	const [v_scrollbar, setV_scrollbar] = useState<TableScrollbarState>({ have: false, outSize: 0, innerSize: 0, width: 0 });
+	const [h_scrollbar, setH_scrollbar] = useState<TableScrollbarState>({ have: false, outSize: 0, innerSize: 0, width: 0 });
 
 	// 左右固定的index
 	const [pingedObj, setPingedObj] = useState<{ [key: string]: { fixed: 'left' | 'right'; index: number } }>({});

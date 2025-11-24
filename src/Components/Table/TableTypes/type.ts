@@ -21,3 +21,5 @@ export type TableColumnOnCellSpan<T> = (
 	// 列占据几格，用于合并单元格
 	colSpan?: number;
 };
+
+export type TableScrollbarState = { have: boolean; outSize: number; innerSize: number; width: number };
