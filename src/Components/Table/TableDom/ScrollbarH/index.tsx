@@ -3,6 +3,7 @@ import { memo, useEffect } from 'react';
 import classNames from 'classnames';
 
 import styles from './index.module.less';
+import scrollbarStyles from '../../TableUtils/calcBorderWidth/index.module.less';
 import { type TableInstance } from '../../useTableInstance';
 
 type Props<T> = Required<Pick<TableInstance<T>, 'h_scrollbar' | 'v_scrollbar' | 'bordered' | 'hScrollbarRef' | 'bodyRef' | 'headRef'>>;
@@ -41,10 +42,10 @@ const ScrollbarH = <T,>(props: Props<T>) => {
 
 	if (h_scrollbar.have && h_scrollbar.width > 0) {
 		return (
-			<div className={styles['virtual-h-scrollbar-wrapper']}>
+			<div className={styles['h-scrollbar-wrapper']}>
 				<div
 					ref={hScrollbarRef}
-					className={classNames(styles['virtual-h-scrollbar'], { [styles['bordered']]: bordered })}
+					className={classNames(styles['h-scrollbar'], scrollbarStyles['scrollbar'], { [scrollbarStyles['bordered']]: bordered })}
 					style={{ height: h_scrollbar.width, minHeight: h_scrollbar.width, maxHeight: h_scrollbar.width }}
 				>
 					<div
@@ -64,7 +65,7 @@ const ScrollbarH = <T,>(props: Props<T>) => {
 
 	if (h_scrollbar.have && h_scrollbar.width === 0) {
 		return (
-			<div ref={hScrollbarRef} className={styles['virtual-h-scrollbar-wrapper-absolute']}>
+			<div ref={hScrollbarRef} className={styles['h-scrollbar-absolute']}>
 				<div className={styles['h-scrollbar-absolute-inner']} style={{ width: h_scrollbar.innerSize }} />
 			</div>
 		);

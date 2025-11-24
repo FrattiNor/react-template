@@ -1,6 +1,7 @@
 import { useEffect, useLayoutEffect, useRef } from 'react';
 
 import { useScrollBy } from './useScroll';
+import calcBorderWidth from '../../TableUtils/calcBorderWidth';
 
 import type useTableState from '../useTableState';
 
@@ -29,38 +30,22 @@ const useTableDomRef = ({ tableState }: Props) => {
 				const hScrollbarHave = body.scrollWidth > body.clientWidth;
 				const vScrollbarHave = body.scrollHeight > body.clientHeight;
 				if (!entries) {
-					// 创建隐藏的div容器
-					const outer = document.createElement('div');
-					outer.style.width = '100px';
-					outer.style.height = '100px';
-					outer.style.visibility = 'hidden';
-					outer.style.opacity = '0';
-					outer.style.zIndex = '-1';
-					outer.style.overflow = 'scroll';
-					outer.style.position = 'absolute';
-					outer.style.top = '0px';
-					outer.style.left = '0px';
-					body.appendChild(outer);
-					// 创建内部元素并放置在容器中
-					const inner = document.createElement('div');
-					inner.style.width = '1000px';
-					inner.style.height = '1000px';
-					outer.appendChild(inner);
+					const { calcDom, HScrollbarWidth, VScrollbarWidth } = calcBorderWidth(body);
 					// 保存宽度
 					setV_scrollbar({
 						have: vScrollbarHave,
 						outSize: body.clientHeight,
 						innerSize: body.scrollHeight,
-						width: outer.offsetWidth - outer.clientWidth,
+						width: VScrollbarWidth,
 					});
 					setH_scrollbar({
 						have: hScrollbarHave,
 						outSize: body.clientWidth,
 						innerSize: body.scrollWidth,
-						width: outer.offsetHeight - outer.clientHeight,
+						width: HScrollbarWidth,
 					});
 					// 从DOM中移除临时元素
-					outer.parentNode?.removeChild(outer);
+					calcDom.parentNode?.removeChild(calcDom);
 				} else {
 					setV_scrollbar((old) => ({
 						...old,

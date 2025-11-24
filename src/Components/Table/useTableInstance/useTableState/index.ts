@@ -1,9 +1,9 @@
 import { useMemo, useState } from 'react';
 
 const useTableState = () => {
+	const [sizeCacheMap, setSizeCacheMap] = useState<Map<string, number>>(() => new Map());
 	const [v_scrollbar, setV_scrollbar] = useState({ have: false, outSize: 0, innerSize: 0, width: 0 });
 	const [h_scrollbar, setH_scrollbar] = useState({ have: false, outSize: 0, innerSize: 0, width: 0 });
-	const [sizeCacheMap, setSizeCacheMap] = useState<Map<string, number>>(() => new Map());
 
 	// 左右固定的index
 	const [pingedObj, setPingedObj] = useState<{ left: Record<string, true>; right: Record<string, true> }>({ left: {}, right: {} });

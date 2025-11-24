@@ -3,6 +3,7 @@ import { memo, useEffect } from 'react';
 import classNames from 'classnames';
 
 import styles from './index.module.less';
+import scrollbarStyles from '../../TableUtils/calcBorderWidth/index.module.less';
 import { type TableInstance } from '../../useTableInstance';
 
 type Props<T> = Required<Pick<TableInstance<T>, 'v_scrollbar' | 'bordered' | 'vScrollbarRef' | 'bodyRef'>>;
@@ -40,7 +41,7 @@ const ScrollbarV = <T,>(props: Props<T>) => {
 		return (
 			<div
 				ref={vScrollbarRef}
-				className={classNames(styles['virtual-v-scrollbar'], { [styles['bordered']]: bordered })}
+				className={classNames(styles['v-scrollbar'], scrollbarStyles['scrollbar'], { [scrollbarStyles['bordered']]: bordered })}
 				style={{ width: v_scrollbar.width, minWidth: v_scrollbar.width, maxWidth: v_scrollbar.width }}
 			>
 				<div
@@ -53,7 +54,7 @@ const ScrollbarV = <T,>(props: Props<T>) => {
 
 	if (v_scrollbar.have && v_scrollbar.width === 0) {
 		return (
-			<div ref={vScrollbarRef} className={styles['virtual-v-scrollbar-wrapper-absolute']}>
+			<div ref={vScrollbarRef} className={styles['v-scrollbar-absolute']}>
 				<div className={styles['v-scrollbar-absolute-inner']} style={{ height: v_scrollbar.innerSize }} />
 			</div>
 		);
