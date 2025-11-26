@@ -54,8 +54,6 @@ const useSizeCacheMap = ({ props }: Props) => {
 				sizeCacheMap.delete(key);
 			}
 		});
-
-		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [count, getItemKey]);
 
 	return { getItemSizeCover, updateItemSize };

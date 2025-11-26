@@ -55,6 +55,7 @@ const MeasureCol = <T,>(props: Props<T>) => {
 				);
 			});
 
+			// eslint-disable-next-line react-hooks/set-state-in-effect
 			setResizeObserver(_observer);
 
 			return () => {

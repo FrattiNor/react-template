@@ -40,7 +40,6 @@ const StickyObserverItem = <T,>(props: Props<T>) => {
 		if (bodyRef.current) {
 			const key = column.key;
 			const fixed = column.fixed;
-			const index = column.index;
 			const bodyScrollLeft = bodyRef.current?.scrollLeft;
 			const bodyScrollWidth = bodyRef.current?.scrollWidth;
 			const bodyClientWidth = bodyRef.current?.clientWidth;
@@ -53,8 +52,8 @@ const StickyObserverItem = <T,>(props: Props<T>) => {
 						(fixed === 'left' && scrollLeft > 0 && scrollLeft > pingedSize) ||
 						(fixed === 'right' && scrollRight > 0 && scrollRight > pingedSize)
 					) {
-						if (!old[key] || old[key].fixed !== fixed || old[key].index !== index) {
-							old[key] = { fixed, index };
+						if (!old[key] || old[key].fixed !== fixed || old[key].index !== column.index) {
+							old[key] = { fixed, index: column.index };
 							return { ...old };
 						}
 					} else if (old[key]) {

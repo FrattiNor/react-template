@@ -26,14 +26,14 @@ export const getCellTitle = (element: ReactNode) => {
 
 // 获取叶子column
 export const getLeafColumn = <T>(splitColumns: Array<InnerColumnGroup<T> | InnerColumn<T> | null>) => {
-	return splitColumns[splitColumns.length - 1] as InnerColumn<T>;
+	return splitColumns[0] as InnerColumn<T>;
 };
 
-// 填充splitColumns，在叶子节点之前插入null
-export const fillSplitColumns = <T>(splitColumns: Array<InnerColumnGroup<T> | InnerColumn<T> | null>, deepLevel: number) => {
-	while (splitColumns.length < deepLevel + 1) {
-		splitColumns.splice(splitColumns.length - 1, 0, null);
-	}
+// 获取非叶子column，通过index
+export const getNotLeafColumnByIndex = <T>(splitColumns: Array<InnerColumnGroup<T> | InnerColumn<T> | null>, index: number) => {
+	const length = splitColumns.length;
+	if (length - 1 - index === 0) return null; // 只能获得非叶子节点
+	return splitColumns[length - 1 - index] as InnerColumnGroup<T>;
 };
 
 // 获取Group的合成key，根据children的key合成

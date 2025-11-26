@@ -4,9 +4,8 @@ import classNames from 'classnames';
 
 import HeadCell from './HeadCell';
 import styles from './index.module.less';
-import { getGroupColumnMergeKey, getLeafColumn } from '../../../TableUtils';
+import { getNotLeafColumnByIndex, getGroupColumnMergeKey, getLeafColumn } from '../../../TableUtils';
 
-import type { InnerColumn } from '../../../TableTypes/typeColumn';
 import type { TableInstance } from '../../../useTableInstance';
 
 type Props<T> = Required<Pick<TableInstance<T>, 'splitColumnsArr' | 'deepLevel' | 'bordered' | 'rowHeight' | 'getStickyStyle'>> & {
@@ -16,49 +15,78 @@ type Props<T> = Required<Pick<TableInstance<T>, 'splitColumnsArr' | 'deepLevel' 
 const HeadRow = <T,>(props: Props<T>) => {
 	const { rowIndex, splitColumnsArr, deepLevel } = props;
 
+	// 是否是叶子节点
+	const isLeaf = rowIndex === deepLevel;
+
 	const renderRow = () => {
 		let colSameCount = 0;
 		return splitColumnsArr.map((splitColumns, colIndex) => {
-			// 当前column
-			const column = splitColumns[rowIndex];
-			// 不存在column
-			if (!column) return null;
-			// 同行下一列column
-			const nextColumn = splitColumnsArr[colIndex + 1]?.[rowIndex];
-			// 叶子节点
-			const leafColumn = getLeafColumn(splitColumns);
-			// 同行下一列叶子节点
-			const nextLeafColumn = splitColumnsArr[colIndex + 1]?.[splitColumnsArr[colIndex + 1]?.length - 1];
-			// 同行下一列和当前列相同【key和fixed都相同】，跳过当前渲染
-			if (column.key === nextColumn?.key && leafColumn.fixed === nextLeafColumn?.fixed) {
-				colSameCount++;
-				return null;
-			}
-			// 是否是叶子节点
-			const isLeaf = rowIndex === splitColumns.length - 1;
-			// index
-			const colIndexStart = colIndex - colSameCount;
-			const colIndexEnd = colIndex;
-			const rowIndexStart = isLeaf ? (column as InnerColumn<T>).level : rowIndex;
-			const rowIndexEnd = rowIndex;
-			// 获取key
-			const key = isLeaf ? column.key : getGroupColumnMergeKey(splitColumnsArr, rowIndex, deepLevel, colIndexStart, colIndexEnd);
-			// 重置colSameCount
-			colSameCount = 0;
+			if (isLeaf) {
+				// 当前column
+				const column = getLeafColumn(splitColumns);
+				// 不存在column
+				if (!column) return null;
+				// 开始渲染
+				const colIndexStart = colIndex;
+				const colIndexEnd = colIndex;
+				const rowIndexStart = splitColumns.length - 1;
+				const rowIndexEnd = rowIndex;
+				const key = column.key;
 
-			return (
-				<HeadCell
-					key={key}
-					column={column}
-					colIndexEnd={colIndexEnd}
-					rowIndexEnd={rowIndexEnd}
-					bordered={props.bordered}
-					rowHeight={props.rowHeight}
-					colIndexStart={colIndexStart}
-					rowIndexStart={rowIndexStart}
-					getStickyStyle={props.getStickyStyle}
-				/>
-			);
+				return (
+					<HeadCell
+						key={key}
+						column={column}
+						colIndexEnd={colIndexEnd}
+						rowIndexEnd={rowIndexEnd}
+						bordered={props.bordered}
+						rowHeight={props.rowHeight}
+						colIndexStart={colIndexStart}
+						rowIndexStart={rowIndexStart}
+						getStickyStyle={props.getStickyStyle}
+					/>
+				);
+			} else {
+				// 当前column
+				const column = getNotLeafColumnByIndex(splitColumns, rowIndex);
+				// 不存在column
+				if (!column) return null;
+				// 存在下一列
+				if (splitColumnsArr[colIndex + 1] !== undefined) {
+					// 同行下一列column
+					const nextColumn = getNotLeafColumnByIndex(splitColumnsArr[colIndex + 1], rowIndex);
+					// 叶子节点
+					const leafColumn = getLeafColumn(splitColumns);
+					// 同行下一列叶子节点
+					const nextLeafColumn = getLeafColumn(splitColumnsArr[colIndex + 1]);
+					// 同行下一列和当前列相同【key和fixed都相同】，跳过当前渲染
+					if (column.key === nextColumn?.key && leafColumn.fixed === nextLeafColumn?.fixed) {
+						colSameCount++;
+						return null;
+					}
+				}
+				// 开始渲染
+				const colIndexStart = colIndex - colSameCount;
+				const colIndexEnd = colIndex;
+				const rowIndexStart = rowIndex;
+				const rowIndexEnd = rowIndex;
+				const key = getGroupColumnMergeKey(splitColumnsArr, rowIndex, deepLevel, colIndexStart, colIndexEnd);
+				colSameCount = 0;
+
+				return (
+					<HeadCell
+						key={key}
+						column={column}
+						colIndexEnd={colIndexEnd}
+						rowIndexEnd={rowIndexEnd}
+						bordered={props.bordered}
+						rowHeight={props.rowHeight}
+						colIndexStart={colIndexStart}
+						rowIndexStart={rowIndexStart}
+						getStickyStyle={props.getStickyStyle}
+					/>
+				);
+			}
 		});
 	};
 

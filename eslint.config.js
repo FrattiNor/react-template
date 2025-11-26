@@ -22,6 +22,9 @@ export default defineConfig([
 			import: eslintPluginImport,
 		},
 		rules: {
+			'react-hooks/exhaustive-deps': 'off',
+			'@typescript-eslint/ban-ts-comment': 'off',
+			'@typescript-eslint/no-explicit-any': 'off',
 			'import/order': [
 				'error',
 				{
