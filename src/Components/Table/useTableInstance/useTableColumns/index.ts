@@ -95,38 +95,43 @@ const useTableColumns = <T>({ props, tableState }: Props<T>) => {
 		let leftPingedSize = leftCalcSize;
 		//
 		const splitColumnsArr: Array<Array<InnerColumnGroup<T> | InnerColumn<T> | null>> = [];
-		splitColumnsArr_01.forEach((splitColumns, index) => {
+		let index = 0;
+		splitColumnsArr_01.forEach((splitColumns) => {
 			const column = getLeafColumn(splitColumns);
-			column.index = index; // 覆盖index，避免sort后index不一致
-			const sizeCache = sizeCacheMap.get(column.key) ?? 0;
-			splitColumnsArr.push(splitColumns);
-			totalSize += sizeCache;
-			gridTemplateColumns += gridTemplateColumns === '' ? `${sizeCache}px` : ` ${sizeCache}px`;
+			const sizeCache = sizeCacheMap.get(column.key);
+			if (typeof sizeCache === 'number') {
+				column.index = index; // 覆盖index，避免sort后index不一致
+				totalSize += sizeCache;
+				splitColumnsArr.push(splitColumns);
+				gridTemplateColumns += gridTemplateColumns === '' ? `${sizeCache}px` : ` ${sizeCache}px`;
 
-			if (column.fixed === 'left') {
-				const fixedValue = {
-					index,
-					key: column.key,
-					size: sizeCache,
-					stickySize: leftCalcSize,
-					pingedSize: leftPingedSize,
-				};
-				fixedLeftObj[index] = fixedValue;
-				leftCalcSize += sizeCache;
-			} else {
-				leftPingedSize += sizeCache;
-			}
+				if (column.fixed === 'left') {
+					const fixedValue = {
+						index,
+						key: column.key,
+						size: sizeCache,
+						stickySize: leftCalcSize,
+						pingedSize: leftPingedSize,
+					};
+					fixedLeftObj[index] = fixedValue;
+					leftCalcSize += sizeCache;
+				} else {
+					leftPingedSize += sizeCache;
+				}
 
-			if (column.fixed === 'right') {
-				// stickySize, pingedSize 占位，避免ts报错
-				fixedRightArr.unshift({
-					index,
-					stickySize: 0,
-					pingedSize: 0,
-					size: sizeCache,
-					key: column.key,
-					leftTotalSize: totalSize,
-				});
+				if (column.fixed === 'right') {
+					// stickySize, pingedSize 占位，避免ts报错
+					fixedRightArr.unshift({
+						index,
+						stickySize: 0,
+						pingedSize: 0,
+						size: sizeCache,
+						key: column.key,
+						leftTotalSize: totalSize,
+					});
+				}
+
+				index++;
 			}
 		});
 

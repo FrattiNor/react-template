@@ -3,14 +3,15 @@ import { memo, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import styles from './index.module.less';
 import MeasureColItem from './MeasureColItem';
 import { FixedTwo, getLeafColumn } from '../../../TableUtils';
+import { maxColWidth, minColWidth } from '../../../TableUtils/configValues';
 
 import type { TableInstance } from '../../../useTableInstance';
 
-type Props<T> = Required<Pick<TableInstance<T>, 'splitColumnsArr_01' | 'setSizeCacheMap'>>;
+type Props<T> = Required<Pick<TableInstance<T>, 'splitColumnsArr_01' | 'setSizeCacheMap' | 'resizeFlag' | 'sizeCacheMap' | 'resized'>>;
 
 const MeasureCol = <T,>(props: Props<T>) => {
 	const ref = useRef<HTMLDivElement | null>(null);
-	const { splitColumnsArr_01, setSizeCacheMap } = props;
+	const { splitColumnsArr_01, setSizeCacheMap, resizeFlag } = props;
 	const [resizeObserver, setResizeObserver] = useState<ResizeObserver | null>(null);
 
 	const sizeCacheChangeBatch = <B,>(items: Array<B>, getKey: (item: B) => string | null, getSize: (item: B) => number) => {
@@ -19,7 +20,7 @@ const MeasureCol = <T,>(props: Props<T>) => {
 			items.forEach((item) => {
 				const key = getKey(item);
 				if (typeof key === 'string') {
-					const size = FixedTwo(getSize(item));
+					const size = Math.min(Math.max(FixedTwo(getSize(item)), minColWidth), maxColWidth);
 					if (old.get(key) !== size) {
 						old.set(key, size);
 						changed = true;
@@ -46,7 +47,7 @@ const MeasureCol = <T,>(props: Props<T>) => {
 
 	// ResizeObserver
 	useEffect(() => {
-		if (ref.current) {
+		if (!resizeFlag && ref.current) {
 			const _observer = new ResizeObserver((entries) => {
 				sizeCacheChangeBatch(
 					entries,
@@ -55,7 +56,6 @@ const MeasureCol = <T,>(props: Props<T>) => {
 				);
 			});
 
-			// eslint-disable-next-line react-hooks/set-state-in-effect
 			setResizeObserver(_observer);
 
 			return () => {
@@ -63,13 +63,22 @@ const MeasureCol = <T,>(props: Props<T>) => {
 				setResizeObserver(null);
 			};
 		}
-	}, []);
+	}, [resizeFlag]);
 
 	return (
 		<div ref={ref} className={styles['measure-col']}>
 			{splitColumnsArr_01.map((splitColumns) => {
 				const column = getLeafColumn(splitColumns);
-				return <MeasureColItem column={column} key={column.key} resizeObserver={resizeObserver} />;
+				return (
+					<MeasureColItem
+						column={column}
+						key={column.key}
+						resized={props.resized}
+						resizeObserver={resizeObserver}
+						setSizeCacheMap={setSizeCacheMap}
+						sizeCacheMap={props.sizeCacheMap}
+					/>
+				);
 			})}
 		</div>
 	);

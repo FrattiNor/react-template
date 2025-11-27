@@ -21,6 +21,8 @@ export type TableColumn<T> = {
 	align?: 'left' | 'right' | 'center';
 	// 左右固定【和colSpan有冲突】
 	fixed?: 'left' | 'right';
+	// 是否可以拖拽修改列宽
+	resize?: boolean;
 } & {
 	// 兼容group
 	children?: undefined;

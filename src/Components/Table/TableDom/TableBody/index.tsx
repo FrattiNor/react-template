@@ -1,6 +1,5 @@
 import { memo } from 'react';
 
-import BodyEmpty from './BodyEmpty';
 import BodyInner from './BodyInner';
 import styles from './index.module.less';
 import MeasureCol from './MeasureCol';
@@ -25,17 +24,27 @@ type Props<T> = Required<
 		| 'setPingedObj'
 		| 'fixedLeftObj'
 		| 'fixedRightObj'
+		| 'getBodyCellBg'
+		| 'sizeCacheMap'
+		| 'resized'
+		| 'resizeFlag'
+		| 'h_scrollbar'
 	>
 >;
 
 const TableBody = <T,>(props: Props<T>) => {
-	const { data, bodyRef, bodyInnerRef } = props;
-	const isEmpty = (data ?? []).length === 0;
+	const { bodyRef } = props;
 
 	return (
 		<div ref={bodyRef} className={styles['body']}>
 			{/* 监测col宽度 */}
-			<MeasureCol setSizeCacheMap={props.setSizeCacheMap} splitColumnsArr_01={props.splitColumnsArr_01} />
+			<MeasureCol
+				resized={props.resized}
+				resizeFlag={props.resizeFlag}
+				sizeCacheMap={props.sizeCacheMap}
+				setSizeCacheMap={props.setSizeCacheMap}
+				splitColumnsArr_01={props.splitColumnsArr_01}
+			/>
 			{/* 监测fixed状态 */}
 			<StickyObserver
 				bodyRef={props.bodyRef}
@@ -45,22 +54,18 @@ const TableBody = <T,>(props: Props<T>) => {
 				splitColumnsArr={props.splitColumnsArr}
 				gridTemplateColumns={props.gridTemplateColumns}
 			/>
-			<div ref={bodyInnerRef} className={styles['body-inner']}>
-				{/* Body本体 */}
-				{!isEmpty && (
-					<BodyInner
-						data={props.data}
-						rowKey={props.rowKey}
-						bordered={props.bordered}
-						rowHeight={props.rowHeight}
-						getStickyStyle={props.getStickyStyle}
-						splitColumnsArr={props.splitColumnsArr}
-						gridTemplateColumns={props.gridTemplateColumns}
-					/>
-				)}
-				{/* 空Body */}
-				{isEmpty && <BodyEmpty />}
-			</div>
+			<BodyInner
+				data={props.data}
+				rowKey={props.rowKey}
+				bordered={props.bordered}
+				rowHeight={props.rowHeight}
+				h_scrollbar={props.h_scrollbar}
+				bodyInnerRef={props.bodyInnerRef}
+				getBodyCellBg={props.getBodyCellBg}
+				getStickyStyle={props.getStickyStyle}
+				splitColumnsArr={props.splitColumnsArr}
+				gridTemplateColumns={props.gridTemplateColumns}
+			/>
 		</div>
 	);
 };

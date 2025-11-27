@@ -8,7 +8,12 @@ import { getNotLeafColumnByIndex, getGroupColumnMergeKey, getLeafColumn } from '
 
 import type { TableInstance } from '../../../useTableInstance';
 
-type Props<T> = Required<Pick<TableInstance<T>, 'splitColumnsArr' | 'deepLevel' | 'bordered' | 'rowHeight' | 'getStickyStyle'>> & {
+type Props<T> = Required<
+	Pick<
+		TableInstance<T>,
+		'splitColumnsArr' | 'deepLevel' | 'bordered' | 'rowHeight' | 'getStickyStyle' | 'startResize' | 'resizeFlag' | 'getHeadCellBg'
+	>
+> & {
 	rowIndex: number;
 };
 
@@ -41,8 +46,11 @@ const HeadRow = <T,>(props: Props<T>) => {
 						rowIndexEnd={rowIndexEnd}
 						bordered={props.bordered}
 						rowHeight={props.rowHeight}
+						resizeFlag={props.resizeFlag}
 						colIndexStart={colIndexStart}
 						rowIndexStart={rowIndexStart}
+						startResize={props.startResize}
+						getHeadCellBg={props.getHeadCellBg}
 						getStickyStyle={props.getStickyStyle}
 					/>
 				);
@@ -81,8 +89,11 @@ const HeadRow = <T,>(props: Props<T>) => {
 						rowIndexEnd={rowIndexEnd}
 						bordered={props.bordered}
 						rowHeight={props.rowHeight}
+						resizeFlag={props.resizeFlag}
 						colIndexStart={colIndexStart}
 						rowIndexStart={rowIndexStart}
+						startResize={props.startResize}
+						getHeadCellBg={props.getHeadCellBg}
 						getStickyStyle={props.getStickyStyle}
 					/>
 				);

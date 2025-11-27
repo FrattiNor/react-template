@@ -20,6 +20,9 @@ type Props<T> = Required<
 		| 'rowHeight'
 		| 'getStickyStyle'
 		| 'pingedRightStart'
+		| 'startResize'
+		| 'resizeFlag'
+		| 'getHeadCellBg'
 	>
 >;
 
@@ -39,6 +42,9 @@ const TableHead = <T,>(props: Props<T>) => {
 							bordered={props.bordered}
 							rowHeight={props.rowHeight}
 							deepLevel={props.deepLevel}
+							resizeFlag={props.resizeFlag}
+							startResize={props.startResize}
+							getHeadCellBg={props.getHeadCellBg}
 							getStickyStyle={props.getStickyStyle}
 							splitColumnsArr={props.splitColumnsArr}
 						/>

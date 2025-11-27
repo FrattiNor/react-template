@@ -19,10 +19,10 @@ const calcBorderWidth = (container: HTMLElement) => {
 	calcDomInner.style.height = '1000px';
 	calcDom.appendChild(calcDomInner);
 
-	const VScrollbarWidth = calcDom.offsetWidth - calcDom.clientWidth;
-	const HScrollbarWidth = calcDom.offsetHeight - calcDom.clientHeight;
+	const vScrollbarWidth = calcDom.offsetWidth - calcDom.clientWidth;
+	const hScrollbarWidth = calcDom.offsetHeight - calcDom.clientHeight;
 
-	return { calcDom, VScrollbarWidth, HScrollbarWidth };
+	return { calcDom, vScrollbarWidth, hScrollbarWidth };
 };
 
 export default calcBorderWidth;

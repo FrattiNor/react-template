@@ -1,0 +1,17 @@
+.resize-handle {
+	top: 0;
+	right: 0;
+	bottom: 0;
+	cursor: ew-resize;
+	position: absolute;
+	background-color: transparent;
+	width: var(--table-head-resize-width);
+
+	&:hover {
+		background-color: var(--table-head-resize-handle-bg);
+	}
+
+	&:active {
+		background-color: var(--table-primary-color);
+	}
+}

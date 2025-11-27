@@ -3,7 +3,7 @@
 	height: 100%;
 	outline: none;
 	position: relative;
-	background-color: var(--table-body-cell-bg);
+	transition: background-color 0.2s;
 
 	&.left-last-pinged::after {
 		content: '';
@@ -37,6 +37,7 @@
 		padding: var(--table-cell-padding);
 		display: flex;
 		align-items: center;
+		white-space: nowrap;
 		border-top: var(--table-cell-border-width) solid var(--table-cell-border-color);
 
 		&.first-row {

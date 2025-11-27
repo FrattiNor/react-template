@@ -22,4 +22,15 @@ export type TableColumnOnCellSpan<T> = (
 	colSpan?: number;
 };
 
-export type TableScrollbarState = { have: boolean; outSize: number; innerSize: number; width: number };
+export type TableScrollbarState = { have: boolean; wrapperSize: number; innerSize: number; width: number };
+
+// Table Resize标记
+export type ResizeFlag = {
+	activeKey: string;
+	pageX: number;
+	children: {
+		key: string;
+		index: number;
+		clientWidth: number;
+	}[];
+};

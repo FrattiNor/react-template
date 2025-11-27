@@ -1,5 +1,7 @@
 import { useMemo } from 'react';
 
+import { defaultBordered, defaultRowHeight } from '../../TableUtils/configValues';
+
 import type { TableProps } from '../../TableTypes/typeProps';
 
 const useTableRequiredProps = <T>(props: TableProps<T>) => {
@@ -17,8 +19,8 @@ const useTableRequiredProps = <T>(props: TableProps<T>) => {
 		rowKey: props.rowKey,
 		columnConf: columnConf,
 		loading: props.loading ?? false,
-		bordered: props.bordered ?? false,
-		rowHeight: props.rowHeight ?? 38,
+		bordered: props.bordered ?? defaultBordered,
+		rowHeight: props.rowHeight ?? defaultRowHeight,
 	};
 
 	return { ...requiredProps };

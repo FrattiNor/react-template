@@ -1,4 +1,4 @@
-import { memo, useEffect, useLayoutEffect, useRef } from 'react';
+import { memo, startTransition, useEffect, useRef } from 'react';
 
 import type { InnerColumn } from '../../../../TableTypes/typeColumn';
 import type { TableInstance } from '../../../../useTableInstance';
@@ -10,7 +10,7 @@ type Props<T> = Required<Pick<TableInstance<T>, 'setPingedObj' | 'fixedLeftObj' 
 
 const StickyObserverItem = <T,>(props: Props<T>) => {
 	const ref = useRef<HTMLDivElement | null>(null);
-	const { column, intersectionObserver, setPingedObj, fixedLeftObj, fixedRightObj, bodyRef } = props;
+	const { column, intersectionObserver, setPingedObj, fixedLeftObj, fixedRightObj } = props;
 
 	const stickySize = (() => {
 		if (column.fixed === 'left') {
@@ -24,58 +24,6 @@ const StickyObserverItem = <T,>(props: Props<T>) => {
 		return 0;
 	})();
 
-	const pingedSize = (() => {
-		if (column.fixed === 'left') {
-			const pingedSize = fixedLeftObj[column.index]?.pingedSize;
-			if (typeof pingedSize === 'number') return pingedSize;
-		}
-		if (column.fixed === 'right') {
-			const pingedSize = fixedRightObj[column.index]?.pingedSize;
-			if (typeof pingedSize === 'number') return pingedSize;
-		}
-		return 0;
-	})();
-
-	useLayoutEffect(() => {
-		if (bodyRef.current) {
-			const key = column.key;
-			const fixed = column.fixed;
-			const bodyScrollLeft = bodyRef.current?.scrollLeft;
-			const bodyScrollWidth = bodyRef.current?.scrollWidth;
-			const bodyClientWidth = bodyRef.current?.clientWidth;
-			if (typeof bodyScrollLeft === 'number' && typeof bodyScrollWidth === 'number' && typeof bodyClientWidth === 'number') {
-				const scrollLeft = bodyScrollLeft;
-				const scrollRight = bodyScrollWidth - bodyClientWidth - bodyScrollLeft;
-
-				setPingedObj((old) => {
-					if (
-						(fixed === 'left' && scrollLeft > 0 && scrollLeft > pingedSize) ||
-						(fixed === 'right' && scrollRight > 0 && scrollRight > pingedSize)
-					) {
-						if (!old[key] || old[key].fixed !== fixed || old[key].index !== column.index) {
-							old[key] = { fixed, index: column.index };
-							return { ...old };
-						}
-					} else if (old[key]) {
-						delete old[key];
-						return { ...old };
-					}
-					return old;
-				});
-
-				return () => {
-					setPingedObj((old) => {
-						if (old[key]) {
-							delete old[key];
-							return { ...old };
-						}
-						return old;
-					});
-				};
-			}
-		}
-	}, []);
-
 	useEffect(() => {
 		// observer
 		if (intersectionObserver && ref.current) {
@@ -83,6 +31,16 @@ const StickyObserverItem = <T,>(props: Props<T>) => {
 			intersectionObserver.observe(item);
 			return () => {
 				intersectionObserver.unobserve(item);
+				startTransition(() => {
+					setPingedObj((old) => {
+						const key = column.key;
+						if (old[key]) {
+							delete old[key];
+							return { ...old };
+						}
+						return old;
+					});
+				});
 			};
 		}
 	}, [intersectionObserver]);

@@ -3,12 +3,13 @@ import { memo } from 'react';
 import classNames from 'classnames';
 
 import styles from './index.module.less';
+import ResizeHandle from './ResizeHandle';
 import { getCellTitle, isStrNum } from '../../../../TableUtils';
 
 import type { InnerColumn, InnerColumnGroup } from '../../../../TableTypes/typeColumn';
 import type { TableInstance } from '../../../../useTableInstance';
 
-type Props<T> = Required<Pick<TableInstance<T>, 'bordered' | 'rowHeight' | 'getStickyStyle'>> & {
+type Props<T> = Required<Pick<TableInstance<T>, 'bordered' | 'rowHeight' | 'getStickyStyle' | 'startResize' | 'resizeFlag' | 'getHeadCellBg'>> & {
 	rowIndexStart: number;
 	rowIndexEnd: number;
 	colIndexStart: number;
@@ -17,11 +18,13 @@ type Props<T> = Required<Pick<TableInstance<T>, 'bordered' | 'rowHeight' | 'getS
 };
 
 const HeadCell = <T,>(props: Props<T>) => {
-	const { column, bordered, rowIndexStart, rowIndexEnd, colIndexStart, colIndexEnd, rowHeight, getStickyStyle } = props;
+	const { column, bordered, rowIndexStart, rowIndexEnd, colIndexStart, colIndexEnd, rowHeight, getStickyStyle, getHeadCellBg } = props;
 
 	const renderDom = column.title;
+	const resize = column.resize ?? true;
 	const title = getCellTitle(renderDom);
 	const canEllipsis = isStrNum(renderDom);
+	const backgroundColor = getHeadCellBg({ colIndexStart, colIndexEnd });
 	const { stickyStyle, rightLastPinged, leftFirstPinged, leftLastPinged } = getStickyStyle({ colIndexStart, colIndexEnd, type: 'head' });
 
 	return (
@@ -33,6 +36,7 @@ const HeadCell = <T,>(props: Props<T>) => {
 			})}
 			style={{
 				...stickyStyle,
+				backgroundColor,
 				minHeight: (rowIndexEnd - rowIndexStart + 1) * rowHeight,
 				gridRow: `${rowIndexStart + 1}/${rowIndexEnd + 2}`,
 				gridColumn: `${colIndexStart + 1}/${colIndexEnd + 2}`,
@@ -49,6 +53,15 @@ const HeadCell = <T,>(props: Props<T>) => {
 			>
 				{!canEllipsis ? renderDom : <div className={styles['ellipsis-wrapper']}>{renderDom}</div>}
 			</div>
+			{resize === true && (
+				<ResizeHandle
+					columnKey={column.key}
+					colIndexEnd={colIndexEnd}
+					colIndexStart={colIndexStart}
+					resizeFlag={props.resizeFlag}
+					startResize={props.startResize}
+				/>
+			)}
 		</div>
 	);
 };

@@ -8,7 +8,7 @@ import { getCellTitle, isStrNum } from '../../../../../TableUtils';
 import type { InnerColumn } from '../../../../../TableTypes/typeColumn';
 import type { TableInstance } from '../../../../../useTableInstance';
 
-type Props<T> = Required<Pick<TableInstance<T>, 'bordered' | 'rowHeight' | 'getStickyStyle'>> & {
+type Props<T> = Required<Pick<TableInstance<T>, 'bordered' | 'rowHeight' | 'getStickyStyle' | 'getBodyCellBg'>> & {
 	rowIndex: number;
 	colIndex: number;
 	column: InnerColumn<T>;
@@ -16,7 +16,7 @@ type Props<T> = Required<Pick<TableInstance<T>, 'bordered' | 'rowHeight' | 'getS
 };
 
 const BodyCell = <T,>(props: Props<T>) => {
-	const { column, bordered, dataItem, rowIndex, colIndex, rowHeight, getStickyStyle } = props;
+	const { column, bordered, dataItem, rowIndex, colIndex, rowHeight, getStickyStyle, getBodyCellBg } = props;
 
 	const { rowSpan = 1, colSpan = 1 } = column.onCellSpan ? column.onCellSpan(dataItem, rowIndex) : {};
 	// span为0
@@ -30,6 +30,7 @@ const BodyCell = <T,>(props: Props<T>) => {
 	const renderDom = column.render(dataItem, { index: rowIndex });
 	const title = getCellTitle(renderDom);
 	const canEllipsis = isStrNum(renderDom);
+	const backgroundColor = getBodyCellBg({ colIndexStart, colIndexEnd });
 	const { stickyStyle, rightLastPinged, leftFirstPinged, leftLastPinged } = getStickyStyle({ colIndexStart, colIndexEnd, type: 'body' });
 
 	return (
@@ -41,6 +42,7 @@ const BodyCell = <T,>(props: Props<T>) => {
 			})}
 			style={{
 				...stickyStyle,
+				backgroundColor,
 				minHeight: rowHeight,
 				gridRow: `${rowIndexStart + 1}/${rowIndexEnd + 2}`,
 				gridColumn: `${colIndexStart + 1}/${colIndexEnd + 2}`,
