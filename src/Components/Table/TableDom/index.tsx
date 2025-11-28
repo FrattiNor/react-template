@@ -35,9 +35,9 @@ const Table = <T,>(_props: TableProps<T>) => {
 				v_scrollbar={props.v_scrollbar}
 				startResize={props.startResize}
 				getHeadCellBg={props.getHeadCellBg}
-				getStickyStyle={props.getStickyStyle}
 				splitColumnsArr={props.splitColumnsArr}
-				pingedRightStart={props.pingedRightStart}
+				columnsKeyIndexMap={props.columnsKeyIndexMap}
+				getHeadStickyStyle={props.getHeadStickyStyle}
 				gridTemplateColumns={props.gridTemplateColumns}
 			/>
 			<div className={styles['table-body-wrapper']}>
@@ -50,15 +50,19 @@ const Table = <T,>(_props: TableProps<T>) => {
 					bodyWidth={props.bodyWidth}
 					rowHeight={props.rowHeight}
 					resizeFlag={props.resizeFlag}
+					bodyRowClick={props.bodyRowClick}
 					sizeCacheMap={props.sizeCacheMap}
 					bodyInnerRef={props.bodyInnerRef}
-					setPingedObj={props.setPingedObj}
-					fixedLeftObj={props.fixedLeftObj}
-					fixedRightObj={props.fixedRightObj}
+					setPingedMap={props.setPingedMap}
+					fixedLeftMap={props.fixedLeftMap}
+					fixedRightMap={props.fixedRightMap}
 					getBodyCellBg={props.getBodyCellBg}
-					getStickyStyle={props.getStickyStyle}
 					setSizeCacheMap={props.setSizeCacheMap}
 					splitColumnsArr={props.splitColumnsArr}
+					bodyRowMouseEnter={props.bodyRowMouseEnter}
+					bodyRowMouseLeave={props.bodyRowMouseLeave}
+					columnsKeyIndexMap={props.columnsKeyIndexMap}
+					getBodyStickyStyle={props.getBodyStickyStyle}
 					splitColumnsArr_01={props.splitColumnsArr_01}
 					gridTemplateColumns={props.gridTemplateColumns}
 				/>

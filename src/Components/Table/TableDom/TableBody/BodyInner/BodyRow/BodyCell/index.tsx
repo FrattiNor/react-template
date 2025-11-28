@@ -1,41 +1,71 @@
-import { memo } from 'react';
+import { memo, useMemo } from 'react';
 
 import classNames from 'classnames';
 
 import styles from './index.module.less';
-import { getCellTitle, isStrNum } from '../../../../../TableUtils';
+import { getCellTitle, getColKeys, getRowKeys, isStrNum } from '../../../../../TableUtils';
 
-import type { InnerColumn } from '../../../../../TableTypes/typeColumn';
+import type { TableColumn } from '../../../../../TableTypes/typeColumn';
 import type { TableInstance } from '../../../../../useTableInstance';
 
-type Props<T> = Required<Pick<TableInstance<T>, 'bordered' | 'rowHeight' | 'getStickyStyle' | 'getBodyCellBg'>> & {
-	rowIndex: number;
-	colIndex: number;
-	column: InnerColumn<T>;
+type Props<T> = Required<
+	Pick<
+		TableInstance<T>,
+		| 'splitColumnsArr'
+		| 'bordered'
+		| 'rowHeight'
+		| 'getBodyStickyStyle'
+		| 'getBodyCellBg'
+		| 'rowKey'
+		| 'data'
+		| 'bodyRowClick'
+		| 'bodyRowMouseEnter'
+		| 'bodyRowMouseLeave'
+	>
+> & {
 	dataItem: T;
+	colIndexStart: number;
+	colIndexEnd: number;
+	rowIndexStart: number;
+	rowIndexEnd: number;
+	leafColumn: TableColumn<T>;
 };
 
 const BodyCell = <T,>(props: Props<T>) => {
-	const { column, bordered, dataItem, rowIndex, colIndex, rowHeight, getStickyStyle, getBodyCellBg } = props;
+	const {
+		data,
+		rowKey,
+		leafColumn,
+		splitColumnsArr,
+		bordered,
+		dataItem,
+		colIndexStart,
+		colIndexEnd,
+		rowIndexStart,
+		rowIndexEnd,
+		rowHeight,
+		getBodyStickyStyle,
+		getBodyCellBg,
+		bodyRowClick,
+		bodyRowMouseEnter,
+		bodyRowMouseLeave,
+	} = props;
 
-	const { rowSpan = 1, colSpan = 1 } = column.onCellSpan ? column.onCellSpan(dataItem, rowIndex) : {};
-	// span为0
-	if (rowSpan <= 0 || colSpan <= 0) return null;
+	const rowKeys = useMemo(() => getRowKeys(rowKey, data, rowIndexStart, rowIndexEnd), [rowKey, data, rowIndexStart, rowIndexEnd]);
+	const colKeys = useMemo(() => getColKeys(splitColumnsArr, colIndexStart, colIndexEnd), [splitColumnsArr, colIndexStart, colIndexEnd]);
 
-	const rowIndexStart = rowIndex;
-	const rowIndexEnd = rowIndex + rowSpan - 1;
-	const colIndexStart = colIndex;
-	const colIndexEnd = colIndex + colSpan - 1;
-
-	const renderDom = column.render(dataItem, { index: rowIndex });
+	const renderDom = leafColumn.render(dataItem, { index: rowIndexStart });
 	const title = getCellTitle(renderDom);
 	const canEllipsis = isStrNum(renderDom);
-	const backgroundColor = getBodyCellBg({ colIndexStart, colIndexEnd });
-	const { stickyStyle, rightLastPinged, leftFirstPinged, leftLastPinged } = getStickyStyle({ colIndexStart, colIndexEnd, type: 'body' });
+	const backgroundColor = getBodyCellBg({ rowKeys, colKeys });
+	const { stickyStyle, rightLastPinged, leftFirstPinged, leftLastPinged } = getBodyStickyStyle({ colKeys });
 
 	return (
 		<div
 			title={title}
+			onClick={bodyRowClick ? () => bodyRowClick({ rowKeys }) : undefined}
+			onMouseEnter={bodyRowMouseEnter ? () => bodyRowMouseEnter({ rowKeys }) : undefined}
+			onMouseLeave={bodyRowMouseLeave ? () => bodyRowMouseLeave({ rowKeys }) : undefined}
 			className={classNames(styles['body-cell'], {
 				[styles['left-last-pinged']]: leftLastPinged,
 				[styles['right-last-pinged']]: rightLastPinged,
@@ -49,13 +79,13 @@ const BodyCell = <T,>(props: Props<T>) => {
 			}}
 		>
 			<div
-				style={{ justifyContent: column.align === 'center' ? 'center' : column.align === 'right' ? 'flex-end' : 'flex-start' }}
+				style={{ justifyContent: leafColumn.align === 'center' ? 'center' : leafColumn.align === 'right' ? 'flex-end' : 'flex-start' }}
 				className={classNames(styles['body-cell-inner'], {
 					[styles['bordered']]: bordered,
-					[styles['first-col']]: colIndex === 0,
-					[styles['first-row']]: rowIndex === 0,
-					[styles['not-first-col-and-left-first-pinged']]: colIndex !== 0 && leftFirstPinged,
-					[styles['not-first-col-and-right-last-pinged']]: colIndex !== 0 && rightLastPinged,
+					[styles['first-col']]: colIndexStart === 0,
+					[styles['first-row']]: rowIndexStart === 0,
+					[styles['not-first-col-and-left-first-pinged']]: colIndexStart !== 0 && leftFirstPinged,
+					[styles['not-first-col-and-right-last-pinged']]: colIndexStart !== 0 && rightLastPinged,
 				})}
 			>
 				{!canEllipsis ? renderDom : <div className={styles['ellipsis-wrapper']}>{renderDom}</div>}

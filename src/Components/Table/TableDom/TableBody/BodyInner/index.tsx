@@ -16,10 +16,14 @@ type Props<T> = Required<
 		| 'rowKey'
 		| 'gridTemplateColumns'
 		| 'rowHeight'
-		| 'getStickyStyle'
+		| 'getBodyStickyStyle'
 		| 'getBodyCellBg'
 		| 'bodyInnerRef'
 		| 'bodyWidth'
+		| 'columnsKeyIndexMap'
+		| 'bodyRowClick'
+		| 'bodyRowMouseEnter'
+		| 'bodyRowMouseLeave'
 	>
 >;
 
@@ -30,19 +34,24 @@ const BodyInner = <T,>(props: Props<T>) => {
 	return (
 		<div ref={bodyInnerRef} className={styles['body-inner']} style={{ gridTemplateColumns: gridTemplateColumns + ` minmax(0px, 1fr)` }}>
 			{isEmpty && <BodyEmpty bodyWidth={props.bodyWidth} />}
-			{!isEmpty &&
-				data?.map((dataItem, rowIndex) => (
-					<BodyRow
-						dataItem={dataItem}
-						rowIndex={rowIndex}
-						bordered={props.bordered}
-						rowHeight={props.rowHeight}
-						getBodyCellBg={props.getBodyCellBg}
-						getStickyStyle={props.getStickyStyle}
-						splitColumnsArr={props.splitColumnsArr}
-						key={getRowKey(rowKey, dataItem, rowIndex)}
-					/>
-				))}
+			{data?.map((dataItem, rowIndex) => (
+				<BodyRow
+					data={props.data}
+					dataItem={dataItem}
+					rowIndex={rowIndex}
+					rowKey={props.rowKey}
+					bordered={props.bordered}
+					rowHeight={props.rowHeight}
+					bodyRowClick={props.bodyRowClick}
+					getBodyCellBg={props.getBodyCellBg}
+					splitColumnsArr={props.splitColumnsArr}
+					key={getRowKey(rowKey, dataItem, rowIndex)}
+					bodyRowMouseEnter={props.bodyRowMouseEnter}
+					bodyRowMouseLeave={props.bodyRowMouseLeave}
+					getBodyStickyStyle={props.getBodyStickyStyle}
+					columnsKeyIndexMap={props.columnsKeyIndexMap}
+				/>
+			))}
 		</div>
 	);
 };

@@ -26,13 +26,16 @@ export type TableScrollbarState = { have: boolean; innerSize: number; width: num
 
 // Table Resize标记
 export type ResizeFlag = {
-	activeKey: string;
 	pageX: number;
-	children: {
-		key: string;
-		index: number;
-		clientWidth: number;
-	}[];
+	activeKey: string;
+	children: Map<
+		string,
+		{
+			key: string;
+			index: number;
+			clientWidth: number;
+		}
+	>;
 };
 
 export type TableColumnFixed = 'left' | 'right';

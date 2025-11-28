@@ -42,9 +42,3 @@ export type TableColumnGroup<T> = Partial2Undefined<Omit<TableColumn<T>, 'key' |
 };
 
 export type TableColumns<T> = Array<TableColumnGroup<T> | TableColumn<T>>;
-
-// 内部使用的columnGroup类型
-export type InnerColumnGroup<T> = Omit<TableColumnGroup<T>, 'children'>;
-
-// 内部使用的column类型
-export type InnerColumn<T> = Omit<TableColumn<T> & { index: number }, 'children'>;

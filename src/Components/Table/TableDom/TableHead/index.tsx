@@ -18,11 +18,11 @@ type Props<T> = Required<
 		| 'gridTemplateColumns'
 		| 'v_scrollbar'
 		| 'rowHeight'
-		| 'getStickyStyle'
-		| 'pingedRightStart'
+		| 'getHeadStickyStyle'
 		| 'startResize'
 		| 'resizeFlag'
 		| 'getHeadCellBg'
+		| 'columnsKeyIndexMap'
 	>
 >;
 
@@ -45,8 +45,9 @@ const TableHead = <T,>(props: Props<T>) => {
 							resizeFlag={props.resizeFlag}
 							startResize={props.startResize}
 							getHeadCellBg={props.getHeadCellBg}
-							getStickyStyle={props.getStickyStyle}
 							splitColumnsArr={props.splitColumnsArr}
+							columnsKeyIndexMap={props.columnsKeyIndexMap}
+							getHeadStickyStyle={props.getHeadStickyStyle}
 						/>
 					))}
 

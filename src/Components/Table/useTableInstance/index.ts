@@ -15,7 +15,7 @@ const useTableInstance = <T>(props: TableProps<T>) => {
 	const tableDomRef = useTableDomRef({ tableState });
 	const tableSticky = useTableSticky({ tableState, tableColumns });
 	const tableResize = useTableResize({ tableState, tableRequiredProps, tableColumns });
-	const tableCellBg = useTableCellBg({ tableState });
+	const tableCellBg = useTableCellBg({ tableState, tableRequiredProps });
 	return { ...tableState, ...tableRequiredProps, ...tableDomRef, ...tableColumns, ...tableSticky, ...tableResize, ...tableCellBg };
 };
 

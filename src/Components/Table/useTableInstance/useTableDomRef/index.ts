@@ -1,6 +1,7 @@
 import { startTransition, useEffect, useLayoutEffect, useRef } from 'react';
 
 import { useScrollBy } from './useScroll';
+import useDebounce from '../../TableHooks/useDebounce';
 import calcBorderWidth from '../../TableUtils/calcBorderWidth';
 
 import type useTableState from '../useTableState';
@@ -11,6 +12,7 @@ type Props = {
 
 // 表格dom的ref 以及 对dom的监测【resize、scroll】
 const useTableDomRef = ({ tableState }: Props) => {
+	const { debounce } = useDebounce();
 	const scrollByTop = useScrollBy('scrollTop');
 	const scrollByLeft = useScrollBy('scrollLeft');
 	const headRef = useRef<HTMLDivElement>(null);
@@ -50,22 +52,24 @@ const useTableDomRef = ({ tableState }: Props) => {
 					// 从DOM中移除临时元素
 					calcDom.parentNode?.removeChild(calcDom);
 				} else {
-					startTransition(() => {
-						setV_scrollbar((old) => {
-							const next = { ...old, have: vScrollbarHave, innerSize: bodyInner.clientHeight };
-							if (next.have !== old.have || next.width !== old.width || next.innerSize !== old.innerSize) {
-								return next;
-							}
-							return old;
+					debounce(() => {
+						startTransition(() => {
+							setV_scrollbar((old) => {
+								const next = { ...old, have: vScrollbarHave, innerSize: bodyInner.clientHeight };
+								if (next.have !== old.have || next.width !== old.width || next.innerSize !== old.innerSize) {
+									return next;
+								}
+								return old;
+							});
+							setH_scrollbar((old) => {
+								const next = { ...old, have: hScrollbarHave, innerSize: bodyInner.clientWidth };
+								if (next.have !== old.have || next.width !== old.width || next.innerSize !== old.innerSize) {
+									return next;
+								}
+								return old;
+							});
+							setBodyWidth(body.clientWidth);
 						});
-						setH_scrollbar((old) => {
-							const next = { ...old, have: hScrollbarHave, innerSize: bodyInner.clientWidth };
-							if (next.have !== old.have || next.width !== old.width || next.innerSize !== old.innerSize) {
-								return next;
-							}
-							return old;
-						});
-						setBodyWidth(body.clientWidth);
 					});
 				}
 			};

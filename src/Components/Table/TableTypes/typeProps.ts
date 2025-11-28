@@ -25,4 +25,10 @@ export type TableProps<T> = {
 		visibleConf?: Record<string, boolean>; // 可见
 		widthConf?: Record<string, TableColumnWidth>; // 宽度
 	};
+	// 行高亮配置
+	rowBgHighlight?: {
+		rowHover?: boolean;
+		rowClick?: boolean;
+		rowSelect?: boolean;
+	};
 };

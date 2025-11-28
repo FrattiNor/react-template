@@ -1,31 +1,46 @@
-import { memo } from 'react';
+import { memo, useMemo } from 'react';
 
 import classNames from 'classnames';
 
 import styles from './index.module.less';
 import ResizeHandle from './ResizeHandle';
-import { getCellTitle, isStrNum } from '../../../../TableUtils';
+import { getCellTitle, getColKeys, isStrNum } from '../../../../TableUtils';
 
-import type { InnerColumn, InnerColumnGroup } from '../../../../TableTypes/typeColumn';
+import type { TableColumn, TableColumnGroup } from '../../../../TableTypes/typeColumn';
 import type { TableInstance } from '../../../../useTableInstance';
 
-type Props<T> = Required<Pick<TableInstance<T>, 'bordered' | 'rowHeight' | 'getStickyStyle' | 'startResize' | 'resizeFlag' | 'getHeadCellBg'>> & {
+type Props<T> = Required<
+	Pick<TableInstance<T>, 'splitColumnsArr' | 'bordered' | 'rowHeight' | 'getHeadStickyStyle' | 'startResize' | 'resizeFlag' | 'getHeadCellBg'>
+> & {
 	rowIndexStart: number;
 	rowIndexEnd: number;
 	colIndexStart: number;
 	colIndexEnd: number;
-	column: InnerColumn<T> | InnerColumnGroup<T>;
+	column: TableColumn<T> | TableColumnGroup<T>;
 };
 
 const HeadCell = <T,>(props: Props<T>) => {
-	const { column, bordered, rowIndexStart, rowIndexEnd, colIndexStart, colIndexEnd, rowHeight, getStickyStyle, getHeadCellBg } = props;
+	const {
+		column,
+		splitColumnsArr,
+		bordered,
+		rowIndexStart,
+		rowIndexEnd,
+		colIndexStart,
+		colIndexEnd,
+		rowHeight,
+		getHeadStickyStyle,
+		getHeadCellBg,
+	} = props;
+
+	const colKeys = useMemo(() => getColKeys(splitColumnsArr, colIndexStart, colIndexEnd), [splitColumnsArr, colIndexStart, colIndexEnd]);
 
 	const renderDom = column.title;
 	const resize = column.resize ?? true;
 	const title = getCellTitle(renderDom);
 	const canEllipsis = isStrNum(renderDom);
-	const backgroundColor = getHeadCellBg({ colIndexStart, colIndexEnd });
-	const { stickyStyle, rightLastPinged, leftFirstPinged, leftLastPinged } = getStickyStyle({ colIndexStart, colIndexEnd, type: 'head' });
+	const backgroundColor = getHeadCellBg({ colKeys });
+	const { stickyStyle, rightLastPinged, leftFirstPinged, leftLastPinged } = getHeadStickyStyle({ colKeys });
 
 	return (
 		<div

@@ -19,16 +19,20 @@ type Props<T> = Required<
 		| 'bodyRef'
 		| 'bodyInnerRef'
 		| 'rowHeight'
-		| 'getStickyStyle'
+		| 'getBodyStickyStyle'
 		| 'setSizeCacheMap'
-		| 'setPingedObj'
-		| 'fixedLeftObj'
-		| 'fixedRightObj'
+		| 'setPingedMap'
+		| 'fixedLeftMap'
+		| 'fixedRightMap'
 		| 'getBodyCellBg'
 		| 'sizeCacheMap'
 		| 'resized'
 		| 'resizeFlag'
 		| 'bodyWidth'
+		| 'columnsKeyIndexMap'
+		| 'bodyRowClick'
+		| 'bodyRowMouseEnter'
+		| 'bodyRowMouseLeave'
 	>
 >;
 
@@ -48,10 +52,11 @@ const TableBody = <T,>(props: Props<T>) => {
 			{/* 监测fixed状态 */}
 			<StickyObserver
 				bodyRef={props.bodyRef}
-				setPingedObj={props.setPingedObj}
-				fixedLeftObj={props.fixedLeftObj}
-				fixedRightObj={props.fixedRightObj}
+				setPingedMap={props.setPingedMap}
+				fixedLeftMap={props.fixedLeftMap}
+				fixedRightMap={props.fixedRightMap}
 				splitColumnsArr={props.splitColumnsArr}
+				columnsKeyIndexMap={props.columnsKeyIndexMap}
 				gridTemplateColumns={props.gridTemplateColumns}
 			/>
 			<BodyInner
@@ -60,10 +65,14 @@ const TableBody = <T,>(props: Props<T>) => {
 				bordered={props.bordered}
 				rowHeight={props.rowHeight}
 				bodyWidth={props.bodyWidth}
+				bodyRowClick={props.bodyRowClick}
 				bodyInnerRef={props.bodyInnerRef}
 				getBodyCellBg={props.getBodyCellBg}
-				getStickyStyle={props.getStickyStyle}
 				splitColumnsArr={props.splitColumnsArr}
+				bodyRowMouseEnter={props.bodyRowMouseEnter}
+				bodyRowMouseLeave={props.bodyRowMouseLeave}
+				getBodyStickyStyle={props.getBodyStickyStyle}
+				columnsKeyIndexMap={props.columnsKeyIndexMap}
 				gridTemplateColumns={props.gridTemplateColumns}
 			/>
 		</div>

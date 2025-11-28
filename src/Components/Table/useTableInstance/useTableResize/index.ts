@@ -1,5 +1,6 @@
-import { useCallback, useEffect } from 'react';
+import { startTransition, useCallback, useEffect } from 'react';
 
+import useDebounce from '../../TableHooks/useDebounce';
 import useRefValue from '../../TableHooks/useRefValue';
 import { type ResizeFlag } from '../../TableTypes/type';
 import { FixedTwo, getLeafColumn } from '../../TableUtils';
@@ -26,6 +27,7 @@ type Props<T> = {
 
 // 表格resize宽度
 const useTableResize = <T>({ tableState, tableColumns, tableRequiredProps }: Props<T>) => {
+	const { debounce } = useDebounce();
 	const { splitColumnsArr } = tableColumns;
 	const [getResizeEndCallback] = useRefValue(tableRequiredProps.onResizeEnd);
 	const { resizeFlag, setResized, setResizeFlag, setSizeCacheMap, sizeCacheMap } = tableState;
@@ -34,49 +36,54 @@ const useTableResize = <T>({ tableState, tableColumns, tableRequiredProps }: Pro
 		if (resizeFlag) {
 			const mouseMove = (e: MouseEvent) => {
 				pauseEvent(e);
-				// 更新宽度
-				setResized(true);
-				setSizeCacheMap((old) => {
-					const next = new Map(old);
-					// 移动列的数量
-					const count = resizeFlag.children.length;
-					// 整体移动距离【一定是整数】
-					const moveX = e.pageX - resizeFlag.pageX;
-					// 剩余移动距离
-					let remainingMoveX = moveX % count;
-					// 每列移动距离
-					const eachMoveX = (moveX - remainingMoveX) / count;
-					// 遍历需要移动的列
-					resizeFlag.children.forEach(({ clientWidth, key }, index) => {
-						// 当前列移动距离
-						let currentMoveX = eachMoveX;
-						// 从剩余移动距离中获取的移动距离
-						const _addMoveX = remainingMoveX / (count - index);
-						const addMoveX = _addMoveX >= 0 ? Math.ceil(_addMoveX) : Math.floor(_addMoveX);
-						currentMoveX = currentMoveX + addMoveX;
-						remainingMoveX = remainingMoveX - addMoveX;
-						// 移动后的宽度
-						const afterMoveWidth = clientWidth + currentMoveX;
-						// 判定宽度小于最小宽度
-						if (afterMoveWidth < minColWidth) {
-							next.set(key, minColWidth);
-							remainingMoveX = remainingMoveX + Math.round(afterMoveWidth - minColWidth);
-							return currentMoveX - Math.round(afterMoveWidth - minColWidth);
-						}
-						// 判断宽度大于最大宽度
-						else if (afterMoveWidth > maxColWidth) {
-							next.set(key, maxColWidth);
-							remainingMoveX = remainingMoveX + Math.round(afterMoveWidth - maxColWidth);
-							return currentMoveX - Math.round(afterMoveWidth - maxColWidth);
-						}
-						// 判断宽度在合理范围
-						else {
-							next.set(key, FixedTwo(afterMoveWidth));
-							return currentMoveX;
-						}
+				debounce(() => {
+					startTransition(() => {
+						// 更新宽度
+						setResized(true);
+						setSizeCacheMap((old) => {
+							const next = new Map(old);
+							// 移动列的数量
+							const count = resizeFlag.children.size;
+							// 整体移动距离【一定是整数】
+							const moveX = e.pageX - resizeFlag.pageX;
+							// 剩余移动距离
+							let remainingMoveX = moveX % count;
+							// 每列移动距离
+							const eachMoveX = (moveX - remainingMoveX) / count;
+							// 遍历需要移动的列
+							let index = -1;
+							resizeFlag.children.forEach(({ clientWidth, key }) => {
+								index++;
+								// 当前列移动距离
+								let currentMoveX = eachMoveX;
+								// 从剩余移动距离中获取的移动距离
+								const _addMoveX = remainingMoveX / (count - index);
+								const addMoveX = _addMoveX >= 0 ? Math.ceil(_addMoveX) : Math.floor(_addMoveX);
+								currentMoveX = currentMoveX + addMoveX;
+								remainingMoveX = remainingMoveX - addMoveX;
+								// 移动后的宽度
+								const afterMoveWidth = clientWidth + currentMoveX;
+								// 判定宽度小于最小宽度
+								if (afterMoveWidth < minColWidth) {
+									next.set(key, minColWidth);
+									remainingMoveX = remainingMoveX + Math.round(afterMoveWidth - minColWidth);
+									return currentMoveX - Math.round(afterMoveWidth - minColWidth);
+								}
+								// 判断宽度大于最大宽度
+								else if (afterMoveWidth > maxColWidth) {
+									next.set(key, maxColWidth);
+									remainingMoveX = remainingMoveX + Math.round(afterMoveWidth - maxColWidth);
+									return currentMoveX - Math.round(afterMoveWidth - maxColWidth);
+								}
+								// 判断宽度在合理范围
+								else {
+									next.set(key, FixedTwo(afterMoveWidth));
+									return currentMoveX;
+								}
+							});
+							return next;
+						});
 					});
-
-					return next;
 				});
 			};
 
@@ -112,17 +119,17 @@ const useTableResize = <T>({ tableState, tableColumns, tableRequiredProps }: Pro
 
 	const startResize = useCallback(
 		({ e, columnKey, colIndexStart, colIndexEnd }: StartResizeProps) => {
-			const nextChildren: ResizeFlag['children'] = [];
+			const nextChildren: ResizeFlag['children'] = new Map();
 
 			for (let i = colIndexStart; i <= colIndexEnd; i++) {
-				const key = getLeafColumn(splitColumnsArr[i]).key;
-				const clientWidth = sizeCacheMap.get(key) ?? 0;
-				nextChildren.push({ key, clientWidth, index: i });
+				const leafColumn = getLeafColumn(splitColumnsArr[i]);
+				const clientWidth = sizeCacheMap.get(leafColumn.key) ?? 0;
+				nextChildren.set(leafColumn.key, { key: leafColumn.key, clientWidth, index: i });
 			}
 
 			setResizeFlag({
-				activeKey: columnKey,
 				pageX: e.pageX,
+				activeKey: columnKey,
 				children: nextChildren,
 			});
 

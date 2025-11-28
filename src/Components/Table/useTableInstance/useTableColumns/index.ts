@@ -2,7 +2,7 @@ import { useMemo } from 'react';
 
 import { getLeafColumn } from '../../TableUtils';
 
-import type { InnerColumn, InnerColumnGroup, TableColumn, TableColumnGroup } from '../../TableTypes/typeColumn';
+import type { TableColumn, TableColumnGroup } from '../../TableTypes/typeColumn';
 import type { TableProps } from '../../TableTypes/typeProps';
 import type useTableState from '../useTableState';
 
@@ -29,28 +29,30 @@ const useTableColumns = <T>({ props, tableState }: Props<T>) => {
 		let index = 0;
 		// columns深度
 		let deepLevel = 0;
+		//
+		const keyIndexMap = new Map<string, number>();
 		// 遍历columns
-		const getSplitColumnsArr = (c: TableProps<T>['columns'], opt?: { parents: Array<InnerColumnGroup<T>> }) => {
+		const getSplitColumnsArr = (c: TableProps<T>['columns'], opt?: { parents: Array<TableColumnGroup<T>> }) => {
 			const parents = opt?.parents ?? [];
-			const splitColumnsArrInner: Array<Array<InnerColumnGroup<T> | InnerColumn<T> | null>> = [];
+			const splitColumnsArrInner: Array<Array<TableColumnGroup<T> | TableColumn<T>>> = [];
 			if (parents.length > deepLevel) deepLevel = parents.length;
 			c.forEach((column) => {
 				judgeSameKey(column.key);
 				// isGroup
 				if (Array.isArray(column.children)) {
-					const current: InnerColumnGroup<T> = { ...(column as TableColumnGroup<T>) };
+					const current: TableColumnGroup<T> = { ...(column as TableColumnGroup<T>) };
 					delete (current as any)['children'];
 					splitColumnsArrInner.push(...getSplitColumnsArr(column.children, { parents: [current, ...parents] }));
 				}
 				// isColumn
 				// 判断visible & 覆盖width
 				else if (visibleConf?.[column.key] === undefined || visibleConf?.[column.key] === true) {
-					const current: InnerColumn<T> = {
-						index,
+					const current: TableColumn<T> = {
 						...(column as TableColumn<T>),
 						width: widthConf?.[column.key] ?? column.width ?? 150,
 					};
 					splitColumnsArrInner.push([current, ...parents]);
+					keyIndexMap.set(column.key, index);
 					index++;
 				}
 			});
@@ -65,8 +67,8 @@ const useTableColumns = <T>({ props, tableState }: Props<T>) => {
 			splitColumnsArr_01 = splitColumnsArr_01.sort((a, b) => {
 				const aLeaf = getLeafColumn(a);
 				const bLeaf = getLeafColumn(b);
-				const aIndex = sortConf?.[aLeaf.key] ?? aLeaf.index;
-				const bIndex = sortConf?.[bLeaf.key] ?? bLeaf.index;
+				const aIndex = sortConf?.[aLeaf.key] ?? keyIndexMap.get(aLeaf.key) ?? Infinity;
+				const bIndex = sortConf?.[bLeaf.key] ?? keyIndexMap.get(bLeaf.key) ?? Infinity;
 				return aIndex - bIndex;
 			});
 		}
@@ -76,7 +78,7 @@ const useTableColumns = <T>({ props, tableState }: Props<T>) => {
 	// ======================================== part1 ========================================
 
 	// ======================================== part2 ========================================
-	const { splitColumnsArr, gridTemplateColumns, fixedLeftObj, fixedRightObj } = useMemo(() => {
+	const { splitColumnsArr, gridTemplateColumns, fixedLeftMap, fixedRightMap, columnsKeyIndexMap } = useMemo(() => {
 		// gridTemplateColumns
 		let gridTemplateColumns = '';
 		// index，当前column所在index
@@ -87,69 +89,69 @@ const useTableColumns = <T>({ props, tableState }: Props<T>) => {
 		type FixedLeftItem = { key: string; index: number; size: number; stickySize: number; pingedSize: number };
 		type FixedRightItem = { key: string; index: number; size: number; stickySize: number; pingedSize: number; leftTotalSize: number };
 		const fixedRightArr: FixedRightItem[] = [];
-		const fixedLeftObj: { [index: string]: FixedLeftItem } = {};
-		const fixedRightObj: { [index: string]: FixedRightItem } = {};
+		const fixedLeftMap = new Map<string, FixedLeftItem>();
+		const fixedRightMap = new Map<string, FixedRightItem>();
 		//
 		let totalSize = 0;
 		let leftCalcSize = 0;
 		let leftPingedSize = leftCalcSize;
 		//
-		const splitColumnsArr: Array<Array<InnerColumnGroup<T> | InnerColumn<T> | null>> = [];
 		let index = 0;
+		const columnsKeyIndexMap = new Map<string, number>();
+		const splitColumnsArr: Array<Array<TableColumnGroup<T> | TableColumn<T>>> = [];
 		splitColumnsArr_01.forEach((splitColumns) => {
-			const column = getLeafColumn(splitColumns);
-			const sizeCache = sizeCacheMap.get(column.key);
+			const leafColumn = getLeafColumn(splitColumns);
+			const sizeCache = sizeCacheMap.get(leafColumn.key);
 			if (typeof sizeCache === 'number') {
-				column.index = index; // 覆盖index，避免sort后index不一致
 				totalSize += sizeCache;
 				splitColumnsArr.push(splitColumns);
 				gridTemplateColumns += gridTemplateColumns === '' ? `${sizeCache}px` : ` ${sizeCache}px`;
 
-				if (column.fixed === 'left') {
-					const fixedValue = {
+				if (leafColumn.fixed === 'left') {
+					fixedLeftMap.set(leafColumn.key, {
 						index,
-						key: column.key,
+						key: leafColumn.key,
 						size: sizeCache,
 						stickySize: leftCalcSize,
 						pingedSize: leftPingedSize,
-					};
-					fixedLeftObj[index] = fixedValue;
+					});
 					leftCalcSize += sizeCache;
 				} else {
 					leftPingedSize += sizeCache;
 				}
 
-				if (column.fixed === 'right') {
+				if (leafColumn.fixed === 'right') {
 					// stickySize, pingedSize 占位，避免ts报错
 					fixedRightArr.unshift({
 						index,
 						stickySize: 0,
 						pingedSize: 0,
 						size: sizeCache,
-						key: column.key,
+						key: leafColumn.key,
 						leftTotalSize: totalSize,
 					});
 				}
 
+				columnsKeyIndexMap.set(leafColumn.key, index);
 				index++;
 			}
 		});
 
 		let rightCalcSize = 0;
-		fixedRightArr.forEach(({ index, size, leftTotalSize }, i) => {
+		fixedRightArr.forEach(({ key, size, leftTotalSize }, i) => {
 			const stickySize = rightCalcSize;
 			const pingedSize = totalSize - leftTotalSize - rightCalcSize;
 			fixedRightArr[i].stickySize = stickySize;
 			fixedRightArr[i].pingedSize = pingedSize;
-			fixedRightObj[index] = fixedRightArr[i];
+			fixedRightMap.set(key, fixedRightArr[i]);
 			rightCalcSize += size;
 		});
 
-		return { splitColumnsArr, gridTemplateColumns, fixedLeftObj, fixedRightObj };
+		return { splitColumnsArr, gridTemplateColumns, fixedLeftMap, fixedRightMap, columnsKeyIndexMap };
 	}, [splitColumnsArr_01, sizeCacheMap]);
 	// ======================================== part2 ========================================
 
-	return { splitColumnsArr_01, splitColumnsArr, gridTemplateColumns, deepLevel, fixedLeftObj, fixedRightObj };
+	return { splitColumnsArr_01, splitColumnsArr, gridTemplateColumns, deepLevel, fixedLeftMap, fixedRightMap, columnsKeyIndexMap };
 };
 
 export default useTableColumns;

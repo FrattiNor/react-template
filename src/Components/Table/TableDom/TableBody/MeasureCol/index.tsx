@@ -68,14 +68,13 @@ const MeasureCol = <T,>(props: Props<T>) => {
 	return (
 		<div ref={ref} className={styles['measure-col']}>
 			{splitColumnsArr_01.map((splitColumns) => {
-				const column = getLeafColumn(splitColumns);
+				const leafColumn = getLeafColumn(splitColumns);
 				return (
 					<MeasureColItem
-						column={column}
-						key={column.key}
+						key={leafColumn.key}
+						leafColumn={leafColumn}
 						resized={props.resized}
 						resizeObserver={resizeObserver}
-						setSizeCacheMap={setSizeCacheMap}
 						sizeCacheMap={props.sizeCacheMap}
 					/>
 				);
