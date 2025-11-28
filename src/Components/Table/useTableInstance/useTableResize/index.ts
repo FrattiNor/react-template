@@ -1,5 +1,6 @@
 import { useCallback, useEffect } from 'react';
 
+import useRefValue from '../../TableHooks/useRefValue';
 import { type ResizeFlag } from '../../TableTypes/type';
 import { FixedTwo, getLeafColumn } from '../../TableUtils';
 import { maxColWidth, minColWidth } from '../../TableUtils/configValues';
@@ -24,8 +25,9 @@ type Props<T> = {
 };
 
 // 表格resize宽度
-const useTableResize = <T>({ tableState, tableColumns }: Props<T>) => {
+const useTableResize = <T>({ tableState, tableColumns, tableRequiredProps }: Props<T>) => {
 	const { splitColumnsArr } = tableColumns;
+	const [getResizeEndCallback] = useRefValue(tableRequiredProps.onResizeEnd);
 	const { resizeFlag, setResized, setResizeFlag, setSizeCacheMap, sizeCacheMap } = tableState;
 
 	useEffect(() => {
@@ -81,7 +83,14 @@ const useTableResize = <T>({ tableState, tableColumns }: Props<T>) => {
 			const mouseUp = (e: MouseEvent) => {
 				pauseEvent(e);
 				setResizeFlag(null);
-				// resizeEndCallbackRef.current();
+				// onResize回调
+				const onResizeEnd = getResizeEndCallback();
+				if (typeof onResizeEnd === 'function') {
+					setSizeCacheMap((old) => {
+						onResizeEnd(Object.fromEntries(old));
+						return old;
+					});
+				}
 			};
 
 			document.addEventListener('mouseup', mouseUp);

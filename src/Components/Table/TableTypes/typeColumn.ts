@@ -1,6 +1,6 @@
 import { type ReactNode } from 'react';
 
-import type { TableColumnOnCellSpan, TableColumnRender, TableColumnWidth } from './type';
+import type { TableColumnAlign, TableColumnFixed, TableColumnOnCellSpan, TableColumnRender, TableColumnWidth } from './type';
 import type { Partial2Undefined } from './typeUtil';
 
 // onCell 的 colSpan 和 fixed 存在冲突
@@ -18,9 +18,10 @@ export type TableColumn<T> = {
 	// 配置span
 	onCellSpan?: TableColumnOnCellSpan<T>;
 	// 左右对齐
-	align?: 'left' | 'right' | 'center';
+	align?: TableColumnAlign;
 	// 左右固定【和colSpan有冲突】
-	fixed?: 'left' | 'right';
+	fixed?: TableColumnFixed;
+	// TODO 无法影响父节点是否可以拖拽
 	// 是否可以拖拽修改列宽
 	resize?: boolean;
 } & {
@@ -35,7 +36,7 @@ export type TableColumnGroup<T> = Partial2Undefined<Omit<TableColumn<T>, 'key' |
 	// 列标题
 	title: ReactNode;
 	// 左右对齐
-	align?: 'left' | 'right' | 'center';
+	align?: TableColumnAlign;
 	// group下的列配置
 	children: Array<TableColumnGroup<T> | TableColumn<T>>;
 };

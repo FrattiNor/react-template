@@ -34,3 +34,7 @@ export type ResizeFlag = {
 		clientWidth: number;
 	}[];
 };
+
+export type TableColumnFixed = 'left' | 'right';
+
+export type TableColumnAlign = 'left' | 'right' | 'center';

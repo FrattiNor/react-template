@@ -13,14 +13,16 @@ export type TableProps<T> = {
 	rowKey: TableRowKey<T>;
 	// 边框样式
 	bordered?: boolean;
+	// 最小行高
+	rowHeight?: number;
+	// 加载中
+	loading?: boolean;
+	// 拖动修改大小的回调，用于保存列宽配置
+	onResizeEnd?: (widths: Record<string, number>) => void;
 	// 列配置【覆盖】
 	columnConf?: {
 		sortConf?: Record<string, number>; // 排序
 		visibleConf?: Record<string, boolean>; // 可见
 		widthConf?: Record<string, TableColumnWidth>; // 宽度
 	};
-	// 最小行高
-	rowHeight?: number;
-	// 加载中
-	loading?: boolean;
 };

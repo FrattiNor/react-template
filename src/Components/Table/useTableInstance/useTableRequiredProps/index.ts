@@ -21,6 +21,7 @@ const useTableRequiredProps = <T>(props: TableProps<T>) => {
 		loading: props.loading ?? false,
 		bordered: props.bordered ?? defaultBordered,
 		rowHeight: props.rowHeight ?? defaultRowHeight,
+		onResizeEnd: props.onResizeEnd ?? (() => {}),
 	};
 
 	return { ...requiredProps };

@@ -34,9 +34,9 @@ const StickyObserverItem = <T,>(props: Props<T>) => {
 				startTransition(() => {
 					setPingedObj((old) => {
 						const key = column.key;
-						if (old[key]) {
-							delete old[key];
-							return { ...old };
+						if (old.has(key)) {
+							old.delete(key);
+							return new Map(old);
 						}
 						return old;
 					});

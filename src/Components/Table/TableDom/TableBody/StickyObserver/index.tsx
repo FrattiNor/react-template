@@ -2,6 +2,7 @@ import { memo, useRef, useState, useEffect, startTransition } from 'react';
 
 import styles from './index.module.less';
 import StickyObserverItem from './StickyObserverItem';
+import { type TableColumnFixed } from '../../../TableTypes/type';
 import { getLeafColumn } from '../../../TableUtils';
 
 import type { TableInstance } from '../../../useTableInstance';
@@ -29,7 +30,7 @@ const StickyObserver = <T,>(props: Props<T>) => {
 								const _index = entry.target.getAttribute('data-index');
 								if (key !== null && _index !== null && _fixed !== null) {
 									const index = parseInt(_index);
-									const fixed = _fixed as 'left' | 'right';
+									const fixed = _fixed as TableColumnFixed;
 									// 触发pinged
 									// 缩放可能导致无法达到1
 									// 确保left是左侧遮挡，right是右侧遮挡
@@ -38,19 +39,19 @@ const StickyObserver = <T,>(props: Props<T>) => {
 										((fixed === 'left' && entry.boundingClientRect.left < (entry.rootBounds?.left ?? 0)) ||
 											(fixed === 'right' && entry.boundingClientRect.right > (entry.rootBounds?.right ?? 0)))
 									) {
-										if (!old[key] || old[key].fixed !== fixed || old[key].index !== index) {
-											old[key] = { fixed, index };
+										if (!old.has(key) || old.get(key)?.fixed !== fixed || old.get(key)?.index !== index) {
+											old.set(key, { fixed, index });
 											changed = true;
 										}
 									}
 									// 未触发pinged
-									else if (old[key]) {
-										delete old[key];
+									else if (old.has(key)) {
+										old.delete(key);
 										changed = true;
 									}
 								}
 							});
-							if (changed) return { ...old };
+							if (changed) return new Map(old);
 							return old;
 						});
 					});
