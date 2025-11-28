@@ -19,7 +19,7 @@ type Props<T> = Required<
 		| 'getStickyStyle'
 		| 'getBodyCellBg'
 		| 'bodyInnerRef'
-		| 'h_scrollbar'
+		| 'bodyWidth'
 	>
 >;
 
@@ -29,7 +29,7 @@ const BodyInner = <T,>(props: Props<T>) => {
 
 	return (
 		<div ref={bodyInnerRef} className={styles['body-inner']} style={{ gridTemplateColumns: gridTemplateColumns + ` minmax(0px, 1fr)` }}>
-			{isEmpty && <BodyEmpty h_scrollbar={props.h_scrollbar} />}
+			{isEmpty && <BodyEmpty bodyWidth={props.bodyWidth} />}
 			{!isEmpty &&
 				data?.map((dataItem, rowIndex) => (
 					<BodyRow

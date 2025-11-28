@@ -22,7 +22,7 @@ export type TableColumnOnCellSpan<T> = (
 	colSpan?: number;
 };
 
-export type TableScrollbarState = { have: boolean; wrapperSize: number; innerSize: number; width: number };
+export type TableScrollbarState = { have: boolean; innerSize: number; width: number };
 
 // Table Resize标记
 export type ResizeFlag = {

@@ -35,7 +35,7 @@ const useTableSticky = <T>({ tableColumns, tableState }: Props<T>) => {
 				stickyStyle = { position: 'sticky', zIndex: 5, right };
 				rightLastPinged = colIndexStart === pingedRightStart;
 				const pinged = colIndexEnd >= (pingedRightStart ?? Infinity);
-				if (pinged) stickyStyle.zIndex = 10;
+				if (pinged) stickyStyle.zIndex = 11;
 			}
 
 			return { stickyStyle, leftLastPinged, leftFirstPinged, rightLastPinged };

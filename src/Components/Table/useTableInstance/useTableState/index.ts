@@ -3,12 +3,14 @@ import { useMemo, useState } from 'react';
 import { type ResizeFlag, type TableScrollbarState } from '../../TableTypes/type';
 
 const useTableState = () => {
+	// body宽度
+	const [bodyWidth, setBodyWidth] = useState<number>(0);
 	// 列宽state
 	const [sizeCacheMap, setSizeCacheMap] = useState<Map<string, number>>(() => new Map());
 	// 纵向滚动条
-	const [v_scrollbar, setV_scrollbar] = useState<TableScrollbarState>({ have: false, wrapperSize: 0, innerSize: 0, width: 0 });
+	const [v_scrollbar, setV_scrollbar] = useState<TableScrollbarState>({ have: false, innerSize: 0, width: 0 });
 	// 横向滚动条
-	const [h_scrollbar, setH_scrollbar] = useState<TableScrollbarState>({ have: false, wrapperSize: 0, innerSize: 0, width: 0 });
+	const [h_scrollbar, setH_scrollbar] = useState<TableScrollbarState>({ have: false, innerSize: 0, width: 0 });
 	// 列宽是否被修改过
 	const [resized, setResized] = useState<boolean>(false);
 	// 拖拽修改列宽标记
@@ -35,6 +37,8 @@ const useTableState = () => {
 	}, [pingedObj]);
 
 	return {
+		bodyWidth,
+		setBodyWidth,
 		sizeCacheMap,
 		setSizeCacheMap,
 		v_scrollbar,

@@ -47,9 +47,9 @@ const Table = <T,>(_props: TableProps<T>) => {
 					bodyRef={props.bodyRef}
 					resized={props.resized}
 					bordered={props.bordered}
+					bodyWidth={props.bodyWidth}
 					rowHeight={props.rowHeight}
 					resizeFlag={props.resizeFlag}
-					h_scrollbar={props.h_scrollbar}
 					sizeCacheMap={props.sizeCacheMap}
 					bodyInnerRef={props.bodyInnerRef}
 					setPingedObj={props.setPingedObj}

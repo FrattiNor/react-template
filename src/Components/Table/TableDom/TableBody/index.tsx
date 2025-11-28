@@ -28,7 +28,7 @@ type Props<T> = Required<
 		| 'sizeCacheMap'
 		| 'resized'
 		| 'resizeFlag'
-		| 'h_scrollbar'
+		| 'bodyWidth'
 	>
 >;
 
@@ -59,7 +59,7 @@ const TableBody = <T,>(props: Props<T>) => {
 				rowKey={props.rowKey}
 				bordered={props.bordered}
 				rowHeight={props.rowHeight}
-				h_scrollbar={props.h_scrollbar}
+				bodyWidth={props.bodyWidth}
 				bodyInnerRef={props.bodyInnerRef}
 				getBodyCellBg={props.getBodyCellBg}
 				getStickyStyle={props.getStickyStyle}

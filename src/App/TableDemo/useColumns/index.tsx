@@ -38,7 +38,6 @@ const useColumns = () => {
 					key: 'index4',
 					title: 'Index4',
 					render: ({ index }) => `row4_${index}`,
-					fixed: 'left',
 				},
 				{
 					key: 'email',
@@ -70,7 +69,6 @@ const useColumns = () => {
 					key: 'age',
 					title: '年龄_8',
 					render: ({ age }) => age,
-					fixed: 'left',
 				},
 				{
 					key: 'gender',

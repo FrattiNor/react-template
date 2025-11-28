@@ -18,7 +18,7 @@ const useTableDomRef = ({ tableState }: Props) => {
 	const bodyInnerRef = useRef<HTMLDivElement>(null);
 	const vScrollbarRef = useRef<HTMLDivElement>(null);
 	const hScrollbarRef = useRef<HTMLDivElement>(null);
-	const { setV_scrollbar, setH_scrollbar } = tableState;
+	const { setV_scrollbar, setH_scrollbar, setBodyWidth } = tableState;
 
 	useLayoutEffect(() => {
 		if (bodyRef.current && bodyInnerRef.current) {
@@ -26,81 +26,53 @@ const useTableDomRef = ({ tableState }: Props) => {
 			const bodyInner = bodyInnerRef.current;
 
 			// === ob body content resize ===
-			const calcScrollBar = (entries?: ResizeObserverEntry[]) => {
+			const calcObserver = (entries?: ResizeObserverEntry[]) => {
 				const hScrollbarHave = bodyInner.clientWidth > 0 && body.clientWidth > 0 && bodyInner.clientWidth > body.clientWidth;
 				const vScrollbarHave = bodyInner.clientHeight > 0 && body.clientHeight > 0 && bodyInner.clientHeight > body.clientHeight;
 				if (!entries) {
 					const { calcDom, hScrollbarWidth, vScrollbarWidth } = calcBorderWidth(body);
-					// 保存宽度
+					// 保存state
 					setV_scrollbar((old) => {
-						const next = {
-							have: vScrollbarHave,
-							width: vScrollbarWidth,
-							wrapperSize: body.clientHeight,
-							innerSize: bodyInner.clientHeight,
-						};
-						if (
-							next.have !== old.have ||
-							next.width !== old.width ||
-							next.innerSize !== old.innerSize ||
-							next.wrapperSize !== old.wrapperSize
-						) {
+						const next = { have: vScrollbarHave, width: vScrollbarWidth, innerSize: bodyInner.clientHeight };
+						if (next.have !== old.have || next.width !== old.width || next.innerSize !== old.innerSize) {
 							return next;
 						}
 						return old;
 					});
 					setH_scrollbar((old) => {
-						const next = {
-							have: hScrollbarHave,
-							width: hScrollbarWidth,
-							wrapperSize: body.clientWidth,
-							innerSize: bodyInner.clientWidth,
-						};
-						if (
-							next.have !== old.have ||
-							next.width !== old.width ||
-							next.innerSize !== old.innerSize ||
-							next.wrapperSize !== old.wrapperSize
-						) {
+						const next = { have: hScrollbarHave, width: hScrollbarWidth, innerSize: bodyInner.clientWidth };
+						if (next.have !== old.have || next.width !== old.width || next.innerSize !== old.innerSize) {
 							return next;
 						}
 						return old;
 					});
+					setBodyWidth(body.clientWidth);
 					// 从DOM中移除临时元素
 					calcDom.parentNode?.removeChild(calcDom);
 				} else {
 					startTransition(() => {
 						setV_scrollbar((old) => {
-							const next = { ...old, have: vScrollbarHave, wrapperSize: body.clientHeight, innerSize: bodyInner.clientHeight };
-							if (
-								next.have !== old.have ||
-								next.width !== old.width ||
-								next.innerSize !== old.innerSize ||
-								next.wrapperSize !== old.wrapperSize
-							) {
+							const next = { ...old, have: vScrollbarHave, innerSize: bodyInner.clientHeight };
+							if (next.have !== old.have || next.width !== old.width || next.innerSize !== old.innerSize) {
 								return next;
 							}
 							return old;
 						});
 						setH_scrollbar((old) => {
-							const next = { ...old, have: hScrollbarHave, wrapperSize: body.clientWidth, innerSize: bodyInner.clientWidth };
-							if (
-								next.have !== old.have ||
-								next.width !== old.width ||
-								next.innerSize !== old.innerSize ||
-								next.wrapperSize !== old.wrapperSize
-							) {
+							const next = { ...old, have: hScrollbarHave, innerSize: bodyInner.clientWidth };
+							if (next.have !== old.have || next.width !== old.width || next.innerSize !== old.innerSize) {
 								return next;
 							}
 							return old;
 						});
+						setBodyWidth(body.clientWidth);
 					});
 				}
 			};
 
 			// 直接执行一次
-			calcScrollBar();
-			const ob = new ResizeObserver(calcScrollBar);
+			calcObserver();
+			const ob = new ResizeObserver(calcObserver);
 			ob.observe(body, { box: 'border-box' });
 			ob.observe(bodyInner, { box: 'border-box' });
 

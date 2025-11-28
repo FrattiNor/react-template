@@ -94,18 +94,15 @@ const useTableResize = <T>({ tableState, tableColumns }: Props<T>) => {
 		}
 	}, [resizeFlag]);
 
+	type StartResizeProps = {
+		columnKey: string;
+		colIndexStart: number;
+		colIndexEnd: number;
+		e: React.MouseEvent<HTMLDivElement, MouseEvent>;
+	};
+
 	const startResize = useCallback(
-		({
-			e,
-			columnKey,
-			colIndexStart,
-			colIndexEnd,
-		}: {
-			columnKey: string;
-			colIndexStart: number;
-			colIndexEnd: number;
-			e: React.MouseEvent<HTMLDivElement, MouseEvent>;
-		}) => {
+		({ e, columnKey, colIndexStart, colIndexEnd }: StartResizeProps) => {
 			const nextChildren: ResizeFlag['children'] = [];
 
 			for (let i = colIndexStart; i <= colIndexEnd; i++) {
