@@ -1,0 +1,201 @@
+40 个结果 - 40 文件
+
+isdm-apps\isdm-web\src\modals\BigScreen\DeviceInfo\BigScreenDeviceInfo\Blocks\Bottom\useColumns.tsx:
+  8  
+  9: 	const columns: TableColumns<BigScreenDeviceInspectionListItem> = [
+  10  		{
+
+isdm-apps\isdm-web\src\modals\BigScreen\DeviceInfo\BigScreenDeviceInfo\Blocks\BottomLeft\LimsList\useColumns.tsx:
+  8  
+  9: 	const columns: TableColumns<BigScreenDeviceLimsListItem> = [
+  10  		{
+
+isdm-apps\isdm-web\src\modals\BigScreen\DeviceInfo\BigScreenDeviceInfo\Blocks\BottomRight\useColumns.tsx:
+  8  
+  9: 	const columns: TableColumns<BigScreenDevicePreventListItem> = [
+  10  		{
+
+isdm-apps\isdm-web\src\modals\BigScreen\DeviceInfo\BigScreenDeviceInfo\Blocks\Center\useColumns.tsx:
+  8  
+  9: 	const columns: TableColumns<BigScreenDeviceDefectListItem> = [
+  10  		{
+
+isdm-apps\isdm-web\src\modals\BigScreen\DeviceInfo\BigScreenDeviceInfo\Blocks\CenterRight\useColumns.tsx:
+  8  
+  9: 	const columns: TableColumns<BigScreenDeviceWorkListItem> = [
+  10  		{
+
+isdm-apps\isdm-web\src\modals\BigScreen\DeviceInfo\BigScreenDeviceInfo\Blocks\Top\useColumns.tsx:
+  8  
+  9: 	const columns: TableColumns<BigScreenDeviceParamsMonitorListItem> = [
+  10  		{
+
+isdm-apps\isdm-web\src\modals\BigScreen\DeviceInfo\BigScreenDeviceInfo\Blocks\TopRight\useColumns.tsx:
+  8  
+  9: 	const columns: TableColumns<BigScreenDeviceParamsAlarmListItem> = [
+  10  		{
+
+isdm-apps\isdm-web\src\modals\BigScreen\DeviceInfo\DeviceHealth\useColumns.tsx:
+  8  
+  9: 	const columns: TableColumns<BigScreenDeviceHealthListItem> = [
+  10  		{
+
+isdm-apps\isdm-web\src\modals\BigScreen\DeviceInfo\DeviceKnowledge\useColumns.tsx:
+  11  
+  12: 	const columns: TableColumns<DeviceManualItem> = [
+  13  		{
+
+isdm-apps\isdm-web\src\modals\BigScreen\OverallView\OverallViewChannelStatus\useColumns.tsx:
+   9  
+  10: 	const columns: TableColumns<ChannelStatusItem> = [
+  11  		{
+
+isdm-apps\isdm-web\src\modals\BigScreen\OverallView\OverallViewGlobalAlarm\Diagnostic\index.tsx:
+  21  
+  22: 	const columns: TableColumns<DiagnosticInfoItem> = [
+  23  		{
+
+isdm-apps\isdm-web\src\modals\Business\AnalysisMeterMonitorPointDetail\List\useColumns.tsx:
+  20  
+  21: 	const columns: TableColumns<AnalysisMeterMonitorPointDetailItem> = [
+  22  		{
+
+isdm-apps\isdm-web\src\modals\Business\BusinessViewPoint\List\useColumns.tsx:
+  12  
+  13: 	const columns: TableColumns<MonitorPointItem> = [
+  14  		{
+
+isdm-apps\isdm-web\src\modals\Device\DeviceModelAppSyncDataDetail\Invalid\List\useColumns.tsx:
+  24  
+  25: 	const columns: TableColumns<InvalidDeviceItem> = [
+  26  		{
+
+isdm-apps\isdm-web\src\modals\Device\DeviceModelAppSyncDataDetail\NotSynchronized\List\useColumns.tsx:
+  22  
+  23: 	const columns: TableColumns<NotSynchronizedDeviceItem> = [
+  24  		{
+
+isdm-apps\isdm-web\src\modals\Device\DeviceModelAppSyncDataDetail\Synchronized\List\useColumns.tsx:
+  25  
+  26: 	const columns: TableColumns<SynchronizedDeviceItem> = [
+  27  		{
+
+isdm-apps\isdm-web\src\modals\Device\DeviceNumberMatch\Step2\List\useColumns.tsx:
+   9  
+  10: 	const columns: TableColumns<DeviceNoMatchListItem> = [
+  11  		{
+
+isdm-apps\isdm-web\src\modals\DeviceDetail\EquipmentParameterHistoricalBackup\useColumns.tsx:
+  17  
+  18: 	const columns: TableColumns<string> = [
+  19  		{
+
+isdm-apps\isdm-web\src\modals\EM\AddEMDeviceLinkParam\List\useColumns.tsx:
+  10  
+  11: 	const columns: TableColumns<AllEMDeviceLinkParamsListItem> = [
+  12  		{
+
+isdm-apps\isdm-web\src\modals\Factory\CtrlSysHardwareAudit\CSHA_AE\List\useColumns.tsx:
+  15  
+  16: 	const columns: TableColumns<CSHA_AEDeviationListItem> = [
+  17  		{
+
+isdm-apps\isdm-web\src\modals\Factory\CtrlSysHardwareAudit\CSHA_Confi\LoseEfficacy\List\useColumns.tsx:
+  11  
+  12: 	const columns: TableColumns<CSHA_ConfDeviationListItem> = [
+  13  		{
+
+isdm-apps\isdm-web\src\modals\Factory\CtrlSysHardwareAudit\CSHA_Confi\Missing\List\useColumns.tsx:
+  26  
+  27: 	const columns: TableColumns<CSHA_ConfDeviationListItem> = [
+  28  		{
+
+isdm-apps\isdm-web\src\modals\Factory\CtrlSysHardwareAudit\CSHA_Overview_CtrlSys\List\useColumns.tsx:
+  19  
+  20: 	const columns: TableColumns<CSHA_Overview_ControlSystemDeviationListItem> = [
+  21  		{
+
+isdm-apps\isdm-web\src\modals\Factory\ECS700Editor\ECS700EditorLineManage\List2\useColumns.tsx:
+  15  
+  16: 	const columns: TableColumns<LineDataItem> = [
+  17  		{
+
+isdm-apps\isdm-web\src\modals\Factory\FactoryModelNodeLink\Bind\List\useColumns.tsx:
+   9  
+  10: 	const columns: TableColumns<BindDeviceItem> = [
+  11  		{
+
+isdm-apps\isdm-web\src\modals\Factory\FactoryModelNodeLink\See\List\useColumns.tsx:
+   9  
+  10: 	const columns: TableColumns<BindDeviceItem> = [
+  11  		{
+
+isdm-apps\isdm-web\src\modals\Factory\FactoryModelQuickAdd\Area\List\useColumns.tsx:
+   9  
+  10: 	const columns: TableColumns<BindAreaItem> = [
+  11  		{
+
+isdm-apps\isdm-web\src\modals\Factory\FactoryModelQuickAdd\Cabinet\List\useColumns.tsx:
+  8  
+  9: 	const columns: TableColumns<BindCabinetItem> = [
+  10  		{
+
+isdm-apps\isdm-web\src\modals\InterlockDeviceGroup\InterlockDeviceGroupConfigureDevice\List\useColumns.tsx:
+  28  
+  29: 	const columns: TableColumns<InterlockDeviceItem> = [
+  30  		{
+
+isdm-apps\isdm-web\src\modals\Knowledge\KnowledgePublishCover\List\useColumns.tsx:
+  20  
+  21: 	const columns: TableColumns<SuposUserItem> = [
+  22  		{
+
+isdm-apps\isdm-web\src\modals\ListColumn\ListColumnPublish\List\useColumns.tsx:
+  17  
+  18: 	const columns: TableColumns<SuposUserItem> = [
+  19  		{
+
+isdm-apps\isdm-web\src\modals\Point\Datasource5GConf\List\useColumns.tsx:
+  12  
+  13: 	const columns: TableColumns<FiveGNodeItem> = [
+  14  		{
+
+isdm-apps\isdm-web\src\modals\Point\DatasourceISDMLinkConf\List\useColumns.tsx:
+  12  
+  13: 	const columns: TableColumns<IsdmLinkNodeItem> = [
+  14  		{
+
+isdm-apps\isdm-web\src\modals\Point\DatasourceStdConf\List\useColumns.tsx:
+  12  
+  13: 	const columns: TableColumns<StdNodeItem> = [
+  14  		{
+
+isdm-apps\isdm-web\src\modals\Point\DatasourceUaConf\List\useColumns.tsx:
+  12  
+  13: 	const columns: TableColumns<UANodeItem> = [
+  14  		{
+
+isdm-apps\isdm-web\src\modals\Prediction\CtrlSYSPredDetailControllerDetail\useColumns.tsx:
+   9  
+  10: 	const columns: TableColumns<ControllerParamsDetailItem> = [
+  11  		{
+
+isdm-apps\isdm-web\src\modals\Task\DeviceGroupAddDevice\List\useColumns.tsx:
+  18  
+  19: 	const columns: TableColumns<DeviceGroupDeviceItemAdd> = [
+  20  		{
+
+isdm-apps\isdm-web\src\modals\Task\DeviceGroupDevice\List\useColumns.tsx:
+  24  
+  25: 	const columns: TableColumns<DeviceGroupDeviceItem> = [
+  26  		{
+
+isdm-apps\isdm-web\src\modals\VideoMonitor\VideoMonitorList\useColumns.tsx:
+  12  
+  13: 	const columns: TableColumns<VideoMonitorItem> = [
+  14  		{
+
+isdm-apps\isdm-web\src\modals\WeeklyReport\WeeklyReportControllerLoad\useColumns\index.tsx:
+   9  
+  10: 	const columns: TableColumns<ControllerLoadItem> = [
+  11  		{

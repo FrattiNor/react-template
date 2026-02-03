@@ -1,150 +1,99 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
-const { execSync } = require('child_process');
-const { colorMap, getRecord } = require('./utils.cjs');
-const { getConfig } = require('./getConfig.cjs');
-const { rimrafSync } = require('rimraf');
+const { colorMap } = require('./utils.cjs');
 const fs = require('fs');
-const { NodeSSH } = require('node-ssh');
-const AdmZip = require('adm-zip');
+const path = require('path');
 
-const delZip = ({ zipFilename }) => {
-    const record = getRecord('删除压缩包');
-    record.start();
-    rimrafSync(zipFilename);
-    record.end();
-};
+const data = fs.readFileSync(path.join(__dirname, './data.txt'), { encoding: 'utf-8' });
 
-const delFile = ({ filePath }) => {
-    const record = getRecord('删除文件');
-    record.start();
-    rimrafSync(filePath);
-    record.end();
-};
+const v = data.replaceAll('\\', '/').match(/isdm-apps\/isdm-web\/.*useColumns.tsx/g);
 
-const zipFile = ({ filePath, zipFilename }) => {
-    const record = getRecord('压缩');
-    record.start();
-    const zip = new AdmZip();
-    zip.addLocalFolder(filePath);
-    zip.writeZip(zipFilename);
-    record.end();
-};
+const pathList = v.map((item) => `D:/code/isdm_web/${item}`);
 
-const unzipFile = ({ filePath, zipFilename }) => {
-    const record = getRecord('解压缩');
-    record.start();
-    const zip = new AdmZip(zipFilename);
-    zip.extractAllTo(filePath, true); // true = 覆盖现有文件
-    record.end();
-};
+console.log(pathList);
 
-const uploadZip = async ({ username, password, host, zipFilename, port }) => {
-    const record = getRecord('上传压缩包');
-    record.start();
-    const ssh = new NodeSSH();
-    await ssh.connect({ host, username, password, port });
-    await ssh.putFile(`./${zipFilename}`, `/home/web_code/${zipFilename}`);
-    ssh.dispose();
-    record.end();
-};
-
-const downloadZip = async ({ username, password, host, zipFilename, port }) => {
-    const record = getRecord('下载压缩包');
-    record.start();
-    const ssh = new NodeSSH();
-    await ssh.connect({ host, username, password, port });
-    await ssh.getFile(`./${zipFilename}`, `/home/web_code/${zipFilename}`);
-    ssh.dispose();
-    record.end();
-};
-
-const bakZip = ({ zipFilename }) => {
-    const record = getRecord('备份源文件');
-    record.start();
-    fs.rename(`./${zipFilename}`, `./${zipFilename}.bak`, (err) => {
-        if (err) throw err;
-    });
-    record.end();
-};
-
-const unbakZip = ({ zipFilename }) => {
-    const record = getRecord('还原备份源文件');
-    record.start();
-    fs.rename(`./${zipFilename}.bak`, `./${zipFilename}`, (err) => {
-        if (err) throw err;
-    });
-    record.end();
-};
-
-const clearNodeModules = ({ filePath, deepClear }) => {
-    const record = getRecord('清除依赖');
-    record.start();
-    rimrafSync(`${filePath}/node_modules`);
-    execSync('cd', { stdio: 'inherit', cwd: filePath });
-    if (deepClear) execSync('npm run rm-dep', { stdio: 'inherit', cwd: filePath });
-    record.end();
-};
-
-const haveFile = ({ filePath }) => {
-    if (fs.existsSync(filePath)) {
-        const files = fs.readdirSync(filePath);
-        if (files.length > 0) {
-            return true;
+try {
+    pathList.forEach((item) => {
+        let fileStr = fs.readFileSync(item, { encoding: 'utf-8' });
+        //
+        fileStr = fileStr.replaceAll(': TableColumns<', ': Table2Columns<');
+        //
+        fileStr = fileStr.replaceAll(
+            'const { createListInnerFilter } = useListInnerFilter();',
+            'const { createList2InnerFilter } = useList2InnerFilter();',
+        );
+        //
+        fileStr = fileStr.replaceAll('const { locationFilter, areaFilter } =', 'const { locationFilterProps, areaFilterProps } =');
+        //
+        fileStr = fileStr.replaceAll('filter: createListInnerFilter({', '...createList2InnerFilter({');
+        //
+        fileStr = fileStr.replaceAll(
+            'onCell: ({ factoryModelPath }) => ({ title: notEmpty(factoryModelPath) }),',
+            'onCellTitle: ({ factoryModelPath }) => notEmpty(factoryModelPath),',
+        );
+        //
+        fileStr = fileStr.replaceAll('filter: locationFilter', '...createList2InnerFilter(locationFilterProps)');
+        //
+        fileStr = fileStr.replaceAll('filter: areaFilter', '...createList2InnerFilter(areaFilterProps)');
+        //
+        fileStr = fileStr.replaceAll('onCell: () => ({ cellInnerStyle: { padding: 0 } }),', 'onCellStyle: () => ({ padding: 0 }),');
+        //
+        fileStr = fileStr.replaceAll('onCell: ({ userCode }) => ({ title: userCode }),', 'onCellTitle: ({ userCode }) => notEmpty(userCode),');
+        //
+        fileStr = fileStr.replaceAll(
+            'onCell: ({ authorCode }) => ({ title: authorCode }),',
+            'onCellTitle: ({ authorCode }) => notEmpty(authorCode),',
+        );
+        //
+        fileStr = fileStr.replaceAll(
+            'onCell: ({ userNameCode }) => ({ title: userNameCode }),',
+            'onCellTitle: ({ userNameCode }) => notEmpty(userNameCode),',
+        );
+        //
+        fileStr = fileStr.replaceAll(
+            'onCell: ({ ackUserCode }) => ({ title: ackUserCode }),',
+            'onCellTitle: ({ ackUserCode }) => notEmpty(ackUserCode),',
+        );
+        //
+        fileStr = fileStr.replaceAll(
+            'onCell: ({ handleUserCode }) => ({ title: handleUserCode }),',
+            'onCellTitle: ({ handleUserCode }) => notEmpty(handleUserCode),',
+        );
+        //
+        fileStr = fileStr.replaceAll(
+            'onCell: ({ lastShelvedUserCode }) => ({ title: lastShelvedUserCode }),',
+            'onCellTitle: ({ lastShelvedUserCode }) => notEmpty(lastShelvedUserCode),',
+        );
+        //
+        fileStr = fileStr.replaceAll(
+            'onCell: ({ usernameCode }) => ({ title: usernameCode }),',
+            'onCellTitle: ({ usernameCode }) => notEmpty(usernameCode),',
+        );
+        //
+        fileStr = fileStr.replaceAll('useCreatePermissionOperate(', 'useCreatePermissionOperate2(');
+        //
+        fileStr = fileStr.replaceAll('useCreateOperateColumn(', 'useCreateOperateColumn2(');
+        //
+        fileStr = fileStr.replaceAll(
+            "import { useListInnerFilter } from '@/components/ListInnerFilter';",
+            "import { useList2InnerFilter } from '@/components/ListInnerFilter';",
+        );
+        //
+        fileStr = fileStr.replaceAll(
+            "import useCreateOperateColumn from '@/hooks/useCreateOperateColumn';",
+            "import useCreateOperateColumn2 from '@/hooks/useCreateOperateColumn2';",
+        );
+        //
+        fileStr = fileStr.replaceAll('forceRender: true', 'colBodyForceRender: true');
+        //
+        fileStr = fileStr.replaceAll("import { type TableColumns } from '@react/components';", '');
+        fileStr = fileStr.replaceAll(', type TableColumns', '');
+        fileStr = fileStr.replaceAll('type TableColumns,', '');
+        //
+        if (!fileStr.includes("import { type Table2Columns } from '@table/components';")) {
+            fileStr = "import { type Table2Columns } from '@table/components';\n" + fileStr;
         }
-    }
-    return false;
-};
-
-const getArgs1 = () => {
-    const args = process.argv.slice(2);
-    const args1 = args[0];
-    if (args1 === 'upload') return 'upload';
-    if (args1 === 'download') return 'download';
-    if (args1 === 'unbak') return 'unbak';
-    return 'null';
-};
-
-(async () => {
-    try {
-        const { clearDep, deepClear, directory, filename, username, password, host, port } = getConfig();
-
-        const zipFilename = `${filename}.zip`;
-
-        const filePath = `${directory}${filename}`;
-
-        const args1 = getArgs1();
-
-        switch (args1) {
-            case 'upload': {
-                if (!haveFile({ filePath })) throw new Error('文件夹为空');
-                if (clearDep) clearNodeModules({ filePath, deepClear });
-                zipFile({ filePath, zipFilename });
-                await uploadZip({ host, username, password, zipFilename, port });
-                delZip({ zipFilename });
-                break;
-            }
-            case 'download': {
-                if (haveFile({ filePath })) {
-                    if (clearDep) clearNodeModules({ filePath, deepClear });
-                    delZip({ zipFilename });
-                    zipFile({ filePath, zipFilename });
-                    bakZip({ zipFilename });
-                }
-                await downloadZip({ host, username, password, zipFilename, port });
-                delFile({ filePath });
-                unzipFile({ filePath, zipFilename });
-                delZip({ zipFilename });
-                break;
-            }
-            case 'unbak': {
-                unbakZip({ zipFilename });
-                unzipFile({ filePath, zipFilename });
-                bakZip({ zipFilename });
-                break;
-            }
-            default:
-        }
-    } catch (e) {
-        console.log(colorMap.red(String(e)));
-    }
-})();
+        fs.writeFileSync(item, fileStr, { encoding: 'utf-8' });
+    });
+} catch (e) {
+    console.log(colorMap.red(String(e)));
+}
