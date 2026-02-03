@@ -1,0 +1,43 @@
+{
+    "context": {
+        "jsonData": {
+            "v": "7.0.5",
+            "p": {
+                "background": "rgba(129, 154, 225, 0.5)",
+                "layers": [
+                    {
+                        "name": "0",
+                        "visible": true,
+                        "selectable": true,
+                        "movable": true,
+                        "editable": true,
+                        "displayName": "图层0"
+                    }
+                ],
+                "autoAdjustIndex": true,
+                "hierarchicalRendering": true
+            },
+            "a": {
+                "rotateAsClock": false,
+                "connectActionType": null,
+                "couldDrag": false,
+                "layoutIndex": "m4xgueux0",
+                "jsonVersion": "V2",
+                "width": 1920,
+                "height": 1080,
+                "showAnchor": false
+            },
+            "d": [],
+            "modified": "Tue Jan 20 2026 19:50:40 GMT+0800 (中国标准时间)",
+            "contentRect": {
+                "x": 0,
+                "y": 0,
+                "width": 1920,
+                "height": 1080
+            }
+        },
+        "type": "display",
+        "name": "Layout_13311823285851617900Data"
+    },
+    "version": "v1.0"
+}

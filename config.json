@@ -1,10 +1,8 @@
 {
-    "directory": "../",
-    "filename": "isdm_web",
-    "host": "10.30.76.33",
-    "username": "root",
-    "password": "Sup@2021",
-    "clearDep": true,
-    "deepClear": true,
-    "port": 35030
+    "appId": "App_a870b0c69f5a9157a781409e15af6928",
+    "parentId": "App_a870b0c69f5a9157a781409e15af6928",
+    "suposHost": "http://10.10.58.245:8080",
+    "ticket": "6R5158h4tJRMDBGTEplGE",
+    "width": 1920,
+    "height": 1080
 }

@@ -1,5 +1,7 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
+const { HttpsProxyAgent, HttpProxyAgent } = require('hpagent');
 const chalk = require('chalk');
+const { got } = require('got');
 
 const colorMap = {
     red: chalk.rgb(219, 106, 106),
@@ -11,19 +13,27 @@ const colorMap = {
     cyan: chalk.rgb(19, 194, 194),
 };
 
-const getRecord = (handle) => {
-    let timestamp = 0;
+const httpsAgent = new HttpsProxyAgent({
+    proxy: 'http://localhost:8080',
+    rejectUnauthorized: false,
+});
 
-    const start = () => {
-        timestamp = new Date().valueOf();
-        console.log(colorMap.blue(`${handle}中...`));
-    };
-    const end = () => {
-        console.log(colorMap.green(`${handle}完成`));
-        console.log(colorMap.yellow(`耗时: ${(new Date().valueOf() - timestamp) / 1000}s\n`));
-    };
+const httpAgent = new HttpProxyAgent({
+    proxy: 'http://localhost:8080',
+});
 
-    return { start, end };
-};
+const isDev = process.env.NODE_ENV === 'development';
 
-module.exports = { colorMap, getRecord };
+const gotInstance = got.extend({
+    headers: {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36',
+    },
+    agent: {
+        https: isDev ? httpsAgent : undefined,
+        http: isDev ? httpAgent : undefined,
+    },
+    methodRewriting: true,
+    followRedirect: false,
+});
+
+module.exports = { colorMap, gotInstance };
