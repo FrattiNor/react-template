@@ -10,19 +10,24 @@ const { getComponents2 } = require('./getComponent2.cjs');
 const addPage = async ({ name, type }) => {
     const { suposHost, ticket, appId, parentId, width, height } = getConfig();
 
-    const contextStr = fs.readFileSync(path.join(__dirname, './context.json'), 'utf-8');
-    const contextJSON = JSON.parse(contextStr);
+    // 获取context模板
+    const contextJSON = JSON.parse(fs.readFileSync(path.join(__dirname, './context.json'), 'utf-8'));
+    // 获取模板内layoutIndex
     const layoutIndex = contextJSON.context.jsonData.a.layoutIndex;
+    // 根据type生成component
     if (type === '1') {
         contextJSON.context.jsonData.d = getComponents(appId, layoutIndex, width, height);
     } else {
         contextJSON.context.jsonData.d = getComponents2(appId, layoutIndex, width, height);
     }
+    // 替换模板内数据
     contextJSON.context.jsonData.a.width = width;
     contextJSON.context.jsonData.a.height = height;
     contextJSON.context.jsonData.contentRect.width = width;
     contextJSON.context.jsonData.contentRect.height = height;
+    contextJSON.context.jsonData.modified = new Date().toString();
 
+    // 新增页面参数
     const params = {
         name,
         description: '',
